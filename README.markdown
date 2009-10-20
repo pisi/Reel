@@ -30,8 +30,8 @@ Requirements
 ------------
 * **[jQuery 1.3.x][jquery]**
 * Optionaly you can also include these handy jQuery plugins (recommended)
- * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
- * [jQuery.disableTextSelect][disabletextselect] will retain mouse dragging 
+    * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
+    * [jQuery.disableTextSelect][disabletextselect] will retain mouse dragging 
 interaction when saving the image is enabled
 
 License
