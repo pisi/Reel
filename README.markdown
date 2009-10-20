@@ -5,7 +5,7 @@ a live "projection" of pre-built animation frames sequence.
 Its aim is to provide a 360° view of something or someplace. 
 Great alternative to widely used Flash techniques.
 
-<http://plugins.jquery.com/reel>
+<http://plugins.jquery.com/project/reel>
 
 * Intuitive operation. Supports mouse wheel!
 * No need for a stitched image but we do support them too.
@@ -54,5 +54,5 @@ Download version 1.0.1
 [jquery]: http://www.jquery.com/
 [disabletextselect]: http://www.jdempster.com/category/jquery/disabletextselect/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
-[source]: http://github.com/pisi/Reel/blob/master/jquery.reel.js
-[min]: http://github.com/pisi/Reel/blob/master/jquery.reel-min.js
+[source]: http://github.com/pisi/Reel/raw/master/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/master/jquery.reel-min.js
