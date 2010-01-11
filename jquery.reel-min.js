@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Petr Vostrel (http://www.pisi.cz/)
+/* Copyright (c) 2009-2010 Petr Vostrel (http://www.pisi.cz/)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
