@@ -215,7 +215,6 @@
   }
   // PRIVATE
   function number(input){
-    if (typeof(input) != 'string') return input;
-    return input.replace(/[^0-9]+/, '') - 0;
+    return +input.toString().replace(/[^0-9]+/, '');
   }
 })(jQuery);
