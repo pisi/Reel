@@ -108,7 +108,7 @@
               hotspot= set.hotspot ? set.hotspot : t,
               space= recall('dimensions')
             hotspot
-              .css('cursor', 'ew-resize')
+              .css({ cursor: 'ew-resize' })
               .mouseenter(function(e){ t.trigger('enter'); })
               .mouseleave(function(e){ t.trigger('leave'); })
               .mousemove(function(e){ t.trigger('over', [e.clientX, e.clientY]); })
@@ -198,8 +198,8 @@
             }
             var
               indicator= ((space.x - set.indicator) / (frames - 1) * (frame - 1)) + 'px'
-            t.css('backgroundPosition', shift)
-              .find('.indicator').css('left', indicator);
+            t.css({ backgroundPosition: shift })
+              .find('.indicator').css({ left: indicator });
           },
           wheel: function(e, distance){
             var
