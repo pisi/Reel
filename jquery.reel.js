@@ -9,10 +9,10 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://www.vostrel.cz/jquery/reel/
- * Version: 1.0.0
- * Updated: 2009-08-31
+ * Version: 1.0.1
+ * Updated: 2010-02-21
  *
- * Requires jQuery 1.3.x
+ * Requires jQuery 1.3.x or higher
  */
 /*
  * Optional nice-to-haves:
@@ -36,9 +36,22 @@
         sensitivity:       20, // interaction sensitivity
         spacing:            0, // space between frames on reel
         stitched:   undefined, // pixel width (length) of a stitched panoramic reel
-        suffix:       '-reel'
-    }
-    return this.each(function(){
+        suffix:       '-reel',
+      },
+      applicable= (function(tags){
+        // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
+        var pass= [];
+        tags.filter('img').each(function(ix){
+          var $this= $(this),
+              src= $this.attr('src'),
+              width= number($this.css('width')),
+              height= number($this.css('height'));
+          if (!src || src=='' || !width || !height ) return;
+          pass.push($this);
+        });
+        return $(pass);
+      })(this);
+    return applicable.each(function(){
       var t= $(this),
           set= $.extend(defaults, options),
           pool= $(document),
