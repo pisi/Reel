@@ -9,7 +9,7 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://www.vostrel.cz/jquery/reel/
- * Version: 1.0.1
+ * Version: 1.0.2
  * Updated: 2010-02-21
  *
  * Requires jQuery 1.3.x or higher
@@ -33,6 +33,7 @@
         indicator:          0, // size of a visual indicator of reeling (in pixels)
         klass:             '', // plugin instance class name
         loops:           true, // is it a loop?
+        reversed:       false, // true for "counter-clockwise sprite"
         saves:          false, // wheather allow user to save the image thumbnail
         sensitivity:       20, // interaction sensitivity
         spacing:            0, // space between frames on reel
@@ -151,7 +152,8 @@
               frame= recall('clicked_on_frame'),
               frames= recall('frames'),
               distance= Math.round((origin - x) / set.sensitivity),
-              frame= store('frame', frame - distance)
+              reverse= set.reversed ? -1 : 1,
+              frame= store('frame', frame - reverse * distance)
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
@@ -204,8 +206,9 @@
               frame= recall('frame'),
               frames= recall('frames'),
               delta= Math.ceil(Math.sqrt(Math.abs(distance))),
-              shift= distance < 0 ? - delta : delta,
-              frame= store('frame', frame - shift)
+              delta= distance < 0 ? - delta : delta,
+              reverse= set.reversed ? -1 : 1,
+              frame= store('frame', frame - reverse * delta)
             t.trigger('frameChange');
             return false;
           }
