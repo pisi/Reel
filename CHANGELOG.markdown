@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Version 1.0.3
+-------------
+* User *neptune* (thanks!) found a nasty mishap where option `tooltip` was used instead of `hint` on several places. To stay backwards compatibile `tooltip` will stay as an alias of new option `hint` (which is preferred).
+
 Version 1.0.2
 -------------
 * Added support for counter-clockwise sprite by specifying option `reverse`
