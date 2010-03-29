@@ -7,7 +7,7 @@ Version 1.0.3
 
 Version 1.0.2
 -------------
-* Added support for counter-clockwise sprite by specifying option `reverse`
+* Added support for counter-clockwise sprite by specifying option `reversed`
 * Validation of tags on which reel is applied added. Only IMG tags with assigned all `src`, `width` and `height` pass.
 
 Version 1.0.1
