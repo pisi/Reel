@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
-    <title>jQuery Reel Basic 360° Example</title>
+    <title>Object Example - jQuery Reel 360°</title>
     <link href='style/example.css' rel='stylesheet' type='text/css' />
     <script src='http://code.jquery.com/jquery-latest.min.js' type='text/javascript'></script>
     <script src='../jquery.reel-min.js' type='text/javascript'></script>
@@ -12,14 +12,17 @@
   <body>
     <h1>
       <a href='http://jquery.vostrel.cz/reel'>jQuery Reel</a> 
-      Basic 360° Example
+      Example
     </h1>
+    <h2>
+      360° Object View Example
+    </h2>
     <p>
       Photographed object can be spinned 360° using mouse drag or mouse wheel. 
     </p>
 
     <div id="example">
-      <img id='image' src='example.jpg' width='276' height='126' />
+      <img id='image' src='object.jpg' width='276' height='126' />
     </div>
     <script type='text/javascript'>$(document).ready(function(){ $('#image').reel({ frames: 35, saves: true }); });</script>
 
@@ -52,7 +55,7 @@
           <script src='inc/jquery.mousewheel-min.js'></script>
       </head>
       <body>
-          <img id='image' src='example.jpg' width='276' height='126' />
+          <img id='image' src='object.jpg' width='276' height='126' />
           <script>
               $(document).ready(function(){
                   $('#image').reel({
@@ -70,10 +73,10 @@
       and <em>width &amp; height</em> dimensions
       of <em>#image</em>.
       It then looks into
-      <a href="example.jpg">example.jpg</a>'s
+      <a href="object.jpg">object.jpg</a>'s
       folder
       and automatically chooses another image named
-      <strong><a href="example-reel.jpg">example-reel.jpg</a></strong>
+      <strong><a href="object-reel.jpg">object-reel.jpg</a></strong>
       for Reel interactions.
     </p>
     <p class="more">
