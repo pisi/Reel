@@ -1,7 +1,7 @@
 /*
  * .reel - Image Turntable Plugin
  *
- * Transforms an image tag to act as an projector
+ * Transforms an image tag to act as a projector
  *
  */
 /*! Copyright (c) 2009-2010 Petr Vostrel (http://www.pisi.cz/)
@@ -219,6 +219,6 @@
   }
   // PRIVATE
   function number(input){
-    return +input.toString().replace(/[^0-9]+/, '');
+    return parseInt(input);
   }
 })(jQuery);
