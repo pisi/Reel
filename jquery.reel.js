@@ -143,9 +143,9 @@
                   touchend: end,
                   touchcancel: end,
                   click: prevent,
-                  dblclick: prevent,
                   gesturestart: prevent,
-                  gesturechange: prevent
+                  gesturechange: prevent,
+                  gestureend: prevent
                 });
                 function bind(element, events){
                   $.each(events, function bind_handler(event){
@@ -153,7 +153,8 @@
                   });
                 }
                 function prevent(event){
-                  return (event.cancelBubble= true) && event.preventDefault() || false;
+                  event.cancelable && event.preventDefault();
+                  return false;
                 }
                 function start(event){
                   var
