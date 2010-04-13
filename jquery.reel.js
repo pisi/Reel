@@ -9,7 +9,7 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://www.vostrel.cz/jquery/reel/
- * Version: 1.0.3.1
+ * Version: 1.0.4 "Touchy"
  * Updated: 2010-04-14
  *
  * Requires jQuery 1.4.x or higher
@@ -61,7 +61,9 @@
           pass.push($(this));
         });
         return $(pass);
-      })(this);
+      })(this)	,
+      // Flag touch-enabled devices
+      touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
 
     // Double plugin functions in case plugin is missing
     double_for('mousewheel disableTextSelect'.split(/ /));
@@ -93,9 +95,10 @@
               image= src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'),
               size= { x: number(t.css('width')), y: number(t.css('height')) },
               turntable= $('<div>').attr('class',classes).addClass(klass).addClass(set.klass),
-              image_css= set.saves ? { opacity: 0 } : { display: 'none' }
+              image_css= touchy || !set.saves ? { display: 'none' } : { opacity: 0 }
             t= t.attr('id', '').wrap(turntable).css(image_css)
             .parent().attr('id', id).bind(on).css({
+              display: 'block',
               width: size.x + 'px',
               height: size.y + 'px',
               backgroundImage: 'url(' + image + ')'
@@ -132,9 +135,48 @@
               .mousewheel(function(e, delta){ t.trigger('wheel', [delta]); return false; })
               .dblclick(function(e){ t.trigger('animate'); })
               .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]); })
-              .disableTextSelect();
-            if (set.hint || set.tooltip) hotspot.attr('title', set.hint || set.tooltip);
-            if (set.indicator) t.append($('<div>')
+              .disableTextSelect()
+              .each(function touch_support(){
+                touchy && bind(this, {
+                  touchstart: start,
+                  touchmove: move,
+                  touchend: end,
+                  touchcancel: end,
+                  click: prevent,
+                  dblclick: prevent,
+                  gesturestart: prevent,
+                  gesturechange: prevent
+                });
+                function bind(element, events){
+                  $.each(events, function bind_handler(event){
+                    element.addEventListener(event, this, false);
+                  });
+                }
+                function prevent(event){
+                  return (event.cancelBubble= true) && event.preventDefault() || false;
+                }
+                function start(event){
+                  var
+                    touch= event.touches[0],
+                    clicked= store('clicked', true),
+                    location= store('clicked_location', touch.clientX),
+                    frame= store('last_frame', store('clicked_on_frame', recall('frame')));
+                  return prevent(event);
+                }
+                function move(event){
+                  var
+                    touch= event.touches[0];
+                  t.trigger('drag', [touch.clientX, touch.clientY]);
+                  return prevent(event);
+                }
+                function end(event){
+                  var
+                    clicked= store('clicked',false);
+                  return prevent(event);
+                }
+              });
+            (set.hint || set.tooltip) && hotspot.attr('title', set.hint || set.tooltip);
+            set.indicator && t.append($('<div/>')
               .addClass('indicator')
               .css({
                 width: set.indicator + 'px',
@@ -168,10 +210,22 @@
               origin= recall('clicked_location'),
               frame= recall('clicked_on_frame'),
               frames= recall('frames'),
-              distance= Math.round((origin - x) / set.sensitivity),
+              sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
+              distance= Math.round((origin - x) / sensitivity),
               reverse= set.reversed ? -1 : 1,
               frame= store('frame', frame - reverse * distance)
             t.trigger('frameChange');
+          },
+          wheel: function(e, distance){
+            var
+              frame= recall('frame'),
+              frames= recall('frames'),
+              delta= Math.ceil(Math.sqrt(Math.abs(distance))),
+              delta= distance < 0 ? - delta : delta,
+              reverse= set.reversed ? -1 : 1,
+              frame= store('frame', frame - reverse * delta)
+            t.trigger('frameChange');
+            return false;
           },
           frameChange: function(e, frame){
             var
@@ -217,17 +271,6 @@
               indicator= ((space.x - set.indicator) / (frames - 1) * (frame - 1)) + 'px'
             t.css({ backgroundPosition: shift })
               .find('.indicator').css({ left: indicator });
-          },
-          wheel: function(e, distance){
-            var
-              frame= recall('frame'),
-              frames= recall('frames'),
-              delta= Math.ceil(Math.sqrt(Math.abs(distance))),
-              delta= distance < 0 ? - delta : delta,
-              reverse= set.reversed ? -1 : 1,
-              frame= store('frame', frame - reverse * delta)
-            t.trigger('frameChange');
-            return false;
           }
         };
       t.ready(on.setup);
