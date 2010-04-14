@@ -9,10 +9,10 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://www.vostrel.cz/jquery/reel/
- * Version: 1.0.3
- * Updated: 2010-03-29
+ * Version: 1.0.3.1
+ * Updated: 2010-04-14
  *
- * Requires jQuery 1.3.x or higher
+ * Requires jQuery 1.4.x or higher
  */
 /*
  * Optional nice-to-haves:
@@ -41,6 +41,8 @@
         suffix:       '-reel',
         tooltip:           ''  // alias of `hint`
       },
+
+      klass= 'jquery-reel',
       applicable= (function(tags){
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
@@ -51,11 +53,18 @@
             src= $this.attr('src'),
             width= number($this.css('width')),
             height= number($this.css('height'))
-          if (!src || src=='' || !width || !height ) return;
+          if (!src || src=='' || !width || !height) return;
           pass.push($this);
+        });
+        tags.filter('div.' + klass).each(function(ix){
+          pass.push($(this));
         });
         return $(pass);
       })(this);
+
+    // Double plugin functions in case plugin is missing
+    double('mousewheel disableTextSelect'.split(/ /));
+
     return applicable.each(function(){
       var
         t= $(this),
@@ -73,36 +82,42 @@
           return value;
         },
         on= {
-          init: function(){
+          setup: function(){
+            if (t.hasClass(klass)) return;
             var
-              classes= t.attr('class'),
               src= t.attr('src'),
+              id= t.attr('id'),
+              classes= t.attr('class'),
+              styles= t.attr('style'),
               image= src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'),
               size= { x: number(t.css('width')), y: number(t.css('height')) },
-              turntable= $('<div>').attr('class',classes).addClass('jquery-reel').addClass(set.klass),
-              external_methods= ['mousewheel', 'disableTextSelect'],
+              turntable= $('<div>').attr('class',classes).addClass(klass).addClass(set.klass),
               image_css= set.saves ? { opacity: 0 } : { display: 'none' }
-            t= t.wrap(turntable).css(image_css)
-            .parent().css({
+            t= t.attr('id', '').wrap(turntable).css(image_css)
+            .parent().attr('id', id).bind(on).css({
               width: size.x + 'px',
               height: size.y + 'px',
               backgroundImage: 'url(' + image + ')'
             });
-            for (var ev in on) t.bind(ev, on[ev]);
-            $.each(external_methods, function(ix,method){
-              // Stub wanted methods from missing plugins
-              if (!$.fn[method]) $.fn[method]= function(){ return this; };
-            });
-            t.trigger('setup');
-          },
-          setup: function(e){
-            var
-              size= { x: number(t.css('width')), y: number(t.css('height')) }
             store('frames', set.frames);
             store('spacing', set.spacing);
             store('offset', t.offset());
             store('dimensions', size);
+            store('backup', {
+              id: id,
+              'class': classes || '',
+              style: styles || ''
+            })
             t.trigger('start');
+          },
+          teardown: function(e){
+            t= t.unbind(on)
+            .find('img')
+            .attr(t.data('backup')).unwrap()
+            .bind('setup', function resetup(e){
+              t.unbind('setup');
+              on.setup();
+            });
           },
           start: function(e){
             var
@@ -214,11 +229,16 @@
             return false;
           }
         };
-      t.ready(on.init);
+      t.ready(on.setup);
     });
   }
   // PRIVATE
   function number(input){
     return parseInt(input);
+  }
+  function double(methods){
+    $.each(methods, function(){
+      if (!$.fn[this]) $.fn[this]= function(){ return this; };
+    });
   }
 })(jQuery);

@@ -32,11 +32,11 @@
       $reel= $('#image_height_only').reel();
     equal( $reel.length, 0);
   });
-  test( 'Accepts image tag with dimensions set in CSS, not in HTML', function()
+  test( 'Does not accept image tag without dimensions', function()
   {
-    var selector= '#image_no_dimensions',
-        $reel= $(selector).reel();
-    equal( $reel.length, 1);
+    var
+      $reel= $('#image_no_dimensions').reel();
+    equal( $reel.length, 0);
   });
   test( 'Does not accept non-image tag (like DIV)', function()
   {
@@ -44,9 +44,15 @@
         $reel= $(selector).reel();
     equal( $reel.length, 0);
   });
-  test( 'Accepts ONLY proper image tag', function()
+  test( 'Accepts ONLY proper image tag with dimensions', function()
   {
     var selector= '#image',
+        $reel= $(selector).reel();
+    equal( $reel.length, 1);
+  });
+  test( 'Accepts image tag with dimensions set in CSS, not in HTML', function()
+  {
+    var selector= '#image_css_dimensions',
         $reel= $(selector).reel();
     equal( $reel.length, 1);
   });
