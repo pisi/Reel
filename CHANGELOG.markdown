@@ -3,7 +3,8 @@ Changelog
 
 Version 1.0.4
 -------------
-* To pair `setup`, `teardown` event is now available for effective reversal of initialization.
+* Added long awaited support for iPhone/iPad/iPod family of touch-enabled devices.
+* Added `teardown` event for effective reversal of initialization and to pair `setup`.
 * As of this version the minimal jQuery version has been increased to *1.4.x*.
 * Added very preliminary test suite. Hurray!
 * Added compatibility with another nice mouse wheel plugin, Three Dub Media's $.event.special.wheel.

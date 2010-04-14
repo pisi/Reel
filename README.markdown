@@ -1,4 +1,4 @@
-Reel 1.0.4
+Reel 1.0.4 "Touchy"
 ===============
 Is a jQuery plugin which takes an image tag and makes it 
 a live "projection" of pre-built animation frames sequence. 
@@ -7,12 +7,13 @@ Great alternative to widely used Flash techniques.
 
 <http://plugins.jquery.com/project/reel>
 
+* NEW! iPhone support!
 * Intuitive operation. Supports mouse wheel!
 * No need for a stitched image but we do support them too.
 * Plays fair with your existing CSS.
 * Browser and operating system agnostic. It's your choice.
 * No browser extensions needed. No Flash, nothing. It's just an image...
-* Tiny code base. No carbon footprint!
+* Tiny code base.
 
 Demo
 ----
@@ -40,10 +41,10 @@ License
 * Available for use in all personal or commercial projects under both 
 [MIT][license-mit] and [GPL][license-gpl] licenses.
 
-Download version 1.0.4
-----------------------
-* **[Open source][source] (~ 9,7 kB)**
-* or [the gzipped version][min] (~ 3,9 kB)
+Download version 1.0.4 "Touchy"
+-------------------------------
+* **[Open source][source] (~ 11,5 kB)**
+* or [the gzipped version][min] (~ 4,6 kB)
 
 [CHANGELOG][changelog]
 
