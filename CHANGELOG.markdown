@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 1.0.4
+-------------
+* To pair `setup`, `teardown` event is now available for effective reversal of initialization.
+* As of this version the minimal jQuery version has been increased to *1.4.x*.
+* Added very preliminary test suite. Hurray!
+* Added compatibility with another nice mouse wheel plugin, Three Dub Media's $.event.special.wheel.
+
 Version 1.0.3
 -------------
 * User *neptune* (thanks!) found a nasty mishap where option `tooltip` was used instead of `hint` on several places. To stay backwards compatibile `tooltip` will stay as an alias of new option `hint` (which is preferred).
