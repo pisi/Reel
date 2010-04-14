@@ -64,7 +64,7 @@
       })(this);
 
     // Double plugin functions in case plugin is missing
-    double('mousewheel disableTextSelect'.split(/ /));
+    double_for('mousewheel disableTextSelect'.split(/ /));
 
     return applicable.each(function(){
       var
@@ -237,7 +237,7 @@
   function number(input){
     return parseInt(input);
   }
-  function double(methods){
+  function double_for(methods){
     $.each(methods, function(){
       if (!$.fn[this]) $.fn[this]= function(){ return this; };
     });
