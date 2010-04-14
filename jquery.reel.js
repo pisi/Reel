@@ -17,7 +17,8 @@
 /*
  * Optional nice-to-haves:
  * - jQuery.disableTextSelect (James Dempster, http://www.jdempster.com/category/jquery/disabletextselect/)
- * - jQuery.mouseWheel (Brandon Aaron, http://brandonaaron.net/)
+ * - jQuery.mouseWheel (Brandon Aaron, http://plugins.jquery.com/project/mousewheel)
+ * - or jQuery.event.special.wheel (Three Dub Media, http://blog.threedubmedia.com/2008/08/eventspecialwheel.html)
  */
 
 (function($){
