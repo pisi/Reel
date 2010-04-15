@@ -50,13 +50,13 @@ Download version 1.0.4
 
 [demo]: http://jquery.vostrel.cz/reel#demo
 [options]: http://jquery.vostrel.cz/reel#options
-[changelog]: http://github.com/pisi/Reel/blob/master/CHANGELOG.markdown
-[license-mit]: http://github.com/pisi/Reel/blob/master/MIT-LICENSE.txt
-[license-gpl]: http://github.com/pisi/Reel/blob/master/GPL-LICENSE.txt
+[changelog]: http://github.com/pisi/Reel/blob/iphone-support/CHANGELOG.markdown
+[license-mit]: http://github.com/pisi/Reel/blob/iphone-support/MIT-LICENSE.txt
+[license-gpl]: http://github.com/pisi/Reel/blob/iphone-support/GPL-LICENSE.txt
 [jquery]: http://www.jquery.com/
 [disabletextselect]: http://www.jdempster.com/category/jquery/disabletextselect/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
-[source]: http://github.com/pisi/Reel/raw/master/jquery.reel.js
-[min]: http://github.com/pisi/Reel/raw/master/jquery.reel-min.js
+[source]: http://github.com/pisi/Reel/raw/iphone-support/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/iphone-support/jquery.reel-min.js
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
