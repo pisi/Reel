@@ -7,8 +7,8 @@ Great alternative to widely used Flash techniques.
 
 <http://plugins.jquery.com/project/reel>
 
-* NEW! iPhone support!
-* Intuitive operation. Supports mouse wheel!
+* **NEW** iPhone support!
+* Intuitive operation. Supports mouse wheel.
 * No need for a stitched image but we do support them too.
 * Plays fair with your existing CSS.
 * Browser and operating system agnostic. It's your choice.
@@ -32,7 +32,7 @@ Requirements
 * **[jQuery 1.4.x or higher][jquery]**
 * Optionaly you can also include these handy jQuery plugins (recommended)
     * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
-    * [jQuery.event.special.wheel][wheel] is a nice alternative
+    * or [jQuery.event.special.wheel][wheel] is a nice alternative
     * [jQuery.disableTextSelect][disabletextselect] will retain mouse dragging 
 interaction when saving the image is enabled
 
@@ -41,8 +41,8 @@ License
 * Available for use in all personal or commercial projects under both 
 [MIT][license-mit] and [GPL][license-gpl] licenses.
 
-Download version 1.0.4 "Touchy"
--------------------------------
+Download version 1.0.4
+----------------------
 * **[Open source][source] (~ 11,5 kB)**
 * or [the gzipped version][min] (~ 4,6 kB)
 
