@@ -7,7 +7,7 @@ Great alternative to widely used Flash techniques.
 
 <http://plugins.jquery.com/project/reel>
 
-* **NEW** iPhone support!
+* **NEW** [iPhone support][iphone-test]!
 * Intuitive operation. Supports mouse wheel.
 * No need for a stitched image but we do support them too.
 * Plays fair with your existing CSS.
@@ -59,3 +59,4 @@ Download version 1.0.4
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
 [source]: http://github.com/pisi/Reel/raw/master/jquery.reel.js
 [min]: http://github.com/pisi/Reel/raw/master/jquery.reel-min.js
+[iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
