@@ -9,8 +9,8 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://www.vostrel.cz/jquery/reel/
- * Version: 1.0.3
- * Updated: 2010-03-29
+ * Version: 1.0.3.GH-4-patch
+ * Updated: 2010-04-17
  *
  * Requires jQuery 1.3.x or higher
  */
@@ -153,7 +153,7 @@
               frame= recall('clicked_on_frame'),
               frames= recall('frames'),
               distance= Math.round((origin - x) / set.sensitivity),
-              reverse= set.reversed ? -1 : 1,
+              reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
               frame= store('frame', frame - reverse * distance)
             t.trigger('frameChange');
           },
@@ -192,10 +192,10 @@
                 shift= set.horizontal ? y + 'px ' + x + 'px' : x + 'px ' + y + 'px'
             }else{
               var
-                step= set.stitched / frames,
-                x= frame * step,
+                step= -(set.stitched - space.x) / frames,
+                x= Math.round((frame - 1) * step),
                 y= 0,
-                shift= x + 'px 0' + y + 'px'
+                shift= x + 'px ' + y + 'px'
             }
             var
               indicator= ((space.x - set.indicator) / (frames - 1) * (frame - 1)) + 'px'
