@@ -18,9 +18,10 @@ All tests pass on following browsers and platforms:
 * MacOS, iPhoneOS, Windows, Ubuntu
 
 On iPhone, besides these automated tests, there's also the *touch* part of the deal.
-Browse `example/iphone.html` in your iPhone
+Browse [`example/iphone.html`][iphone-example] in your iPhone
 or watch short **[test session video][iphone-test]**
 kindly recorded by [Michael Crane][mick] (thanks Mick!).
 
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
+[iphone-example]: http://jquery.vostrel.cz/reel/example/iphone.html
 [mick]: http://www.mickiwiki.com
