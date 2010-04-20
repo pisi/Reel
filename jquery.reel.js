@@ -128,7 +128,7 @@
               hotspot= set.hotspot ? set.hotspot : t,
               space= recall('dimensions')
             hotspot
-              .css({ cursor: 'ew-resize' })
+              .css({ cursor: 'ew-resize', position: 'relative' })
               .mouseenter(function(e){ t.trigger('enter'); })
               .mouseleave(function(e){ t.trigger('leave'); })
               .mousemove(function(e){ t.trigger('over', [e.clientX, e.clientY]); })
@@ -183,7 +183,7 @@
                 width: set.indicator + 'px',
                 height: set.indicator + 'px',
                 top: (space.y - set.indicator) + 'px',
-                position: 'relative',
+                position: 'absolute',
                 backgroundColor: '#000'
               }));
             t.trigger('frameChange', set.frame);
