@@ -61,14 +61,15 @@
           pass.push($(this));
         });
         return $(pass);
-      })(this)	,
+      })(this),
+      instances= [],
       // Flag touch-enabled devices
       touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
 
     // Double plugin functions in case plugin is missing
     double_for('mousewheel disableTextSelect'.split(/ /));
 
-    return applicable.each(function(){
+    applicable.each(function(){
       var
         t= $(this),
         set= $.extend(defaults, options),
@@ -96,13 +97,13 @@
               size= { x: number(t.css('width')), y: number(t.css('height')) },
               turntable= $('<div>').attr('class',classes).addClass(klass).addClass(set.klass),
               image_css= touchy || !set.saves ? { display: 'none' } : { opacity: 0 }
-            t= t.attr('id', '').wrap(turntable).css(image_css)
+            instances.push((t= t.attr('id', '').wrap(turntable).css(image_css)
             .parent().attr('id', id).bind(on).css({
               display: 'block',
               width: size.x + 'px',
               height: size.y + 'px',
               backgroundImage: 'url(' + image + ')'
-            });
+            }))[0]);
             store('frames', set.frames);
             store('spacing', set.spacing);
             store('offset', t.offset());
@@ -276,6 +277,7 @@
         };
       t.ready(on.setup);
     });
+    return $(instances);
   }
   // PRIVATE
   function number(input){

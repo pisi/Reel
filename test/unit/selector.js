@@ -58,5 +58,11 @@
         $reel= $(selector).reel();
     equal( $reel.length, 1);
   });
+  test( 'Returns proper "jquery-reel"-classed elements in the resulting jQuery', function()
+  {
+    var selector= '#image',
+        $reel= $(selector).reel();
+    equal( $reel.hasClass('jquery-reel'), true, 'Returned element has a proper class name');
+  });
 
 })(jQuery);
