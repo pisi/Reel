@@ -117,6 +117,7 @@
           },
           teardown: function(e){
             t= t.unbind(on)
+            .find('.indicator').remove().end()
             .find('img')
             .attr(t.data('backup')).unwrap()
             .bind('setup', function resetup(e){
