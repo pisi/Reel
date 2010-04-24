@@ -10,7 +10,7 @@
  *
  * http://www.vostrel.cz/jquery/reel/
  * Version: 1.0.4 "Touchy"
- * Updated: 2010-04-19
+ * Updated: 2010-04-24
  *
  * Requires jQuery 1.4.x or higher
  */
@@ -265,10 +265,12 @@
                 shift= set.horizontal ? y + 'px ' + x + 'px' : x + 'px ' + y + 'px'
             }else{
               var
-                step= -(set.stitched - space.x) / frames,
+                travel= set.loops ? set.stitched : set.stitched - space.x,
+                steps= set.loops ? frames : frames - 1,
+                step= travel / steps,
                 x= Math.round((frame - 1) * step),
                 y= 0,
-                shift= x + 'px ' + y + 'px'
+                shift= -x + 'px ' + y + 'px'
             }
             var
               indicator= ((space.x - set.indicator) / (frames - 1) * (frame - 1)) + 'px'
