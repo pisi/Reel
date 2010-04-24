@@ -4,7 +4,7 @@ Changelog
 Version 1.0.4
 -------------
 * Added long awaited support for iPhone/iPad/iPod family of touch-enabled devices.
-* Fixed a miscalculation bugs in stitched panoramas (github issues GH-4 and GH-6).
+* Fixed miscalculation bugs in stitched panoramas (github issues GH-4 and GH-6).
 * Added `teardown` event for effective reversal of initialization and to pair `setup`.
 * As of this release the minimal version of jQuery has been increased to *1.4.x*.
 * Added very preliminary test suite. Hurray!
