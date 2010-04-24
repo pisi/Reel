@@ -126,11 +126,12 @@
             });
           },
           start: function(e){
+            t.css({ position: 'relative' });
             var
               hotspot= set.hotspot ? set.hotspot : t,
               space= recall('dimensions')
             hotspot
-              .css({ cursor: 'ew-resize', position: 'relative' })
+              .css({ cursor: 'ew-resize' })
               .mouseenter(function(e){ t.trigger('enter'); })
               .mouseleave(function(e){ t.trigger('leave'); })
               .mousemove(function(e){ t.trigger('over', [e.clientX, e.clientY]); })
