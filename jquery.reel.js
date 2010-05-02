@@ -8,11 +8,16 @@
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
- * http://www.vostrel.cz/jquery/reel/
+ * http://jquery.vostrel.cz/reel
  * Version: 1.0.4 "Touchy"
  * Updated: 2010-04-24
  *
  * Requires jQuery 1.4.x or higher
+ */
+/*
+ * CDN locations available:
+ * - http://code.vostrel.cz/jquery.reel.js (minified & compressed with gzip)
+ * - http://code.vostrel.cz/jquery.reel-devel.js (human readable gziped source for development)
  */
 /*
  * Optional nice-to-haves:
