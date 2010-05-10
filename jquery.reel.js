@@ -9,8 +9,8 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://www.vostrel.cz/jquery/reel/
- * Version: 1.0.4 "Touchy"
- * Updated: 2010-04-24
+ * Version: "Dancer" (will be 1.1 on release)
+ * Updated: 2010-05-10
  *
  * Requires jQuery 1.4.x or higher
  */
