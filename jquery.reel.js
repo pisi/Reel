@@ -22,28 +22,35 @@
  */
 
 (function($){
+  var
+    defaults= {
+      footage:            6, // number of frames per line/column
+      frame:              1, // initial frame
+      frames:            36, // total number of frames; every 10° for full rotation
+      horizontal:      true, // roll flow; defaults to horizontal
+      hotspot:    undefined, // custom jQuery as a hotspot
+      hint:              '', // hotspot hint tooltip
+      indicator:          0, // size of a visual indicator of reeling (in pixels)
+      klass:             '', // plugin instance class name
+      loops:           true, // is it a loop?
+      reversed:       false, // true for "counter-clockwise sprite"
+      saves:          false, // wheather allow user to save the image thumbnail
+      sensitivity:       20, // interaction sensitivity
+      spacing:            0, // space between frames on reel
+      stitched:   undefined, // pixel width (length) of a stitched panoramic reel
+      suffix:       '-reel',
+      tooltip:           ''  // alias of `hint`
+    },
+    klass= 'jquery-reel',
+    pool= $(document),
+    // Flag touch-enabled devices
+    touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+
+  // Double plugin functions in case plugin is missing
+  double_for('mousewheel disableTextSelect'.split(/ /));
+
   $.fn.reel= function(options){
     var
-      defaults= {
-        footage:            6, // number of frames per line/column
-        frame:              1, // initial frame
-        frames:            36, // total number of frames; every 10° for full rotation
-        horizontal:      true, // roll flow; defaults to horizontal
-        hotspot:    undefined, // custom jQuery as a hotspot 
-        hint:              '', // hotspot hint tooltip 
-        indicator:          0, // size of a visual indicator of reeling (in pixels)
-        klass:             '', // plugin instance class name
-        loops:           true, // is it a loop?
-        reversed:       false, // true for "counter-clockwise sprite"
-        saves:          false, // wheather allow user to save the image thumbnail
-        sensitivity:       20, // interaction sensitivity
-        spacing:            0, // space between frames on reel
-        stitched:   undefined, // pixel width (length) of a stitched panoramic reel
-        suffix:       '-reel',
-        tooltip:           ''  // alias of `hint`
-      },
-
-      klass= 'jquery-reel',
       applicable= (function(tags){
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
@@ -63,8 +70,6 @@
         return $(pass);
       })(this),
       instances= [],
-      // Flag touch-enabled devices
-      touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
 
     // Double plugin functions in case plugin is missing
     double_for('mousewheel disableTextSelect'.split(/ /));
@@ -73,7 +78,6 @@
       var
         t= $(this),
         set= $.extend(defaults, options),
-        pool= $(document),
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
