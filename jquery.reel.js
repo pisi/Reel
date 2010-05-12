@@ -21,7 +21,7 @@
  * - or jQuery.event.special.wheel (Three Dub Media, http://blog.threedubmedia.com/2008/08/eventspecialwheel.html)
  */
 
-(function($){
+(function($, document){
   var
     defaults= {
       footage:            6, // number of frames per line/column
@@ -71,8 +71,6 @@
       })(this),
       instances= [],
 
-    // Double plugin functions in case plugin is missing
-    double_for('mousewheel disableTextSelect'.split(/ /));
 
     applicable.each(function(){
       var
@@ -296,4 +294,4 @@
       if (!$.fn[this]) $.fn[this]= function(){ return this; };
     });
   }
-})(jQuery);
+})(jQuery, this);
