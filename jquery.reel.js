@@ -85,8 +85,12 @@
     })();
 
     applicable.each(function(){
+      function not_idle(){
+        return idle= -set.timeout * set.frequency;
+      }
       var
         t= $(this),
+        idle= set.autoplay ? -set.delay * set.frequency : 0,
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
@@ -125,7 +129,8 @@
               id: id,
               'class': classes || '',
               style: styles || ''
-            })
+            });
+            ticker && pool.bind(tick_event, on.tick);
             t.trigger('start');
           },
           teardown: function(e){
@@ -137,6 +142,7 @@
               t.unbind('setup');
               on.setup();
             });
+            ticker && pool.unbind(tick_event, on.tick);
           },
           start: function(e){
             t.css({ position: 'relative' });
@@ -208,6 +214,10 @@
             // Stub for future compatibility
             // log(e.type);
           },
+          tick: function(e){
+            idle && idle++;
+            if (idle) return;
+          },
           down: function(e, x, y){
             var
               clicked= store('clicked',true),
@@ -232,6 +242,7 @@
               reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
               frame= store('frame', frame - reverse * distance)
             t.trigger('frameChange');
+            not_idle();
           },
           wheel: function(e, distance){
             var
@@ -242,6 +253,7 @@
               reverse= set.reversed ? -1 : 1,
               frame= store('frame', frame - reverse * delta)
             t.trigger('frameChange');
+            not_idle();
             return false;
           },
           frameChange: function(e, frame){
