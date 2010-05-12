@@ -24,9 +24,11 @@
 (function($, document){
   var
     defaults= {
+      autoplay:        true, // NEW whether animation after delay on start or not
       footage:            6, // number of frames per line/column
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
+      frequency:         25, // NEW shared ticker frequency
       horizontal:      true, // roll flow; defaults to horizontal
       hotspot:    undefined, // custom jQuery as a hotspot
       hint:              '', // hotspot hint tooltip
@@ -42,9 +44,12 @@
       tooltip:           ''  // alias of `hint`
     },
     klass= 'jquery-reel',
+    ns= '.reel',
+    tick_event= 'tick'+ns,
     pool= $(document),
     // Flag touch-enabled devices
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+    ticker
 
   // Double plugin functions in case plugin is missing
   double_for('mousewheel disableTextSelect'.split(/ /));
@@ -71,7 +76,13 @@
       })(this),
       set= $.extend({}, defaults, options),
       instances= [],
+      tick_interval= 1000 / set.frequency
 
+    ticker= ticker || (function run_ticker(){
+      return setInterval(function(){
+        pool.trigger(tick_event);
+      }, tick_interval);
+    })();
 
     applicable.each(function(){
       var
