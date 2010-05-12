@@ -69,13 +69,13 @@
         });
         return $(pass);
       })(this),
+      set= $.extend({}, defaults, options),
       instances= [],
 
 
     applicable.each(function(){
       var
         t= $(this),
-        set= $.extend(defaults, options),
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
