@@ -238,7 +238,7 @@
             if (idle) return;
             var
               step= set.frequency / set.tempo,
-              fraction= recall('fraction') - step,
+              fraction= recall('fraction') + step,
               fraction= store('fraction', fraction)
             t.trigger('fractionChange');
           },
