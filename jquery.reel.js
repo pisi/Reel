@@ -25,6 +25,7 @@
   var
     defaults= {
       autoplay:        true, // NEW whether animation after delay on start or not
+      delay:              1, // NEW delay in seconds between initialization and autoplay (if true)
       footage:            6, // number of frames per line/column
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
@@ -41,6 +42,12 @@
       spacing:            0, // space between frames on reel
       stitched:   undefined, // pixel width (length) of a stitched panoramic reel
       suffix:       '-reel',
+      timeout:            1, // NEW idle timeout in seconds
+      steps:      undefined, // NEW number of steps a revolution is divided in (by default equal to `frames`)
+      step:       undefined, // NEW initial step (overrides `frame`)
+      revolution: undefined, // NEW distance mouse must be dragged for full revolution
+                             // (defaults to double the viewport size or half the `stitched` option)
+      revolutions:     0.25, // NEW fraction of revolution per second
       tooltip:           ''  // alias of `hint`
     },
     klass= 'jquery-reel',
@@ -125,6 +132,9 @@
             store('spacing', set.spacing);
             store('offset', t.offset());
             store('dimensions', size);
+            store('fraction', 0);
+            store('steps', set.steps || set.frames);
+            store('resolution', Math.max(set.steps, set.frames));
             store('backup', {
               id: id,
               'class': classes || '',
@@ -217,12 +227,17 @@
           tick: function(e){
             idle && idle++;
             if (idle) return;
+            var
+              step= set.revolutions / set.frequency,
+              fraction= recall('fraction') - step,
+              fraction= store('fraction', fraction)
+            t.trigger('fractionChange');
           },
           down: function(e, x, y){
             var
               clicked= store('clicked',true),
               location= store('clicked_location', x),
-              frame= store('last_frame', store('clicked_on_frame', recall('frame')))
+              frame= store('last_fraction', store('clicked_on', recall('fraction')))
             pool
             .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]); })
             .mouseup(function(e){ t.trigger('up'); });
@@ -235,45 +250,62 @@
           drag: function(e, x, y){
             var
               origin= recall('clicked_location'),
-              frame= recall('clicked_on_frame'),
-              frames= recall('frames'),
+              fraction= recall('clicked_on'),
+              stitched= set.stitched,
+              space= recall('dimensions'),
+              resolution= Math.max(recall('frames'), recall('steps')),
+              revolution= set.revolution || stitched / 2 || space.x * 2,
+              step= 1 / resolution,
               sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
-              distance= Math.round((origin - x) / sensitivity),
-              reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
-              frame= store('frame', frame - reverse * distance)
-            t.trigger('frameChange');
+              distance= (x - origin), // / sensitivity,
+              reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
+              shift= fraction + reverse / revolution * distance,
+              fraction= store('fraction', shift - Math.floor(shift))
+            t.trigger('fractionChange');
             not_idle();
           },
           wheel: function(e, distance){
             var
-              frame= recall('frame'),
-              frames= recall('frames'),
+              fraction= recall('fraction'),
+              resolution= Math.max(recall('frames'), recall('steps')),
+              step= 1 / resolution,
               delta= Math.ceil(Math.sqrt(Math.abs(distance))),
               delta= distance < 0 ? - delta : delta,
-              reverse= set.reversed ? -1 : 1,
-              frame= store('frame', frame - reverse * delta)
-            t.trigger('frameChange');
+              reverse= set.reversed ? -1 : 1
+              // frame= store('frame', frame - reverse * delta)
+            // t.trigger('frameChange');
             not_idle();
             return false;
           },
+          fractionChange: function(e, fraction){
+            var
+              steps= recall('steps'),
+              step= 1 / steps,
+              fraction= !fraction ? recall('fraction') : store('fraction', fraction),
+              last_fraction= recall('last_fraction'),
+              delta= fraction - last_fraction,
+              fraction= fraction < 0 ? 0 : fraction,
+              fraction= fraction > 1 ? 1 : fraction,
+              loops= set.loops && ((fraction == 1 && last_fraction == 1) || (fraction == 0 && last_fraction == 0)),
+              fraction= loops ? Math.abs(fraction - 1) : fraction,
+              fraction= store('last_fraction', store('fraction', fraction)),
+              reversed= store('reversed', delta != 0 ? (delta < 0) : recall('reversed')),
+              frames= recall('frames'),
+              frames= set.stitched ? frames : frames - 1,
+              frame= store('frame', fraction * frames + 1)
+            t.trigger('frameChange');
+          },
           frameChange: function(e, frame){
             var
-              frame= !frame ? recall('frame') : store('frame', frame),
-              last_frame= recall('last_frame'),
               frames= recall('frames'),
+              fraction= !frame ? recall('fraction') : store('fraction', frame / frames),
+              frame= !frame ? recall('frame') : store('frame', frame),
               space= recall('dimensions'),
               spacing= recall('spacing'),
-              // Take care of the looping
-              frame= !set.loops && frame > frames ? frames : frame,
-              frame= !set.loops && frame < 1 ? 1 : frame,
-              frame= frame - Math.floor(frame / frames) * frames,
-              frame= store('last_frame', store('frame', frame < 1 ? frames : frame)),
-              // Find out if the movement is reversed
-              delta= frame - last_frame,
-              delta= Math.abs(delta) > 10 ? 0 - delta : delta,
-              reversed= store('reversed', delta != 0 ? (delta > 0) : recall('reversed'))
+              reversed= recall('reversed')
             if (!set.stitched){
               var
+                frame= Math.round(frame),
                 major= Math.floor(frame / set.footage),
                 minor= frame - major * set.footage - 1,
                 major= minor == -1 ? major + minor : major,
