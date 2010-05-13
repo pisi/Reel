@@ -1,4 +1,4 @@
-Reel 1.0.4 "Touchy"
+Reel "Dancer"
 ===================
 Is a jQuery plugin which takes an image tag and makes it 
 a live "projection" of pre-built animation frames sequence. 
@@ -7,11 +7,11 @@ Great alternative to widely used Flash techniques.
 
 <http://plugins.jquery.com/project/reel>
 
-* **NEW** [iPhone support][iphone-test]!
 * Intuitive operation. Supports mouse wheel.
 * No need for a stitched image but we do support them too.
+* **NEW** Optional automatic animation.
 * Plays fair with your existing CSS.
-* Browser and operating system agnostic. It's your choice.
+* Browser and operating system agnostic. It's your choice. Even [iPhone][iphone-test] or iPad!
 * No browser extensions needed. No Flash, nothing. It's just an image...
 * Tiny code base.
 

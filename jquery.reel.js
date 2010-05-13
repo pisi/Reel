@@ -27,8 +27,8 @@
       // Options marked [new] are newly available in 1.1
       // [deprecated] options will be gone in next version
 
-      autoplay:        true, // [new] whether animation after delay on start or not
-      delay:              1, // [new] delay in seconds between initialization and autoplay (if true)
+      animate:         true, // [new] whether animation will start automatically after a delay
+      delay:              1, // [new] delay in seconds between initialization and animation (if true)
       footage:            6, // number of frames per line/column
       frequency:       0.25, // [new] animated rotation speed in Hz
       frame:              1, // initial frame
@@ -101,7 +101,7 @@
       }
       var
         t= $(this),
-        idle= set.autoplay ? -set.delay * set.tempo : 0,
+        idle= set.animate ? -set.delay * set.tempo : 0,
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
