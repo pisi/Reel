@@ -24,32 +24,35 @@
 (function($, document){
   var
     defaults= {
-      autoplay:        true, // NEW whether animation after delay on start or not
-      delay:              1, // NEW delay in seconds between initialization and autoplay (if true)
+      // Options marked [new] are newly available in 1.1
+      // [deprecated] options will be gone in next version
+
+      autoplay:        true, // [new] whether animation after delay on start or not
+      delay:              1, // [new] delay in seconds between initialization and autoplay (if true)
       footage:            6, // number of frames per line/column
+      frequency:       0.25, // [new] animated rotation speed in Hz
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
-      frequency:         25, // NEW shared ticker frequency
       horizontal:      true, // roll flow; defaults to horizontal
       hotspot:    undefined, // custom jQuery as a hotspot
       hint:              '', // hotspot hint tooltip
       indicator:          0, // size of a visual indicator of reeling (in pixels)
       klass:             '', // plugin instance class name
       loops:           true, // is it a loop?
+      monitor:    undefined, // [new] stored value name to monitor in the upper left corner of the viewport
       reversed:       false, // true for "counter-clockwise sprite"
+      revolution: undefined, // [new] distance mouse must be dragged for full revolution
+                             // (defaults to double the viewport size or half the `stitched` option)
       saves:          false, // wheather allow user to save the image thumbnail
       sensitivity:       20, // interaction sensitivity
       spacing:            0, // space between frames on reel
+      step:       undefined, // [new] initial step (overrides `frame`)
+      steps:      undefined, // [new] number of steps a revolution is divided in (by default equal to `frames`)
       stitched:   undefined, // pixel width (length) of a stitched panoramic reel
-      suffix:       '-reel',
-      timeout:            1, // NEW idle timeout in seconds
-      monitor:    undefined, // NEW stored value name to monitor in the upper left corner of the viewport
-      steps:      undefined, // NEW number of steps a revolution is divided in (by default equal to `frames`)
-      step:       undefined, // NEW initial step (overrides `frame`)
-      revolution: undefined, // NEW distance mouse must be dragged for full revolution
-                             // (defaults to double the viewport size or half the `stitched` option)
-      revolutions:     0.25, // NEW fraction of revolution per second
-      tooltip:           ''  // alias of `hint`
+      suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
+      tempo:             25, // [new] shared ticker tempo in ticks per second
+      timeout:            1, // [new] idle timeout in seconds
+      tooltip:           ''  // [deprecated] use `hint` instead
     },
     klass= 'jquery-reel',
     ns= '.reel',
@@ -84,7 +87,7 @@
       })(this),
       set= $.extend({}, defaults, options),
       instances= [],
-      tick_interval= 1000 / set.frequency
+      tick_interval= 1000 / set.tempo
 
     ticker= ticker || (function run_ticker(){
       return setInterval(function(){
@@ -94,11 +97,11 @@
 
     applicable.each(function(){
       function not_idle(){
-        return idle= -set.timeout * set.frequency;
+        return idle= -set.timeout * set.tempo;
       }
       var
         t= $(this),
-        idle= set.autoplay ? -set.delay * set.frequency : 0,
+        idle= set.autoplay ? -set.delay * set.tempo : 0,
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
@@ -234,7 +237,7 @@
             idle && idle++;
             if (idle) return;
             var
-              step= set.revolutions / set.frequency,
+              step= set.frequency / set.tempo,
               fraction= recall('fraction') - step,
               fraction= store('fraction', fraction)
             t.trigger('fractionChange');
