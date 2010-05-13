@@ -1,5 +1,5 @@
-Reel "Dancer"
-===================
+Reel "Dancer" (will be 1.1)
+===========================
 Is a jQuery plugin which takes an image tag and makes it 
 a live "projection" of pre-built animation frames sequence. 
 Its aim is to provide a 360° view of something or someplace. 
@@ -50,13 +50,13 @@ Download version 1.0.4
 
 [demo]: http://jquery.vostrel.cz/reel#demo
 [options]: http://jquery.vostrel.cz/reel#options
-[changelog]: http://github.com/pisi/Reel/blob/iphone-support/CHANGELOG.markdown
-[license-mit]: http://github.com/pisi/Reel/blob/iphone-support/MIT-LICENSE.txt
-[license-gpl]: http://github.com/pisi/Reel/blob/iphone-support/GPL-LICENSE.txt
+[changelog]: http://github.com/pisi/Reel/blob/animation/CHANGELOG.markdown
+[license-mit]: http://github.com/pisi/Reel/blob/animation/MIT-LICENSE.txt
+[license-gpl]: http://github.com/pisi/Reel/blob/animation/GPL-LICENSE.txt
 [jquery]: http://www.jquery.com/
 [disabletextselect]: http://www.jdempster.com/category/jquery/disabletextselect/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
-[source]: http://github.com/pisi/Reel/raw/iphone-support/jquery.reel.js
-[min]: http://github.com/pisi/Reel/raw/iphone-support/jquery.reel-min.js
+[source]: http://github.com/pisi/Reel/raw/animation/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/animation/jquery.reel-min.js
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
