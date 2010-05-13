@@ -18,6 +18,7 @@
     </h1>
     <img id='f1' src='samples/f1.jpg' width='276' height='126' />
     <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
+    <img id='chicago' src='samples/chicago.jpg' width='270' height='150' />
     <img id='green' src='samples/green.jpg' width='200' height='150' />
     <div id='no_image'></div>
     <script type='text/javascript'>
@@ -26,11 +27,14 @@ $(function(){
   $('#stitched').reel({ stitched: 1821, frames: 60, frequency: 0.1 });
   $('#green').reel({ frames: 32, footage: 4, frequency: -0.1 });
   $('#no_image').reel({ sprite: 'samples/outlook.jpg', frame: 5, stitched: 1652 });
+  $('#chicago').reel({ stitched: 1072, loops: false, steps: 10, frequency: 0.3, delay: 1 });
   $('body')
   .append($('<button>').html('teardown #f1').click(function(){ $('#f1').trigger('teardown'); }))
   .append($('<button>').html('setup #f1').click(function(){ $('#f1').trigger('setup'); }))
   .append($('<button>').html('teardown #stitched').click(function(){ $('#stitched').trigger('teardown'); }))
   .append($('<button>').html('setup #stitched').click(function(){ $('#stitched').trigger('setup'); }))
+  .append($('<button>').html('teardown #chicago').click(function(){ $('#chicago').trigger('teardown'); }))
+  .append($('<button>').html('setup #chicago').click(function(){ $('#chicago').trigger('setup'); }))
   .append($('<button>').html('teardown #green').click(function(){ $('#green').trigger('teardown'); }))
   .append($('<button>').html('setup #green').click(function(){ $('#green').trigger('setup'); }))
   .append($('<button>').html('teardown #no_image').click(function(){ $('#no_image').trigger('teardown'); }))
