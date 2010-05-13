@@ -101,7 +101,7 @@
       }
       var
         t= $(this),
-        idle= set.animate ? -set.delay * set.tempo : 0,
+        idle= set.animate ? Math.round(-set.delay * set.tempo) : 0,
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
