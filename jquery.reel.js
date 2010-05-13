@@ -239,7 +239,8 @@
           },
           tick: function(e){
             $('.monitor', t).text(recall(set.monitor));
-            !recall('clicked') && idle && idle++;
+            if (recall('clicked')) return not_idle();
+            idle && idle++;
             if (idle) return;
             var
               reversed= recall('reversed'),
