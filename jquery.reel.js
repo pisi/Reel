@@ -139,6 +139,7 @@
             store('fraction', 0);
             store('steps', set.steps || set.frames);
             store('resolution', Math.max(set.steps, set.frames));
+            store('reversed', set.frequency < 0);
             store('backup', {
               id: id,
               'class': classes || '',
@@ -162,7 +163,11 @@
             t.css({ position: 'relative' });
             var
               hotspot= set.hotspot ? set.hotspot : t,
-              space= recall('dimensions')
+              space= recall('dimensions'),
+              frames= recall('frames'),
+              resolution= Math.max(frames, recall('steps')),
+              fraction= store('fraction', 1 / resolution * ((set.step || set.frame) - 1)),
+              frame= store('frame', fraction * frames + 1)
             hotspot
               .css({ cursor: 'ew-resize' })
               .mouseenter(function(e){ t.trigger('enter'); })
@@ -226,7 +231,7 @@
                 position: 'absolute',
                 backgroundColor: '#000'
               }));
-            t.trigger('frameChange', set.frame);
+            t.trigger('frameChange');
           },
           animate: function(e){
             // Stub for future compatibility
@@ -237,9 +242,11 @@
             !recall('clicked') && idle && idle++;
             if (idle) return;
             var
-              step= set.frequency / set.tempo,
-              fraction= recall('fraction') + step,
-              fraction= store('fraction', fraction)
+              reversed= recall('reversed'),
+              frequency= set.frequency,
+              frequency= (reversed && frequency > 0) || (!reversed && frequency < 0) ? -frequency : frequency,
+              step= frequency / set.tempo,
+              fraction= store('fraction', recall('fraction') + step)
             t.trigger('fractionChange');
           },
           down: function(e, x, y){
@@ -296,10 +303,11 @@
               delta= fraction - last_fraction,
               fraction= fraction < 0 ? 0 : fraction,
               fraction= fraction > 1 ? 1 : fraction,
-              loops= set.loops && ((fraction == 1 && last_fraction == 1) || (fraction == 0 && last_fraction == 0)),
+              over_edge= ((fraction == 1 && last_fraction == 1) || (fraction == 0 && last_fraction == 0)),
+              loops= set.loops && over_edge,
               fraction= loops ? Math.abs(fraction - 1) : fraction,
               fraction= store('last_fraction', store('fraction', fraction)),
-              reversed= store('reversed', delta != 0 ? (delta < 0) : recall('reversed')),
+              reversed= delta && store('reversed', delta != 0 ? (delta < 0) : recall('reversed')),
               frames= recall('frames'),
               frames= set.stitched ? frames : frames - 1,
               frame= store('frame', fraction * frames + 1)
@@ -311,6 +319,7 @@
               fraction= !frame ? recall('fraction') : store('fraction', frame / frames),
               frame= !frame ? recall('frame') : store('frame', frame),
               space= recall('dimensions'),
+              steps= recall('steps'),
               spacing= recall('spacing'),
               reversed= recall('reversed')
             if (!set.stitched){
@@ -334,14 +343,13 @@
             }else{
               var
                 travel= set.loops ? set.stitched : set.stitched - space.x,
-                steps= set.loops ? frames : frames - 1,
                 step= travel / steps,
                 x= Math.round((frame - 1) * step),
                 y= 0,
                 shift= -x + 'px ' + y + 'px'
             }
             var
-              indicator= ((space.x - set.indicator) / (frames - 1) * (frame - 1)) + 'px'
+              indicator= (fraction * (space.x - set.indicator)) + 'px'
             t.css({ backgroundPosition: shift })
               .find('.indicator').css({ left: indicator });
           }
