@@ -234,7 +234,7 @@
           },
           tick: function(e){
             $('.monitor', t).text(recall(set.monitor));
-            idle && idle++;
+            !recall('clicked') && idle && idle++;
             if (idle) return;
             var
               step= set.frequency / set.tempo,
@@ -244,16 +244,17 @@
           },
           down: function(e, x, y){
             var
-              clicked= store('clicked',true),
+              clicked= store('clicked', true),
               location= store('clicked_location', x),
               frame= store('last_fraction', store('clicked_on', recall('fraction')))
             pool
             .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]); })
             .mouseup(function(e){ t.trigger('up'); });
+            not_idle();
           },
           up: function(e){
             var
-              clicked= store('clicked',false)
+              clicked= store('clicked', false)
             pool.unbind('mousemove mouseup');
           },
           drag: function(e, x, y){
