@@ -43,6 +43,7 @@
       stitched:   undefined, // pixel width (length) of a stitched panoramic reel
       suffix:       '-reel',
       timeout:            1, // NEW idle timeout in seconds
+      monitor:    undefined, // NEW stored value name to monitor in the upper left corner of the viewport
       steps:      undefined, // NEW number of steps a revolution is divided in (by default equal to `frames`)
       step:       undefined, // NEW initial step (overrides `frame`)
       revolution: undefined, // NEW distance mouse must be dragged for full revolution
@@ -209,6 +210,10 @@
                 }
               });
             (set.hint || set.tooltip) && hotspot.attr('title', set.hint || set.tooltip);
+            set.monitor && t.append($('<div/>', {
+              className: 'monitor',
+              css: { position: 'absolute', left: 0, top: 0 }
+            }));
             set.indicator && t.append($('<div/>')
               .addClass('indicator')
               .css({
@@ -225,6 +230,7 @@
             // log(e.type);
           },
           tick: function(e){
+            $('.monitor', t).text(recall(set.monitor));
             idle && idle++;
             if (idle) return;
             var
