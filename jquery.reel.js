@@ -272,7 +272,7 @@
               stitched= set.stitched,
               space= recall('dimensions'),
               resolution= Math.max(recall('frames'), recall('steps')),
-              revolution= set.revolution || stitched / 2 || space.x * 2,
+              revolution= set.revolution || stitched / 2 || space.x,
               step= 1 / resolution,
               sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
               distance= (x - origin), // / sensitivity,
