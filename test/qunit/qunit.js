@@ -161,7 +161,6 @@ var QUnit = {
 
 			if ( tests ) {
 				var ol  = document.createElement("ol");
-				ol.style.display = "none";
 
 				for ( var i = 0; i < config.assertions.length; i++ ) {
 					var assertion = config.assertions[i];
@@ -179,6 +178,8 @@ var QUnit = {
 						config.moduleStats.bad++;
 					}
 				}
+
+				ol.style.display = bad ? "block" : "none";
 
 				var b = document.createElement("strong");
 				b.innerHTML = name + " <b style='color:black;'>(<b class='fail'>" + bad + "</b>, <b class='pass'>" + good + "</b>, " + config.assertions.length + ")</b>";
