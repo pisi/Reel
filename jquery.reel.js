@@ -238,15 +238,15 @@
             // log(e.type);
           },
           tick: function(e){
-            $('.monitor', t).text(recall(set.monitor));
-            if (recall('clicked')) return not_idle();
-            idle && idle++;
-            if (idle) return;
             var
-              reversed= recall('reversed'),
               frequency= set.frequency,
-              frequency= (reversed && frequency > 0) || (!reversed && frequency < 0) ? -frequency : frequency,
-              step= frequency / set.tempo,
+              velocity= 0,
+              step= (frequency + velocity) / set.tempo
+            $('.monitor', t).text(recall(set.monitor));
+            idle && idle++;
+            if (idle && !velocity) return;
+            if (recall('clicked')) return not_idle();
+            var
               fraction= store('fraction', recall('fraction') + step)
             t.trigger('fractionChange');
           },
@@ -297,21 +297,16 @@
           },
           fractionChange: function(e, fraction){
             var
-              steps= recall('steps'),
-              step= 1 / steps,
+              loops= set.loops,
               fraction= !fraction ? recall('fraction') : store('fraction', fraction),
               last_fraction= recall('last_fraction'),
               delta= fraction - last_fraction,
-              fraction= fraction < 0 ? 0 : fraction,
-              fraction= fraction > 1 ? 1 : fraction,
-              over_edge= ((fraction == 1 && last_fraction == 1) || (fraction == 0 && last_fraction == 0)),
-              loops= set.loops && over_edge,
-              fraction= loops ? Math.abs(fraction - 1) : fraction,
-              fraction= store('last_fraction', store('fraction', fraction)),
-              reversed= delta && store('reversed', delta != 0 ? (delta < 0) : recall('reversed')),
+              fraction= loops ? fraction - Math[fraction<0? 'ceil':'floor'](fraction) : Math.max(0, Math.min(1, fraction)),
+              condition= loops ? fraction >= 0 : fraction > 0,
+              fraction= !loops ? fraction : (condition ? fraction : 1 + fraction)
+              fraction= store('last_fraction', store('fraction', +fraction.toFixed(6))),
               frames= recall('frames'),
-              frames= set.stitched ? frames : frames - 1,
-              frame= store('frame', fraction * frames + 1)
+              frame= store('frame', Math.round(fraction * (frames-1) + 1))
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
@@ -344,8 +339,7 @@
             }else{
               var
                 travel= set.loops ? set.stitched : set.stitched - space.x,
-                step= travel / steps,
-                x= Math.round((frame - 1) * step),
+                x= Math.round(fraction * travel),
                 y= 0,
                 shift= -x + 'px ' + y + 'px'
             }

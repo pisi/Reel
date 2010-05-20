@@ -14,6 +14,7 @@
 .sample h2{ margin: 20px 0 0 0; cursor: pointer; text-decoration: line-through; color: #b00; }
 .sample h2:hover{ text-decoration: underline !important;  }
 .sample.on h2{ text-decoration: none; color: #080; }
+.jquery-reel .monitor{ background: #000; color: #fff; }
 
     </style>
   </head>
@@ -54,7 +55,7 @@
     <script type='text/javascript'>
 $(function(){ 
   $('#logo').reel({ frequency: 1, delay: 0, indicator: 5 });
-  $('#f1').reel({ frames: 35, saves: true, frequency: 0.5, delay: 0, indicator: 5 });
+  $('#f1').reel({ frames: 35, saves: true, delay: 0, indicator: 5 });
   $('#stitched').reel({ stitched: 1821, frames: 60, frequency: -0.1, delay: 0.5, indicator: 5 });
   $('#chicago').reel({ stitched: 1072, loops: false, steps: 30, frequency: 0.3, delay: 1, indicator: 5 });
   $('#green').reel({ frames: 32, footage: 4, frequency: -0.1, indicator: 5 });
