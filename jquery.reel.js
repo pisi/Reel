@@ -306,14 +306,15 @@
               fraction= !loops ? fraction : (condition ? fraction : 1 + fraction)
               fraction= store('last_fraction', store('fraction', +fraction.toFixed(6))),
               frames= recall('frames'),
-              frame= store('frame', Math.round(fraction * (frames-1) + 1))
+              frame= store('frame', fraction * (frames-1) + 1)
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
             var
               frames= recall('frames'),
-              fraction= !frame ? recall('fraction') : store('fraction', frame / frames),
+              fraction= !frame ? recall('fraction') : store('fraction', +((frame-1) / (frames-1)).toFixed(6)),
               frame= !frame ? recall('frame') : store('frame', frame),
+              frame= store('frame', Math.round(frame)),
               space= recall('dimensions'),
               steps= recall('steps'),
               spacing= recall('spacing'),
@@ -344,7 +345,8 @@
                 shift= -x + 'px ' + y + 'px'
             }
             var
-              indicator= (fraction * (space.x - set.indicator)) + 'px'
+              travel= space.x - set.indicator,
+              indicator= Math.round(fraction * travel) + 'px'
             t.css({ backgroundPosition: shift })
               .find('.indicator').css({ left: indicator });
           }
