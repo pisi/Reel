@@ -321,7 +321,6 @@
               reversed= recall('reversed')
             if (!set.stitched){
               var
-                frame= Math.round(frame),
                 major= Math.floor(frame / set.footage),
                 minor= frame - major * set.footage - 1,
                 major= minor == -1 ? major + minor : major,
@@ -346,9 +345,9 @@
             }
             var
               travel= space.x - set.indicator,
-              indicator= Math.round(fraction * travel) + 'px'
+              indicator= Math.max(0, Math.min(travel, Math.round(fraction * (travel+2)) - 1))
             t.css({ backgroundPosition: shift })
-              .find('.indicator').css({ left: indicator });
+              .find('.indicator').css({ left: indicator + 'px' });
           }
         };
       t.ready(on.setup);
