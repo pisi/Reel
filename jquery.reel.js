@@ -24,35 +24,36 @@
 (function($, document){
   var
     defaults= {
-      // Options marked [new] are newly available in 1.1
-      // [deprecated] options will be gone in next version
-
-      animate:         true, // [new] whether animation will start automatically after a delay
-      delay:              1, // [new] delay in seconds between initialization and animation (if true)
+      // Options as of version 1.0
+      // [deprecated] options will disappear in future versions
       footage:            6, // number of frames per line/column
-      frequency:       0.25, // [new] animated rotation speed in Hz
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
+      hint:              '', // hotspot hint tooltip
       horizontal:      true, // roll flow; defaults to horizontal
       hotspot:    undefined, // custom jQuery as a hotspot
-      hint:              '', // hotspot hint tooltip
       indicator:          0, // size of a visual indicator of reeling (in pixels)
       klass:             '', // plugin instance class name
       loops:           true, // is it a loop?
-      monitor:    undefined, // [new] stored value name to monitor in the upper left corner of the viewport
       reversed:       false, // true for "counter-clockwise sprite"
-      revolution: undefined, // [new] distance mouse must be dragged for full revolution
                              // (defaults to double the viewport size or half the `stitched` option)
       saves:          false, // wheather allow user to save the image thumbnail
       sensitivity:       20, // interaction sensitivity
       spacing:            0, // space between frames on reel
-      step:       undefined, // [new] initial step (overrides `frame`)
-      steps:      undefined, // [new] number of steps a revolution is divided in (by default equal to `frames`)
       stitched:   undefined, // pixel width (length) of a stitched panoramic reel
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
-      tempo:             25, // [new] shared ticker tempo in ticks per second
-      timeout:            1, // [new] idle timeout in seconds
-      tooltip:           ''  // [deprecated] use `hint` instead
+      tooltip:           '', // [deprecated] use `hint` instead
+
+      // Additional options as of 1.1
+      animate:         true, // whether animation will start automatically after a delay
+      delay:              1, // delay in seconds between initialization and animation (if true)
+      frequency:       0.25, // animated rotation speed in Hz
+      monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      revolution: undefined, // distance mouse must be dragged for full revolution
+      step:       undefined, // initial step (overrides `frame`)
+      steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
+      tempo:             25, // shared ticker tempo in ticks per second
+      timeout:            2  // idle timeout in seconds
     },
     klass= 'jquery-reel',
     ns= '.reel',
