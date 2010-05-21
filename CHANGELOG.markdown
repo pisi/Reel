@@ -15,7 +15,7 @@ Changelog
     * `timeout` option is a period of user inactivity after which animation is resumed again.
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.
 * Extended the Test Sampler (test/sampler.html).
-
+* Now deprecated `saves` option was way too much problematic cross-browser-wise. Be warned that when using it anyway, there are unfortunate mouse-dragging issues with Firefox.
 
 Version 1.0.4
 -------------

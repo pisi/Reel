@@ -37,7 +37,7 @@
       loops:           true, // is it a loop?
       reversed:       false, // true for "counter-clockwise sprite"
                              // (defaults to double the viewport size or half the `stitched` option)
-      saves:          false, // wheather allow user to save the image thumbnail
+      saves:          false, // [deprecated] whether allow user to save the image thumbnail
       sensitivity:       20, // interaction sensitivity
       spacing:            0, // space between frames on reel
       stitched:   undefined, // pixel width (length) of a stitched panoramic reel
