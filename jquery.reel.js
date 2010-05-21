@@ -87,12 +87,10 @@
     })();
 
     applicable.each(function(){
-      function not_idle(){
-        return idle= -set.timeout * set.tempo;
-      }
       var
         t= $(this),
         idle= set.animate ? Math.round(-set.delay * set.tempo) : 0,
+        unidle= function(){ return idle= -set.timeout * set.tempo },
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
@@ -234,12 +232,13 @@
             $('.monitor', t).text(recall(set.monitor));
             idle && idle++;
             if (idle && !velocity) return;
-            if (recall('clicked')) return not_idle();
+            if (recall('clicked')) return unidle();
             var
               fraction= store('fraction', recall('fraction') + step)
             t.trigger('fractionChange');
           },
           down: function(e, x, y){
+            unidle();
             var
               clicked= store('clicked', true),
               location= store('clicked_location', x),
@@ -247,7 +246,6 @@
             pool
             .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]); })
             .mouseup(function(e){ t.trigger('up'); });
-            not_idle();
           },
           up: function(e){
             var
@@ -255,6 +253,7 @@
             pool.unbind('mousemove mouseup');
           },
           drag: function(e, x, y){
+            unidle();
             var
               origin= recall('clicked_location'),
               fraction= recall('clicked_on'),
@@ -267,9 +266,9 @@
               shift= fraction + reverse / revolution * distance,
               fraction= store('fraction', shift),
             t.trigger('fractionChange');
-            not_idle();
           },
           wheel: function(e, distance){
+            unidle();
             var
               fraction= recall('fraction'),
               resolution= max(recall('frames'), recall('steps')),
@@ -278,7 +277,6 @@
               delta= distance < 0 ? -delta : delta,
               fraction= store('fraction', fraction + delta * step)
             t.trigger('fractionChange');
-            not_idle();
             return false;
           },
           fractionChange: function(e, fraction){
@@ -351,22 +349,20 @@
     // Flag touch-enabled devices
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
     ticker,
+    number= parseInt,
     round= Math.round,
     floor= Math.floor,
     ceil= Math.ceil,
     min= Math.min,
     max= Math.max,
-		sqrt= Math.sqrt,
-		abs= Math.abs
+    sqrt= Math.sqrt,
+    abs= Math.abs
 
   function round_to(decimals, number){
     return +number.toFixed(decimals)
   }
   function min_max(minimum, maximum, number){
     return max(minimum, min(maximum, number));
-  }
-  function number(input){
-    return parseInt(input);
   }
   function double_for(methods){
     $.each(methods, function(){
