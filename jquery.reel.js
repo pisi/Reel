@@ -49,6 +49,8 @@
       delay:              1, // delay in seconds between initialization and animation (if true)
       frequency:       0.25, // animated rotation speed in Hz
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      inertial:        true, // drag & throw will give the rotation a momentum when true
+      friction:         0.8, // friction of the inertial rotation (will loose 80% of speed per second)
       revolution: undefined, // distance mouse must be dragged for full revolution
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
@@ -89,8 +91,6 @@
     applicable.each(function(){
       var
         t= $(this),
-        idle= set.animate ? Math.round(-set.delay * set.tempo) : 0,
-        unidle= function(){ return idle= -set.timeout * set.tempo },
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
@@ -227,9 +227,16 @@
           tick: function(e){
             var
               frequency= set.frequency,
-              velocity= 0,
+              friction= set.friction / set.tempo,
+              velocity= recall('velocity'),
+              negative= velocity < 0,
+              velocity= velocity - velocity * friction,
+              velocity= last_velocity= velocity == last_velocity ? 0 : velocity
+              velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
+              velocity= store('velocity', velocity),
               step= (frequency + velocity) / set.tempo
             $('.monitor', t).text(recall(set.monitor));
+            to_bias(0);
             idle && idle++;
             if (idle && !velocity) return;
             if (recall('clicked')) return unidle();
@@ -242,6 +249,7 @@
             var
               clicked= store('clicked', true),
               location= store('clicked_location', x),
+              velocity= store('velocity', 0),
               frame= store('last_fraction', store('clicked_on', recall('fraction')))
             pool
             .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]); })
@@ -249,7 +257,12 @@
           },
           up: function(e){
             var
-              clicked= store('clicked', false)
+              clicked= store('clicked', false),
+              pitch= bias[1] + bias[2] != 0,
+              momentum= (bias[0] + bias[1] + bias[2]) / bias.length / 20,
+              velocity= store('velocity', set.inertial && pitch ? (set.stitched ? -momentum : momentum) : 0)
+            no_bias();
+            idle= 0;
             pool.unbind('mousemove mouseup');
           },
           drag: function(e, x, y){
@@ -264,12 +277,15 @@
               distance= (x - origin), // / sensitivity,
               reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
               shift= fraction + reverse / revolution * distance,
-              fraction= store('fraction', shift),
+              fraction= store('fraction', shift)
+            to_bias(x - last_x);
+            last_x= x;
             t.trigger('fractionChange');
           },
           wheel: function(e, distance){
             unidle();
             var
+              velocity= store('velocity', 0),
               fraction= recall('fraction'),
               resolution= max(recall('frames'), recall('steps')),
               step= 1 / resolution,
@@ -331,7 +347,19 @@
             t.css({ backgroundPosition: shift })
               .find('.indicator').css({ left: indicator + 'px' });
           }
-        };
+        },
+
+        // User idle control
+        idle= set.delay > 0 ? -round(set.delay * set.tempo) : 0,
+        unidle= function(){ return idle= -set.timeout * set.tempo },
+
+        // Inertial rotation control
+        last_x= 0,
+        last_velocity= 0,
+        no_bias= function(){ return bias= [0,0,0] },
+        bias= no_bias(),
+        to_bias= function(value){ bias.push(value) && bias.shift() }
+
       t.ready(on.setup);
     });
     return $(instances);
