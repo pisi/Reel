@@ -81,7 +81,7 @@
       tick_interval= 1000 / set.tempo
 
     ticker= ticker || (function run_ticker(){
-      return setInterval(function(){
+      return setInterval(function tick(){
         pool.trigger(tick_event);
       }, tick_interval);
     })();
@@ -99,10 +99,8 @@
           return value;
         },
         recall= function(name){
-          var
-            value= t.data(name)
           t.trigger('recall')
-          return value;
+          return t.data(name);
         },
         on= {
           setup: function(){
@@ -286,13 +284,11 @@
           },
           fractionChange: function(e, fraction){
             var
-              loops= set.loops,
               fraction= !fraction ? recall('fraction') : store('fraction', fraction),
               last_fraction= recall('last_fraction'),
               delta= fraction - last_fraction,
-              fraction= loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
-              condition= loops ? fraction >= 0 : fraction > 0,
-              fraction= !loops ? fraction : (condition ? fraction : 1 + fraction)
+              fraction= set.loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
+              fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
               fraction= store('last_fraction', store('fraction', round_to(6, fraction))),
               frame= store('frame', fraction * (recall('frames') - 1) + 1)
             t.trigger('frameChange');
@@ -374,5 +370,8 @@
     $.each(methods, function(){
       if (!$.fn[this]) $.fn[this]= function(){ return this; };
     });
+  }
+  function sign_like(specimen, value){
+    return (specimen * value > 0) ? value : -value;
   }
 })(jQuery, this);
