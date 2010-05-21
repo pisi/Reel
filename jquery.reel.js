@@ -21,7 +21,7 @@
  * - or jQuery.event.special.wheel (Three Dub Media, http://blog.threedubmedia.com/2008/08/eventspecialwheel.html)
  */
 
-(function($, document){
+(function($){
   var
     defaults= {
       // Options as of version 1.0
@@ -375,4 +375,4 @@
   function sign_like(specimen, value){
     return (specimen * value > 0) ? value : -value;
   }
-})(jQuery, this);
+})(jQuery);
