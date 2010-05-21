@@ -24,8 +24,6 @@
 (function($){
   var
     defaults= {
-      // Options as of version 1.0
-      // [deprecated] options will disappear in future versions
       footage:            6, // number of frames per line/column
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
@@ -44,18 +42,20 @@
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
       tooltip:           '', // [deprecated] use `hint` instead
 
-      // Additional options as of 1.1
       delay:              1, // delay before autoplay in seconds (use -1 to disable)
+      // [NEW] in version 1.1
       frequency:       0.25, // animated rotation speed in revolutions per second (Hz)
       friction:         0.8, // friction of the inertial rotation (will loose 80% of speed per second)
       inertial:        true, // drag & throw will give the rotation a momentum when true
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      rebound:          0.5,
       revolution: undefined, // distance mouse must be dragged for full revolution
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
       tempo:             25, // shared ticker tempo in ticks per second
       timeout:            2  // idle timeout in seconds
     }
+    // [deprecated] options may be gone anytime soon
 
   $.fn.reel= function(options){
     var
@@ -305,10 +305,14 @@
               frequency= set.frequency= sign_like(delta, set.frequency),
               // Looping
               fraction= set.loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
+              // Rebounce
+              bounce= !set.loops && set.rebound && on_edge == set.rebound * 1000 / set.tempo,
+              frequency= set.frequency= bounce ? -frequency : frequency,
               // Turn negative into positive
               fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
               fraction= store('last_fraction', store('fraction', round_to(6, fraction))),
               frame= store('frame', fraction * (recall('frames') - 1) + 1)
+            !idle && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
@@ -358,6 +362,7 @@
         unidle= function(){ return idle= -set.timeout * set.tempo },
 
         // Inertial rotation control
+        on_edge= 0,
         last_x= 0,
         last_velocity= 0,
         to_bias= function(value){ bias.push(value) && bias.shift() },
