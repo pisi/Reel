@@ -287,6 +287,7 @@
               fraction= !fraction ? recall('fraction') : store('fraction', fraction),
               last_fraction= recall('last_fraction'),
               delta= fraction - last_fraction,
+              frequency= set.frequency= sign_like(delta, set.frequency),
               fraction= set.loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
               fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
               fraction= store('last_fraction', store('fraction', round_to(6, fraction))),
