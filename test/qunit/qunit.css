@@ -68,6 +68,10 @@ h1#qunit-header{
 	-webkit-border-top-left-radius:15px;
 	text-shadow: rgba(0, 0, 0, 0.5) 4px 4px 1px;
 }
+h1#qunit-header a{
+	color:#2b81af;
+	font-weight:normal;
+}
 h2#qunit-banner{
 	font-family:"Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
 	height:5px;
