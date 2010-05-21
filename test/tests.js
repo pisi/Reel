@@ -1,7 +1,7 @@
 /**
  * .reel Unit Test
  */
-(function($, document){
+(function($){
 
 // All tests reside inside `unit/` folder
 
@@ -30,4 +30,4 @@
 		}
 	});
 
-})(jQuery, this);
+})(jQuery);

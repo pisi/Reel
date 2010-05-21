@@ -1,7 +1,7 @@
 /**
  * .reel Unit Tests
  */
-(function($, document){
+(function($){
 
   module('Computation', { teardown: function teardown(){
     $('.jquery-reel').trigger('teardown');
@@ -30,4 +30,4 @@
     start();
   });
 
-})(jQuery, this);
+})(jQuery);

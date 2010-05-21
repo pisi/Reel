@@ -1,7 +1,7 @@
 /**
  * .reel Unit Tests
  */
-(function($, document){
+(function($){
 
   module('Animation', { teardown: function teardown(){
     $('.jquery-reel').trigger('teardown');
@@ -28,4 +28,4 @@
 		}
 	});
 
-})(jQuery, this);
+})(jQuery);
