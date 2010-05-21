@@ -138,7 +138,7 @@
             store('dimensions', size);
             store('fraction', 0);
             store('steps', set.steps || set.frames);
-            store('resolution', Math.max(set.steps, set.frames));
+            store('resolution', max(set.steps, set.frames));
             store('reversed', set.frequency < 0);
             store('backup', {
               id: id,
@@ -165,7 +165,7 @@
               hotspot= set.hotspot ? set.hotspot : t,
               space= recall('dimensions'),
               frames= recall('frames'),
-              resolution= Math.max(frames, recall('steps')),
+              resolution= max(frames, recall('steps')),
               fraction= store('fraction', 1 / resolution * ((set.step || set.frame) - 1)),
               frame= store('frame', fraction * frames + 1)
             hotspot
@@ -285,10 +285,10 @@
           wheel: function(e, distance){
             var
               fraction= recall('fraction'),
-              resolution= Math.max(recall('frames'), recall('steps')),
               step= 1 / resolution,
               delta= Math.ceil(Math.sqrt(Math.abs(distance))),
               delta= distance < 0 ? - delta : delta,
+              resolution= max(recall('frames'), recall('steps')),
               reverse= set.reversed ? -1 : 1
               // frame= store('frame', frame - reverse * delta)
             // t.trigger('frameChange');
@@ -301,27 +301,26 @@
               fraction= !fraction ? recall('fraction') : store('fraction', fraction),
               last_fraction= recall('last_fraction'),
               delta= fraction - last_fraction,
-              fraction= loops ? fraction - Math[fraction<0? 'ceil':'floor'](fraction) : Math.max(0, Math.min(1, fraction)),
+              fraction= loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
               condition= loops ? fraction >= 0 : fraction > 0,
               fraction= !loops ? fraction : (condition ? fraction : 1 + fraction)
-              fraction= store('last_fraction', store('fraction', +fraction.toFixed(6))),
-              frames= recall('frames'),
-              frame= store('frame', fraction * (frames-1) + 1)
+              fraction= store('last_fraction', store('fraction', round_to(6, fraction))),
+              frame= store('frame', fraction * (recall('frames') - 1) + 1)
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
             var
               frames= recall('frames'),
-              fraction= !frame ? recall('fraction') : store('fraction', +((frame-1) / (frames-1)).toFixed(6)),
+              fraction= !frame ? recall('fraction') : store('fraction', round_to(6, (frame-1) / (frames-1))),
               frame= !frame ? recall('frame') : store('frame', frame),
-              frame= store('frame', Math.round(frame)),
+              frame= store('frame', round(frame)),
               space= recall('dimensions'),
               steps= recall('steps'),
               spacing= recall('spacing'),
               reversed= recall('reversed')
             if (!set.stitched){
               var
-                major= Math.floor(frame / set.footage),
+                major= floor(frame / set.footage),
                 minor= frame - major * set.footage - 1,
                 major= minor == -1 ? major + minor : major,
                 minor= minor == -1 ? set.footage + minor : minor,
@@ -330,7 +329,7 @@
                 minor_size= set.horizontal ? space.x : space.y,
                 x= - major * (spacing + major_size),
                 y= - minor * (spacing + minor_size),
-                rows= Math.ceil(frames / set.footage),
+                rows= ceil(frames / set.footage),
                 // Count additional shift when rolling reverse direction
                 reverse_shift= rows * major_size + (rows - 1) * spacing,
                 x= reversed && set.horizontal ? x - reverse_shift : x,
@@ -339,13 +338,13 @@
             }else{
               var
                 travel= set.loops ? set.stitched : set.stitched - space.x,
-                x= Math.round(fraction * travel),
+                x= round(fraction * travel),
                 y= 0,
                 shift= -x + 'px ' + y + 'px'
             }
             var
               travel= space.x - set.indicator,
-              indicator= Math.max(0, Math.min(travel, Math.round(fraction * (travel+2)) - 1))
+              indicator= min_max(0, travel, round(fraction * (travel+2)) - 1)
             t.css({ backgroundPosition: shift })
               .find('.indicator').css({ left: indicator + 'px' });
           }
@@ -354,7 +353,21 @@
     });
     return $(instances);
   }
+
   // PRIVATE
+  var
+    round= Math.round,
+    floor= Math.floor,
+    ceil= Math.ceil,
+    min= Math.min,
+    max= Math.max
+
+  function round_to(decimals, number){
+    return +number.toFixed(decimals)
+  }
+  function min_max(minimum, maximum, number){
+    return max(minimum, min(maximum, number));
+  }
   function number(input){
     return parseInt(input);
   }
