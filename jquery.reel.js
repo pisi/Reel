@@ -10,7 +10,7 @@
  *
  * http://www.vostrel.cz/jquery/reel/
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-05-10
+ * Updated: 2010-05-21
  *
  * Requires jQuery 1.4.x or higher
  */
@@ -40,17 +40,16 @@
       saves:          false, // [deprecated] whether allow user to save the image thumbnail
       sensitivity:       20, // interaction sensitivity
       spacing:            0, // space between frames on reel
-      stitched:   undefined, // pixel width (length) of a stitched panoramic reel
+      stitched:   undefined, // pixel width (length) of a stitched (rectilinear) panoramic reel
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
       tooltip:           '', // [deprecated] use `hint` instead
 
       // Additional options as of 1.1
-      animate:         true, // whether animation will start automatically after a delay
-      delay:              1, // delay in seconds between initialization and animation (if true)
-      frequency:       0.25, // animated rotation speed in Hz
-      monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
-      inertial:        true, // drag & throw will give the rotation a momentum when true
+      delay:              1, // delay before autoplay in seconds (use -1 to disable)
+      frequency:       0.25, // animated rotation speed in revolutions per second (Hz)
       friction:         0.8, // friction of the inertial rotation (will loose 80% of speed per second)
+      inertial:        true, // drag & throw will give the rotation a momentum when true
+      monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       revolution: undefined, // distance mouse must be dragged for full revolution
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
@@ -79,18 +78,19 @@
         return $(pass);
       })(this),
       set= $.extend({}, defaults, options),
-      instances= [],
-      tick_interval= 1000 / set.tempo
+      instances= []
 
     ticker= ticker || (function run_ticker(){
       return setInterval(function tick(){
         pool.trigger(tick_event);
-      }, tick_interval);
+      }, 1000 / set.tempo);
     })();
 
     applicable.each(function(){
       var
         t= $(this),
+
+        // Data storage
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
@@ -100,6 +100,8 @@
           t.trigger('recall')
           return t.data(name);
         },
+
+        // Events & handlers
         on= {
           setup: function(){
             if (t.hasClass(klass)) return;
@@ -157,12 +159,12 @@
               frame= store('frame', fraction * frames + 1)
             hotspot
               .css({ cursor: 'ew-resize' })
-              .mouseenter(function(e){ t.trigger('enter'); })
-              .mouseleave(function(e){ t.trigger('leave'); })
-              .mousemove(function(e){ t.trigger('over', [e.clientX, e.clientY]); })
-              .mousewheel(function(e, delta){ t.trigger('wheel', [delta]); return false; })
-              .dblclick(function(e){ t.trigger('animate'); })
-              .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]); })
+              .mouseenter(function(e){ t.trigger('enter') })
+              .mouseleave(function(e){ t.trigger('leave') })
+              .mousemove(function(e){ t.trigger('over', [e.clientX, e.clientY]) })
+              .mousewheel(function(e, delta){ t.trigger('wheel', [delta]); return false })
+              .dblclick(function(e){ t.trigger('animate') })
+              .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]) })
               .disableTextSelect()
               .each(function touch_support(){
                 touchy && bind(this, {
@@ -252,8 +254,8 @@
               velocity= store('velocity', 0),
               frame= store('last_fraction', store('clicked_on', recall('fraction')))
             pool
-            .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]); })
-            .mouseup(function(e){ t.trigger('up'); });
+            .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
+            .mouseup(function(e){ t.trigger('up') });
           },
           up: function(e){
             var
@@ -301,7 +303,9 @@
               last_fraction= recall('last_fraction'),
               delta= fraction - last_fraction,
               frequency= set.frequency= sign_like(delta, set.frequency),
+              // Looping
               fraction= set.loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
+              // Turn negative into positive
               fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
               fraction= store('last_fraction', store('fraction', round_to(6, fraction))),
               frame= store('frame', fraction * (recall('frames') - 1) + 1)
@@ -356,9 +360,9 @@
         // Inertial rotation control
         last_x= 0,
         last_velocity= 0,
+        to_bias= function(value){ bias.push(value) && bias.shift() },
         no_bias= function(){ return bias= [0,0,0] },
-        bias= no_bias(),
-        to_bias= function(value){ bias.push(value) && bias.shift() }
+        bias= no_bias()
 
       t.ready(on.setup);
     });
@@ -386,18 +390,12 @@
     sqrt= Math.sqrt,
     abs= Math.abs
 
-  function round_to(decimals, number){
-    return +number.toFixed(decimals)
-  }
-  function min_max(minimum, maximum, number){
-    return max(minimum, min(maximum, number));
-  }
+  function round_to(decimals, number){ return +number.toFixed(decimals) }
+  function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
+  function sign_like(specimen, value){ return (specimen * value > 0) ? value : -value }
   function double_for(methods){
     $.each(methods, function(){
-      if (!$.fn[this]) $.fn[this]= function(){ return this; };
+      if (!$.fn[this]) $.fn[this]= function(){ return this };
     });
-  }
-  function sign_like(specimen, value){
-    return (specimen * value > 0) ? value : -value;
   }
 })(jQuery);
