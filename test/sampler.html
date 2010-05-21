@@ -71,8 +71,8 @@ $(function(){
     onoff || $(target).trigger('teardown');
     onoff && $sample.addClass('on');
     $('h2', $sample)
-		.attr({ title: 'Click to setup/teardown' })
-		.click(function click_it(){
+    .attr({ title: 'Click to setup/teardown' })
+    .click(function click_it(){
       var
         onoff= !$sample.hasClass('on');
       $sample[onoff ? 'addClass' : 'removeClass']('on');

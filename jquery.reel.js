@@ -54,17 +54,7 @@
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
       tempo:             25, // shared ticker tempo in ticks per second
       timeout:            2  // idle timeout in seconds
-    },
-    klass= 'jquery-reel',
-    ns= '.reel',
-    tick_event= 'tick'+ns,
-    pool= $(document),
-    // Flag touch-enabled devices
-    touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
-    ticker
-
-  // Double plugin functions in case plugin is missing
-  double_for('mousewheel disableTextSelect'.split(/ /));
+    }
 
   $.fn.reel= function(options){
     var
@@ -272,14 +262,12 @@
               fraction= recall('clicked_on'),
               stitched= set.stitched,
               space= recall('dimensions'),
-              resolution= Math.max(recall('frames'), recall('steps')),
               revolution= set.revolution || stitched / 2 || space.x,
-              step= 1 / resolution,
-              sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
+              // sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
               distance= (x - origin), // / sensitivity,
               reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
               shift= fraction + reverse / revolution * distance,
-              fraction= store('fraction', shift - Math.floor(shift))
+              fraction= store('fraction', shift),
             t.trigger('fractionChange');
             not_idle();
           },
@@ -355,8 +343,18 @@
     return $(instances);
   }
 
+  // Double plugin functions in case plugin is missing
+  double_for('mousewheel disableTextSelect'.split(/ /));
+
   // PRIVATE
   var
+    klass= 'jquery-reel',
+    ns= '.reel',
+    tick_event= 'tick'+ns,
+    pool= $(document),
+    // Flag touch-enabled devices
+    touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+    ticker,
     round= Math.round,
     floor= Math.floor,
     ceil= Math.ceil,
