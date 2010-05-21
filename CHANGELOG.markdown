@@ -7,12 +7,13 @@ Changelog
     * `steps` option divides Reel into different amount of steps other than defined by `frames`.
     * `step` option can be used to override initial `frame` option.
     * `revolution` option is a pixel distance mouse drag has to travel for full revolution.
-* Having one shared ticker for all animation purposes.
+* Having one shared ticker for animation purposes. `tempo` option sets the speed in ticks per second.
 * The projector can now self-animate. The animation is controlled with bunch of options.
-    * `animate` and `delay` options for starting the animation after the delay.
+    * `delay` option for starting the animation after the delay (when -1, animation won't start).
     * `frequency` option sets the speed of animation.
-    * `tempo` option sets the internal ticker clock speed.
     * `timeout` option is a period of user inactivity after which animation is resumed again.
+* Added boolean `inertial`. When true user can drag & "throw" to create a momentum.
+* The inertial momentum gradually wears off by fraction defined as `friction` option.
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.
 * Extended the Test Sampler (test/sampler.html).
 * Now deprecated `saves` option was way too much problematic cross-browser-wise. Be warned that when using it anyway, there are unfortunate mouse-dragging issues with Firefox.
