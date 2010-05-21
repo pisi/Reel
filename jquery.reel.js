@@ -272,13 +272,12 @@
           wheel: function(e, distance){
             var
               fraction= recall('fraction'),
-              step= 1 / resolution,
-              delta= Math.ceil(Math.sqrt(Math.abs(distance))),
-              delta= distance < 0 ? - delta : delta,
               resolution= max(recall('frames'), recall('steps')),
-              reverse= set.reversed ? -1 : 1
-              // frame= store('frame', frame - reverse * delta)
-            // t.trigger('frameChange');
+              step= 1 / resolution,
+              delta= ceil(sqrt(abs(distance)) / 2),
+              delta= distance < 0 ? -delta : delta,
+              fraction= store('fraction', fraction + delta * step)
+            t.trigger('fractionChange');
             not_idle();
             return false;
           },
@@ -356,7 +355,9 @@
     floor= Math.floor,
     ceil= Math.ceil,
     min= Math.min,
-    max= Math.max
+    max= Math.max,
+		sqrt= Math.sqrt,
+		abs= Math.abs
 
   function round_to(decimals, number){
     return +number.toFixed(decimals)
