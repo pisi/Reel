@@ -63,14 +63,14 @@
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
       tooltip:           '', // [deprecated] use `hint` instead
 
-      delay:              1, // delay before autoplay in seconds (use -1 to disable)
       // [NEW] in version 1.1
-      frequency:       0.25, // animated rotation speed in revolutions per second (Hz)
+      delay:             -1, // delay before autoplay in seconds (no autoplay by default)
       friction:         0.8, // friction of the inertial rotation (will loose 80% of speed per second)
       inertial:        true, // drag & throw will give the rotation a momentum when true
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       rebound:          0.5,
       revolution: undefined, // distance mouse must be dragged for full revolution
+      speed:              0, // animated rotation speed in revolutions per second (Hz)
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
       tempo:             25, // shared ticker tempo in ticks per second
@@ -148,7 +148,7 @@
             store(_fraction_, 0);
             store(_steps_, set.steps || set.frames);
             store('resolution', max(set.steps, set.frames));
-            store(_reversed_, set.frequency < 0);
+            store(_reversed_, set.speed < 0);
             store(_backup_, {
               id: id,
               'class': classes || __,
@@ -247,7 +247,7 @@
           },
           tick: function(e){
             var
-              frequency= set.frequency,
+              speed= set.speed,
               friction= set.friction / set.tempo,
               velocity= recall(_velocity_),
               negative= velocity < 0,
@@ -255,7 +255,7 @@
               velocity= last_velocity= velocity == last_velocity ? 0 : velocity
               velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
               velocity= store(_velocity_, velocity),
-              step= (frequency + velocity) / set.tempo
+              step= (speed + velocity) / set.tempo
             $(dot(monitor_klass), t).text(recall(set.monitor));
             to_bias(0);
             idle && idle++;
@@ -321,12 +321,12 @@
               fraction= !fraction ? recall(_fraction_) : store(_fraction_, fraction),
               last_fraction= recall(_last_fraction_),
               delta= fraction - last_fraction,
-              frequency= set.frequency= sign_like(delta, set.frequency),
+              speed= set.speed= sign_like(delta, set.speed),
               // Looping
               fraction= set.loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
               // Rebounce
               bounce= !set.loops && set.rebound && on_edge == set.rebound * 1000 / set.tempo,
-              frequency= set.frequency= bounce ? -frequency : frequency,
+              speed= set.speed= bounce ? -speed : speed,
               // Turn negative into positive
               fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
               fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),

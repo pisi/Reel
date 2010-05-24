@@ -10,7 +10,7 @@ Changelog
 * Having one shared ticker for animation purposes. `tempo` option sets the speed in ticks per second.
 * The projector can now self-animate. The animation is controlled with bunch of options.
     * `delay` option for autoplay delay (use -1 to prevent it).
-    * `frequency` option sets the speed of animation.
+    * `speed` option sets the speed of animation (in Hz).
     * `rebound` options is how long in seconds will a non-looping reel stay on edge before re-bounce.
     * `timeout` option is a period of user inactivity after which animation is resumed again.
 * Added boolean `inertial`. When true user can drag & "throw" to create a momentum.
