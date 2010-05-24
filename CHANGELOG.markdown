@@ -18,6 +18,8 @@ Changelog
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.
 * Extended the Test Sampler (test/sampler.html).
 * Now deprecated `saves` option is way too much problematic cross-browser-wise. Be warned that when using it anyway, there are unfortunate mouse-dragging issues with Firefox.
+* Reel's own cloud CDN has been started and recommended for use instead of download.
+* For convenience, a "bundle" is available on the CDN and it contains Reel along side with jQuery.mouseWheel and jQuery.disableTextSelect optional plugins.
 
 Version 1.0.4
 -------------

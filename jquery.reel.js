@@ -1,24 +1,45 @@
-/*
- * .reel - Image Turntable Plugin
+/**
+          @@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@          @@@@@@@@
+  @@@@@@@                @@@@@@@
+ @@@@@@@                  @@@@@@@
+ @@@@@@@                  @@@@@@@
+ @@@@@@@@     @          @@@@@@@@
+  @@@@@@@@@  @@@       @@@@@@@@@
+   @@@@@@@@@@@@@@   @@@@@@@@@@@
+     @@@@@@@@@@@@@    @@@@@@@
+       @@@@@@@@@@@@     @@@
+          @@@@@@
+         @@@@
+        @@
  *
- * Transforms an image tag to act as a projector
+ * jQuery Reel
+ * ===========
+ * 360° projection plugin for jQuery
  *
- */
-/*! Copyright (c) 2009-2010 Petr Vostrel (http://www.pisi.cz/)
+ * @license Copyright (c) 2009-2010 Petr Vostrel (http://petr.vostrel.cz/)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
- * http://www.vostrel.cz/jquery/reel/
+ * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-05-21
+ * Updated: 2010-05-24
  *
- * Requires jQuery 1.4.x or higher
+ * Requires jQuery 1.4.x
  */
 /*
- * Optional nice-to-haves:
- * - jQuery.disableTextSelect (James Dempster, http://www.jdempster.com/category/jquery/disabletextselect/)
- * - jQuery.mouseWheel (Brandon Aaron, http://plugins.jquery.com/project/mousewheel)
+ * Have it served by a cloud CDN:
+ * - http://code.vostrel.cz/jquery.reel-bundle.js (recommended)
+ * - http://code.vostrel.cz/jquery.reel.js
+ * - http://code.vostrel.cz/jquery.reel-debug.js
+ *
+ * Optional nice-to-have plugins:
+ * - jQuery.disableTextSelect [B] (James Dempster, http://www.jdempster.com/category/jquery/disabletextselect/)
+ * - jQuery.mouseWheel [B] (Brandon Aaron, http://plugins.jquery.com/project/mousewheel)
  * - or jQuery.event.special.wheel (Three Dub Media, http://blog.threedubmedia.com/2008/08/eventspecialwheel.html)
+ *
+ * [B] Marked plugins are contained (with permissions) in the "bundle" version
  */
 
 (function($){

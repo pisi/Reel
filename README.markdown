@@ -1,8 +1,23 @@
-Reel "Dancer" (will be 1.1)
-===========================
-Is a jQuery plugin which takes an image tag and makes it 
-a live "projection" of pre-built animation frames sequence. 
-Its aim is to provide a 360° view of something or someplace. 
+             @@@@@@@@@@@@@@
+         @@@@@@@@@@@@@@@@@@@@@@
+       @@@@@@@@          @@@@@@@@
+     @@@@@@@                @@@@@@@
+    @@@@@@@                  @@@@@@@
+    @@@@@@@                  @@@@@@@
+    @@@@@@@@     @          @@@@@@@@
+     @@@@@@@@@  @@@       @@@@@@@@@
+      @@@@@@@@@@@@@@   @@@@@@@@@@@
+        @@@@@@@@@@@@@    @@@@@@@
+          @@@@@@@@@@@@     @@@
+             @@@@@@
+            @@@@
+           @@
+
+jQuery Reel "Dancer" (will be 1.1)
+==================================
+**Reel** is a jQuery plugin which turns an image tag into an interactive
+panorama-like "projection" of pre-built animation sequence (of frames).
+Its aim is to provide a 360° view of something or someplace.
 Great alternative to widely used Flash techniques.
 
 <http://plugins.jquery.com/project/reel>
@@ -13,7 +28,7 @@ Great alternative to widely used Flash techniques.
 * Plays fair with your existing CSS.
 * Browser and operating system agnostic. It's your choice. Even [iPhone][iphone-test] or iPad!
 * No browser extensions needed. No Flash, nothing. It's just an image...
-* Tiny code base.
+* Evolving tiny code base.
 
 Demo
 ----
@@ -44,7 +59,13 @@ License
 Download version 1.0.4
 ----------------------
 * **[Open source][source] (~ 11,5 kB)**
-* or [the gzipped version][min] (~ 4,6 kB)
+* or [minified version][min] (~ 4,6 kB)
+
+User Reel's cloud CDN
+---------------------
+* **[Bundled with plugins & minified][cdn-bundle] (~ 2,7 kB; gzipped)**
+* or [just minified][cdn-min] (~ 2,1 kB; gzipped)
+* or [open source for development][cdn-devel] (~ 3,5 kB; gzipped)
 
 [CHANGELOG][changelog]
 
@@ -60,3 +81,6 @@ Download version 1.0.4
 [source]: http://github.com/pisi/Reel/raw/animation/jquery.reel.js
 [min]: http://github.com/pisi/Reel/raw/animation/jquery.reel-min.js
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
+[cdn-min]: http://code.vostrel.cz/jquery.reel.js
+[cdn-bundle]: http://code.vostrel.cz/jquery.reel-bundle.js
+[cdn-devel]: http://code.vostrel.cz/jquery.reel-devel.js

@@ -1,13 +1,14 @@
-/* Copyright (c) 2009-2010 Petr Vostrel (http://www.pisi.cz/)
- * Dual licensed under the MIT (MIT-LICENSE.txt)
- * and GPL (GPL-LICENSE.txt) licenses.
- *
- * http://www.vostrel.cz/jquery/reel/
- * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-05-21
- *
- * Requires jQuery 1.4.x or higher
- */
+/*
+ Copyright (c) 2009-2010 Petr Vostrel (http://petr.vostrel.cz/)
+ Dual licensed under the MIT (MIT-LICENSE.txt)
+ and GPL (GPL-LICENSE.txt) licenses.
+
+ http://jquery.vostrel.cz/reel
+ Version: "Dancer" (will be 1.1 on release)
+ Updated: 2010-05-24
+
+ Requires jQuery 1.4.x
+*/
 (function(m){function D(o,p){return+p.toFixed(o)}function I(o,p,a){return v(o,J(p,a))}function Q(o,p){return o*p>0?p:-p}function R(o){m.each(o,function(){m.fn[this]||(m.fn[this]=function(){return this})})}var S={footage:6,frame:1,frames:36,hint:"",horizontal:true,hotspot:undefined,indicator:0,klass:"",loops:true,reversed:false,saves:false,sensitivity:20,spacing:0,stitched:undefined,suffix:"-reel",tooltip:"",delay:-1,frequency:0.25,friction:0.8,inertial:true,maximum:100,minimum:0,monitor:undefined,
 rebound:0.5,revolution:undefined,step:undefined,steps:undefined,tempo:25,timeout:2};m.fn.reel=function(o){var p=function(c){var d=[];c.filter("img").each(function(){var g=m(this),q=g.attr("src"),r=y(g.css("width")),t=y(g.css("height"));!q||q==""||!r||!t||d.push(g)});c.filter("div."+E).each(function(){d.push(m(this))});return m(d)}(this),a=m.extend({},S,o),K=[];z=z||function(){return setInterval(function(){w.trigger(F)},1E3/a.tempo)}();p.each(function(){var c=m(this),d=function(e,b){c.data(e,b);c.trigger("store");
 return b},g=function(e){c.trigger("recall");return c.data(e)},q={setup:function(){if(!c.hasClass(E)){var e=c.attr("src"),b=c.attr("id"),f=c.attr("class"),i=c.attr("style");e=e.replace(/^(.*)\.(jpg|jpeg|png|gif)$/,"$1"+a.suffix+".$2");var h={x:y(c.css("width")),y:y(c.css("height"))},j=m("<div>").attr("class",f).addClass(E).addClass(a.klass),k=L||!a.saves?{display:"none"}:{opacity:0};K.push((c=c.attr("id","").wrap(j).css(k).parent().attr("id",b).bind(q).css({display:"block",width:h.x+"px",height:h.y+
