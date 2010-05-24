@@ -84,16 +84,16 @@
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
           pass= []
-        tags.filter('img').each(function(ix){
+        tags.filter(_img_).each(function(ix){
           var
             $this= $(this),
-            src= $this.attr('src'),
-            width= number($this.css('width')),
-            height= number($this.css('height'))
-          if (!src || src=='' || !width || !height) return;
+            src= $this.attr(_src_),
+            width= number($this.css(_width_)),
+            height= number($this.css(_height_))
+          if (!src || src == __ || !width || !height) return;
           pass.push($this);
         });
-        tags.filter('div.' + klass).each(function(ix){
+        tags.filter(_div_ + dot(klass)).each(function(ix){
           pass.push($(this));
         });
         return $(pass);
@@ -127,42 +127,41 @@
           setup: function(){
             if (t.hasClass(klass)) return;
             var
-              src= t.attr('src'),
-              id= t.attr('id'),
-              classes= t.attr('class'),
+              src= t.attr(_src_),
+              id= t.attr(_id_),
+              classes= t.attr(_class_),
               styles= t.attr('style'),
               image= src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'),
-              size= { x: number(t.css('width')), y: number(t.css('height')) },
-              turntable= $('<div>').attr('class',classes).addClass(klass).addClass(set.klass),
+              size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
+              turntable= $(_div_tag_).attr(_class_, classes).addClass(klass).addClass(set.klass),
               image_css= touchy || !set.saves ? { display: 'none' } : { opacity: 0 }
-            instances.push((t= t.attr('id', '').wrap(turntable).css(image_css)
-            .parent().attr('id', id).bind(on).css({
+            instances.push((t= t.attr(_id_, __).wrap(turntable).css(image_css)
+            .parent().attr(_id_, id).bind(on).css({
               display: 'block',
-              width: size.x + 'px',
-              height: size.y + 'px',
-              backgroundImage: 'url(' + image + ')'
+              width: size.x + _px_,
+              height: size.y + _px_,
+              backgroundImage: url(image)
             }))[0]);
-            store('frames', set.frames);
-            store('spacing', set.spacing);
-            store('offset', t.offset());
-            store('dimensions', size);
-            store('fraction', 0);
-            store('steps', set.steps || set.frames);
+            store(_frames_, set.frames);
+            store(_spacing_, set.spacing);
+            store(_dimensions_, size);
+            store(_fraction_, 0);
+            store(_steps_, set.steps || set.frames);
             store('resolution', max(set.steps, set.frames));
-            store('reversed', set.frequency < 0);
-            store('backup', {
+            store(_reversed_, set.frequency < 0);
+            store(_backup_, {
               id: id,
-              'class': classes || '',
-              style: styles || ''
+              'class': classes || __,
+              style: styles || __
             });
             ticker && pool.bind(tick_event, on.tick);
             t.trigger('start');
           },
           teardown: function(e){
             t= t.unbind(on)
-            .find('.indicator, .monitor').remove().end()
-            .find('img')
-            .attr(t.data('backup')).unwrap()
+            .find(dot(indicator_klass) + ', ' + dot(monitor_klass)).remove().end()
+            .find(_img_)
+            .attr(t.data(_backup_)).unwrap()
             .bind('setup', function resetup(e){
               t.unbind('setup');
               on.setup();
@@ -173,11 +172,11 @@
             t.css({ position: 'relative' });
             var
               hotspot= set.hotspot ? set.hotspot : t,
-              space= recall('dimensions'),
-              frames= recall('frames'),
-              resolution= max(frames, recall('steps')),
-              fraction= store('fraction', 1 / resolution * ((set.step || set.frame) - 1)),
-              frame= store('frame', fraction * frames + 1)
+              space= recall(_dimensions_),
+              frames= recall(_frames_),
+              resolution= max(frames, recall(_steps_)),
+              fraction= store(_fraction_, 1 / resolution * ((set.step || set.frame) - 1)),
+              frame= store(_frame_, fraction * frames + 1)
             hotspot
               .css({ cursor: 'ew-resize' })
               .mouseenter(function(e){ t.trigger('enter') })
@@ -210,9 +209,8 @@
                 function start(event){
                   var
                     touch= event.touches[0],
-                    clicked= store('clicked', true),
-                    location= store('clicked_location', touch.clientX),
-                    frame= store('last_frame', store('clicked_on_frame', recall('frame')));
+                    clicked= store(_clicked_, true),
+                    location= store(_clicked_location_, touch.clientX)
                   return prevent(event);
                 }
                 function move(event){
@@ -223,23 +221,23 @@
                 }
                 function end(event){
                   var
-                    clicked= store('clicked',false);
+                    clicked= store(_clicked_,false);
                   return prevent(event);
                 }
               });
-            (set.hint || set.tooltip) && hotspot.attr('title', set.hint || set.tooltip);
-            set.monitor && t.append($('<div/>', {
-              className: 'monitor',
-              css: { position: 'absolute', left: 0, top: 0 }
+            (set.hint || set.tooltip) && hotspot.attr(_title_, set.hint || set.tooltip);
+            set.monitor && t.append($(_div_tag_, {
+              className: monitor_klass,
+              css: { position: _absolute_, left: 0, top: 0 }
             }));
-            set.indicator && t.append($('<div/>')
-              .addClass('indicator')
+            set.indicator && t.append($(_div_tag_)
+              .addClass(indicator_klass)
               .css({
-                width: set.indicator + 'px',
-                height: set.indicator + 'px',
-                top: (space.y - set.indicator) + 'px',
-                position: 'absolute',
-                backgroundColor: '#000'
+                width: set.indicator + _px_,
+                height: set.indicator + _px_,
+                top: (space.y - set.indicator) + _px_,
+                position: _absolute_,
+                backgroundColor: _hex_black_
               }));
             t.trigger('frameChange');
           },
@@ -251,39 +249,39 @@
             var
               frequency= set.frequency,
               friction= set.friction / set.tempo,
-              velocity= recall('velocity'),
+              velocity= recall(_velocity_),
               negative= velocity < 0,
               velocity= velocity - velocity * friction,
               velocity= last_velocity= velocity == last_velocity ? 0 : velocity
               velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
-              velocity= store('velocity', velocity),
+              velocity= store(_velocity_, velocity),
               step= (frequency + velocity) / set.tempo
-            $('.monitor', t).text(recall(set.monitor));
+            $(dot(monitor_klass), t).text(recall(set.monitor));
             to_bias(0);
             idle && idle++;
             if (idle && !velocity) return;
-            if (recall('clicked')) return unidle();
+            if (recall(_clicked_)) return unidle();
             var
-              fraction= store('fraction', recall('fraction') + step)
+              fraction= store(_fraction_, recall(_fraction_) + step)
             t.trigger('fractionChange');
           },
           down: function(e, x, y){
             unidle();
             var
-              clicked= store('clicked', true),
-              location= store('clicked_location', x),
-              velocity= store('velocity', 0),
-              frame= store('last_fraction', store('clicked_on', recall('fraction')))
+              clicked= store(_clicked_, true),
+              location= store(_clicked_location_, x),
+              velocity= store(_velocity_, 0),
+              frame= store(_last_fraction_, store(_clicked_on_, recall(_fraction_)))
             pool
             .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
             .mouseup(function(e){ t.trigger('up') });
           },
           up: function(e){
             var
-              clicked= store('clicked', false),
+              clicked= store(_clicked_, false),
               pitch= bias[1] + bias[2] != 0,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / 20,
-              velocity= store('velocity', set.inertial && pitch ? (set.stitched ? -momentum : momentum) : 0)
+              velocity= store(_velocity_, set.inertial && pitch ? (set.stitched ? -momentum : momentum) : 0)
             no_bias();
             idle= 0;
             pool.unbind('mousemove mouseup');
@@ -291,16 +289,16 @@
           drag: function(e, x, y){
             unidle();
             var
-              origin= recall('clicked_location'),
-              fraction= recall('clicked_on'),
+              origin= recall(_clicked_location_),
+              fraction= recall(_clicked_on_),
               stitched= set.stitched,
-              space= recall('dimensions'),
+              space= recall(_dimensions_),
               revolution= set.revolution || stitched / 2 || space.x,
               // sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
               distance= (x - origin), // / sensitivity,
               reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
               shift= fraction + reverse / revolution * distance,
-              fraction= store('fraction', shift)
+              fraction= store(_fraction_, shift)
             to_bias(x - last_x);
             last_x= x;
             t.trigger('fractionChange');
@@ -308,20 +306,20 @@
           wheel: function(e, distance){
             unidle();
             var
-              velocity= store('velocity', 0),
-              fraction= recall('fraction'),
-              resolution= max(recall('frames'), recall('steps')),
+              velocity= store(_velocity_, 0),
+              fraction= recall(_fraction_),
+              resolution= max(recall(_frames_), recall(_steps_)),
               step= 1 / resolution,
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= distance < 0 ? -delta : delta,
-              fraction= store('fraction', fraction + delta * step)
+              fraction= store(_fraction_, fraction + delta * step)
             t.trigger('fractionChange');
             return false;
           },
           fractionChange: function(e, fraction){
             var
-              fraction= !fraction ? recall('fraction') : store('fraction', fraction),
-              last_fraction= recall('last_fraction'),
+              fraction= !fraction ? recall(_fraction_) : store(_fraction_, fraction),
+              last_fraction= recall(_last_fraction_),
               delta= fraction - last_fraction,
               frequency= set.frequency= sign_like(delta, set.frequency),
               // Looping
@@ -331,21 +329,21 @@
               frequency= set.frequency= bounce ? -frequency : frequency,
               // Turn negative into positive
               fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
-              fraction= store('last_fraction', store('fraction', round_to(6, fraction))),
-              frame= store('frame', fraction * (recall('frames') - 1) + 1)
+              fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
+              frame= store(_frame_, fraction * (recall(_frames_) - 1) + 1)
             !idle && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
             var
-              frames= recall('frames'),
-              fraction= !frame ? recall('fraction') : store('fraction', round_to(6, (frame-1) / (frames-1))),
-              frame= !frame ? recall('frame') : store('frame', frame),
-              frame= store('frame', round(frame)),
-              space= recall('dimensions'),
-              steps= recall('steps'),
-              spacing= recall('spacing'),
-              reversed= recall('reversed')
+              frames= recall(_frames_),
+              fraction= !frame ? recall(_fraction_) : store(_fraction_, round_to(6, (frame-1) / (frames-1))),
+              frame= !frame ? recall(_frame_) : store(_frame_, frame),
+              frame= store(_frame_, round(frame)),
+              space= recall(_dimensions_),
+              steps= recall(_steps_),
+              spacing= recall(_spacing_),
+              reversed= recall(_reversed_)
             if (!set.stitched){
               var
                 major= floor(frame / set.footage),
@@ -362,19 +360,19 @@
                 reverse_shift= rows * major_size + (rows - 1) * spacing,
                 x= reversed && set.horizontal ? x - reverse_shift : x,
                 y= reversed && !set.horizontal ? y - reverse_shift : y,
-                shift= set.horizontal ? y + 'px ' + x + 'px' : x + 'px ' + y + 'px'
+                shift= set.horizontal ? [y + _px_, x + _px_] : [x + _px_, y + _px_]
             }else{
               var
                 travel= set.loops ? set.stitched : set.stitched - space.x,
                 x= round(fraction * travel),
                 y= 0,
-                shift= -x + 'px ' + y + 'px'
+                shift= [-x + _px_, y + _px_]
             }
             var
               travel= space.x - set.indicator,
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1)
-            t.css({ backgroundPosition: shift })
-              .find('.indicator').css({ left: indicator + 'px' });
+            t.css({ backgroundPosition: shift.join(' ') })
+              .find(dot(indicator_klass)).css({ left: indicator + _px_ });
           }
         },
 
@@ -414,8 +412,34 @@
     min= Math.min,
     max= Math.max,
     sqrt= Math.sqrt,
-    abs= Math.abs
+    abs= Math.abs,
 
+    // Storage keys
+    _backup_= 'backup',
+    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on',
+    _dimensions_= 'dimensions',
+    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames',
+    _last_fraction_= 'last_fraction',
+    _reversed_= 'reversed',
+    _spacing_= 'spacing', _steps_= 'steps',
+    _velocity_= 'velocity',
+
+    // Various string primitives
+    __= '',
+    _absolute_= 'absolute',
+    _class_= 'class',
+    _div_= 'div', _div_tag_= '<'+ _div_ + '/>',
+    _height_= 'height', _hex_black_= '#000',
+    _id_= 'id', _img_= 'img',
+    indicator_klass= 'indicator',
+    monitor_klass= 'monitor',
+    _px_= 'px',
+    _src_= 'src',
+    _title_= 'title',
+    _width_= 'width'
+
+  function dot(string){ return '.' + string }
+  function url(location){ return 'url(' + location + ')' }
   function round_to(decimals, number){ return +number.toFixed(decimals) }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function sign_like(specimen, value){ return (specimen * value > 0) ? value : -value }
