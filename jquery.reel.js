@@ -398,45 +398,31 @@
 
   // PRIVATE
   var
-    klass= 'jquery-reel',
     ns= '.reel',
+    klass= 'jquery-reel',
+    indicator_klass= 'indicator',
+    monitor_klass= 'monitor',
     tick_event= 'tick'+ns,
     pool= $(document),
     // Flag touch-enabled devices
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
     ticker,
+
+    // Shortcuts
+    round= Math.round, floor= Math.floor, ceil= Math.ceil,
+    min= Math.min, max= Math.max, abs= Math.abs, sqrt= Math.sqrt,
     number= parseInt,
-    round= Math.round,
-    floor= Math.floor,
-    ceil= Math.ceil,
-    min= Math.min,
-    max= Math.max,
-    sqrt= Math.sqrt,
-    abs= Math.abs,
 
     // Storage keys
-    _backup_= 'backup',
-    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on',
-    _dimensions_= 'dimensions',
-    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames',
-    _last_fraction_= 'last_fraction',
-    _reversed_= 'reversed',
-    _spacing_= 'spacing', _steps_= 'steps',
-    _velocity_= 'velocity',
+    _backup_= 'backup', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
+    _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
+    _frames_= 'frames', _last_fraction_= 'last_fraction', _reversed_= 'reversed', _spacing_= 'spacing',
+    _steps_= 'steps', _velocity_= 'velocity',
 
     // Various string primitives
-    __= '',
-    _absolute_= 'absolute',
-    _class_= 'class',
-    _div_= 'div', _div_tag_= '<'+ _div_ + '/>',
-    _height_= 'height', _hex_black_= '#000',
-    _id_= 'id', _img_= 'img',
-    indicator_klass= 'indicator',
-    monitor_klass= 'monitor',
-    _px_= 'px',
-    _src_= 'src',
-    _title_= 'title',
-    _width_= 'width'
+    __= '', _absolute_= 'absolute', _class_= 'class', _div_= 'div', _div_tag_= '<'+ _div_ + '/>',
+    _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _px_= 'px', _src_= 'src',
+    _title_= 'title', _width_= 'width'
 
   function dot(string){ return '.' + string }
   function url(location){ return 'url(' + location + ')' }
