@@ -1,20 +1,7 @@
-             @@@@@@@@@@@@@@
-         @@@@@@@@@@@@@@@@@@@@@@
-       @@@@@@@@          @@@@@@@@
-     @@@@@@@                @@@@@@@
-    @@@@@@@                  @@@@@@@
-    @@@@@@@                  @@@@@@@
-    @@@@@@@@     @          @@@@@@@@
-     @@@@@@@@@  @@@       @@@@@@@@@
-      @@@@@@@@@@@@@@   @@@@@@@@@@@
-        @@@@@@@@@@@@@    @@@@@@@
-          @@@@@@@@@@@@     @@@
-             @@@@@@
-            @@@@
-           @@
 
 jQuery Reel "Dancer" (will be 1.1)
 ==================================
+
 **Reel** is a jQuery plugin which turns an image tag into an interactive
 panorama-like "projection" of pre-built animation sequence (of frames).
 Its aim is to provide a 360° view of something or someplace.
