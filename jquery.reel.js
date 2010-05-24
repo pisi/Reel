@@ -214,9 +214,13 @@
                   return prevent(event);
                 }
                 function move(event){
+                  unidle();
                   var
-                    touch= event.touches[0];
-                  t.trigger('drag', [touch.clientX, touch.clientY]);
+                    touch= event.touches[0],
+                    x= touch.clientX
+                  t.trigger('drag', [x, touch.clientY]);
+                  to_bias(x - last_x);
+                  last_x= x;
                   return prevent(event);
                 }
                 function end(event){
