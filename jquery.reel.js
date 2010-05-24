@@ -408,7 +408,6 @@
     monitor_klass= 'monitor',
     tick_event= 'tick'+ns,
     pool= $(document),
-    // Flag touch-enabled devices
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
     ticker,
 
@@ -433,9 +432,7 @@
   function round_to(decimals, number){ return +number.toFixed(decimals) }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function sign_like(specimen, value){ return (specimen * value > 0) ? value : -value }
-  function double_for(methods){
-    $.each(methods, function(){
-      if (!$.fn[this]) $.fn[this]= function(){ return this };
-    });
+  function double_for(methods){ $.each(methods, pretend);
+    function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
 })(jQuery);
