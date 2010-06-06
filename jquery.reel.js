@@ -144,6 +144,7 @@
               .dblclick(function(e){ t.trigger('animate'); })
               .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]); })
               .disableTextSelect()
+              .css({ WebkitUserSelect: 'none' })
               .each(function touch_support(){
                 touchy && bind(this, {
                   touchstart: start,

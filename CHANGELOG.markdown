@@ -1,6 +1,8 @@
 Changelog
 =========
 
+* Prevented an accidental selection of the projector on iPhone.
+
 Version 1.0.4
 -------------
 * Added long awaited support for iPhone/iPad/iPod family of touch-enabled devices.
