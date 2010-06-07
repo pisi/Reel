@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-05-24
+ * Updated: 2010-06-07
  *
  * Requires jQuery 1.4.x
  */
@@ -65,7 +65,7 @@
 
       // [NEW] in version 1.1
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
-      friction:         0.8, // friction of the inertial rotation (will loose 80% of speed per second)
+      friction:         0.9, // friction of the inertial rotation (will loose 90% of speed per second)
       inertial:        true, // drag & throw will give the rotation a momentum when true
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       rebound:          0.5,
@@ -177,7 +177,7 @@
               resolution= max(frames, recall(_steps_)),
               fraction= store(_fraction_, 1 / resolution * ((set.step || set.frame) - 1)),
               frame= store(_frame_, fraction * frames + 1)
-            hotspot
+            if (!touchy) hotspot
               .css({ cursor: 'ew-resize' })
               .mouseenter(function(e){ t.trigger('enter') })
               .mouseleave(function(e){ t.trigger('leave') })
@@ -186,16 +186,13 @@
               .dblclick(function(e){ t.trigger('animate') })
               .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]) })
               .disableTextSelect()
+            else hotspot
               .each(function touch_support(){
-                touchy && bind(this, {
+                bind(this, {
                   touchstart: start,
                   touchmove: move,
                   touchend: end,
-                  touchcancel: end,
-                  click: prevent,
-                  gesturestart: prevent,
-                  gesturechange: prevent,
-                  gestureend: prevent
+                  touchcancel: end
                 });
                 function bind(element, events){
                   $.each(events, function bind_handler(event){
@@ -203,29 +200,22 @@
                   });
                 }
                 function prevent(event){
-                  event.cancelable && event.preventDefault();
-                  return false;
+                  return event.cancelable && event.preventDefault() || false;
                 }
                 function start(event){
                   var
-                    touch= event.touches[0],
-                    clicked= store(_clicked_, true),
-                    location= store(_clicked_location_, touch.clientX)
+                    touch= event.touches[0]
+                  t.trigger('down', [touch.clientX, touch.clientY, true])
                   return prevent(event);
                 }
                 function move(event){
-                  unidle();
                   var
-                    touch= event.touches[0],
-                    x= touch.clientX
-                  t.trigger('drag', [x, touch.clientY]);
-                  to_bias(x - last_x);
-                  last_x= x;
+                    touch= event.touches[0]
+                  t.trigger('drag', [touch.clientX, touch.clientY, true]);
                   return prevent(event);
                 }
                 function end(event){
-                  var
-                    clicked= store(_clicked_,false);
+                  t.trigger('up', [true]);
                   return prevent(event);
                 }
               });
@@ -269,28 +259,29 @@
               fraction= store(_fraction_, recall(_fraction_) + step)
             t.trigger('fractionChange');
           },
-          down: function(e, x, y){
+          down: function(e, x, y, touched){
             unidle();
             var
               clicked= store(_clicked_, true),
               location= store(_clicked_location_, x),
               velocity= store(_velocity_, 0),
               frame= store(_last_fraction_, store(_clicked_on_, recall(_fraction_)))
-            pool
+            !touched && pool
             .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
             .mouseup(function(e){ t.trigger('up') });
           },
-          up: function(e){
+          up: function(e, touched){
             var
               clicked= store(_clicked_, false),
               pitch= bias[1] + bias[2] != 0,
-              momentum= (bias[0] + bias[1] + bias[2]) / bias.length / 20,
+              damper= touched ? 5 : 20,
+              momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
               velocity= store(_velocity_, set.inertial && pitch ? (set.stitched ? -momentum : momentum) : 0)
             no_bias();
             idle= 0;
-            pool.unbind('mousemove mouseup');
+            !touched && pool.unbind('mousemove mouseup');
           },
-          drag: function(e, x, y){
+          drag: function(e, x, y, touched){
             unidle();
             var
               origin= recall(_clicked_location_),
