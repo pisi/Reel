@@ -14,21 +14,19 @@
 .sample h2{ margin: 20px 0 0 0; cursor: pointer; text-decoration: line-through; color: #b00; }
 .sample h2:hover{ text-decoration: underline !important;  }
 .sample.on h2{ text-decoration: none; color: #080; }
+.jquery-reel .monitor{ background: #000; color: #fff; }
 
     </style>
   </head>
   <body>
-    <h1>
-      <a href='http://jquery.vostrel.cz/reel'>jQuery Reel</a>
-      Test Sampler
-    </h1>
+    <h1><a href='index.html'>« Tests</a> / Sampler</h1>
     <p>
       <strong>Hint:</strong>
       Toggle individual "Reels" by clicking their title
     </p>
 
     <div class="sample">
-      <h2>Object movie (bi-directional)</h2>
+      <h2>Object movie (auto-playing, bi-directional)</h2>
       <img id='logo' src='samples/logo.png' width='130' height='60' />
     </div>
     <div class="sample">
@@ -40,11 +38,11 @@
       <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
     </div>
     <div class="sample">
-      <h2>Non-looping rectilinear panorama</h2>
+      <h2>Non-looping rectilinear panorama (auto-playing)</h2>
       <img id='chicago' src='samples/chicago.jpg' width='270' height='150' />
     </div>
     <div class="sample">
-      <h2>Panorama movie</h2>
+      <h2>Panorama movie (auto-playing)</h2>
       <img id='green' src='samples/green.jpg' width='200' height='150' />
     </div>
     <div class="sample">
@@ -53,11 +51,11 @@
 
     <script type='text/javascript'>
 $(function(){ 
-  $('#logo').reel({ frequency: 1, delay: 0, indicator: 5 });
-  $('#f1').reel({ frames: 35, saves: true, frequency: 0.5, delay: 0, indicator: 5 });
-  $('#stitched').reel({ stitched: 1821, frames: 60, frequency: -0.1, delay: 0.5, indicator: 5 });
-  $('#chicago').reel({ stitched: 1072, loops: false, steps: 30, frequency: 0.3, delay: 1, indicator: 5 });
-  $('#green').reel({ frames: 32, footage: 4, frequency: -0.1, indicator: 5 });
+  $('#logo').reel({ speed: 1, delay: 0, indicator: 5 });
+  $('#f1').reel({ frames: 35, delay: 0, indicator: 5 });
+  $('#stitched').reel({ stitched: 1821, frames: 60, delay: 0.5, indicator: 5 });
+  $('#chicago').reel({ stitched: 1072, loops: false, steps: 30, step: 15, speed: 0.1, delay: 1, indicator: 5 });
+  $('#green').reel({ frames: 32, footage: 4, speed: -0.1, indicator: 5 });
   $('#no_image').reel({ sprite: 'samples/outlook.jpg', frame: 5, stitched: 1652, indicator: 5 });
 
   // Reels can easily be turned off by setting their toggle to `false`
@@ -73,8 +71,8 @@ $(function(){
     onoff || $(target).trigger('teardown');
     onoff && $sample.addClass('on');
     $('h2', $sample)
-		.attr({ title: 'Click to setup/teardown' })
-		.click(function click_it(){
+    .attr({ title: 'Click to setup/teardown' })
+    .click(function click_it(){
       var
         onoff= !$sample.hasClass('on');
       $sample[onoff ? 'addClass' : 'removeClass']('on');

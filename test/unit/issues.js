@@ -29,7 +29,7 @@
     var
       stitched= 1652,
       $pano= $('#stitched_looping').reel({ stitched: stitched, loops: true }),
-      travel= Math.round(stitched - stitched / 36)
+      travel= stitched
 
     $pano.trigger('frameChange', 1);
     equal($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
