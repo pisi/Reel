@@ -256,7 +256,6 @@
               setTimeout(function delayed(){
                 $.each(preload, function preload_image(ix, url){
                   $(tag(_img_), { src: set.path+url, className: preloaded_frame_klass }).appendTo(t).hide().load(function image_loaded(){
-                    $(this).remove();
                     loaded++;
                     $preloader.text(loading+___+loaded+'/'+preload.length);
                     loaded == preload.length && $preloader.remove();
