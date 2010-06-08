@@ -68,7 +68,7 @@
       friction:         0.9, // friction of the inertial rotation (will loose 90% of speed per second)
       inertial:        true, // drag & throw will give the rotation a momentum when true
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
-      rebound:          0.5,
+      rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
       speed:              0, // animated rotation speed in revolutions per second (Hz)
       step:       undefined, // initial step (overrides `frame`)
