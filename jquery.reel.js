@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-07
+ * Updated: 2010-06-08
  *
  * Requires jQuery 1.4.x
  */
@@ -236,10 +236,6 @@
               className: monitor_klass,
               css: { position: _absolute_, left: 0, top: 0 }
             }));
-            set.preloader && t.append($preloader= $(_div_tag_, {
-              className: preloader_klass,
-              css: { position: _absolute_, right: 0, top: 0 }
-            }).text(loading+___+loaded+'/'+preload.length));
             set.indicator && t.append($(_div_tag_)
               .addClass(indicator_klass)
               .css({
@@ -250,13 +246,22 @@
                 backgroundColor: _hex_black_
               }));
             // Preloading of image(s)
-            $.each(preload, function preload_image(ix, url){
-              $(tag(_img_), { src: set.path+url, className: preloaded_frame_klass }).appendTo(t).hide().load(function image_loaded(){
-                $(this).remove();
-                loaded++;
-                $preloader.text(loading+___+loaded+'/'+preload.length);
-                loaded == preload.length && $preloader.remove();
-              });
+            $(function ready(){
+              set.preloader && t.append($preloader= $(_div_tag_, {
+                className: preloader_klass,
+                css: { position: _absolute_, right: 0, top: 0 }
+              }).text(loading+___+loaded+'/'+preload.length));
+              // Timeouted to not halt the jQuery `ready` event
+              setTimeout(function delayed(){
+                $.each(preload, function preload_image(ix, url){
+                  $(tag(_img_), { src: set.path+url, className: preloaded_frame_klass }).appendTo(t).hide().load(function image_loaded(){
+                    $(this).remove();
+                    loaded++;
+                    $preloader.text(loading+___+loaded+'/'+preload.length);
+                    loaded == preload.length && $preloader.remove();
+                  });
+                });
+              }, 10);
             });
             t.trigger('frameChange');
           },
