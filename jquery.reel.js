@@ -274,9 +274,10 @@
             var
               clicked= store(_clicked_, false),
               pitch= bias[1] + bias[2] != 0,
-              damper= touched ? 5 : 20,
+              damper= touched ? 15 : 20,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
-              velocity= store(_velocity_, set.inertial && pitch ? (set.stitched ? -momentum : momentum) : 0)
+              reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
+              velocity= store(_velocity_, set.inertial && pitch ? momentum * reverse : 0)
             no_bias();
             idle= 0;
             !touched && pool.unbind('mousemove mouseup');
