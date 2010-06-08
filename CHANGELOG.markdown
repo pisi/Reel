@@ -1,7 +1,21 @@
 Changelog
 =========
 
+"Dancer" (will be 1.1)
+--------
 * Prevented an accidental selection of the projector on iPhone.
+* Decimal fraction is now used as a base for internal computations instead of using frames.
+    * `steps` option divides Reel into different amount of steps other than defined by `frames`.
+    * `step` option can be used to override initial `frame` option.
+    * `revolution` option is a pixel distance mouse drag has to travel for full revolution.
+* Having one shared ticker for all animation purposes.
+* The projector can now self-animate. The animation is controlled with bunch of options.
+    * `animate` and `delay` options for starting the animation after the delay.
+    * `frequency` option sets the speed of animation.
+    * `tempo` option sets the internal ticker clock speed.
+    * `timeout` option is a period of user inactivity after which animation is resumed again.
+* Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.
+* Extended the Test Sampler (test/sampler.html).
 
 Version 1.0.4
 -------------
@@ -14,7 +28,7 @@ Version 1.0.4
 
 Version 1.0.3
 -------------
-* User *neptune* (thanks!) found a nasty mishap where option `tooltip` was used instead of `hint` on several places. To stay backwards compatibile `tooltip` will stay as an alias of new option `hint` (which is preferred).
+* User *neptune* (thanks!) found a nasty mishap where option `tooltip` was used instead of `hint` on several places. To stay backwards compatible `tooltip` will stay as an alias of new option `hint` (which is preferred).
 
 Version 1.0.2
 -------------

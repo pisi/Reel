@@ -9,8 +9,8 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://jquery.vostrel.cz/reel
- * Version: 1.0.4 "Touchy"
- * Updated: 2010-04-24
+ * Version: "Dancer" (will be 1.1 on release)
+ * Updated: 2010-05-10
  *
  * Requires jQuery 1.4.x or higher
  */
@@ -26,29 +26,55 @@
  * - or jQuery.event.special.wheel (Three Dub Media, http://blog.threedubmedia.com/2008/08/eventspecialwheel.html)
  */
 
-(function($){
+(function($, document){
+  var
+    defaults= {
+      // Options marked [new] are newly available in 1.1
+      // [deprecated] options will be gone in next version
+
+      animate:         true, // [new] whether animation will start automatically after a delay
+      delay:              1, // [new] delay in seconds between initialization and animation (if true)
+      footage:            6, // number of frames per line/column
+      frequency:       0.25, // [new] animated rotation speed in Hz
+      frame:              1, // initial frame
+      frames:            36, // total number of frames; every 10° for full rotation
+      horizontal:      true, // roll flow; defaults to horizontal
+      hotspot:    undefined, // custom jQuery as a hotspot
+      hint:              '', // hotspot hint tooltip
+      indicator:          0, // size of a visual indicator of reeling (in pixels)
+      klass:             '', // plugin instance class name
+      loops:           true, // is it a loop?
+      monitor:    undefined, // [new] stored value name to monitor in the upper left corner of the viewport
+      reversed:       false, // true for "counter-clockwise sprite"
+      revolution: undefined, // [new] distance mouse must be dragged for full revolution
+                             // (defaults to double the viewport size or half the `stitched` option)
+      saves:          false, // wheather allow user to save the image thumbnail
+      sensitivity:       20, // interaction sensitivity
+      spacing:            0, // space between frames on reel
+      step:       undefined, // [new] initial step (overrides `frame`)
+      steps:      undefined, // [new] number of steps a revolution is divided in (by default equal to `frames`)
+      stitched:   undefined, // pixel width (length) of a stitched panoramic reel
+      suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
+      tempo:             25, // [new] shared ticker tempo in ticks per second
+      timeout:            1, // [new] idle timeout in seconds
+      tooltip:           ''  // [deprecated] use `hint` instead
+    },
+    klass= 'jquery-reel',
+    ns= '.reel',
+    tick_event= 'tick'+ns,
+    pool= $(document),
+    // Flag touch-enabled devices
+    touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+    drag_cursor= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7',
+    drag_cursor_down= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==',
+    failsafe_cursor= 'w-resize',
+    ticker
+
+  // Double plugin functions in case plugin is missing
+  double_for('mousewheel disableTextSelect'.split(/ /));
+
   $.fn.reel= function(options){
     var
-      defaults= {
-        footage:            6, // number of frames per line/column
-        frame:              1, // initial frame
-        frames:            36, // total number of frames; every 10° for full rotation
-        horizontal:      true, // roll flow; defaults to horizontal
-        hotspot:    undefined, // custom jQuery as a hotspot 
-        hint:              '', // hotspot hint tooltip 
-        indicator:          0, // size of a visual indicator of reeling (in pixels)
-        klass:             '', // plugin instance class name
-        loops:           true, // is it a loop?
-        reversed:       false, // true for "counter-clockwise sprite"
-        saves:          false, // wheather allow user to save the image thumbnail
-        sensitivity:       20, // interaction sensitivity
-        spacing:            0, // space between frames on reel
-        stitched:   undefined, // pixel width (length) of a stitched panoramic reel
-        suffix:       '-reel',
-        tooltip:           ''  // alias of `hint`
-      },
-
-      klass= 'jquery-reel',
       applicable= (function(tags){
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
@@ -67,18 +93,23 @@
         });
         return $(pass);
       })(this),
+      set= $.extend({}, defaults, options),
       instances= [],
-      // Flag touch-enabled devices
-      touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
+      tick_interval= 1000 / set.tempo
 
-    // Double plugin functions in case plugin is missing
-    double_for('mousewheel disableTextSelect'.split(/ /));
+    ticker= ticker || (function run_ticker(){
+      return setInterval(function(){
+        pool.trigger(tick_event);
+      }, tick_interval);
+    })();
 
     applicable.each(function(){
+      function not_idle(){
+        return idle= -set.timeout * set.tempo;
+      }
       var
         t= $(this),
-        set= $.extend(defaults, options),
-        pool= $(document),
+        idle= set.animate ? Math.round(-set.delay * set.tempo) : 0,
         store= function(name, value){
           t.data(name, value);
           t.trigger('store');
@@ -113,33 +144,43 @@
             store('spacing', set.spacing);
             store('offset', t.offset());
             store('dimensions', size);
+            store('fraction', 0);
+            store('steps', set.steps || set.frames);
+            store('resolution', Math.max(set.steps, set.frames));
+            store('reversed', set.frequency < 0);
             store('backup', {
               id: id,
               'class': classes || '',
               style: styles || ''
-            })
+            });
+            ticker && pool.bind(tick_event, on.tick);
             t.trigger('start');
           },
           teardown: function(e){
             t= t.unbind(on)
-            .find('.indicator').remove().end()
+            .find('.indicator, .monitor').remove().end()
             .find('img')
             .attr(t.data('backup')).unwrap()
             .bind('setup', function resetup(e){
               t.unbind('setup');
               on.setup();
             });
+            ticker && pool.unbind(tick_event, on.tick);
           },
           start: function(e){
             t.css({ position: 'relative' });
             var
               hotspot= set.hotspot ? set.hotspot : t,
-              space= recall('dimensions')
+              space= recall('dimensions'),
+              frames= recall('frames'),
+              resolution= Math.max(frames, recall('steps')),
+              fraction= store('fraction', 1 / resolution * ((set.step || set.frame) - 1)),
+              frame= store('frame', fraction * frames + 1)
             hotspot
-              .css({ cursor: 'ew-resize' })
+              .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .mouseenter(function(e){ t.trigger('enter'); })
               .mouseleave(function(e){ t.trigger('leave'); })
-              .mousemove(function(e){ t.trigger('over', [e.clientX, e.clientY]); })
+              .mousemove(function(e){ t.trigger('over', [e.pageX, e.pageY]); })
               .mousewheel(function(e, delta){ t.trigger('wheel', [delta]); return false; })
               .dblclick(function(e){ t.trigger('animate'); })
               .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]); })
@@ -186,6 +227,10 @@
                 }
               });
             (set.hint || set.tooltip) && hotspot.attr('title', set.hint || set.tooltip);
+            set.monitor && t.append($('<div/>', {
+              className: 'monitor',
+              css: { position: 'absolute', left: 0, top: 0 }
+            }));
             set.indicator && t.append($('<div/>')
               .addClass('indicator')
               .css({
@@ -195,66 +240,107 @@
                 position: 'absolute',
                 backgroundColor: '#000'
               }));
-            t.trigger('frameChange', set.frame);
+            t.trigger('frameChange');
           },
           animate: function(e){
             // Stub for future compatibility
             // log(e.type);
           },
+          tick: function(e){
+            $('.monitor', t).text(recall(set.monitor));
+            if (recall('clicked')) return not_idle();
+            idle && idle++;
+            if (idle) return;
+            var
+              reversed= recall('reversed'),
+              frequency= set.frequency,
+              frequency= (reversed && frequency > 0) || (!reversed && frequency < 0) ? -frequency : frequency,
+              step= frequency / set.tempo,
+              fraction= store('fraction', recall('fraction') + step)
+            t.trigger('fractionChange');
+          },
           down: function(e, x, y){
             var
-              clicked= store('clicked',true),
+              hotspot= set.hotspot ? set.hotspot : t,
+              clicked= store('clicked', true),
               location= store('clicked_location', x),
-              frame= store('last_frame', store('clicked_on_frame', recall('frame')))
+              frame= store('last_fraction', store('clicked_on', recall('fraction')))
             pool
             .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]); })
             .mouseup(function(e){ t.trigger('up'); });
+            hotspot
+            .css({ cursor: 'url('+drag_cursor_down+'), '+failsafe_cursor });
+            not_idle();
           },
           up: function(e){
             var
-              clicked= store('clicked',false)
+              hotspot= set.hotspot ? set.hotspot : t,
+              clicked= store('clicked', false)
             pool.unbind('mousemove mouseup');
+            hotspot
+            .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
           },
           drag: function(e, x, y){
             var
               origin= recall('clicked_location'),
-              frame= recall('clicked_on_frame'),
-              frames= recall('frames'),
+              fraction= recall('clicked_on'),
+              stitched= set.stitched,
+              space= recall('dimensions'),
+              resolution= Math.max(recall('frames'), recall('steps')),
+              revolution= set.revolution || stitched / 2 || space.x,
+              step= 1 / resolution,
               sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
-              distance= Math.round((origin - x) / sensitivity),
-              reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
-              frame= store('frame', frame - reverse * distance)
-            t.trigger('frameChange');
+              distance= (x - origin), // / sensitivity,
+              reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
+              shift= fraction + reverse / revolution * distance,
+              fraction= store('fraction', shift - Math.floor(shift))
+            t.trigger('fractionChange');
+            not_idle();
           },
           wheel: function(e, distance){
             var
-              frame= recall('frame'),
-              frames= recall('frames'),
+              fraction= recall('fraction'),
+              resolution= Math.max(recall('frames'), recall('steps')),
+              step= 1 / resolution,
               delta= Math.ceil(Math.sqrt(Math.abs(distance))),
               delta= distance < 0 ? - delta : delta,
-              reverse= set.reversed ? -1 : 1,
-              frame= store('frame', frame - reverse * delta)
-            t.trigger('frameChange');
+              reverse= set.reversed ? -1 : 1
+              // frame= store('frame', frame - reverse * delta)
+            // t.trigger('frameChange');
+            not_idle();
             return false;
+          },
+          fractionChange: function(e, fraction){
+            var
+              steps= recall('steps'),
+              step= 1 / steps,
+              fraction= !fraction ? recall('fraction') : store('fraction', fraction),
+              last_fraction= recall('last_fraction'),
+              delta= fraction - last_fraction,
+              fraction= fraction < 0 ? 0 : fraction,
+              fraction= fraction > 1 ? 1 : fraction,
+              over_edge= ((fraction == 1 && last_fraction == 1) || (fraction == 0 && last_fraction == 0)),
+              loops= set.loops && over_edge,
+              fraction= loops ? Math.abs(fraction - 1) : fraction,
+              fraction= store('last_fraction', store('fraction', fraction)),
+              reversed= delta && store('reversed', delta != 0 ? (delta < 0) : recall('reversed')),
+              frames= recall('frames'),
+              frames= set.stitched ? frames : frames - 1,
+              frame= store('frame', fraction * frames + 1)
+            t.trigger('frameChange');
           },
           frameChange: function(e, frame){
             var
-              frame= !frame ? recall('frame') : store('frame', frame),
-              last_frame= recall('last_frame'),
               frames= recall('frames'),
+              fraction= !frame ? recall('fraction') : store('fraction', frame / frames),
+              frame= !frame ? recall('frame') : store('frame', frame),
               space= recall('dimensions'),
+              steps= recall('steps'),
               spacing= recall('spacing'),
-              // Take care of the looping
-              frame= !set.loops && frame > frames ? frames : frame,
-              frame= !set.loops && frame < 1 ? 1 : frame,
-              frame= frame - Math.floor(frame / frames) * frames,
-              frame= store('last_frame', store('frame', frame < 1 ? frames : frame)),
-              // Find out if the movement is reversed
-              delta= frame - last_frame,
-              delta= Math.abs(delta) > 10 ? 0 - delta : delta,
-              reversed= store('reversed', delta != 0 ? (delta > 0) : recall('reversed'))
+              reversed= recall('reversed')
             if (!set.stitched){
               var
+                frame= Math.round(frame),
                 major= Math.floor(frame / set.footage),
                 minor= frame - major * set.footage - 1,
                 major= minor == -1 ? major + minor : major,
@@ -273,14 +359,13 @@
             }else{
               var
                 travel= set.loops ? set.stitched : set.stitched - space.x,
-                steps= set.loops ? frames : frames - 1,
                 step= travel / steps,
                 x= Math.round((frame - 1) * step),
                 y= 0,
                 shift= -x + 'px ' + y + 'px'
             }
             var
-              indicator= ((space.x - set.indicator) / (frames - 1) * (frame - 1)) + 'px'
+              indicator= (fraction * (space.x - set.indicator)) + 'px'
             t.css({ backgroundPosition: shift })
               .find('.indicator').css({ left: indicator });
           }
@@ -298,4 +383,4 @@
       if (!$.fn[this]) $.fn[this]= function(){ return this; };
     });
   }
-})(jQuery);
+})(jQuery, this);

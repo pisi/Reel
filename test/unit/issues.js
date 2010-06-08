@@ -17,7 +17,7 @@
       travel= stitched - parseInt($pano.css('width'))
 
     $pano.trigger('frameChange', 1);
-    equal($pano.css('backgroundPosition'), '0px 0px', 'Frame 0 (min)');
+    equal($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
     $pano.trigger('frameChange', 36);
     equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Frame 36 (max)');
   });
@@ -32,7 +32,7 @@
       travel= Math.round(stitched - stitched / 36)
 
     $pano.trigger('frameChange', 1);
-    equal($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 0 (min)');
+    equal($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
     $pano.trigger('frameChange', 36);
     equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Looping - frame 36 (max)');
   });
