@@ -3,6 +3,9 @@ Changelog
 
 "Dancer" (will be 1.1)
 --------
+* Images are now being preloaded and loading is indicated when `preloader` option is true.
+* Added the `image` option which can be used to supply custom image sprite to use.
+* Array of individual `images` can now be supplied instead of using a collective sprite.
 * Decimal fraction is now used as a base for internal computations instead of using frames.
     * `steps` option divides Reel into different amount of steps other than defined by `frames`.
     * `step` option can be used to override initial `frame` option.
