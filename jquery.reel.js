@@ -69,8 +69,8 @@
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       inertial:        true, // drag & throw will give the rotation a momentum when true
-      loading: 'Loading...', // label used for preloader
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      loading: 'Loading...', // label used for preloader
       path:              '', // URL path to be prepended to `image` or `images` filenames
       preloader:       true, // whether display the preloader or not
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
@@ -113,9 +113,6 @@
     })();
 
     applicable.each(function(){
-      function not_idle(){
-        return idle= -set.timeout * set.tempo;
-      }
       var
         t= $(this),
 
@@ -193,7 +190,7 @@
               preload= !images.length ? [image] : images,
               $preloader
             if (!touchy) hotspot
-	            .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
+              .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .mouseenter(function(e){ t.trigger('enter') })
               .mouseleave(function(e){ t.trigger('leave') })
               .mousemove(function(e){ t.trigger('over', [e.pageX, e.pageY]) })
@@ -202,7 +199,7 @@
               .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]) })
               .disableTextSelect()
             else hotspot
-	            .css({ WebkitUserSelect: 'none' })
+              .css({ WebkitUserSelect: 'none' })
               .each(function touch_support(){
                 bind(this, {
                   touchstart: start,
@@ -308,7 +305,7 @@
           },
           up: function(e, touched){
             var
-	            hotspot= set.hotspot || t,
+              hotspot= set.hotspot || t,
               clicked= store(_clicked_, false),
               pitch= bias[1] + bias[2] != 0,
               damper= touched ? 15 : 20,
@@ -319,7 +316,7 @@
             idle= 0;
             !touched && pool
             .unbind('mousemove mouseup') && hotspot
-            .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
+            .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
           },
           drag: function(e, x, y, touched){
             unidle();
