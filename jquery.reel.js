@@ -57,7 +57,7 @@
       reversed:       false, // true for "counter-clockwise sprite"
                              // (defaults to double the viewport size or half the `stitched` option)
       saves:          false, // [deprecated] whether allow user to save the image thumbnail
-      sensitivity:       20, // interaction sensitivity
+      sensitivity:       20, // [deprecated] interaction sensitivity
       spacing:            0, // space between frames on reel
       stitched:   undefined, // pixel width (length) of a stitched (rectilinear) panoramic reel
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)

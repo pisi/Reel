@@ -2,7 +2,8 @@ Changelog
 =========
 
 "Dancer" (will be 1.1)
---------
+----------------------
+* Suggestive open/closed palm cursor used for mouse pointer.
 * Images are now being preloaded and loading is indicated when `preloader` option is true.
 * Added the `image` option which can be used to supply custom image sprite to use.
 * Array of individual `images` can now be supplied instead of using a collective sprite.
