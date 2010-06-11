@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-08
+ * Updated: 2010-06-11
  *
  * Requires jQuery 1.4.x
  */
@@ -104,12 +104,14 @@
         });
         return $(pass);
       })(this),
-      instances= []
+      instances= [],
+      ticker_timeout= 1000 / set.tempo
 
     ticker= ticker || (function run_ticker(){
-      return setInterval(function tick(){
+      return setTimeout(function tick(){
         pool.trigger(tick_event);
-      }, 1000 / set.tempo);
+        ticker= setTimeout(arguments.callee, ticker_timeout);
+      }, ticker_timeout);
     })();
 
     applicable.each(function(){
