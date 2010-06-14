@@ -90,7 +90,7 @@
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
           pass= []
-        tags.each(function(ix){
+        tags.filter(_img_).each(function(ix){
           var
             $this= $(this),
             src= set.images.length && set.images || set.image || $this.attr(_src_),
@@ -138,10 +138,9 @@
               styles= t.attr('style'),
               images= set.images,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
-              turntable= $(_div_tag_).attr(_class_, classes).addClass(klass).addClass(set.klass),
-              image_css= touchy || !set.saves ? { display: 'none' } : { opacity: 0 }
-            instances.push((t= t.attr(_id_, __).wrap(turntable).css(image_css)
-            .parent().attr(_id_, id).bind(on).css({
+              image_src= set.images ? transparent : src
+            instances.push((t= t.attr({ src: image_src }).bind(on)
+            .css({
               display: 'block',
               width: size.x + _px_,
               height: size.y + _px_
@@ -156,18 +155,15 @@
             store('resolution', max(set.steps, set.frames));
             store(_reversed_, set.speed < 0);
             store(_backup_, {
-              id: id,
-              'class': classes || __,
+              src: src,
               style: styles || __
             });
             ticker && pool.bind(tick_event, on.tick);
             t.trigger('start');
           },
           teardown: function(e){
-            t= t.unbind(on)
-            .find([dot(indicator_klass), dot(monitor_klass), dot(preloader_klass), _img_+dot(preloaded_frame_klass)].join(', ')).remove().end()
-            .find(_img_)
-            .attr(t.data(_backup_)).unwrap()
+            t.unbind(on)
+            .attr(t.data(_backup_))
             .bind('setup', function resetup(e){
               t.unbind('setup');
               on.setup();
@@ -406,8 +402,7 @@
               travel= space.x - set.indicator,
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
               css= { background: url(set.path+sprite)+___+shift.join(___) }
-            t.css(css)
-              .find(dot(indicator_klass)).css({ left: indicator + _px_ });
+            set.images.length ? t.attr({ src: set.path+sprite }) : t.css(css);
           }
         },
 
@@ -423,7 +418,7 @@
         no_bias= function(){ return bias= [0,0,0] },
         bias= no_bias()
 
-      t.ready(on.setup);
+      on.setup();
     });
     return $(instances);
   }
@@ -446,6 +441,7 @@
     ticker,
 
     // Embedded images
+    transparent= 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7',
     drag_cursor= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7',
     drag_cursor_down= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==',
 
