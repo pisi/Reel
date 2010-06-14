@@ -152,6 +152,7 @@
             store(_dimensions_, size);
             store(_fraction_, 0);
             store(_steps_, set.steps || set.frames);
+            store(_stage_, '#'+id+set.suffix);
             store('resolution', max(set.steps, set.frames));
             store(_reversed_, set.speed < 0);
             store(_backup_, {
@@ -162,6 +163,7 @@
             t.trigger('start');
           },
           teardown: function(e){
+            $(recall(_stage_)).remove();
             t.unbind(on)
             .attr(t.data(_backup_))
             .bind('setup', function resetup(e){
@@ -185,6 +187,8 @@
               loading= set.loading,
               preload= !images.length ? [image] : images,
               $preloader
+              overlay_id= recall(_stage_).substr(1),
+              $overlay= $(_div_tag_, { id: overlay_id, css: { position: 'relative', width: space.x } }).insertAfter(t)
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .mouseenter(function(e){ t.trigger('enter') })
@@ -229,19 +233,20 @@
                 }
               });
             (set.hint || set.tooltip) && hotspot.attr(_title_, set.hint || set.tooltip);
-            set.monitor && t.append($(_div_tag_, {
+            set.monitor && $overlay.append($(_div_tag_, {
               className: monitor_klass,
-              css: { position: _absolute_, left: 0, top: 0 }
+              css: { position: _absolute_, left: 0, top: -space.y }
             }));
-            set.indicator && t.append($(_div_tag_)
-              .addClass(indicator_klass)
-              .css({
+            set.indicator && $overlay.append($(_div_tag_, {
+              className: indicator_klass,
+              css: {
                 width: set.indicator + _px_,
                 height: set.indicator + _px_,
-                top: (space.y - set.indicator) + _px_,
+                top: (-set.indicator) + _px_,
                 position: _absolute_,
                 backgroundColor: _hex_black_
-              }));
+              }
+             }));
             // Preloading of image(s)
             $(function ready(){
               set.preloader && t.append($preloader= $(_div_tag_, {
@@ -276,7 +281,7 @@
               velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
               velocity= store(_velocity_, velocity),
               step= (speed + velocity) / set.tempo
-            $(dot(monitor_klass), t).text(recall(set.monitor));
+            $(dot(monitor_klass), recall(_stage_)).text(recall(set.monitor));
             to_bias(0);
             idle && idle++;
             if (idle && !velocity) return;
@@ -403,6 +408,7 @@
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
               css= { background: url(set.path+sprite)+___+shift.join(___) }
             set.images.length ? t.attr({ src: set.path+sprite }) : t.css(css);
+            $(dot(indicator_klass), recall(_stage_)).css({ left: indicator + _px_ });
           }
         },
 
@@ -454,7 +460,7 @@
     _backup_= 'backup', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _image_= 'image', _last_fraction_= 'last_fraction', _reversed_= 'reversed',
-    _spacing_= 'spacing', _steps_= 'steps', _velocity_= 'velocity',
+    _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps', _velocity_= 'velocity',
 
     // Various string primitives
     __= '', ___= ' ', _absolute_= 'absolute', _class_= 'class', _div_= 'div', _div_tag_= tag(_div_),
