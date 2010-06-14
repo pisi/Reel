@@ -185,10 +185,16 @@
               images= set.images,
               loaded= 0,
               loading= set.loading,
-              preload= !images.length ? [image] : images,
-              $preloader
+              preload= !images.length ? [image] : new Array().concat(images),
+              $preloader,
+              id= t.attr('id'),
+              img_tag= t[0],
+              preload_images= preload.length != img_tag.preloads.length,
               overlay_id= recall(_stage_).substr(1),
               $overlay= $(_div_tag_, { id: overlay_id, css: { position: 'relative', width: space.x } }).insertAfter(t)
+            img_tag.frames= preload.length;
+            img_tag.preloads= img_tag.preloads || [];
+            img_tag.preloaded= img_tag.preloaded || 0;
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .mouseenter(function(e){ t.trigger('enter') })
@@ -248,22 +254,28 @@
               }
              }));
             // Preloading of image(s)
-            $(function ready(){
-              set.preloader && t.append($preloader= $(_div_tag_, {
-                className: preloader_klass,
-                css: { position: _absolute_, right: 0, top: 0 }
-              }).text(loading+___+loaded+'/'+preload.length));
-              // Timeouted to not halt the jQuery `ready` event
-              setTimeout(function delayed(){
-                $.each(preload, function preload_image(ix, url){
-                  $(tag(_img_), { src: set.path+url, className: preloaded_frame_klass }).appendTo(t).hide().load(function image_loaded(){
-                    loaded++;
-                    $preloader.text(loading+___+loaded+'/'+preload.length);
-                    loaded == preload.length && $preloader.remove();
-                  });
-                });
-              }, 10);
-            });
+            preload_images && $overlay.append($preloader= $(_div_tag_, {
+              className: preloader_klass,
+              css: {
+                position: _absolute_,
+                left: 0,
+                top: -set.indicator,
+                height: set.indicator,
+                backgroundColor: _hex_black_
+              }
+            }));
+            preload_images && while(preload.length){
+              var
+                img= new Image(),
+                url= set.path+preload.shift()
+              $(img).load(function(){
+                img_tag.preloaded++
+                $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
+                if (img_tag.frames == img_tag.preloaded) $preloader.remove()
+              })
+              img.src= url;
+              img_tag.preloads.push(img)
+            }
             t.trigger('frameChange');
           },
           animate: function(e){

@@ -3,8 +3,9 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
+* The old wrapper DIV is gone. Image stays and CSS is applied to it. That also means that the `saves` option does no longer make sense and had been removed all together.
 * Suggestive open/closed palm cursor used for mouse pointer.
-* Images are now being preloaded and loading is indicated when `preloader` option is true.
+* Image(s) loading status is now indicated by a horizontal progress bar at the bottom of the image.
 * Added the `image` option which can be used to supply custom image sprite to use.
 * Array of individual `images` can now be supplied instead of using a collective sprite.
 * Prevented an accidental selection of the projector on iPhone.
