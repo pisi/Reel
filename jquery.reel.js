@@ -187,12 +187,12 @@
               $preloader,
               id= t.attr('id'),
               img_tag= t[0],
+              img_frames= img_tag.frames= preload.length,
+              img_preloads= img_tag.preloads= img_tag.preloads || [],
+              img_preloaded= img_tag.preloaded= img_tag.preloaded || 0,
               preload_images= preload.length != img_tag.preloads.length,
               overlay_id= recall(_stage_).substr(1),
               $overlay= $(_div_tag_, { id: overlay_id, css: { position: 'relative', width: space.x } }).insertAfter(t)
-            img_tag.frames= preload.length;
-            img_tag.preloads= img_tag.preloads || [];
-            img_tag.preloaded= img_tag.preloaded || 0;
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .mouseenter(function(e){ t.trigger('enter') })
@@ -262,7 +262,7 @@
                 backgroundColor: _hex_black_
               }
             }));
-            preload_images && while(preload.length){
+            if (preload_images) while(preload.length){
               var
                 img= new Image(),
                 url= set.path+preload.shift()
