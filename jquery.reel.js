@@ -136,13 +136,14 @@
               styles= t.attr('style'),
               images= set.images,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
-              image_src= set.images ? transparent : src
-            instances.push((t= t.attr({ src: image_src }).bind(on).addClass(klass)
-            .css({
-              display: 'block',
-              width: size.x + _px_,
-              height: size.y + _px_
-            }))[0]);
+              image_src= set.images ? transparent : src,
+              style= {
+                display: 'block',
+                width: size.x + _px_,
+                height: size.y + _px_
+              },
+              $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
+              instances_count= instances.push($instance[0])
             store(_image_, images.length && images.length || set.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'));
             store(_frame_, set.frame);
             store(_frames_, images.length || set.frames);
