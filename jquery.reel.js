@@ -163,14 +163,14 @@
           },
           teardown: function(e){
             $(recall(_stage_)).remove();
-            t.unbind(on)
-            .attr(t.data(_backup_))
-            .bind('setup', function resetup(e){
-              t.unbind('setup');
-              on.setup();
-            });
-            ticker && pool.unbind(tick_event, on.tick);
             t.removeClass(klass)
+            .unbind(ns).unbind(on)
+            .attr(t.data(_backup_))
+            .enableTextSelect()
+            .removeData();
+            no_bias();
+            .unbind(_mouseup_).unbind(_mousemove_)
+            .unbind(tick_event, on.tick);
           },
           start: function(e){
             t.css({ position: 'relative' });
@@ -197,12 +197,12 @@
               $overlay= $(_div_tag_, { id: overlay_id, css: { position: 'relative', width: space.x } }).insertAfter(t)
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-              .mouseenter(function(e){ t.trigger('enter') })
-              .mouseleave(function(e){ t.trigger('leave') })
-              .mousemove(function(e){ t.trigger('over', [e.pageX, e.pageY]) })
-              .mousewheel(function(e, delta){ t.trigger('wheel', [delta]); return false })
-              .dblclick(function(e){ t.trigger('animate') })
-              .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]) })
+              .bind(_mouseenter_, function(e){ t.trigger('enter') })
+              .bind(_mouseleave_, function(e){ t.trigger('leave') })
+              .bind(_mousemove_, function(e){ t.trigger('over', [e.pageX, e.pageY]) })
+              .bind(_mousewheel_, function(e, delta){ t.trigger('wheel', [delta]); return false })
+              .bind(_dblclick_, function(e){ t.trigger('animate') })
+              .bind(_mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]) })
               .disableTextSelect()
             else hotspot
               .css({ WebkitUserSelect: 'none' })
@@ -311,8 +311,8 @@
               velocity= store(_velocity_, 0),
               frame= store(_last_fraction_, store(_clicked_on_, recall(_fraction_)))
             !touched && pool
-            .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
-            .mouseup(function(e){ t.trigger('up') }) && hotspot
+            .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
+            .bind(_mouseup_, function(e){ t.trigger('up') }) && hotspot
             .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor });
           },
           up: function(e, touched){
@@ -327,7 +327,7 @@
             no_bias();
             idle= 0;
             !touched && pool
-            .unbind('mousemove mouseup') && hotspot
+            .unbind(_mouseup_).unbind(_mousemove_) && hotspot
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
           },
           drag: function(e, x, y, touched){
@@ -442,7 +442,7 @@
   }
 
   // Double plugin functions in case plugin is missing
-  double_for('mousewheel disableTextSelect'.split(/ /));
+  double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
 
   // PRIVATE
   var
@@ -473,6 +473,11 @@
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _image_= 'image', _last_fraction_= 'last_fraction', _reversed_= 'reversed',
     _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps', _velocity_= 'velocity',
+
+    // Client events
+    _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
+    _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
+    _mousewheel_= 'mousewheel'+ns,
 
     // Various string primitives
     __= '', ___= ' ', _absolute_= 'absolute', _class_= 'class', _div_= 'div', _div_tag_= tag(_div_),
