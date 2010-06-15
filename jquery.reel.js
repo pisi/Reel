@@ -105,10 +105,9 @@
       })(this),
       instances= []
 
-    ticker= ticker || (function run_ticker(){
-      return setInterval(function tick(){
-        pool.trigger(tick_event);
-      }, 1000 / set.tempo);
+    ticker= ticker || (function tick(){
+      pool.trigger(tick_event);
+      return setTimeout(tick, 1000 / set.tempo);
     })();
 
     applicable.each(function(){
