@@ -324,7 +324,7 @@
               reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
               velocity= store(_velocity_, set.inertia ? momentum * reverse : 0)
             no_bias();
-            idle= 0;
+            unidle();
             !touched && pool
             .unbind(_mouseup_).unbind(_mousemove_) && hotspot
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
