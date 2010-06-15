@@ -259,8 +259,8 @@
               css: {
                 position: _absolute_,
                 left: 0,
-                top: -set.indicator,
-                height: set.indicator,
+                top: -0.5*set.indicator,
+                height: 0.5*set.indicator,
                 backgroundColor: _hex_black_
               }
             }));
