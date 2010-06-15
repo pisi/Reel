@@ -42,7 +42,7 @@
  * [B] Marked plugins are contained (with permissions) in the "bundle" version
  */
 
-(function($){
+(function($, window, document, undefined){
   var
     defaults= {
       footage:            6, // number of frames per line/column
@@ -65,14 +65,13 @@
 
       // [NEW] in version 1.1
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
-      friction:         0.9, // friction of the inertial rotation (will loose 90% of speed per second)
+      friction:         0.9, // friction of the rotation inertia (will loose 90% of speed per second)
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
-      inertial:        true, // drag & throw will give the rotation a momentum when true
-      monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      inertia:         true, // drag & throw will give the rotation a momentum when true
       loading: 'Loading...', // label used for preloader
+      monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       path:              '', // URL path to be prepended to `image` or `images` filenames
-      preloader:       true, // whether display the preloader or not
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
       speed:              0, // animated rotation speed in revolutions per second (Hz)
@@ -90,7 +89,7 @@
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
           pass= []
-        tags.each(function(ix){
+        tags.filter(_img_).each(function(ix){
           var
             $this= $(this),
             src= set.images.length && set.images || set.image || $this.attr(_src_),
@@ -107,11 +106,9 @@
       instances= [],
       ticker_timeout= 1000 / set.tempo
 
-    ticker= ticker || (function run_ticker(){
-      return setTimeout(function tick(){
-        pool.trigger(tick_event);
-        ticker= setTimeout(arguments.callee, ticker_timeout);
-      }, ticker_timeout);
+    ticker= ticker || (function tick(){
+      pool.trigger(tick_event);
+      return setTimeout(tick, 1000 / set.tempo);
     })();
 
     applicable.each(function(){
@@ -140,14 +137,14 @@
               styles= t.attr('style'),
               images= set.images,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
-              turntable= $(_div_tag_).attr(_class_, classes).addClass(klass).addClass(set.klass),
-              image_css= touchy || !set.saves ? { display: 'none' } : { opacity: 0 }
-            instances.push((t= t.attr(_id_, __).wrap(turntable).css(image_css)
-            .parent().attr(_id_, id).bind(on).css({
-              display: 'block',
-              width: size.x + _px_,
-              height: size.y + _px_
-            }))[0]);
+              image_src= set.images ? transparent : src,
+              style= {
+                display: 'block',
+                width: size.x + _px_,
+                height: size.y + _px_
+              },
+              $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
+              instances_count= instances.push($instance[0])
             store(_image_, images.length && images.length || set.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'));
             store(_frame_, set.frame);
             store(_frames_, images.length || set.frames);
@@ -155,29 +152,28 @@
             store(_dimensions_, size);
             store(_fraction_, 0);
             store(_steps_, set.steps || set.frames);
-            store('resolution', max(set.steps, set.frames));
+            store(_stage_, '#'+id+set.suffix);
             store(_reversed_, set.speed < 0);
             store(_backup_, {
-              id: id,
-              'class': classes || __,
+              src: src,
               style: styles || __
             });
             ticker && pool.bind(tick_event, on.tick);
             t.trigger('start');
           },
           teardown: function(e){
-            t= t.unbind(on)
-            .find([dot(indicator_klass), dot(monitor_klass), dot(preloader_klass), _img_+dot(preloaded_frame_klass)].join(', ')).remove().end()
-            .find(_img_)
-            .attr(t.data(_backup_)).unwrap()
-            .bind('setup', function resetup(e){
-              t.unbind('setup');
-              on.setup();
-            });
-            ticker && pool.unbind(tick_event, on.tick);
+            $(recall(_stage_)).remove();
+            t.removeClass(klass)
+            .unbind(ns).unbind(on)
+            .attr(t.data(_backup_))
+            .enableTextSelect()
+            .removeData();
+            no_bias();
+            pool
+            .unbind(_mouseup_).unbind(_mousemove_)
+            .unbind(tick_event, on.tick);
           },
           start: function(e){
-            t.css({ position: 'relative' });
             var
               hotspot= set.hotspot || t,
               space= recall(_dimensions_),
@@ -189,16 +185,25 @@
               images= set.images,
               loaded= 0,
               loading= set.loading,
-              preload= !images.length ? [image] : images,
-              $preloader
+              preload= !images.length ? [image] : new Array().concat(images),
+              $preloader,
+              id= t.attr('id'),
+              img_tag= t[0],
+              img_frames= img_tag.frames= preload.length,
+              img_preloads= img_tag.preloads= img_tag.preloads || [],
+              img_preloaded= img_tag.preloaded= img_tag.preloaded || 0,
+              preload_images= preload.length != img_tag.preloads.length,
+              overlay_id= recall(_stage_).substr(1),
+              overlay_css= { position: 'relative', width: space.x },
+              $overlay= $(_div_tag_, { className: overlay_klass, id: overlay_id, css: overlay_css }).insertAfter(t)
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-              .mouseenter(function(e){ t.trigger('enter') })
-              .mouseleave(function(e){ t.trigger('leave') })
-              .mousemove(function(e){ t.trigger('over', [e.pageX, e.pageY]) })
-              .mousewheel(function(e, delta){ t.trigger('wheel', [delta]); return false })
-              .dblclick(function(e){ t.trigger('animate') })
-              .mousedown(function(e){ t.trigger('down', [e.clientX, e.clientY]) })
+              .bind(_mouseenter_, function(e){ t.trigger('enter') })
+              .bind(_mouseleave_, function(e){ t.trigger('leave') })
+              .bind(_mousemove_, function(e){ t.trigger('over', [e.pageX, e.pageY]) })
+              .bind(_mousewheel_, function(e, delta){ t.trigger('wheel', [delta]); return false })
+              .bind(_dblclick_, function(e){ t.trigger('animate') })
+              .bind(_mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]) })
               .disableTextSelect()
             else hotspot
               .css({ WebkitUserSelect: 'none' })
@@ -235,36 +240,43 @@
                 }
               });
             (set.hint || set.tooltip) && hotspot.attr(_title_, set.hint || set.tooltip);
-            set.monitor && t.append($(_div_tag_, {
+            set.monitor && $overlay.append($(_div_tag_, {
               className: monitor_klass,
-              css: { position: _absolute_, left: 0, top: 0 }
+              css: { position: _absolute_, left: 0, top: -space.y }
             }));
-            set.indicator && t.append($(_div_tag_)
-              .addClass(indicator_klass)
-              .css({
+            set.indicator && $overlay.append($(_div_tag_, {
+              className: indicator_klass,
+              css: {
                 width: set.indicator + _px_,
                 height: set.indicator + _px_,
-                top: (space.y - set.indicator) + _px_,
+                top: (-set.indicator) + _px_,
                 position: _absolute_,
                 backgroundColor: _hex_black_
-              }));
+              }
+             }));
             // Preloading of image(s)
-            $(function ready(){
-              set.preloader && t.append($preloader= $(_div_tag_, {
-                className: preloader_klass,
-                css: { position: _absolute_, right: 0, top: 0 }
-              }).text(loading+___+loaded+'/'+preload.length));
-              // Timeouted to not halt the jQuery `ready` event
-              setTimeout(function delayed(){
-                $.each(preload, function preload_image(ix, url){
-                  $(tag(_img_), { src: set.path+url, className: preloaded_frame_klass }).appendTo(t).hide().load(function image_loaded(){
-                    loaded++;
-                    $preloader.text(loading+___+loaded+'/'+preload.length);
-                    loaded == preload.length && $preloader.remove();
-                  });
-                });
-              }, 10);
-            });
+            preload_images && $overlay.append($preloader= $(_div_tag_, {
+              className: preloader_klass,
+              css: {
+                position: _absolute_,
+                left: 0,
+                top: -0.5*set.indicator,
+                height: 0.5*set.indicator,
+                backgroundColor: _hex_black_
+              }
+            }));
+            if (preload_images) while(preload.length){
+              var
+                img= new Image(),
+                url= set.path+preload.shift()
+              $(img).load(function(){
+                img_tag.preloaded++
+                $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
+                if (img_tag.frames == img_tag.preloaded) $preloader.remove()
+              })
+              img.src= url;
+              img_tag.preloads.push(img)
+            }
             t.trigger('frameChange');
           },
           animate: function(e){
@@ -282,7 +294,7 @@
               velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
               velocity= store(_velocity_, velocity),
               step= (speed + velocity) / set.tempo
-            $(dot(monitor_klass), t).text(recall(set.monitor));
+            $(dot(monitor_klass), recall(_stage_)).text(recall(set.monitor));
             to_bias(0);
             idle && idle++;
             if (idle && !velocity) return;
@@ -300,23 +312,22 @@
               velocity= store(_velocity_, 0),
               frame= store(_last_fraction_, store(_clicked_on_, recall(_fraction_)))
             !touched && pool
-            .mousemove(function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
-            .mouseup(function(e){ t.trigger('up') }) && hotspot
+            .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
+            .bind(_mouseup_, function(e){ t.trigger('up') }) && hotspot
             .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor });
           },
           up: function(e, touched){
             var
               hotspot= set.hotspot || t,
               clicked= store(_clicked_, false),
-              pitch= bias[1] + bias[2] != 0,
               damper= touched ? 15 : 20,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
               reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
-              velocity= store(_velocity_, set.inertial && pitch ? momentum * reverse : 0)
+              velocity= store(_velocity_, set.inertia ? momentum * reverse : 0)
             no_bias();
-            idle= 0;
+            unidle();
             !touched && pool
-            .unbind('mousemove mouseup') && hotspot
+            .unbind(_mouseup_).unbind(_mousemove_) && hotspot
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
           },
           drag: function(e, x, y, touched){
@@ -408,8 +419,8 @@
               travel= space.x - set.indicator,
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
               css= { background: url(set.path+sprite)+___+shift.join(___) }
-            t.css(css)
-              .find(dot(indicator_klass)).css({ left: indicator + _px_ });
+            set.images.length ? t.attr({ src: set.path+sprite }) : t.css(css);
+            $(dot(indicator_klass), recall(_stage_)).css({ left: indicator + _px_ });
           }
         },
 
@@ -417,7 +428,7 @@
         idle= set.delay > 0 ? -round(set.delay * set.tempo) : 0,
         unidle= function(){ return idle= -set.timeout * set.tempo },
 
-        // Inertial rotation control
+        // Inertia rotation control
         on_edge= 0,
         last_x= 0,
         last_velocity= 0,
@@ -425,21 +436,21 @@
         no_bias= function(){ return bias= [0,0,0] },
         bias= no_bias()
 
-      t.ready(on.setup);
+      on.setup();
     });
     return $(instances);
   }
 
   // Double plugin functions in case plugin is missing
-  double_for('mousewheel disableTextSelect'.split(/ /));
+  double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
 
   // PRIVATE
   var
     ns= '.reel',
     klass= 'jquery-reel',
+    overlay_klass= klass + '-overlay',
     indicator_klass= 'indicator',
     preloader_klass= 'preloader',
-    preloaded_frame_klass= 'preloaded_frame',
     monitor_klass= 'monitor',
     tick_event= 'tick'+ns,
     pool= $(document),
@@ -448,6 +459,7 @@
     ticker,
 
     // Embedded images
+    transparent= 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7',
     drag_cursor= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7',
     drag_cursor_down= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==',
 
@@ -460,7 +472,12 @@
     _backup_= 'backup', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _image_= 'image', _last_fraction_= 'last_fraction', _reversed_= 'reversed',
-    _spacing_= 'spacing', _steps_= 'steps', _velocity_= 'velocity',
+    _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps', _velocity_= 'velocity',
+
+    // Client events
+    _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
+    _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
+    _mousewheel_= 'mousewheel'+ns,
 
     // Various string primitives
     __= '', ___= ' ', _absolute_= 'absolute', _class_= 'class', _div_= 'div', _div_tag_= tag(_div_),
@@ -476,4 +493,4 @@
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
-})(jQuery);
+})(jQuery, window, document);
