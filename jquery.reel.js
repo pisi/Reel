@@ -137,7 +137,7 @@
               images= set.images,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
               image_src= set.images ? transparent : src
-            instances.push((t= t.attr({ src: image_src }).bind(on)
+            instances.push((t= t.attr({ src: image_src }).bind(on).addClass(klass)
             .css({
               display: 'block',
               width: size.x + _px_,
@@ -169,6 +169,7 @@
               on.setup();
             });
             ticker && pool.unbind(tick_event, on.tick);
+            t.removeClass(klass)
           },
           start: function(e){
             t.css({ position: 'relative' });
