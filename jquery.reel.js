@@ -194,7 +194,8 @@
               img_preloaded= img_tag.preloaded= img_tag.preloaded || 0,
               preload_images= preload.length != img_tag.preloads.length,
               overlay_id= recall(_stage_).substr(1),
-              $overlay= $(_div_tag_, { id: overlay_id, css: { position: 'relative', width: space.x } }).insertAfter(t)
+              overlay_css= { position: 'relative', width: space.x },
+              $overlay= $(_div_tag_, { className: overlay_klass, id: overlay_id, css: overlay_css }).insertAfter(t)
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .bind(_mouseenter_, function(e){ t.trigger('enter') })
@@ -448,6 +449,7 @@
   var
     ns= '.reel',
     klass= 'jquery-reel',
+    overlay_klass= klass + '-overlay',
     indicator_klass= 'indicator',
     preloader_klass= 'preloader',
     preloaded_frame_klass= 'preloaded_frame',

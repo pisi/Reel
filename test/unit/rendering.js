@@ -7,6 +7,27 @@
     $('.jquery-reel').trigger('teardown');
   }});
 
+  asyncTest( 'Overlay: is created with proper ID', function(){
+    expect(1);
+    var
+      suffix= '-abc',
+      $reel= $('#image').reel({ suffix: suffix }),
+      $overlay= $('#image' + suffix)
+
+    ok( $overlay.length, 'Has the right ID (original image ID + `suffix`)' );
+    start();
+  });
+
+  asyncTest( 'Overlay: has the proper `jquery-reel-overlay` class', function(){
+    expect(1);
+    var
+      $reel= $('#image').reel(),
+      $overlay= $('#image-reel')
+
+    ok( $overlay.hasClass('jquery-reel-overlay'), 'Has the class');
+    start();
+  });
+
   asyncTest( 'Indicator: is sticked to the bottom edge of the projector', function(){
     expect(4);
     try_different_sizes([10, 20, 50, 100]);
