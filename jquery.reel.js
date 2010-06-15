@@ -55,8 +55,6 @@
       klass:             '', // plugin instance class name
       loops:           true, // is it a loop?
       reversed:       false, // true for "counter-clockwise sprite"
-                             // (defaults to double the viewport size or half the `stitched` option)
-      saves:          false, // [deprecated] whether allow user to save the image thumbnail
       sensitivity:       20, // [deprecated] interaction sensitivity
       spacing:            0, // space between frames on reel
       stitched:   undefined, // pixel width (length) of a stitched (rectilinear) panoramic reel
@@ -69,11 +67,11 @@
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       inertia:         true, // drag & throw will give the rotation a momentum when true
-      loading: 'Loading...', // label used for preloader
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       path:              '', // URL path to be prepended to `image` or `images` filenames
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
+                             // (defaults to double the viewport size or half the `stitched` option)
       speed:              0, // animated rotation speed in revolutions per second (Hz)
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
@@ -184,7 +182,6 @@
               image= recall(_image_),
               images= set.images,
               loaded= 0,
-              loading= set.loading,
               preload= !images.length ? [image] : new Array().concat(images),
               $preloader,
               id= t.attr('id'),
