@@ -72,7 +72,6 @@
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       loading: 'Loading...', // label used for preloader
       path:              '', // URL path to be prepended to `image` or `images` filenames
-      preloader:       true, // whether display the preloader or not
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
       speed:              0, // animated rotation speed in revolutions per second (Hz)
