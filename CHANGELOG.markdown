@@ -3,11 +3,13 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
-* The old wrapper DIV is gone. Image stays and CSS is applied to it. That also means that the `saves` option does no longer make sense and had been removed all together.
+* The old wrapper DIV is gone. Image stays and CSS is applied to it.
+* The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
 * Suggestive open/closed palm cursor used for mouse pointer.
 * Image(s) loading status is now indicated by a horizontal progress bar at the bottom of the image.
 * Added the `image` option which can be used to supply custom image sprite to use.
 * Array of individual `images` can now be supplied instead of using a collective sprite.
+* Downsizing of JPEG sprites due to dimensions limit on iPhone may now be surpassed by using the `images` option to load individual images.
 * Prevented an accidental selection of the projector on iPhone.
 * Decimal fraction is now used as a base for internal computations instead of using frames.
     * `steps` option divides Reel into different amount of steps other than defined by `frames`.
@@ -23,7 +25,7 @@ Changelog
 * The inertial momentum gradually wears off by fraction defined as `friction` option.
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.
 * Extended the Test Sampler (test/sampler.html).
-* Now deprecated `saves` option is way too much problematic cross-browser-wise. Be warned that when using it anyway, there are unfortunate mouse-dragging issues with Firefox.
+* Teardown sequence now wipes out everything.
 * Reel's own cloud CDN has been started and recommended for use instead of download.
 * For convenience, a "bundle" is available on the CDN and it contains Reel along side with jQuery.mouseWheel and jQuery.disableTextSelect optional plugins.
 

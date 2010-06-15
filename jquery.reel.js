@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-11
+ * Updated: 2010-06-15
  *
  * Requires jQuery 1.4.x
  */
@@ -203,7 +203,7 @@
               .bind(_mousemove_, function(e){ t.trigger('over', [e.pageX, e.pageY]) })
               .bind(_mousewheel_, function(e, delta){ t.trigger('wheel', [delta]); return false })
               .bind(_dblclick_, function(e){ t.trigger('animate') })
-              .bind(_mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]) })
+              .bind(_mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]); return false })
               .disableTextSelect()
             else hotspot
               .css({ WebkitUserSelect: 'none' })
