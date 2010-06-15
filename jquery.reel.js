@@ -42,7 +42,7 @@
  * [B] Marked plugins are contained (with permissions) in the "bundle" version
  */
 
-(function($){
+(function($, window, document, undefined){
   var
     defaults= {
       footage:            6, // number of frames per line/column
@@ -493,4 +493,4 @@
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
-})(jQuery);
+})(jQuery, window, document);
