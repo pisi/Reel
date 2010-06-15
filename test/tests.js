@@ -22,8 +22,8 @@
 				ticks.push(new Date());
 			}else if (ticks.length == 2){
 				timeout= ticks[1] - ticks[0];
-				ok( timeout > should_be-1 && timeout < should_be+1,
-					'Measured delay between two ticks matches tempo given in options' );
+				ok( timeout > should_be - 0.1*should_be && timeout < should_be + 0.1*should_be,
+					'Measured delay between two ticks matches tempo given in options (± 10 %)' );
 				$pool.unbind('tick.reel', tick);
 				start();
 			}
