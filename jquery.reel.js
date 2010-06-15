@@ -65,12 +65,12 @@
 
       // [NEW] in version 1.1
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
-      friction:         0.9, // friction of the inertial rotation (will loose 90% of speed per second)
+      friction:         0.9, // friction of the rotation inertia (will loose 90% of speed per second)
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
-      inertial:        true, // drag & throw will give the rotation a momentum when true
-      monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      inertia:         true, // drag & throw will give the rotation a momentum when true
       loading: 'Loading...', // label used for preloader
+      monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       path:              '', // URL path to be prepended to `image` or `images` filenames
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
@@ -152,7 +152,6 @@
             store(_fraction_, 0);
             store(_steps_, set.steps || set.frames);
             store(_stage_, '#'+id+set.suffix);
-            store('resolution', max(set.steps, set.frames));
             store(_reversed_, set.speed < 0);
             store(_backup_, {
               src: src,
@@ -174,7 +173,6 @@
             .unbind(tick_event, on.tick);
           },
           start: function(e){
-            t.css({ position: 'relative' });
             var
               hotspot= set.hotspot || t,
               space= recall(_dimensions_),
@@ -321,11 +319,10 @@
             var
               hotspot= set.hotspot || t,
               clicked= store(_clicked_, false),
-              pitch= bias[1] + bias[2] != 0,
               damper= touched ? 15 : 20,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
               reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
-              velocity= store(_velocity_, set.inertial && pitch ? momentum * reverse : 0)
+              velocity= store(_velocity_, set.inertia ? momentum * reverse : 0)
             no_bias();
             idle= 0;
             !touched && pool
@@ -430,7 +427,7 @@
         idle= set.delay > 0 ? -round(set.delay * set.tempo) : 0,
         unidle= function(){ return idle= -set.timeout * set.tempo },
 
-        // Inertial rotation control
+        // Inertia rotation control
         on_edge= 0,
         last_x= 0,
         last_velocity= 0,
@@ -453,7 +450,6 @@
     overlay_klass= klass + '-overlay',
     indicator_klass= 'indicator',
     preloader_klass= 'preloader',
-    preloaded_frame_klass= 'preloaded_frame',
     monitor_klass= 'monitor',
     tick_event= 'tick'+ns,
     pool= $(document),
