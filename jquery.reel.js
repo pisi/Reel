@@ -169,6 +169,7 @@
             .enableTextSelect()
             .removeData();
             no_bias();
+            pool
             .unbind(_mouseup_).unbind(_mousemove_)
             .unbind(tick_event, on.tick);
           },
