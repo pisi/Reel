@@ -10,11 +10,10 @@
     <style type="text/css">
 
 #no_image{ width: 267px; height: 150px; }
-.sample img, .sample .jquery-reel{ display: block; border: 5px solid #000; }
 .sample h2{ margin: 20px 0 0 0; cursor: pointer; text-decoration: line-through; color: #b00; }
 .sample h2:hover{ text-decoration: underline !important;  }
 .sample.on h2{ text-decoration: none; color: #080; }
-.jquery-reel .monitor, .jquery-reel .preloader{ background: #000; color: #fff; }
+.jquery-reel-overlay .monitor{ background: #000; color: #fff; }
 
     </style>
   </head>
@@ -46,41 +45,45 @@
       <img id='green' src='samples/green.jpg' width='200' height='150' />
     </div>
     <div class="sample">
+      <h2>Object movie (auto-playing, sequence)</h2>
+      <img id='badge' src='http://code.vostrel.cz/jquery.reel-1.gif' width='120' height='30' />
+    </div>
+    <div class="sample">
       <h2>Panorama movie (custom `image`)</h2>
       <div id='no_image'></div>
     </div>
 
     <script type='text/javascript'>
-$(function(){ 
-  $('#logo').reel({ speed: 1, delay: 0, indicator: 5 });
-  $('#f1').reel({ frames: 35, delay: 0, indicator: 5 });
-  $('#stitched').reel({ stitched: 1821, frames: 60, delay: 0.5, indicator: 5 });
-  $('#chicago').reel({ stitched: 1072, loops: false, steps: 30, step: 15, speed: 0.1, delay: 1, indicator: 5 });
-  $('#green').reel({ frames: 32, footage: 4, speed: -0.1, indicator: 5 });
-  $('#no_image').reel({ image: 'samples/outlook.jpg', frame: 5, stitched: 1652, indicator: 5 });
+$(function ready(){
 
-  // Reels can easily be turned off by setting their toggle to `false`
-  toggle('#logo', true);
-  toggle('#f1', true);
-  toggle('#stitched', true);
-  toggle('#chicago', true);
-  toggle('#green', true);
-  toggle('#no_image', true);
+  toggle('#logo', true, { speed: 1, delay: 0, indicator: 5 });
+  toggle('#f1', true, { frames: 35, delay: 0, indicator: 5 });
+  toggle('#badge', true, { delay: 0, indicator: 5, speed: 0.1, images: ['http://code.vostrel.cz/jquery.reel-1.gif', 'http://code.vostrel.cz/jquery.reel-2.gif', 'http://code.vostrel.cz/jquery.reel-3.gif'] });
+  toggle('#stitched', true, { stitched: 1821, frames: 60, delay: 0.5, indicator: 5 });
+  toggle('#chicago', true, { stitched: 1072, loops: false, steps: 30, step: 15, speed: 0.1, delay: 1, indicator: 5 });
+  toggle('#green', true, { frames: 32, footage: 4, speed: -0.1, indicator: 5 });
+  toggle('#no_image', true, { image: 'samples/outlook.jpg', frame: 5, stitched: 1652, indicator: 5 });
 
-  function toggle(target, onoff){
+  /*
+  This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
+  It essentially is a shortcut for `$(target).reel(options)`
+  */
+  function toggle(target, onoff, options){
     var
       $sample= $(target).parent('.sample');
-    onoff || $(target).trigger('teardown');
-    onoff && $sample.addClass('on');
     $('h2', $sample)
     .attr({ title: 'Click to setup/teardown' })
-    .click(function click_it(){
+    .click(click_it);
+    onoff && click_it();
+    function click_it(){
       var
         onoff= !$sample.hasClass('on');
       $sample[onoff ? 'addClass' : 'removeClass']('on');
-      $(target).trigger(onoff ? 'setup' : 'teardown');
-    });
+      onoff && $(target).reel(options) || $(target).trigger('teardown');
+    }
+    return onoff
   }
+
 });
     </script>
   </body>
