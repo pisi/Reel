@@ -22,6 +22,7 @@ Changelog
     * `speed` option sets the speed of animation (in Hz).
     * `rebound` options is how long in seconds will a non-looping reel stay on edge before re-bounce.
     * `timeout` option is a period of user inactivity after which animation is resumed again.
+* Also to control the animation from outside the reel, new events `"play"`, `"pause"` ańd `"stop"`.
 * Added boolean `inertial`. When true user can drag & "throw" to create a momentum.
 * The inertial momentum gradually wears off by fraction defined as `friction` option.
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.

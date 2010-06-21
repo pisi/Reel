@@ -279,8 +279,8 @@
               img.src= url;
               img_tag.preloads.push(img)
             }
-            t.trigger('frameChange');
             set.delay > 0 && unidle();
+            t.trigger('frameChange');
           },
           animate: function(e){
             // Stub for future compatibility
@@ -288,15 +288,14 @@
           },
           tick: function(e){
             var
-              speed= set.speed,
               friction= set.friction / set.tempo,
               velocity= recall(_velocity_),
               negative= velocity < 0,
               velocity= velocity - velocity * friction,
-              velocity= last_velocity= velocity == last_velocity ? 0 : velocity
+              velocity= last_velocity= velocity == last_velocity ? 0 : velocity,
               velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
               velocity= store(_velocity_, velocity),
-              step= (speed + velocity) / set.tempo
+              step= (recall(_stopped_) ? velocity : set.speed + velocity) / set.tempo
             $(dot(monitor_klass), recall(_stage_)).text(recall(set.monitor));
             to_bias(0);
             operated && operated++;
@@ -305,6 +304,20 @@
             var
               fraction= store(_fraction_, recall(_fraction_) + step)
             t.trigger('fractionChange');
+          },
+          play: function(e, direction){
+            var
+              playing= store(_playing_, true),
+              stopped= store(_stopped_, !playing)
+          },
+          pause: function(e){
+            var
+              playing= store(_playing_, false)
+          },
+          stop: function(e){
+            var
+              stopped= store(_stopped_, true),
+              playing= store(_playing_, !stopped)
           },
           down: function(e, x, y, touched){
             var
@@ -363,15 +376,15 @@
             var
               fraction= !fraction ? recall(_fraction_) : store(_fraction_, fraction),
               last_fraction= recall(_last_fraction_),
-              delta= fraction - last_fraction,
-              speed= set.speed= sign_like(delta, set.speed),
-              // Looping
-              fraction= set.loops ? fraction - (fraction<0? ceil:floor)(fraction) : min_max(0, 1, fraction),
+              delta= fraction - last_fraction
+            if (delta === 0) return;
+            var
+              speed= recall(_stopped_) ? 0 : (set.speed= sign_like(delta, set.speed)),
+              // Looping or limits
+              fraction= set.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               // Rebounce
               bounce= !set.loops && set.rebound && on_edge == set.rebound * 1000 / set.tempo,
-              speed= set.speed= bounce ? -speed : speed,
-              // Turn negative into positive
-              fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
+              speed= !bounce ? speed : (set.speed= -speed),
               fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
               frame= store(_frame_, fraction * (recall(_frames_) - 1) + 1)
             !operated && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
@@ -475,8 +488,8 @@
     _backup_= 'backup', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _hotspot_= 'hotspot', _image_= 'image', _last_fraction_= 'last_fraction',
-    _reversed_= 'reversed', _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps',
-    _velocity_= 'velocity',
+    _playing_= 'playing', _reversed_= 'reversed', _spacing_= 'spacing', _stage_= 'stage',
+    _steps_= 'steps', _stopped_= 'stopped', _velocity_= 'velocity',
 
     // Client events
     _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
