@@ -142,7 +142,7 @@
                 height: size.y + _px_
               },
               $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
-              $instance= $instance.bind(unidle_events, unidle)
+              $instance= $instance.bind(unidle_events, unidle).bind(idle_events, idle)
               instances_count= instances.push($instance[0])
             store(_image_, images.length && images.length || set.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'));
             store(_frame_, set.frame);
@@ -164,7 +164,7 @@
             $(recall(_stage_)).remove();
             t.removeClass(klass)
             .unbind(ns).unbind(on)
-            .unbind(unidle_events, unidle)
+            .unbind(unidle_events, unidle).unbind(idle_events, idle)
             .attr(t.data(_backup_))
             .enableTextSelect()
             .removeData();
@@ -280,6 +280,7 @@
               img_tag.preloads.push(img)
             }
             t.trigger('frameChange');
+            set.delay > 0 && unidle();
           },
           animate: function(e){
             // Stub for future compatibility
@@ -423,7 +424,8 @@
         },
 
         // User idle control
-        operated= set.delay > 0 ? -round(set.delay * set.tempo) : 0,
+        operated,
+        idle= function(){ return operated= 0 },
         unidle= function(){ return operated= -set.timeout * set.tempo },
 
         // Inertia rotation control
@@ -452,7 +454,8 @@
     monitor_klass= 'monitor',
     hi_klass= 'interface',
     tick_event= 'tick'+ns,
-    unidle_events= 'down drag up wheel',
+    unidle_events= 'down drag up wheel pause',
+    idle_events= 'play',
     pool= $(document),
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
     failsafe_cursor= 'w-resize',
