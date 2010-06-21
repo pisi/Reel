@@ -142,6 +142,7 @@
                 height: size.y + _px_
               },
               $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
+              $instance= $instance.bind(unidle_events, unidle)
               instances_count= instances.push($instance[0])
             store(_image_, images.length && images.length || set.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'));
             store(_frame_, set.frame);
@@ -163,6 +164,7 @@
             $(recall(_stage_)).remove();
             t.removeClass(klass)
             .unbind(ns).unbind(on)
+            .unbind(unidle_events, unidle)
             .attr(t.data(_backup_))
             .enableTextSelect()
             .removeData();
@@ -293,15 +295,14 @@
               step= (speed + velocity) / set.tempo
             $(dot(monitor_klass), recall(_stage_)).text(recall(set.monitor));
             to_bias(0);
-            idle && idle++;
-            if (idle && !velocity) return;
+            operated && operated++;
+            if (operated && !velocity) return;
             if (recall(_clicked_)) return unidle();
             var
               fraction= store(_fraction_, recall(_fraction_) + step)
             t.trigger('fractionChange');
           },
           down: function(e, x, y, touched){
-            unidle();
             var
               hotspot= set.hotspot || t,
               clicked= store(_clicked_, true),
@@ -322,13 +323,11 @@
               reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
               velocity= store(_velocity_, set.inertia ? momentum * reverse : 0)
             no_bias();
-            unidle();
             !touched && pool
             .unbind(_mouseup_).unbind(_mousemove_) && hotspot
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
           },
           drag: function(e, x, y, touched){
-            unidle();
             var
               origin= recall(_clicked_location_),
               fraction= recall(_clicked_on_),
@@ -345,7 +344,6 @@
             t.trigger('fractionChange');
           },
           wheel: function(e, distance){
-            unidle();
             var
               velocity= store(_velocity_, 0),
               fraction= recall(_fraction_),
@@ -372,7 +370,7 @@
               fraction= !set.loops ? fraction : (fraction >= 0 ? fraction : 1 + fraction),
               fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
               frame= store(_frame_, fraction * (recall(_frames_) - 1) + 1)
-            !idle && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
+            !operated && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
@@ -422,8 +420,8 @@
         },
 
         // User idle control
-        idle= set.delay > 0 ? -round(set.delay * set.tempo) : 0,
-        unidle= function(){ return idle= -set.timeout * set.tempo },
+        operated= set.delay > 0 ? -round(set.delay * set.tempo) : 0,
+        unidle= function(){ return operated= -set.timeout * set.tempo },
 
         // Inertia rotation control
         on_edge= 0,
@@ -450,6 +448,7 @@
     preloader_klass= 'preloader',
     monitor_klass= 'monitor',
     tick_event= 'tick'+ns,
+    unidle_events= 'down drag up wheel',
     pool= $(document),
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
     failsafe_cursor= 'w-resize',
