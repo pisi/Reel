@@ -175,7 +175,6 @@
           },
           start: function(e){
             var
-              hotspot= set.hotspot || t,
               space= recall(_dimensions_),
               frames= recall(_frames_),
               resolution= max(frames, recall(_steps_)),
@@ -194,7 +193,11 @@
               preload_images= preload.length != img_tag.preloads.length,
               overlay_id= recall(_stage_).substr(1),
               overlay_css= { position: 'relative', width: space.x },
-              $overlay= $(_div_tag_, { className: overlay_klass, id: overlay_id, css: overlay_css }).insertAfter(t)
+              $overlay= $(_div_tag_, { className: overlay_klass, id: overlay_id, css: overlay_css }).insertAfter(t),
+              $hi= $(_div_tag_, { className: hi_klass,
+                css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y }
+              }).appendTo($overlay),
+              hotspot= store(_hotspot_, $(set.hotspot || $hi ))
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .bind(_mouseenter_, function(e){ t.trigger('enter') })
@@ -304,7 +307,7 @@
           },
           down: function(e, x, y, touched){
             var
-              hotspot= set.hotspot || t,
+              hotspot= recall(_hotspot_),
               clicked= store(_clicked_, true),
               location= store(_clicked_location_, x),
               velocity= store(_velocity_, 0),
@@ -316,7 +319,7 @@
           },
           up: function(e, touched){
             var
-              hotspot= set.hotspot || t,
+              hotspot= recall(_hotspot_),
               clicked= store(_clicked_, false),
               damper= touched ? 15 : 20,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
@@ -447,6 +450,7 @@
     indicator_klass= 'indicator',
     preloader_klass= 'preloader',
     monitor_klass= 'monitor',
+    hi_klass= 'interface',
     tick_event= 'tick'+ns,
     unidle_events= 'down drag up wheel',
     pool= $(document),
@@ -467,8 +471,9 @@
     // Storage keys
     _backup_= 'backup', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
-    _frames_= 'frames', _image_= 'image', _last_fraction_= 'last_fraction', _reversed_= 'reversed',
-    _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps', _velocity_= 'velocity',
+    _frames_= 'frames', _hotspot_= 'hotspot', _image_= 'image', _last_fraction_= 'last_fraction',
+    _reversed_= 'reversed', _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps',
+    _velocity_= 'velocity',
 
     // Client events
     _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,

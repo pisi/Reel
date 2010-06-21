@@ -11,11 +11,14 @@
     ok( typeof $.fn.reel == 'function' );
   });
 
-  test( 'Default option values exposed publicly in jQuery.reel hash', function()
+  test( 'Default option values exposed publicly as jQuery.reel', function()
   {
     ok( $.reel !== undefined );
     ok( typeof $.reel == 'object' );
+  });
 
+  test( 'Options in jQuery.reel hash and their default values', function()
+  {
     // Version 1.0 options
     equal( $.reel.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.frame,                      1, 'initial frame' );
@@ -27,7 +30,7 @@
     equal( $.reel.klass,                     '', 'plugin instance class name' );
     equal( $.reel.loops,                   true, 'is it a loop?' );
     equal( $.reel.reversed,               false, 'true for "counter-clockwise sprite"' );
-    equal( $.reel.saves,                  false, 'allow save as?' );
+    ok( $.reel.saves === undefined,              '[removed] allow save as?' );
     equal( $.reel.sensitivity,               20, '[deprecated] interaction sensitivity' );
     equal( $.reel.spacing,                    0, 'space between frames on reel' );
     equal( $.reel.stitched,           undefined, 'pixel width (length) of a stitched (rectilinear) panoramic reel' );
@@ -38,8 +41,8 @@
     equal( $.reel.delay,                     -1, 'delay before autoplay in seconds (no autoplay by default)' );
     equal( $.reel.friction,                 0.9, 'friction of the rotation inertia (will loose 90% of speed per second)' );
     equal( $.reel.image,              undefined, 'image sprite to be used' );
-    equal( typeof $.reel.images,       'object', 'sequence array of individual images to be used instead of sprite' );
-    equal( $.reel.images.length,              0, 'the sequence is empty by default' );
+    ok( typeof $.reel.images === 'object',       'sequence array of individual images to be used instead of sprite' );
+    ok( $.reel.images.length === 0,              'the sequence is empty by default' );
     equal( $.reel.inertia,                 true, 'drag & throw will give the rotation a momentum when true' );
     equal( $.reel.monitor,            undefined, 'stored value name to monitor in the upper left corner of the viewport' );
     equal( $.reel.path,                      '', 'URL path to be prepended to `image` or `images` filenames' );
