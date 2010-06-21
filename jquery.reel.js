@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-15
+ * Updated: 2010-06-21
  *
  * Requires jQuery 1.4.x
  */
@@ -69,6 +69,7 @@
       inertia:         true, // drag & throw will give the rotation a momentum when true
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       path:              '', // URL path to be prepended to `image` or `images` filenames
+      preloader:          4, // size (height) of a image loading indicator (in pixels)
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
                              // (defaults to double the viewport size or half the `stitched` option)
@@ -257,8 +258,8 @@
               css: {
                 position: _absolute_,
                 left: 0,
-                top: -0.5*set.indicator,
-                height: 0.5*set.indicator,
+                top: -set.preloader,
+                height: set.preloader,
                 backgroundColor: _hex_black_
               }
             }));
