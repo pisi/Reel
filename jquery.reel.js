@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-15
+ * Updated: 2010-06-21
  *
  * Requires jQuery 1.4.x
  */
@@ -44,7 +44,7 @@
 
 (function($, window, document, undefined){
   var
-    defaults= {
+    defaults= $.reel= {
       footage:            6, // number of frames per line/column
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation

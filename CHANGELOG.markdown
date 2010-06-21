@@ -3,6 +3,7 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
+* Default options are now made available for manipulation as `$.reel` object.
 * The old wrapper DIV is gone. Image stays and CSS is applied to it.
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
 * Suggestive open/closed palm cursor used for mouse pointer.
