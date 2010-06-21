@@ -271,7 +271,7 @@
               var
                 img= new Image(),
                 url= set.path+preload.shift()
-              $(img).load(function(){
+              $(img).load(function update_preloader(){
                 img_tag.preloaded++
                 $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                 if (img_tag.frames == img_tag.preloaded) $preloader.remove()
