@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-21
+ * Updated: 2010-06-22
  *
  * Requires jQuery 1.4.x
  */
@@ -352,9 +352,12 @@
               space= recall(_dimensions_),
               revolution= set.revolution || stitched / 2 || space.x,
               // sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
+              old_distance= recall(_distance_dragged_),
               distance= (x - origin), // / sensitivity,
+              reversed= store(_reversed_, distance > old_distance),
               reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
               shift= fraction + reverse / revolution * distance,
+              distance= store(_distance_dragged_, distance),
               fraction= store(_fraction_, shift)
             to_bias(x - last_x);
             last_x= x;
@@ -368,6 +371,7 @@
               step= 1 / resolution,
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= distance < 0 ? -delta : delta,
+              reversed= store(_reversed_, delta > 0),
               fraction= store(_fraction_, fraction + delta * step)
             t.trigger('fractionChange');
             return false;
@@ -486,10 +490,11 @@
 
     // Storage keys
     _backup_= 'backup', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
-    _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
-    _frames_= 'frames', _hotspot_= 'hotspot', _image_= 'image', _last_fraction_= 'last_fraction',
-    _playing_= 'playing', _reversed_= 'reversed', _spacing_= 'spacing', _stage_= 'stage',
-    _steps_= 'steps', _stopped_= 'stopped', _velocity_= 'velocity',
+    _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged',
+    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hotspot_= 'hotspot',
+    _image_= 'image', _last_fraction_= 'last_fraction', _playing_= 'playing', _reversed_= 'reversed',
+    _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps', _stopped_= 'stopped',
+    _velocity_= 'velocity',
 
     // Client events
     _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,

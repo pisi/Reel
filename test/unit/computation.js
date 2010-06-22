@@ -30,4 +30,24 @@
     start();
   });
 
+  asyncTest( 'Positive direction/spped is not detected as reversed', function(){
+    expect(1);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ speed: 1 })
+
+    equal( $reel.data('reversed'), false, 'Not reversed at positive speed');
+    start();
+  });
+
+  asyncTest( 'Negative direction/spped is detected as reversed', function(){
+    expect(1);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ speed: -1 })
+
+    equal( $reel.data('reversed'), true, 'Reversed at negative speeds');
+    start();
+  });
+
 })(jQuery);
