@@ -7,7 +7,7 @@ Changelog
 * The old wrapper DIV is gone. Image stays and CSS is applied to it.
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
 * Suggestive open/closed palm cursor used for mouse pointer.
-* Image(s) loading status is now indicated by a horizontal progress bar at the bottom of the image.
+* Image(s) loading status is now indicated by a horizontal progress bar at the bottom of the image. Height of the loader indicator can be adjusted by using new `preloader` option.
 * Added the `image` option which can be used to supply custom image sprite to use.
 * Array of individual `images` can now be supplied instead of using a collective sprite.
 * Downsizing of JPEG sprites due to dimensions limit on iPhone may now be surpassed by using the `images` option to load individual images.
