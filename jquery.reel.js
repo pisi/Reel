@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-22
+ * Updated: 2010-06-28
  *
  * Requires jQuery 1.4.x
  */
@@ -296,7 +296,8 @@
               velocity= last_velocity= velocity == last_velocity ? 0 : velocity,
               velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
               velocity= store(_velocity_, velocity),
-              step= (recall(_stopped_) ? velocity : set.speed + velocity) / set.tempo
+              speed= recall(_reversed_) ? -set.speed : set.speed,
+              step= (recall(_stopped_) ? velocity : velocity + speed) / set.tempo
             $(dot(monitor_klass), recall(_stage_)).text(recall(set.monitor));
             to_bias(0);
             operated && operated++;
@@ -384,12 +385,11 @@
               delta= fraction - last_fraction
             if (delta === 0) return;
             var
-              speed= recall(_stopped_) ? 0 : (set.speed= sign_like(delta, set.speed)),
               // Looping or limits
               fraction= set.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               // Rebounce
               bounce= !set.loops && set.rebound && on_edge == set.rebound * 1000 / set.tempo,
-              speed= !bounce ? speed : (set.speed= -speed),
+              reversed= bounce && store(_reversed_, !recall(_reversed_)),
               fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
               frame= store(_frame_, fraction * (recall(_frames_) - 1) + 1)
             !operated && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
