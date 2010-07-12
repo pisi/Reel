@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-28
+ * Updated: 2010-06-22
  *
  * Requires jQuery 1.4.x
  */
@@ -153,7 +153,7 @@
             store(_fraction_, 0);
             store(_steps_, set.steps || set.frames);
             store(_stage_, '#'+id+set.suffix);
-            store(_reversed_, set.speed < 0);
+            store(_reversed_, store(_speed_, set.speed) < 0);
             store(_backup_, {
               src: src,
               style: styles || __
@@ -243,10 +243,10 @@
                 }
               });
             (set.hint || set.tooltip) && hotspot.attr(_title_, set.hint || set.tooltip);
-            set.monitor && $overlay.append($(_div_tag_, {
+            set.monitor && $overlay.append($monitor= $(_div_tag_, {
               className: monitor_klass,
               css: { position: _absolute_, left: 0, top: -space.y }
-            }));
+            })) || ($monitor= $());
             set.indicator && $overlay.append($(_div_tag_, {
               className: indicator_klass,
               css: {
@@ -289,16 +289,12 @@
           },
           tick: function(e){
             var
-              friction= set.friction / set.tempo,
               velocity= recall(_velocity_),
-              negative= velocity < 0,
-              velocity= velocity - velocity * friction,
+              velocity= velocity - velocity * tick_friction,
               velocity= last_velocity= velocity == last_velocity ? 0 : velocity,
-              velocity= (negative? min:max)(0, round_to(3, velocity)) || 0,
-              velocity= store(_velocity_, velocity),
-              speed= recall(_reversed_) ? -set.speed : set.speed,
-              step= (recall(_stopped_) ? velocity : velocity + speed) / set.tempo
-            $(dot(monitor_klass), recall(_stage_)).text(recall(set.monitor));
+              velocity= store(_velocity_, (velocity < 0 ? min : max)(0, round_to(3, velocity)) || 0),
+              step= (recall(_stopped_) ? velocity : velocity + tick_fixed_speed()) / set.tempo
+            $monitor.text(recall(set.monitor));
             to_bias(0);
             operated && operated++;
             if (operated && !velocity) return;
@@ -446,6 +442,12 @@
         idle= function(){ return operated= 0 },
         unidle= function(){ return operated= -set.timeout * set.tempo },
 
+        tick_friction= set.friction / set.tempo,
+        tick_fixed_speed= function(){
+          return store(_speed_, sign_like(recall(_reversed_) ? 1 : -1, recall(_speed_)))
+        },
+        $monitor,
+
         // Inertia rotation control
         on_edge= 0,
         last_x= 0,
@@ -494,7 +496,7 @@
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged',
     _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hotspot_= 'hotspot',
     _image_= 'image', _last_fraction_= 'last_fraction', _playing_= 'playing', _reversed_= 'reversed',
-    _spacing_= 'spacing', _stage_= 'stage', _steps_= 'steps', _stopped_= 'stopped',
+    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stopped_= 'stopped',
     _velocity_= 'velocity',
 
     // Client events
