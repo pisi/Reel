@@ -454,7 +454,7 @@
 
         tick_friction= set.friction / set.tempo,
         tick_fixed_speed= function(){
-          return store(_speed_, sign_like(recall(_reversed_) ? 1 : -1, recall(_speed_)))
+          return store(_speed_, (recall(_reversed_) ? -1 : 1) * abs(recall(_speed_)))
         },
         $monitor,
 
@@ -524,7 +524,6 @@
   function url(location){ return 'url(' + location + ')' }
   function round_to(decimals, number){ return +number.toFixed(decimals) }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
-  function sign_like(specimen, value){ return (specimen * value > 0) ? value : -value }
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
