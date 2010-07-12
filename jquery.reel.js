@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-06-22
+ * Updated: 2010-07-12
  *
  * Requires jQuery 1.4.x
  */
@@ -297,11 +297,13 @@
             $monitor.text(recall(set.monitor));
             to_bias(0);
             operated && operated++;
-            if (operated && !velocity) return;
-            if (recall(_clicked_)) return unidle();
+            if (operated && !velocity) return clean();
+            if (recall(_clicked_)) return clean(unidle());
             var
               fraction= store(_fraction_, recall(_fraction_) + step)
+            clean();
             t.trigger('fractionChange');
+            function clean(pass){ return e= null || pass }
           },
           play: function(e, direction){
             var
@@ -359,7 +361,9 @@
               fraction= store(_fraction_, shift)
             to_bias(x - last_x);
             last_x= x;
+            clean();
             t.trigger('fractionChange');
+            function clean(pass){ return e= space= cleanup= null || pass }
           },
           wheel: function(e, distance){
             var
@@ -371,15 +375,17 @@
               delta= distance < 0 ? -delta : delta,
               reversed= store(_reversed_, delta > 0),
               fraction= store(_fraction_, fraction + delta * step)
+            clean();
             t.trigger('fractionChange');
             return false;
+            function clean(pass){ return e= cleanup= null || pass }
           },
           fractionChange: function(e, fraction){
             var
               fraction= !fraction ? recall(_fraction_) : store(_fraction_, fraction),
               last_fraction= recall(_last_fraction_),
               delta= fraction - last_fraction
-            if (delta === 0) return;
+            if (delta === 0) return clean();
             var
               // Looping or limits
               fraction= set.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
@@ -389,7 +395,9 @@
               fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
               frame= store(_frame_, fraction * (recall(_frames_) - 1) + 1)
             !operated && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
+            clean();
             t.trigger('frameChange');
+            function clean(pass){ e= cleanup= null || pass }
           },
           frameChange: function(e, frame){
             var
@@ -433,7 +441,9 @@
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
               css= { background: url(set.path+sprite)+___+shift.join(___) }
             set.images.length ? t.attr({ src: set.path+sprite }) : t.css(css);
+            clean();
             $(dot(indicator_klass), recall(_stage_)).css({ left: indicator + _px_ });
+            function clean(pass){ return e= space= css= cleanup= null || pass }
           }
         },
 
