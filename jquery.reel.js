@@ -352,10 +352,10 @@
               space= recall(_dimensions_),
               revolution= set.revolution || stitched / 2 || space.x,
               // sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
-              old_distance= recall(_distance_dragged_),
+              distance_dragged= recall(_distance_dragged_),
               distance= (x - origin), // / sensitivity,
-              reversed= store(_reversed_, distance > old_distance),
               reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
+              reversed= store(_reversed_, distance < distance_dragged),
               shift= fraction + reverse / revolution * distance,
               distance= store(_distance_dragged_, distance),
               fraction= store(_fraction_, shift)
