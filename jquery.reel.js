@@ -125,10 +125,13 @@
           return t.data(name);
         },
 
+        // Garbage clean-up facility called by every event
+        cleanup= function(pass){ delete this; return pass },
+
         // Events & handlers
         on= {
-          setup: function(){
-            if (t.hasClass(klass)) return;
+          setup: function(e){
+            if (t.hasClass(klass)) return cleanup.call(e);
             var
               src= t.attr(_src_),
               id= t.attr(_id_),
@@ -159,6 +162,7 @@
               style: styles || __
             });
             ticker && pool.bind(tick_event, on.tick);
+            cleanup.call(e);
             t.trigger('start');
           },
           teardown: function(e){
@@ -173,6 +177,7 @@
             pool
             .unbind(_mouseup_).unbind(_mousemove_)
             .unbind(tick_event, on.tick);
+            cleanup.call(e);
           },
           start: function(e){
             var
@@ -281,6 +286,7 @@
               img_tag.preloads.push(img)
             }
             set.delay > 0 && unidle();
+            cleanup.call(e);
             t.trigger('frameChange');
           },
           animate: function(e){
@@ -297,27 +303,29 @@
             $monitor.text(recall(set.monitor));
             to_bias(0);
             operated && operated++;
-            if (operated && !velocity) return clean();
-            if (recall(_clicked_)) return clean(unidle());
+            if (operated && !velocity) return cleanup.call(e);
+            if (recall(_clicked_)) return cleanup.call(e, unidle());
             var
               fraction= store(_fraction_, recall(_fraction_) + step)
-            clean();
+            cleanup.call(e);
             t.trigger('fractionChange');
-            function clean(pass){ return e= null || pass }
           },
           play: function(e, direction){
             var
               playing= store(_playing_, true),
               stopped= store(_stopped_, !playing)
+            cleanup.call(e);
           },
           pause: function(e){
             var
               playing= store(_playing_, false)
+            cleanup.call(e);
           },
           stop: function(e){
             var
               stopped= store(_stopped_, true),
               playing= store(_playing_, !stopped)
+            cleanup.call(e);
           },
           down: function(e, x, y, touched){
             var
@@ -330,6 +338,7 @@
             .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
             .bind(_mouseup_, function(e){ t.trigger('up') }) && hotspot
             .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor });
+            cleanup.call(e);
           },
           up: function(e, touched){
             var
@@ -343,6 +352,7 @@
             !touched && pool
             .unbind(_mouseup_).unbind(_mousemove_) && hotspot
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
+            cleanup.call(e);
           },
           drag: function(e, x, y, touched){
             var
@@ -361,9 +371,8 @@
               fraction= store(_fraction_, shift)
             to_bias(x - last_x);
             last_x= x;
-            clean();
+            cleanup.call(e);
             t.trigger('fractionChange');
-            function clean(pass){ return e= space= cleanup= null || pass }
           },
           wheel: function(e, distance){
             var
@@ -375,17 +384,16 @@
               delta= distance < 0 ? -delta : delta,
               reversed= store(_reversed_, delta > 0),
               fraction= store(_fraction_, fraction + delta * step)
-            clean();
+            cleanup.call(e);
             t.trigger('fractionChange');
             return false;
-            function clean(pass){ return e= cleanup= null || pass }
           },
           fractionChange: function(e, fraction){
             var
               fraction= !fraction ? recall(_fraction_) : store(_fraction_, fraction),
               last_fraction= recall(_last_fraction_),
               delta= fraction - last_fraction
-            if (delta === 0) return clean();
+            if (delta === 0) return cleanup.call(e);
             var
               // Looping or limits
               fraction= set.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
@@ -395,9 +403,8 @@
               fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
               frame= store(_frame_, fraction * (recall(_frames_) - 1) + 1)
             !operated && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
-            clean();
+            cleanup.call(e);
             t.trigger('frameChange');
-            function clean(pass){ e= cleanup= null || pass }
           },
           frameChange: function(e, frame){
             var
@@ -441,9 +448,8 @@
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
               css= { background: url(set.path+sprite)+___+shift.join(___) }
             set.images.length ? t.attr({ src: set.path+sprite }) : t.css(css);
-            clean();
+            cleanup.call(e);
             $(dot(indicator_klass), recall(_stage_)).css({ left: indicator + _px_ });
-            function clean(pass){ return e= space= css= cleanup= null || pass }
           }
         },
 
