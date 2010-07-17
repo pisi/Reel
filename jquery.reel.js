@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-07-12
+ * Updated: 2010-07-17
  *
  * Requires jQuery 1.4.x
  */
@@ -417,21 +417,20 @@
               space= recall(_dimensions_),
               steps= recall(_steps_),
               spacing= recall(_spacing_),
-              reversed= recall(_reversed_)
+              reversed= recall(_reversed_),
+              footage= set.footage
             if (!set.stitched){
               var
-                major= floor(frame / set.footage),
-                minor= frame - major * set.footage - 1,
-                major= minor == -1 ? major + minor : major,
-                minor= minor == -1 ? set.footage + minor : minor,
+                major= floor((frame - 0.1) / footage),
+                minor= (frame % footage) - 1,
                 // Count new positions
                 major_size= set.horizontal ? space.y : space.x,
                 minor_size= set.horizontal ? space.x : space.y,
                 x= - major * (spacing + major_size),
                 y= - minor * (spacing + minor_size),
-                rows= ceil(frames / set.footage),
+                rows= ceil(frames / footage),
                 // Count additional shift when rolling reverse direction
-                reverse_shift= rows * major_size + (rows - 1) * spacing,
+                reverse_shift= rows * (major_size + spacing) - spacing,
                 x= reversed && set.horizontal ? x - reverse_shift : x,
                 y= reversed && !set.horizontal ? y - reverse_shift : y,
                 shift= images.length ? [0, 0] : set.horizontal ? [y + _px_, x + _px_] : [x + _px_, y + _px_]
