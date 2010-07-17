@@ -410,7 +410,7 @@
             var
               frames= recall(_frames_),
               fraction= !frame ? recall(_fraction_) : store(_fraction_, round_to(6, (frame-1) / (frames-1))),
-              frame= !frame ? recall(_frame_) : store(_frame_, frame),
+              frame= !frame ? recall(_frame_) : frame,
               frame= store(_frame_, round(frame)),
               image= recall(_image_),
               images= set.images,
