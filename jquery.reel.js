@@ -383,7 +383,7 @@
               step= 1 / resolution,
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= distance < 0 ? -delta : delta,
-              reversed= store(_reversed_, delta > 0),
+              reversed= store(_reversed_, delta < 0),
               fraction= store(_fraction_, fraction + delta * step)
             cleanup.call(e);
             t.trigger('fractionChange');
@@ -458,7 +458,7 @@
 
         tick_friction= set.friction / set.tempo,
         tick_fixed_speed= function(){
-          return store(_speed_, (recall(_reversed_) ? -1 : 1) * abs(recall(_speed_)))
+          return store(_speed_, (recall(_reversed_) ? 1 : -1) * abs(recall(_speed_)))
         },
         $monitor,
 
