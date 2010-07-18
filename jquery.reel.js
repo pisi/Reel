@@ -150,12 +150,16 @@
               instances_count= instances.push($instance[0])
             store(_image_, images.length && images.length || set.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'));
             store(_frame_, set.frame);
-            store(_frames_, images.length || set.frames);
-            store(_bit_, 1 / (recall(_frames_) - (set.loops ? 0 : 1)));
             store(_spacing_, set.spacing);
             store(_dimensions_, size);
             store(_fraction_, 0);
             store(_steps_, set.steps || set.frames);
+            store(_revolution_, set.revolution || set.stitched / 2 || size.x);
+            store(_rows_, ceil(store(_frames_, images.length || set.frames) / set.footage));
+            store(_bit_, 1 / (recall(_frames_) - (set.loops ? 0 : 1)));
+            store(_wheel_step_, 1 / max(recall(_frames_), recall(_steps_)));
+            store(_stitched_travel_, set.stitched + (set.loops ? 0 : -size.x));
+            store(_indicator_travel_, size.x - set.indicator);
             store(_stage_, '#'+id+set.suffix);
             store(_reversed_, store(_speed_, set.speed) < 0);
             store(_backup_, {
@@ -299,14 +303,14 @@
               velocity= recall(_velocity_),
               velocity= velocity - velocity * tick_friction,
               velocity= last_velocity= velocity == last_velocity ? 0 : velocity,
-              velocity= store(_velocity_, (velocity < 0 ? min : max)(0, round_to(3, velocity)) || 0),
-              step= (recall(_stopped_) ? velocity : velocity + tick_fixed_speed()) / set.tempo
+              velocity= store(_velocity_, (velocity < 0 ? min : max)(0, round_to(3, velocity)) || 0)
             $monitor.text(recall(set.monitor));
             to_bias(0);
             operated && operated++;
             if (operated && !velocity) return cleanup.call(e);
             if (recall(_clicked_)) return cleanup.call(e, unidle());
             var
+              step= (recall(_stopped_) ? velocity : velocity + tick_fixed_speed()) / set.tempo,
               fraction= store(_fraction_, recall(_fraction_) + step)
             cleanup.call(e);
             t.trigger('fractionChange');
@@ -330,20 +334,18 @@
           },
           down: function(e, x, y, touched){
             var
-              hotspot= recall(_hotspot_),
               clicked= store(_clicked_, true),
               location= store(_clicked_location_, x),
               velocity= store(_velocity_, 0),
               frame= store(_last_fraction_, store(_clicked_on_, recall(_fraction_)))
             !touched && pool
-            .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]) })
-            .bind(_mouseup_, function(e){ t.trigger('up') }) && hotspot
+            .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]); cleanup.call(e) })
+            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && recall(_hotspot_)
             .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor });
             cleanup.call(e);
           },
           up: function(e, touched){
             var
-              hotspot= recall(_hotspot_),
               clicked= store(_clicked_, false),
               damper= touched ? 15 : 20,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
@@ -351,23 +353,16 @@
               velocity= store(_velocity_, set.inertia ? momentum * reverse : 0)
             no_bias();
             !touched && pool
-            .unbind(_mouseup_).unbind(_mousemove_) && hotspot
+            .unbind(_mouseup_).unbind(_mousemove_) && recall(_hotspot_)
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
             cleanup.call(e);
           },
           drag: function(e, x, y, touched){
             var
-              origin= recall(_clicked_location_),
-              fraction= recall(_clicked_on_),
-              stitched= set.stitched,
-              space= recall(_dimensions_),
-              revolution= set.revolution || stitched / 2 || space.x,
-              // sensitivity= touchy? set.sensitivity * 0.6 : set.sensitivity,
-              distance_dragged= recall(_distance_dragged_),
-              distance= (x - origin), // / sensitivity,
-              reverse= (set.reversed ? -1 : 1) * (stitched ? -1 : 1),
-              reversed= store(_reversed_, distance < distance_dragged),
-              shift= fraction + reverse / revolution * distance,
+              distance= (x - recall(_clicked_location_)),
+              reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
+              reversed= store(_reversed_, distance < recall(_distance_dragged_)),
+              shift= recall(_clicked_on_) + reverse / recall(_revolution_) * distance,
               distance= store(_distance_dragged_, distance),
               fraction= store(_fraction_, shift)
             to_bias(x - last_x);
@@ -377,14 +372,11 @@
           },
           wheel: function(e, distance){
             var
-              velocity= store(_velocity_, 0),
-              fraction= recall(_fraction_),
-              resolution= max(recall(_frames_), recall(_steps_)),
-              step= 1 / resolution,
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= distance < 0 ? -delta : delta,
               reversed= store(_reversed_, delta < 0),
-              fraction= store(_fraction_, fraction + delta * step)
+              fraction= store(_fraction_, recall(_fraction_) + delta * recall(_wheel_step_)),
+              velocity= store(_velocity_, 0)
             cleanup.call(e);
             t.trigger('fractionChange');
             return false;
@@ -392,8 +384,7 @@
           fractionChange: function(e, fraction){
             var
               fraction= !fraction ? recall(_fraction_) : store(_fraction_, fraction),
-              last_fraction= recall(_last_fraction_),
-              delta= fraction - last_fraction
+              delta= fraction - recall(_last_fraction_)
             if (delta === 0) return cleanup.call(e);
             var
               // Looping or limits
@@ -409,16 +400,12 @@
           },
           frameChange: function(e, frame){
             var
-              frames= recall(_frames_),
-              fraction= !frame ? recall(_fraction_) : store(_fraction_, round_to(6, (frame-1) / (frames-1))),
-              frame= !frame ? recall(_frame_) : frame,
-              frame= store(_frame_, round(frame)),
-              image= recall(_image_),
+              fraction= !frame ? recall(_fraction_) : store(_fraction_, round_to(6, recall(_bit_) * (frame-1))),
+              frame= store(_frame_, round(frame ? frame : recall(_frame_))),
               images= set.images,
               space= recall(_dimensions_),
               steps= recall(_steps_),
               spacing= recall(_spacing_),
-              reversed= recall(_reversed_),
               footage= set.footage,
               horizontal= set.horizontal
             if (!set.stitched){
@@ -427,22 +414,20 @@
                 minor= (frame % footage) - 1,
                 minor= minor < 0 ? footage - 1 : minor,
                 // Additional shift when rolling in reverse direction
-                rows= ceil(frames / footage),
-                shifted= !reversed && horizontal ? (major+= rows) : (minor-= rows),
+                shifted= !recall(_reversed_) && horizontal ? (major+= recall(_rows_)) : (minor-= recall(_rows_)),
                 // Count new positions
                 a= major * ((horizontal ? space.y : space.x) + spacing),
                 b= minor * ((horizontal ? space.x : space.y) + spacing),
                 shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
             }else{
               var
-                travel= set.loops ? set.stitched : set.stitched - space.x,
-                x= round(fraction * travel),
+                x= round(fraction * recall(_stitched_travel_)),
                 y= 0,
                 shift= [-x + _px_, y + _px_]
             }
             var
-              sprite= images[frame - 1] || image,
-              travel= space.x - set.indicator,
+              sprite= images[frame - 1] || recall(_image_),
+              travel= recall(_indicator_travel_),
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
               css= { background: url(set.path+sprite)+___+shift.join(___) }
             set.images.length ? t.attr({ src: set.path+sprite }) : t.css(css);
@@ -458,7 +443,7 @@
 
         tick_friction= set.friction / set.tempo,
         tick_fixed_speed= function(){
-          return store(_speed_, (recall(_reversed_) ? 1 : -1) * abs(recall(_speed_)))
+          return store(_speed_, (recall(_reversed_) ? -1 : 1) * abs(recall(_speed_)))
         },
         $monitor,
 
@@ -509,9 +494,11 @@
     _backup_= 'backup', _bit_= 'bit', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged',
     _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hotspot_= 'hotspot',
-    _image_= 'image', _last_fraction_= 'last_fraction', _playing_= 'playing', _reversed_= 'reversed',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stopped_= 'stopped',
-    _velocity_= 'velocity',
+    _image_= 'image', _indicator_travel_= 'indicator_travel', _last_fraction_= 'last_fraction',
+    _playing_= 'playing', _reversed_= 'reversed', _revolution_= 'revolution', _rows_= 'rows',
+    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
+    _wheel_step_= 'wheel_step',
 
     // Client events
     _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
