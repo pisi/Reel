@@ -418,22 +418,20 @@
               steps= recall(_steps_),
               spacing= recall(_spacing_),
               reversed= recall(_reversed_),
-              footage= set.footage
+              footage= set.footage,
+              horizontal= set.horizontal
             if (!set.stitched){
               var
                 major= floor((frame - 0.1) / footage),
                 minor= (frame % footage) - 1,
-                // Count new positions
-                major_size= set.horizontal ? space.y : space.x,
-                minor_size= set.horizontal ? space.x : space.y,
-                x= - major * (spacing + major_size),
-                y= - minor * (spacing + minor_size),
+                minor= minor < 0 ? footage - 1 : minor,
+                // Additional shift when rolling in reverse direction
                 rows= ceil(frames / footage),
-                // Count additional shift when rolling reverse direction
-                reverse_shift= rows * (major_size + spacing) - spacing,
-                x= reversed && set.horizontal ? x - reverse_shift : x,
-                y= reversed && !set.horizontal ? y - reverse_shift : y,
-                shift= images.length ? [0, 0] : set.horizontal ? [y + _px_, x + _px_] : [x + _px_, y + _px_]
+                shifted= !reversed && horizontal ? (major+= rows) : (minor-= rows),
+                // Count new positions
+                a= major * ((horizontal ? space.y : space.x) + spacing),
+                b= minor * ((horizontal ? space.x : space.y) + spacing),
+                shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
             }else{
               var
                 travel= set.loops ? set.stitched : set.stitched - space.x,
