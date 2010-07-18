@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-07-17
+ * Updated: 2010-07-18
  *
  * Requires jQuery 1.4.x
  */
@@ -151,6 +151,7 @@
             store(_image_, images.length && images.length || set.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'));
             store(_frame_, set.frame);
             store(_frames_, images.length || set.frames);
+            store(_bit_, 1 / (recall(_frames_) - (set.loops ? 0 : 1)));
             store(_spacing_, set.spacing);
             store(_dimensions_, size);
             store(_fraction_, 0);
@@ -401,8 +402,8 @@
               bounce= !set.loops && set.rebound && on_edge == set.rebound * 1000 / set.tempo,
               reversed= bounce && store(_reversed_, !recall(_reversed_)),
               fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
-              frame= store(_frame_, fraction * (recall(_frames_) - 1) + 1)
-            !operated && (on_edge= fraction == 0 || fraction == 1 ? on_edge + 1 : 0);
+              frame= store(_frame_, floor(fraction / recall(_bit_) + 1))
+            !operated && (fraction == 0 || fraction == 1 ? on_edge++ : (on_edge= 0));
             cleanup.call(e);
             t.trigger('frameChange');
           },
@@ -505,7 +506,7 @@
     number= parseInt,
 
     // Storage keys
-    _backup_= 'backup', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
+    _backup_= 'backup', _bit_= 'bit', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged',
     _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hotspot_= 'hotspot',
     _image_= 'image', _last_fraction_= 'last_fraction', _playing_= 'playing', _reversed_= 'reversed',
