@@ -83,7 +83,7 @@
 
   $.fn.reel= function(options){
     var
-      set= $.extend({}, defaults, options),
+      opt= $.extend({}, defaults, options),
       applicable= (function(tags){
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
@@ -91,7 +91,7 @@
         tags.filter(_img_).each(function(ix){
           var
             $this= $(this),
-            src= set.images.length && set.images || set.image || $this.attr(_src_),
+            src= opt.images.length && opt.images || opt.image || $this.attr(_src_),
             width= number($this.css(_width_)),
             height= number($this.css(_height_))
           if (!src || src == __ || !width || !height) return;
@@ -103,11 +103,11 @@
         return $(pass);
       })(this),
       instances= [],
-      ticker_timeout= 1000 / set.tempo
+      ticker_timeout= 1000 / opt.tempo
 
     ticker= ticker || (function tick(){
       pool.trigger(tick_event);
-      return setTimeout(tick, 1000 / set.tempo);
+      return setTimeout(tick, 1000 / opt.tempo);
     })();
 
     applicable.each(function(){
@@ -115,12 +115,12 @@
         t= $(this),
 
         // Data storage
-        store= function(name, value){
+        set= function(name, value){
           t.data(name, value);
           t.trigger('store');
           return value;
         },
-        recall= function(name){
+        get= function(name){
           t.trigger('recall')
           return t.data(name);
         },
@@ -137,9 +137,9 @@
               id= t.attr(_id_),
               classes= t.attr(_class_),
               styles= t.attr('style'),
-              images= set.images,
+              images= opt.images,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
-              image_src= set.images ? transparent : src,
+              image_src= opt.images ? transparent : src,
               style= {
                 display: 'block',
                 width: size.x + _px_,
@@ -148,21 +148,21 @@
               $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
               $instance= $instance.bind(unidle_events, unidle).bind(idle_events, idle)
               instances_count= instances.push($instance[0])
-            store(_image_, images.length && images.length || set.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + set.suffix + '.$2'));
-            store(_frame_, set.frame);
-            store(_spacing_, set.spacing);
-            store(_dimensions_, size);
-            store(_fraction_, 0);
-            store(_steps_, set.steps || set.frames);
-            store(_revolution_, set.revolution || set.stitched / 2 || size.x);
-            store(_rows_, ceil(store(_frames_, images.length || set.frames) / set.footage));
-            store(_bit_, 1 / (recall(_frames_) - (set.loops ? 0 : 1)));
-            store(_wheel_step_, 1 / max(recall(_frames_), recall(_steps_)));
-            store(_stitched_travel_, set.stitched + (set.loops ? 0 : -size.x));
-            store(_indicator_travel_, size.x - set.indicator);
-            store(_stage_, '#'+id+set.suffix);
-            store(_reversed_, store(_speed_, set.speed) < 0);
-            store(_backup_, {
+            set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
+            set(_frame_, opt.frame);
+            set(_spacing_, opt.spacing);
+            set(_dimensions_, size);
+            set(_fraction_, 0);
+            set(_steps_, opt.steps || opt.frames);
+            set(_revolution_, opt.revolution || opt.stitched / 2 || size.x);
+            set(_rows_, ceil(set(_frames_, images.length || opt.frames) / opt.footage));
+            set(_bit_, 1 / (get(_frames_) - (opt.loops ? 0 : 1)));
+            set(_wheel_step_, 1 / max(get(_frames_), get(_steps_)));
+            set(_stitched_travel_, opt.stitched + (opt.loops ? 0 : -size.x));
+            set(_indicator_travel_, size.x - opt.indicator);
+            set(_stage_, '#'+id+opt.suffix);
+            set(_reversed_, set(_speed_, opt.speed) < 0);
+            set(_backup_, {
               src: src,
               style: styles || __
             });
@@ -171,7 +171,7 @@
             t.trigger('start');
           },
           teardown: function(e){
-            $(recall(_stage_)).remove();
+            $(get(_stage_)).remove();
             t.removeClass(klass)
             .unbind(ns).unbind(on)
             .unbind(unidle_events, unidle).unbind(idle_events, idle)
@@ -186,13 +186,13 @@
           },
           start: function(e){
             var
-              space= recall(_dimensions_),
-              frames= recall(_frames_),
-              resolution= max(frames, recall(_steps_)),
-              fraction= store(_fraction_, 1 / resolution * ((set.step || set.frame) - 1)),
-              frame= store(_frame_, fraction * frames + 1),
-              image= recall(_image_),
-              images= set.images,
+              space= get(_dimensions_),
+              frames= get(_frames_),
+              resolution= max(frames, get(_steps_)),
+              fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
+              frame= set(_frame_, fraction * frames + 1),
+              image= get(_image_),
+              images= opt.images,
               loaded= 0,
               preload= !images.length ? [image] : new Array().concat(images),
               $preloader,
@@ -202,13 +202,13 @@
               img_preloads= img_tag.preloads= img_tag.preloads || [],
               img_preloaded= img_tag.preloaded= img_tag.preloaded || 0,
               preload_images= preload.length != img_tag.preloads.length,
-              overlay_id= recall(_stage_).substr(1),
+              overlay_id= get(_stage_).substr(1),
               overlay_css= { position: 'relative', width: space.x },
               $overlay= $(_div_tag_, { className: overlay_klass, id: overlay_id, css: overlay_css }).insertAfter(t),
               $hi= $(_div_tag_, { className: hi_klass,
                 css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y }
               }).appendTo($overlay),
-              hotspot= store(_hotspot_, $(set.hotspot || $hi ))
+              hotspot= set(_hotspot_, $(opt.hotspot || $hi ))
             if (!touchy) hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .bind(_mouseenter_, function(e){ t.trigger('enter') })
@@ -252,17 +252,17 @@
                   return prevent(event);
                 }
               });
-            (set.hint || set.tooltip) && hotspot.attr(_title_, set.hint || set.tooltip);
-            set.monitor && $overlay.append($monitor= $(_div_tag_, {
+            (opt.hint || opt.tooltip) && hotspot.attr(_title_, opt.hint || opt.tooltip);
+            opt.monitor && $overlay.append($monitor= $(_div_tag_, {
               className: monitor_klass,
               css: { position: _absolute_, left: 0, top: -space.y }
             })) || ($monitor= $());
-            set.indicator && $overlay.append($(_div_tag_, {
+            opt.indicator && $overlay.append($(_div_tag_, {
               className: indicator_klass,
               css: {
-                width: set.indicator + _px_,
-                height: set.indicator + _px_,
-                top: (-set.indicator) + _px_,
+                width: opt.indicator + _px_,
+                height: opt.indicator + _px_,
+                top: (-opt.indicator) + _px_,
                 position: _absolute_,
                 backgroundColor: _hex_black_
               }
@@ -273,15 +273,15 @@
               css: {
                 position: _absolute_,
                 left: 0,
-                top: -set.preloader,
-                height: set.preloader,
+                top: -opt.preloader,
+                height: opt.preloader,
                 backgroundColor: _hex_black_
               }
             }));
             if (preload_images) while(preload.length){
               var
                 img= new Image(),
-                url= set.path+preload.shift()
+                url= opt.path+preload.shift()
               $(img).load(function update_preloader(){
                 img_tag.preloaded++
                 $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
@@ -290,7 +290,7 @@
               img.src= url;
               img_tag.preloads.push(img)
             }
-            set.delay > 0 && unidle();
+            opt.delay > 0 && unidle();
             cleanup.call(e);
             t.trigger('frameChange');
           },
@@ -300,71 +300,71 @@
           },
           tick: function(e){
             var
-              velocity= recall(_velocity_),
+              velocity= get(_velocity_),
               velocity= velocity - velocity * tick_friction,
               velocity= last_velocity= velocity == last_velocity ? 0 : velocity,
-              velocity= store(_velocity_, (velocity < 0 ? min : max)(0, round_to(3, velocity)) || 0)
-            $monitor.text(recall(set.monitor));
+              velocity= set(_velocity_, (velocity < 0 ? min : max)(0, round_to(3, velocity)) || 0)
+            $monitor.text(get(opt.monitor));
             to_bias(0);
             operated && operated++;
             if (operated && !velocity) return cleanup.call(e);
-            if (recall(_clicked_)) return cleanup.call(e, unidle());
+            if (get(_clicked_)) return cleanup.call(e, unidle());
             var
-              step= (recall(_stopped_) ? velocity : velocity + tick_fixed_speed()) / set.tempo,
-              fraction= store(_fraction_, recall(_fraction_) + step)
+              step= (get(_stopped_) ? velocity : velocity + tick_fixed_speed()) / opt.tempo,
+              fraction= set(_fraction_, get(_fraction_) + step)
             cleanup.call(e);
             t.trigger('fractionChange');
           },
           play: function(e, direction){
             var
-              playing= store(_playing_, true),
-              stopped= store(_stopped_, !playing)
+              playing= set(_playing_, true),
+              stopped= set(_stopped_, !playing)
             cleanup.call(e);
           },
           pause: function(e){
             var
-              playing= store(_playing_, false)
+              playing= set(_playing_, false)
             cleanup.call(e);
           },
           stop: function(e){
             var
-              stopped= store(_stopped_, true),
-              playing= store(_playing_, !stopped)
+              stopped= set(_stopped_, true),
+              playing= set(_playing_, !stopped)
             cleanup.call(e);
           },
           down: function(e, x, y, touched){
             var
-              clicked= store(_clicked_, true),
-              location= store(_clicked_location_, x),
-              velocity= store(_velocity_, 0),
-              frame= store(_last_fraction_, store(_clicked_on_, recall(_fraction_)))
+              clicked= set(_clicked_, true),
+              location= set(_clicked_location_, x),
+              velocity= set(_velocity_, 0),
+              frame= set(_last_fraction_, set(_clicked_on_, get(_fraction_)))
             !touched && pool
             .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]); cleanup.call(e) })
-            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && recall(_hotspot_)
+            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_hotspot_)
             .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor });
             cleanup.call(e);
           },
           up: function(e, touched){
             var
-              clicked= store(_clicked_, false),
+              clicked= set(_clicked_, false),
               damper= touched ? 15 : 20,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
-              reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
-              velocity= store(_velocity_, set.inertia ? momentum * reverse : 0)
+              reverse= (opt.reversed ? -1 : 1) * (opt.stitched ? -1 : 1),
+              velocity= set(_velocity_, opt.inertia ? momentum * reverse : 0)
             no_bias();
             !touched && pool
-            .unbind(_mouseup_).unbind(_mousemove_) && recall(_hotspot_)
+            .unbind(_mouseup_).unbind(_mousemove_) && get(_hotspot_)
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
             cleanup.call(e);
           },
           drag: function(e, x, y, touched){
             var
-              distance= (x - recall(_clicked_location_)),
-              reverse= (set.reversed ? -1 : 1) * (set.stitched ? -1 : 1),
-              reversed= store(_reversed_, distance < recall(_distance_dragged_)),
-              shift= recall(_clicked_on_) + reverse / recall(_revolution_) * distance,
-              distance= store(_distance_dragged_, distance),
-              fraction= store(_fraction_, shift)
+              distance= (x - get(_clicked_location_)),
+              reverse= (opt.reversed ? -1 : 1) * (opt.stitched ? -1 : 1),
+              reversed= set(_reversed_, distance < get(_distance_dragged_)),
+              shift= get(_clicked_on_) + reverse / get(_revolution_) * distance,
+              distance= set(_distance_dragged_, distance),
+              fraction= set(_fraction_, shift)
             to_bias(x - last_x);
             last_x= x;
             cleanup.call(e);
@@ -374,76 +374,74 @@
             var
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= distance < 0 ? -delta : delta,
-              reversed= store(_reversed_, delta < 0),
-              fraction= store(_fraction_, recall(_fraction_) + delta * recall(_wheel_step_)),
-              velocity= store(_velocity_, 0)
+              reversed= set(_reversed_, delta < 0),
+              fraction= set(_fraction_, get(_fraction_) + delta * get(_wheel_step_)),
+              velocity= set(_velocity_, 0)
             cleanup.call(e);
             t.trigger('fractionChange');
             return false;
           },
           fractionChange: function(e, fraction){
             var
-              fraction= !fraction ? recall(_fraction_) : store(_fraction_, fraction),
-              delta= fraction - recall(_last_fraction_)
+              fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
+              delta= fraction - get(_last_fraction_)
             if (delta === 0) return cleanup.call(e);
             var
-              // Looping or limits
-              fraction= set.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
-              // Rebounce
-              bounce= !set.loops && set.rebound && on_edge == set.rebound * 1000 / set.tempo,
-              reversed= bounce && store(_reversed_, !recall(_reversed_)),
-              fraction= store(_last_fraction_, store(_fraction_, round_to(6, fraction))),
-              frame= store(_frame_, floor(fraction / recall(_bit_) + 1))
+              fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
+              bounce= !opt.loops && opt.rebound && on_edge == opt.rebound * 1000 / opt.tempo,
+              reversed= bounce && set(_reversed_, !get(_reversed_)),
+              fraction= set(_last_fraction_, set(_fraction_, round_to(6, fraction))),
+              frame= set(_frame_, floor(fraction / get(_bit_) + 1))
             !operated && (fraction == 0 || fraction == 1 ? on_edge++ : (on_edge= 0));
             cleanup.call(e);
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
             var
-              fraction= !frame ? recall(_fraction_) : store(_fraction_, round_to(6, recall(_bit_) * (frame-1))),
-              frame= store(_frame_, round(frame ? frame : recall(_frame_))),
-              images= set.images,
-              space= recall(_dimensions_),
-              steps= recall(_steps_),
-              spacing= recall(_spacing_),
-              footage= set.footage,
-              horizontal= set.horizontal
-            if (!set.stitched){
+              fraction= !frame ? get(_fraction_) : set(_fraction_, round_to(6, get(_bit_) * (frame-1))),
+              frame= set(_frame_, round(frame ? frame : get(_frame_))),
+              images= opt.images,
+              space= get(_dimensions_),
+              steps= get(_steps_),
+              spacing= get(_spacing_),
+              footage= opt.footage,
+              horizontal= opt.horizontal
+            if (!opt.stitched){
               var
                 major= floor((frame - 0.1) / footage),
                 minor= (frame % footage) - 1,
                 minor= minor < 0 ? footage - 1 : minor,
                 // Additional shift when rolling in reverse direction
-                shifted= !recall(_reversed_) && horizontal ? (major+= recall(_rows_)) : (minor-= recall(_rows_)),
+                shifted= !get(_reversed_) && horizontal ? (major+= get(_rows_)) : (minor-= get(_rows_)),
                 // Count new positions
                 a= major * ((horizontal ? space.y : space.x) + spacing),
                 b= minor * ((horizontal ? space.x : space.y) + spacing),
                 shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
             }else{
               var
-                x= round(fraction * recall(_stitched_travel_)),
+                x= round(fraction * get(_stitched_travel_)),
                 y= 0,
                 shift= [-x + _px_, y + _px_]
             }
             var
-              sprite= images[frame - 1] || recall(_image_),
-              travel= recall(_indicator_travel_),
+              sprite= images[frame - 1] || get(_image_),
+              travel= get(_indicator_travel_),
               indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
-              css= { background: url(set.path+sprite)+___+shift.join(___) }
-            set.images.length ? t.attr({ src: set.path+sprite }) : t.css(css);
+              css= { background: url(opt.path+sprite)+___+shift.join(___) }
+            opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
             cleanup.call(e);
-            $(dot(indicator_klass), recall(_stage_)).css({ left: indicator + _px_ });
+            $(dot(indicator_klass), get(_stage_)).css({ left: indicator + _px_ });
           }
         },
 
         // User idle control
         operated,
         idle= function(){ return operated= 0 },
-        unidle= function(){ return operated= -set.timeout * set.tempo },
+        unidle= function(){ return operated= -opt.timeout * opt.tempo },
 
-        tick_friction= set.friction / set.tempo,
+        tick_friction= opt.friction / opt.tempo,
         tick_fixed_speed= function(){
-          return store(_speed_, (recall(_reversed_) ? -1 : 1) * abs(recall(_speed_)))
+          return set(_speed_, (get(_reversed_) ? -1 : 1) * abs(get(_speed_)))
         },
         $monitor,
 
