@@ -162,6 +162,7 @@
             set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, '#'+id+opt.suffix);
             set(_reversed_, set(_speed_, opt.speed) < 0);
+            set(_rev_, (opt.reversed ? -1 : 1) * (opt.stitched ? -1 : 1));
             set(_backup_, {
               src: src,
               style: styles || __
@@ -349,8 +350,7 @@
               clicked= set(_clicked_, false),
               damper= touched ? 15 : 20,
               momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
-              reverse= (opt.reversed ? -1 : 1) * (opt.stitched ? -1 : 1),
-              velocity= set(_velocity_, opt.inertia ? momentum * reverse : 0)
+              velocity= set(_velocity_, opt.inertia ? momentum * get(_rev_) : 0)
             no_bias();
             !touched && pool
             .unbind(_mouseup_).unbind(_mousemove_) && get(_hotspot_)
@@ -360,9 +360,8 @@
           drag: function(e, x, y, touched){
             var
               distance= (x - get(_clicked_location_)),
-              reverse= (opt.reversed ? -1 : 1) * (opt.stitched ? -1 : 1),
               reversed= set(_reversed_, distance < get(_distance_dragged_)),
-              shift= get(_clicked_on_) + reverse / get(_revolution_) * distance,
+              shift= get(_clicked_on_) + get(_rev_) / get(_revolution_) * distance,
               distance= set(_distance_dragged_, distance),
               fraction= set(_fraction_, shift)
             to_bias(x - last_x);
@@ -493,7 +492,7 @@
     _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged',
     _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hotspot_= 'hotspot',
     _image_= 'image', _indicator_travel_= 'indicator_travel', _last_fraction_= 'last_fraction',
-    _playing_= 'playing', _reversed_= 'reversed', _revolution_= 'revolution', _rows_= 'rows',
+    _playing_= 'playing', _rev_= 'rev', _reversed_= 'reversed', _revolution_= 'revolution', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
     _wheel_step_= 'wheel_step',
