@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-07-18
+ * Updated: 2010-07-19
  *
  * Requires jQuery 1.4.x
  */
@@ -407,11 +407,10 @@
               horizontal= opt.horizontal
             if (!opt.stitched){
               var
-                major= floor((frame - 0.1) / footage),
                 minor= (frame % footage) - 1,
                 minor= minor < 0 ? footage - 1 : minor,
-                // Additional shift when rolling in reverse direction
-                shifted= !get(_reversed_) && horizontal ? (major+= get(_rows_)) : (minor-= get(_rows_)),
+                major= floor((frame - 0.1) / footage),
+                major= major + (!get(_reversed_) ? get(_rows_) : 0),
                 // Count new positions
                 a= major * ((horizontal ? space.y : space.x) + spacing),
                 b= minor * ((horizontal ? space.x : space.y) + spacing),
