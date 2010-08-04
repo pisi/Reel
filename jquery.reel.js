@@ -243,28 +243,30 @@
                 backgroundColor: _hex_black_
               }
              }));
-            // Preloading of image(s)
-            preload_images && $overlay.append($preloader= $(_div_tag_, {
-              className: preloader_klass,
-              css: {
-                position: _absolute_,
-                left: 0,
-                top: -opt.preloader,
-                height: opt.preloader,
-                backgroundColor: _hex_black_
+            // Images preloader
+            if (preload_images){
+              $overlay.append($preloader= $(_div_tag_, {
+                className: preloader_klass,
+                css: {
+                  position: _absolute_,
+                  left: 0,
+                  top: -opt.preloader,
+                  height: opt.preloader,
+                  backgroundColor: _hex_black_
+                }
+              }));
+              while(preload.length){
+                var
+                  img= new Image(),
+                  url= opt.path+preload.shift()
+                $(img).load(function update_preloader(){
+                  img_tag.preloaded++
+                  $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
+                  if (img_tag.frames == img_tag.preloaded) $preloader.remove()
+                })
+                img.src= url;
+                img_tag.preloads.push(img)
               }
-            }));
-            if (preload_images) while(preload.length){
-              var
-                img= new Image(),
-                url= opt.path+preload.shift()
-              $(img).load(function update_preloader(){
-                img_tag.preloaded++
-                $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
-                if (img_tag.frames == img_tag.preloaded) $preloader.remove()
-              })
-              img.src= url;
-              img_tag.preloads.push(img)
             }
             opt.delay > 0 && unidle();
             cleanup.call(e);
