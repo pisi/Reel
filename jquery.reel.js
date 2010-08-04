@@ -224,38 +224,10 @@
               .disableTextSelect()
             else hotspot
               .css({ WebkitUserSelect: 'none' })
-              .each(function touch_support(){
-                bind(this, {
-                  touchstart: start,
-                  touchmove: move,
-                  touchend: end,
-                  touchcancel: end
-                });
-                function bind(element, events){
-                  $.each(events, function bind_handler(event){
-                    element.addEventListener(event, this, false);
-                  });
-                }
-                function prevent(event){
-                  return event.cancelable && event.preventDefault() || false;
-                }
-                function start(event){
-                  var
-                    touch= event.touches[0]
-                  t.trigger('down', [touch.clientX, touch.clientY, true])
-                  return prevent(event);
-                }
-                function move(event){
-                  var
-                    touch= event.touches[0]
-                  t.trigger('drag', [touch.clientX, touch.clientY, true]);
-                  return prevent(event);
-                }
-                function end(event){
-                  t.trigger('up', [true]);
-                  return prevent(event);
-                }
-              });
+              .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
+              .bind(_touchmove_, function(e){ t.trigger('drag', [finger(e).clientX, finger(e).clientY, true]); return false })
+              .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
+              .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false });
             (opt.hint || opt.tooltip) && hotspot.attr(_title_, opt.hint || opt.tooltip);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
               className: monitor_klass,
@@ -522,7 +494,8 @@
     // Client events
     _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
     _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
-    _mousewheel_= 'mousewheel'+ns,
+    _mousewheel_= 'mousewheel'+ns, _touchcancel_= 'touchcancel'+ns, _touchend_= 'touchend'+ns,
+    _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
 
     // Various string primitives
     __= '', ___= ' ', _absolute_= 'absolute', _class_= 'class', _div_= 'div', _div_tag_= tag(_div_),
@@ -550,4 +523,5 @@
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
+  function finger(e){ return e.originalEvent.touches[0] }
 })(jQuery, window, document);
