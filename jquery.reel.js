@@ -165,7 +165,7 @@
             set(_stage_, '#'+id+opt.suffix);
             set(_reversed_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
-            set(_cwish_, opt.cw || opt.stitched ? 1 : -1);
+            set(_cwish_, negative_when(1, !opt.cw && !opt.stitched));
             set(_backup_, {
               src: src,
               style: styles || __
@@ -380,9 +380,11 @@
           wheel: function(e, distance){
             var
               delta= ceil(sqrt(abs(distance)) / 2),
-              delta= distance < 0 ? -delta : delta,
-              reversed= set(_reversed_, delta < 0),
-              fraction= set(_fraction_, get(_fraction_) + delta * get(_wheel_step_)),
+              delta= negative_when(delta, distance > 0),
+              revolution= 0.2 * get(_revolution_), // Wheel's revolution is just 20 % of full revolution
+              origin= recenter_mouse(undefined, get(_fraction_), revolution),
+              fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+              backwards= delta && set(_backwards_, delta > 0),
               velocity= set(_velocity_, 0)
             cleanup.call(e);
             t.trigger('fractionChange');
@@ -546,4 +548,5 @@
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
+  function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
 })(jQuery, window, document);
