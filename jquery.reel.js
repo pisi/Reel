@@ -144,8 +144,8 @@
               image_src= opt.images ? transparent : src,
               style= {
                 display: 'block',
-                width: size.x + _px_,
-                height: size.y + _px_
+                width: size.x,
+                height: size.y
               },
               $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
               $instance= $instance.bind(unidle_events, unidle).bind(idle_events, idle)
@@ -236,9 +236,9 @@
             opt.indicator && $overlay.append($(_div_tag_, {
               className: indicator_klass,
               css: {
-                width: opt.indicator + _px_,
-                height: opt.indicator + _px_,
-                top: (-opt.indicator) + _px_,
+                width: opt.indicator,
+                height: opt.indicator,
+                top: -opt.indicator,
                 position: _absolute_,
                 backgroundColor: _hex_black_
               }
@@ -413,7 +413,7 @@
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
             opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
             cleanup.call(e);
-            $(dot(indicator_klass), get(_stage_)).css({ left: indicator + _px_ });
+            $(dot(indicator_klass), get(_stage_)).css({ left: indicator });
           }
         },
 
