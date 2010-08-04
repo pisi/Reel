@@ -54,7 +54,7 @@
       indicator:          0, // size of a visual indicator of reeling (in pixels)
       klass:             '', // plugin instance class name
       loops:           true, // is it a loop?
-      reversed:       false, // true for "counter-clockwise sprite"
+      reversed:       false, // [deprecated] use `cw` instead
       sensitivity:       20, // [deprecated] interaction sensitivity
       spacing:            0, // space between frames on reel
       stitched:   undefined, // pixel width (length) of a stitched (rectilinear) panoramic reel
@@ -62,8 +62,10 @@
       tooltip:           '', // [deprecated] use `hint` instead
 
       // [NEW] in version 1.1
+      cw:             false, // true for clockwise sprite organization
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
       friction:         0.9, // friction of the rotation inertia (will loose 90% of speed per second)
+      graph:      undefined,
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       inertia:         true, // drag & throw will give the rotation a momentum when true
@@ -162,7 +164,8 @@
             set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, '#'+id+opt.suffix);
             set(_reversed_, set(_speed_, opt.speed) < 0);
-            set(_rev_, (opt.reversed ? -1 : 1) * (opt.stitched ? -1 : 1));
+            set(_velocity_, 0);
+            set(_cwish_, opt.cw || opt.stitched ? 1 : -1);
             set(_backup_, {
               src: src,
               style: styles || __
@@ -336,9 +339,10 @@
           down: function(e, x, y, touched){
             var
               clicked= set(_clicked_, true),
-              location= set(_clicked_location_, x),
               velocity= set(_velocity_, 0),
-              frame= set(_last_fraction_, set(_clicked_on_, get(_fraction_)))
+              origin= recenter_mouse(x, get(_fraction_), get(_revolution_)),
+              xx= last_x= undefined
+            no_bias();
             !touched && pool
             .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]); cleanup.call(e) })
             .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_hotspot_)
@@ -348,9 +352,9 @@
           up: function(e, touched){
             var
               clicked= set(_clicked_, false),
-              damper= touched ? 15 : 20,
-              momentum= (bias[0] + bias[1] + bias[2]) / bias.length / damper,
-              velocity= set(_velocity_, opt.inertia ? momentum * get(_rev_) : 0)
+              velocity= set(_velocity_, !opt.inertia ? 0 : abs(bias[0] + bias[1] + bias[2]) / 60),
+              breaks= breaking= velocity ? 1 : 0
+            velocity ? idle() : unidle();
             no_bias();
             !touched && pool
             .unbind(_mouseup_).unbind(_mousemove_) && get(_hotspot_)
@@ -359,12 +363,16 @@
           },
           drag: function(e, x, y, touched){
             var
-              distance= (x - get(_clicked_location_)),
-              reversed= set(_reversed_, distance < get(_distance_dragged_)),
-              shift= get(_clicked_on_) + get(_rev_) / get(_revolution_) * distance,
-              distance= set(_distance_dragged_, distance),
-              fraction= set(_fraction_, shift)
-            to_bias(x - last_x);
+              revolution= get(_revolution_),
+              origin= get(_clicked_location_),
+              then= get(_distance_dragged_),
+              now= set(_distance_dragged_, x - origin),
+              fraction= set(_fraction_, graph(now, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
+            if (fraction % 1 && !opt.loops) var
+              origin= recenter_mouse(x, fraction, revolution)
+            else var
+              backwards= then != now && set(_backwards_, then < now)
+            last_x && to_bias(x - last_x);
             last_x= x;
             cleanup.call(e);
             t.trigger('fractionChange');
@@ -449,7 +457,18 @@
         last_velocity= 0,
         to_bias= function(value){ bias.push(value) && bias.shift() },
         no_bias= function(){ return bias= [0,0,0] },
-        bias= no_bias()
+        bias= no_bias(),
+
+        // Graph function to be used
+        graph= opt.graph || (opt.loops ? hatching : enveloping),
+
+        // Resets the interaction graph's zero point
+        recenter_mouse= function(x, fraction, revolution){
+          set(_clicked_on_, fraction);
+          set(_lo_, opt.loops ? 0 : - fraction * revolution);
+          set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
+          return x && set(_clicked_location_, x) || undefined
+        }
 
       on.setup();
     });
@@ -469,7 +488,7 @@
     monitor_klass= 'monitor',
     hi_klass= 'interface',
     tick_event= 'tick'+ns,
-    unidle_events= 'down drag up wheel pause',
+    unidle_events= 'down drag wheel pause',
     idle_events= 'play',
     pool= $(document),
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
@@ -487,11 +506,12 @@
     number= parseInt,
 
     // Storage keys
-    _backup_= 'backup', _bit_= 'bit', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
-    _clicked_on_= 'clicked_on', _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged',
-    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hotspot_= 'hotspot',
-    _image_= 'image', _indicator_travel_= 'indicator_travel', _last_fraction_= 'last_fraction',
-    _playing_= 'playing', _rev_= 'rev', _reversed_= 'reversed', _revolution_= 'revolution', _rows_= 'rows',
+    _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _clicked_= 'clicked',
+    _clicked_location_= 'clicked_location', _cwish_= 'cwish', _clicked_on_= 'clicked_on',
+    _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged', _fraction_= 'fraction',
+    _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image',
+    _indicator_travel_= 'indicator_travel', _last_fraction_= 'last_fraction', _lo_= 'lo',
+    _playing_= 'playing', _reversed_= 'reversed', _revolution_= 'revolution', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
     _wheel_step_= 'wheel_step',
