@@ -33,6 +33,10 @@
       <img id='f1' src='samples/f1.jpg' width='276' height='126' />
     </div>
     <div class="sample">
+      <h2>Object movie (animated, counter-clockwise sprite)</h2>
+      <img id='f1ccw' src='samples/f1-ccw.jpg' width='276' height='126' />
+    </div>
+    <div class="sample">
       <h2>Rectilinear panorama (stitched)</h2>
       <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
     </div>
@@ -52,12 +56,15 @@
     <script type='text/javascript'>
 $(function ready(){
 
-  toggle('#logo', true, { speed: 1, delay: 0, indicator: 5 });
-  toggle('#f1', true, { speed: 0.3, frames: 35, delay: 0, indicator: 5 });
-  toggle('#stitched', true, { stitched: 1821, frames: 60, delay: 0.5, indicator: 5 });
-  toggle('#chicago', true, { stitched: 1072, loops: false, steps: 30, step: 15, speed: 0.1, delay: 2, timeout: 1, indicator: 5 });
-  toggle('#green', true, { frames: 32, footage: 4, speed: -0.1, indicator: 5 });
-  toggle('#badge', true, { delay: 0, indicator: 5, speed: 0.1, images: ['http://code.vostrel.cz/jquery.reel-1.gif', 'http://code.vostrel.cz/jquery.reel-2.gif', 'http://code.vostrel.cz/jquery.reel-3.gif'] });
+  $.reel.indicator= 5;
+
+  toggle('#logo', true, { delay: 0, speed: 1 });
+  toggle('#f1', true, { delay: 0.5, speed: 0.3, frames: 35, cw: true });
+  toggle('#f1ccw', true, { delay: 0.5, speed: 0.3, frames: 35 });
+  toggle('#stitched', true, { delay: 1, stitched: 1821, frames: 60, speed: 0.05 });
+  toggle('#chicago', true, { delay: 1.5, stitched: 1072, loops: false, steps: 30, step: 15, speed: 0.1, timeout: 1 });
+  toggle('#green', true, { delay: 2, frames: 32, footage: 4, speed: -0.1 });
+  toggle('#badge', true, { delay: 2.5, speed: 0.1, images: ['http://code.vostrel.cz/jquery.reel-1.gif', 'http://code.vostrel.cz/jquery.reel-2.gif', 'http://code.vostrel.cz/jquery.reel-3.gif'] });
 
   /*
   This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
