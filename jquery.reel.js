@@ -506,6 +506,18 @@
     _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _px_= 'px', _src_= 'src',
     _title_= 'title', _width_= 'width'
 
+  // The two main graph functions chosen based on `loops` option
+  function enveloping(x, start, revolution, lo, hi, cwness){
+    return start + max(lo, min(hi, - x * cwness)) / revolution
+  }
+  function hatching(x, start, revolution, lo, hi, cwness){
+    var
+      x= (x < lo ? hi : 0) + x % hi, // Looping
+      fraction= start + (- x * cwness) / revolution
+    return fraction - floor(fraction)
+  }
+
+  // Helpers
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
   function url(location){ return 'url(' + location + ')' }
