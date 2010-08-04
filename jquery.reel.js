@@ -304,18 +304,21 @@
           },
           tick: function(e){
             var
-              velocity= get(_velocity_),
-              velocity= velocity - velocity * tick_friction,
-              velocity= last_velocity= velocity == last_velocity ? 0 : velocity,
-              velocity= set(_velocity_, (velocity < 0 ? min : max)(0, round_to(3, velocity)) || 0)
+              velocity= get(_velocity_)
+            if (breaking) var
+              breaked= round_to(3, velocity - (tick_friction * breaking)),
+              done= velocity * breaked <= 0 || abs(velocity) < abs(breaked),
+              velocity= !done && set(_velocity_, abs(velocity) > abs(opt.speed) ? breaked : (breaking= operated= 0))
             $monitor.text(get(opt.monitor));
-            to_bias(0);
+            velocity && breaking++;
             operated && operated++;
+            to_bias(0);
             if (operated && !velocity) return cleanup.call(e);
             if (get(_clicked_)) return cleanup.call(e, unidle());
             var
-              step= (get(_stopped_) ? velocity : velocity + tick_fixed_speed()) / opt.tempo,
-              fraction= set(_fraction_, get(_fraction_) + step)
+              backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
+              step= (get(_stopped_) ? velocity : get(_speed_) + velocity) / opt.tempo,
+              fraction= set(_fraction_, get(_fraction_) + step * backwards)
             cleanup.call(e);
             t.trigger('fractionChange');
           },
@@ -444,13 +447,11 @@
 
         // User idle control
         operated,
+        breaking= 0,
         idle= function(){ return operated= 0 },
         unidle= function(){ return operated= -opt.timeout * opt.tempo },
 
         tick_friction= opt.friction / opt.tempo,
-        tick_fixed_speed= function(){
-          return set(_speed_, (get(_reversed_) ? -1 : 1) * abs(get(_speed_)))
-        },
         $monitor,
 
         // Inertia rotation control
