@@ -36,7 +36,7 @@
       selector= '#image',
       $reel= $(selector).reel({ speed: 1 })
 
-    equal( $reel.data('reversed'), false, 'Not reversed at positive speed');
+    equal( $reel.data('backwards'), false, 'Not reversed at positive speed');
     start();
   });
 
@@ -46,7 +46,7 @@
       selector= '#image',
       $reel= $(selector).reel({ speed: -1 })
 
-    equal( $reel.data('reversed'), true, 'Reversed at negative speeds');
+    equal( $reel.data('backwards'), true, 'Reversed at negative speeds');
     start();
   });
 

@@ -166,7 +166,7 @@
             set(_stitched_travel_, opt.stitched - (opt.loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, '#'+id+opt.suffix);
-            set(_speed_, opt.speed);
+            set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
             set(_cwish_, negative_when(1, !opt.cw && !opt.stitched));
             set(_backup_, {
