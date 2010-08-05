@@ -63,12 +63,12 @@
 
       // [NEW] in version 1.1
       cw:             false, // true for clockwise sprite organization
+      draggable:       true, // mouse or finger drag interaction (allowed by default)
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
       friction:         0.9, // friction of the rotation inertia (will loose 90% of speed per second)
       graph:      undefined,
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
-      inertia:         true, // drag & throw will give the rotation a momentum when true
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       path:              '', // URL path to be prepended to `image` or `images` filenames
       preloader:          4, // size (height) of a image loading indicator (in pixels)
@@ -79,7 +79,9 @@
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
       tempo:             25, // shared ticker tempo in ticks per second
-      timeout:            2  // idle timeout in seconds
+      timeout:            2, // idle timeout in seconds
+      throwable:       true, // drag & throw interaction (allowed by default)
+      wheelable:       true  // mouse wheel interaction (allowed by default)
     }
     // [deprecated] options may be gone anytime soon
 
@@ -178,7 +180,6 @@
             $(get(_stage_)).remove();
             t.removeClass(klass)
             .unbind(ns).unbind(on)
-            .unbind(unidle_events, unidle).unbind(idle_events, idle)
             .attr(t.data(_backup_))
             .enableTextSelect()
             .removeData();
@@ -300,11 +301,13 @@
             var
               playing= set(_playing_, true),
               stopped= set(_stopped_, !playing)
+            idle();
             cleanup.call(e);
           },
           pause: function(e){
             var
               playing= set(_playing_, false)
+            unidle();
             cleanup.call(e);
           },
           stop: function(e){
@@ -314,11 +317,13 @@
             cleanup.call(e);
           },
           down: function(e, x, y, touched){
+            if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, true),
               velocity= set(_velocity_, 0),
               origin= recenter_mouse(x, get(_fraction_), get(_revolution_)),
               xx= last_x= undefined
+            unidle();
             no_bias();
             !touched && pool
             .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]); cleanup.call(e) })
@@ -327,9 +332,10 @@
             cleanup.call(e);
           },
           up: function(e, touched){
+            if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, false),
-              velocity= set(_velocity_, !opt.inertia ? 0 : abs(bias[0] + bias[1] + bias[2]) / 60),
+              velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1] + bias[2]) / 60),
               breaks= breaking= velocity ? 1 : 0
             velocity ? idle() : unidle();
             no_bias();
@@ -345,6 +351,7 @@
           - detects the direction of the motion
           - builds inertial motion bias
           */
+            if (!opt.draggable) return cleanup.call(e);
             var
               revolution= get(_revolution_),
               origin= get(_clicked_location_),
@@ -352,11 +359,13 @@
               fraction= set(_fraction_, graph(x - origin, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
               backwards= motion && set(_backwards_, motion < 0),
               origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, fraction, revolution)
+            unidle();
             last_x= x;
             cleanup.call(e);
             t.trigger('fractionChange');
           },
           wheel: function(e, distance){
+            if (!opt.wheelable) return cleanup.call(e);
             var
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= negative_when(delta, distance > 0),
@@ -365,6 +374,7 @@
               fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
               backwards= delta && set(_backwards_, delta > 0),
               velocity= set(_velocity_, 0)
+            unidle();
             cleanup.call(e);
             t.trigger('fractionChange');
             return false;
@@ -475,8 +485,6 @@
     monitor_klass= 'monitor',
     hi_klass= 'interface',
     tick_event= 'tick'+ns,
-    unidle_events= 'down drag wheel pause',
-    idle_events= 'play',
     pool= $(document),
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
     failsafe_cursor= 'w-resize',

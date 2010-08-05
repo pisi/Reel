@@ -3,6 +3,7 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
+* New `draggable`, `wheelable` and `throwable` options added to allow interaction style control.
 * Default options are now made available for manipulation as `$.reel` object.
 * The old wrapper DIV is gone. Image stays and CSS is applied to it.
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
@@ -23,7 +24,6 @@ Changelog
     * `rebound` options is how long in seconds will a non-looping reel stay on edge before re-bounce.
     * `timeout` option is a period of user inactivity after which animation is resumed again.
 * Also to control the animation from outside the reel, new events `"play"`, `"pause"` ańd `"stop"`.
-* Added boolean `inertial`. When true user can drag & "throw" to create a momentum.
 * The inertial momentum gradually wears off by fraction defined as `friction` option.
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.
 * Extended the Test Sampler (test/sampler.html).
