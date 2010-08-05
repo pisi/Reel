@@ -55,7 +55,6 @@
       klass:             '', // plugin instance class name
       loops:           true, // is it a loop?
       reversed:       false, // [deprecated] use `cw` instead
-      sensitivity:       20, // [deprecated] interaction sensitivity
       spacing:            0, // space between frames on reel
       stitched:   undefined, // pixel width (length) of a stitched (rectilinear) panoramic reel
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)

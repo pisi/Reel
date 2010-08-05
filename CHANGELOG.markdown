@@ -7,6 +7,7 @@ Changelog
 * Default options are now made available for manipulation as `$.reel` object.
 * The old wrapper DIV is gone. Image stays and CSS is applied to it.
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
+* The `sensitivity` option has become obsolete and had been removed.
 * Suggestive open/closed palm cursor used for mouse pointer.
 * Image(s) loading status is now indicated by a horizontal progress bar at the bottom of the image. Height of the loader indicator can be adjusted by using new `preloader` option.
 * Added the `image` option which can be used to supply custom image sprite to use.
