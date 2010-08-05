@@ -505,7 +505,7 @@
     tick_event= 'tick'+ns,
     pool= $(document),
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
-    failsafe_cursor= 'w-resize',
+    failsafe_cursor= 'ew-resize',
     ticker,
 
     // Embedded images
