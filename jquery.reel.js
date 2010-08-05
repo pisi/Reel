@@ -113,7 +113,7 @@
     opt.tooltip && (opt.hint= opt.tooltip);
 
     ticker= ticker || (function tick(){
-      pool.trigger(tick_event);
+      pool.trigger(_tick_);
       return setTimeout(tick, 1000 / opt.tempo);
     })();
 
@@ -142,7 +142,6 @@
             var
               src= t.attr(_src_),
               id= t.attr(_id_),
-              classes= t.attr(_class_),
               styles= t.attr('style'),
               images= opt.images,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
@@ -167,14 +166,14 @@
             set(_stitched_travel_, opt.stitched - (opt.loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, '#'+id+opt.suffix);
-            set(_reversed_, set(_speed_, opt.speed) < 0);
+            set(_speed_, opt.speed);
             set(_velocity_, 0);
             set(_cwish_, negative_when(1, !opt.cw && !opt.stitched));
             set(_backup_, {
               src: src,
               style: styles || __
             });
-            ticker && pool.bind(tick_event, on.tick);
+            ticker && pool.bind(_tick_, on.tick);
             cleanup.call(e);
             t.trigger('start');
           },
@@ -188,7 +187,7 @@
             no_bias();
             pool
             .unbind(_mouseup_).unbind(_mousemove_)
-            .unbind(tick_event, on.tick);
+            .unbind(_tick_, on.tick);
             cleanup.call(e);
           },
           start: function(e){
@@ -202,7 +201,6 @@
               images= opt.images,
               loaded= 0,
               preload= !images.length ? [image] : new Array().concat(images),
-              $preloader,
               id= t.attr('id'),
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
@@ -447,16 +445,16 @@
         idle= function(){ return operated= 0 },
         unidle= function(){ return operated= -opt.timeout * opt.tempo },
 
-        tick_brake= opt.brake / opt.tempo,
         $monitor,
+        $preloader,
 
         // Inertia rotation control
         on_edge= 0,
         last_x= 0,
-        last_velocity= 0,
         to_bias= function(value){ return bias.push(value) && bias.shift() && value },
         no_bias= function(){ return bias= [0,0,0] },
         bias= no_bias(),
+        tick_brake= opt.brake / opt.tempo,
 
         // Graph function to be used
         graph= opt.graph || $.reel.math[opt.loops ? 'hatch' : 'envelope'],
@@ -495,18 +493,18 @@
 
   // PRIVATE
   var
-    ns= '.reel',
+    pool= $(document),
+    touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+    failsafe_cursor= 'ew-resize',
+    ticker,
+
+    // HTML classes
     klass= 'jquery-reel',
     overlay_klass= klass + '-overlay',
     indicator_klass= 'indicator',
     preloader_klass= 'preloader',
     monitor_klass= 'monitor',
     hi_klass= 'interface',
-    tick_event= 'tick'+ns,
-    pool= $(document),
-    touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
-    failsafe_cursor= 'ew-resize',
-    ticker,
 
     // Embedded images
     transparent= 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7',
@@ -523,19 +521,20 @@
     _clicked_location_= 'clicked_location', _cwish_= 'cwish', _clicked_on_= 'clicked_on',
     _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames',
     _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image', _indicator_travel_= 'indicator_travel',
-    _lo_= 'lo', _playing_= 'playing', _reversed_= 'reversed', _revolution_= 'revolution',
-    _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
+    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _rows_= 'rows',
+    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
     _wheel_step_= 'wheel_step',
 
-    // Client events
+    // Events
+    ns= '.reel',
     _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
     _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
-    _mousewheel_= 'mousewheel'+ns, _touchcancel_= 'touchcancel'+ns, _touchend_= 'touchend'+ns,
-    _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
+    _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+ns,
+    _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
 
     // Various string primitives
-    __= '', ___= ' ', _absolute_= 'absolute', _class_= 'class', _div_= 'div', _div_tag_= tag(_div_),
+    __= '', ___= ' ', _absolute_= 'absolute', _div_= 'div', _div_tag_= tag(_div_),
     _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _px_= 'px', _src_= 'src',
     _title_= 'title', _width_= 'width'
 
