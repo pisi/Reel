@@ -339,17 +339,19 @@
             cleanup.call(e);
           },
           drag: function(e, x, y, touched){
+          /*
+          - calculates the X distance from drag center and applies graph on it to get fraction
+          - recenters the drag when dragged over limits
+          - detects the direction of the motion
+          - builds inertial motion bias
+          */
             var
               revolution= get(_revolution_),
               origin= get(_clicked_location_),
-              then= get(_distance_dragged_),
-              now= set(_distance_dragged_, x - origin),
-              fraction= set(_fraction_, graph(now, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
-            if (fraction % 1 && !opt.loops) var
-              origin= recenter_mouse(x, fraction, revolution)
-            else var
-              backwards= then != now && set(_backwards_, then < now)
-            last_x && to_bias(x - last_x);
+              motion= to_bias(x - last_x || 0),
+              fraction= set(_fraction_, graph(x - origin, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+              backwards= motion && set(_backwards_, motion < 0),
+              origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, fraction, revolution)
             last_x= x;
             cleanup.call(e);
             t.trigger('fractionChange');
@@ -437,7 +439,7 @@
         on_edge= 0,
         last_x= 0,
         last_velocity= 0,
-        to_bias= function(value){ bias.push(value) && bias.shift() },
+        to_bias= function(value){ return bias.push(value) && bias.shift() && value },
         no_bias= function(){ return bias= [0,0,0] },
         bias= no_bias(),
 
@@ -490,11 +492,10 @@
     // Storage keys
     _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _clicked_= 'clicked',
     _clicked_location_= 'clicked_location', _cwish_= 'cwish', _clicked_on_= 'clicked_on',
-    _dimensions_= 'dimensions', _distance_dragged_= 'distance_dragged', _fraction_= 'fraction',
-    _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image',
-    _indicator_travel_= 'indicator_travel', _last_fraction_= 'last_fraction', _lo_= 'lo',
-    _playing_= 'playing', _reversed_= 'reversed', _revolution_= 'revolution', _rows_= 'rows',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
+    _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames',
+    _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image', _indicator_travel_= 'indicator_travel',
+    _lo_= 'lo', _playing_= 'playing', _reversed_= 'reversed', _revolution_= 'revolution',
+    _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
     _wheel_step_= 'wheel_step',
 
