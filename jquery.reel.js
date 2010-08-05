@@ -108,6 +108,10 @@
       instances= [],
       ticker_timeout= 1000 / opt.tempo
 
+    // Backward-compatibility of [deprecated] legacy options
+    opt.reversed && (opt.cw= true);
+    opt.tooltip && (opt.hint= opt.tooltip);
+
     ticker= ticker || (function tick(){
       pool.trigger(tick_event);
       return setTimeout(tick, 1000 / opt.tempo);
@@ -228,7 +232,7 @@
               .bind(_dblclick_, function(e){ t.trigger('animate') })
               .bind(_mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]); return false })
               .disableTextSelect();
-            (opt.hint || opt.tooltip) && hotspot.attr(_title_, opt.hint || opt.tooltip);
+            (opt.hint) && hotspot.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
               className: monitor_klass,
               css: { position: _absolute_, left: 0, top: -space.y }
