@@ -430,7 +430,7 @@
             var
               sprite= images[frame - 1] || get(_image_),
               travel= get(_indicator_travel_),
-              indicator= min_max(0, travel, round(interpolate(fraction, -1, travel+2))),
+              indicator= min_max(0, travel, round($.reel.math.interpolate(fraction, -1, travel+2))),
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
             opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
@@ -457,7 +457,7 @@
         bias= no_bias(),
 
         // Graph function to be used
-        graph= opt.graph || (opt.loops ? hatching : enveloping),
+        graph= opt.graph || $.reel.math[opt.loops ? 'hatch' : 'envelope'],
 
         // Resets the interaction graph's zero point
         recenter_mouse= function(x, fraction, revolution){
@@ -470,6 +470,22 @@
       on.setup();
     });
     return $(instances);
+  }
+
+  // Mathematics core
+  $.reel.math= {
+    envelope: function(x, start, revolution, lo, hi, cwness){
+      return start + max(lo, min(hi, - x * cwness)) / revolution
+    },
+    hatch: function(x, start, revolution, lo, hi, cwness){
+      var
+        x= (x < lo ? hi : 0) + x % hi, // Looping
+        fraction= start + (- x * cwness) / revolution
+      return fraction - floor(fraction)
+    },
+    interpolate: function(fraction, lo, hi){
+      return lo + fraction * (hi - lo)
+    }
   }
 
   // Double plugin functions in case plugin is missing
@@ -520,20 +536,6 @@
     __= '', ___= ' ', _absolute_= 'absolute', _class_= 'class', _div_= 'div', _div_tag_= tag(_div_),
     _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _px_= 'px', _src_= 'src',
     _title_= 'title', _width_= 'width'
-
-  // The two main graph functions chosen based on `loops` option
-  function enveloping(x, start, revolution, lo, hi, cwness){
-    return start + max(lo, min(hi, - x * cwness)) / revolution
-  }
-  function hatching(x, start, revolution, lo, hi, cwness){
-    var
-      x= (x < lo ? hi : 0) + x % hi, // Looping
-      fraction= start + (- x * cwness) / revolution
-    return fraction - floor(fraction)
-  }
-
-  // The rest is simply interpolated
-  function interpolate(fraction, lo, hi){ return lo + fraction * (hi - lo) }
 
   // Helpers
   function tag(string){ return '<' + string + '/>' }
