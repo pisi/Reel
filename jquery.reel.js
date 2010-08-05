@@ -54,7 +54,7 @@
       indicator:          0, // size of a visual indicator of reeling (in pixels)
       klass:             '', // plugin instance class name
       loops:           true, // is it a loop?
-      reversed:       false, // [deprecated] use `cw` instead
+      reversed:   undefined, // [deprecated] use `cw` instead
       spacing:            0, // space between frames on reel
       stitched:   undefined, // pixel width (length) of a stitched (rectilinear) panoramic reel
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
@@ -63,8 +63,8 @@
       // [NEW] in version 1.1
       brake:            0.5, // brake force of the inertial rotation
       cw:             false, // true for clockwise organization of sprite
-      draggable:       true, // mouse or finger drag interaction (allowed by default)
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
+      draggable:       true, // mouse or finger drag interaction (allowed by default)
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
