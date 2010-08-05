@@ -280,7 +280,7 @@
             var
               velocity= get(_velocity_)
             if (breaking) var
-              breaked= round_to(3, velocity - (tick_friction * breaking)),
+              breaked= lofi(velocity - (tick_friction * breaking)),
               done= velocity * breaked <= 0 || abs(velocity) < abs(breaked),
               velocity= !done && set(_velocity_, abs(velocity) > abs(opt.speed) ? breaked : (breaking= operated= 0))
             $monitor.text(get(opt.monitor));
@@ -378,7 +378,7 @@
             var
               fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
-              fraction= set(_fraction_, round_to(6, fraction)),
+              fraction= set(_fraction_, lofi(fraction)),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_)))
             if (!opt.loops && opt.rebound) var
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
@@ -389,7 +389,7 @@
           },
           frameChange: function(e, frame){
             var
-              fraction= !frame ? get(_fraction_) : set(_fraction_, round_to(6, get(_bit_) * (frame-1))),
+              fraction= !frame ? get(_fraction_) : set(_fraction_, lofi(get(_bit_) * (frame-1))),
               frame= set(_frame_, round(frame ? frame : get(_frame_))),
               images= opt.images,
               space= get(_dimensions_),
@@ -524,7 +524,7 @@
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
   function url(location){ return 'url(' + location + ')' }
-  function round_to(decimals, number){ return +number.toFixed(decimals) }
+  function lofi(number){ return +number.toFixed(4) }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
