@@ -153,7 +153,6 @@
                 height: size.y
               },
               $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
-              $instance= $instance.bind(unidle_events, unidle).bind(idle_events, idle)
               instances_count= instances.push($instance[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_frame_, opt.frame);
