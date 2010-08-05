@@ -160,7 +160,7 @@
             set(_rows_, ceil(set(_frames_, images.length || opt.frames) / opt.footage));
             set(_bit_, 1 / (get(_frames_) - (opt.loops ? 0 : 1)));
             set(_wheel_step_, 1 / max(get(_frames_), get(_steps_)));
-            set(_stitched_travel_, opt.stitched + (opt.loops ? 0 : -size.x));
+            set(_stitched_travel_, opt.stitched - (opt.loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, '#'+id+opt.suffix);
             set(_reversed_, set(_speed_, opt.speed) < 0);
@@ -292,7 +292,7 @@
             var
               backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
               step= (get(_stopped_) ? velocity : get(_speed_) + velocity) / opt.tempo,
-              fraction= set(_fraction_, get(_fraction_) + step * backwards)
+              fraction= set(_fraction_, get(_fraction_) - step * backwards)
             cleanup.call(e);
             t.trigger('fractionChange');
           },
@@ -390,35 +390,38 @@
             t.trigger('frameChange');
           },
           frameChange: function(e, frame){
+          /*
+          - rounds given frame (if any) and calculates fraction using it
+          - calculates sprite background position shift and applies it
+            or changes sprite image
+          - adjusts indicator position
+          */
             var
               fraction= !frame ? get(_fraction_) : set(_fraction_, lofi(get(_bit_) * (frame-1))),
               frame= set(_frame_, round(frame ? frame : get(_frame_))),
               images= opt.images,
-              space= get(_dimensions_),
               steps= get(_steps_),
-              spacing= get(_spacing_),
               footage= opt.footage,
               horizontal= opt.horizontal
-            if (!opt.stitched){
-              var
-                minor= (frame % footage) - 1,
-                minor= minor < 0 ? footage - 1 : minor,
-                major= floor((frame - 0.1) / footage),
-                major= major + (!get(_reversed_) ? get(_rows_) : 0),
-                // Count new positions
-                a= major * ((horizontal ? space.y : space.x) + spacing),
-                b= minor * ((horizontal ? space.x : space.y) + spacing),
-                shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
-            }else{
-              var
-                x= round(fraction * get(_stitched_travel_)),
-                y= 0,
-                shift= [-x + _px_, y + _px_]
-            }
+            if (!opt.stitched) var
+              minor= (frame % footage) - 1,
+              minor= minor < 0 ? footage - 1 : minor,
+              major= floor((frame - 0.1) / footage),
+              major= major + (get(_backwards_) ? 0 : get(_rows_)),
+              space= get(_dimensions_),
+              spacing= get(_spacing_),
+              a= major * ((horizontal ? space.y : space.x) + spacing),
+              b= minor * ((horizontal ? space.x : space.y) + spacing),
+              shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
+            else var
+              x= round(fraction * get(_stitched_travel_)),
+              y= 0,
+              shift= [-x + _px_, y + _px_]
             var
               sprite= images[frame - 1] || get(_image_),
               travel= get(_indicator_travel_),
-              indicator= min_max(0, travel, round(fraction * (travel+2)) - 1),
+              indicator= min_max(0, travel, round(interpolate(fraction, -1, travel+2))),
+              indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
             opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
             cleanup.call(e);
@@ -520,6 +523,9 @@
       fraction= start + (- x * cwness) / revolution
     return fraction - floor(fraction)
   }
+
+  // The rest is simply interpolated
+  function interpolate(fraction, lo, hi){ return lo + fraction * (hi - lo) }
 
   // Helpers
   function tag(string){ return '<' + string + '/>' }
