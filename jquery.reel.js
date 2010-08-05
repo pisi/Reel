@@ -61,11 +61,11 @@
       tooltip:           '', // [deprecated] use `hint` instead
 
       // [NEW] in version 1.1
-      cw:             false, // true for clockwise sprite organization
       brake:            0.5, // brake force of the inertial rotation
+      cw:             false, // true for clockwise organization of sprite
       draggable:       true, // mouse or finger drag interaction (allowed by default)
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
-      graph:      undefined,
+      graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
