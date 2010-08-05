@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-07-19
+ * Updated: 2010-08-05
  *
  * Requires jQuery 1.4.x
  */
@@ -368,17 +368,22 @@
             return false;
           },
           fractionChange: function(e, fraction){
+          /*
+          - normalizes given fraction (if any) - loop/limit and round
+          - calculates and changes sprite frame
+          - for non-looping panoramas
+              - keeps track of ticks spent on edge
+              - reverses motion direction if too long
+          */
             var
               fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
-              delta= fraction - get(_last_fraction_)
-            if (delta === 0) return cleanup.call(e);
-            var
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
-              bounce= !opt.loops && opt.rebound && on_edge == opt.rebound * 1000 / opt.tempo,
-              reversed= bounce && set(_reversed_, !get(_reversed_)),
-              fraction= set(_last_fraction_, set(_fraction_, round_to(6, fraction))),
-              frame= set(_frame_, floor(fraction / get(_bit_) + 1))
-            !operated && (fraction == 0 || fraction == 1 ? on_edge++ : (on_edge= 0));
+              fraction= set(_fraction_, round_to(6, fraction)),
+              frame= set(_frame_, 1 + floor(fraction / get(_bit_)))
+            if (!opt.loops && opt.rebound) var
+              bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
+              backwards= bounce && set(_backwards_, !get(_backwards_)),
+              edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0)
             cleanup.call(e);
             t.trigger('frameChange');
           },
