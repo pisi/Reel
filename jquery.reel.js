@@ -63,9 +63,9 @@
 
       // [NEW] in version 1.1
       cw:             false, // true for clockwise sprite organization
+      brake:            0.5, // brake force of the inertial rotation
       draggable:       true, // mouse or finger drag interaction (allowed by default)
       delay:             -1, // delay before autoplay in seconds (no autoplay by default)
-      friction:         0.9, // friction of the rotation inertia (will loose 90% of speed per second)
       graph:      undefined,
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
@@ -281,7 +281,7 @@
             var
               velocity= get(_velocity_)
             if (breaking) var
-              breaked= lofi(velocity - (tick_friction * breaking)),
+              breaked= lofi(velocity - (tick_brake * breaking)),
               done= velocity * breaked <= 0 || abs(velocity) < abs(breaked),
               velocity= !done && set(_velocity_, abs(velocity) > abs(opt.speed) ? breaked : (breaking= operated= 0))
             $monitor.text(get(opt.monitor));
@@ -445,7 +445,7 @@
         idle= function(){ return operated= 0 },
         unidle= function(){ return operated= -opt.timeout * opt.tempo },
 
-        tick_friction= opt.friction / opt.tempo,
+        tick_brake= opt.brake / opt.tempo,
         $monitor,
 
         // Inertia rotation control
