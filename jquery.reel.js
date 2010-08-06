@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-08-05
+ * Updated: 2010-08-06
  *
  * Requires jQuery 1.4.x
  */
@@ -161,7 +161,7 @@
             set(_steps_, opt.steps || opt.frames);
             set(_revolution_, opt.revolution || opt.stitched / 2 || size.x);
             set(_rows_, ceil(set(_frames_, images.length || opt.frames) / opt.footage));
-            set(_bit_, 1 / (get(_frames_) - (opt.loops ? 0 : 1)));
+            set(_bit_, 1 / (get(_frames_) - (opt.loops && !opt.stitched ? 0 : 1)));
             set(_wheel_step_, 1 / max(get(_frames_), get(_steps_)));
             set(_stitched_travel_, opt.stitched - (opt.loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
