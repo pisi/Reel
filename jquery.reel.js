@@ -427,9 +427,9 @@
               fraction= set(_fraction_, lofi(fraction)),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_)))
             if (!opt.loops && opt.rebound) var
+              edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
-              backwards= bounce && set(_backwards_, !get(_backwards_)),
-              edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0)
+              backwards= bounce && set(_backwards_, !get(_backwards_))
             cleanup.call(e);
             t.trigger('frameChange');
           },
