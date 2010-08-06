@@ -412,7 +412,6 @@
               fraction= !frame ? get(_fraction_) : set(_fraction_, lofi(get(_bit_) * (frame-1))),
               frame= set(_frame_, round(frame ? frame : get(_frame_))),
               images= opt.images,
-              steps= get(_steps_),
               footage= opt.footage,
               horizontal= opt.horizontal
             if (!opt.stitched) var
