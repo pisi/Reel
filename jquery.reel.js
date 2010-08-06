@@ -144,6 +144,8 @@
               id= t.attr(_id_),
               styles= t.attr('style'),
               images= opt.images,
+              stitched= opt.stitched,
+              loops= opt.loops,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
               image_src= opt.images ? transparent : src,
               style= {
@@ -159,16 +161,16 @@
             set(_dimensions_, size);
             set(_fraction_, 0);
             set(_steps_, opt.steps || opt.frames);
-            set(_revolution_, opt.revolution || opt.stitched / 2 || size.x);
+            set(_revolution_, opt.revolution || stitched / 2 || size.x);
             set(_rows_, ceil(set(_frames_, images.length || opt.frames) / opt.footage));
-            set(_bit_, 1 / (get(_frames_) - (opt.loops && !opt.stitched ? 0 : 1)));
+            set(_bit_, 1 / (get(_frames_) - (loops && !stitched ? 0 : 1)));
             set(_wheel_step_, 1 / max(get(_frames_), get(_steps_)));
-            set(_stitched_travel_, opt.stitched - (opt.loops ? 0 : size.x));
+            set(_stitched_travel_, stitched - (loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, '#'+id+opt.suffix);
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
-            set(_cwish_, negative_when(1, !opt.cw && !opt.stitched));
+            set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
               src: src,
               style: styles || __
