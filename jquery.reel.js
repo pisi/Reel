@@ -282,8 +282,8 @@
               velocity= get(_velocity_)
             if (breaking) var
               breaked= lofi(velocity - (tick_brake * breaking)),
-              done= velocity * breaked <= 0 || abs(velocity) < abs(breaked),
-              velocity= !done && set(_velocity_, abs(velocity) > abs(opt.speed) ? breaked : (breaking= operated= 0))
+              done= velocity * breaked <= 0 || velocity < abs(breaked),
+              velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? breaked : (breaking= operated= 0))
             $monitor.text(get(opt.monitor));
             velocity && breaking++;
             operated && operated++;
@@ -292,7 +292,7 @@
             if (get(_clicked_)) return cleanup.call(e, unidle());
             var
               backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
-              step= (get(_stopped_) ? velocity : get(_speed_) + velocity) / opt.tempo,
+              step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / opt.tempo,
               fraction= set(_fraction_, get(_fraction_) - step * backwards)
             cleanup.call(e);
             t.trigger('fractionChange');
@@ -372,7 +372,7 @@
               revolution= 0.2 * get(_revolution_), // Wheel's revolution is just 20 % of full revolution
               origin= recenter_mouse(undefined, get(_fraction_), revolution),
               fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
-              backwards= delta && set(_backwards_, delta > 0),
+              backwards= delta && set(_backwards_, delta < 0),
               velocity= set(_velocity_, 0)
             unidle();
             cleanup.call(e);
