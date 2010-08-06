@@ -63,7 +63,7 @@
       // [NEW] in version 1.1
       brake:            0.5, // brake force of the inertial rotation
       cw:             false, // true for clockwise organization of sprite
-      delay:             -1, // delay before autoplay in seconds (no autoplay by default)
+      delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
       draggable:       true, // mouse or finger drag interaction (allowed by default)
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
@@ -138,6 +138,10 @@
         // Events & handlers
         on= {
           setup: function(e){
+          /*
+          - fills up the data storage with values based on options
+          - binds to ticker
+          */
             if (t.hasClass(klass)) return cleanup.call(e);
             var
               src= t.attr(_src_),
@@ -180,6 +184,10 @@
             t.trigger('start');
           },
           teardown: function(e){
+          /*
+          - unbinds events, erases all state data
+          - reconstructs the original DOM element
+          */
             $(get(_stage_)).remove();
             t.removeClass(klass)
             .unbind(ns).unbind(on)
@@ -193,6 +201,11 @@
             cleanup.call(e);
           },
           start: function(e){
+          /*
+          - binds all mouse/touch events (namespaced)
+          - prepares stage overlay elements
+          - preloads images if needed
+          */
             var
               space= get(_dimensions_),
               frames= get(_frames_),
@@ -280,6 +293,11 @@
             // log(e.type);
           },
           tick: function(e){
+          /*
+          - Triggered by pool's `tick.reel` event
+          - Keeps track of operated and breaked statuses
+          - Decreases inertial velocity by braking
+          */
             var
               velocity= get(_velocity_)
             if (breaking) var
@@ -319,6 +337,9 @@
             cleanup.call(e);
           },
           down: function(e, x, y, touched){
+          /*
+          - starts the dragging opration by binding dragging events to the pool
+          */
             if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, true),
@@ -334,6 +355,11 @@
             cleanup.call(e);
           },
           up: function(e, touched){
+          /*
+          - ends dragging operation by calculating velocity by summing the bias
+          - unbinds dragging events from pool
+          - resets the mouse cursor
+          */
             if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, false),
@@ -367,6 +393,12 @@
             t.trigger('fractionChange');
           },
           wheel: function(e, distance){
+          /*
+          - calculates wheel input delta and adjusts fraction using the graph
+          - recenters the "drag" each and every time
+          - detects motion direction
+          - nullifies the velocity
+          */
             if (!opt.wheelable) return cleanup.call(e);
             var
               delta= ceil(sqrt(abs(distance)) / 2),
