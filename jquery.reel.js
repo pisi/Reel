@@ -221,7 +221,7 @@
               .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchmove_, function(e){ t.trigger('drag', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
-              .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false });
+              .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
             else hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .bind(_mouseenter_, function(e){ t.trigger('enter') })
