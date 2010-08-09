@@ -176,7 +176,7 @@
             set(_stage_, '#'+id+opt.suffix);
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
-            set(_row_, opt.row / (opt.rows - 1));
+            set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
               src: src,
