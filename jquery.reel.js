@@ -74,6 +74,8 @@
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
                              // (defaults to double the viewport size or half the `stitched` option)
+      row:                1, // initial row
+      rows:               0, // number of rows for a multi-row setup
       speed:              0, // animated rotation speed in revolutions per second (Hz)
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
