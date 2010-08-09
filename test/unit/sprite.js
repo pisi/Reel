@@ -7,7 +7,7 @@
     $('.jquery-reel').trigger('teardown');
   }});
 
-  asyncTest( 'Multi-row: Frame shifting', function(){
+  asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
   /*
   A1 A2 A3
   A4 A5 A6
@@ -26,36 +26,37 @@
         footage: 3,
         rows: 4,
         row: 1
-      })
-    equal( $reel.data('row'), 0);
-    equal( $reel.data('frame'), 2);
-    equal( $reel.css('backgroundPosition'), '-276px 0px');
+      }),
+      /*
+      Sprite layout:
 
-    $reel.trigger('rowChange', 2);
-    equal( $reel.data('row'), 0.3333);
-    equal( $reel.data('frame'), 8);
-    equal( $reel.css('backgroundPosition'), '-276px -252px');
+      A1 A2 A3                     1  2  3
+      A4 A5 A6                     4  5  6
+      B1 B2 B3                     7  8  9
+      B4 B5 B6  in real frames »  10 11 12
+      C1 C2 C3                    13 14 15
+      C4 C5 C6                    16 17 18
+      D1 D2 D3                    19 20 21
+      D4 D5 D6                    22 23 24
 
-    $reel.trigger('rowChange', 3);
-    equal( $reel.data('row'), 0.6667);
-    equal( $reel.data('frame'), 14);
-    equal( $reel.css('backgroundPosition'), '-276px -504px');
-
-    $reel.trigger('rowChange', 4);
-    equal( $reel.data('row'), 1);
-    equal( $reel.data('frame'), 20);
-    equal( $reel.css('backgroundPosition'), '-276px -756px');
+      (letter ~ row; number ~ frame)
+      */
+      entries= {
+        '1': [         0,           2,      '-276px 0px' ],
+        '2': [    0.3333,           8,      '-276px -252px' ],
+        '3': [    0.6667,          14,      '-276px -504px' ],
+        '4': [         1,          20,      '-276px -756px' ],
+      }
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      equal( $reel.css('backgroundPosition'), it[2], 'Row '+ix+': Sprite CSS background position');
+    });
     start();
   });
 
-  asyncTest( 'Multi-row: Uneven rows frame shifting', function(){
-  /*
-  A1 A2 A3 A4
-  A5 A6 B1 B2
-  B3 B4 B5 B6
-  C1 C2 C3 C4
-  C5 C6
-  */
+  asyncTest( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
     var
       selector= '#image',
       $reel= $(selector).reel({
@@ -64,20 +65,29 @@
         frame: 5,
         rows: 3,
         row: 3
-      })
-    equal( $reel.data('row'), 1);
-    equal( $reel.data('frame'), 17);
-    equal( $reel.css('backgroundPosition'), '0px -504px');
+      }),
+      /*
+      Sprite layout:
 
-    $reel.trigger('rowChange', 2);
-    equal( $reel.data('row'), 0.5);
-    equal( $reel.data('frame'), 11);
-    equal( $reel.css('backgroundPosition'), '-552px -252px');
+      A1 A2 A3 A4                    1  2  3  4
+      A5 A6 B1 B2                    5  6  7  8
+      B3 B4 B5 B6  in real frames »  9 10 11 12
+      C1 C2 C3 C4                   13 14 15 16
+      C5 C6                         17 18
 
-    $reel.trigger('rowChange', 1);
-    equal( $reel.data('row'), 0);
-    equal( $reel.data('frame'), 5);
-    equal( $reel.css('backgroundPosition'), '0px -126px');
+      (letter ~ row; number ~ frame)
+      */
+      entries= {
+        '3': [         1,          17,      '0px -504px' ],
+        '2': [       0.5,          11,      '-552px -252px' ],
+        '1': [         0,           5,      '0px -126px' ],
+      }
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      equal( $reel.css('backgroundPosition'), it[2], 'Row '+ix+': Sprite CSS background position');
+    });
     start();
   });
 
