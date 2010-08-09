@@ -379,8 +379,14 @@
               revolution= get(_revolution_),
               origin= get(_clicked_location_),
               motion= to_bias(x - last_x || 0),
-              backwards= motion && set(_backwards_, motion < 0),
               fraction= set(_fraction_, graph(x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+              backwards= motion && set(_backwards_, motion < 0)
+            if (opt.rows) var
+              space_y= get(_dimensions_).y,
+              start= get(_clicked_row_),
+              lo= - start * space_y,
+              row= set(_row_, lofi($.reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1)))
+            var
               origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
             unidle();
             last_x= x;
