@@ -440,8 +440,8 @@
           - shifts the stored frame to a desired row
           */
             var
-              row= set(_row_, min_max(0, 1, row || get(_row_))),
               frame= floor(get(_fraction_) / get(_bit_)) + 1,
+              row= set(_row_, min_max(0, 1, lofi(row != undefined ? (row-1) / (opt.rows-1) : get(_row_)))),
               frame= set(_frame_, frame + (!opt.rows ? 0 : round(row * (opt.rows - 1)) * opt.frames))
             cleanup.call(e);
             t.trigger('frameChange');
