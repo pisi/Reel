@@ -339,7 +339,7 @@
             var
               clicked= set(_clicked_, true),
               velocity= set(_velocity_, 0),
-              origin= recenter_mouse(x, get(_fraction_), get(_revolution_)),
+              origin= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_)),
               xx= last_x= undefined
             unidle();
             no_bias();
@@ -379,9 +379,9 @@
               revolution= get(_revolution_),
               origin= get(_clicked_location_),
               motion= to_bias(x - last_x || 0),
-              fraction= set(_fraction_, graph(x - origin, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
               backwards= motion && set(_backwards_, motion < 0),
-              origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, fraction, revolution)
+              fraction= set(_fraction_, graph(x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+              origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
             unidle();
             last_x= x;
             cleanup.call(e);
@@ -399,7 +399,7 @@
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= negative_when(delta, distance > 0),
               revolution= 0.2 * get(_revolution_), // Wheel's revolution is just 20 % of full revolution
-              origin= recenter_mouse(undefined, get(_fraction_), revolution),
+              origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_row_)),
               fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
               backwards= delta && set(_backwards_, delta < 0),
               velocity= set(_velocity_, 0)
@@ -501,11 +501,12 @@
         graph= opt.graph || $.reel.math[opt.loops ? 'hatch' : 'envelope'],
 
         // Resets the interaction graph's zero point
-        recenter_mouse= function(x, fraction, revolution){
+        recenter_mouse= function(x, y, fraction, revolution, row){
           set(_clicked_on_, fraction);
+          set(_clicked_row_, row);
           set(_lo_, opt.loops ? 0 : - fraction * revolution);
           set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
-          return x && set(_clicked_location_, x) || undefined
+          return x && set(_clicked_location_, { x: x, y: y }) || undefined
         }
 
       on.setup();
@@ -559,13 +560,13 @@
 
     // Storage keys
     _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _clicked_= 'clicked',
-    _clicked_location_= 'clicked_location', _cwish_= 'cwish', _clicked_on_= 'clicked_on',
-    _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames',
-    _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image', _indicator_travel_= 'indicator_travel',
-    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
-    _wheel_step_= 'wheel_step',
+    _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
+    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
+    _frames_= 'frames', _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image',
+    _indicator_travel_= 'indicator_travel', _lo_= 'lo', _playing_= 'playing',
+    _revolution_= 'revolution', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing',
+    _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_travel_= 'stitched_travel',
+    _stopped_= 'stopped', _velocity_= 'velocity', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',
