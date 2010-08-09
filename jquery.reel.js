@@ -281,7 +281,7 @@
             }
             opt.delay > 0 && unidle();
             cleanup.call(e);
-            t.trigger('frameChange');
+            t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           animate: function(e){
             // Stub for future compatibility
@@ -432,8 +432,7 @@
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
               backwards= bounce && set(_backwards_, !get(_backwards_))
             cleanup.call(e);
-            if (opt.rows && !opt.stitched) return t.trigger('rowChange');
-            t.trigger('frameChange');
+            t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           rowChange: function(e, row){
           /*
