@@ -480,6 +480,11 @@
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
             opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
             $(dot(indicator_klass+'.x'), get(_stage_)).css({ left: indicator });
+            if (!opt.rows) return cleanup.call(e);
+            var
+              ytravel= get(_dimensions_).y - opt.indicator,
+              yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2)))
+            $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator - ytravel - opt.indicator });
             cleanup.call(e);
           }
         },
