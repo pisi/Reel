@@ -252,16 +252,8 @@
               className: monitor_klass,
               css: { position: _absolute_, left: 0, top: -space.y }
             })) || ($monitor= $());
-            opt.indicator && $overlay.append($(_div_tag_, {
-              className: indicator_klass,
-              css: {
-                width: opt.indicator,
-                height: opt.indicator,
-                top: -opt.indicator,
-                position: _absolute_,
-                backgroundColor: _hex_black_
-              }
-             }));
+            opt.indicator && $overlay.append(indicator('x'));
+            opt.rows && opt.indicator && $overlay.append(indicator('y'));
             // Images preloader
             if (preload_images){
               $overlay.append($preloader= $(_div_tag_, {
@@ -470,8 +462,8 @@
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
             opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
+            $(dot(indicator_klass+'.x'), get(_stage_)).css({ left: indicator });
             cleanup.call(e);
-            $(dot(indicator_klass), get(_stage_)).css({ left: indicator });
           }
         },
 
@@ -483,6 +475,19 @@
 
         $monitor,
         $preloader,
+        indicator= function(axis){
+          return $(_div_tag_, {
+            className: [indicator_klass, axis].join(___),
+            css: {
+              width: opt.indicator,
+              height: opt.indicator,
+              top: axis == 'y' ? undefined : -opt.indicator,
+              left: axis == 'x' ? undefined : 0,
+              position: _absolute_,
+              backgroundColor: _hex_black_
+            }
+          })
+        },
 
         // Inertia rotation control
         on_edge= 0,
