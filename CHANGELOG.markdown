@@ -3,6 +3,9 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
+* Support for multi-row object movies added by possibility to control Y axis too.
+    * `rows` option sets the vertical rows count.
+    * `row` the initial row on which to start.
 * New `draggable`, `wheelable` and `throwable` options added to allow interaction style control.
 * Default options are now made available for manipulation as `$.reel` object.
 * The old wrapper DIV is gone. Image stays and CSS is applied to it.
