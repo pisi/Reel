@@ -435,6 +435,16 @@
             if (opt.rows && !opt.stitched) return t.trigger('rowChange');
             t.trigger('frameChange');
           },
+          rowChange: function(e, row){
+          /*
+          - shifts the stored frame to represent respective row
+          */
+            var
+              row= set(_row_, min_max(0, 1, row || get(_row_))),
+              frame= set(_frame_, get(_frame_) + (!opt.rows ? 0 : round(row * (opt.rows - 1)) * opt.frames))
+            cleanup.call(e);
+            t.trigger('frameChange');
+          },
           frameChange: function(e, frame){
           /*
           - rounds given frame (if any) and calculates fraction using it
