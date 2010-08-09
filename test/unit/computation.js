@@ -30,6 +30,26 @@
     start();
   });
 
+  asyncTest( '`rowChange` accepts and normalizes any real row fraction passed', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel(),
+      entries= {
+        '3': 1,
+        '-2.1': 0,
+        '1.8': 1,
+        '0.4': 0.4,
+        '-0.3': 0,
+        '1.23456': 1,
+        '-1.23456': 0
+      }
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), it, 'Passed '+ix);
+    });
+    start();
+  });
+
   asyncTest( 'Positive direction/spped is not detected as reversed', function(){
     expect(1);
     var
