@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-08-06
+ * Updated: 2010-08-09
  *
  * Requires jQuery 1.4.x
  */
