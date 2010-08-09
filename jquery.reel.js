@@ -176,6 +176,7 @@
             set(_stage_, '#'+id+opt.suffix);
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
+            set(_row_, opt.row / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
               src: src,
@@ -556,7 +557,7 @@
     _clicked_location_= 'clicked_location', _cwish_= 'cwish', _clicked_on_= 'clicked_on',
     _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames',
     _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image', _indicator_travel_= 'indicator_travel',
-    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _rows_= 'rows',
+    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
     _wheel_step_= 'wheel_step',
