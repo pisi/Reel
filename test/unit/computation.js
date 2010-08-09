@@ -33,19 +33,19 @@
   asyncTest( '`rowChange` accepts and normalizes any real row fraction passed', function(){
     var
       selector= '#image',
-      $reel= $(selector).reel(),
+      $reel= $(selector).reel({ rows: 3 }),
       entries= {
-        '3': 1,
+        '4': 1,
         '-2.1': 0,
-        '1.8': 1,
-        '0.4': 0.4,
+        '1.8': 0.4,
+        '0.4': 0,
         '-0.3': 0,
-        '1.23456': 1,
+        '1.23456': 0.1173,
         '-1.23456': 0
       }
     $.each(entries, function(ix,it){
       $reel.trigger('rowChange', Number(ix));
-      equal( $reel.data('row'), it, 'Passed '+ix);
+      equal( $reel.data('row'), it, 'Fraction '+ix);
     });
     start();
   });
