@@ -462,7 +462,7 @@
               minor= (frame % footage) - 1,
               minor= minor < 0 ? footage - 1 : minor,
               major= floor((frame - 0.1) / footage),
-              major= major + (get(_backwards_) ? 0 : get(_rows_)),
+              major= major + (opt.rows ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
               space= get(_dimensions_),
               spacing= get(_spacing_),
               a= major * ((horizontal ? space.y : space.x) + spacing),
