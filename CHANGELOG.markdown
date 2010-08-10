@@ -3,6 +3,7 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
+* Mouse/touch control of two or more instances of Reel can be coupled together using new `couple` option.
 * Support for multi-row object movies added by possibility to control Y axis too.
     * `rows` option sets the vertical rows count.
     * `row` the initial row on which to start.
