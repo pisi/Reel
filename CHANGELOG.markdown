@@ -3,6 +3,7 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
+* New boolean `mousefree` option which causes binding to mouseenter/leave events rather than down/up for click-free interaction.
 * Using standard jQuery's `.val()` facility one can set or get value representation of the fraction in the range defined by new `minimum` and `maximum` options (0 to 100 by default). Default initial value can be adjusted by using new `value` option.
 * Mouse/touch control of two or more instances of Reel can be coupled together using new `couple` option.
 * Support for multi-row object movies added by possibility to control Y axis too.
