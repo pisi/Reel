@@ -499,7 +499,9 @@
           },
           valueChange: function(e, value){
             var
+              fraction= value !== undefined && set(_fraction_, value / (opt.maximum - opt.minimum)),
               val= t[0].value= value === undefined ? get(_value_) : set(_value_, value)
+            fraction === false || t.trigger('fractionChange');
           }
         },
 
