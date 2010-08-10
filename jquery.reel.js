@@ -308,6 +308,8 @@
             velocity && breaking++;
             operated && operated++;
             to_bias(0);
+            // Perform check for value set using .val(value)
+            t[0].value != get(_value_) && t.trigger('valueChange', t[0].value);
             if (operated && !velocity) return cleanup.call(e);
             if (get(_clicked_)) return cleanup.call(e, unidle());
             var
