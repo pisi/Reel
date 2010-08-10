@@ -84,6 +84,7 @@
       tempo:             25, // shared ticker tempo in ticks per second
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
+      value:      undefined, // initial value
       wheelable:       true  // mouse wheel interaction (allowed by default)
     }
     // [deprecated] options may be gone anytime soon
@@ -179,6 +180,7 @@
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
+            set(_value_, opt.value || 0);
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
               src: src,
@@ -282,6 +284,7 @@
               }
             }
             opt.delay > 0 && unidle();
+            opt.value != undefined && t.trigger('valueChange', get(_value_));
             cleanup.call(e);
             t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },

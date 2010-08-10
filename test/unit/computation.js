@@ -110,4 +110,14 @@
     start();
   });
 
+  asyncTest( 'Initial value can be preset by `value` option', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ value: 50, loops: false })
+
+    equal( $reel.data('value'), 50, 'Initial state');
+    equal( $reel.data('fraction'), 0.5, 'Updated fraction');
+    start();
+  });
+
 })(jQuery);
