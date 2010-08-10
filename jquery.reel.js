@@ -62,6 +62,7 @@
 
       // [NEW] in version 1.1
       brake:            0.5, // brake force of the inertial rotation
+      clickfree:      false, // binds to leave/enter events instead of down/up
       couple:     undefined, // harness other Reel instance(s) to share interaction events
       cw:             false, // true for clockwise organization of sprite
       delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
@@ -251,7 +252,8 @@
               .bind(_mousemove_, function(e){ $couple.trigger('over', [e.pageX, e.pageY]) })
               .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
               .bind(_dblclick_, function(e){ $couple.trigger('animate') })
-              .bind(_mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
+              .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
+              .bind(opt.clickfree ? _mouseleave_ : _mouseup_, function(e){ $couple.trigger('up'); return false })
               .disableTextSelect();
             (opt.hint) && hotspot.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
