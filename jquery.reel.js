@@ -70,6 +70,8 @@
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      maximum:          100, // maximal value
+      minimum:            0, // minimal value
       path:              '', // URL path to be prepended to `image` or `images` filenames
       preloader:          4, // size (height) of a image loading indicator (in pixels)
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
@@ -83,6 +85,7 @@
       tempo:             25, // shared ticker tempo in ticks per second
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
+      value:      undefined, // initial value
       wheelable:       true  // mouse wheel interaction (allowed by default)
     }
     // [deprecated] options may be gone anytime soon
@@ -178,6 +181,7 @@
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
+            set(_value_, opt.value || 0);
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
               src: src,
@@ -282,6 +286,7 @@
               }
             }
             opt.delay > 0 && unidle();
+            opt.value != undefined && t.trigger('valueChange', get(_value_));
             cleanup.call(e);
             t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },
@@ -305,6 +310,8 @@
             velocity && breaking++;
             operated && operated++;
             to_bias(0);
+            // Perform check for value set using .val(value)
+            t[0].value != get(_value_) && t.trigger('valueChange', t[0].value);
             if (operated && !velocity) return cleanup.call(e);
             if (get(_clicked_)) return cleanup.call(e, unidle());
             var
@@ -428,12 +435,14 @@
               fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
-              frame= set(_frame_, 1 + floor(fraction / get(_bit_)))
+              frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
+              value= set(_value_, lofi($.reel.math.interpolate(fraction, opt.minimum, opt.maximum)))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
               backwards= bounce && set(_backwards_, !get(_backwards_))
             cleanup.call(e);
+            t.trigger('valueChange');
             t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           rowChange: function(e, row){
@@ -489,6 +498,12 @@
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2)))
             $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator - ytravel - opt.indicator });
             cleanup.call(e);
+          },
+          valueChange: function(e, value){
+            var
+              fraction= value !== undefined && set(_fraction_, value / (opt.maximum - opt.minimum)),
+              val= t[0].value= value === undefined ? get(_value_) : set(_value_, value)
+            fraction === false || t.trigger('fractionChange');
           }
         },
 
@@ -591,7 +606,7 @@
     _indicator_travel_= 'indicator_travel', _lo_= 'lo', _playing_= 'playing',
     _revolution_= 'revolution', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing',
     _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_travel_= 'stitched_travel',
-    _stopped_= 'stopped', _velocity_= 'velocity', _wheel_step_= 'wheel_step',
+    _stopped_= 'stopped', _value_= 'value', _velocity_= 'velocity', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',

@@ -70,4 +70,97 @@
     start();
   });
 
+  asyncTest( 'jQuery\'s .val() returns numeric value in the range of 0 to 100 by default', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ loops: false }),
+      entries= {
+        '-1': 0,
+        '0': 0,
+        '0.2': 20,
+        '0.5': 50,
+        '0.75': 75,
+        '1': 100,
+        '1.5': 100
+      }
+    $.each(entries, function(ix,it){
+      $reel.trigger('fractionChange', Number(ix));
+      equal( $reel.data('value'), it, 'Passed '+ix);
+    });
+    start();
+  });
+
+  asyncTest( 'jQuery\'s .val() returns numeric value in the range of `minimum` and `maximum` options', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ minimum: 1000, maximum: 2000, loops: false }),
+      entries= {
+        '-1': 1000,
+        '0': 1000,
+        '0.2': 1200,
+        '0.5': 1500,
+        '0.75': 1750,
+        '1': 2000,
+        '1.5': 2000
+      }
+    $.each(entries, function(ix,it){
+      $reel.trigger('fractionChange', Number(ix));
+      equal( $reel.data('value'), it, 'Passed '+ix);
+    });
+    start();
+  });
+
+  asyncTest( 'Initial value can be preset by `value` option', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ value: 50, loops: false })
+
+    equal( $reel.data('value'), 50, 'Initial state');
+    equal( $reel.data('fraction'), 0.5, 'Updated fraction');
+    start();
+  });
+
+  asyncTest( 'Value can be set from outside using `valueChange` event', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ loops: false })
+
+    equal( $reel.data('value'), 0, 'Initial state');
+
+    $reel.trigger('valueChange', 50);
+    equal( $reel.data('value'), 50, 'Changed value');
+    equal( $reel.data('fraction'), 0.5, 'Updated fraction');
+    start();
+  });
+
+  asyncTest( 'Value can be set from outside using jQuery\'s .val() facility', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ loops: false })
+
+    equal( $reel.data('value'), 0, 'Initial state');
+
+    $reel.val(20);
+    $reel.bind('valueChange', function(){
+      equal( $reel.data('value'), 20, 'Changed value');
+      equal( $reel.data('fraction'), 0.2, 'Updated fraction');
+      start();
+    });
+  });
+
+  asyncTest( 'Value can be set from outside directly by setting .value=', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ loops: false })
+
+    equal( $reel.data('value'), 0, 'Initial state');
+
+    $reel[0].value= 60;
+    $reel.bind('valueChange', function(){
+      equal( $reel.data('value'), 60, 'Changed value');
+      equal( $reel.data('fraction'), 0.6, 'Updated fraction');
+      start();
+    });
+  });
+
 })(jQuery);
