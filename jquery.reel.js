@@ -236,18 +236,18 @@
               $sync= t.add(opt.insync)
             if (touchy) hotspot
               .css({ WebkitUserSelect: 'none' })
-              .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
-              .bind(_touchmove_, function(e){ t.trigger('drag', [finger(e).clientX, finger(e).clientY, true]); return false })
-              .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
-              .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
+              .bind(_touchstart_, function(e){ $sync.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
+              .bind(_touchmove_, function(e){ $sync.trigger('drag', [finger(e).clientX, finger(e).clientY, true]); return false })
+              .bind(_touchend_, function(e){ $sync.trigger('up', [true]); return false })
+              .bind(_touchcancel_, function(e){ $sync.trigger('up', [true]); return false })
             else hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-              .bind(_mouseenter_, function(e){ t.trigger('enter') })
-              .bind(_mouseleave_, function(e){ t.trigger('leave') })
-              .bind(_mousemove_, function(e){ t.trigger('over', [e.pageX, e.pageY]) })
-              .bind(_mousewheel_, function(e, delta){ t.trigger('wheel', [delta]); return false })
-              .bind(_dblclick_, function(e){ t.trigger('animate') })
-              .bind(_mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]); return false })
+              .bind(_mouseenter_, function(e){ $sync.trigger('enter') })
+              .bind(_mouseleave_, function(e){ $sync.trigger('leave') })
+              .bind(_mousemove_, function(e){ $sync.trigger('over', [e.pageX, e.pageY]) })
+              .bind(_mousewheel_, function(e, delta){ $sync.trigger('wheel', [delta]); return false })
+              .bind(_dblclick_, function(e){ $sync.trigger('animate') })
+              .bind(_mousedown_, function(e){ $sync.trigger('down', [e.clientX, e.clientY]); return false })
               .disableTextSelect();
             (opt.hint) && hotspot.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
