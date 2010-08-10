@@ -496,6 +496,10 @@
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2)))
             $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator - ytravel - opt.indicator });
             cleanup.call(e);
+          },
+          valueChange: function(e, value){
+            var
+              val= t[0].value= value === undefined ? get(_value_) : set(_value_, value)
           }
         },
 
