@@ -247,8 +247,6 @@
               .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
             else hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-              .bind(_mouseenter_, function(e){ $couple.trigger('enter') })
-              .bind(_mouseleave_, function(e){ $couple.trigger('leave') })
               .bind(_mousemove_, function(e){ $couple.trigger('over', [e.pageX, e.pageY]) })
               .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
               .bind(_dblclick_, function(e){ $couple.trigger('animate') })
