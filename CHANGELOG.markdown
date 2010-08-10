@@ -3,6 +3,7 @@ Changelog
 
 "Dancer" (will be 1.1)
 ----------------------
+* Using standard jQuery's `.val()` facility one can set or get value representation of the fraction in the range defined by new `minimum` and `maximum` options (0 to 100 by default). Default initial value can be adjusted by using new `value` option.
 * Support for multi-row object movies added by possibility to control Y axis too.
     * `rows` option sets the vertical rows count.
     * `row` the initial row on which to start.
