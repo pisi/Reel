@@ -45,6 +45,10 @@
       <img id='badge' src='http://code.vostrel.cz/jquery.reel-1.gif' width='120' height='30' />
     </div>
     <div class="sample">
+      <h2>Object movie (sequence)</h2>
+      <img id='drone' src='' width='300' height='200' />
+    </div>
+    <div class="sample">
       <h2>Rectilinear panorama (stitched)</h2>
       <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
     </div>
@@ -70,6 +74,20 @@ $(function ready(){
   toggle('#chicago', true, { delay: 1.5, stitched: 1072, loops: false, steps: 30, step: 15, speed: -0.1, timeout: 1 });
   toggle('#green', true, { delay: 2, frames: 32, footage: 4, speed: 0.1 });
   toggle('#badge', true, { delay: 2.5, speed: -0.1, images: ['http://code.vostrel.cz/jquery.reel-1.gif', 'http://code.vostrel.cz/jquery.reel-2.gif', 'http://code.vostrel.cz/jquery.reel-3.gif'] });
+  toggle('#drone', true, { delay: 3, cw: true, speed: -0.2, path: 'http://test.dev.acegroup.lv/uav/3d/plane/', images: drone_frames() });
+
+  /*
+  Code used in the #drone example; based on one by Mark Leidman
+  */
+  function drone_frames(frames){
+    var frames= 179, every= 5, stack= []
+    for(var i= 1; i < 180; i+= every){
+      var name= ['plane_', i, '.png'].join('')
+      while (name.length < 15) name= name.replace('_', '_0')
+      stack.push(name)
+    }
+    return stack
+  }
 
   /*
   This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
