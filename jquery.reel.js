@@ -591,7 +591,7 @@
     _indicator_travel_= 'indicator_travel', _lo_= 'lo', _playing_= 'playing',
     _revolution_= 'revolution', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing',
     _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_travel_= 'stitched_travel',
-    _stopped_= 'stopped', _velocity_= 'velocity', _wheel_step_= 'wheel_step',
+    _stopped_= 'stopped', _value_= 'value', _velocity_= 'velocity', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',
