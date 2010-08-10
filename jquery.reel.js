@@ -62,6 +62,7 @@
 
       // [NEW] in version 1.1
       brake:            0.5, // brake force of the inertial rotation
+      couple:     undefined, // harness other Reel instance(s) to share interaction events
       cw:             false, // true for clockwise organization of sprite
       delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
       draggable:       true, // mouse or finger drag interaction (allowed by default)
@@ -69,7 +70,6 @@
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
-      insync:     undefined, // jQuery of other Reel instance(s) to stay in-sync by sharing interaction events
       path:              '', // URL path to be prepended to `image` or `images` filenames
       preloader:          4, // size (height) of a image loading indicator (in pixels)
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
@@ -233,21 +233,21 @@
                 css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y }
               }).appendTo($overlay),
               hotspot= set(_hotspot_, $(opt.hotspot || $hi )),
-              $sync= hotspot.add(opt.insync)
+              $couple= hotspot.add(opt.couple)
             if (touchy) hotspot
               .css({ WebkitUserSelect: 'none' })
-              .bind(_touchstart_, function(e){ $sync.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
-              .bind(_touchmove_, function(e){ $sync.trigger('drag', [finger(e).clientX, finger(e).clientY, true]); return false })
-              .bind(_touchend_, function(e){ $sync.trigger('up', [true]); return false })
-              .bind(_touchcancel_, function(e){ $sync.trigger('up', [true]); return false })
+              .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
+              .bind(_touchmove_, function(e){ $couple.trigger('drag', [finger(e).clientX, finger(e).clientY, true]); return false })
+              .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
+              .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
             else hotspot
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-              .bind(_mouseenter_, function(e){ $sync.trigger('enter') })
-              .bind(_mouseleave_, function(e){ $sync.trigger('leave') })
-              .bind(_mousemove_, function(e){ $sync.trigger('over', [e.pageX, e.pageY]) })
-              .bind(_mousewheel_, function(e, delta){ $sync.trigger('wheel', [delta]); return false })
-              .bind(_dblclick_, function(e){ $sync.trigger('animate') })
-              .bind(_mousedown_, function(e){ $sync.trigger('down', [e.clientX, e.clientY]); return false })
+              .bind(_mouseenter_, function(e){ $couple.trigger('enter') })
+              .bind(_mouseleave_, function(e){ $couple.trigger('leave') })
+              .bind(_mousemove_, function(e){ $couple.trigger('over', [e.pageX, e.pageY]) })
+              .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
+              .bind(_dblclick_, function(e){ $couple.trigger('animate') })
+              .bind(_mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
               .disableTextSelect();
             (opt.hint) && hotspot.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
