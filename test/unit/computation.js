@@ -70,4 +70,44 @@
     start();
   });
 
+  asyncTest( 'jQuery\'s .val() returns numeric value in the range of 0 to 100 by default', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ loops: false }),
+      entries= {
+        '-1': 0,
+        '0': 0,
+        '0.2': 20,
+        '0.5': 50,
+        '0.75': 75,
+        '1': 100,
+        '1.5': 100
+      }
+    $.each(entries, function(ix,it){
+      $reel.trigger('fractionChange', Number(ix));
+      equal( $reel.data('value'), it, 'Passed '+ix);
+    });
+    start();
+  });
+
+  asyncTest( 'jQuery\'s .val() returns numeric value in the range of `minimum` and `maximum` options', function(){
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ minimum: 1000, maximum: 2000, loops: false }),
+      entries= {
+        '-1': 1000,
+        '0': 1000,
+        '0.2': 1200,
+        '0.5': 1500,
+        '0.75': 1750,
+        '1': 2000,
+        '1.5': 2000
+      }
+    $.each(entries, function(ix,it){
+      $reel.trigger('fractionChange', Number(ix));
+      equal( $reel.data('value'), it, 'Passed '+ix);
+    });
+    start();
+  });
+
 })(jQuery);
