@@ -69,6 +69,8 @@
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
+      maximum:          100, // maximal value
+      minimum:            0, // minimal value
       path:              '', // URL path to be prepended to `image` or `images` filenames
       preloader:          4, // size (height) of a image loading indicator (in pixels)
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
