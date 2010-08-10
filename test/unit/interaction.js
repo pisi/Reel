@@ -7,12 +7,12 @@
     $('.jquery-reel').trigger('teardown');
   }});
 
-  asyncTest( 'Synchronization: Two in-sync instances have equal states after mouse-wheeling one or the other', function(){
+  asyncTest( 'Coupling: Two coupled instances have equal states after mouse-wheeling one or the other', function(){
     var
       master= '#image',
       slave= '#image2',
-      $master= $(master).reel({ insync: $(slave) }),
-      $slave= $(slave).reel({ insync: $(master) })
+      $master= $(master).reel({ couple: $(slave) }),
+      $slave= $(slave).reel({ couple: $(master) })
 
     equal( $master.data('frame'), $slave.data('frame'));
     equal( $master.data('fraction'), $slave.data('fraction'));
