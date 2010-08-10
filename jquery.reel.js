@@ -432,12 +432,13 @@
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
-              value= t[0].value= set(_value_, lofi($.reel.math.interpolate(fraction, opt.minimum, opt.maximum)))
+              value= set(_value_, lofi($.reel.math.interpolate(fraction, opt.minimum, opt.maximum)))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
               backwards= bounce && set(_backwards_, !get(_backwards_))
             cleanup.call(e);
+            t.trigger('valueChange');
             t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           rowChange: function(e, row){
