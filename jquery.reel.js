@@ -233,7 +233,7 @@
                 css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y }
               }).appendTo($overlay),
               hotspot= set(_hotspot_, $(opt.hotspot || $hi )),
-              $couple= hotspot.add(opt.couple)
+              $couple= t.add(opt.couple)
             if (touchy) hotspot
               .css({ WebkitUserSelect: 'none' })
               .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
