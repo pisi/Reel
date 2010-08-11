@@ -242,7 +242,7 @@
             if (touchy) hotspot
               .css({ WebkitUserSelect: 'none' })
               .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
-              .bind(_touchmove_, function(e){ $couple.trigger('drag', [finger(e).clientX, finger(e).clientY, true]); return false })
+              .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
               .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
             else hotspot
@@ -349,7 +349,7 @@
             unidle();
             no_bias();
             !touched && pool
-            .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]); cleanup.call(e) })
+            .bind(_mousemove_, function(e){ t.trigger('slide', [e.clientX, e.clientY]); cleanup.call(e) })
             .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor }) && !opt.clickfree && pool
             .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_hotspot_);
             cleanup.call(e);
@@ -372,12 +372,13 @@
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
             cleanup.call(e);
           },
-          drag: function(e, x, y, touched){
+          slide: function(e, x, y, touched){
           /*
           - calculates the X distance from drag center and applies graph on it to get fraction
           - recenters the drag when dragged over limits
           - detects the direction of the motion
           - builds inertial motion bias
+          - (`slide` was originally `drag` which conflicted with MSIE)
           */
             if (!opt.draggable) return cleanup.call(e);
             var
