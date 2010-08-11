@@ -249,7 +249,7 @@
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .bind(_mousemove_, function(e){ $couple.trigger('over', [e.pageX, e.pageY]) })
               .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
-              .bind(_dblclick_, function(e){ $couple.trigger('animate') })
+              .bind(_dblclick_, function(e){ $couple.trigger('play') })
               .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
               .bind(opt.clickfree ? _mouseleave_ : _mouseup_, function(e){ $couple.trigger('up'); return false })
               .disableTextSelect();
@@ -289,10 +289,6 @@
             opt.value != undefined && t.trigger('valueChange', get(_value_));
             cleanup.call(e);
             t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
-          },
-          animate: function(e){
-            // Stub for future compatibility
-            // log(e.type);
           },
           tick: function(e){
           /*
