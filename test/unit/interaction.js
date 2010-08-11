@@ -8,6 +8,7 @@
   }});
 
   asyncTest( 'Coupling: Two coupled instances have equal states after mouse-wheeling one or the other', function(){
+		expect(8);
     var
       master= '#image',
       slave= '#image2',

@@ -10,6 +10,7 @@
 	} });
 
 	asyncTest( 'Very first initiated Reel sets `tempo` of ticker shared by all others', function(){
+		expect(1);
 		var
 			fps= 6,
 			$reel= $('#image').reel({ tempo: fps }),

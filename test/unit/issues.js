@@ -11,6 +11,7 @@
     /* Github issue 4 bugfix
      * http://github.com/pisi/Reel/issues/#issue/4
      */
+		expect(2);
     var
       stitched= 1652,
       $pano= $('#stitched_nonlooping').reel({ stitched: stitched, loops: false }),
@@ -26,6 +27,7 @@
     /* Github issue 6 bugfix
      * http://github.com/pisi/Reel/issues/#issue/6
      */
+		expect(2);
     var
       stitched= 1652,
       $pano= $('#stitched_looping').reel({ stitched: stitched, loops: true }),

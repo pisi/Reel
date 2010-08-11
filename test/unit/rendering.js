@@ -66,6 +66,7 @@
   });
 
   asyncTest( 'Indicator: is sticked to the bottom left corner when on min frame (1)', function(){
+		expect(1);
     var
       size= 10,
       $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
@@ -76,6 +77,7 @@
   });
 
   asyncTest( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){
+		expect(1);
     var
       size= 10,
       $reel= $('#image').reel({ indicator: size }),
@@ -93,6 +95,7 @@
   });
 
   asyncTest( 'Indicator: reacts on frame change', function(){
+		expect(1);
     var
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
       before= $('#image-reel .indicator').css('left');
@@ -106,6 +109,7 @@
   });
 
   asyncTest( 'Indicator: Custom style may be applied to indicator via `.indicator`', function(){
+		expect(2);
     var
       $reel= $('#image').reel({ indicator: 10 }),
       $indicator= $('#image-reel .indicator');

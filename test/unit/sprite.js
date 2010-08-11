@@ -18,6 +18,7 @@
   D1 D2 D3
   D4 D5 D6
   */
+		expect(12);
     var
       selector= '#image',
       $reel= $(selector).reel({
@@ -57,6 +58,7 @@
   });
 
   asyncTest( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
+		expect(9);
     var
       selector= '#image',
       $reel= $(selector).reel({
@@ -92,6 +94,7 @@
   });
 
   asyncTest( 'Multi-row: Immune to `backwards` value', function(){
+		expect(6);
     var
       selector= '#image',
       $reel= $(selector).reel({

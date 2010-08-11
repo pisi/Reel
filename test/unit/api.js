@@ -7,18 +7,21 @@
 
   test( 'Method exposed publicly as jQuery.fn.reel()', function()
   {
+		expect(2);
     ok( $.fn.reel !== undefined );
     ok( typeof $.fn.reel == 'function' );
   });
 
   test( 'Default option values exposed publicly as jQuery.reel', function()
   {
+		expect(2);
     ok( $.reel !== undefined );
     ok( typeof $.reel == 'object' );
   });
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
+		expect(38);
     // Version 1.0 options
     equal( $.reel.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.frame,                      1, 'initial frame' );

@@ -8,6 +8,7 @@
   }});
 
 	asyncTest( 'Speed of ticker can not be changed by any consequent Reel', function(){
+		expect(1);
 		var
 			fps= 6,
 			$reel= $('#image').reel({ tempo: 25 }),

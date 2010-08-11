@@ -8,6 +8,7 @@
   }});
 
   asyncTest( '`fractionChange` accepts and normalizes any real fraction passed', function(){
+		expect(10);
     var
       selector= '#image',
       $reel= $(selector).reel(),
@@ -31,6 +32,7 @@
   });
 
   asyncTest( '`rowChange` accepts and normalizes any real row fraction passed', function(){
+		expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({ rows: 3 }),
@@ -71,6 +73,7 @@
   });
 
   asyncTest( 'jQuery\'s .val() returns numeric value in the range of 0 to 100 by default', function(){
+		expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false }),
@@ -91,6 +94,7 @@
   });
 
   asyncTest( 'jQuery\'s .val() returns numeric value in the range of `minimum` and `maximum` options', function(){
+		expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({ minimum: 1000, maximum: 2000, loops: false }),
@@ -111,6 +115,7 @@
   });
 
   asyncTest( 'Initial value can be preset by `value` option', function(){
+		expect(2);
     var
       selector= '#image',
       $reel= $(selector).reel({ value: 50, loops: false })
@@ -121,6 +126,7 @@
   });
 
   asyncTest( 'Value can be set from outside using `valueChange` event', function(){
+		expect(3);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false })
@@ -133,7 +139,8 @@
     start();
   });
 
-  asyncTest( 'Value can be set from outside using jQuery\'s .val() facility', function(){
+  asyncTest( 'Value can be set from outside using jQuery\'s standard .val() facility', function(){
+  	expect(3);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false })
@@ -149,6 +156,7 @@
   });
 
   asyncTest( 'Value can be set from outside directly by setting .value=', function(){
+  	expect(3);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false })
