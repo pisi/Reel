@@ -235,7 +235,7 @@
               overlay_css= { position: 'relative', width: space.x },
               $overlay= $(_div_tag_, { className: overlay_klass, id: overlay_id, css: overlay_css }).insertAfter(t),
               $hi= $(_div_tag_, { className: hi_klass,
-                css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y }
+                css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
               }).appendTo($overlay),
               hotspot= set(_hotspot_, $(opt.hotspot || $hi )),
               $couple= t.add(opt.couple)
