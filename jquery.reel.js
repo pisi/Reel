@@ -419,7 +419,7 @@
             t.trigger('fractionChange');
             return false;
           },
-          fractionChange: function(e, fraction){
+          fractionChange: function(e, fraction, detected){
           /*
           - normalizes given fraction (if any) - loop/limit and round
           - calculates and changes sprite frame
