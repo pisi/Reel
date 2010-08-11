@@ -26,25 +26,49 @@
 		expect(1);
     var selector= '#image, #image_empty_src, #image2, #image_width_only',
         $reel= $(selector).reel();
-    equal( $reel.length, 3);
+    equal( $reel.length, $.browser.msie ? 2 : 3);
   });
-  test( 'Accepts image tag with one dimension missing', function()
-  {
-		expect(2);
-    var
-      $reel= $('#image_width_only').reel();
-    equal( $reel.length, 1);
-    var
-      $reel= $('#image_height_only').reel();
-    equal( $reel.length, 1);
-  });
-  test( 'Accepts image tag without dimensions', function()
-  {
-		expect(1);
-    var
-      $reel= $('#image_no_dimensions').reel();
-    equal( $reel.length, 1);
-  });
+  if ($.browser.msie){
+    /*
+    All browsers except MSIE are capable to resolve image dimensions from the actual image loaded.
+    MSIE isn't. So clearly using just one dimension isn't a wa to go. Always use both dimensions.
+    */
+    test( 'Doesn\'t accept image tag with one dimension missing', function()
+    {
+      expect(2);
+      var
+        $reel= $('#image_width_only').reel();
+      equal( $reel.length, 0);
+      var
+        $reel= $('#image_height_only').reel();
+      equal( $reel.length, 0);
+    });
+    test( 'Doesn\'t accept image tag without dimensions', function()
+    {
+      expect(1);
+      var
+        $reel= $('#image_no_dimensions').reel();
+      equal( $reel.length, 0);
+    });
+  }else{
+    test( 'Accepts image tag with one dimension missing', function()
+    {
+      expect(2);
+      var
+        $reel= $('#image_width_only').reel();
+      equal( $reel.length, 1);
+      var
+        $reel= $('#image_height_only').reel();
+      equal( $reel.length, 1);
+    });
+    test( 'Accepts image tag without dimensions', function()
+    {
+      expect(1);
+      var
+        $reel= $('#image_no_dimensions').reel();
+      equal( $reel.length, 1);
+    });
+  }
   test( 'Does not accept non-image tag (like DIV)', function()
   {
 		expect(1);
