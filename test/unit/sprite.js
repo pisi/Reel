@@ -36,7 +36,7 @@
         '1': [         0,           2,      '-276px 0px' ],
         '2': [    0.3333,           8,      '-276px -252px' ],
         '3': [    0.6667,          14,      '-276px -504px' ],
-        '4': [         1,          20,      '-276px -756px' ],
+        '4': [         1,          20,      '-276px -756px' ]
       }
     $.each(entries, function(ix,it){
       $reel.trigger('rowChange', Number(ix));
@@ -72,7 +72,7 @@
       entries= {
         '3': [         1,          17,      '0px -504px' ],
         '2': [       0.5,          11,      '-552px -252px' ],
-        '1': [         0,           5,      '0px -126px' ],
+        '1': [         0,           5,      '0px -126px' ]
       }
     $.each(entries, function(ix,it){
       $reel.trigger('rowChange', Number(ix));
