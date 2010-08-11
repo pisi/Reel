@@ -438,7 +438,7 @@
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
               backwards= bounce && set(_backwards_, !get(_backwards_))
             cleanup.call(e);
-            t.trigger('valueChange');
+            detected || t.trigger('valueChange');
             t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           rowChange: function(e, row){
