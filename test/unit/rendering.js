@@ -118,7 +118,7 @@
       background: '#fff',
       opacity: 0.5
     })
-    equal( $indicator.css('backgroundColor'), 'rgb(255, 255, 255)', 'Custom background' )
+    equal( $indicator.css('backgroundColor'), $.browser.opera ? '#ffffff' : 'rgb(255, 255, 255)', 'Custom background' )
     equal( $indicator.css('opacity'), '0.5', 'Custom opacity' )
     start();
   });
