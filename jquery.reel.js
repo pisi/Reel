@@ -140,7 +140,7 @@
         },
 
         // Garbage clean-up facility called by every event
-        cleanup= function(pass){ delete this; return pass },
+        cleanup= function(pass){ ie || delete this; return pass },
 
         // Events & handlers
         on= {
@@ -574,6 +574,7 @@
   var
     pool= $(document),
     touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+    ie= $.browser.msie,
     failsafe_cursor= 'ew-resize',
     ticker,
 
