@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-08-09
+ * Updated: 2010-08-11
  *
  * Requires jQuery 1.4.x
  */
@@ -499,7 +499,7 @@
             var
               fraction= value !== undefined && set(_fraction_, value / (opt.maximum - opt.minimum)),
               val= t[0].value= value === undefined ? get(_value_) : set(_value_, value)
-            fraction === false || t.trigger('fractionChange');
+            fraction === false || t.trigger('fractionChange', [undefined, true]);
           }
         },
 
