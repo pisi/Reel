@@ -147,12 +147,12 @@
 
     equal( $reel.data('value'), 0, 'Initial state');
 
-    $reel.val(20);
-    $reel.bind('valueChange', function(){
+    $reel.one('valueChange', function(event){
       equal( $reel.data('value'), 20, 'Changed value');
       equal( $reel.data('fraction'), 0.2, 'Updated fraction');
       start();
-    });
+  	});
+    $reel.val(20);
   });
 
   asyncTest( 'Value can be set from outside directly by setting .value=', function(){
@@ -163,12 +163,12 @@
 
     equal( $reel.data('value'), 0, 'Initial state');
 
-    $reel[0].value= 60;
-    $reel.bind('valueChange', function(){
+    $reel.one('valueChange', function(){
       equal( $reel.data('value'), 60, 'Changed value');
       equal( $reel.data('fraction'), 0.6, 'Updated fraction');
       start();
     });
+    $reel[0].value= 60;
   });
 
 })(jQuery);
