@@ -350,8 +350,8 @@
             no_bias();
             !touched && pool
             .bind(_mousemove_, function(e){ t.trigger('drag', [e.clientX, e.clientY]); cleanup.call(e) })
-            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_hotspot_)
-            .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor });
+            .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor }) && !opt.clickfree && pool
+            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_hotspot_);
             cleanup.call(e);
           },
           up: function(e, touched){
