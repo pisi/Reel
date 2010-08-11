@@ -26,24 +26,24 @@
 		expect(1);
     var selector= '#image, #image_empty_src, #image2, #image_width_only',
         $reel= $(selector).reel();
-    equal( $reel.length, 2);
+    equal( $reel.length, 3);
   });
-  test( 'Does not accept image tag with one dimension missing', function()
+  test( 'Accepts image tag with one dimension missing', function()
   {
 		expect(2);
     var
       $reel= $('#image_width_only').reel();
-    equal( $reel.length, 0);
+    equal( $reel.length, 1);
     var
       $reel= $('#image_height_only').reel();
-    equal( $reel.length, 0);
+    equal( $reel.length, 1);
   });
-  test( 'Does not accept image tag without dimensions', function()
+  test( 'Accepts image tag without dimensions', function()
   {
 		expect(1);
     var
       $reel= $('#image_no_dimensions').reel();
-    equal( $reel.length, 0);
+    equal( $reel.length, 1);
   });
   test( 'Does not accept non-image tag (like DIV)', function()
   {
