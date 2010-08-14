@@ -23,8 +23,8 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://jquery.vostrel.cz/reel
- * Version: "Dancer" (will be 1.1 on release)
- * Updated: 2010-08-11
+ * Version: 1.1 RC
+ * Updated: 2010-08-14
  *
  * Requires jQuery 1.4.x
  */
@@ -62,7 +62,7 @@
 
       // [NEW] in version 1.1
       brake:            0.5, // brake force of the inertial rotation
-      clickfree:      false, // binds to leave/enter events instead of down/up
+      clickfree:      false, // binds to mouse leave/enter events instead of down/up
       couple:     undefined, // harness other Reel instance(s) to share interaction events
       cw:             false, // true for clockwise organization of sprite
       delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
@@ -79,7 +79,7 @@
       revolution: undefined, // distance mouse must be dragged for full revolution
                              // (defaults to double the viewport size or half the `stitched` option)
       row:                1, // initial row
-      rows:               0, // number of rows for a multi-row setup
+      rows:               0, // number of rows for a multi-row setup (zero from one-row setup)
       speed:              0, // animated rotation speed in revolutions per second (Hz)
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
