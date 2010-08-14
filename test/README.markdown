@@ -1,8 +1,6 @@
 jQuery Reel Test Suite
 ======================
-A few **preliminary** tests. Can't call it a collection yet, but they already helped.
-The suite will slowly grow as new tests will be added from time to time
-independent on version releases.
+To date we have **162 tests in 39 tasks and 8 modules**, that's far more than 450% compared in comparison with last version). The suite will keep on growing as enhancements are made or new bugs discovered. The test suite grows independent on regular version releases.
 
 Usage?
 ------------
@@ -10,12 +8,12 @@ Just run `index.html` in your own browser.
 
 If you have a positive test in a browser not listed here, I would love to know about!
 
-Positively tested
------------------
-All tests pass on following browsers and platforms:
+Positive Results
+----------------
+See [detailed report][tests]. Tests were success in every case tried. With the exception of Opera Mini.
 
-* Safari 3+, Firefox 3+, Chrome, IE 5.5+
-* MacOS, iPhoneOS, Windows, Ubuntu
+iPhone / iPad
+-------------
 
 On iPhone, besides these automated tests, there's also the *touch* part of the deal.
 Browse [`example/iphone.html`][iphone-example] in your iPhone
@@ -25,3 +23,4 @@ kindly recorded by [Michael Crane][mick] (thanks Mick!).
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [iphone-example]: http://jquery.vostrel.cz/reel/example/iphone.html
 [mick]: http://www.mickiwiki.com
+[tests]: http://github.com/pisi/Reel/blob/development/TESTS.markdown

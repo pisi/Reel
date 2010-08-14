@@ -10,7 +10,7 @@ I could as well leave out this JavaScript-disabled browser completely to have it
 
 Statistics
 ----------
-Between last version update (1.0 » 1.1), the test coverage has been **improved by 361%**. We now have 157 tests in 39 tasks and 8 modules in version 1.1 as opposed to 34 tests in 19 tasks and 4 modules back in 1.0.4.
+Between last version update (1.0 » 1.1), the test coverage has been **improved by 361%**. We now have 162 tests in 39 tasks and 8 modules in version 1.1 as opposed to 34 tests in 19 tasks and 4 modules back in 1.0.4.
 
 Results
 -------
