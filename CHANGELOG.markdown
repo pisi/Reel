@@ -46,6 +46,7 @@ Version 1.1 RC
 * All default options are now made available for manipulation as `$.reel` object.
 * The `sensitivity` option has become obsolete and had been removed.
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
+* The `hotspot` option deprecated in favor to new `area` to stop being misleading.
 
 ### Content Delivery Network
 * Reel's own cloud CDN has been started and recommended for use instead of download.

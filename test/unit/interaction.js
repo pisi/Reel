@@ -18,12 +18,12 @@
     equal( $master.data('frame'), $slave.data('frame'));
     equal( $master.data('fraction'), $slave.data('fraction'));
 
-    $master.data('hotspot').trigger('mousewheel', -10);
+    $master.data('area').trigger('mousewheel', -10);
     equal( $master.data('frame'), $slave.data('frame'));
     equal( $master.data('fraction'), $slave.data('fraction'));
     equal( $master.data('backwards'), $slave.data('backwards'));
 
-    $slave.data('hotspot').trigger('mousewheel', 5);
+    $slave.data('area').trigger('mousewheel', 5);
     equal( $master.data('frame'), $slave.data('frame'));
     equal( $master.data('fraction'), $slave.data('fraction'));
     equal( $master.data('backwards'), $slave.data('backwards'));
