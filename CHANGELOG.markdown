@@ -14,7 +14,6 @@ Version 1.1 RC
 * Having one shared ticker for animation purposes. `tempo` option sets the speed in ticks per second.
 
 ### Rendering
-* The old wrapper DIV is gone. Image stays and CSS is applied to it.
 * Suggestive open/closed palm cursor used for mouse pointer over the projector.
 * Image(s) loading status is now indicated by a horizontal progress bar at the bottom of the image. Height of the loader indicator can be adjusted by using new `preloader` option.
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.

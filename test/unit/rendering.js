@@ -38,9 +38,9 @@
         $('#image').trigger('teardown')
         var
           $reel= $('#image').reel({ indicator: size }),
-          $indicator= $('#image-reel .indicator'),
+          $indicator= $('#image-reel .jquery-reel-indicator'),
           indicator_offset_top= parseInt($indicator.css('top'));
-        equal( indicator_offset_top, - size );
+        equal( indicator_offset_top, 126 - size );
       });
     }
   });
@@ -55,7 +55,7 @@
         $('#image').trigger('teardown')
         var
           $reel= $('#image').reel({ indicator: size }),
-          $indicator= $('#image-reel .indicator'),
+          $indicator= $('#image-reel .jquery-reel-indicator'),
           indicator_width= parseInt($indicator.css('width')),
           indicator_height= parseInt($indicator.css('height'));
 
@@ -70,7 +70,7 @@
     var
       size= 10,
       $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
-      $indicator= $('#image-reel .indicator');
+      $indicator= $('#image-reel .jquery-reel-indicator');
 
     equal( $indicator.css('left'), '0px' );
     start();
@@ -82,7 +82,7 @@
       size= 10,
       $reel= $('#image').reel({ indicator: size }),
       width= parseInt($reel.css('width')),
-      $indicator= $('#image-reel .indicator');
+      $indicator= $('#image-reel .jquery-reel-indicator');
 
     /*
     As the indicator indicates the beginning of the frame and not its end we need to simulate
@@ -98,21 +98,21 @@
 		expect(1);
     var
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
-      before= $('#image-reel .indicator').css('left');
+      before= $('#image-reel .jquery-reel-indicator').css('left');
 
     $reel.trigger('frameChange', 2);
     var
-      after= $('#image-reel .indicator').css('left');
+      after= $('#image-reel .jquery-reel-indicator').css('left');
 
     ok( before != after, 'Position change after frame change' );
     start();
   });
 
-  asyncTest( 'Indicator: Custom style may be applied to indicator via `.indicator`', function(){
+  asyncTest( 'Indicator: Custom style may be applied to indicator via `.jquery-reel-indicator`', function(){
 		expect(2);
     var
       $reel= $('#image').reel({ indicator: 10 }),
-      $indicator= $('#image-reel .indicator');
+      $indicator= $('#image-reel .jquery-reel-indicator');
 
     $indicator.css({         // This may as well be done in external CSS
       background: '#fff',
@@ -133,7 +133,7 @@
         $('#image').trigger('teardown')
         var
           $reel= $('#image').reel({ indicator: value }),
-          $indicator= $('#image-reel .indicator');
+          $indicator= $('#image-reel .jquery-reel-indicator');
 
         equal( $indicator.length, 0, 'When ' + value );
       });
