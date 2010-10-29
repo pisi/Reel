@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: 1.1 RC
- * Updated: 2010-08-14
+ * Updated: 2010-10-28
  *
  * Requires jQuery 1.4.x
  */
@@ -169,9 +169,14 @@
                 width: size.x,
                 height: size.y
               },
-              $instance= t.attr({ src: image_src }).bind(on).addClass(klass).css(style),
+              stage_id= '#'+id+opt.suffix,
+              classes= t.attr('className'),
+              overlay_css= { position: 'relative', width: size.x, height: size.y },
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), className: classes+___+overlay_klass, css: overlay_css }),
+              $instance= t.wrap($overlay).attr({ src: image_src, className: klass, style: style }).bind(on),
               instances_count= instances.push($instance[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
+            set(_classes_, classes);
             set(_frame_, opt.frame);
             set(_spacing_, opt.spacing);
             set(_dimensions_, size);
@@ -184,7 +189,7 @@
             set(_stitched_, stitched);
             set(_stitched_travel_, stitched - (loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
-            set(_stage_, '#'+id+opt.suffix);
+            set(_stage_, stage_id);
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
@@ -203,12 +208,10 @@
           - unbinds events, erases all state data
           - reconstructs the original DOM element
           */
-            $(get(_stage_)).remove();
-            t.removeClass(klass)
-            .unbind(ns).unbind(on)
+            $(get(_stage_)).replaceWith($(t.clone())
             .attr(t.data(_backup_))
-            .enableTextSelect()
-            .removeData();
+            .removeClass(klass)
+            .addClass(get(_classes_)));
             no_bias();
             pool
             .unbind(_mouseup_).unbind(_mousemove_)
@@ -237,16 +240,14 @@
               img_preloads= img_tag.preloads= img_tag.preloads || [],
               img_preloaded= img_tag.preloaded= img_tag.preloaded || 0,
               preload_images= preload.length != img_tag.preloads.length,
-              overlay_id= get(_stage_).substr(1),
-              overlay_css= { position: 'relative', width: space.x },
-              $overlay= $(_div_tag_, { className: overlay_klass, id: overlay_id, css: overlay_css }).insertAfter(t),
+              $overlay= t.parent(),
               $hi= $(_div_tag_, { className: hi_klass,
-                css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
+                css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
               }).appendTo($overlay),
               area= set(_area_, $(opt.area || $hi )),
               $couple= t.add(opt.couple)
             if (touchy) hotspot
-              .css({ WebkitUserSelect: 'none', WebkitBackgroundSize: images.length ? 'auto': (get(_stitched_) || space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px') })
+              .css({ WebkitUserSelect: 'none', WebkitBackgroundSize: images.length ? 'auto' : (get(_stitched_) || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px') })
               .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
@@ -262,7 +263,7 @@
             (opt.hint) && area.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
               className: monitor_klass,
-              css: { position: _absolute_, left: 0, top: -space.y }
+              css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows && opt.indicator && $overlay.append(indicator('y'));
@@ -273,7 +274,7 @@
                 css: {
                   position: _absolute_,
                   left: 0,
-                  top: -opt.preloader,
+                  top: space.y - opt.preloader,
                   height: opt.preloader,
                   backgroundColor: _hex_black_
                 }
@@ -499,7 +500,7 @@
             var
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2)))
-            $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator - ytravel - opt.indicator });
+            $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator });
             cleanup.call(e);
           },
           valueChange: function(e, value){
@@ -524,7 +525,7 @@
             css: {
               width: opt.indicator,
               height: opt.indicator,
-              top: axis == 'y' ? undefined : -opt.indicator,
+              top: axis == 'y' ? undefined : get(_dimensions_).y - opt.indicator,
               left: axis == 'x' ? undefined : 0,
               position: _absolute_,
               backgroundColor: _hex_black_
@@ -587,10 +588,10 @@
     // HTML classes
     klass= 'jquery-reel',
     overlay_klass= klass + '-overlay',
-    indicator_klass= 'indicator',
-    preloader_klass= 'preloader',
-    monitor_klass= 'monitor',
-    hi_klass= 'interface',
+    indicator_klass= klass + '-indicator',
+    preloader_klass= klass + '-preloader',
+    monitor_klass= klass + '-monitor',
+    hi_klass= klass + '-interface',
 
     // Embedded images
     transparent= 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7',
@@ -603,10 +604,10 @@
     number= parseInt,
 
     // Storage keys
-    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _clicked_= 'clicked',
-    _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
-    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
-    _frames_= 'frames', _hi_= 'hi', _image_= 'image', _indicator_travel_= 'indicator_travel',
+    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _classes_= 'classes',
+    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on',
+    _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction',
+    _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image', _indicator_travel_= 'indicator_travel',
     _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value',
