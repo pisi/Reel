@@ -66,6 +66,7 @@
       couple:     undefined, // harness other Reel instance(s) to share interaction events
       cw:             false, // true for clockwise organization of sprite
       delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
+      directional:    false, // two sets of frames (for forward and backward motion) are used when true
       dragable:       true, // mouse or finger drag interaction (allowed by default)
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
@@ -159,6 +160,8 @@
               loops= opt.loops,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
               image_src= opt.images ? transparent : src,
+              frames= set(_frames_, images.length || opt.frames),
+              rows= stitched ? 1 : ceil(frames / opt.footage),
               style= {
                 display: 'block',
                 width: size.x,
@@ -173,9 +176,10 @@
             set(_fraction_, 0);
             set(_steps_, opt.steps || opt.frames);
             set(_revolution_, opt.revolution || stitched / 2 || size.x);
-            set(_rows_, ceil(set(_frames_, images.length || opt.frames) / opt.footage));
+            set(_rows_, rows);
             set(_bit_, 1 / (get(_frames_) - (loops && !stitched ? 0 : 1)));
             set(_wheel_step_, 1 / max(get(_frames_), get(_steps_)));
+            set(_stitched_, stitched);
             set(_stitched_travel_, stitched - (loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, '#'+id+opt.suffix);
@@ -240,7 +244,7 @@
               hotspot= set(_hotspot_, $(opt.hotspot || $hi )),
               $couple= t.add(opt.couple)
             if (touchy) hotspot
-              .css({ WebkitUserSelect: 'none' })
+              .css({ WebkitUserSelect: 'none', WebkitBackgroundSize: images.length ? 'auto': (get(_stitched_) || space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px') })
               .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
@@ -603,8 +607,9 @@
     _frames_= 'frames', _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image',
     _indicator_travel_= 'indicator_travel', _lo_= 'lo', _playing_= 'playing',
     _revolution_= 'revolution', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing',
-    _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_travel_= 'stitched_travel',
-    _stopped_= 'stopped', _value_= 'value', _velocity_= 'velocity', _wheel_step_= 'wheel_step',
+    _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value',
+    _velocity_= 'velocity', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',
