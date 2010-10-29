@@ -16,6 +16,7 @@ Version 1.1 RC
 ### Rendering
 * The old wrapper DIV is gone. Image stays and CSS is applied to it.
 * Suggestive open/closed palm cursor used for mouse pointer over the projector.
+* iPhone downsizing bug is gone, however it decreases visual quality to fit in memory.
 * Image(s) loading status is now indicated by a horizontal progress bar at the bottom of the image. Height of the loader indicator can be adjusted by using new `preloader` option.
 * Added `monitor` option accepting a string key of any value stored within. It is then displayed in the upper left corner of the viewport.
 * Teardown sequence now wipes out everything.
@@ -47,6 +48,7 @@ Version 1.1 RC
 * The `sensitivity` option has become obsolete and had been removed.
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
 * The `hotspot` option deprecated in favor to new `area` to stop being misleading.
+* New `directional` boolean option to flag bi-directional sprites.
 
 ### Content Delivery Network
 * Reel's own cloud CDN has been started and recommended for use instead of download.
