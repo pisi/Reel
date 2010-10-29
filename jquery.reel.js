@@ -48,9 +48,9 @@
       footage:            6, // number of frames per line/column
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
-      hint:              '', // hotspot hint tooltip
+      hint:              '', // mouse-sensitive area hint tooltip
       horizontal:      true, // roll flow; defaults to horizontal
-      hotspot:    undefined, // custom jQuery as a hotspot
+      hotspot:    undefined, // [deprecated] use `area` instead
       indicator:          0, // size of a visual indicator of reeling (in pixels)
       klass:             '', // plugin instance class name
       loops:           true, // is it a loop?
@@ -61,6 +61,7 @@
       tooltip:           '', // [deprecated] use `hint` instead
 
       // [NEW] in version 1.1
+      area:       undefined, // custom mouse-sensitive area jQuery collection
       brake:            0.5, // brake force of the inertial rotation
       clickfree:      false, // binds to mouse leave/enter events instead of down/up
       couple:     undefined, // harness other Reel instance(s) to share interaction events
@@ -118,6 +119,7 @@
     // Backward-compatibility of [deprecated] legacy options
     opt.reversed && (opt.cw= true);
     opt.tooltip && (opt.hint= opt.tooltip);
+    opt.hotspot && (opt.area= opt.hotspot);
 
     ticker= ticker || (function tick(){
       pool.trigger(_tick_);
@@ -237,15 +239,15 @@
               $hi= $(_div_tag_, { className: hi_klass,
                 css: { position: _absolute_, left: 0, top: -space.y, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
               }).appendTo($overlay),
-              hotspot= set(_hotspot_, $(opt.hotspot || $hi )),
+              area= set(_area_, $(opt.area || $hi )),
               $couple= t.add(opt.couple)
-            if (touchy) hotspot
+            if (touchy) area
               .css({ WebkitUserSelect: 'none' })
               .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
               .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
-            else hotspot
+            else area
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
               .bind(_mousemove_, function(e){ $couple.trigger('over', [e.pageX, e.pageY]) })
               .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
@@ -253,7 +255,7 @@
               .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
               .bind(opt.clickfree ? _mouseleave_ : _mouseup_, function(e){ $couple.trigger('up'); return false })
               .disableTextSelect();
-            (opt.hint) && hotspot.attr(_title_, opt.hint);
+            (opt.hint) && area.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
               className: monitor_klass,
               css: { position: _absolute_, left: 0, top: -space.y }
@@ -351,7 +353,7 @@
             !touched && pool
             .bind(_mousemove_, function(e){ t.trigger('slide', [e.clientX, e.clientY]); cleanup.call(e) })
             .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor }) && !opt.clickfree && pool
-            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_hotspot_);
+            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_area_);
             cleanup.call(e);
           },
           up: function(e, touched){
@@ -368,7 +370,7 @@
             velocity ? idle() : unidle();
             no_bias();
             !touched && pool
-            .unbind(_mouseup_).unbind(_mousemove_) && get(_hotspot_)
+            .unbind(_mouseup_).unbind(_mousemove_) && get(_area_)
             .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
             cleanup.call(e);
           },
@@ -597,14 +599,14 @@
     number= parseInt,
 
     // Storage keys
-    _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _clicked_= 'clicked',
+    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _clicked_= 'clicked',
     _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
-    _frames_= 'frames', _hi_= 'hi', _hotspot_= 'hotspot', _image_= 'image',
-    _indicator_travel_= 'indicator_travel', _lo_= 'lo', _playing_= 'playing',
-    _revolution_= 'revolution', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing',
-    _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_travel_= 'stitched_travel',
-    _stopped_= 'stopped', _value_= 'value', _velocity_= 'velocity', _wheel_step_= 'wheel_step',
+    _frames_= 'frames', _hi_= 'hi', _image_= 'image', _indicator_travel_= 'indicator_travel',
+    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
+    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value',
+    _velocity_= 'velocity', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',

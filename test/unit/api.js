@@ -21,14 +21,14 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(43);
+		expect(44);
     // Version 1.0 options
     equal( $.reel.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.frame,                      1, 'initial frame' );
     equal( $.reel.frames,                    36, 'total number of frames; every 10° for full rotation' );
-    equal( $.reel.hint,                      '', 'hotspot hint tooltip' );
+    equal( $.reel.hint,                      '', 'mouse-sensitive area hint tooltip' );
     equal( $.reel.horizontal,              true, 'roll flow; defaults to horizontal' );
-    equal( $.reel.hotspot,            undefined, 'custom jQuery as a hotspot' );
+    equal( $.reel.hotspot,            undefined, '[deprecated] use `area` instead' );
     equal( $.reel.indicator,                  0, 'size of a visual indicator of reeling (in pixels)' );
     equal( $.reel.klass,                     '', 'plugin instance class name' );
     equal( $.reel.loops,                   true, 'is it a loop?' );
@@ -41,6 +41,7 @@
     equal( $.reel.tooltip,                   '', '[deprecated] use `hint` instead' );
 
     // Version 1.1 options
+    equal( $.reel.area,               undefined, 'custom mouse-sensitive area jQuery collection' );
     equal( $.reel.brake,                    0.5, 'brake force of the inertial rotation' );
     equal( $.reel.clickfree,              false, 'binds to mouse leave/enter events instead of down/up' );
     equal( $.reel.couple,             undefined, 'harness other Reel instance(s) to share interaction events' );
