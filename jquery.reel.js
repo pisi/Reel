@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: 1.1 RC
- * Updated: 2010-10-28
+ * Updated: 2010-10-31
  *
  * Requires jQuery 1.4.x
  */
@@ -208,10 +208,13 @@
           - unbinds events, erases all state data
           - reconstructs the original DOM element
           */
-            $(get(_stage_)).replaceWith($(t.clone())
-            .attr(t.data(_backup_))
-            .removeClass(klass)
-            .addClass(get(_classes_)));
+            t.unbind(ns).unbind(on);
+            var
+              $original= t.clone()
+              .attr(t.data(_backup_))
+              .removeClass(klass)
+              .addClass(get(_classes_));
+            $(get(_stage_)).before($original).detach();
             no_bias();
             pool
             .unbind(_mouseup_).unbind(_mousemove_)
