@@ -7,127 +7,201 @@
     <script src='../jquery.reel-min.js' type='text/javascript'></script>
     <script src='../example/inc/jquery.disabletextselect-min.js' type='text/javascript'></script>
     <script src='../example/inc/jquery.mousewheel-min.js' type='text/javascript'></script>
+    <script src='../example/inc/jquery.cookie-min.js' type='text/javascript'></script>
+    <script src='sampler.js' type='text/javascript'></script>
+    <link href='sampler.css' language='text/css' rel='stylesheet' />
+    <meta name='viewport' content='width=1010' />
     <style type="text/css">
-
-.sample img{ display: block; }
-.sample h2{ margin: 20px 0 0 0; cursor: pointer; text-decoration: line-through; color: #b00; }
-.sample h2:hover{ text-decoration: underline !important;  }
-.sample.on h2{ text-decoration: none; color: #080; }
-.jquery-reel .jquery-reel-monitor{ background: #000; color: #fff; }
-.bordered{ border: 2px solid black;}
-
-.credits li{ list-style-type: none; }
-
+      /*
+      Piece of CSS style used by #multirow sample to test classes persistence
+      */
+      .bordered{ border: 2px dashed black; }
     </style>
   </head>
   <body>
-    <h1><a href='index.html'>« Tests</a> / Sampler</h1>
-    <p>
-      <strong>Hint:</strong>
-      Toggle individual "Reels" by clicking their title
+    <h1>
+      <a href='index.html'>« Tests</a>
+      <a href='index.html'>/</a>
+      <strong>Sampler</strong>
+    </h1>
+
+    <p class="hint">
+      Click any sample to initialize. Hold [Alt] key during the click to have multiple samples running at once.
     </p>
 
+    <h2>Object Movie</h2>
     <div class="sample">
-      <h2>Object movie (animated, bi-directional)</h2>
-      <img id='logo' src='samples/logo.png' width='130' height='60' class="bordered highlighted" />
+      <img id='logo' src='samples/logo.png' width='130' height='60' />
+      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+      <h3>Directional Sprite</h3>
+<code><pre>
+{ speed: 1,
+  directional: true }
+
+</pre>
+// `speed` 1 is one revolution per second (1 Hz)
+</code>
     </div>
     <div class="sample">
-      <h2>Object movie (animated) *</h2>
       <img id='f1' src='samples/f1.jpg' width='276' height='126' />
+      <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
+      <h3>Coupled Sprite</h3>
+<code><pre>
+{ speed:   -0.3,
+  frames:  35,
+  cw:      true,
+  couple:  $('#f1ccw') }
+
+</pre>
+// Both formula cars have their events coupled together. Click on the other with [Alt] pressed to have initialized both of them.
+Then spinning any of them will spin the other too.
+</code>
     </div>
     <div class="sample">
-      <h2>Object movie (animated, counter-clockwise sprite) *</h2>
       <img id='f1ccw' src='samples/f1-ccw.jpg' width='276' height='126' />
+      <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
+      <h3>Coupled Counter-Clockwise Sprite</h3>
+<code><pre>
+{ speed: -0.3,
+  frames: 35,
+  couple: $('#f1') }
+
+</pre>
+// Both formula cars have their events coupled together. Click on the other with [Alt] pressed to have initialized both of them.
+Then spinning any of them will spin the other too.
+</code>
     </div>
     <div class="sample">
-      <h2>Object movie (animated, multi-row)</h2>
-      <img id='multirow' src='samples/multi-row.png' width='100' height='100' />
+      <img id='multirow' src='samples/multi-row.png' width='100' height='100' class="bordered highlighted" />
+      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+      <h3>Multi-Row Sprite</h3>
+<code><pre>
+{ speed: 0.3,
+  frames: 6,
+  footage: 3,
+  rows: 3,
+  row: 2 }
+
+</pre>
+// Additionally custom class "bordered" (the dashed border) is applied on the IMG and is being preserved.
+</code>
     </div>
     <div class="sample">
-      <h2>Object movie (animated, sequence)</h2>
+      <img id='mini' src='samples/mini.jpg' width='200' height='200' />
+      <div class="credits">photo &copy; <a href="mailto:masmith@photospherix.com">Matt Smith</a></div>
+      <h3>Multi-Row Sequence</h3>
+<code><pre>
+{ frames: 20,
+  frame: 14,
+  rows: 6,
+  row: 3,
+  speed: 0.2,
+  path: 'samples/mini/',
+  images: mini_frames() }
+
+</pre>
+// Helper function `mini_frames` returns simply an array of filenames ['001.jpg', '002.jpg', '003.jpg', up to '120.jpg']
+</code>
+    </div>
+    <div class="sample">
       <img id='badge' src='http://code.vostrel.cz/jquery.reel-1.gif' width='120' height='30' />
+      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+      <h3>Sequence</h3>
+<code><pre>
+{ speed: -0.1,
+  path: 'http://code.vostrel.cz/jquery.reel-',
+  images: [ '1.gif', '2.gif', '3.gif' ] }
+</pre></code>
     </div>
     <div class="sample">
-      <h2>Object movie (sequence) **</h2>
-      <img id='drone' src='' width='300' height='200' />
-    </div>
-    <div class="sample">
-      <h2>Rectilinear panorama (stitched, click-free) ***</h2>
-      <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
-    </div>
-    <div class="sample">
-      <h2>Non-looping rectilinear panorama (animated, delayed) ****</h2>
-      <img id='chicago' src='samples/chicago.jpg' width='270' height='150' />
-    </div>
-    <div class="sample">
-      <h2>Panorama movie (animated)</h2>
-      <img id='green' src='samples/green.jpg' width='200' height='150' />
+      <img id='drone' src='samples/drone.png' width='300' height='200' />
+      <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
+      <h3>Sequence</h3>
+<code><pre>
+{ cw: true,
+  frame: 32,
+  speed: -0.2,
+  path: 'samples/drone/',
+  images: drone_frames() }
+
+</pre>
+// Helper function `drone_frames` returns simply an array of filenames ['00001.png', '00006.png', '00011.png', up to '00179.png']
+</code>
     </div>
 
-    <h2>Image Credits:</h2>
-    <ul class="credits">
-      <li><strong>*</strong> <a href="mailto:syerik@seznam.cz">Erik Kluka</a></li>
-      <li><strong>**</strong> <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></li>
-      <li><strong>***</strong> <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></li>
-      <li><strong>****</strong> <em>to add</em></li>
-      <li>no star for me, <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></li>
-    </ul>
+    <h2>Panorama Movie</h2>
+    <div class="sample">
+      <img id='green' src='samples/green.jpg' width='200' height='150' />
+      <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+      <h3>Stitched</h3>
+<code><pre>
+{ frames: 32,
+  footage: 4,
+  speed: 0.1 }
+</pre></code>
+    </div>
+
+    <h2>Rectilinear Panorama</h2>
+    <div class="sample">
+      <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
+      <div class="credits">photo &copy; <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></div>
+      <h3>Click-Free Stitched</h3>
+<code><pre>
+{ stitched: 1821,
+  frames: 60,
+  frame: 23,
+  speed: -0.05,
+  clickfree: true }
+</pre></code>
+    </div>
+    <div class="sample">
+      <img id='chicago' src='samples/chicago.jpg' width='270' height='150' />
+      <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
+      <h3>Non-Looping Stitched</h3>
+<code><pre>
+{ stitched: 1072,
+  loops: false,
+  steps: 30,
+  step: 15,
+  speed: -0.1,
+  timeout: 1 }
+</pre></code>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="footer">
+      &copy; 2009-2010 Petr Vostřel, part of <strong>jQuery Reel project - <a href="http://jquery.vostrel.cz/reel">http://jquery.vostrel.cz/reel</a></strong>
+    </div>
 
     <script type='text/javascript'>
 $(function ready(){
 
+  /*
+  Preset common indicator size
+  */
   $.reel.indicator= 5;
 
-  toggle('#logo', true, { delay: 0, speed: 1, directional: true });
-  toggle('#f1', true, { delay: 0.5, speed: -0.3, frames: 35, cw: true, couple: $('#f1ccw') });
-  toggle('#f1ccw', true, { delay: 0.5, speed: -0.3, frames: 35, couple: $('#f1') });
-  toggle('#multirow', true, { delay: 0.5, speed: 0.3, frames: 6, footage: 3, rows: 3, row: 2 });
-  toggle('#stitched', true, { delay: 1, stitched: 1821, frames: 60, speed: -0.05, clickfree: true });
-  toggle('#chicago', true, { delay: 1.5, stitched: 1072, loops: false, steps: 30, step: 15, speed: -0.1, timeout: 1 });
-  toggle('#green', true, { delay: 2, frames: 32, footage: 4, speed: 0.1 });
-  toggle('#badge', true, { delay: 2.5, speed: -0.1, images: ['http://code.vostrel.cz/jquery.reel-1.gif', 'http://code.vostrel.cz/jquery.reel-2.gif', 'http://code.vostrel.cz/jquery.reel-3.gif'] });
-  toggle('#drone', true, { delay: 3, cw: true, speed: -0.2, path: 'http://test.dev.acegroup.lv/uav/3d/plane/', images: drone_frames() });
+  $('.sample img[id]').each(function(){
+
+    prepare_reel_sample('#' + $(this).attr('id'));
+    /*
+    This `prepare_reel_sample` essentialy uses each sample's options
+    and passes them to `.reel` call as a parameter when clicked.
+    It also adds some UI interactions like toggling samples, cookie persistence and such.
+    Definitely not needed for running Reel itself. You DON'T want to use it.
+
+    You simply do:
+      $('#my_image').reel({ ..your options.. });
+
+    Just like that.
+    */
+  });
 
   /*
-  Code used in the #drone example; based on one by Mark Leidman
+  Cookie persistence of last selected sample. You DON'T want to use this either.
   */
-  function drone_frames(frames){
-    var frames= 179, every= 5, stack= []
-    for(var i= 1; i < 180; i+= every){
-      var name= ['plane_', i, '.png'].join('')
-      while (name.length < 15) name= name.replace('_', '_0')
-      stack.push(name)
-    }
-    return stack
-  }
-
-  /*
-  This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
-  It essentially is a shortcut for `$(target).reel(options)`
-  */
-  function toggle(target, onoff, options){
-    var
-      $sample= $(target).parent('.sample');
-    $('h2', $sample)
-    .attr({ title: 'Click to setup/teardown' })
-    .click(click_it);
-
-    options.speed && $('<div/>', { className: 'control_events' })
-    .append($('<button/>', { text: '▶', title: 'Play' }).click(function(){ $(target).trigger('play') }))
-    .append($('<button/>', { text: '❙❙', title: 'Pause' }).click(function(){ $(target).trigger('pause') }))
-    .append($('<button/>', { text: '◼', title: 'Stop' }).click(function(){ $(target).trigger('stop') }))
-    .insertAfter(target);
-
-    onoff && click_it();
-
-    function click_it(){
-      var
-        onoff= !$sample.hasClass('on');
-      $sample[onoff ? 'addClass' : 'removeClass']('on');
-      onoff && $(target).reel(options) || $(target).trigger('teardown');
-    }
-    return onoff
-  }
+  $($.cookie('reel.test.sample') || '.sample:first').click();
 
 });
     </script>
