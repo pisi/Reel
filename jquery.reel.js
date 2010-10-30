@@ -68,7 +68,7 @@
       cw:             false, // true for clockwise organization of sprite
       delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
       directional:    false, // two sets of frames (for forward and backward motion) are used when true
-      dragable:       true, // mouse or finger drag interaction (allowed by default)
+      draggable:       true, // mouse or finger drag interaction (allowed by default)
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
@@ -347,7 +347,7 @@
           /*
           - starts the dragging opration by binding dragging events to the pool
           */
-            if (!opt.dragable) return cleanup.call(e);
+            if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, true),
               velocity= set(_velocity_, 0),
@@ -367,7 +367,7 @@
           - unbinds dragging events from pool
           - resets the mouse cursor
           */
-            if (!opt.dragable) return cleanup.call(e);
+            if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, false),
               velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1] + bias[2]) / 60),
@@ -387,7 +387,7 @@
           - builds inertial motion bias
           - (`slide` was originally `drag` which conflicted with MSIE)
           */
-            if (!opt.dragable) return cleanup.call(e);
+            if (!opt.draggable) return cleanup.call(e);
             var
               revolution= get(_revolution_),
               origin= get(_clicked_location_),

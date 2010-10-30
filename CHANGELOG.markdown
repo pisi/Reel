@@ -28,7 +28,7 @@ Version 1.1 RC
 * Using standard jQuery's `.val()` facility one can set or get value representation of the fraction in the range defined by new `minimum` and `maximum` options (0 to 100 by default). Default initial value can be adjusted by using new `value` option.
 
 ### Interaction
-* New `dragable`, `wheelable` and `throwable` options added for interaction style control.
+* New `draggable`, `wheelable` and `throwable` options added for interaction style control.
 * New boolean `clickfree` option which causes binding to mouseenter/leave events rather than down/up for click-free interaction.
 * Two or more instances of Reel can be coupled together using new `couple` option for joint-interaction.
 * Prevented text selection of the projector on iPhone.

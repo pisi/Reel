@@ -47,7 +47,7 @@
     equal( $.reel.couple,             undefined, 'harness other Reel instance(s) to share interaction events' );
     equal( $.reel.cw,                     false, 'true for clockwise organization of sprite' );
     equal( $.reel.delay,                     -1, 'delay before autoplay in seconds (no autoplay by default)' );
-    equal( $.reel.dragable,                true, 'mouse or finger drag interaction (allowed by default)' );
+    equal( $.reel.draggable,               true, 'mouse or finger drag interaction (allowed by default)' );
     equal( $.reel.graph,              undefined, 'custom graph function' );
     equal( $.reel.image,              undefined, 'image sprite to be used' );
     ok( typeof $.reel.images === 'object',       'sequence array of individual images to be used instead of sprite' );
