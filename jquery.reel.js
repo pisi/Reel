@@ -249,7 +249,7 @@
               }).appendTo($overlay),
               area= set(_area_, $(opt.area || $hi )),
               $couple= t.add(opt.couple)
-            if (touchy) hotspot
+            if (touchy) area
               .css({ WebkitUserSelect: 'none', WebkitBackgroundSize: images.length ? 'auto' : (get(_stitched_) || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px') })
               .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
