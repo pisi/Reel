@@ -35,8 +35,8 @@
       <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Directional Sprite</h3>
 <code><pre>
-{ speed: 1,
-  directional: true }
+{ speed:        1,
+  directional:  true }
 
 </pre>
 // `speed` 1 is one revolution per second (1 Hz)
@@ -62,9 +62,9 @@ Then spinning any of them will spin the other too.
       <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
       <h3>Coupled Counter-Clockwise Sprite</h3>
 <code><pre>
-{ speed: -0.3,
-  frames: 35,
-  couple: $('#f1') }
+{ speed:   -0.3,
+  frames:  35,
+  couple:  $('#f1') }
 
 </pre>
 // Both formula cars have their events coupled together. Click on the other with [Alt] pressed to have initialized both of them.
@@ -76,11 +76,11 @@ Then spinning any of them will spin the other too.
       <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Multi-Row Sprite</h3>
 <code><pre>
-{ speed: 0.3,
-  frames: 6,
-  footage: 3,
-  rows: 3,
-  row: 2 }
+{ speed:    0.3,
+  frames:   6,
+  footage:  3,
+  rows:     3,
+  row:      2 }
 
 </pre>
 // Additionally custom class "bordered" (the dashed border) is applied on the IMG and is being preserved.
@@ -91,13 +91,13 @@ Then spinning any of them will spin the other too.
       <div class="credits">photo &copy; <a href="mailto:masmith@photospherix.com">Matt Smith</a></div>
       <h3>Multi-Row Sequence</h3>
 <code><pre>
-{ frames: 20,
-  frame: 14,
-  rows: 6,
-  row: 3,
-  speed: 0.2,
-  path: 'samples/mini/',
-  images: mini_frames() }
+{ frames:  20,
+  frame:   14,
+  rows:    6,
+  row:     3,
+  speed:   0.2,
+  path:    'samples/mini/',
+  images:  mini_frames() }
 
 </pre>
 // Helper function `mini_frames` returns simply an array of filenames ['001.jpg', '002.jpg', '003.jpg', up to '120.jpg']
@@ -108,9 +108,12 @@ Then spinning any of them will spin the other too.
       <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Sequence</h3>
 <code><pre>
-{ speed: -0.1,
-  path: 'http://code.vostrel.cz/jquery.reel-',
-  images: [ '1.gif', '2.gif', '3.gif' ] }
+{ speed:   -0.1,
+  path:    'samples/',
+  images:  [ 'badge-1.gif',
+             'badge-2.gif',
+             'badge-3.gif',
+             'badge-4.gif' ] }
 </pre></code>
     </div>
     <div class="sample">
@@ -118,11 +121,11 @@ Then spinning any of them will spin the other too.
       <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
       <h3>Sequence</h3>
 <code><pre>
-{ cw: true,
-  frame: 32,
-  speed: -0.2,
-  path: 'samples/drone/',
-  images: drone_frames() }
+{ cw:      true,
+  frame:   32,
+  speed:   -0.2,
+  path:    'samples/drone/',
+  images:  drone_frames() }
 
 </pre>
 // Helper function `drone_frames` returns simply an array of filenames ['00001.png', '00006.png', '00011.png', up to '00179.png']
@@ -135,9 +138,9 @@ Then spinning any of them will spin the other too.
       <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Stitched</h3>
 <code><pre>
-{ frames: 32,
-  footage: 4,
-  speed: 0.1 }
+{ frames:   32,
+  footage:  4,
+  speed:    0.1 }
 </pre></code>
     </div>
 
@@ -147,11 +150,11 @@ Then spinning any of them will spin the other too.
       <div class="credits">photo &copy; <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></div>
       <h3>Click-Free Stitched</h3>
 <code><pre>
-{ stitched: 1821,
-  frames: 60,
-  frame: 23,
-  speed: -0.05,
-  clickfree: true }
+{ stitched:   1821,
+  frames:     60,
+  frame:      23,
+  speed:      -0.05,
+  clickfree:  true }
 </pre></code>
     </div>
     <div class="sample">
@@ -159,12 +162,12 @@ Then spinning any of them will spin the other too.
       <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
       <h3>Non-Looping Stitched</h3>
 <code><pre>
-{ stitched: 1072,
-  loops: false,
-  steps: 30,
-  step: 15,
-  speed: -0.1,
-  timeout: 1 }
+{ stitched:  1072,
+  loops:     false,
+  steps:     30,
+  step:      15,
+  speed:     -0.1,
+  timeout:   1 }
 </pre></code>
     </div>
 
