@@ -162,7 +162,7 @@
               loops= opt.loops,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
               image_src= opt.images ? transparent : src,
-              frames= set(_frames_, images.length || opt.frames),
+              frames= set(_frames_, !opt.rows && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               style= {
                 display: 'block',
@@ -184,8 +184,8 @@
             set(_steps_, opt.steps || opt.frames);
             set(_revolution_, opt.revolution || stitched / 2 || size.x);
             set(_rows_, rows);
-            set(_bit_, 1 / (get(_frames_) - (loops && !stitched ? 0 : 1)));
-            set(_wheel_step_, 1 / max(get(_frames_), get(_steps_)));
+            set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
+            set(_wheel_step_, 1 / max(frames, get(_steps_)));
             set(_stitched_, stitched);
             set(_stitched_travel_, stitched - (loops ? 0 : size.x));
             set(_indicator_travel_, size.x - opt.indicator);
