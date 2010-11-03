@@ -27,6 +27,9 @@ Version 1.1 RC
     * `revolution` option is a pixel distance mouse drag has to travel for full revolution.
 * Using standard jQuery's `.val()` facility one can set or get value representation of the fraction in the range defined by new `minimum` and `maximum` options (0 to 100 by default). Default initial value can be adjusted by using new `value` option.
 
+### Events
+* New "loaded" event is triggered when image(s) is/are loaded.
+
 ### Interaction
 * New `draggable`, `wheelable` and `throwable` options added for interaction style control.
 * New boolean `clickfree` option which causes binding to mouseenter/leave events rather than down/up for click-free interaction.

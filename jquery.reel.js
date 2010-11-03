@@ -294,7 +294,7 @@
                   opt.value != undefined && t.trigger('valueChange', get(_value_));
                   t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
                   cleanup.call(e);
-                  t.trigger('play').attr({ src: transparent });
+                  t.trigger('loaded').trigger('play').attr({ src: transparent });
                 }
               }))
               img.src= url;
