@@ -72,6 +72,7 @@
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
+      laziness:           8, // on "lazy" devices tempo is divided by this divisor for better performace
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       maximum:          100, // maximal value
       minimum:            0, // minimal value
@@ -115,7 +116,8 @@
         return $(pass);
       })(this),
       instances= [],
-      ticker_timeout= 1000 / opt.tempo
+      tempo= opt.tempo= opt.tempo / (lazy ? opt.laziness : 1),
+      ticker_timeout= 1000 / tempo
 
     // Backward-compatibility of [deprecated] legacy options
     opt.reversed && (opt.cw= true);
@@ -124,7 +126,7 @@
 
     ticker= ticker || (function tick(){
       pool.trigger(_tick_);
-      return setTimeout(tick, 1000 / opt.tempo);
+      return setTimeout(tick, ticker_timeout);
     })();
 
     applicable.each(function(){
@@ -584,7 +586,9 @@
   // PRIVATE
   var
     pool= $(document),
-    touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+    agent= navigator.userAgent,
+    touchy= (/iphone|ipod|ipad|android/i).test(agent),
+    lazy= (/iphone|ipod|ipad/i).test(agent),
     ie= $.browser.msie,
     failsafe_cursor= 'ew-resize',
     ticker,

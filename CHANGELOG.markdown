@@ -12,6 +12,7 @@ Version 1.1 RC
     * `timeout` option is a period of user inactivity after which animation is resumed again.
 * To control the animation from outside, new events `"play"`, `"pause"` ańd `"stop"` have been added.
 * Having one shared ticker for animation purposes. `tempo` option sets the speed in ticks per second.
+* Slower devices are detected and their tempo is decreased accordingly for better performance.
 
 ### Rendering
 * Suggestive open/closed palm cursor used for mouse pointer over the projector.
@@ -51,6 +52,7 @@ Version 1.1 RC
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
 * The `hotspot` option deprecated in favor to new `area` to stop being misleading.
 * New `directional` boolean option to flag bi-directional sprites.
+* New `laziness` option allows to customize the tempo divisor for lazy devices.
 
 ### Content Delivery Network
 * Reel's own cloud CDN has been started and recommended for use instead of download.
