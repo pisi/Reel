@@ -242,7 +242,6 @@
               img_frames= img_tag.frames= preload.length,
               img_preloads= img_tag.preloads= img_tag.preloads || [],
               img_preloaded= img_tag.preloaded= img_tag.preloaded || 0,
-              preload_images= preload.length != img_tag.preloads.length,
               $overlay= t.parent(),
               $hi= $(_div_tag_, { className: hi_klass,
                 css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
@@ -271,34 +270,36 @@
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows && opt.indicator && $overlay.append(indicator('y'));
             // Images preloader
-            if (preload_images){
-              $overlay.append($preloader= $(_div_tag_, {
-                className: preloader_klass,
-                css: {
-                  position: _absolute_,
-                  left: 0,
-                  top: space.y - opt.preloader,
-                  height: opt.preloader,
-                  backgroundColor: _hex_black_
-                }
-              }));
-              while(preload.length){
-                var
-                  img= new Image(),
-                  url= opt.path+preload.shift()
-                $(img).load(function update_preloader(){
-                  img_tag.preloaded++
-                  $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
-                  if (img_tag.frames == img_tag.preloaded) $preloader.remove()
-                })
-                img.src= url;
-                img_tag.preloads.push(img)
+            t.trigger('stop');
+            $overlay.append($preloader= $(_div_tag_, {
+              className: preloader_klass,
+              css: {
+                position: _absolute_,
+                left: 0,
+                top: space.y - opt.preloader,
+                height: opt.preloader,
+                backgroundColor: _hex_black_
               }
+            }));
+            while(preload.length){
+              var
+                img= new Image(),
+                url= opt.path+preload.shift()
+              $overlay.append($(img).hide().bind('load'+ns, function update_preloader(){
+                img_tag.preloaded++
+                $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
+                if (img_tag.frames == img_tag.preloaded){
+                  $preloader.remove();
+                  opt.delay > 0 && unidle();
+                  opt.value != undefined && t.trigger('valueChange', get(_value_));
+                  t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
+                  cleanup.call(e);
+                  t.trigger('play').attr({ src: transparent });
+                }
+              }))
+              img.src= url;
+              img_tag.preloads.push(img)
             }
-            opt.delay > 0 && unidle();
-            opt.value != undefined && t.trigger('valueChange', get(_value_));
-            cleanup.call(e);
-            t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           tick: function(e){
           /*
