@@ -4,7 +4,7 @@
 (function($){
 
   module('Rendering', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
+    $('.jquery-reel').unbind('loaded').trigger('teardown');
   }});
 
   asyncTest( 'Overlay: is created with proper ID', function(){
@@ -30,17 +30,25 @@
 
   asyncTest( 'Indicator: is sticked to the bottom edge of the projector', function(){
     expect(4);
-    try_different_sizes([10, 20, 50, 100]);
-    start();
+    var
+      samples= [10, 20, 50, 100]
+
+    try_different_sizes(samples);
 
     function try_different_sizes(sizes){
+      var
+        count= 0
       $(sizes).each(function try_size(ix, size){
         $('#image').trigger('teardown')
         var
           $reel= $('#image').reel({ indicator: size }),
           $indicator= $('#image-reel .jquery-reel-indicator'),
           indicator_offset_top= parseInt($indicator.css('top'));
-        equal( indicator_offset_top, 126 - size );
+        $reel.one('loaded', function(){
+          count++;
+          equal( indicator_offset_top, 126 - size );
+          count==samples.length && start();
+        });
       });
     }
   });
@@ -66,7 +74,7 @@
   });
 
   asyncTest( 'Indicator: is sticked to the bottom left corner when on min frame (1)', function(){
-		expect(1);
+    expect(1);
     var
       size= 10,
       $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
@@ -77,7 +85,7 @@
   });
 
   asyncTest( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){
-		expect(1);
+    expect(1);
     var
       size= 10,
       $reel= $('#image').reel({ indicator: size }),
@@ -95,7 +103,7 @@
   });
 
   asyncTest( 'Indicator: reacts on frame change', function(){
-		expect(1);
+    expect(1);
     var
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
       before= $('#image-reel .jquery-reel-indicator').css('left');
@@ -109,7 +117,7 @@
   });
 
   asyncTest( 'Indicator: Custom style may be applied to indicator via `.jquery-reel-indicator`', function(){
-		expect(2);
+    expect(2);
     var
       $reel= $('#image').reel({ indicator: 10 }),
       $indicator= $('#image-reel .jquery-reel-indicator');

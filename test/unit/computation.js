@@ -8,7 +8,7 @@
   }});
 
   asyncTest( '`fractionChange` accepts and normalizes any real fraction passed', function(){
-		expect(10);
+    expect(10);
     var
       selector= '#image',
       $reel= $(selector).reel(),
@@ -24,15 +24,17 @@
         '-1.23456': 0.7654,
         '-1.2': 0.8
       }
-    $.each(entries, function(ix,it){
-      $reel.trigger('fractionChange', Number(ix));
-      equal( $reel.data('fraction'), it, 'Passed '+ix);
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.trigger('fractionChange', Number(ix));
+        equal( $reel.data('fraction'), it, 'Passed '+ix);
+      });
+      start();
     });
-    start();
   });
 
   asyncTest( '`rowChange` accepts and normalizes any real row fraction passed', function(){
-		expect(7);
+    expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({ rows: 3 }),
@@ -45,11 +47,13 @@
         '1.23456': 0.1173,
         '-1.23456': 0
       }
-    $.each(entries, function(ix,it){
-      $reel.trigger('rowChange', Number(ix));
-      equal( $reel.data('row'), it, 'Fraction '+ix);
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.trigger('rowChange', Number(ix));
+        equal( $reel.data('row'), it, 'Fraction '+ix);
+      });
+      start();
     });
-    start();
   });
 
   asyncTest( 'Positive direction/spped is not detected as reversed', function(){
@@ -73,7 +77,7 @@
   });
 
   asyncTest( 'jQuery\'s .val() returns numeric value in the range of 0 to 100 by default', function(){
-		expect(7);
+    expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false }),
@@ -94,7 +98,7 @@
   });
 
   asyncTest( 'jQuery\'s .val() returns numeric value in the range of `minimum` and `maximum` options', function(){
-		expect(7);
+    expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({ minimum: 1000, maximum: 2000, loops: false }),
@@ -115,18 +119,20 @@
   });
 
   asyncTest( 'Initial value can be preset by `value` option', function(){
-		expect(2);
+    expect(2);
     var
       selector= '#image',
       $reel= $(selector).reel({ value: 50, loops: false })
 
-    equal( $reel.data('value'), 50, 'Initial state');
-    equal( $reel.data('fraction'), 0.5, 'Updated fraction');
-    start();
+    $reel.one('loaded', function(){
+      equal( $reel.data('value'), 50, 'Initial state');
+      equal( $reel.data('fraction'), 0.5, 'Updated fraction');
+      start();
+    });
   });
 
   asyncTest( 'Value can be set from outside using `valueChange` event', function(){
-		expect(3);
+    expect(3);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false })
@@ -140,7 +146,7 @@
   });
 
   asyncTest( 'Value can be set from outside using jQuery\'s standard .val() facility', function(){
-  	expect(3);
+    expect(3);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false })
@@ -151,12 +157,12 @@
       equal( $reel.data('value'), 20, 'Changed value');
       equal( $reel.data('fraction'), 0.2, 'Updated fraction');
       start();
-  	});
+    });
     $reel.val(20);
   });
 
   asyncTest( 'Value can be set from outside directly by setting .value=', function(){
-  	expect(3);
+    expect(3);
     var
       selector= '#image',
       $reel= $(selector).reel({ loops: false })
