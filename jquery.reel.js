@@ -163,7 +163,6 @@
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
-              image_src= opt.images ? transparent : src,
               frames= set(_frames_, !opt.rows && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               style= {
@@ -175,7 +174,7 @@
               classes= t.attr('className'),
               overlay_css= { position: 'relative', width: size.x, height: size.y },
               $overlay= $(_div_tag_, { id: stage_id.substr(1), className: classes+___+overlay_klass, css: overlay_css }),
-              $instance= t.wrap($overlay).attr({ src: image_src, className: klass, style: style }).bind(on),
+              $instance= t.wrap($overlay).attr({ className: klass, style: style }).bind(on),
               instances_count= instances.push($instance[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_classes_, classes);
