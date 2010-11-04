@@ -23,8 +23,8 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * http://jquery.vostrel.cz/reel
- * Version: 1.1 RC
- * Updated: 2010-10-31
+ * Version: 1.1 RC 2
+ * Updated: 2010-11-04
  *
  * Requires jQuery 1.4.x
  */
@@ -42,7 +42,7 @@
  * [B] Marked plugins are contained (with permissions) in the "bundle" version
  */
 
-(function($, window, document, undefined){
+jQuery.fn.reel || (function($, window, document, undefined){
   var
     defaults= $.reel= {
       footage:            6, // number of frames per line/column
