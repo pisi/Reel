@@ -385,7 +385,7 @@
             if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, false),
-              velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1] + bias[2]) / 60),
+              velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
               breaks= breaking= velocity ? 1 : 0
             velocity ? idle() : unidle();
             no_bias();
@@ -552,7 +552,7 @@
         on_edge= 0,
         last_x= 0,
         to_bias= function(value){ return bias.push(value) && bias.shift() && value },
-        no_bias= function(){ return bias= [0,0,0] },
+        no_bias= function(){ return bias= [0,0] },
         bias= no_bias(),
         tick_brake= opt.brake / opt.tempo,
 
