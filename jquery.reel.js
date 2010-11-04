@@ -183,7 +183,7 @@
             set(_dimensions_, size);
             set(_fraction_, 0);
             set(_steps_, opt.steps || opt.frames);
-            set(_revolution_, opt.revolution || stitched / 2 || size.x);
+            set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
             set(_rows_, rows);
             set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
             set(_wheel_step_, 1 / max(frames, get(_steps_)));
