@@ -45,30 +45,22 @@
     <div class="sample">
       <img id='f1' src='samples/f1.jpg' width='276' height='126' />
       <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-      <h3>Coupled Sprite</h3>
+      <h3>Clockwise Sprite</h3>
 <code><pre>
 { speed:   -0.3,
   frames:  35,
-  cw:      true,
-  couple:  $('#f1ccw') }
+  cw:      true }
 
 </pre>
-// Both formula cars have their events coupled together. Click on the other with [Alt] pressed to have initialized both of them.
-Then spinning any of them will spin the other too.
+// Unlike the other formula car sample this one's sprite is clockwise-organized.
 </code>
     </div>
     <div class="sample">
       <img id='f1ccw' src='samples/f1-ccw.jpg' width='276' height='126' />
       <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-      <h3>Coupled Counter-Clockwise Sprite</h3>
+      <h3>Non-Animated Sprite</h3>
 <code><pre>
-{ speed:   -0.3,
-  frames:  35,
-  couple:  $('#f1') }
-
-</pre>
-// Both formula cars have their events coupled together. Click on the other with [Alt] pressed to have initialized both of them.
-Then spinning any of them will spin the other too.
+{ frames:  35 }</pre>
 </code>
     </div>
     <div class="sample">
