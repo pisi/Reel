@@ -26,7 +26,7 @@
  * Version: 1.1 RC 2
  * Updated: 2010-11-04
  *
- * Requires jQuery 1.4.x
+ * Requires jQuery 1.4.2
  */
 /*
  * Have it served by a cloud CDN:
