@@ -315,6 +315,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
                   t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
                   cleanup.call(e);
                   t.trigger('loaded').attr({ src: transparent });
+                  t.trigger('opening');
                 }
               }))
               img.src= url;
@@ -349,6 +350,8 @@ jQuery.fn.reel || (function($, window, document, undefined){
             cleanup.call(e);
             if (fraction == was) return;
             t.trigger('fractionChange');
+          },
+          opening: function(e){
             t.trigger('fractionChange');
           },
           play: function(e, direction){
