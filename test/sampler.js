@@ -44,9 +44,9 @@ $(function ready(){
 		$('h3', $sample).click(click_it);
 
     options.speed && $('<div/>', { className: 'control_events' })
-    .append($('<button/>', { text: '▶ play', title: 'Play' }).click(function(){ $(target).trigger('play') }))
-    .append($('<button/>', { text: '❙❙ pause', title: 'Pause' }).click(function(){ $(target).trigger('pause') }))
-    .append($('<button/>', { text: '◼ stop', title: 'Stop' }).click(function(){ $(target).trigger('stop') }))
+    .append($('<button/>', { text: '▶ play' }).click(function(){ $(target).trigger('play') }))
+    .append($('<button/>', { text: '❙❙ pause' }).click(function(){ $(target).trigger('pause') }))
+    .append($('<button/>', { text: '◼ stop' }).click(function(){ $(target).trigger('stop') }))
     .insertAfter(target);
 
     function click_it(e){
