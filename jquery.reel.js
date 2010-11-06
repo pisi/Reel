@@ -373,7 +373,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
           */
             var
               speed= opt.entry || opt.speed,
-              step= speed / opt.tempo,
+              step= speed / opt.tempo * (opt.cw? -1:1),
               was= get(_fraction_),
               fraction= set(_fraction_, was + step)
             cleanup.call(e);
