@@ -344,8 +344,11 @@ jQuery.fn.reel || (function($, window, document, undefined){
             var
               backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
               step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / opt.tempo,
-              fraction= set(_fraction_, get(_fraction_) - step * backwards)
+              was= get(_fraction_),
+              fraction= set(_fraction_, was - step * backwards)
             cleanup.call(e);
+            if (fraction == was) return;
+            t.trigger('fractionChange');
             t.trigger('fractionChange');
           },
           play: function(e, direction){
