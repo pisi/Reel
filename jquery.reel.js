@@ -355,9 +355,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
           - initiates opening animation
           - or simply plays the reel when without opening
           */
-            if (!opt.opening) return waiter= setTimeout(function play(){
-              t.trigger('play');
-            }, opt.delay * 1000 || 0);
+            if (!opt.opening) return delay_play();
 
             var
               speed= opt.entry || opt.speed,
@@ -382,9 +380,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
             if (ticks) return;
 
             pool.unbind(_tick_, on.opening_tick);
-            waiter= setTimeout(function play(){
-              t.trigger('play');
-            }, opt.delay * 1000 || 0);
+            delay_play();
           },
           play: function(e, direction){
             var
@@ -578,10 +574,17 @@ jQuery.fn.reel || (function($, window, document, undefined){
         breaking= 0,
         idle= function(){ return operated= 0 },
         unidle= function(){
-          clearTimeout(waiter);
+          clearTimeout(delay);
           pool.unbind(_tick_, on.opening_tick);
           t.trigger('play');
           return operated= -opt.timeout * opt.tempo
+        },
+        delay,
+        // Triggers "play" delayed or immediate play
+        delay_play= function(){
+          delay= setTimeout(function play(){
+            t.trigger('play');
+          }, opt.delay * 1000 || 0);
         },
 
         $monitor,
@@ -653,7 +656,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
     ie= $.browser.msie,
     failsafe_cursor= 'ew-resize',
     ticker,
-    waiter,
 
     // HTML classes
     klass= 'jquery-reel',
