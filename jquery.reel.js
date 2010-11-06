@@ -243,15 +243,8 @@ jQuery.fn.reel || (function($, window, document, undefined){
               resolution= max(frames, get(_steps_)),
               fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
               frame= set(_frame_, fraction * frames + 1),
-              image= get(_image_),
-              images= opt.images,
               loaded= 0,
-              preload= !images.length ? [image] : new Array().concat(images),
               id= t.attr('id'),
-              img_tag= t[0],
-              img_frames= img_tag.frames= preload.length,
-              img_preloads= img_tag.preloads= img_tag.preloads || [],
-              img_preloaded= img_tag.preloaded= img_tag.preloaded || 0,
               $overlay= t.parent(),
               $hi= $(_div_tag_, { className: hi_klass,
                 css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
@@ -259,7 +252,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               area= set(_area_, $(opt.area || $hi )),
               $couple= t.add(opt.couple)
             if (touchy) area
-              .css({ WebkitUserSelect: 'none', WebkitBackgroundSize: images.length ? 'auto' : (get(_stitched_) || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px') })
+              .css({ WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length ? 'auto' : (get(_stitched_) || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px') })
               .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
               .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
@@ -279,7 +272,22 @@ jQuery.fn.reel || (function($, window, document, undefined){
             })) || ($monitor= $());
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows && opt.indicator && $overlay.append(indicator('y'));
-            // Images preloader
+            t.trigger('preload');
+          },
+          preload: function(e){
+          /*
+          - Preloads all frames and sprites
+          */
+            var
+              space= get(_dimensions_),
+              $overlay= t.parent(),
+              image= get(_image_),
+              images= opt.images,
+              preload= !images.length ? [image] : new Array().concat(images),
+              img_tag= t[0],
+              img_frames= img_tag.frames= preload.length,
+              img_preloads= img_tag.preloads= img_tag.preloads || [],
+              img_preloaded= img_tag.preloaded= img_tag.preloaded || 0
             t.trigger('stop');
             $overlay.append($preloader= $(_div_tag_, {
               className: preloader_klass,
@@ -304,7 +312,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
                   opt.value != undefined && t.trigger('valueChange', get(_value_));
                   t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
                   cleanup.call(e);
-                  t.trigger('loaded').trigger('play').attr({ src: transparent });
+                  t.trigger('loaded').attr({ src: transparent });
                 }
               }))
               img.src= url;
