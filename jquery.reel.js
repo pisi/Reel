@@ -363,6 +363,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               duration= opt.opening,
               start= set(_fraction_, end - speed * opt.opening),
               ticks= set(_opening_ticks_, duration * tempo)
+            t.trigger('stop');
             pool.bind(_tick_, on.opening_tick);
           },
           opening_tick: function(e){
