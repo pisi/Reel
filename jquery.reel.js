@@ -355,7 +355,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
           - initiates opening animation
           - or simply plays the reel when without opening
           */
-            if (!opt.opening) return delay_play();
+            if (!opt.opening) return t.trigger('fractionChange') && delay_play();
 
             var
               speed= opt.entry || opt.speed,
