@@ -359,13 +359,13 @@ jQuery.fn.reel || (function($, window, document, undefined){
               t.trigger('play');
             }, opt.delay * 1000 || 0);
 
+            var
+              speed= opt.entry || opt.speed,
+              end= get(_fraction_),
+              duration= opt.opening,
+              start= set(_fraction_, end - speed * opt.opening),
+              ticks= set(_opening_ticks_, floor(duration * opt.tempo) - 1)
             pool.bind(_tick_, on.opening_tick);
-            waiter= setTimeout(function finish(){
-              pool.unbind(_tick_, on.opening_tick);
-              waiter= setTimeout(function play(){
-                t.trigger('play');
-              }, opt.delay * 1000 || 0);
-            }, opt.opening * 1000);
           },
           opening_tick: function(e){
           /*
@@ -377,7 +377,15 @@ jQuery.fn.reel || (function($, window, document, undefined){
               was= get(_fraction_),
               fraction= set(_fraction_, was + step)
             cleanup.call(e);
+              ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
             t.trigger('fractionChange');
+            cleanup.call(e);
+            if (ticks) return;
+
+            pool.unbind(_tick_, on.opening_tick);
+            waiter= setTimeout(function play(){
+              t.trigger('play');
+            }, opt.delay * 1000 || 0);
           },
           play: function(e, direction){
             var
@@ -671,9 +679,9 @@ jQuery.fn.reel || (function($, window, document, undefined){
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on',
     _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction',
     _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image', _indicator_travel_= 'indicator_travel',
-    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value',
+    _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row',
+    _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
+    _stitched_= 'stitched', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value',
     _velocity_= 'velocity', _wheel_step_= 'wheel_step',
 
     // Events
