@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: 1.1 RC 2
- * Updated: 2010-11-04
+ * Updated: 2010-11-06
  *
  * Requires jQuery 1.4.2
  */
@@ -371,6 +371,12 @@ jQuery.fn.reel || (function($, window, document, undefined){
           /*
           - ticker listener dedicated to opening animation
           */
+            var
+              speed= opt.entry || opt.speed,
+              step= speed / opt.tempo,
+              was= get(_fraction_),
+              fraction= set(_fraction_, was + step)
+            cleanup.call(e);
             t.trigger('fractionChange');
           },
           play: function(e, direction){
@@ -567,6 +573,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
         unidle= function(){
           clearTimeout(waiter);
           pool.unbind(_tick_, on.opening_tick);
+          t.trigger('play');
           return operated= -opt.timeout * opt.tempo
         },
 
