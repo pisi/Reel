@@ -362,7 +362,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               end= get(_fraction_),
               duration= opt.opening,
               start= set(_fraction_, end - speed * opt.opening),
-              ticks= set(_opening_ticks_, floor(duration * opt.tempo) - 1)
+              ticks= set(_opening_ticks_, duration * tempo)
             pool.bind(_tick_, on.opening_tick);
           },
           opening_tick: function(e){
@@ -377,7 +377,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
             t.trigger('fractionChange');
             cleanup.call(e);
-            if (ticks) return;
+            if (ticks > 1) return;
 
             pool.unbind(_tick_, on.opening_tick);
             delay_play();
