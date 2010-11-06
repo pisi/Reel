@@ -219,7 +219,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
               $original= t.clone()
               .attr(t.data(_backup_))
               .removeClass(klass).addClass(get(_classes_));
-
             // clone original events (inspired by Brandon Aaron's copyEvents plugin)
             for (var type in events) $.each(events[type], function(ix, handler){
               // for this we need the 1.4.2+ version
@@ -278,7 +277,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
           },
           preload: function(e){
           /*
-          - Preloads all frames and sprites
+          - preloads all frames and sprites
           */
             var
               space= get(_dimensions_),
@@ -324,9 +323,9 @@ jQuery.fn.reel || (function($, window, document, undefined){
           },
           tick: function(e){
           /*
-          - Triggered by pool's `tick.reel` event
-          - Keeps track of operated and breaked statuses
-          - Decreases inertial velocity by braking
+          - triggered by pool's `tick.reel` event
+          - keeps track of operated and breaked statuses
+          - decreases inertial velocity by braking
           */
             var
               velocity= get(_velocity_)
