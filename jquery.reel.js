@@ -229,7 +229,8 @@ jQuery.fn.reel || (function($, window, document, undefined){
             no_bias();
             pool
             .unbind(_mouseup_).unbind(_mousemove_)
-            .unbind(_tick_, on.tick);
+            .unbind(_tick_, on.tick)
+            .unbind(_tick_, on.opening_tick);
             cleanup.call(e);
           },
           start: function(e){
@@ -309,7 +310,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
                 $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                 if (img_tag.frames == img_tag.preloaded){
                   $preloader.remove();
-                  opt.delay > 0 && unidle();
                   opt.value != undefined && t.trigger('valueChange', get(_value_));
                   t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
                   cleanup.call(e);
@@ -351,6 +351,26 @@ jQuery.fn.reel || (function($, window, document, undefined){
             t.trigger('fractionChange');
           },
           opening: function(e){
+          /*
+          - initiates opening animation
+          - or simply plays the reel when without opening
+          */
+            if (!opt.opening) return waiter= setTimeout(function play(){
+              t.trigger('play');
+            }, opt.delay * 1000 || 0);
+
+            pool.bind(_tick_, on.opening_tick);
+            waiter= setTimeout(function finish(){
+              pool.unbind(_tick_, on.opening_tick);
+              waiter= setTimeout(function play(){
+                t.trigger('play');
+              }, opt.delay * 1000 || 0);
+            }, opt.opening * 1000);
+          },
+          opening_tick: function(e){
+          /*
+          - ticker listener dedicated to opening animation
+          */
             t.trigger('fractionChange');
           },
           play: function(e, direction){
@@ -544,7 +564,11 @@ jQuery.fn.reel || (function($, window, document, undefined){
         operated,
         breaking= 0,
         idle= function(){ return operated= 0 },
-        unidle= function(){ return operated= -opt.timeout * opt.tempo },
+        unidle= function(){
+          clearTimeout(waiter);
+          pool.unbind(_tick_, on.opening_tick);
+          return operated= -opt.timeout * opt.tempo
+        },
 
         $monitor,
         $preloader,
@@ -615,6 +639,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
     ie= $.browser.msie,
     failsafe_cursor= 'ew-resize',
     ticker,
+    waiter,
 
     // HTML classes
     klass= 'jquery-reel',
