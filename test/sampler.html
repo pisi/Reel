@@ -35,11 +35,13 @@
       <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Directional Sprite</h3>
 <code><pre>
-{ speed:        1,
+{ speed:        -1,
+  opening:      1,
+  delay:        3,
   directional:  true }
 
 </pre>
-// `speed` 1 is one revolution per second (1 Hz)
+// `speed` 1 is one revolution per second (1 Hz). It is animated after 1 second long `opening` spin and a 3 second `delay`.
 </code>
     </div>
     <div class="sample">
@@ -60,7 +62,12 @@
       <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
       <h3>Non-Animated Sprite</h3>
 <code><pre>
-{ frames:  35 }</pre>
+{ frames:  35,
+  opening: 2,
+  entry: 1 }
+
+</pre>
+// This one isn't fully animated, but has a 2 seconds long 1 full spin as a opening.
 </code>
     </div>
     <div class="sample">
@@ -87,7 +94,7 @@
   frame:   14,
   rows:    6,
   row:     3,
-  speed:   0.2,
+  speed:   0.3,
   path:    'samples/mini/',
   images:  mini_frames() }
 
@@ -101,12 +108,16 @@
       <h3>Sequence</h3>
 <code><pre>
 { speed:   2,
+  delay:   1,
   path:    'samples/',
   images:  [ 'badge-1.gif',
              'badge-2.gif',
              'badge-3.gif',
              'badge-4.gif' ] }
-</pre></code>
+
+</pre>
+// `delay` tells it to wait 1 second before starting to play
+</code>
     </div>
     <div class="sample">
       <img id='drone' src='samples/drone.png' width='300' height='200' />
