@@ -13,6 +13,7 @@ Version 1.1 RC
 * To control the animation from outside, new events `"play"`, `"pause"` ańd `"stop"` have been added.
 * Having one shared ticker for animation purposes. `tempo` option sets the speed in ticks per second.
 * Slower devices are detected and their tempo is decreased accordingly for better performance.
+* Duration of an opening animation is set using new `opening` option. Custom opening speed can be set using new `entry` option.
 
 ### Rendering
 * Suggestive open/closed palm cursor used for mouse pointer over the projector.

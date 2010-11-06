@@ -21,7 +21,7 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(44);
+		expect(46);
     // Version 1.0 options
     equal( $.reel.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.frame,                      1, 'initial frame' );
@@ -48,6 +48,7 @@
     equal( $.reel.cw,                     false, 'true for clockwise organization of sprite' );
     equal( $.reel.delay,                     -1, 'delay before autoplay in seconds (no autoplay by default)' );
     equal( $.reel.draggable,               true, 'mouse or finger drag interaction (allowed by default)' );
+    equal( $.reel.entry,              undefined, 'speed of the opening animation (Hz, defaults to value of `speed`)' );
     equal( $.reel.graph,              undefined, 'custom graph function' );
     equal( $.reel.image,              undefined, 'image sprite to be used' );
     ok( typeof $.reel.images === 'object',       'sequence array of individual images to be used instead of sprite' );
@@ -55,6 +56,7 @@
     equal( $.reel.maximum,                  100 );
     equal( $.reel.minimum,                    0 );
     equal( $.reel.monitor,            undefined, 'stored value name to monitor in the upper left corner of the viewport' );
+    equal( $.reel.opening,                    0, 'duration of opening animation (in seconds)' );
     equal( $.reel.path,                      '', 'URL path to be prepended to `image` or `images` filenames' );
     equal( $.reel.preloader,                  4, 'size (height) of a image loading indicator (in pixels)' );
     equal( $.reel.rebound,                  0.5, 'time spent on the edge (in seconds) of a non-looping panorama before it bounces back' );

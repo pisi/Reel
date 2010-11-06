@@ -69,6 +69,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
       delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
       directional:    false, // two sets of frames (for forward and backward motion) are used when true
       draggable:       true, // mouse or finger drag interaction (allowed by default)
+      entry:      undefined, // speed of the opening animation (Hz, defaults to value of `speed`)
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
@@ -76,6 +77,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       maximum:          100, // maximal value
       minimum:            0, // minimal value
+      opening:            0, // duration of opening animation (in seconds)
       path:              '', // URL path to be prepended to `image` or `images` filenames
       preloader:          4, // size (height) of a image loading indicator (in pixels)
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
