@@ -375,8 +375,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               speed= opt.entry || opt.speed,
               step= speed / opt.tempo * (opt.cw? -1:1),
               was= get(_fraction_),
-              fraction= set(_fraction_, was + step)
-            cleanup.call(e);
+              fraction= set(_fraction_, lofi(was + step)),
               ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
             t.trigger('fractionChange');
             cleanup.call(e);
