@@ -454,6 +454,16 @@ jQuery.fn.reel || (function($, window, document, undefined){
               vertical= get(_vertical_),
               motion= to_bias(vertical ? y - last.y : x - last.x || 0),
               backwards= motion && set(_backwards_, motion < 0)
+            if (opt.perpendicular) var
+              perpen= opt.perpendicular,
+              footage= opt.footage,
+              frame= get(_frame_)
+            if (opt.perpendicular && (frame <= perpen
+            || frame >= footage - perpen + 2
+            && frame <= footage + perpen - 1
+            || frame == 2 * footage - perpen + 2)) var
+              vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
+              origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
             if (opt.rows > 1) var
               space_y= get(_dimensions_).y,
               start= get(_clicked_row_),
