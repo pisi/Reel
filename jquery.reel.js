@@ -544,6 +544,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               frame= set(_frame_, round(frame ? frame : get(_frame_))),
               images= opt.images,
               footage= opt.footage,
+              space= get(_dimensions_),
               horizontal= opt.horizontal
             if (get(_vertical_)) var
               frame= opt.inversed ? footage + 1 - frame : frame,
@@ -552,7 +553,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
               minor= (frame % footage) - 1,
               minor= minor < 0 ? footage - 1 : minor,
               major= floor((frame - 0.1) / footage),
-              space= get(_dimensions_),
               major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
               spacing= get(_spacing_),
               a= major * ((horizontal ? space.y : space.x) + spacing),
@@ -569,7 +569,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
             opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
-            $(dot(indicator_klass+'.x'), get(_stage_)).css({ left: indicator });
+            $(dot(indicator_klass+'.x'), get(_stage_)).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
             if (opt.rows <= 1) return cleanup.call(e);
             var
               ytravel= get(_dimensions_).y - opt.indicator,
