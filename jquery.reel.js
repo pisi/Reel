@@ -597,8 +597,8 @@ jQuery.fn.reel || (function($, window, document, undefined){
             css: {
               width: opt.indicator,
               height: opt.indicator,
-              top: axis == 'y' ? undefined : get(_dimensions_).y - opt.indicator,
-              left: axis == 'x' ? undefined : 0,
+              top: get(_dimensions_).y - opt.indicator,
+              left: 0,
               position: _absolute_,
               backgroundColor: _hex_black_
             }
