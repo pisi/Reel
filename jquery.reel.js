@@ -79,6 +79,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
       minimum:            0, // minimal value
       opening:            0, // duration of opening animation (in seconds)
       path:              '', // URL path to be prepended to `image` or `images` filenames
+      perpendicular:      0, // 
       preloader:          4, // size (height) of a image loading indicator (in pixels)
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
