@@ -94,6 +94,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
       value:      undefined, // initial value
+      vertical:       false, // 
       wheelable:       true  // mouse wheel interaction (allowed by default)
     }
     // [deprecated] options may be gone anytime soon
@@ -198,6 +199,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
             set(_velocity_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_value_, opt.value || 0);
+            set(_vertical_, opt.vertical);
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
               src: src,
@@ -695,11 +697,11 @@ jQuery.fn.reel || (function($, window, document, undefined){
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _classes_= 'classes',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on',
     _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction',
-    _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image', _indicator_travel_= 'indicator_travel',
-    _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row',
-    _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps',
-    _stitched_= 'stitched', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value',
-    _velocity_= 'velocity', _wheel_step_= 'wheel_step',
+    _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image', _opening_ticks_= 'opening_ticks',
+    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
+    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value', _velocity_= 'velocity',
+    _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',
