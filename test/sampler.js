@@ -23,6 +23,16 @@ $(function ready(){
     return stack
   }
 
+  function phone_frames(frames){
+    var every= 1, stack= []
+    for(var i= 1; i <= frames; i+= every){
+      var name= [i, '.png'].join('')
+      while (name.length < 6) name= '0'+name
+      stack.push(name)
+    }
+    return stack
+  }
+
 
   /*
   This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
