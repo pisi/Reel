@@ -166,7 +166,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
-              frames= set(_frames_, !opt.rows && images.length || opt.frames),
+              frames= set(_frames_, opt.perpendicular && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               style= {
                 display: 'block',
