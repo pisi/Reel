@@ -192,7 +192,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
             set(_wheel_step_, 1 / max(frames, get(_steps_)));
             set(_stitched_, stitched);
             set(_stitched_travel_, stitched - (loops ? 0 : size.x));
-            set(_indicator_travel_, size.x - opt.indicator);
             set(_stage_, stage_id);
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
@@ -412,7 +411,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               clicked= set(_clicked_, true),
               velocity= set(_velocity_, 0),
               origin= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_)),
-              xx= last_x= undefined
+              xy= last= { x: undefined, y: undefined }
             unidle();
             no_bias();
             !touched && pool
@@ -451,8 +450,9 @@ jQuery.fn.reel || (function($, window, document, undefined){
             var
               revolution= get(_revolution_),
               origin= get(_clicked_location_),
-              motion= to_bias(x - last_x || 0),
               fraction= set(_fraction_, graph(x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+              vertical= get(_vertical_),
+              motion= to_bias(vertical ? y - last.y : x - last.x || 0),
               backwards= motion && set(_backwards_, motion < 0)
             if (opt.rows > 1) var
               space_y= get(_dimensions_).y,
@@ -462,7 +462,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
             var
               origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
             unidle();
-            last_x= x;
+            last= { x: x, y: y };
             cleanup.call(e);
             t.trigger('fractionChange');
           },
@@ -550,7 +550,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               shift= [-x + _px_, y + _px_]
             var
               sprite= images[frame - 1] || get(_image_),
-              travel= get(_indicator_travel_),
+              travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
               indicator= min_max(0, travel, round($.reel.math.interpolate(fraction, -1, travel+2))),
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
@@ -607,7 +607,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
 
         // Inertia rotation control
         on_edge= 0,
-        last_x= 0,
+        last= { x: 0, y: 0 },
         to_bias= function(value){ return bias.push(value) && bias.shift() && value },
         no_bias= function(){ return bias= [0,0] },
         bias= no_bias(),
