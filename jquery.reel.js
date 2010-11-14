@@ -73,6 +73,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
+      inversed:       false, // 
       laziness:           8, // on "lazy" devices tempo is divided by this divisor for better performace
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       maximum:          100, // maximal value
@@ -544,6 +545,9 @@ jQuery.fn.reel || (function($, window, document, undefined){
               images= opt.images,
               footage= opt.footage,
               horizontal= opt.horizontal
+            if (get(_vertical_)) var
+              frame= opt.inversed ? footage + 1 - frame : frame,
+              frame= frame + footage
             if (!opt.stitched) var
               minor= (frame % footage) - 1,
               minor= minor < 0 ? footage - 1 : minor,
