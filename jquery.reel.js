@@ -450,9 +450,9 @@ jQuery.fn.reel || (function($, window, document, undefined){
             var
               revolution= get(_revolution_),
               origin= get(_clicked_location_),
-              fraction= set(_fraction_, graph(x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
               vertical= get(_vertical_),
               motion= to_bias(vertical ? y - last.y : x - last.x || 0),
+              fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
               backwards= motion && set(_backwards_, motion < 0)
             if (opt.perpendicular) var
               perpen= opt.perpendicular,
