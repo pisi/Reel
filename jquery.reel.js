@@ -433,9 +433,9 @@ jQuery.fn.reel || (function($, window, document, undefined){
               breaks= breaking= velocity ? 1 : 0
             velocity ? idle() : unidle();
             no_bias();
-            !touched && pool
-            .unbind(_mouseup_).unbind(_mousemove_) && get(_area_)
-            .css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
+            !touched
+            && pool.unbind(_mouseup_).unbind(_mousemove_)
+            && get(_area_).css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
             cleanup.call(e);
           },
           slide: function(e, x, y, touched){
