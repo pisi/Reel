@@ -274,7 +274,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
             opt.indicator && $overlay.append(indicator('x'));
-            opt.rows && opt.indicator && $overlay.append(indicator('y'));
+            opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             t.trigger('preload');
           },
           preload: function(e){
@@ -312,7 +312,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
                 if (img_tag.frames == img_tag.preloaded){
                   $preloader.remove();
                   opt.value != undefined && t.trigger('valueChange', get(_value_));
-                  t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
+                  t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange');
                   cleanup.call(e);
                   t.trigger('loaded').attr({ src: transparent });
                   t.trigger('opening');
@@ -454,7 +454,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               motion= to_bias(x - last_x || 0),
               fraction= set(_fraction_, graph(x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
               backwards= motion && set(_backwards_, motion < 0)
-            if (opt.rows) var
+            if (opt.rows > 1) var
               space_y= get(_dimensions_).y,
               start= get(_clicked_row_),
               lo= - start * space_y,
@@ -507,7 +507,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               backwards= bounce && set(_backwards_, !get(_backwards_))
             cleanup.call(e);
             detected || t.trigger('valueChange');
-            t.trigger(opt.rows && !opt.stitched ? 'rowChange' : 'frameChange');
+            t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           rowChange: function(e, row){
           /*
@@ -517,7 +517,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
             var
               frame= floor(get(_fraction_) / get(_bit_)) + 1,
               row= set(_row_, min_max(0, 1, lofi(row != undefined ? (row-1) / (opt.rows-1) : get(_row_)))),
-              frame= set(_frame_, frame + (!opt.rows ? 0 : round(row * (opt.rows - 1)) * opt.frames))
+              frame= set(_frame_, frame + (opt.rows <= 1 ? 0 : round(row * (opt.rows - 1)) * opt.frames))
             cleanup.call(e);
             t.trigger('frameChange');
           },
@@ -538,8 +538,8 @@ jQuery.fn.reel || (function($, window, document, undefined){
               minor= (frame % footage) - 1,
               minor= minor < 0 ? footage - 1 : minor,
               major= floor((frame - 0.1) / footage),
-              major= major + (opt.rows ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
               space= get(_dimensions_),
+              major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
               spacing= get(_spacing_),
               a= major * ((horizontal ? space.y : space.x) + spacing),
               b= minor * ((horizontal ? space.x : space.y) + spacing),
@@ -556,7 +556,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
             opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
             $(dot(indicator_klass+'.x'), get(_stage_)).css({ left: indicator });
-            if (!opt.rows) return cleanup.call(e);
+            if (opt.rows <= 1) return cleanup.call(e);
             var
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2)))
