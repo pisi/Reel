@@ -411,18 +411,20 @@ jQuery.fn.reel || (function($, window, document, undefined){
           /*
           - starts the dragging operation by binding dragging events to the pool
           */
-            if (!opt.draggable) return cleanup.call(e);
-            var
-              clicked= set(_clicked_, true),
-              velocity= set(_velocity_, 0),
-              origin= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_)),
-              xy= last= { x: undefined, y: undefined }
-            unidle();
-            no_bias();
-            !touched && pool
-            .bind(_mousemove_, function(e){ t.trigger('slide', [e.clientX, e.clientY]); cleanup.call(e) })
-            .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor }) && !opt.clickfree && pool
-            .bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) }) && get(_area_);
+            if (opt.draggable){
+              var
+                clicked= set(_clicked_, true),
+                velocity= set(_velocity_, 0),
+                origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
+              unidle();
+              no_bias();
+              if (!touched){
+                pool
+                .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor })
+                .bind(_mousemove_, function(e){ t.trigger('slide', [e.clientX, e.clientY]); cleanup.call(e); return false })
+                opt.clickfree || pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
+              }
+            }
             cleanup.call(e);
           },
           up: function(e, touched){
