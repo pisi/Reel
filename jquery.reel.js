@@ -256,19 +256,27 @@ jQuery.fn.reel || (function($, window, document, undefined){
               }).appendTo($overlay),
               area= set(_area_, $(opt.area || $hi )),
               $couple= t.add(opt.couple)
-            if (touchy) area
-              .css({ WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length ? 'auto' : (get(_stitched_) || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px') })
-              .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
-              .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
-              .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
-              .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
-            else area
-              .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-              .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
-              .bind(_dblclick_, function(e){ $couple.trigger('play') })
-              .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
-              .bind(opt.clickfree ? _mouseleave_ : _mouseup_, function(e){ $couple.trigger('up'); return false })
-              .disableTextSelect();
+            if (touchy){
+              // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
+              t.css({ WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length
+                ? 'auto'
+                : (get(_stitched_) && get(_stitched_)+'px '+space.y+'px')
+                || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px'
+              });
+              area
+                .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
+                .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
+                .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
+                .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
+            }else{
+              area
+                .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
+                .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
+                .bind(_dblclick_, function(e){ $couple.trigger('play') })
+                .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
+                .bind(opt.clickfree ? _mouseleave_ : '', function(e){ $couple.trigger('up'); return false })
+                .disableTextSelect();
+            }
             (opt.hint) && area.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
               className: monitor_klass,
