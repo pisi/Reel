@@ -515,8 +515,18 @@ jQuery.fn.reel || (function($, window, document, undefined){
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
               backwards= bounce && set(_backwards_, !get(_backwards_))
-            cleanup.call(e);
             detected || t.trigger('valueChange');
+            var
+              space= get(_dimensions_),
+              travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
+              indicator= min_max(0, travel, round($.reel.math.interpolate(fraction, -1, travel+2))),
+              indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
+              $indicator= $(dot(indicator_klass+'.x'), get(_stage_)).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
+            if (opt.rows > 1) var
+              ytravel= get(_dimensions_).y - opt.indicator,
+              yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
+              $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
+            cleanup.call(e);
             t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           rowChange: function(e, row){
@@ -548,17 +558,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
             if (get(_vertical_)) var
               frame= opt.inversed ? footage + 1 - frame : frame,
               frame= frame + footage
-            var
-              travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
-              indicator= min_max(0, travel, round($.reel.math.interpolate(fraction, -1, travel+2))),
-              indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
-              css= { background: url(opt.path+sprite)+___+shift.join(___) }
-            $(dot(indicator_klass+'.x'), get(_stage_)).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
-            if (opt.rows <= 1) return cleanup.call(e);
-            var
-              ytravel= get(_dimensions_).y - opt.indicator,
-              yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2)))
-            $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator });
             if (images.length){
               var
                 sprite= images[frame - 1]
