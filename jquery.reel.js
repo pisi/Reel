@@ -509,6 +509,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
+              was= get(_frame_),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
               value= set(_value_, lofi($.reel.math.interpolate(fraction, opt.minimum, opt.maximum)))
             if (!opt.loops && opt.rebound) var
@@ -526,8 +527,9 @@ jQuery.fn.reel || (function($, window, document, undefined){
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
+            if (frame == was) return cleanup.call(e);
+            t.trigger(opt.rows > 1 ? 'rowChange' : 'frameChange');
             cleanup.call(e);
-            t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange');
           },
           rowChange: function(e, row){
           /*
