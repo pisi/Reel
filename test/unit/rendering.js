@@ -4,7 +4,7 @@
 (function($){
 
   module('Rendering', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded').trigger('teardown');
+    $('.jquery-reel').unbind('load').trigger('teardown');
   }});
 
   asyncTest( 'Overlay: is created with proper ID', function(){
@@ -44,7 +44,7 @@
           $reel= $('#image').reel({ indicator: size }),
           $indicator= $('#image-reel .jquery-reel-indicator'),
           indicator_offset_top= parseInt($indicator.css('top'));
-        $reel.one('loaded', function(){
+        $reel.one('load', function(e){
           count++;
           equal( indicator_offset_top, 126 - size );
           count==samples.length && start();
