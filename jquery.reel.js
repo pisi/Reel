@@ -363,15 +363,12 @@ jQuery.fn.reel || (function($, window, document, undefined){
           - initiates opening animation
           - or simply plays the reel when without opening
           */
-            if (!opt.opening) return t.trigger('fractionChange') && delay_play();
-
             var
               speed= opt.entry || opt.speed,
               end= get(_fraction_),
               duration= opt.opening,
               start= set(_fraction_, end - speed * opt.opening),
               ticks= set(_opening_ticks_, duration * tempo)
-            t.trigger('stop');
             pool.bind(_tick_, on.opening_tick);
           },
           opening_tick: function(e){
