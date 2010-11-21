@@ -264,7 +264,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
               .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
             else area
               .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-              .bind(_mousemove_, function(e){ $couple.trigger('over', [e.pageX, e.pageY]) })
               .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
               .bind(_dblclick_, function(e){ $couple.trigger('play') })
               .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
