@@ -337,6 +337,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
             velocity && breaking++;
             operated && operated++;
             to_bias(0);
+            slidable= true;
             // Perform check for value set using .val(value)
             t[0].value != get(_value_) && t.trigger('valueChange', t[0].value);
             if (operated && !velocity) return cleanup.call(e);
@@ -404,7 +405,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
           },
           down: function(e, x, y, touched){
           /*
-          - starts the dragging opration by binding dragging events to the pool
+          - starts the dragging operation by binding dragging events to the pool
           */
             if (!opt.draggable) return cleanup.call(e);
             var
@@ -446,35 +447,42 @@ jQuery.fn.reel || (function($, window, document, undefined){
           - builds inertial motion bias
           - (`slide` was originally `drag` which conflicted with MSIE)
           */
-            if (!opt.draggable) return cleanup.call(e);
-            var
-              revolution= get(_revolution_),
-              origin= get(_clicked_location_),
-              vertical= get(_vertical_),
-              motion= to_bias(vertical ? y - last.y : x - last.x || 0),
-              fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
-              backwards= motion && set(_backwards_, motion < 0)
-            if (opt.perpendicular) var
-              perpen= opt.perpendicular,
-              footage= opt.footage,
-              frame= get(_frame_)
-            if (opt.perpendicular && (frame <= perpen
-            || frame >= footage - perpen + 2
-            && frame <= footage + perpen - 1
-            || frame == 2 * footage - perpen + 2)) var
-              vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
-              origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
-            if (opt.rows > 1) var
-              space_y= get(_dimensions_).y,
-              start= get(_clicked_row_),
-              lo= - start * space_y,
-              row= set(_row_, lofi($.reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1)))
-            var
-              origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
-            unidle();
-            last= { x: x, y: y };
+            if (opt.draggable && slidable){
+              // by checking slidable sync with the ticker tempo is achieved
+              slidable= false;
+              unidle();
+              var
+                delta= { x: x - last.x, y: y - last.y }
+              if (delta.x > 0 || delta.y > 0){
+                last= { x: x, y: y };
+                var
+                  revolution= get(_revolution_),
+                  origin= get(_clicked_location_),
+                  vertical= get(_vertical_),
+                  fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+                  motion= to_bias(vertical ? delta.y : delta.x || 0),
+                  backwards= motion && set(_backwards_, motion < 0)
+                if (opt.perpendicular) var
+                  perpen= opt.perpendicular,
+                  footage= opt.footage,
+                  frame= get(_frame_)
+                if (opt.perpendicular && (frame <= perpen
+                || frame >= footage - perpen + 2
+                && frame <= footage + perpen - 1
+                || frame == 2 * footage - perpen + 2)) var
+                  vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
+                  origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
+                if (opt.rows > 1) var
+                  space_y= get(_dimensions_).y,
+                  start= get(_clicked_row_),
+                  lo= - start * space_y,
+                  row= set(_row_, lofi($.reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1)))
+                var
+                  origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
+                t.trigger('fractionChange');
+              }
+            }
             cleanup.call(e);
-            t.trigger('fractionChange');
           },
           wheel: function(e, distance){
           /*
