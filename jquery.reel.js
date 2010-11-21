@@ -43,8 +43,11 @@
  */
 
 jQuery.fn.reel || (function($, window, document, undefined){
-  var
-    defaults= $.reel= {
+
+  $.reel= {
+    version: '1.1rc2',
+
+    default: {
       footage:            6, // number of frames per line/column
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
@@ -97,11 +100,12 @@ jQuery.fn.reel || (function($, window, document, undefined){
       vertical:       false, // 
       wheelable:       true  // mouse wheel interaction (allowed by default)
     }
-    // [deprecated] options may be gone anytime soon
+    // [deprecated] options defaults may be gone anytime soon
+  }
 
   $.fn.reel= function(options){
     var
-      opt= $.extend({}, defaults, options),
+      opt= $.extend({}, $.reel.default, options),
       applicable= (function(tags){
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
