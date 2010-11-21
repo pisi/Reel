@@ -1,16 +1,17 @@
 html{ background: #ddd; font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Calibri, Helvetica, Arial; }
+body{ margin: 20px; }
 a{ color: #2B81AF; }
-.sample{ width: 300px; height: 290px; float: left; background: #eee; padding: 20px 10px 10px; margin: 0 10px 10px 0;
+.sample{ width: 290px; height: 290px; background: #eee; padding: 20px 340px 10px 10px; margin: 0 0 10px;
 	border-top: 1px solid white; border-bottom: 1px solid #ccc; border-radius: 15px;
 	position: relative; cursor: pointer; }
 .sample img{ display: block; margin: 0 auto; }
 .sample .jquery-reel-overlay{ margin: 0 auto; }
 h1{ font-size: 2em; font-weight: normal; margin: 0; }
-h2{ float: left; width: 300px; height: 170px; padding: 140px 10px 10px; margin: 0 10px 10px 0; background: #999; color: white;
-	border-top: 1px solid #999; border-bottom: 1px solid #999; border-radius: 5px; text-align: right;
+h2{ width: 620px; height: 30px; padding: 30px 10px; margin: 30px 10px 10px 0; background: #999; color: white;
+	border-top: 1px solid #999; border-bottom: 1px solid #999; border-radius: 5px; text-align: center;
 	font-size: 2em; font-weight: normal; }
 .sample h3{ position: absolute; left: 30px; bottom: 20px; width: 260px; color: #666; cursor: pointer; text-align: center; }
-.sample.on{ width: 300px; padding-right: 340px; background: white; -webkit-box-shadow: 0px 5px 10px #999; cursor: default; }
+.sample.on{ width: 290px; background: white; -webkit-box-shadow: 0px 5px 10px #999; cursor: default; }
 .sample.on:hover h3{ text-decoration: none; }
 .sample.on h3:hover, .sample:hover h3{ text-decoration: underline; }
 .sample.on h3{ color: black; }
@@ -23,12 +24,12 @@ h2{ float: left; width: 300px; height: 170px; padding: 140px 10px 10px; margin: 
 .sample.on .credits{ color: black; }
 .sample.on .credits a{ color: #2B81AF; }
 .sample.on .credits a:hover{ text-decoration: underline; }
-.sample code{ position: absolute; top: 0; left: 330px; font-size: .9em; display: none; background: #444;
-	width: 300px; padding: 20px 10px; height: 280px; color: #999; border-radius: 0 15px 15px 0; overflow: hidden; }
-.sample.on code{ display: block; text-align: left; }
-.sample.on code pre{ margin: 0; color: white; }
+.sample code{ position: absolute; top: 0; left: 320px; font-size: .9em; 
+	width: 300px; padding: 20px 10px; height: 280px; color: #eee; border-radius: 0 15px 15px 0; overflow: hidden; }
+.sample code pre{ margin: 0; color: #999; }
+.sample.on code{ text-align: left; background: #444; color: #999; }
+.sample.on code pre{ color: white; }
 .footer{ padding: 10px 0 0 0; color: #999; }
 .footer strong{ color: #333; }
-.clearfix{ clear: both; }
-.hint{ font-size: 1.5em; color: #999; }
-.hint strong{ display: block; }
+.sample .hint{ position: absolute; right: 20px; bottom: 20px; color: #999; text-decoration: underline; }
+.sample.on .hint{ display: none; }

@@ -59,6 +59,8 @@ $(function ready(){
     .append($('<button/>', { text: '◼ stop' }).click(function(){ $(target).trigger('stop') }))
     .insertAfter(target);
 
+    $('<div/>', { className: 'hint', text: 'Click to activate this sample'}).appendTo($sample);
+
     function click_it(e){
       var
         onoff= !$sample.hasClass('on'),
