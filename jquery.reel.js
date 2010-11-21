@@ -453,7 +453,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               unidle();
               var
                 delta= { x: x - last.x, y: y - last.y }
-              if (delta.x > 0 || delta.y > 0){
+              if (abs(delta.x) > 0 || abs(delta.y) > 0){
                 last= { x: x, y: y };
                 var
                   revolution= get(_revolution_),
