@@ -42,7 +42,7 @@
  * [B] Marked plugins are contained (with permissions) in the "bundle" version
  */
 
-jQuery.fn.reel || (function($, window, document, undefined){
+jQuery.reel || (function($, window, document, undefined){
 
   $.reel= {
     version: '1.1rc2',
