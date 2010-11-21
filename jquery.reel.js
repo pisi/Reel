@@ -24,7 +24,7 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: 1.1 RC 2
- * Updated: 2010-11-14
+ * Updated: 2010-11-21
  *
  * Requires jQuery 1.4.2
  */
@@ -179,7 +179,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               classes= t.attr('className'),
               overlay_css= { position: 'relative', width: size.x, height: size.y },
               $overlay= $(_div_tag_, { id: stage_id.substr(1), className: classes+___+overlay_klass, css: overlay_css }),
-              $instance= t.wrap($overlay).attr({ className: klass, style: style }).bind(on),
+              $instance= t.wrap($overlay).attr({ className: klass }).css(style).bind(on),
               instances_count= instances.push($instance[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_classes_, classes);
