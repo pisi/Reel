@@ -548,32 +548,39 @@ jQuery.fn.reel || (function($, window, document, undefined){
             if (get(_vertical_)) var
               frame= opt.inversed ? footage + 1 - frame : frame,
               frame= frame + footage
-            if (!opt.stitched) var
-              minor= (frame % footage) - 1,
-              minor= minor < 0 ? footage - 1 : minor,
-              major= floor((frame - 0.1) / footage),
-              major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
-              spacing= get(_spacing_),
-              a= major * ((horizontal ? space.y : space.x) + spacing),
-              b= minor * ((horizontal ? space.x : space.y) + spacing),
-              shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
-            else var
-              x= round(fraction * get(_stitched_travel_)),
-              y= 0,
-              shift= [-x + _px_, y + _px_]
             var
-              sprite= images[frame - 1] || get(_image_),
               travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
               indicator= min_max(0, travel, round($.reel.math.interpolate(fraction, -1, travel+2))),
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
               css= { background: url(opt.path+sprite)+___+shift.join(___) }
-            opt.images.length ? t.attr({ src: opt.path+sprite }) : t.css(css);
             $(dot(indicator_klass+'.x'), get(_stage_)).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
             if (opt.rows <= 1) return cleanup.call(e);
             var
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2)))
             $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator });
+            if (images.length){
+              var
+                sprite= images[frame - 1]
+              t.attr({ src: opt.path+sprite })
+            }else{
+              if (!opt.stitched) var
+                minor= (frame % footage) - 1,
+                minor= minor < 0 ? footage - 1 : minor,
+                major= floor((frame - 0.1) / footage),
+                major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
+                spacing= get(_spacing_),
+                a= major * ((horizontal ? space.y : space.x) + spacing),
+                b= minor * ((horizontal ? space.x : space.y) + spacing),
+                shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
+              else var
+                x= round(fraction * get(_stitched_travel_)),
+                y= 0,
+                shift= [-x + _px_, y + _px_]
+              var
+                sprite= get(_image_)
+              t.css({ background: url(opt.path+sprite)+___+shift.join(___) });
+            }
             cleanup.call(e);
           },
           valueChange: function(e, value){
