@@ -90,7 +90,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
       speed:              0, // animated rotation speed in revolutions per second (Hz)
       step:       undefined, // initial step (overrides `frame`)
       steps:      undefined, // number of steps a revolution is divided in (by default equal to `frames`)
-      tempo:             18, // shared ticker tempo in ticks per second
+      tempo:             36, // shared ticker tempo in ticks per second
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
       value:      undefined, // initial value
