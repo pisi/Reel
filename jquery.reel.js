@@ -64,7 +64,6 @@ jQuery.fn.reel || (function($, window, document, undefined){
       area:       undefined, // custom mouse-sensitive area jQuery collection
       brake:            0.5, // brake force of the inertial rotation
       clickfree:      false, // binds to mouse leave/enter events instead of down/up
-      couple:     undefined, // harness other Reel instance(s) to share interaction events
       cw:             false, // true for clockwise organization of sprite
       delay:             -1, // delay before autoplay in seconds (no autoplay by default (-1))
       directional:    false, // two sets of frames (for forward and backward motion) are used when true
@@ -254,8 +253,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               $hi= $(_div_tag_, { className: hi_klass,
                 css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
               }).appendTo($overlay),
-              area= set(_area_, $(opt.area || $hi )),
-              $couple= t.add(opt.couple)
+              area= set(_area_, $(opt.area || $hi ))
             if (touchy){
               // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
               t.css({ WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length
@@ -264,17 +262,17 @@ jQuery.fn.reel || (function($, window, document, undefined){
                 || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px'
               });
               area
-                .bind(_touchstart_, function(e){ $couple.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
-                .bind(_touchmove_, function(e){ $couple.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
-                .bind(_touchend_, function(e){ $couple.trigger('up', [true]); return false })
-                .bind(_touchcancel_, function(e){ $couple.trigger('up', [true]); return false })
+                .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
+                .bind(_touchmove_, function(e){ t.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
+                .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
+                .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
             }else{
               area
                 .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-                .bind(_mousewheel_, function(e, delta){ $couple.trigger('wheel', [delta]); return false })
-                .bind(_dblclick_, function(e){ $couple.trigger('play') })
-                .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ $couple.trigger('down', [e.clientX, e.clientY]); return false })
-                .bind(opt.clickfree ? _mouseleave_ : '', function(e){ $couple.trigger('up'); return false })
+                .bind(_mousewheel_, function(e, delta){ t.trigger('wheel', [delta]); return false })
+                .bind(_dblclick_, function(e){ t.trigger('play') })
+                .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]); return false })
+                .bind(opt.clickfree ? _mouseleave_ : '', function(e){ t.trigger('up'); return false })
                 .disableTextSelect();
             }
             (opt.hint) && area.attr(_title_, opt.hint);

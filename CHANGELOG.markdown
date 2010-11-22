@@ -35,7 +35,6 @@ Version 1.1 RC
 ### Interaction
 * New `draggable`, `wheelable` and `throwable` options added for interaction style control.
 * New boolean `clickfree` option which causes binding to mouseenter/leave events rather than down/up for click-free interaction.
-* Two or more instances of Reel can be coupled together using new `couple` option for joint-interaction.
 * Prevented text selection of the projector on iPhone.
 
 ### Multi-Row Object Movies

@@ -21,7 +21,7 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(46);
+		expect(45);
     // Version 1.0 options
     equal( $.reel.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.frame,                      1, 'initial frame' );
@@ -44,7 +44,6 @@
     equal( $.reel.area,               undefined, 'custom mouse-sensitive area jQuery collection' );
     equal( $.reel.brake,                    0.5, 'brake force of the inertial rotation' );
     equal( $.reel.clickfree,              false, 'binds to mouse leave/enter events instead of down/up' );
-    equal( $.reel.couple,             undefined, 'harness other Reel instance(s) to share interaction events' );
     equal( $.reel.cw,                     false, 'true for clockwise organization of sprite' );
     equal( $.reel.delay,                     -1, 'delay before autoplay in seconds (no autoplay by default)' );
     equal( $.reel.draggable,               true, 'mouse or finger drag interaction (allowed by default)' );
