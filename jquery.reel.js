@@ -47,7 +47,8 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel= {
     version: '1.1rc2',
 
-    default: {
+    // Options defaults
+    def: {
       footage:            6, // number of frames per line/column
       frame:              1, // initial frame
       frames:            36, // total number of frames; every 10° for full rotation
@@ -101,7 +102,7 @@ jQuery.reel || (function($, window, document, undefined){
 
   $.fn.reel= function(options){
     var
-      opt= $.extend({}, $.reel.default, options),
+      opt= $.extend({}, $.reel.def, options),
       applicable= (function(tags){
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
