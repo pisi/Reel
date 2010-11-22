@@ -78,8 +78,6 @@ jQuery.reel || (function($, window, document, undefined){
       inversed:       false, // 
       laziness:           8, // on "lazy" devices tempo is divided by this divisor for better performace
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
-      maximum:          100, // maximal value
-      minimum:            0, // minimal value
       opening:            0, // duration of opening animation (in seconds)
       path:              '', // URL path to be prepended to `image` or `images` filenames
       perpendicular:      0, // 
@@ -95,7 +93,6 @@ jQuery.reel || (function($, window, document, undefined){
       tempo:             36, // shared ticker tempo in ticks per second
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
-      value:      undefined, // initial value
       vertical:       false, // 
       wheelable:       true  // mouse wheel interaction (allowed by default)
     }
@@ -152,9 +149,6 @@ jQuery.reel || (function($, window, document, undefined){
           return t.data(name);
         },
 
-        // Garbage clean-up facility called by every event
-        cleanup= function(pass){ ie || delete this; return pass },
-
         // Events & handlers
         on= {
           setup: function(e){
@@ -201,7 +195,6 @@ jQuery.reel || (function($, window, document, undefined){
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
-            set(_value_, opt.value || 0);
             set(_vertical_, opt.vertical);
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
@@ -321,7 +314,6 @@ jQuery.reel || (function($, window, document, undefined){
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                   if (img_tag.frames == img_tag.preloaded){
                     $preloader.remove();
-                    opt.value != undefined && t.trigger('valueChange', get(_value_));
                     t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange');
                     t.attr({ src: transparent }).trigger('loaded');
                     t.trigger('opening');
@@ -348,8 +340,6 @@ jQuery.reel || (function($, window, document, undefined){
             operated && operated++;
             to_bias(0);
             slidable= true;
-            // Perform check for value set using .val(value)
-            t[0].value != get(_value_) && t.trigger('valueChange', t[0].value);
             if (operated && !velocity) return cleanup.call(e);
             if (get(_clicked_)) return cleanup.call(e, unidle());
             var
@@ -514,7 +504,7 @@ jQuery.reel || (function($, window, document, undefined){
             t.trigger('fractionChange');
             return false;
           },
-          fractionChange: function(e, fraction, detected){
+          fractionChange: function(e, fraction){
           /*
           - normalizes given fraction (if any) - loop/limit and round
           - calculates and changes sprite frame
@@ -527,13 +517,11 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
               was= get(_frame_),
-              frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
-              value= set(_value_, lofi($.reel.math.interpolate(fraction, opt.minimum, opt.maximum)))
+              frame= set(_frame_, 1 + floor(fraction / get(_bit_)))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
               backwards= bounce && set(_backwards_, !get(_backwards_))
-            detected || t.trigger('valueChange');
             var
               space= get(_dimensions_),
               travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
@@ -600,14 +588,11 @@ jQuery.reel || (function($, window, document, undefined){
               t.css({ background: url(opt.path+sprite)+___+shift.join(___) });
             }
             cleanup.call(e);
-          },
-          valueChange: function(e, value){
-            var
-              fraction= value !== undefined && set(_fraction_, value / (opt.maximum - opt.minimum)),
-              val= t[0].value= value === undefined ? get(_value_) : set(_value_, value)
-            fraction === false || t.trigger('fractionChange', [undefined, true]);
           }
         },
+
+        // Garbage clean-up facility called by every event
+        cleanup= function(pass){ ie || delete this; return pass },
 
         // User idle control
         operated,
@@ -722,7 +707,7 @@ jQuery.reel || (function($, window, document, undefined){
     _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _value_= 'value', _velocity_= 'velocity',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
