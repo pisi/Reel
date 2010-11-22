@@ -24,7 +24,7 @@
         '-1.23456': 0.7654,
         '-1.2': 0.8
       }
-    $reel.one('load', function(){
+    $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
         $reel.trigger('fractionChange', Number(ix));
         equal( $reel.data('fraction'), it, 'Passed '+ix);
@@ -47,7 +47,7 @@
         '1.23456': 0.1173,
         '-1.23456': 0
       }
-    $reel.one('load', function(){
+    $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
         $reel.trigger('rowChange', Number(ix));
         equal( $reel.data('row'), it, 'Fraction '+ix);
@@ -124,7 +124,7 @@
       selector= '#image',
       $reel= $(selector).reel({ value: 50, loops: false })
 
-    $reel.one('load', function(){
+    $reel.one('loaded', function(){
       equal( $reel.data('value'), 50, 'Initial state');
       equal( $reel.data('fraction'), 0.5, 'Updated fraction');
       start();

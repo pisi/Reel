@@ -4,7 +4,7 @@
 (function($){
 
   module('Rendering', { teardown: function teardown(){
-    $('.jquery-reel').unbind('load').trigger('teardown');
+    $('.jquery-reel').unbind('loaded').trigger('teardown');
   }});
 
   asyncTest( 'Overlay: is created with proper ID', function(){
@@ -28,7 +28,7 @@
     start();
   });
 
-  asyncTest( 'Indicator: is sticked to the bottom edge of the projector', function(){
+  asyncTest( 'Indicator: is sticked to the bottom edge of the container', function(){
     expect(4);
     var
       samples= [10, 20, 50, 100]
@@ -38,17 +38,17 @@
     function try_different_sizes(sizes){
       var
         count= 0
-      $(sizes).each(function try_size(ix, size){
+      $(sizes).each(function try_size(){
         $('#image').trigger('teardown')
         var
-          $reel= $('#image').reel({ indicator: size }),
+          size= this,
+          $reel= $('#image').reel({ indicator: size }).bind('loaded', function(e){
+            count++;
+            equal( indicator_offset_top, 126 - size );
+            count==samples.length && start();
+          }),
           $indicator= $('#image-reel .jquery-reel-indicator'),
-          indicator_offset_top= parseInt($indicator.css('top'));
-        $reel.one('load', function(e){
-          count++;
-          equal( indicator_offset_top, 126 - size );
-          count==samples.length && start();
-        });
+          indicator_offset_top= parseInt($indicator.css('top'))
       });
     }
   });

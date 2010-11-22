@@ -320,7 +320,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
                     $preloader.remove();
                     opt.value != undefined && t.trigger('valueChange', get(_value_));
                     t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange');
-                    t.attr({ src: transparent }).trigger('load');
+                    t.attr({ src: transparent }).trigger('loaded');
                     t.trigger('opening');
                     cleanup.call(e);
                   }
