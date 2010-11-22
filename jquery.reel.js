@@ -227,6 +227,7 @@ jQuery.fn.reel || (function($, window, document, undefined){
               // for this we need the 1.4.2+ version
               $original.bind(type+'.'+handler.namespace, handler.handler, handler.data);
             });
+            $('img:hidden', t.parent()).remove();
             // replace stage with the original
             $(get(_stage_)).before($original).detach();
             no_bias();
