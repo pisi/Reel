@@ -21,7 +21,7 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(46);
+		expect(43);
     // Version 1.0 options
     equal( $.reel.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.frame,                      1, 'initial frame' );
@@ -53,8 +53,6 @@
     equal( $.reel.image,              undefined, 'image sprite to be used' );
     ok( typeof $.reel.images === 'object',       'sequence array of individual images to be used instead of sprite' );
     ok( $.reel.images.length === 0,              'the sequence is empty by default' );
-    equal( $.reel.maximum,                  100 );
-    equal( $.reel.minimum,                    0 );
     equal( $.reel.monitor,            undefined, 'stored value name to monitor in the upper left corner of the viewport' );
     equal( $.reel.opening,                    0, 'duration of opening animation (in seconds)' );
     equal( $.reel.path,                      '', 'URL path to be prepended to `image` or `images` filenames' );
@@ -69,7 +67,6 @@
     equal( $.reel.tempo,                     18, 'shared ticker tempo in ticks per second' );
     equal( $.reel.timeout,                    2, 'idle timeout in seconds' );
     equal( $.reel.throwable,               true, 'drag & throw interaction (allowed by default)' );
-    equal( $.reel.value,              undefined, 'initial value' );
     equal( $.reel.wheelable,               true, 'mouse wheel interaction (allowed by default)' );
 
   });

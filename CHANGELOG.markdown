@@ -27,7 +27,6 @@ Version 1.1 RC
     * `steps` option divides Reel into different amount of steps other than defined by `frames`.
     * `step` option can be used to override initial `frame` option.
     * `revolution` option is a pixel distance mouse drag has to travel for full revolution.
-* Using standard jQuery's `.val()` facility one can set or get value representation of the fraction in the range defined by new `minimum` and `maximum` options (0 to 100 by default). Default initial value can be adjusted by using new `value` option.
 
 ### Events
 * Instance now emits "load" event after image(s) preloading is done.
@@ -59,6 +58,7 @@ Version 1.1 RC
 * Reel's own cloud CDN has been started and recommended for use instead of download.
 * For convenience, a "bundle" is available on the [CDN][cdn] and it contains Reel along side with jQuery.mouseWheel and jQuery.disableTextSelect optional plugins.
 
+* As of this release the minimal version of jQuery has been increased to *1.4.2*.
 
 Version 1.0.4 "Touchy"
 ----------------------
