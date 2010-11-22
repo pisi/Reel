@@ -21,7 +21,7 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(43);
+		expect(44);
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.def.frame,                      1, 'initial frame' );
@@ -54,6 +54,7 @@
     ok( $.reel.def.images.length === 0,              'the sequence is empty by default' );
     equal( $.reel.def.monitor,            undefined, 'stored value name to monitor in the upper left corner of the viewport' );
     equal( $.reel.def.opening,                    0, 'duration of opening animation (in seconds)' );
+    equal( $.reel.def.orbital,                    0, 'view centering tolerance in frames for dual-orbit object movies' );
     equal( $.reel.def.path,                      '', 'URL path to be prepended to `image` or `images` filenames' );
     equal( $.reel.def.preloader,                  4, 'size (height) of a image loading indicator (in pixels)' );
     equal( $.reel.def.rebound,                  0.5, 'time spent on the edge (in seconds) of a non-looping panorama before it bounces back' );

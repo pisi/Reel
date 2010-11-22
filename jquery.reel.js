@@ -80,8 +80,8 @@ jQuery.reel || (function($, window, document, undefined){
       laziness:           8, // on "lazy" devices tempo is divided by this divisor for better performace
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       opening:            0, // duration of opening animation (in seconds)
+      orbital:            0, // view centering tolerance in frames for dual-orbit object movies
       path:              '', // URL path to be prepended to `image` or `images` filenames
-      perpendicular:      0, // 
       preloader:          4, // size (height) of a image loading indicator (in pixels)
       rebound:          0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution: undefined, // distance mouse must be dragged for full revolution
@@ -166,7 +166,7 @@ jQuery.reel || (function($, window, document, undefined){
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
-              frames= set(_frames_, opt.perpendicular && opt.footage || opt.rows <= 1 && images.length || opt.frames),
+              frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               style= {
                 display: 'block',
@@ -462,14 +462,14 @@ jQuery.reel || (function($, window, document, undefined){
                   fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
                   motion= to_bias(vertical ? delta.y : delta.x || 0),
                   backwards= motion && set(_backwards_, motion < 0)
-                if (opt.perpendicular) var
-                  perpen= opt.perpendicular,
+                if (opt.orbital) var
+                  orbital= opt.orbital,
                   footage= opt.footage,
                   frame= get(_frame_)
-                if (opt.perpendicular && (frame <= perpen
-                || frame >= footage - perpen + 2
-                && frame <= footage + perpen - 1
-                || frame == 2 * footage - perpen + 2)) var
+                if (opt.orbital && (frame <= orbital
+                || frame >= footage - orbital + 2
+                && frame <= footage + orbital - 1
+                || frame == 2 * footage - orbital + 2)) var
                   vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
                   origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
                 if (opt.rows > 1) var

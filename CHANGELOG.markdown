@@ -41,6 +41,10 @@ Version 1.1 RC
     * `rows` option sets the vertical rows count.
     * `row` the initial row on which to start.
 
+### Dual-Axis Object Movies
+
+* New `orbital` option allows to specify centering tolerance and the movie is switched to dual-axis mode for one horizontal plus one vertical orbit.
+
 ### Sequence of Images
 * Added the `image` option which allows custom image sprite to be used.
 * Array of individual `images` can now be supplied instead of using a collective sprite - this feature effectively overcomes the memory limit on iPhone imposed on large JPEG sprites exhibited by downsizing the sprite. See [FAQ][faq] for more on this.
