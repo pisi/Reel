@@ -29,7 +29,7 @@ Version 1.1 RC
     * `revolution` option is a pixel distance mouse drag has to travel for full revolution.
 
 ### Events
-* Instance now emits "load" event after image(s) preloading is done.
+* Instance now emits "loaded" event after image(s) preloading is done.
 
 ### Interaction
 * New `draggable`, `wheelable` and `throwable` options added for interaction style control.
