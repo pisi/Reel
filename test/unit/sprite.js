@@ -4,7 +4,7 @@
 (function($){
 
   module('Sprite', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
+    $('.jquery-reel').unbind('loaded').trigger('teardown');
   }});
 
   asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
@@ -94,15 +94,18 @@
         rows: 3,
         row: 3
       })
-    equal( $reel.data('row'), 1);
-    equal( $reel.data('frame'), 17);
-    equal( $reel.data('backwards'), false);
 
-    $reel.data('backwards', true);
-    equal( $reel.data('row'), 1);
-    equal( $reel.data('frame'), 17);
-    equal( $reel.data('backwards'), true);
-    start();
+    $reel.bind('loaded', function(){
+      equal( $reel.data('row'), 1);
+      equal( $reel.data('frame'), 17);
+      equal( $reel.data('backwards'), false);
+
+      $reel.data('backwards', true);
+      equal( $reel.data('row'), 1);
+      equal( $reel.data('frame'), 17);
+      equal( $reel.data('backwards'), true);
+      start();
+    });
   });
 
 })(jQuery);
