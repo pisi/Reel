@@ -21,7 +21,7 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(44);
+		expect(43);
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.def.frame,                      1, 'initial frame' );
@@ -64,7 +64,7 @@
     equal( $.reel.def.speed,                      0, 'animated rotation speed in revolutions per second (Hz)' );
     equal( $.reel.def.step,               undefined, 'initial step (overrides `frame`)' );
     equal( $.reel.def.steps,              undefined, 'number of steps a revolution is divided in (by default equal to `frames`)' );
-    equal( $.reel.def.tempo,                     18, 'shared ticker tempo in ticks per second' );
+    equal( $.reel.def.tempo,                     36, 'shared ticker tempo in ticks per second' );
     equal( $.reel.def.timeout,                    2, 'idle timeout in seconds' );
     equal( $.reel.def.throwable,               true, 'drag & throw interaction (allowed by default)' );
     equal( $.reel.def.wheelable,               true, 'mouse wheel interaction (allowed by default)' );

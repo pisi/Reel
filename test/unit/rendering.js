@@ -4,7 +4,7 @@
 (function($){
 
   module('Rendering', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded').trigger('teardown');
+    $('.jquery-reel').unbind('loaded frameChange').trigger('teardown');
   }});
 
   asyncTest( 'Overlay: is created with proper ID', function(){
@@ -108,12 +108,16 @@
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
       before= $('#image-reel .jquery-reel-indicator').css('left');
 
-    $reel.trigger('frameChange', 2);
-    var
-      after= $('#image-reel .jquery-reel-indicator').css('left');
+    $reel.bind('loaded', function(){
+      $reel.trigger('frameChange', 5);
+      $reel.bind('frameChange', function(){
+        var
+          after= $('#image-reel .jquery-reel-indicator').css('left');
 
-    ok( before != after, 'Position change after frame change' );
-    start();
+        ok( before != after, 'Position change after frame change' );
+        start();
+      });
+    })
   });
 
   asyncTest( 'Indicator: Custom style may be applied to indicator via `.jquery-reel-indicator`', function(){
