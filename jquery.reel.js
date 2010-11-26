@@ -24,9 +24,9 @@
  *
  * http://jquery.vostrel.cz/reel
  * Version: 1.1 RC 2
- * Updated: 2010-11-22
+ * Updated: 2010-11-26
  *
- * Requires jQuery 1.4.2
+ * Requires jQuery 1.4.2 or higher
  */
 /*
  * Have it served by a cloud CDN:
@@ -142,12 +142,14 @@ jQuery.reel || (function($, window, document, undefined){
         // Data storage
         set= function(name, value){
           t.data(name, value);
-          t.trigger('store');
+          t.trigger('store', [name, value]);
           return value;
         },
         get= function(name){
-          t.trigger('recall')
-          return t.data(name);
+          var
+            value= t.data(name)
+          t.trigger('recall', [name, value]);
+          return value;
         },
 
         // Events & handlers

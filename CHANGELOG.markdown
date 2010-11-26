@@ -30,6 +30,7 @@ Version 1.1 RC
 
 ### Events
 * Instance now emits "load" event after image(s) preloading is done.
+* Internal data storage now report every manipulation by "store" or "recall" events. Name and value are passed as additional params to the handler.
 
 ### Interaction
 * New `draggable`, `wheelable` and `throwable` options added for interaction style control.
