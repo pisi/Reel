@@ -1,21 +1,19 @@
 
-jQuery Reel 1.1 RC
-==================
+jQuery Reel 1.1
+===============
 
-**Reel** is a jQuery plugin which turns an image tag into an interactive
-object movie or panorama. Its aim is to provide 360° view of something or someplace.
-Great alternative to widely used Flash techniques.
+**Reel** is a jQuery plugin which takes an image tag and makes it a live "projection" of pre-built animation frames sequence. Its aim is to provide a 360° view of something or someplace. Great alternative to widely used Flash and Java techniques.
 
 <http://plugins.jquery.com/project/reel>
 
-* Intuitive operation. Supports mouse wheel and touch.
-* No need for a stitched image but we do support them too.
-* **NEW** Animation!
-* **NEW** Multi-row setup can go far beyond 360° span.
+* Intuitive operation. Supports mouse wheel and touch (iPads and such).
+* **NEW** Animated rotation and inertial motion.
+* **NEW** Combined horizontal-vertical setups cover more than the usual 360° span.
+* **NEW** Now sprite is just an option not a condition.
 * Plays fair with your existing CSS.
-* Browser and operating system agnostic. It's your choice. Even [iPhone][iphone-test] or iPad!
+* Browser and operating system agnostic. It's your choice.
 * No browser extensions needed. No Flash, nothing. It's just an image...
-* Evolving tiny code base.
+* **NEW** Transparent, eventful & well-tested tiny code base.
 
 Demo
 ----
@@ -29,13 +27,13 @@ The syntax is pretty straightforward. The plugin exposes just one method:
 
 and one set of default values for all the options:
 
-    $.reel
+    $.reel.ref
 
 For list of options head to plugin [on-line reference][options] page.
 
 Requirements
 ------------
-* **[jQuery 1.4.x or higher][jquery]**
+* **[jQuery 1.4.2 or higher][jquery]**
 * Optionaly you can also include these handy jQuery plugins (recommended)
     * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
     * or [jQuery.event.special.wheel][wheel] is a nice alternative
@@ -47,16 +45,16 @@ License
 * Available for use in all personal or commercial projects under both 
 [MIT][license-mit] and [GPL][license-gpl] licenses.
 
-Download version 1.1 RC
------------------------
-* **[Open source][source] (~ 28,5 kB)**
-* or [minified version][min] (~ 9,6 kB)
+Download version 1.1
+--------------------
+* **[Open source][source] (~ 32,8 kB)**
+* or [minified version][min] (~ 10,7 kB)
 
-Use [Reel's cloud CDN][cdn] (1.0.4)
+Use [Reel's cloud CDN][cdn] (1.1)
 -----------------------------------
-* **[Bundled with plugins & minified][cdn-bundle] (~ 2,7 kB; gzipped)**
-* or [just minified][cdn-min] (~ 2,1 kB; gzipped)
-* or [open source for development][cdn-devel] (~ 3,5 kB; gzipped)
+* **[Bundled with plugins & minified][cdn-bundle] (~ 5,5 kB; gzipped)**
+* or [just minified][cdn-min] (~ 4,8 kB; gzipped)
+* or [open source for development][cdn-devel] (~ 9,3 kB; gzipped)
 
 [CHANGELOG][changelog]
 

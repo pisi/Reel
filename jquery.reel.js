@@ -22,9 +22,10 @@
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
+ * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1 RC 2
- * Updated: 2010-11-26
+ * Version: 1.1
+ * Updated: 2010-11-27
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -45,7 +46,7 @@
 jQuery.reel || (function($, window, document, undefined){
 
   $.reel= {
-    version: '1.1rc2',
+    version: '1.1',
 
     // Options defaults
     def: {
