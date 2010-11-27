@@ -76,7 +76,7 @@ jQuery.reel || (function($, window, document, undefined){
       graph:      undefined, // custom graph function
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
-      inversed:       false, // 
+      inversed:       false, // flags inversed organization of frames in orbital object movie
       laziness:           8, // on "lazy" devices tempo is divided by this divisor for better performace
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       opening:            0, // duration of opening animation (in seconds)

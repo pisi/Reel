@@ -21,7 +21,7 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(43);
+		expect(44);
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.def.frame,                      1, 'initial frame' );
@@ -52,6 +52,7 @@
     equal( $.reel.def.image,              undefined, 'image sprite to be used' );
     ok( typeof $.reel.def.images === 'object',       'sequence array of individual images to be used instead of sprite' );
     ok( $.reel.def.images.length === 0,              'the sequence is empty by default' );
+    equal( $.reel.def.inversed,               false, 'flags inversed organization of frames in orbital object movie' );
     equal( $.reel.def.monitor,            undefined, 'stored value name to monitor in the upper left corner of the viewport' );
     equal( $.reel.def.opening,                    0, 'duration of opening animation (in seconds)' );
     equal( $.reel.def.orbital,                    0, 'view centering tolerance in frames for dual-orbit object movies' );
