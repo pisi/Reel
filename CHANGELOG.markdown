@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Version 1.1 RC
---------------
+Version 1.1
+-----------
 
 ### Animation
 * The projector can now self-animate. The animation is controlled with bunch of options.
@@ -51,7 +51,7 @@ Version 1.1 RC
 * Array of individual `images` can now be supplied instead of using a collective sprite - this feature effectively overcomes the memory limit on iPhone imposed on large JPEG sprites exhibited by downsizing the sprite. See [FAQ][faq] for more on this.
 
 ### Other Options
-* All default options are now made available for manipulation as `$.reel` object.
+* All default options are now made available for manipulation as `$.reel.def` object.
 * The `sensitivity` option has become obsolete and had been removed.
 * The problematic `saves` option does no longer make sense (as there is no other option) and had been removed all together.
 * The `hotspot` option deprecated in favor to new `area` to stop being misleading.
@@ -101,8 +101,8 @@ Version 1.0.1
 * Added new `hotspot` option accepting a jQuery. It allows binding mouse interaction events to custom DOM node.
 
 
-Initial version 1.0 RC
-----------------------
+Initial version 1.0
+-------------------
 
 
 
