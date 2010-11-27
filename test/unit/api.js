@@ -21,7 +21,7 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(44);
+		expect(45);
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.def.frame,                      1, 'initial frame' );
@@ -68,6 +68,7 @@
     equal( $.reel.def.tempo,                     36, 'shared ticker tempo in ticks per second' );
     equal( $.reel.def.timeout,                    2, 'idle timeout in seconds' );
     equal( $.reel.def.throwable,               true, 'drag & throw interaction (allowed by default)' );
+    equal( $.reel.def.vertical,               false, 'switches orbital object movie to vertical mode' );
     equal( $.reel.def.wheelable,               true, 'mouse wheel interaction (allowed by default)' );
 
   });
