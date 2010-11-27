@@ -94,7 +94,6 @@ jQuery.reel || (function($, window, document, undefined){
       tempo:             36, // shared ticker tempo in ticks per second
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
-      vertical:       false, // 
       wheelable:       true  // mouse wheel interaction (allowed by default)
     }
     // [deprecated] options defaults may be gone anytime soon
@@ -198,7 +197,6 @@ jQuery.reel || (function($, window, document, undefined){
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
-            set(_vertical_, opt.vertical);
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_backup_, {
               src: src,
