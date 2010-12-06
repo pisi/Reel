@@ -10,7 +10,7 @@ Version 1.1
     * `speed` option sets the speed of animation (in Hz).
     * `rebound` options is how long in seconds will a non-looping reel stay on edge before bouncing back from it.
     * `timeout` option is a period of user inactivity after which animation is resumed again.
-* To control the animation from outside, new events `"play"`, `"pause"` ańd `"stop"` have been added.
+* To control the animation from outside, new events `"play"`, `"pause"` and `"stop"` have been added.
 * Having one shared ticker for animation purposes. `tempo` option sets the speed in ticks per second.
 * Slower devices are detected and their tempo is decreased accordingly for better performance.
 * Duration of an opening animation is set using new `opening` option. Custom opening speed can be set using new `entry` option.
@@ -43,7 +43,6 @@ Version 1.1
     * `row` the initial row on which to start.
 
 ### Dual-Axis Object Movies
-
 * New `orbital` option allows to specify centering tolerance and the movie is switched to dual-axis mode for one horizontal plus one vertical orbit.
 
 ### Sequence of Images
@@ -108,5 +107,5 @@ Initial version 1.0
 
 
 
-[faq]:http://wiki.github.com/pisi/Reel/faq
-[cdn]:http://wiki.github.com/pisi/Reel/cdn
+[faq]:http://github.com/pisi/Reel/wiki/FAQ
+[cdn]:http://github.com/pisi/Reel/wiki/CDN
