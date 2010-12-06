@@ -26,11 +26,10 @@ h2{ width: 620px; height: 30px; padding: 30px 10px; margin: 30px 10px 10px 0; ba
 .sample.on .credits{ color: black; }
 .sample.on .credits a{ color: #2B81AF; }
 .sample.on .credits a:hover{ text-decoration: underline; }
-.sample code{ position: absolute; top: 0; left: 320px; font-size: .9em; 
-	width: 300px; padding: 20px 10px; height: 280px; color: #eee; border-radius: 0 15px 15px 0; overflow: hidden; }
-.sample code pre{ margin: 0; color: #999; }
-.sample.on code{ text-align: left; background: #444; color: #999; }
-.sample.on code pre{ color: white; }
+.sample pre{ position: absolute; top: 0; left: 320px; font-size: .9em; margin: 0; font-family: Monaco; font-size: 12px;
+	width: 300px; padding: 20px 10px; height: 280px; color: #eee; border-radius: 0 15px 15px 0; overflow: hidden;
+	display: none; }
+.sample.on pre{ text-align: left; background: #444; color: white; display: block; }
 .footer{ clear: left; padding: 10px 0 0 0; color: #999; }
 .footer strong{ color: #333; }
 .sample .hint{ position: absolute; right: 20px; bottom: 20px; color: #666; text-decoration: underline; }

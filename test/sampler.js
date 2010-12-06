@@ -42,7 +42,7 @@ $(function ready(){
   prepare_reel_sample= function(target){
     var
       $sample= $(target).parent('.sample'),
-			opts= $('code pre', $sample).text(),
+			opts= $('pre', $sample).text(),
 			options= eval('('+opts+')')
 
 		$sample.click(function(e){

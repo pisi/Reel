@@ -30,63 +30,76 @@
       <img id='logo' src='samples/logo.png' width='130' height='60' />
       <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Directional Sprite</h3>
-<code><pre>
+<pre>
 { speed:        1,
   opening:      1,
   frame:        3,
   delay:        3,
   directional:  true }
 
+/*
+  `speed` 1 is one revolution
+  per second (1 Hz). It is animated
+  after 1 second long `opening` spin
+  and a 3 second `delay`.
+*/
 </pre>
-// `speed` 1 is one revolution per second (1 Hz). It is animated after 1 second long `opening` spin and a 3 second `delay`.
-</code>
     </div>
     <div class="sample">
       <img id='f1' src='samples/f1.jpg' width='276' height='126' />
       <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
       <h3>Clockwise Sprite</h3>
-<code><pre>
+<pre>
 { speed:   -0.3,
   frames:  35,
   cw:      true }
 
+/*
+  Unlike the other formula car sample
+  this one's sprite is clockwise-
+  -organized.
+*/
 </pre>
-// Unlike the other formula car sample this one's sprite is clockwise-organized.
-</code>
     </div>
     <div class="sample">
       <img id='f1ccw' src='samples/f1-ccw.jpg' width='276' height='126' />
       <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
       <h3>Non-Animated Sprite</h3>
-<code><pre>
+<pre>
 { frames:  35,
   opening: 2,
   entry: 1 }
 
+/*
+  This one isn't fully animated,
+  but has a 2 seconds long `opening`
+  with `entry` speed of 1 Hz.
+*/
 </pre>
-// This one isn't fully animated, but has a 2 seconds long `opening` with `entry` speed of 1 Hz.
-</code>
     </div>
     <div class="sample">
       <img id='multirow' src='samples/multi-row.png' width='100' height='100' class="bordered highlighted" />
       <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Multi-Row Sprite</h3>
-<code><pre>
+<pre>
 { speed:    0.3,
   frames:   6,
   footage:  3,
   rows:     3,
   row:      2 }
 
+/*
+  Additionally custom class "bordered"
+  (the dashed border) is applied
+  on the IMG and is being preserved.
+*/
 </pre>
-// Additionally custom class "bordered" (the dashed border) is applied on the IMG and is being preserved.
-</code>
     </div>
     <div class="sample">
       <img id='mini' src='samples/mini.jpg' width='200' height='200' />
       <div class="credits">photo &copy; <a href="mailto:masmith@photospherix.com">Matt Smith</a></div>
       <h3>Multi-Row Sequence</h3>
-<code><pre>
+<pre>
 { frames:  20,
   frame:   14,
   rows:    6,
@@ -95,14 +108,20 @@
   path:    'samples/mini/',
   images:  mini_frames() }
 
+/*
+  Helper function `mini_frames` returns
+  simply an array of filenames
+  [ '001.jpg',
+    '002.jpg',
+    ..
+    '120.jpg' ]
+*/
 </pre>
-// Helper function `mini_frames` returns simply an array of filenames ['001.jpg', '002.jpg', '003.jpg', up to '120.jpg']
-</code>
     </div>
     <div class="sample">
       <img id='phone' src='samples/phone.png' width='200' height='200' />
       <h3>Dual-Orbit Sequence</h3>
-<code><pre>
+<pre>
 { footage:  10,
   cw:       true,
   orbital:  3,
@@ -111,15 +130,21 @@
   path:     'samples/phone/',
   images:   phone_frames(20) }
 
+/*
+  Helper function `phone_frames` returns
+  simply an array of filenames
+  [ '01.png',
+    '02.png',
+    ..
+    '19.png' ]
+*/
 </pre>
-// Helper function `phone_frames` returns simply an array of filenames ['01.png', '02.png', '03.png', up to '19.png']
-</code>
     </div>
     <div class="sample">
       <img id='badge' src='http://code.vostrel.cz/jquery.reel-1.gif' width='120' height='30' />
       <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Sequence</h3>
-<code><pre>
+<pre>
 { speed:   2,
   delay:   1,
   path:    'samples/',
@@ -128,24 +153,33 @@
              'badge-3.gif',
              'badge-4.gif' ] }
 
+/*
+  `delay` tells it to wait 1 second
+  before starting to play
+*/
 </pre>
-// `delay` tells it to wait 1 second before starting to play
-</code>
     </div>
     <div class="sample">
       <img id='drone' src='samples/drone.png' width='300' height='200' />
       <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
       <h3>Sequence</h3>
-<code><pre>
+<pre>
 { cw:      true,
   frame:   32,
   speed:   -0.2,
   path:    'samples/drone/',
   images:  drone_frames() }
 
+/*
+  Helper function `drone_frames` returns
+  simply an array of filenames
+  [ '00001.png',
+    '00006.png',
+    '00011.png',
+    ..
+    '00179.png' ]
+*/
 </pre>
-// Helper function `drone_frames` returns simply an array of filenames ['00001.png', '00006.png', '00011.png', up to '00179.png']
-</code>
     </div>
 
     <h2>Panorama Movie</h2>
@@ -153,11 +187,11 @@
       <img id='green' src='samples/green.jpg' width='200' height='150' />
       <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
       <h3>Stitched</h3>
-<code><pre>
+<pre>
 { frames:   32,
   footage:  4,
   speed:    0.1 }
-</pre></code>
+</pre>
     </div>
 
     <h2>Rectilinear Panorama</h2>
@@ -165,26 +199,26 @@
       <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
       <div class="credits">photo &copy; <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></div>
       <h3>Click-Free Stitched</h3>
-<code><pre>
+<pre>
 { stitched:   1821,
   frames:     60,
   frame:      23,
   speed:      -0.05,
   clickfree:  true }
-</pre></code>
+</pre>
     </div>
     <div class="sample">
       <img id='chicago' src='samples/chicago.jpg' width='270' height='150' />
       <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
       <h3>Non-Looping Stitched</h3>
-<code><pre>
+<pre>
 { stitched:  1072,
   loops:     false,
   steps:     30,
   step:      15,
   speed:     -0.1,
   timeout:   1 }
-</pre></code>
+</pre>
     </div>
 
     <div class="footer">
