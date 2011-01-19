@@ -24,8 +24,8 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1
- * Updated: 2010-11-27
+ * Version: 1.1 GH-11 zero-fraction-fix
+ * Updated: 2011-01-19
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -536,7 +536,7 @@ jQuery.reel || (function($, window, document, undefined){
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
-            if (frame == was) return cleanup.call(e);
+            if (fraction && frame == was) return cleanup.call(e);
             t.trigger(opt.rows > 1 ? 'rowChange' : 'frameChange');
             cleanup.call(e);
           },
