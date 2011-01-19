@@ -24,8 +24,8 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1
- * Updated: 2010-11-27
+ * Version: 1.1 GH-11
+ * Updated: 2011-01-19
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -319,8 +319,8 @@ jQuery.reel || (function($, window, document, undefined){
                   if (img_tag.frames == img_tag.preloaded){
                     $preloader.remove();
                     t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange');
-                    t.attr({ src: transparent }).trigger('loaded');
-                    t.trigger('opening');
+                    opt.images.length || t.attr({ src: transparent });
+                    t.trigger('loaded').trigger('opening');
                     cleanup.call(e);
                   }
                 });
