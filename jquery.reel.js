@@ -24,8 +24,8 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1
- * Updated: 2010-11-27
+ * Version: 1.1 center-store-key branch
+ * Updated: 2011-02-01
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -46,7 +46,7 @@
 jQuery.reel || (function($, window, document, undefined){
 
   $.reel= {
-    version: '1.1',
+    version: '1.1 center-store-key',
 
     // Options defaults
     def: {
