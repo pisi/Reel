@@ -465,14 +465,7 @@ jQuery.reel || (function($, window, document, undefined){
                   fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
                   motion= to_bias(vertical ? delta.y : delta.x || 0),
                   backwards= motion && set(_backwards_, motion < 0)
-                if (opt.orbital) var
-                  orbital= opt.orbital,
-                  footage= opt.footage,
-                  frame= get(_frame_)
-                if (opt.orbital && (frame <= orbital
-                || frame >= footage - orbital + 2
-                && frame <= footage + orbital - 1
-                || frame == 2 * footage - orbital + 2)) var
+                if (opt.orbital && get(_center_)) var
                   vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
                   origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
                 if (opt.rows > 1) var
@@ -521,7 +514,13 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
               was= get(_frame_),
-              frame= set(_frame_, 1 + floor(fraction / get(_bit_)))
+              frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
+              footage= opt.footage,
+              orbital= opt.orbital,
+              center= set(_center_, orbital && (frame <= orbital
+                || frame >= footage - orbital + 2
+                && frame <= footage + orbital - 1
+                || frame == 2 * footage - orbital + 2))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
@@ -705,14 +704,14 @@ jQuery.reel || (function($, window, document, undefined){
     number= parseInt,
 
     // Storage keys
-    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _classes_= 'classes',
-    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on',
-    _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction',
-    _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image', _opening_ticks_= 'opening_ticks',
-    _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _velocity_= 'velocity',
-    _vertical_= 'vertical', _wheel_step_= 'wheel_step',
+    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _center_= 'center',
+    _classes_= 'classes', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
+    _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions',
+    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image',
+    _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution',
+    _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
+    _steps_= 'steps', _stitched_= 'stitched', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped',
+    _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',
