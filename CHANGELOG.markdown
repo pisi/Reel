@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Development Version
+-------------------
+
+* iPad has been excluded from "lazy" devices list, because it in fact isn't lazy device at all. This means much fluent experience on iPads.
+
+
 Version 1.1
 -----------
 

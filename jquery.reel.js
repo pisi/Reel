@@ -676,7 +676,7 @@ jQuery.reel || (function($, window, document, undefined){
     pool= $(document),
     agent= navigator.userAgent,
     touchy= (/iphone|ipod|ipad|android/i).test(agent),
-    lazy= (/iphone|ipod|ipad/i).test(agent),
+    lazy= (/iphone|ipod/i).test(agent),
     ie= $.browser.msie,
     failsafe_cursor= 'ew-resize',
     ticker,
