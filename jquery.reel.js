@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1-devel
- * Updated: 2011-02-01
+ * Updated: 2011-02-27
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -531,7 +531,7 @@ jQuery.reel || (function($, window, document, undefined){
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
-            if (frame == was) return cleanup.call(e);
+            if (fraction && frame == was) return cleanup.call(e);
             t.trigger(opt.rows > 1 ? 'rowChange' : 'frameChange');
             cleanup.call(e);
           },
