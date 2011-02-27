@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Development Version
+-------------------
+
+* Initial frame 1 now doesn't disappear after loading (Github issue GH-11).
+* New `center` store key now stores if on the center point in orbital setups.
+
+
 Version 1.1
 -----------
 
