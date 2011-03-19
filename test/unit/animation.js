@@ -15,13 +15,15 @@
 			$reel= $('#image').reel({ tempo: 25 }),
 			should_be= 1000 / fps * (lazy? $.reel.laziness:1),
 			ticks= [],
-			timeout,
+			start= new Date(),
+			timeout= 0,
 			$pool= $(document).bind('tick.reel', tick);
 		function tick(){
-			if (ticks.length < 2){
+			if (ticks.length < $.reel.def.tempo){
 				ticks.push(new Date());
-			}else if (ticks.length == 2){
-				timeout= ticks[1] - ticks[0];
+			}else if (ticks.length == $.reel.def.tempo){
+				ticks.push(new Date());
+        timeout= ticks[ticks.length - 1] - ticks[0];
 				ok( timeout < should_be + 0.2*should_be && timeout > should_be - 0.2*should_be,
 					'Measured delay between two ticks matches given 6fps tempo despite setting it to 25fps (± 20 %)' );
 				$pool.unbind('tick.reel', tick);
