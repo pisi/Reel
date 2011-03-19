@@ -4,6 +4,7 @@ Changelog
 Development Version
 -------------------
 
+* Vertical page scrolling now possible in Safari on iOS (Github issue GH-7).
 * Initial frame 1 now doesn't disappear after loading (Github issue GH-11).
 * New `center` store key now stores if on the center point in orbital setups.
 * iPad has been excluded from "lazy" devices list, because it in fact isn't lazy device at all. This means much fluent experience on iPads.
