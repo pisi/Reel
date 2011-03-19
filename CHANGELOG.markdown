@@ -6,6 +6,7 @@ Development Version
 
 * Initial frame 1 now doesn't disappear after loading (Github issue GH-11).
 * New `center` store key now stores if on the center point in orbital setups.
+* iPad has been excluded from "lazy" devices list, because it in fact isn't lazy device at all. This means much fluent experience on iPads.
 
 
 Version 1.1
