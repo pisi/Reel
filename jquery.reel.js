@@ -411,7 +411,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             if (opt.draggable){
               var
-                clicked= set(_clicked_, true),
+                clicked= set(_clicked_, get(_frame_)),
                 velocity= set(_velocity_, 0),
                 origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
               unidle();
