@@ -265,8 +265,8 @@ jQuery.reel || (function($, window, document, undefined){
                 || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px'
               });
               area
-                .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
                 .bind(_touchmove_, function(e){ t.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
+                .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
                 .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                 .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
             }else{
