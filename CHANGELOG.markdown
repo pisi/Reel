@@ -4,6 +4,7 @@ Changelog
 Development Version
 -------------------
 
+* Per document `$.reel.touchy` and `$.reel.lazy` properties added to manifest key user agent qualities.
 * Vertical page scrolling now possible in Safari on iOS (Github issue GH-7).
 * Initial frame 1 now doesn't disappear after loading (Github issue GH-11).
 * New `center` store key now stores if on the center point in orbital setups.

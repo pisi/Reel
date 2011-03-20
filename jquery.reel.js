@@ -123,8 +123,9 @@ jQuery.reel || (function($, window, document, undefined){
         return $(pass);
       })(this),
       instances= [],
-      tempo= opt.tempo= opt.tempo / (lazy ? opt.laziness : 1),
-      ticker_timeout= 1000 / tempo
+      tempo= opt.tempo / ($.reel.lazy? opt.laziness : 1),
+      ticker_target= 1000 / tempo,
+      ticker_timeout= ticker_target
 
     // Backward-compatibility of [deprecated] legacy options
     opt.reversed && (opt.cw= true);
@@ -257,7 +258,7 @@ jQuery.reel || (function($, window, document, undefined){
                 css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
               }).appendTo($overlay),
               area= set(_area_, $(opt.area || $hi ))
-            if (touchy){
+            if ($.reel.touchy){
               // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
               t.css({ WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length
                 ? 'auto'
@@ -671,15 +672,15 @@ jQuery.reel || (function($, window, document, undefined){
     }
   }
 
+  $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
+  $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
+
   // Double plugin functions in case plugin is missing
   double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
 
   // PRIVATE
   var
     pool= $(document),
-    agent= navigator.userAgent,
-    touchy= (/iphone|ipod|ipad|android/i).test(agent),
-    lazy= (/iphone|ipod|android/i).test(agent),
     ie= $.browser.msie,
     failsafe_cursor= 'ew-resize',
     ticker,
