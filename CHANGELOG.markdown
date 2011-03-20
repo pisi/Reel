@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Development Version
--------------------
+Version 1.1.1
+-------------
 
 * Per document `$.reel.touchy` and `$.reel.lazy` properties added to manifest key user agent qualities.
 * Animation timer now automatically adapts to your viewer's device performance to stay in sync.
