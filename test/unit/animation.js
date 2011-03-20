@@ -11,7 +11,7 @@
 		expect(1);
 		var
 			fps= 3,
-			lazy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent),
+			lazy= (/iphone|ipod|android/i).test(navigator.userAgent),
 			$reel= $('#image').reel({ tempo: 25 }),
 			should_be= 1000 / fps * (lazy? $.reel.laziness:1),
 			ticks= [],
