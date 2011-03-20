@@ -39,7 +39,7 @@
     equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Looping - frame 36 (max)');
   });
 
-  asyncTest( 'GH-11 Proper background positioning range for stitched looping panoramas', function(){
+  asyncTest( 'GH-11 First frame disappears after image sequence loading is complete', function(){
     /* Github issue 11 bugfix
      * http://github.com/pisi/Reel/issues/#issue/11
      * Replacement of original image source with embedded transparent sprite
