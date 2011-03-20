@@ -133,8 +133,10 @@ jQuery.reel || (function($, window, document, undefined){
     opt.hotspot && (opt.area= opt.hotspot);
 
     ticker= ticker || (function tick(){
+      ticks= { before: ticks.now, now: new Date() }
+      ticker_timeout+= ticker_target - ceil(ticks.now - ticks.before);
       pool.trigger(_tick_);
-      return setTimeout(tick, ticker_timeout);
+      return ticker= setTimeout(tick, ticker_timeout);
     })();
 
     applicable.each(function(){
@@ -684,6 +686,7 @@ jQuery.reel || (function($, window, document, undefined){
     ie= $.browser.msie,
     failsafe_cursor= 'ew-resize',
     ticker,
+    ticks= { before: 0, now: new Date() },
 
     // HTML classes
     klass= 'jquery-reel',
