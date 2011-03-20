@@ -1,19 +1,20 @@
 
-jQuery Reel 1.1
-===============
+jQuery Reel 1.1.1
+=================
 
 **Reel** is a jQuery plugin which takes an image tag and makes it a live "projection" of pre-built animation frames sequence. Its aim is to provide a 360° view of something or someplace. Great alternative to widely used Flash and Java techniques.
 
 <http://plugins.jquery.com/project/reel>
 
 * Intuitive operation. Supports mouse wheel and touch (iPads and such).
-* **NEW** Animated rotation and inertial motion.
-* **NEW** Combined horizontal-vertical setups cover more than the usual 360° span.
-* **NEW** Now sprite is just an option not a condition.
+* Animated rotation and inertial motion.
+* Combined horizontal-vertical setups cover more than the usual 360° span.
+* Now sprite is just an option not a condition.
+* **NEW** Very iPhoneOS-friendly.
 * Plays fair with your existing CSS.
 * Browser and operating system agnostic. It's your choice.
 * No browser extensions needed. No Flash, nothing. It's just an image...
-* **NEW** Transparent, eventful & well-tested tiny code base.
+* **NEW** Even more transparent, eventful & well-tested tiny code base.
 
 Demo
 ----
@@ -45,16 +46,16 @@ License
 * Available for use in all personal or commercial projects under both 
 [MIT][license-mit] and [GPL][license-gpl] licenses.
 
-Download version 1.1
---------------------
-* **[Open source][source] (~ 32,8 kB)**
-* or [minified version][min] (~ 10,7 kB)
+Download version 1.1.1
+----------------------
+* **[Open source][source] (~ 33,1 kB)**
+* or [minified version][min] (~ 10,9 kB)
 
-Use [Reel's cloud CDN][cdn] (1.1)
+Use [Reel's cloud CDN][cdn] (1.1.1)
 -----------------------------------
-* **[Bundled with plugins & minified][cdn-bundle] (~ 5,5 kB; gzipped)**
-* or [just minified][cdn-min] (~ 4,8 kB; gzipped)
-* or [open source for development][cdn-devel] (~ 9,3 kB; gzipped)
+* **[Bundled with plugins & minified][cdn-bundle] (~ 5,6 kB; gzipped)**
+* or [just minified][cdn-min] (~ 4,9 kB; gzipped)
+* or [open source for development][cdn-devel] (~ 9,4 kB; gzipped)
 
 [CHANGELOG][changelog]
 
