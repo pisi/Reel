@@ -201,6 +201,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_vertical_, opt.vertical);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
+            set(_reeling_, false);
             set(_backup_, {
               src: src,
               style: styles || __
@@ -264,8 +265,8 @@ jQuery.reel || (function($, window, document, undefined){
                 || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px'
               });
               area
-                .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); return false })
-                .bind(_touchmove_, function(e){ t.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return false })
+                .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
+                .bind(_touchmove_, function(e){ t.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return !(opt.rows > 1 || opt.orbital || get(_reeling_)) })
                 .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                 .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
             }else{
@@ -410,7 +411,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             if (opt.draggable){
               var
-                clicked= set(_clicked_, true),
+                clicked= set(_clicked_, get(_frame_)),
                 velocity= set(_velocity_, 0),
                 origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
               unidle();
@@ -433,6 +434,7 @@ jQuery.reel || (function($, window, document, undefined){
             if (!opt.draggable) return cleanup.call(e);
             var
               clicked= set(_clicked_, false),
+              reeling= set(_reeling_, false),
               velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
               breaks= breaking= velocity ? 1 : 0
             velocity ? idle() : unidle();
@@ -463,6 +465,7 @@ jQuery.reel || (function($, window, document, undefined){
                   origin= get(_clicked_location_),
                   vertical= get(_vertical_),
                   fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+                  reeling= set(_reeling_, get(_reeling_) || get(_frame_) != get(_clicked_)),
                   motion= to_bias(vertical ? delta.y : delta.x || 0),
                   backwards= motion && set(_backwards_, motion < 0)
                 if (opt.orbital && get(_center_)) var
@@ -704,7 +707,7 @@ jQuery.reel || (function($, window, document, undefined){
     _classes_= 'classes', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions',
     _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image',
-    _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _revolution_= 'revolution',
+    _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution',
     _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _steps_= 'steps', _stitched_= 'stitched', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped',
     _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
