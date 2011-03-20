@@ -350,7 +350,7 @@ jQuery.reel || (function($, window, document, undefined){
             if (get(_clicked_)) return cleanup.call(e, unidle());
             var
               backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
-              step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / opt.tempo,
+              step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / tempo,
               was= get(_fraction_),
               fraction= set(_fraction_, was - step * backwards)
             cleanup.call(e);
@@ -376,7 +376,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               speed= opt.entry || opt.speed,
-              step= speed / opt.tempo * (opt.cw? -1:1),
+              step= speed / tempo * (opt.cw? -1:1),
               was= get(_fraction_),
               fraction= set(_fraction_, lofi(was + step)),
               ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
@@ -523,7 +523,7 @@ jQuery.reel || (function($, window, document, undefined){
               center= set(_center_, orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
-              bounce= on_edge >= opt.rebound * 1000 / opt.tempo,
+              bounce= on_edge >= opt.rebound * 1000 / tempo,
               backwards= bounce && set(_backwards_, !get(_backwards_))
             var
               space= get(_dimensions_),
@@ -605,7 +605,7 @@ jQuery.reel || (function($, window, document, undefined){
           clearTimeout(delay);
           pool.unbind(_tick_, on.opening_tick);
           t.trigger('play');
-          return operated= -opt.timeout * opt.tempo
+          return operated= -opt.timeout * tempo
         },
         delay,
         // Triggers "play" delayed or immediate play
@@ -637,7 +637,7 @@ jQuery.reel || (function($, window, document, undefined){
         to_bias= function(value){ return bias.push(value) && bias.shift() && value },
         no_bias= function(){ return bias= [0,0] },
         bias= no_bias(),
-        tick_brake= opt.brake / opt.tempo,
+        tick_brake= opt.brake / tempo,
 
         // Graph function to be used
         graph= opt.graph || $.reel.math[opt.loops ? 'hatch' : 'envelope'],
