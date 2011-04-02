@@ -136,7 +136,7 @@ jQuery.reel || (function($, window, document, undefined){
       ticks= { before: ticks.now, now: new Date() }
       ticker_timeout+= ticker_target - ceil(ticks.now - ticks.before);
       pool.trigger(_tick_);
-      return ticker= setTimeout(tick, ticker_timeout);
+      return ticker= setTimeout(tick, max(3, ticker_timeout));
     })();
 
     applicable.each(function(){
