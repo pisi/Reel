@@ -83,10 +83,12 @@
      * and also caused Reel to throw JS errors.
      * Then adaptive ticker timeout sometimes went sub-zero causing IE to invalidate such `setTimeout` call
      * and thus effectively ceised the timer completely.
+     * Another IE issue: broken image overlay in IE 7 or lower was caused by no support for "data:" protocol URLs,
+     * so to workaround it a CDN-served blank image is be used instead.
      */
-    expect(3);
+    expect(4);
     var
-      $pano= $('#sequence').reel(),
+      $pano= $('#image').reel(),
       ticks= 0
 
     equal(typeof slidable, 'undefined', '`slidable` is undefined in the global scope');
@@ -96,6 +98,13 @@
       ticks++;
       if (ticks == 100){
         ok(true, 'Ticked 100 times - ticker runs ;)');
+
+        var
+          protocol= $('#image').attr('src').split(':')[0]
+
+        if ($.browser.msie && +$.browser.version <= 7) equal(protocol, 'http', 'CDN-served transparent image.')
+        else equal(protocol, 'data', 'Embedded transparent image.');
+
         start();
       }
     });
