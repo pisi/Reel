@@ -5,6 +5,7 @@
 
   module('Issues', { teardown: function teardown(){
     $('.jquery-reel').trigger('teardown');
+    $(document).unbind('tick.reel');
   }});
 
   test( 'GH-4 Proper background positioning range for stitched non-looping panoramas', function(){
@@ -73,6 +74,31 @@
       }
       return stack
     }
+  });
+
+  asyncTest( 'GH-30 Broken "play" in IE', function(){
+    /* Github issue 30 bugfix
+     * http://github.com/pisi/Reel/issues/#issue/30
+     * First of all, private `slidable` boolean flag leaked into global scope
+     * and also caused Reel to throw JS errors.
+     * Then adaptive ticker timeout sometimes went sub-zero causing IE to invalidate such `setTimeout` call
+     * and thus effectively ceised the timer completely.
+     */
+    expect(3);
+    var
+      $pano= $('#sequence').reel(),
+      ticks= 0
+
+    equal(typeof slidable, 'undefined', '`slidable` is undefined in the global scope');
+    equal(typeof window.slidable, 'undefined', '`window.slidable` is also undefined');
+
+    $(document).bind('tick.reel', function(){
+      ticks++;
+      if (ticks == 100){
+        ok(true, 'Ticked 100 times - ticker runs ;)');
+        start();
+      }
+    });
   });
 
 })(jQuery);

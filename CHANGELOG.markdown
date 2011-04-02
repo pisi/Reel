@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Development
+-----------
+
+* Fixed two issues preventing Reel from animating itself in IE (Github issues GH-30).
+
+
 Version 1.1.1
 -------------
 
