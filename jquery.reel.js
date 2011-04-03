@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.1 GH-30 fix
- * Updated: 2011-04-02
+ * Updated: 2011-04-03
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -134,7 +134,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     ticker= ticker || (function tick(){
       ticks= { before: ticks.now, now: new Date() }
-      ticker_timeout+= ticker_target - ceil(ticks.now - ticks.before);
+      try{ ticker_timeout+= ticker_target - ceil(ticks.now - ticks.before) }catch(e){}
       pool.trigger(_tick_);
       return ticker= setTimeout(tick, max(3, ticker_timeout));
     })();
