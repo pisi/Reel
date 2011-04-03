@@ -31,25 +31,28 @@
   asyncTest( 'Indicator: is sticked to the bottom edge of the container', function(){
     expect(4);
     var
-      samples= [10, 20, 50, 100]
+      samples= [10, 20, 50, 100],
+      index= 0
 
-    try_different_sizes(samples);
+    try_sizes_one_by_one();
 
-    function try_different_sizes(sizes){
+    function try_sizes_one_by_one(){
       var
-        count= 0
-      $(sizes).each(function try_size(){
-        $('#image').trigger('teardown')
-        var
-          size= this,
-          $reel= $('#image').reel({ indicator: size }).bind('loaded', function(e){
-            count++;
-            equal( indicator_offset_top, 126 - size );
-            count==samples.length && start();
-          }),
-          $indicator= $('#image-reel .jquery-reel-indicator'),
-          indicator_offset_top= parseInt($indicator.css('top'))
-      });
+        size= samples[index],
+        $reel= $('#image').reel({ indicator: size }),
+        $indicator= $('#image-reel .jquery-reel-indicator'),
+        indicator_offset_top= parseInt($indicator.css('top'))
+
+      $reel.bind('loaded', function(e){
+        index++;
+        equal( indicator_offset_top, 126 - size );
+        if (index == samples.length){
+          start();
+        }else{
+          $('#image').unbind('loaded').trigger('teardown')
+          try_sizes_one_by_one()
+        }
+      })
     }
   });
 
