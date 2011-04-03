@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Development
+-----------
+
+* Laziness factor has been adjusted for better performance on iPhones.
+
+
 Version 1.1.1
 -------------
 
