@@ -134,9 +134,9 @@ jQuery.reel || (function($, window, document, undefined){
 
     ticker= ticker || (function tick(){
       ticks= { before: ticks.now, now: new Date() }
-      ticker_timeout+= ticker_target - ceil(ticks.now - ticks.before);
+      try{ ticker_timeout+= ticker_target - ceil(ticks.now - ticks.before) }catch(e){}
       pool.trigger(_tick_);
-      return ticker= setTimeout(tick, ticker_timeout);
+      return ticker= setTimeout(tick, max(3, ticker_timeout));
     })();
 
     applicable.each(function(){
@@ -651,7 +651,8 @@ jQuery.reel || (function($, window, document, undefined){
           set(_lo_, opt.loops ? 0 : - fraction * revolution);
           set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
           return x && set(_clicked_location_, { x: x, y: y }) || undefined
-        }
+        },
+        slidable= true
 
       on.setup();
     });
@@ -683,7 +684,9 @@ jQuery.reel || (function($, window, document, undefined){
   // PRIVATE
   var
     pool= $(document),
+    browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
+    knows_data_url= !(ie && browser_version < 8),
     failsafe_cursor= 'ew-resize',
     ticker,
     ticks= { before: 0, now: new Date() },
@@ -697,7 +700,7 @@ jQuery.reel || (function($, window, document, undefined){
     hi_klass= klass + '-interface',
 
     // Embedded images
-    transparent= 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7',
+    transparent= knows_data_url ? 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7' : cdn('blank.gif'),
     drag_cursor= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7',
     drag_cursor_down= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==',
 
@@ -731,6 +734,7 @@ jQuery.reel || (function($, window, document, undefined){
   // Helpers
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
+  function cdn(path){ return 'http://code.vostrel.cz/' + path }
   function url(location){ return 'url(' + location + ')' }
   function lofi(number){ return +number.toFixed(4) }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }

@@ -4,6 +4,8 @@ Changelog
 Development
 -----------
 
+* Fixed two issues preventing Reel from animating itself in IE (Github issues GH-30).
+* Fixed broken-image-overlay bug when using sprite on IE 7 and lower.
 * Laziness factor has been adjusted for better performance on iPhones.
 
 
