@@ -24,8 +24,8 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1.1
- * Updated: 2011-03-20
+ * Version: 1.1.1-devel
+ * Updated: 2011-04-03
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -46,7 +46,7 @@
 jQuery.reel || (function($, window, document, undefined){
 
   $.reel= {
-    version: '1.1.1',
+    version: '1.1.1-devel',
 
     // Options defaults
     def: {
@@ -78,7 +78,7 @@ jQuery.reel || (function($, window, document, undefined){
       image:      undefined, // image sprite to be used
       images:            [], // sequence array of individual images to be used instead of sprite
       inversed:       false, // flags inversed organization of frames in orbital object movie
-      laziness:           8, // on "lazy" devices tempo is divided by this divisor for better performace
+      laziness:           6, // on "lazy" devices tempo is divided by this divisor for better performace
       monitor:    undefined, // stored value name to monitor in the upper left corner of the viewport
       opening:            0, // duration of opening animation (in seconds)
       orbital:            0, // view centering tolerance in frames for dual-orbit object movies
