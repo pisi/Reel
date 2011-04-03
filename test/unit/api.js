@@ -21,7 +21,14 @@
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		expect(45);
+		var
+		  count= 0
+
+		$.each($.reel.def, function(){ count++ });
+		expect(count + 4);
+
+		equal( count, 44, 'Total number of options');
+
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
     equal( $.reel.def.frame,                      1, 'initial frame' );
@@ -46,6 +53,7 @@
     equal( $.reel.def.clickfree,              false, 'binds to mouse leave/enter events instead of down/up' );
     equal( $.reel.def.cw,                     false, 'true for clockwise organization of sprite' );
     equal( $.reel.def.delay,                     -1, 'delay before autoplay in seconds (no autoplay by default)' );
+    equal( $.reel.def.directional,            false, 'two sets of frames (for forward and backward motion) are used when true' );
     equal( $.reel.def.draggable,               true, 'mouse or finger drag interaction (allowed by default)' );
     equal( $.reel.def.entry,              undefined, 'speed of the opening animation (Hz, defaults to value of `speed`)' );
     equal( $.reel.def.graph,              undefined, 'custom graph function' );
