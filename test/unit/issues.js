@@ -12,32 +12,56 @@
     /* Github issue 4 bugfix
      * http://github.com/pisi/Reel/issues/#issue/4
      */
-		expect(2);
+		expect($.browser.msie ? 4 : 2);
     var
       stitched= 1652,
       $pano= $('#stitched_nonlooping').reel({ stitched: stitched, loops: false }),
       travel= stitched - parseInt($pano.css('width'))
 
     $pano.trigger('frameChange', 1);
-    equal($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
+    if ($.browser.msie){
+      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+      equal($pano.css('backgroundPositionX'), '0px', 'Frame 1 (min, X)');
+      equal($pano.css('backgroundPositionY'), '0px', 'Frame 1 (min, Y)');
+    }else{
+      equal($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
+    }
     $pano.trigger('frameChange', 36);
-    equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Frame 36 (max)');
+    if ($.browser.msie){
+      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+      equal($pano.css('backgroundPositionX'), -travel+'px', 'Frame 36 (max, X)');
+      equal($pano.css('backgroundPositionY'), '0px', 'Frame 36 (max, Y)');
+    }else{
+      equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Frame 36 (max)');
+    }
   });
 
   test( 'GH-6 Proper background positioning range for stitched looping panoramas', function(){
     /* Github issue 6 bugfix
      * http://github.com/pisi/Reel/issues/#issue/6
      */
-		expect(2);
+		expect($.browser.msie ? 4 : 2);
     var
       stitched= 1652,
       $pano= $('#stitched_looping').reel({ stitched: stitched, loops: true }),
       travel= stitched
 
     $pano.trigger('frameChange', 1);
-    equal($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
+    if ($.browser.msie){
+      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+      equal($pano.css('backgroundPositionX'), '0px', 'Looping - frame 1 (min, X)');
+      equal($pano.css('backgroundPositionY'), '0px', 'Looping - frame 1 (min, Y)');
+    }else{
+      equal($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
+    }
     $pano.trigger('frameChange', 36);
-    equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Looping - frame 36 (max)');
+    if ($.browser.msie){
+      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+      equal($pano.css('backgroundPositionX'), -travel+'px', 'Looping - frame 36 (max, X)');
+      equal($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');
+    }else{
+      equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Looping - frame 36 (max)');
+    }
   });
 
   asyncTest( 'GH-11 First frame disappears after image sequence loading is complete', function(){
@@ -57,7 +81,7 @@
         images:   phone_frames(20)
       })
 
-    $pano.bind('fractionChange', function(){
+    $pano.bind('loaded', function(){
       equal($pano.attr('src'), 'samples/phone/01.png', 'Image is from the sequence');
       start();
     });
