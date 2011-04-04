@@ -316,7 +316,7 @@ jQuery.reel || (function($, window, document, undefined){
             }));
             while(preload.length){
               var
-                url= opt.path+preload.shift(),
+                uri= opt.path+preload.shift(),
                 $img= $(new Image()).hide().bind('load'+ns, function update_preloader(){
                   img_tag.preloaded++
                   $(this).unbind(ns);
@@ -332,7 +332,7 @@ jQuery.reel || (function($, window, document, undefined){
                 });
               $overlay.append($img);
               // The actual loading of the image is done asynchronously
-              setTimeout((function($img, url){ return function(){ $img.attr({ src: url }) } })($img, url), 0);
+              setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
             }
           },
           tick: function(e){
