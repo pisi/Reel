@@ -304,7 +304,7 @@ jQuery.reel || (function($, window, document, undefined){
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
               img_preloaded= img_tag.preloaded= 0
-            t.attr({ src: transparent }).trigger('stop');
+            t.trigger('stop');
             $overlay.append($preloader= $(_div_tag_, { className: preloader_klass,
               css: {
                 position: _absolute_,
@@ -325,6 +325,7 @@ jQuery.reel || (function($, window, document, undefined){
                     $preloader.remove();
                     images.length || t.css({ backgroundImage: url(opt.path+image) });
                     t
+                    .attr({ src: transparent })
                     .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
                     .trigger('loaded')
                     .trigger('opening');
