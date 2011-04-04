@@ -323,6 +323,7 @@ jQuery.reel || (function($, window, document, undefined){
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                   if (img_tag.frames == img_tag.preloaded){
                     $preloader.remove();
+                    images.length || t.css({ backgroundImage: url(opt.path+image) });
                     t
                     .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
                     .trigger('loaded')
@@ -592,9 +593,7 @@ jQuery.reel || (function($, window, document, undefined){
                 x= round(fraction * get(_stitched_travel_)),
                 y= 0,
                 shift= [-x + _px_, y + _px_]
-              var
-                sprite= get(_image_)
-              t.css({ background: url(opt.path+sprite)+___+shift.join(___) });
+              t.css({ backgroundPosition: shift.join(___) })
             }
             cleanup.call(e);
           }
