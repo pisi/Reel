@@ -18,7 +18,7 @@
  * ===========
  * 360° projection plugin for jQuery
  *
- * @license Copyright (c) 2009-2010 Petr Vostrel (http://petr.vostrel.cz/)
+ * @license Copyright (c) 2009-2011 Petr Vostrel (http://petr.vostrel.cz/)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
