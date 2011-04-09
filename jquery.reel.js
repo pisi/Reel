@@ -236,9 +236,10 @@ jQuery.reel || (function($, window, document, undefined){
             $(get(_stage_)).before($original).detach();
             no_bias();
             pool
-            .unbind(_mouseup_).unbind(_mousemove_)
             .unbind(_tick_, on.tick)
             .unbind(_tick_, on.opening_tick);
+            stage_pool
+            .unbind(_mouseup_).unbind(_mousemove_);
             cleanup.call(e);
           },
           start: function(e){
@@ -423,10 +424,10 @@ jQuery.reel || (function($, window, document, undefined){
               unidle();
               no_bias();
               if (!touched){
-                pool
+                stage_pool
                 .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor })
                 .bind(_mousemove_, function(e){ t.trigger('slide', [e.clientX, e.clientY]); cleanup.call(e); return false })
-                opt.clickfree || pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
+                opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
               }
             }
             cleanup.call(e);
@@ -446,7 +447,7 @@ jQuery.reel || (function($, window, document, undefined){
             velocity ? idle() : unidle();
             no_bias();
             !touched
-            && pool.unbind(_mouseup_).unbind(_mousemove_)
+            && stage_pool.unbind(_mouseup_).unbind(_mousemove_)
             && get(_area_).css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
             cleanup.call(e);
           },
@@ -657,6 +658,7 @@ jQuery.reel || (function($, window, document, undefined){
         },
         slidable= true
 
+        stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document))
       on.setup();
     });
     return $(instances);
