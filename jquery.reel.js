@@ -231,7 +231,7 @@ jQuery.reel || (function($, window, document, undefined){
               // for this we need the 1.4.2+ version
               $original.bind(type+'.'+handler.namespace, handler.handler, handler.data);
             });
-            $('img:hidden', t.parent()).remove();
+            $('img:'+_hidden_, t.parent()).remove();
             // replace stage with the original
             $(get(_stage_)).before($original).detach();
             no_bias();
@@ -311,6 +311,7 @@ jQuery.reel || (function($, window, document, undefined){
                 left: 0,
                 top: space.y - opt.preloader,
                 height: opt.preloader,
+                overflow: _hidden_,
                 backgroundColor: _hex_black_
               }
             }));
@@ -629,6 +630,7 @@ jQuery.reel || (function($, window, document, undefined){
             css: {
               width: opt.indicator,
               height: opt.indicator,
+              overflow: _hidden_,
               top: get(_dimensions_).y - opt.indicator,
               left: 0,
               position: _absolute_,
@@ -718,7 +720,7 @@ jQuery.reel || (function($, window, document, undefined){
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _center_= 'center',
     _classes_= 'classes', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions',
-    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _image_= 'image',
+    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image',
     _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution',
     _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _steps_= 'steps', _stitched_= 'stitched', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped',

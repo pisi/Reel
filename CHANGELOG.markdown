@@ -9,6 +9,7 @@ Development
 * Laziness factor has been adjusted for better performance on iPhones.
 * Sprite request duplication eliminated for Firefox and others.
 * Unwanted brief image disappearance of image on start eliminated.
+* Fixed the overgrown indicator bug in IE 6.
 
 
 Version 1.1.1
