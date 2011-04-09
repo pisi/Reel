@@ -706,10 +706,10 @@ jQuery.reel || (function($, window, document, undefined){
     monitor_klass= klass + '-monitor',
     hi_klass= klass + '-interface',
 
-    // Embedded images
-    transparent= knows_data_url ? 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7' : cdn('blank.gif'),
-    drag_cursor= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7',
-    drag_cursor_down= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==',
+    // Image resources
+    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
+    drag_cursor= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7'),
+    drag_cursor_down= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw=='),
 
     // Shortcuts
     round= Math.round, floor= Math.floor, ceil= Math.ceil,
@@ -739,6 +739,7 @@ jQuery.reel || (function($, window, document, undefined){
     _title_= 'title', _width_= 'width'
 
   // Helpers
+  function embedded(image){ return knows_data_url && 'data:image/gif;base64,R0lGODlh'+image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
   function cdn(path){ return 'http://code.vostrel.cz/' + path }
