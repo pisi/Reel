@@ -225,6 +225,7 @@ jQuery.reel || (function($, window, document, undefined){
               // clone & restore the original
               $original= t.clone()
               .attr(t.data(_backup_))
+              .css({ background: 'transparent' })
               .removeClass(klass).addClass(get(_classes_));
             // clone original events (inspired by Brandon Aaron's copyEvents plugin)
             for (var type in events) $.each(events[type], function(ix, handler){
@@ -706,10 +707,10 @@ jQuery.reel || (function($, window, document, undefined){
     monitor_klass= klass + '-monitor',
     hi_klass= klass + '-interface',
 
-    // Embedded images
-    transparent= knows_data_url ? 'data:image/gif;base64,R0lGODlhCAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7' : cdn('blank.gif'),
-    drag_cursor= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7',
-    drag_cursor_down= 'data:image/gif;base64,R0lGODlhEAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==',
+    // Image resources
+    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
+    drag_cursor= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7') || cdn('jquery.reel.cursor-drag.gif'),
+    drag_cursor_down= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==') || cdn('jquery.reel.cursor-drag-down.gif'),
 
     // Shortcuts
     round= Math.round, floor= Math.floor, ceil= Math.ceil,
@@ -739,6 +740,7 @@ jQuery.reel || (function($, window, document, undefined){
     _title_= 'title', _width_= 'width'
 
   // Helpers
+  function embedded(image){ return knows_data_url && 'data:image/gif;base64,R0lGODlh'+image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
   function cdn(path){ return 'http://code.vostrel.cz/' + path }
