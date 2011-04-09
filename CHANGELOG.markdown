@@ -7,6 +7,8 @@ Development
 * Fixed two issues preventing Reel from animating itself in IE (Github issues GH-30).
 * Fixed broken-image-overlay bug when using sprite on IE 7 and lower.
 * Laziness factor has been adjusted for better performance on iPhones.
+* Sprite request duplication eliminated for Firefox and others.
+* Unwanted brief image disappearance of image on start eliminated.
 
 
 Version 1.1.1

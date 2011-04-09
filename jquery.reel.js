@@ -304,7 +304,7 @@ jQuery.reel || (function($, window, document, undefined){
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
               img_preloaded= img_tag.preloaded= 0
-            t.attr({ src: transparent }).trigger('stop');
+            t.trigger('stop');
             $overlay.append($preloader= $(_div_tag_, { className: preloader_klass,
               css: {
                 position: _absolute_,
@@ -316,14 +316,16 @@ jQuery.reel || (function($, window, document, undefined){
             }));
             while(preload.length){
               var
-                url= opt.path+preload.shift(),
+                uri= opt.path+preload.shift(),
                 $img= $(new Image()).hide().bind('load'+ns, function update_preloader(){
                   img_tag.preloaded++
                   $(this).unbind(ns);
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                   if (img_tag.frames == img_tag.preloaded){
                     $preloader.remove();
+                    images.length || t.css({ backgroundImage: url(opt.path+image) });
                     t
+                    .attr({ src: transparent })
                     .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
                     .trigger('loaded')
                     .trigger('opening');
@@ -332,7 +334,7 @@ jQuery.reel || (function($, window, document, undefined){
                 });
               $overlay.append($img);
               // The actual loading of the image is done asynchronously
-              setTimeout((function($img, url){ return function(){ $img.attr({ src: url }) } })($img, url), 0);
+              setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
             }
           },
           tick: function(e){
@@ -592,9 +594,7 @@ jQuery.reel || (function($, window, document, undefined){
                 x= round(fraction * get(_stitched_travel_)),
                 y= 0,
                 shift= [-x + _px_, y + _px_]
-              var
-                sprite= get(_image_)
-              t.css({ background: url(opt.path+sprite)+___+shift.join(___) });
+              t.css({ backgroundPosition: shift.join(___) })
             }
             cleanup.call(e);
           }
