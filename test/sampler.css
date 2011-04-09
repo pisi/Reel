@@ -4,7 +4,7 @@ a{ color: #2B81AF; }
 .sample{ float: left; width: 290px; height: 290px; background: #eee; padding: 20px 340px 10px 10px; margin: 0 10px 10px 0;
 	border-top: 1px solid white; border-bottom: 1px solid #ccc; border-radius: 15px;
 	position: relative; cursor: pointer; }
-.sample img{ display: block; margin: 0 auto; }
+.sample img, .sample iframe{ display: block; margin: 0 auto; }
 .sample .jquery-reel-overlay{ margin: 0 auto; }
 h1{ font-size: 2em; font-weight: normal; margin: 0; }
 h2{ width: 620px; height: 30px; padding: 30px 10px; margin: 30px 10px 10px 0; background: #222; color: white;
