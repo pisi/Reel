@@ -347,12 +347,12 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               velocity= get(_velocity_)
-            if (breaking) var
-              breaked= lofi(velocity - (tick_brake * breaking)),
-              done= velocity * breaked <= 0 || velocity < abs(breaked),
-              velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? breaked : (breaking= operated= 0))
+            if (braking) var
+              braked= lofi(velocity - (tick_brake * braking)),
+              done= velocity * braked <= 0 || velocity < abs(braked),
+              velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? braked : (braking= operated= 0))
             $monitor.text(get(opt.monitor));
-            velocity && breaking++;
+            velocity && braking++;
             operated && operated++;
             to_bias(0);
             slidable= true;
@@ -607,7 +607,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // User idle control
         operated,
-        breaking= 0,
+        braking= 0,
         idle= function(){ return operated= 0 },
         unidle= function(){
           clearTimeout(delay);
