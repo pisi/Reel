@@ -3,7 +3,9 @@
  */
 (function($){
 
-  module('API');
+  module('API', { teardown: function teardown(){
+    $('.jquery-reel').trigger('teardown');
+  }});
 
   test( 'Method exposed publicly as jQuery.fn.reel()', function()
   {
@@ -120,5 +122,17 @@
 		equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
 
   });
+
+	test( 'Pseudo-testing for the "leader" - the oldest living instance on page', function()
+	{
+
+		$('#image2, #image').reel();
+		$('#image_width_only, .no_id:first').reel();
+
+		equal( $.reel.instances.length, 4, 'We\'ve just setup 4 instances (2 + 2)');
+		equal( $.reel.instances.first().attr('id'), 'image', '`.first()` returns the oldest (by ID)');
+		equal( $.reel.instances[0].id, 'image', '`[0] too`');
+
+	});
 
 })(jQuery);

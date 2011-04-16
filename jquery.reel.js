@@ -691,6 +691,7 @@ jQuery.reel || (function($, window, document, undefined){
 
   function add_instance($instance){ return $.reel.instances= $.reel.instances.add($instance) }
   function remove_instance($instance){ return $.reel.instances= $.reel.instances.not('#'+$instance.attr(_id_)) }
+  function leader(key){ return $.reel.instances.first().data(key) }
 
   // Double plugin functions in case plugin is missing
   double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
