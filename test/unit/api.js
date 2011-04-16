@@ -111,7 +111,7 @@
 		// One more added
 		equal( $('.no_id:first').reel().length, 1, 'One more instance initiated');
 		equal( $.reel.instances.length, 3, '... correct length of `$.reel.instances` jQuery');
-		ok( $.reel.instances.eq(0).parent().hasClass('no_id'), '... it is our image (class name comparison)');
+		ok( $.reel.instances.eq(2).parent().hasClass('no_id'), '... it is our image (class name comparison)');
 
 		// First, teardown just one from the first two
 		$('#image').trigger('teardown');
