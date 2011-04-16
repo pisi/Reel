@@ -184,7 +184,7 @@ jQuery.reel || (function($, window, document, undefined){
               overlay_css= { position: 'relative', width: size.x, height: size.y },
               $overlay= $(_div_tag_, { id: stage_id.substr(1), className: classes+___+overlay_klass, css: overlay_css }),
               $instance= t.wrap($overlay).attr({ className: klass }).css(style).bind(on),
-              instances_count= instances.push($instance[0])
+              instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_classes_, classes);
             set(_frame_, opt.frame);
@@ -233,6 +233,7 @@ jQuery.reel || (function($, window, document, undefined){
               $original.bind(type+'.'+handler.namespace, handler.handler, handler.data);
             });
             $('img:'+_hidden_, t.parent()).remove();
+            remove_instance(t);
             // replace stage with the original
             $(get(_stage_)).before($original).detach();
             no_bias();
@@ -685,6 +686,11 @@ jQuery.reel || (function($, window, document, undefined){
 
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
+
+  $.reel.instances= $();
+
+  function add_instance($instance){ return $.reel.instances= $.reel.instances.add($instance) }
+  function remove_instance($instance){ return $.reel.instances= $.reel.instances.not('#'+$instance.attr(_id_)) }
 
   // Double plugin functions in case plugin is missing
   double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
