@@ -7,6 +7,21 @@
     $('.jquery-reel').unbind('loaded frameChange').trigger('teardown');
   }});
 
+  asyncTest( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
+    expect(3);
+    var
+      $reel_with_id= $('#image').reel(),
+      $reel_without_id= $('.no_id:first').reel()
+
+		// Given ID attribute
+		equal( $reel_with_id.attr('id'), 'image');
+
+		// The generated ID consists of "jquery-reel-" followed by a timestamp
+		equal( $reel_without_id.attr('id').substr(0, 12), 'jquery-reel-');
+		equal( Math.floor(+$reel_without_id.attr('id').substr(12) / 1000), Math.floor(+new Date() / 1000));
+    start();
+  });
+
   asyncTest( 'Overlay: is created with proper ID', function(){
     expect(1);
     var
