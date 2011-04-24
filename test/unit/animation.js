@@ -69,6 +69,40 @@
 		}
 	});
 
+	// We generate tests for several different tempos ranging from 6 to 48
+	$.each([6, 8, 10, 12, 18, 24, 36], function(ix, tempo){
+
+		var
+			one_second= 1000,
+			lazy_tempo= tempo / ($.reel.lazy? $.reel.def.laziness : 1)
+
+		// We also try different speeds - no animation, odd value, normal value and a speedy value
+		$.each([0, 0.69, 1, 3], function(ixx, speed){
+
+			asyncTest( 'Ticker timing precision on `tempo: ' + lazy_tempo + '` - measuring 1 second at `speed: ' + speed + '`...', function()
+			{
+				expect(2);
+
+				var
+					ticks= 0,
+					sum= 0,
+					bang= +new Date(),
+					$reel= $('#image').reel({ tempo: tempo, speed: speed })
+
+				$(document).bind('tick.reel', function tick(){
+					ticks++;
+				});
+
+				setTimeout(function(duration){
+					duration= +new Date() - bang;
+					ok( duration < 1.2 * one_second, 'Duration of what wannabe one second within 20 % tolerance with slip ' + (duration - one_second) + ' ms');
+					ok( ticks < Math.max(1, 1.2 * lazy_tempo), 'Counted ticks within 20 % tolerance with slip ' + (tempo - ticks) + '.');
+					start();
+				}, one_second);
+			});
+		});
+	});
+
 	asyncTest( 'Running instances have their overall running cost (in ms) exposed as `$.reel.cost`', function()
 	{
 		expect(1);
