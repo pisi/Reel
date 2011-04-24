@@ -4,6 +4,10 @@ Changelog
 Development
 -----------
 
+* Revised adaptive ticker:
+    * Overall `$.reel.cost` per timer tick in ms is calculated
+    * Ticker is now driven by a "leader" - the oldest living instance on page - and `$.reel.leader` references its data. This removes the first-reel-sets-the-tempo limitation in older versions.
+    * Several performance tests included.
 * Unwanted brief image disappearance of image on start eliminated.
 * Sprite request duplication eliminated for Firefox and others.
 * Laziness factor has been adjusted for better performance on iPhones.
