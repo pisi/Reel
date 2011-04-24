@@ -24,8 +24,8 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1.2
- * Updated: 2011-04-09
+ * Version: 1.1.1-devel
+ * Updated: 2011-04-24
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -46,7 +46,7 @@
 jQuery.reel || (function($, window, document, undefined){
 
   $.reel= {
-    version: '1.1.2',
+    version: '1.1.1-devel',
 
     // Options defaults
     def: {
@@ -205,6 +205,8 @@ jQuery.reel || (function($, window, document, undefined){
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_reeling_, false);
+            set(_brake_, opt.brake);
+            set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
             set(_backup_, {
               src: src,
               style: styles || __
@@ -349,7 +351,7 @@ jQuery.reel || (function($, window, document, undefined){
             var
               velocity= get(_velocity_)
             if (braking) var
-              braked= lofi(velocity - (tick_brake * braking)),
+              braked= lofi(velocity - (get(_brake_) / leader(_tempo_) * braking)),
               done= velocity * braked <= 0 || velocity < abs(braked),
               velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? braked : (braking= operated= 0))
             $monitor.text(get(opt.monitor));
@@ -361,7 +363,7 @@ jQuery.reel || (function($, window, document, undefined){
             if (get(_clicked_)) return cleanup.call(e, unidle());
             var
               backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
-              step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / tempo,
+              step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
               was= get(_fraction_),
               fraction= set(_fraction_, was - step * backwards)
             cleanup.call(e);
@@ -378,7 +380,7 @@ jQuery.reel || (function($, window, document, undefined){
               end= get(_fraction_),
               duration= opt.opening,
               start= set(_fraction_, end - speed * opt.opening),
-              ticks= set(_opening_ticks_, duration * tempo)
+              ticks= set(_opening_ticks_, duration * leader(_tempo_))
             pool.bind(_tick_, on.opening_tick);
           },
           opening_tick: function(e){
@@ -387,7 +389,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               speed= opt.entry || opt.speed,
-              step= speed / tempo * (opt.cw? -1:1),
+              step= speed / leader(_tempo_) * (opt.cw? -1:1),
               was= get(_fraction_),
               fraction= set(_fraction_, lofi(was + step)),
               ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
@@ -534,7 +536,7 @@ jQuery.reel || (function($, window, document, undefined){
               center= set(_center_, orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
-              bounce= on_edge >= opt.rebound * 1000 / tempo,
+              bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
               backwards= bounce && set(_backwards_, !get(_backwards_))
             var
               space= get(_dimensions_),
@@ -614,7 +616,7 @@ jQuery.reel || (function($, window, document, undefined){
           clearTimeout(delay);
           pool.unbind(_tick_, on.opening_tick);
           t.trigger('play');
-          return operated= -opt.timeout * tempo
+          return operated= -opt.timeout * leader(_tempo_)
         },
         delay,
         // Triggers "play" delayed or immediate play
@@ -725,7 +727,7 @@ jQuery.reel || (function($, window, document, undefined){
     number= parseInt,
 
     // Storage keys
-    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _center_= 'center',
+    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _center_= 'center',
     _classes_= 'classes', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions',
     _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image',
