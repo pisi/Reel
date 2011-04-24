@@ -122,22 +122,12 @@ jQuery.reel || (function($, window, document, undefined){
         });
         return $(pass);
       })(this),
-      instances= [],
-      tempo= opt.tempo / ($.reel.lazy? opt.laziness : 1),
-      ticker_target= 1000 / tempo,
-      ticker_timeout= ticker_target
+      instances= []
 
     // Backward-compatibility of [deprecated] legacy options
     opt.reversed && (opt.cw= true);
     opt.tooltip && (opt.hint= opt.tooltip);
     opt.hotspot && (opt.area= opt.hotspot);
-
-    ticker= ticker || (function tick(){
-      ticks= { before: ticks.now, now: new Date() }
-      try{ ticker_timeout+= ticker_target - ceil(ticks.now - ticks.before) }catch(e){}
-      pool.trigger(_tick_);
-      return ticker= setTimeout(tick, max(3, ticker_timeout));
-    })();
 
     applicable.each(function(){
       var
@@ -667,6 +657,13 @@ jQuery.reel || (function($, window, document, undefined){
         stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document))
       on.setup();
     });
+
+    ticker= ticker || (function tick(start){
+      start= +new Date();
+        pool.trigger(_tick_);
+        $.reel.cost= (+new Date() + $.reel.cost - start) * 0.5;
+        return ticker= setTimeout(tick, max(16, 1000 / leader(_tempo_) - $.reel.cost));
+    })();
     return $(instances);
   }
 
@@ -690,6 +687,7 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
   $.reel.instances= $();
+  $.reel.cost= 0;
 
   function leader(key){ return $.reel.instances.first().data(key) }
   function add_instance($instance){ return ($.reel.instances.push($instance[0])) && $instance }
