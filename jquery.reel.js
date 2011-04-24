@@ -690,6 +690,8 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.cost= 0;
 
   function leader(key){ return $.reel.instances.first().data(key) }
+  $.reel.leader= leader;
+
   function add_instance($instance){ return ($.reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return ($.reel.instances= $.reel.instances.not('#'+$instance.attr(_id_))) && $instance }
 

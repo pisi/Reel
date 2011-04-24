@@ -37,6 +37,46 @@
 				$pool.unbind('tick.reel', tick);
 				start();
 			}
+
+	asyncTest( 'Ticker is driven by `leader`\'s data from `$.reel.leader()`', function()
+	{
+		expect(9);
+
+		$(document).bind('tick.reel', tick);
+
+		var
+			ticks = 0,
+			$faster = $('#image').reel({ tempo: 20 }),
+			$slower = $('#image2').reel({ tempo: 10 });
+
+		setTimeout(function(){
+			deepEqual( $.reel.leader(), $faster.data(), 'Leader\'s data are the first (oldest living) instance\'s data')
+			equals( $.reel.leader('tempo'), $faster.data('tempo'), 'Timer keeps faster tempo dictated by the leader');
+
+			ok( $faster.trigger('teardown'), 'The older faster instance destroyed (the latter slower instance remains)');
+
+			setTimeout(function(){
+				deepEqual( $.reel.leader(), $slower.data(), 'Leader\'s data are the second (now the only) instance\'s data')
+				equals( $.reel.leader('tempo'), $slower.data('tempo'), 'Ticker slowed down');
+
+				ok( $slower.trigger('teardown'), 'Slower instance removed too (no instance remains)')
+				var
+					ticks_copy= ticks;
+
+				setTimeout(function(){
+					equals( $.reel.leader(), undefined, 'Without a leader there\'s no data');
+					equals( $.reel.leader('tempo'), undefined, 'and no leader\'s tempo');
+					equals( ticks_copy, ticks, 'Ticker is stopped.');
+
+					start();
+				}, 1000);
+
+			}, 1000);
+
+		}, 1000);
+
+		function tick(){
+			ticks++
 		}
 	});
 
