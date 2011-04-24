@@ -335,7 +335,7 @@ jQuery.reel || (function($, window, document, undefined){
           tick: function(e){
           /*
           - triggered by pool's `tick.reel` event
-          - keeps track of operated and breaked statuses
+          - keeps track of operated and braked statuses
           - decreases inertial velocity by braking
           */
             var
@@ -440,7 +440,7 @@ jQuery.reel || (function($, window, document, undefined){
               clicked= set(_clicked_, false),
               reeling= set(_reeling_, false),
               velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
-              breaks= breaking= velocity ? 1 : 0
+              brakes= braking= velocity ? 1 : 0
             velocity ? idle() : unidle();
             no_bias();
             !touched
@@ -639,7 +639,6 @@ jQuery.reel || (function($, window, document, undefined){
         to_bias= function(value){ return bias.push(value) && bias.shift() && value },
         no_bias= function(){ return bias= [0,0] },
         bias= no_bias(),
-        tick_brake= opt.brake / tempo,
 
         // Graph function to be used
         graph= opt.graph || $.reel.math[opt.loops ? 'hatch' : 'envelope'],
