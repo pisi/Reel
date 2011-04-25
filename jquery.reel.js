@@ -661,8 +661,8 @@ jQuery.reel || (function($, window, document, undefined){
       start= +new Date();
       if (leader()){
         pool.trigger(_tick_);
-        $.reel.cost= (+new Date() + $.reel.cost - start) * 0.5;
         return ticker= setTimeout(tick, max(16, 1000 / leader(_tempo_) - $.reel.cost));
+        $.reel.cost= (+new Date() + $.reel.cost - start) / 2;
       }else{
         return ticker= undefined
       }
