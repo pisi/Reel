@@ -202,7 +202,7 @@ jQuery.reel || (function($, window, document, undefined){
               src: src,
               style: styles || __
             });
-            ticker && pool.bind(_tick_, on.tick);
+            pool.bind(_tick_, on.tick);
             cleanup.call(e);
             t.trigger('start');
           },
