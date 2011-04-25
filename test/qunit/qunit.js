@@ -371,7 +371,7 @@ var QUnit = {
 	},
 	
 	// Logging callbacks
-	done: function(failures, total) {},
+	done: function(failures, total) { failures && $('body').addClass('failure') },
 	log: function(result, message) {},
 	testStart: function(name) {},
 	testDone: function(name, failures, total) {},
