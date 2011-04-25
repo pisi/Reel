@@ -1,21 +1,21 @@
 Changelog
 =========
 
-Development
------------
+Version 1.1.2
+-------------
 
-* Revised adaptive ticker:
-    * Ticker is now driven by a "leader" - the oldest living instance on page - and `$.reel.leader` references its data. This removes the first-reel-sets-the-tempo limitation in older versions.
-    * Overall `$.reel.cost` per timer tick in ms is being continuously calculated and then used to elevate timer accuracy.
-    * Several performance tests included.
-* Unwanted brief image disappearance of image on start eliminated.
-* Sprite request duplication eliminated for Firefox and others.
-* Laziness factor has been adjusted for better performance on iPhones.
 * All known Internet Explorer bugs fixed:
     * Fixed two issues preventing Reel from animating itself in IE (Github issue GH-30).
     * Fixed iframe-related bug in IE (Github issue GH-25).
     * Fixed broken-image-overlay bug when using sprite on IE 7 and lower.
     * Fixed the overgrown indicator bug in IE 6.
+* Unwanted brief image disappearance of image on start is now eliminated.
+* Sprite request duplication eliminated for Firefox and others.
+* Laziness factor has been adjusted for better performance on iPhones.
+* Revised adaptive ticker:
+    * Ticker is now driven by a "leader" - the oldest living instance on page - and `$.reel.leader` references its data. This removes the first-reel-sets-the-tempo limitation in older versions.
+    * Overall `$.reel.cost` per timer tick in ms is being continuously calculated and then used to elevate timer accuracy.
+    * Several performance tests included.
 
 
 Version 1.1.1
