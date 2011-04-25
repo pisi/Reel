@@ -10,7 +10,7 @@ I could as well leave out this JavaScript-disabled browser completely to have it
 
 Statistics
 ----------
-Between last version update (1.0 » 1.1), the unit test coverage has been **improved by 361%**. We now have 162 tests in 39 tasks and 8 modules in version 1.1 as opposed to 34 tests in 19 tasks and 4 modules back in 1.0.4.
+Between last version update (1.1.1 » 1.1.2), the unit test coverage has been **improved by 73%**. We now have 246 tests in 58 tasks and 9 modules in version 1.1.2 as opposed to 142 tests in 35 tasks and 8 modules back in 1.1.1.
 
 Desktop-class
 -------------
