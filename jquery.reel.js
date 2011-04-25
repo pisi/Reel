@@ -737,7 +737,7 @@ jQuery.reel || (function($, window, document, undefined){
     _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution',
     _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _steps_= 'steps', _stitched_= 'stitched', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped',
-    _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
+    _tempo_= 'tempo', _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',
