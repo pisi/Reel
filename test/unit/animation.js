@@ -76,8 +76,8 @@
 			one_second= 1000,
 			lazy_tempo= tempo / ($.reel.lazy? $.reel.def.laziness : 1)
 
-		// We also try different speeds - no animation, odd value, normal value and a speedy value
-		$.each([0, 0.69, 1, 3], function(ixx, speed){
+		// We also try both animated and non-animated
+		$.each([0, 1], function(ixx, speed){
 
 			asyncTest( 'Ticker timing precision on `tempo: ' + lazy_tempo + '` - measuring 1 second at `speed: ' + speed + '`...', function()
 			{
