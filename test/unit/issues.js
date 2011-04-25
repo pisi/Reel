@@ -134,4 +134,17 @@
     });
   });
 
+  asyncTest( '`stage_pool` private variable leaked into global scope', function()
+  {
+    expect(1);
+
+    var
+      $reel= $('#image').reel()
+
+    setTimeout(function(){
+      ok( typeof stage_pool === 'undefined', 'No leaked `stage_pool` accessible in the global scope');
+      start();
+    }, 100)
+  })
+
 })(jQuery);

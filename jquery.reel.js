@@ -651,8 +651,7 @@ jQuery.reel || (function($, window, document, undefined){
           set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
           return x && set(_clicked_location_, { x: x, y: y }) || undefined
         },
-        slidable= true
-
+        slidable= true,
         stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document))
       on.setup();
     });
