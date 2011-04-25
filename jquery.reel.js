@@ -132,16 +132,16 @@ jQuery.reel || (function($, window, document, undefined){
     applicable.each(function(){
       var
         t= $(this),
+        data= t.data(),
 
         // Data storage
         set= function(name, value){
-          t.data(name, value);
+          data[name]= value;
           t.trigger('store', [name, value]);
           return value;
         },
         get= function(name){
-          var
-            value= t.data(name)
+          var value= data[name];
           t.trigger('recall', [name, value]);
           return value;
         },
