@@ -34,6 +34,7 @@
  * - http://code.vostrel.cz/jquery.reel-bundle.js (recommended)
  * - http://code.vostrel.cz/jquery.reel.js
  * - http://code.vostrel.cz/jquery.reel-debug.js
+ * - or http://code.vostrel.cz/jquery.reel-edge.js if you feel like it ;)
  *
  * Optional nice-to-have plugins:
  * - jQuery.disableTextSelect [B] (James Dempster, http://www.jdempster.com/category/jquery/disabletextselect/)
