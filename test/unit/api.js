@@ -9,27 +9,27 @@
 
   test( 'Method exposed publicly as jQuery.fn.reel()', function()
   {
-		expect(2);
+    expect(2);
     ok( $.fn.reel !== undefined );
     ok( typeof $.fn.reel == 'function' );
   });
 
   test( 'Default option values exposed publicly as jQuery.reel.def', function()
   {
-		expect(2);
+    expect(2);
     ok( typeof $.reel == 'object' );
     ok( typeof $.reel.def == 'object' );
   });
 
   test( 'Options in jQuery.reel hash and their default values', function()
   {
-		var
-		  count= 0
+    var
+      count= 0
 
-		$.each($.reel.def, function(){ count++ });
-		expect(count + 4);
+    $.each($.reel.def, function(){ count++ });
+    expect(count + 4);
 
-		equal( count, 44, 'Total number of options');
+    equal( count, 44, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -86,53 +86,53 @@
 
   test( 'jQuery of currently living instances is referenced as `$.reel.instances`', function()
   {
-		expect(17);
+    expect(17);
 
-		equal( $.reel.instances.length, 0, '`$.reel.instances` is initially empty');
-		equal( typeof $.reel.instances, 'object', 'And it is a jQuery object');
+    equal( $.reel.instances.length, 0, '`$.reel.instances` is initially empty');
+    equal( typeof $.reel.instances, 'object', 'And it is a jQuery object');
 
-		// Try one instance
-		equal( $('#image').reel().length, 1, 'One instance initiated');
-		equal( $.reel.instances.length, 1, '... correct length of `$.reel.instances` jQuery');
-		equal( typeof $.reel.instances.eq(0), 'object', '... it is an object (jQuery)');
-		equal( typeof $.reel.instances[0], 'object', '... it is an object (jQuery)');
-		equal( $.reel.instances.attr('id'), 'image', '... it is our image (ID comparison)');
+    // Try one instance
+    equal( $('#image').reel().length, 1, 'One instance initiated');
+    equal( $.reel.instances.length, 1, '... correct length of `$.reel.instances` jQuery');
+    equal( typeof $.reel.instances.eq(0), 'object', '... it is an object (jQuery)');
+    equal( typeof $.reel.instances[0], 'object', '... it is an object (jQuery)');
+    equal( $.reel.instances.attr('id'), 'image', '... it is our image (ID comparison)');
 
-		// And tear it down
-		$('#image').trigger('teardown');
-		equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
+    // And tear it down
+    $('#image').trigger('teardown');
+    equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
 
-		// Try two instances setup+teardown
-		equal( $('#image, #image2').reel().length, 2, 'Two instances initiated');
-		equal( $.reel.instances.length, 2, '... correct length of `$.reel.instances` jQuery');
-		equal( $.reel.instances.eq(0).attr('id'), 'image', '... and it is our image (ID comparison)');
-		equal( $.reel.instances.eq(1).attr('id'), 'image2', '... and it is our image (ID comparison)');
+    // Try two instances setup+teardown
+    equal( $('#image, #image2').reel().length, 2, 'Two instances initiated');
+    equal( $.reel.instances.length, 2, '... correct length of `$.reel.instances` jQuery');
+    equal( $.reel.instances.eq(0).attr('id'), 'image', '... and it is our image (ID comparison)');
+    equal( $.reel.instances.eq(1).attr('id'), 'image2', '... and it is our image (ID comparison)');
 
-		// One more added
-		equal( $('.no_id:first').reel().length, 1, 'One more instance initiated');
-		equal( $.reel.instances.length, 3, '... correct length of `$.reel.instances` jQuery');
-		ok( $.reel.instances.eq(2).parent().hasClass('no_id'), '... it is our image (class name comparison)');
+    // One more added
+    equal( $('.no_id:first').reel().length, 1, 'One more instance initiated');
+    equal( $.reel.instances.length, 3, '... correct length of `$.reel.instances` jQuery');
+    ok( $.reel.instances.eq(2).parent().hasClass('no_id'), '... it is our image (class name comparison)');
 
-		// First, teardown just one from the first two
-		$('#image').trigger('teardown');
-		equal( $.reel.instances.length, 2, '... and gets correctly cleaned from `$.reel.instances`');
+    // First, teardown just one from the first two
+    $('#image').trigger('teardown');
+    equal( $.reel.instances.length, 2, '... and gets correctly cleaned from `$.reel.instances`');
 
-		// And then, teardown the rest
-		$('#image2, .no_id:first .jquery-reel').trigger('teardown');
-		equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
+    // And then, teardown the rest
+    $('#image2, .no_id:first .jquery-reel').trigger('teardown');
+    equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
 
   });
 
-	test( 'Pseudo-testing for the "leader" - the oldest living instance on page', function()
-	{
+  test( 'Pseudo-testing for the "leader" - the oldest living instance on page', function()
+  {
 
-		$('#image2, #image').reel();
-		$('#image_width_only, .no_id:first').reel();
+    $('#image2, #image').reel();
+    $('#image_width_only, .no_id:first').reel();
 
-		equal( $.reel.instances.length, 4, 'We\'ve just setup 4 instances (2 + 2)');
-		equal( $.reel.instances.first().attr('id'), 'image', '`.first()` returns the oldest (by ID)');
-		equal( $.reel.instances[0].id, 'image', '`[0] too`');
+    equal( $.reel.instances.length, 4, 'We\'ve just setup 4 instances (2 + 2)');
+    equal( $.reel.instances.first().attr('id'), 'image', '`.first()` returns the oldest (by ID)');
+    equal( $.reel.instances[0].id, 'image', '`[0] too`');
 
-	});
+  });
 
 })(jQuery);

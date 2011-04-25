@@ -8,7 +8,7 @@
   }});
 
   asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
-		expect($.browser.msie ? 16 : 12);
+    expect($.browser.msie ? 16 : 12);
     var
       selector= '#image',
       $reel= $(selector).reel({
@@ -54,7 +54,7 @@
   });
 
   asyncTest( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
-		expect($.browser.msie ? 12 : 9);
+    expect($.browser.msie ? 12 : 9);
     var
       selector= '#image',
       $reel= $(selector).reel({
@@ -96,7 +96,7 @@
   });
 
   asyncTest( 'Multi-row: Immune to `backwards` value', function(){
-		expect(6);
+    expect(6);
     var
       selector= '#image',
       $reel= $(selector).reel({

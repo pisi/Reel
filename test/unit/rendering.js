@@ -13,12 +13,12 @@
       $reel_with_id= $('#image').reel(),
       $reel_without_id= $('.no_id:first').reel()
 
-		// Given ID attribute
-		equal( $reel_with_id.attr('id'), 'image');
+    // Given ID attribute
+    equal( $reel_with_id.attr('id'), 'image');
 
-		// The generated ID consists of "jquery-reel-" followed by a timestamp
-		equal( $reel_without_id.attr('id').substr(0, 12), 'jquery-reel-');
-		equal( Math.floor(+$reel_without_id.attr('id').substr(12) / 10000), Math.floor(+new Date() / 10000));
+    // The generated ID consists of "jquery-reel-" followed by a timestamp
+    equal( $reel_without_id.attr('id').substr(0, 12), 'jquery-reel-');
+    equal( Math.floor(+$reel_without_id.attr('id').substr(12) / 10000), Math.floor(+new Date() / 10000));
     start();
   });
 

@@ -15,8 +15,7 @@ h1
 .more a
 { font-size: 2em; display: block; }
 .more
-{ background: #fff url(tip.png) no-repeat right;
-	padding: 10px 10px; margin: 2em -10px; }
+{ background: #fff url(tip.png) no-repeat right; padding: 10px 10px; margin: 2em -10px; }
 xmp, em
 { background: #494949; color: #fff; font: 0.75em Monaco, courier; }
 xmp
