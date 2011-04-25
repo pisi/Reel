@@ -105,7 +105,7 @@
 
 	asyncTest( 'Running instances have their overall running cost (in ms) exposed as `$.reel.cost`', function()
 	{
-		expect(1);
+		expect(4);
 
 		$('#image').reel({ speed: 1 });
 
@@ -114,16 +114,17 @@
 				cost_of_one
 
 			ok( is('Number', cost_of_one= $.reel.cost), 'Number `$.reel.cost`')
-			ok( cost_of_one > 0, 'Non-zero cost of one instance ' + cost_of_one + ' ms)' )
+			ok( cost_of_one >= 0, 'Non-zero cost of one instance (' + cost_of_one + ' ms)' )
 
 			$('#image2').reel({ speed: 2 });
+			$('#stitched_looping').reel({ speed: 2 });
 
 			setTimeout(function(){
 				var
-					cost_of_two= $.reel.cost
+					cost_of_three= $.reel.cost
 
-				ok( cost_of_two > 0, 'Non-zero cost of two instances (' + cost_of_two + ' ms)' )
-				ok( cost_of_two > cost_of_one, 'Higher cost of two then of one instance' )
+				ok( cost_of_three > 0, 'Non-zero cost of two instances (' + cost_of_three + ' ms)' )
+				ok( cost_of_three > cost_of_one, 'Running cost of three instances is higher then of one' )
 				start();
 
 			}, 100);
