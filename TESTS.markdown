@@ -69,6 +69,9 @@ Mobile-class
 Unles noted otherwise mobile browsers are tested using their respective emulator software running on MacOSX 10.5.8.
 
 ### Safari
+* `Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X) AppleWebKit/533.17.9 Version/5.0.2 Mobile/8C148 Safari/6533.18.5`
+  * **OK** -- Unit
+  * **OK** -- Interaction
 * `Mozilla/5.0 (iPhone Simulator; U; CPU iPhone OS 3_0) AppleWebKit/528.18 Version/4.0 Mobile/7A341 Safari/528.16`
   * **OK** -- Unit
   * **OK** -- Interaction
