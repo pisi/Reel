@@ -197,6 +197,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_reeling_, false);
             set(_brake_, opt.brake);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
+            set(_opening_ticks_, 0);
             set(_backup_, {
               src: src,
               style: styles || __
