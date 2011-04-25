@@ -14,7 +14,7 @@ jQuery Reel 1.1.2
 * Browser and operating system agnostic. It's your choice.
 * No browser extensions needed. No Flash, nothing. It's just an image...
 * **NEW** Even more transparent, eventful & well-tested tiny code base.
-* Emerging tools for Drupal, Dreamweaver , Poser or Python by the community!
+* Emerging tools for Drupal, Dreamweaver, Poser or Python by the community!
 
 Demo
 ----
