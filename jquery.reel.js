@@ -229,7 +229,7 @@ jQuery.reel || (function($, window, document, undefined){
             $('img:'+_hidden_, t.parent()).remove();
             remove_instance(t);
             // replace stage with the original
-            $(get(_stage_)).replaceWith($original);
+            $(get(_stage_)).before($original).detach();
             no_bias();
             pool
             .unbind(_tick_, on.tick)
