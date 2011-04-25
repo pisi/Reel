@@ -74,12 +74,17 @@
 
 		var
 			one_second= 1000,
-			lazy_tempo= tempo / ($.reel.lazy? $.reel.def.laziness : 1)
+			lazy_tempo= tempo / ($.reel.lazy? $.reel.def.laziness : 1),
+			tolerate= 10, // percents
+			tolerance= {
+				lo: 1 - tolerate / 100,
+				hi: 1 + tolerate / 100
+			}
 
 		// We also try both animated and non-animated
 		$.each([0, 1], function(ixx, speed){
 
-			asyncTest( 'Ticker timing precision on `tempo: ' + lazy_tempo + '` - measuring 1 second at `speed: ' + speed + '`...', function()
+			asyncTest( 'Measuring 1 second timing accuracy when running ' + (speed ? 'animated' : 'non-animated') + ' instance at `tempo: ' + lazy_tempo + '`', function()
 			{
 				expect(2);
 
@@ -94,9 +99,10 @@
 				});
 
 				setTimeout(function(duration){
+					var filled;
 					duration= +new Date() - bang;
-					ok( duration < 1.2 * one_second, 'Duration of what wannabe one second within 20 % tolerance with slip ' + (duration - one_second) + ' ms');
-					ok( ticks < Math.max(1, 1.2 * lazy_tempo), 'Counted ticks within 20 % tolerance with slip ' + (tempo - ticks) + '.');
+					ok( (filled= duration / one_second) >= tolerance.lo && filled <= tolerance.hi, duration + ' ms is within the ' + tolerate + ' % tolerance.');
+					ok( true, 'Received ' + ticks + ' ticks');
 					start();
 				}, one_second);
 			});
