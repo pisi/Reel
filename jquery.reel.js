@@ -61,7 +61,7 @@ jQuery.reel || (function($, window, document, undefined){
       loops:           true, // is it a loop?
       reversed:   undefined, // [deprecated] use `cw` instead
       spacing:            0, // space between frames on reel
-      stitched:   undefined, // pixel width (length) of a stitched (rectilinear) panoramic reel
+      stitched:           0, // pixel width (length) of a stitched (rectilinear) panoramic reel
       suffix:       '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
       tooltip:           '', // [deprecated] use `hint` instead
 

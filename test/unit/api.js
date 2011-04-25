@@ -45,7 +45,7 @@
     ok( $.reel.def.saves === undefined,              '[removed] allow save as?' );
     ok( $.reel.def.sensitivity === undefined,        '[removed] interaction sensitivity' );
     equal( $.reel.def.spacing,                    0, 'space between frames on reel' );
-    equal( $.reel.def.stitched,           undefined, 'pixel width (length) of a stitched (rectilinear) panoramic reel' );
+    equal( $.reel.def.stitched,                   0, 'pixel width (length) of a stitched (rectilinear) panoramic reel' );
     equal( $.reel.def.suffix,               '-reel', 'sprite filename suffix (A.jpg\'s sprite is A-reel.jpg by default)' );
     equal( $.reel.def.tooltip,                   '', '[deprecated] use `hint` instead' );
 
