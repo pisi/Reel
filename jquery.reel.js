@@ -156,7 +156,7 @@ jQuery.reel || (function($, window, document, undefined){
             if (t.hasClass(klass)) return cleanup.call(e);
             var
               src= t.attr(_src_),
-              id= t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_),
+              id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
               styles= t.attr('style'),
               images= opt.images,
               stitched= opt.stitched,
