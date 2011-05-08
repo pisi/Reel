@@ -197,6 +197,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_reeling_, false);
             set(_brake_, opt.brake);
+            set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
             set(_opening_ticks_, 0);
             set(_backup_, {
@@ -525,7 +526,7 @@ jQuery.reel || (function($, window, document, undefined){
               was= get(_frame_),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
               orbital= opt.orbital,
-              center= set(_center_, orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
+              center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
