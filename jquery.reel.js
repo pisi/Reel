@@ -24,7 +24,7 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1.3
+ * Version: 1.1.3-devel
  * Updated: 2011-05-08
  *
  * Requires jQuery 1.4.2 or higher
@@ -47,7 +47,7 @@
 jQuery.reel || (function($, window, document, undefined){
 
   $.reel= {
-    version: '1.1.3',
+    version: '1.1.3-devel',
 
     // Options defaults
     def: {
