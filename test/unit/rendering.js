@@ -55,12 +55,11 @@
       var
         size= samples[index],
         $reel= $('#image').reel({ indicator: size }),
-        $indicator= $('#image-reel .jquery-reel-indicator'),
-        indicator_offset_top= parseInt($indicator.css('top'))
+        $indicator= $('#image-reel .jquery-reel-indicator')
 
       $reel.bind('loaded', function(e){
         index++;
-        equal( indicator_offset_top, 126 - size );
+        equiv( $indicator.css('top'), 126 - size );
         if (index == samples.length){
           start();
         }else{
@@ -81,12 +80,10 @@
         $('#image').trigger('teardown')
         var
           $reel= $('#image').reel({ indicator: size }),
-          $indicator= $('#image-reel .jquery-reel-indicator'),
-          indicator_width= parseInt($indicator.css('width')),
-          indicator_height= parseInt($indicator.css('height'));
+          $indicator= $('#image-reel .jquery-reel-indicator')
 
-        equal( indicator_width, size );
-        equal( indicator_height, size );
+        equiv( $indicator.css('width'), size );
+        equiv( $indicator.css('height'), size );
       });
     }
   });
@@ -98,7 +95,7 @@
       $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
       $indicator= $('#image-reel .jquery-reel-indicator');
 
-    equal( $indicator.css('left'), '0px' );
+    equiv( $indicator.css('left'), '0px' );
     start();
   });
 
@@ -116,7 +113,7 @@
     */
     $reel.trigger('fractionChange', [0.9999]);
 
-    equal( $indicator.css('left'), (width - size) + 'px' );
+    equiv( $indicator.css('left'), (width - size) + 'px' );
     start();
   });
 
@@ -148,8 +145,8 @@
       background: '#fff',
       opacity: 0.5
     })
-    equal( $indicator.css('backgroundColor'), $.browser.opera ? '#ffffff' : $.browser.msie ? '#fff' : 'rgb(255, 255, 255)', 'Custom background' )
-    equal( $indicator.css('opacity'), '0.5', 'Custom opacity' )
+    equiv( $indicator.css('backgroundColor'), '#ffffff', 'Custom background' );
+    equiv( $indicator.css('opacity'), '0.5', 'Custom opacity' );
     start();
   });
 

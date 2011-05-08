@@ -21,18 +21,18 @@
     $pano.trigger('frameChange', 1);
     if ($.browser.msie){
       // MSIE returns undefined backgroundPosition, so we need to check individual ones
-      equal($pano.css('backgroundPositionX'), '0px', 'Frame 1 (min, X)');
-      equal($pano.css('backgroundPositionY'), '0px', 'Frame 1 (min, Y)');
+      equiv($pano.css('backgroundPositionX'), '0px', 'Frame 1 (min, X)');
+      equiv($pano.css('backgroundPositionY'), '0px', 'Frame 1 (min, Y)');
     }else{
-      equal($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
+      equiv($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
     }
     $pano.trigger('frameChange', 36);
     if ($.browser.msie){
       // MSIE returns undefined backgroundPosition, so we need to check individual ones
-      equal($pano.css('backgroundPositionX'), -travel+'px', 'Frame 36 (max, X)');
-      equal($pano.css('backgroundPositionY'), '0px', 'Frame 36 (max, Y)');
+      equiv($pano.css('backgroundPositionX'), -travel+'px', 'Frame 36 (max, X)');
+      equiv($pano.css('backgroundPositionY'), '0px', 'Frame 36 (max, Y)');
     }else{
-      equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Frame 36 (max)');
+      equiv($pano.css('backgroundPosition'), -travel+'px 0px', 'Frame 36 (max)');
     }
   });
 
@@ -49,18 +49,18 @@
     $pano.trigger('frameChange', 1);
     if ($.browser.msie){
       // MSIE returns undefined backgroundPosition, so we need to check individual ones
-      equal($pano.css('backgroundPositionX'), '0px', 'Looping - frame 1 (min, X)');
-      equal($pano.css('backgroundPositionY'), '0px', 'Looping - frame 1 (min, Y)');
+      equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 1 (min, X)');
+      equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 1 (min, Y)');
     }else{
-      equal($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
+      equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
     }
     $pano.trigger('frameChange', 36);
     if ($.browser.msie){
       // MSIE returns undefined backgroundPosition, so we need to check individual ones
-      equal($pano.css('backgroundPositionX'), -travel+'px', 'Looping - frame 36 (max, X)');
-      equal($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');
+      equiv($pano.css('backgroundPositionX'), -travel+'px', 'Looping - frame 36 (max, X)');
+      equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');
     }else{
-      equal($pano.css('backgroundPosition'), -travel+'px 0px', 'Looping - frame 36 (max)');
+      equiv($pano.css('backgroundPosition'), -travel+'px 0px', 'Looping - frame 36 (max)');
     }
   });
 

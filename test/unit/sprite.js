@@ -44,10 +44,10 @@
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
       if ($.browser.msie){
         // MSIE returns undefined backgroundPosition, so we need to check individual ones
-        equal( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
-        equal( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
       }else{
-        equal( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
       }
     });
     start();
@@ -86,10 +86,10 @@
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
       if ($.browser.msie){
         // MSIE returns undefined backgroundPosition, so we need to check individual ones
-        equal( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
-        equal( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
       }else{
-        equal( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
       }
     });
     start();
