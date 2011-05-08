@@ -1,10 +1,10 @@
 Changelog
 =========
 
-Edge
-----
+Version 1.1.3
+-------------
 
-* Now fully compatible with new jQuery 1.6 (GH-32).
+* Promptly resolves sudden incompatibility with new jQuery 1.6 (GH-32).
 * Enhanced test for by testing for CSS value equivalency rather for string equality (GH-33).
 * `leader` tests Opera bug fixed (GH-34). 
 
