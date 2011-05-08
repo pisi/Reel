@@ -696,7 +696,7 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.instances= $();
   $.reel.cost= 0;
 
-  function leader(key){ return $.reel.instances.first().data(key) }
+  function leader(key){ return $.reel.instances.length ? $.reel.instances.first().data(key) : null }
   $.reel.leader= leader;
 
   function add_instance($instance){ return ($.reel.instances.push($instance[0])) && $instance }
