@@ -173,8 +173,8 @@ jQuery.reel || (function($, window, document, undefined){
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class'),
               overlay_css= { position: 'relative', width: size.x, height: size.y },
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), className: classes+___+overlay_klass, css: overlay_css }),
-              $instance= t.wrap($overlay).attr({ className: klass }).css(style).bind(on),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }),
+              $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
               instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_classes_, classes);
@@ -253,7 +253,7 @@ jQuery.reel || (function($, window, document, undefined){
               loaded= 0,
               id= t.attr('id'),
               $overlay= t.parent(),
-              $hi= $(_div_tag_, { className: hi_klass,
+              $hi= $(_div_tag_, { 'class': hi_klass,
                 css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
               }).appendTo($overlay),
               area= set(_area_, $(opt.area || $hi ))
@@ -280,7 +280,7 @@ jQuery.reel || (function($, window, document, undefined){
             }
             (opt.hint) && area.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, {
-              className: monitor_klass,
+              'class': monitor_klass,
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
             opt.indicator && $overlay.append(indicator('x'));
@@ -301,7 +301,7 @@ jQuery.reel || (function($, window, document, undefined){
               img_frames= img_tag.frames= preload.length,
               img_preloaded= img_tag.preloaded= 0
             t.trigger('stop');
-            $overlay.append($preloader= $(_div_tag_, { className: preloader_klass,
+            $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass,
               css: {
                 position: _absolute_,
                 left: 0,
@@ -622,7 +622,7 @@ jQuery.reel || (function($, window, document, undefined){
         $preloader,
         indicator= function(axis){
           return $(_div_tag_, {
-            className: [indicator_klass, axis].join(___),
+            'class': [indicator_klass, axis].join(___),
             css: {
               width: opt.indicator,
               height: opt.indicator,
