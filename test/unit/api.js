@@ -118,7 +118,7 @@
     equal( $.reel.instances.length, 2, '... and gets correctly cleaned from `$.reel.instances`');
 
     // And then, teardown the rest
-    $('#image2, .no_id:first .jquery-reel').trigger('teardown');
+    $('.jquery-reel').trigger('teardown');
     equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
 
   });
@@ -127,7 +127,7 @@
   {
 
     $('#image2, #image').reel();
-    $('#image_width_only, .no_id:first').reel();
+    $('#image_width_only, .no_id').reel();
 
     equal( $.reel.instances.length, 4, 'We\'ve just setup 4 instances (2 + 2)');
     equal( $.reel.instances.first().attr('id'), 'image', '`.first()` returns the oldest (by ID)');
