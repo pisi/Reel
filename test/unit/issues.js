@@ -145,6 +145,48 @@
       ok( typeof stage_pool === 'undefined', 'No leaked `stage_pool` accessible in the global scope');
       start();
     }, 100)
-  })
+  });
+
+  asyncTest( 'GH-42 Incorrect starting frame', function(){
+    /* Github issue 42 bugfix
+     * http://github.com/pisi/Reel/issues/#issue/42
+     */
+    var
+      frames = 35
+
+    expect( frames );
+
+    tryout( frames );
+
+    function tryout( frame ){
+      if ( frame > 0 ){
+        $('#image')
+          .reel({
+            frames: frames,
+            frame: frame,
+            cw: true,
+            path: 'samples/mini/',
+            images: set_of_images( frames )
+          })
+          .bind('loaded', function(){
+            $( this ).trigger('teardown');
+            equal( $( this ).data('frame'), frame );
+            tryout( frame - 1 );
+          });
+        console.log(frame);
+      }else{
+        start();
+      }
+    }
+    function set_of_images( frames ){
+      var set = []
+      while ( set.length < frames ){
+        var name= [ +( set[set.length - 1] || '0' ).match(/[0-9]+/)[0] + 1 , '.jpg' ].join('')
+        while ( name.length < 7 ) name= '0' + name;
+        set.push( name );
+      }
+      return set;
+    }
+  });
 
 })(jQuery);
