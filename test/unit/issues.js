@@ -145,6 +145,28 @@
       ok( typeof stage_pool === 'undefined', 'No leaked `stage_pool` accessible in the global scope');
       start();
     }, 100)
-  })
+  });
+
+
+  asyncTest( 'Teardown doesn\'t propagate the cloned original image down the chain', function(){
+    /*
+     * When Reel instance is torn down and `.reel()` is called again in the same chain,
+     * the instance isn't properly initialized.
+     * The cloned-back original `IMG` tag doesn't propagate as a proper target
+     * for subsequent `.reel()` calls. These don't fail (as they are most probably
+     * performed upon the old now detached DOM node. The extra selector evaluation
+     * is therefore required in order to further manipulate the node.
+     */
+    expect( 2 );
+
+    $('#image').reel();
+
+    setTimeout( function(){
+      $('#image').trigger('teardown').reel();
+      ok( $('#image').is('.jquery-reel'), 'IMG tag is flagged as a Reel instance');
+      ok( $('#image').parent().is('.jquery-reel-overlay#image-reel'), 'and wrapped in overlay DIV');
+      start();
+    }, 500 );
+  });
 
 })(jQuery);
