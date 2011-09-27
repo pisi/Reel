@@ -159,6 +159,7 @@ jQuery.reel || (function($, window, document, undefined){
               src= t.attr(_src_),
               id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
               styles= t.attr('style'),
+              data= $.extend({}, t.data()),
               images= opt.images,
               stitched= opt.stitched,
               loops= opt.loops,
@@ -202,7 +203,9 @@ jQuery.reel || (function($, window, document, undefined){
             set(_opening_ticks_, 0);
             set(_backup_, {
               src: src,
-              style: styles || __
+              classes: classes,
+              style: styles || __,
+              data: data
             });
             pool.bind(_tick_, on.tick);
             cleanup.call(e);
