@@ -219,17 +219,11 @@ jQuery.reel || (function($, window, document, undefined){
             // get rid of Reel's own events
             t.unbind(ns).unbind(on);
             var
-              events= t.data('events'),
               // clone & restore the original
               $original= t.clone()
               .attr(t.data(_backup_))
               .css({ background: 'transparent' })
               .removeClass(klass).addClass(get(_classes_));
-            // clone original events (inspired by Brandon Aaron's copyEvents plugin)
-            for (var type in events) $.each(events[type], function(ix, handler){
-              // for this we need the 1.4.2+ version
-              $original.bind(type+'.'+handler.namespace, handler.handler, handler.data);
-            });
             $('img:'+_hidden_, t.parent()).remove();
             remove_instance(t);
             // replace stage with the original
