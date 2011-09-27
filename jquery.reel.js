@@ -221,6 +221,7 @@ jQuery.reel || (function($, window, document, undefined){
               $original= t.clone()
               .css({ background: 'transparent' })
             $('img:'+_hidden_, t.parent()).remove();
+              backup= t.data(_backup_)
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
               src: backup.src,
