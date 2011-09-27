@@ -268,7 +268,7 @@ jQuery.reel || (function($, window, document, undefined){
             }else{
               area
                 .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-                .bind(_mousewheel_, function(e, delta){ t.trigger('wheel', [delta]); return false })
+                .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
                 .bind(_dblclick_, function(e){ t.trigger('play') })
                 .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ t.trigger('down', [e.clientX, e.clientY]); return false })
                 .bind(opt.clickfree ? _mouseleave_ : '', function(e){ t.trigger('up'); return false })
@@ -492,7 +492,6 @@ jQuery.reel || (function($, window, document, undefined){
           - detects motion direction
           - nullifies the velocity
           */
-            if (!opt.wheelable) return cleanup.call(e);
             var
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= negative_when(delta, distance > 0),
