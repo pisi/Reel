@@ -157,14 +157,17 @@
      * performed upon the old now detached DOM node. The extra selector evaluation
      * is therefore required in order to further manipulate the node.
      */
-    expect( 2 );
+    expect( 3 );
 
-    $('#image').reel();
+    $('#image').reel().click(function(){
+      ok( true, 'Event binding is preserved');
+    });
 
     setTimeout( function(){
       $('#image').trigger('teardown').reel();
       ok( $('#image').is('.jquery-reel'), 'IMG tag is flagged as a Reel instance');
       ok( $('#image').parent().is('.jquery-reel-overlay#image-reel'), 'and wrapped in overlay DIV');
+      $('#image').click();
       start();
     }, 500 );
   });
