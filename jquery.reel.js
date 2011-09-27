@@ -220,13 +220,13 @@ jQuery.reel || (function($, window, document, undefined){
               // clone & restore the original
               $original= t.clone()
               .css({ background: 'transparent' })
-            $('img:'+_hidden_, t.parent()).remove();
               backup= t.data(_backup_)
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
               src: backup.src,
               style: backup.style
             }).removeClass(klass);
+            t.data(backup.data).siblings().remove();
             remove_instance(t);
             // replace stage with the original
             $(get(_stage_)).before($original).detach();
