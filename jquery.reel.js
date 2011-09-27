@@ -216,15 +216,15 @@ jQuery.reel || (function($, window, document, undefined){
           - unbinds events, erases all state data
           - reconstructs the original DOM element
           */
-            // get rid of Reel's own events
-            t.unbind(ns).unbind(on);
             var
               // clone & restore the original
               $original= t.clone()
               .attr(t.data(_backup_))
               .css({ background: 'transparent' })
-              .removeClass(klass).addClass(get(_classes_));
             $('img:'+_hidden_, t.parent()).remove();
+            t.unbind(ns).unbind(on).attr({
+             'class': backup.classes,
+            }).removeClass(klass);
             remove_instance(t);
             // replace stage with the original
             $(get(_stage_)).before($original).detach();
