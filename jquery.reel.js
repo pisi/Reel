@@ -217,9 +217,6 @@ jQuery.reel || (function($, window, document, undefined){
           - reconstructs the original DOM element
           */
             var
-              // clone & restore the original
-              $original= t.clone()
-              .css({ background: 'transparent' })
               backup= t.data(_backup_)
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
@@ -227,9 +224,8 @@ jQuery.reel || (function($, window, document, undefined){
               style: backup.style
             }).removeClass(klass);
             t.data(backup.data).siblings().remove();
+            t.unwrap();
             remove_instance(t);
-            // replace stage with the original
-            $(get(_stage_)).before($original).detach();
             no_bias();
             pool
             .unbind(_tick_, on.tick)
