@@ -535,7 +535,7 @@ jQuery.reel || (function($, window, document, undefined){
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
-            if (frame == was && frame != 1) return cleanup.call(e);
+            if (opt.rows <= 1 && frame == was && frame != 1) return cleanup.call(e);
             t.trigger(opt.rows > 1 ? 'rowChange' : 'frameChange');
             cleanup.call(e);
           },
