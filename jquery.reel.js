@@ -517,8 +517,8 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
-              was= get(_frame_),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
+              was= set(__frame_, get(_frame_)),
               orbital= opt.orbital,
               center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
             if (!opt.loops && opt.rebound) var
@@ -546,8 +546,10 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               frame= floor(get(_fraction_) / get(_bit_)) + 1,
+              was= get(__frame_),
               row= set(_row_, min_max(0, 1, lofi(row != undefined ? (row-1) / (opt.rows-1) : get(_row_)))),
               frame= set(_frame_, frame + (opt.rows <= 1 ? 0 : round(row * (opt.rows - 1)) * opt.frames))
+            if (frame == was && frame != 1) return cleanup.call(e);
             cleanup.call(e);
             t.trigger('frameChange');
           },
@@ -732,9 +734,9 @@ jQuery.reel || (function($, window, document, undefined){
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _center_= 'center',
     _classes_= 'classes', _clicked_= 'clicked', _clicked_location_= 'clicked_location',
     _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row', _cwish_= 'cwish', _dimensions_= 'dimensions',
-    _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image',
-    _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution',
-    _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
+    _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame', _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden',
+    _image_= 'image', _opening_ticks_= 'opening_ticks', _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling',
+    _revolution_= 'revolution', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _steps_= 'steps', _stitched_= 'stitched', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped',
     _tempo_= 'tempo', _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
