@@ -518,7 +518,6 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
-              was= set(__frame_, get(_frame_)),
               orbital= opt.orbital,
               center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
             if (!opt.loops && opt.rebound) var
@@ -535,7 +534,6 @@ jQuery.reel || (function($, window, document, undefined){
               ytravel= get(_dimensions_).y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
-            if (opt.rows <= 1 && frame == was && frame != 1) return cleanup.call(e);
             t.trigger(opt.rows > 1 ? 'rowChange' : 'frameChange');
             cleanup.call(e);
           },
@@ -546,10 +544,8 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               frame= (get(_fraction_) / get(_bit_)) + 1,
-              was= get(__frame_),
               row= set(_row_, min_max(0, 1, lofi(row != undefined ? (row-1) / (opt.rows-1) : get(_row_)))),
               frame= set(_frame_, round(frame + (opt.rows <= 1 ? 0 : round(row * (opt.rows-1)) * opt.frames)))
-            if (frame == was && frame != 1) return cleanup.call(e);
             cleanup.call(e);
             t.trigger('frameChange');
           },
@@ -562,7 +558,8 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               fraction= !frame ? get(_fraction_) : set(_fraction_, lofi(get(_bit_) * (frame-1))),
-              frame= set(_frame_, round(frame ? frame : get(_frame_))),
+              was= get(__frame_),
+              frame= set(__frame_, set(_frame_, round(frame ? frame : get(_frame_)))),
               images= opt.images,
               footage= opt.footage,
               space= get(_dimensions_),
@@ -570,6 +567,7 @@ jQuery.reel || (function($, window, document, undefined){
             if (get(_vertical_)) var
               frame= opt.inversed ? footage + 1 - frame : frame,
               frame= frame + footage
+            if (frame != was)
             if (images.length){
               var
                 sprite= images[frame - 1]
