@@ -545,10 +545,10 @@ jQuery.reel || (function($, window, document, undefined){
           - shifts the stored frame to a desired row
           */
             var
-              frame= floor(get(_fraction_) / get(_bit_)) + 1,
+              frame= (get(_fraction_) / get(_bit_)) + 1,
               was= get(__frame_),
               row= set(_row_, min_max(0, 1, lofi(row != undefined ? (row-1) / (opt.rows-1) : get(_row_)))),
-              frame= set(_frame_, frame + (opt.rows <= 1 ? 0 : round(row * (opt.rows - 1)) * opt.frames))
+              frame= set(_frame_, floor(frame + (opt.rows <= 1 ? 0 : round(row * (opt.rows-1)) * opt.frames)))
             if (frame == was && frame != 1) return cleanup.call(e);
             cleanup.call(e);
             t.trigger('frameChange');
