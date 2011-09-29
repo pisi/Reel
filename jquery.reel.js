@@ -536,7 +536,8 @@ jQuery.reel || (function($, window, document, undefined){
             var
               frame= (get(_fraction_) / get(_bit_)) + 1,
               row= set(_row_, min_max(0, 1, lofi(row != undefined ? (row-1) / (opt.rows-1) : get(_row_)))),
-              frame= set(_frame_, round(frame + (opt.rows <= 1 ? 0 : round(row * (opt.rows-1)) * opt.frames)))
+              row_shift= min_max(0, opt.rows - 1, floor(row * (opt.rows))),
+              frame= set(_frame_, floor(frame + row_shift * opt.frames))
             cleanup.call(e);
             t.trigger('frameChange');
           },
