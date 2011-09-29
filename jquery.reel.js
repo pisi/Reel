@@ -244,7 +244,7 @@ jQuery.reel || (function($, window, document, undefined){
               space= get(_dimensions_),
               frames= get(_frames_),
               resolution= max(frames, get(_steps_)),
-              fraction= set(_fraction_, lofi(1 / resolution * ((opt.step || opt.frame) - 1))),
+              fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
               frame= set(_frame_, round(fraction * frames) + 1),
               loaded= 0,
               id= t.attr('id'),
@@ -339,7 +339,7 @@ jQuery.reel || (function($, window, document, undefined){
             var
               velocity= get(_velocity_)
             if (braking) var
-              braked= lofi(velocity - (get(_brake_) / leader(_tempo_) * braking)),
+              braked= velocity - (get(_brake_) / leader(_tempo_) * braking),
               done= velocity * braked <= 0 || velocity < abs(braked),
               velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? braked : (braking= operated= 0))
             $monitor.text(get(opt.monitor));
@@ -379,7 +379,7 @@ jQuery.reel || (function($, window, document, undefined){
               speed= opt.entry || opt.speed,
               step= speed / leader(_tempo_) * (opt.cw? -1:1),
               was= get(_fraction_),
-              fraction= set(_fraction_, lofi(was + step)),
+              fraction= set(_fraction_, was + step),
               ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
             t.trigger('fractionChange');
             cleanup.call(e);
@@ -477,7 +477,7 @@ jQuery.reel || (function($, window, document, undefined){
                   space_y= get(_dimensions_).y,
                   start= get(_clicked_row_),
                   lo= - start * space_y,
-                  row= set(_row_, lofi($.reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1)))
+                  row= set(_row_, $.reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1))
                 var
                   origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
                 t.trigger('fractionChange');
@@ -515,8 +515,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
-              fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
-              fraction= set(_fraction_, lofi(fraction)),
+              fraction= set(_fraction_, opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction)),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
               multirow= opt.rows > 1,
               orbital= opt.orbital,
@@ -535,7 +534,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               frame= (get(_fraction_) / get(_bit_)) + 1,
-              row= set(_row_, min_max(0, 1, lofi(row != undefined ? (row-1) / (opt.rows-1) : get(_row_)))),
+              row= set(_row_, min_max(0, 1, row != undefined ? (row-1) / (opt.rows-1) : get(_row_))),
               row_shift= min_max(0, opt.rows - 1, floor(row * (opt.rows))),
               frame= set(_frame_, floor(frame + row_shift * opt.frames))
             cleanup.call(e);
@@ -549,7 +548,7 @@ jQuery.reel || (function($, window, document, undefined){
           - adjusts indicator position
           */
             var
-              fraction= !frame ? get(_fraction_) : set(_fraction_, lofi(get(_bit_) * (frame-1))),
+              fraction= !frame ? get(_fraction_) : set(_fraction_, get(_bit_) * (frame-1)),
               was= get(__frame_),
               frame= set(__frame_, set(_frame_, round(frame ? frame : get(_frame_)))),
               images= opt.images,
@@ -758,7 +757,6 @@ jQuery.reel || (function($, window, document, undefined){
   function dot(string){ return '.' + string }
   function cdn(path){ return 'http://code.vostrel.cz/' + path }
   function url(location){ return 'url(' + location + ')' }
-  function lofi(number){ return +number.toFixed(4) }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
