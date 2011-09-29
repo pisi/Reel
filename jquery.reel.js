@@ -244,7 +244,7 @@ jQuery.reel || (function($, window, document, undefined){
               space= get(_dimensions_),
               frames= get(_frames_),
               resolution= max(frames, get(_steps_)),
-              fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
+              fraction= set(_fraction_, lofi(1 / resolution * ((opt.step || opt.frame) - 1))),
               frame= set(_frame_, round(fraction * frames) + 1),
               loaded= 0,
               id= t.attr('id'),
