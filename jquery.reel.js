@@ -518,13 +518,14 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction),
               fraction= set(_fraction_, lofi(fraction)),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
+              multirow= opt.rows > 1,
               orbital= opt.orbital,
               center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
             if (!opt.loops && opt.rebound) var
               edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
               bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
               backwards= bounce && set(_backwards_, !get(_backwards_))
-            t.trigger(opt.rows > 1 ? 'rowChange' : 'frameChange');
+            t.trigger(multirow ? 'rowChange' : 'frameChange');
             cleanup.call(e);
           },
           rowChange: function(e, row){
