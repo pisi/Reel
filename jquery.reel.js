@@ -97,6 +97,8 @@ jQuery.reel || (function($, window, document, undefined){
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
       vertical:       false, // switches orbital object movie to vertical mode
+
+      scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
       wheelable:       true  // mouse wheel interaction (allowed by default)
     }
     // [deprecated] options defaults may be gone anytime soon
@@ -251,6 +253,7 @@ jQuery.reel || (function($, window, document, undefined){
               $hi= $(_div_tag_, { 'class': hi_klass,
                 css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
               }).appendTo($overlay),
+              scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
               area= set(_area_, $(opt.area || $hi ))
             if ($.reel.touchy){
               // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
@@ -261,7 +264,7 @@ jQuery.reel || (function($, window, document, undefined){
               });
               area
                 .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
-                .bind(_touchmove_, function(e){ t.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return !(opt.rows > 1 || opt.orbital || get(_reeling_)) })
+                .bind(_touchmove_, function(e){ t.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
                 .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                 .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
             }else{

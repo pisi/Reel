@@ -6,6 +6,7 @@ Development (edge)
 
 * Non-`wheelable` Reels now allow scrolling of the page when wheeling
   above the Reel instance.
+* Option `scrollable` can disable page scrolling (if needed) on touch devices.
 
 
 Version 1.1.3
