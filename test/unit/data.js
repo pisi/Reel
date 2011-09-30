@@ -15,9 +15,7 @@
       if (key.match(/^jQuery\d+|events|handle$/)) return;
       count++
     });
-    // We add 1 as we will additionaly test for `"events"`,
-    // which we excluded from the counting as some don't report it completely
-    expect(count + 1);
+    expect(count);
 
     ok( is('Object', $reel.data('area')), '`area` Object (jQuery)');
     ok( is('Object', $reel.data('backup')), '`backup` Object');
@@ -49,9 +47,6 @@
     ok( is('Number', $reel.data('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.data('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.data('wheel_step')), '`wheel_step` Number');
-
-    // Events key used for cloning events on teardown
-    ok( is('Object', $reel.data('events')), '`events` Object');
 
   });
 
