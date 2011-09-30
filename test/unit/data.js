@@ -48,6 +48,7 @@
     ok( is('Boolean', $reel.data('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.data('wheel_step')), '`wheel_step` Number');
 
+    ok( is('Number', $reel.data('_frame')), '`_frame` Number');
   });
 
   test( 'Contents of attributes backup `.data("backup")`', function(){
