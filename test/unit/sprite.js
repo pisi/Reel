@@ -40,7 +40,7 @@
       }
     $.each(entries, function(ix,it){
       $reel.trigger('rowChange', Number(ix));
-      equal( $reel.data('row'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('row').toFixed(4), it[0], 'Row '+ix+': Interpolated row');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
       if ($.browser.msie){
         // MSIE returns undefined backgroundPosition, so we need to check individual ones

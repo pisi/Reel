@@ -27,7 +27,7 @@
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
         $reel.trigger('fractionChange', Number(ix));
-        equal( $reel.data('fraction'), it, 'Passed '+ix);
+        equal( $reel.data('fraction').toFixed(4), it, 'Passed '+ix);
       });
       start();
     });
@@ -50,7 +50,7 @@
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
         $reel.trigger('rowChange', Number(ix));
-        equal( $reel.data('row'), it, 'Fraction '+ix);
+        equal( $reel.data('row').toFixed(4), it, 'Fraction '+ix);
       });
       start();
     });
