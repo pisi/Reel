@@ -53,13 +53,13 @@ $(function ready(){
     });
     $('h3', $sample).click(click_it);
 
-    options.speed && $('<div/>', { className: 'control_events' })
+    options.speed && $('<div/>', { 'class': 'control_events' })
     .append($('<button/>', { text: '▶ play' }).click(function(){ $(target).trigger('play') }))
     .append($('<button/>', { text: '❙❙ pause' }).click(function(){ $(target).trigger('pause') }))
     .append($('<button/>', { text: '◼ stop' }).click(function(){ $(target).trigger('stop') }))
     .insertAfter(target);
 
-    $('<div/>', { className: 'hint', text: 'Click to activate this sample'}).appendTo($sample);
+    $('<div/>', { 'class': 'hint', text: 'Click to activate this sample'}).appendTo($sample);
 
     function click_it(e){
       var
