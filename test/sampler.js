@@ -72,6 +72,7 @@ $(function ready(){
 
       $sample[onoff ? 'addClass' : 'removeClass']('on');
       onoff && $(target).reel(options) || $(target).trigger('teardown');
+      onoff && console && console.log && console.log($(target), $(target).data());
       $.cookie('reel.test.sample', onoff ? $(target).selector : null);
       // $.cookie(onoff ? '')
       return false;
