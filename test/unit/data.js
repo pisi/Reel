@@ -25,7 +25,6 @@
     ok( is('Number', $reel.data('bit')), '`bit` Number');
     ok( is('Number', $reel.data('brake')), '`brake` Number');
     ok( is('Boolean', $reel.data('center')), '`center` Boolean');
-    ok( is('String', $reel.data('classes')), '`classes` String');
     ok( is('Number', $reel.data('cwish')), '`cwish` Number');
     ok( is('Object', $reel.data('dimensions')), '`dimensions` Object');
     ok( is('Number', $reel.data('fraction')), '`fraction` Number');
