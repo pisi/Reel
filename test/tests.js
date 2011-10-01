@@ -22,8 +22,11 @@
      * - the results summary line with duration
      * - user agent string (your browser name and its version(s))
      */
-    $.post('http://jquery.vostrel.cz/collect/reel/testrun/results', {
-      timestamp:  +new Date(),
+    var
+      timestamp= +new Date()
+
+    $.post('http://au:4567/collect/reel/testrun/results', {
+      timestamp:  timestamp,
       filter:     config.filters,
       count: {
         total:    total,
@@ -38,6 +41,7 @@
       results:    $('#qunit-testresult').html(),
       agent:      $('#qunit-userAgent').html()
     });
+    $('#result_link').attr('href', 'http://au:4567/view/reel/testrun/result/'+timestamp);
 
     function dump($collection){
       var collection = [];
