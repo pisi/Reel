@@ -548,7 +548,7 @@ function done() {
 		result.innerHTML = html;
 	}
 
-	QUnit.done( config.stats.bad, config.stats.all );
+	QUnit.done( config.stats.bad, config.stats.all, config );
 }
 
 function validTest( name ) {
