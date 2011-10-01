@@ -3,6 +3,12 @@
  */
 (function($){
 
-// All tests reside inside `unit/` folder
+
+  QUnit.done = function(failures, total, config) {
+    if (failures){
+      $('body').addClass('failure');
+    }
+  }
+
 
 })(jQuery);
