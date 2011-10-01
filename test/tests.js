@@ -23,9 +23,11 @@
      * - user agent string (your browser name and its version(s))
      */
     var
+      //server= 'http://au:4567',
+      server= 'http://jquery.vostrel.cz',
       timestamp= +new Date()
 
-    $.post('http://au:4567/collect/reel/testrun/results', {
+    $.post(server+'/collect/reel/testrun/results', {
       timestamp:  timestamp,
       filter:     config.filters,
       count: {
@@ -41,7 +43,7 @@
       results:    $('#qunit-testresult').html(),
       agent:      $('#qunit-userAgent').html()
     });
-    $('#result_link').attr('href', 'http://au:4567/view/reel/testrun/result/'+timestamp);
+    $('#result_link').attr('href', server+'/view/reel/testrun/result/'+timestamp);
 
     function dump($collection){
       var collection = [];
