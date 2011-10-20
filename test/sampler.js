@@ -33,6 +33,37 @@ $(function ready(){
     return stack
   }
 
+  $('.samples li').click(function(){
+    var
+      options= cut_out_object( $('.js', this).text() ),
+      css= cut_out_css_object( $('.css', this).text() )
+
+    options.attr= {
+      src     : $('.thumb', this).attr('src'),
+      width   : parseInt(css.width),
+      height  : parseInt(css.height)
+    }
+
+    $('#the_one').addClass('on')
+    $('#meta').html( $('.meta', this).text() )
+    $('#js').text( $('.js', this).text() )
+    $('#image')
+      .reel( options )
+  });
+
+  cut_out_object= function(string){
+    string= string.substr( string.indexOf('{') );
+    string= string.substr( 0, string.indexOf('}')+1 );
+    return eval('('+string+')')
+  }
+  cut_out_css_object= function(string){
+    string= string.substr( string.indexOf('{') );
+    string= string.substr( 0, string.indexOf('}')+1 );
+    string= string.replace(/\: /g, ': "');
+    string= string.replace(/\; \}/g, '" }');
+    string= string.replace(/\; /g, '", ');
+    return eval('('+string+')')
+  }
 
   /*
   This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
