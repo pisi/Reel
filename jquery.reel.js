@@ -120,8 +120,8 @@ jQuery.reel || (function($, window, document, undefined){
           if (!src || src == __ || !width || !height) return;
           pass.push($this);
         });
-        tags.filter(_div_ + dot(klass)).each(function(ix){
-          pass.push($(this));
+        tags.filter(dot(klass)).each(function(ix){
+          pass.push($(this).trigger('teardown'));
         });
         return $(pass);
       })(this),
