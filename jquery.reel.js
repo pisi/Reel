@@ -180,6 +180,7 @@ jQuery.reel || (function($, window, document, undefined){
               $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
               instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
+            set(_images_, []);
             set(_frame_, opt.frame);
             set(_spacing_, opt.spacing);
             set(_dimensions_, size);
@@ -294,6 +295,7 @@ jQuery.reel || (function($, window, document, undefined){
               image= get(_image_),
               images= opt.images,
               preload= !images.length ? [image] : new Array().concat(images),
+              uris= [],
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
               img_preloaded= img_tag.preloaded= 0
@@ -327,9 +329,11 @@ jQuery.reel || (function($, window, document, undefined){
                   }
                 });
               $overlay.append($img);
+              uris.push(uri);
               // The actual loading of the image is done asynchronously
               setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
             }
+            set(_images_, uris);
           },
           tick: function(e){
           /*
@@ -734,8 +738,8 @@ jQuery.reel || (function($, window, document, undefined){
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
-    _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _opening_ticks_= 'opening_ticks', _lo_= 'lo',
-    _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
+    _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
+    _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _tempo_= 'tempo', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',

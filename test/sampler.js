@@ -33,6 +33,18 @@ $(function ready(){
     return stack
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
   /*
   Following code is NOT needed to initiate the Reel. It is here for switching Reel samples
   on and off. It essentially is a shortcut for `$(target).reel(options)`
@@ -60,10 +72,35 @@ $(function ready(){
     $('#html').text( $('.html', this).text().trim() );
     $('#css').text( $('.css', this).text().trim() );
     $('#js').text( $('.js', this).text().trim() );
-    $('#image').reel( options );
+    $('#image')
+      .reel( options )
+      .bind('loaded', function(){
+        var
+          images= $(this).data('images')
+
+        $('#images').prev('h4').find('.count').text( 1 +images.length );
+        $('#images').empty().append( image($(this).data('backup').src, 'The `<img src>` Original ') );
+        console.log(images)
+        if (images.length == 1){
+          $('#images').append( image(images[0], 'And The Sprite ') );
+        }else{
+          $.each( images, function(ix){
+            $('#images').append( image(this, 'Sequence frame '+(ix+1)+' ') );
+          })
+        }
+      });
 
     $.cookie('reel.test.sample', $(this).attr('id'));
   });
+
+  image= function(uri, label){
+    var
+      $image= $('<div/>', { 'class': 'img' } ),
+      $label= $('<span>', { text: label }).appendTo($image),
+      $link= $('<a/>', { href: uri, text: ''+uri }).appendTo($image),
+      $img= $('<img/>', { src: uri }).appendTo($link)
+    return $image
+  }
 
   cut_out_object= function(string){
     string= string.substr( string.indexOf('{') );

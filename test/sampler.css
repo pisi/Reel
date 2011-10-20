@@ -9,11 +9,15 @@ a:hover{ text-decoration: none; }
 h1{ font-size: 2em; font-weight: normal; margin: 0; }
 h2{ display: inline; color: #999; font-size: 1.5em; font-weight: normal; }
 .sample h3{ color: black; font-size: 3em; margin: 0; font-weight: normal; }
-.sample #control_events{ margin: 10px 0 0 0; font-size: 0.9em; }
+.sample h4{ color: #666; font-size: 1em; margin: 5px 0 -4px 0; font-weight: normal; }
+.sample #control_events{ margin: 10px 0 0 0; }
 .sample #control_events button{ background: white; color: #2B81AF; text-decoration: underline; }
 .sample .credits{ font-size: .9em; color: black; }
-.sample pre{ font-size: .8em; margin: 15px 0; font-family: Monaco; padding: 0;
-  background: #aaa; padding: 5px 10px; }
+.sample pre{ font-size: .8em; margin: 0 0 15px 0; font-family: Monaco; padding: 0;
+  background: #666; padding: 15px; color: white; }
+.sample #images{ background: #666; padding: 20px; border: 6px solid #666; color: white; }
+.sample #images a{ color: #4BD1FF; }
+.sample #images img{ outline: 1px dashed white; margin: 3px 0 15px 0; display: block; max-width: 100%; background: white; }
 .footer{ clear: left; padding: 10px 0 0 0; color: #999; }
 .footer strong{ color: #333; }
 .sample .hint{ position: absolute; right: 20px; bottom: 20px; color: #666; text-decoration: underline; }
