@@ -412,22 +412,6 @@ $(function ready(){
   */
   $.reel.def.indicator= 5;
 
-  $('.sample img[id]').each(function(){
-
-    prepare_reel_sample('#' + $(this).attr('id'));
-    /*
-    This `prepare_reel_sample` essentialy uses each sample's options
-    and passes them to `.reel` call as a parameter when clicked.
-    It also adds some UI interactions like toggling samples, cookie persistence and such.
-    Definitely not needed for running Reel itself. You DON'T want to use it.
-
-    You simply do:
-      $('#my_image').reel({ ..your options.. });
-
-    Just like that.
-    */
-  });
-
   /*
   Cookie persistence of last selected sample. You DON'T want to use this either.
    */

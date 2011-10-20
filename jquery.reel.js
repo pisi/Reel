@@ -99,7 +99,7 @@ jQuery.reel || (function($, window, document, undefined){
       vertical:       false, // switches orbital object movie to vertical mode
       wheelable:       true, // mouse wheel interaction (allowed by default)
 
-      attr:              {}
+      attr:              {}  // initial attribute-value pairs map for the IMG tag
     }
     // [deprecated] options defaults may be gone anytime soon
   }

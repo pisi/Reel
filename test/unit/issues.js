@@ -245,7 +245,7 @@
     /*
      * Unable to switch Reels in a simple manner without a manual teardown.
      */
-    expect( 3 );
+    expect( 1 );
     var
       image = undefined
 
@@ -268,7 +268,6 @@
       }
     });
     $('#image').reel();
-
   });
 
 })(jQuery);

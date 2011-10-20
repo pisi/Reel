@@ -33,6 +33,11 @@ $(function ready(){
     return stack
   }
 
+  /*
+  Following code is NOT needed to initiate the Reel. It is here for switching Reel samples
+  on and off. It essentially is a shortcut for `$(target).reel(options)`
+  You don't need (and want) to use it.
+  */
   $('#control_events button').click(function(){
     $('#image').trigger( $(this).text() );
   });
@@ -72,51 +77,6 @@ $(function ready(){
     string= string.replace(/\; \}/g, '" }');
     string= string.replace(/\; /g, '", ');
     return eval('('+string+')')
-  }
-
-  /*
-  This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
-  It essentially is a shortcut for `$(target).reel(options)`
-  You don't need to use it
-  */
-  prepare_reel_sample= function(target){
-    var
-      $sample= $(target).parent('.sample'),
-      opts= $('pre', $sample).text(),
-      options= eval('('+opts+')')
-
-    $sample.click(function(e){
-      if (!$(this).is('.on')){
-        click_it(e);
-        return false;
-      }
-    });
-    $('h3', $sample).click(click_it);
-
-    options.speed && $('<div/>', { 'class': 'control_events' })
-    .append($('<button/>', { text: '▶ play' }).click(function(){ $(target).trigger('play') }))
-    .append($('<button/>', { text: '❙❙ pause' }).click(function(){ $(target).trigger('pause') }))
-    .append($('<button/>', { text: '◼ stop' }).click(function(){ $(target).trigger('stop') }))
-    .insertAfter(target);
-
-    $('<div/>', { 'class': 'hint', text: 'Click to activate this sample'}).appendTo($sample);
-
-    function click_it(e){
-      var
-        onoff= !$sample.hasClass('on'),
-        $others= $('.sample').not($sample)
-      if (!e.altKey){
-        $others.removeClass('on');
-        $('.jquery-reel', $others).trigger('teardown');
-      }
-
-      $sample[onoff ? 'addClass' : 'removeClass']('on');
-      onoff && $(target).reel(options) || $(target).trigger('teardown');
-      onoff && console && console.log && console.log($(target), $(target).data());
-      $.cookie('reel.test.sample', onoff ? $(target).selector : null);
-      // $.cookie(onoff ? '')
-      return false;
-    }
   }
 
 });

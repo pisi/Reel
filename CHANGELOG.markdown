@@ -6,6 +6,8 @@ Development (edge)
 
 * Non-`wheelable` Reels now allow scrolling of the page when wheeling
   above the Reel instance.
+* New option `attr` allows to set custom attributes of the IMG tag
+  (useful for re-using DOM nodes).
 
 
 Version 1.1.3
