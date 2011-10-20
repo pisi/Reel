@@ -97,7 +97,9 @@ jQuery.reel || (function($, window, document, undefined){
       timeout:            2, // idle timeout in seconds
       throwable:       true, // drag & throw interaction (allowed by default)
       vertical:       false, // switches orbital object movie to vertical mode
-      wheelable:       true  // mouse wheel interaction (allowed by default)
+      wheelable:       true, // mouse wheel interaction (allowed by default)
+
+      attr:              {}
     }
     // [deprecated] options defaults may be gone anytime soon
   }
@@ -112,9 +114,9 @@ jQuery.reel || (function($, window, document, undefined){
         tags.filter(_img_).each(function(ix){
           var
             $this= $(this),
-            src= opt.images.length && opt.images || opt.image || $this.attr(_src_),
-            width= number($this.css(_width_)),
-            height= number($this.css(_height_))
+            src= opt.images.length && opt.images || opt.image || opt.attr.src || $this.attr(_src_),
+            width= number(opt.attr.width || $this.css(_width_)),
+            height= number(opt.attr.height || $this.css(_height_))
           if (!src || src == __ || !width || !height) return;
           pass.push($this);
         });
@@ -156,14 +158,14 @@ jQuery.reel || (function($, window, document, undefined){
           */
             if (t.hasClass(klass)) return cleanup.call(e);
             var
-              src= t.attr(_src_),
+              src= t.attr(opt.attr).attr(_src_),
               id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
               styles= t.attr('style'),
               data= $.extend({}, t.data()),
               images= opt.images,
               stitched= opt.stitched,
               loops= opt.loops,
-              size= { x: number(t.css(_width_)), y: number(t.css(_height_)) },
+              size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
               frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               style= {
