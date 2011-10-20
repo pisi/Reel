@@ -1,37 +1,30 @@
 html{ background: #ddd; font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Calibri, Helvetica, Arial; }
 body{ margin: 20px; }
-a{ color: #2B81AF; }
-.sample{ float: left; width: 290px; height: 290px; background: #eee; padding: 20px 340px 10px 10px; margin: 0 10px 10px 0;
-  border-top: 1px solid white; border-bottom: 1px solid #ccc; border-radius: 15px;
-  position: relative; cursor: pointer; }
+a{ color: #2B81AF; text-decoration: underline; }
+a:hover{ text-decoration: none; }
+.sample{ position: relative; text-align: left; display: none; }
+.sample.on{ display: block; }
 .sample img, .sample iframe{ display: block; margin: 0 auto; }
-.sample .jquery-reel-overlay{ margin: 0 auto; }
+.sample .jquery-reel-overlay{ margin: 20px 0 0 0; }
 h1{ font-size: 2em; font-weight: normal; margin: 0; }
-h2{ width: 620px; height: 30px; padding: 30px 10px; margin: 30px 10px 10px 0; background: #222; color: white;
-  border-top: 1px solid #bbb; border-bottom: 1px solid black; border-radius: 5px; text-align: center;
-  font-size: 2em; font-weight: normal; clear: left; }
-.sample h3{ position: absolute; left: 30px; bottom: 20px; width: 260px; color: #666; cursor: pointer; text-align: center; }
-.sample.on{ width: 290px; background: white; -webkit-box-shadow: 0px 5px 10px #999; cursor: default; }
-.sample:hover{ background: #f3f3f3; }
-.sample.on:hover{ background: white; }
-.sample.on:hover h3{ text-decoration: none; }
-.sample.on h3:hover, .sample:hover h3{ text-decoration: underline; }
-.sample.on h3{ color: black; }
-.sample .control_events{ margin: 10px 0 0 0; text-align: center; width: 300px; display: none; opacity: 0.5; }
-.sample.on .control_events{ display: block; }
-.sample .trigger{ z-index: 555; position: absolute; top: 5px; left: 5px; }
-.sample .credits{ margin-top: 10px; font-size: 0.9em; position: absolute; bottom: 10px; text-align: center; width: 300px;
-  color: #666; }
-.sample .credits a{ color: #666; text-decoration: none; }
-.sample.on .credits{ color: black; }
-.sample.on .credits a{ color: #2B81AF; }
-.sample.on .credits a:hover{ text-decoration: underline; }
-.sample pre{ position: absolute; top: 0; left: 320px; font-size: .9em; margin: 0; font-family: Monaco; font-size: 12px;
-  width: 300px; padding: 20px 10px; height: 280px; color: #eee; border-radius: 0 15px 15px 0; overflow: hidden;
-  display: none; }
-.sample.on pre{ text-align: left; background: #444; color: white; display: block; }
+h2{ display: inline; color: #999; font-size: 1.5em; font-weight: normal; }
+.sample h3{ color: black; font-size: 3em; margin: 0; font-weight: normal; }
+.sample .control_events{ margin: 10px 0 0 0; text-align: center; width: 300px; display: none; opacity: 0.5; display: block; }
+.sample .credits{ font-size: .9em; color: black; }
+.sample pre{ font-size: .8em; margin: 15px 0; font-family: Monaco; padding: 0;
+  background: #aaa; padding: 5px 10px; }
 .footer{ clear: left; padding: 10px 0 0 0; color: #999; }
 .footer strong{ color: #333; }
 .sample .hint{ position: absolute; right: 20px; bottom: 20px; color: #666; text-decoration: underline; }
 .sample:hover .hint{ color: #2B81AF; }
 .sample.on .hint{ display: none; }
+
+.groups{ padding: 0; margin: 15px 0 20px 0; }
+.groups li{ list-style-type: none; margin: 0 0 5px 0; border-bottom: 1px solid #ccc; }
+.groups h2{ margin: 10px 10px 10px 0; }
+.samples{ display: inline; padding: 0; height: 60px; line-height: 23px; }
+.samples li{ display: inline; list-style-type: none; padding: 0 10px 0 0; cursor: pointer; color: #2B81AF; border: 0; text-decoration: underline; }
+.samples li:hover{ text-decoration: none; }
+.samples li xmp, .samples li .thumb{ display: none; }
+.samples li img{ max-width: 60px; max-height: 60px; background: white; }
+.samples li strong{ font-weight: normal; }

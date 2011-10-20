@@ -39,16 +39,19 @@ $(function ready(){
       css= cut_out_css_object( $('.css', this).text() )
 
     options.attr= {
-      src     : $('.thumb', this).attr('src'),
+      src     : $('.html', this).text().match(/src='(.+)'/)[1],
       width   : parseInt(css.width),
       height  : parseInt(css.height)
     }
 
-    $('#the_one').addClass('on')
-    $('#meta').html( $('.meta', this).text() )
-    $('#js').text( $('.js', this).text() )
-    $('#image')
-      .reel( options )
+    $('#the_one').addClass('on');
+    $('#meta').html( $('.meta', this).text() );
+    $('#html').text( $('.html', this).text().trim() );
+    $('#css').text( $('.css', this).text().trim() );
+    $('#js').text( $('.js', this).text().trim() );
+    $('#image').reel( options );
+
+    $.cookie('reel.test.sample', $(this).attr('id'));
   });
 
   cut_out_object= function(string){

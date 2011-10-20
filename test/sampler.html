@@ -25,25 +25,26 @@
       <strong>Sampler</strong>
     </h1>
 
-    <div id="the_one" class="sample on">
-      <img id="image" src='' />
-      <div id="meta"></div>
-      <pre id="js"></pre>
-    </div>
-    <ul class="samples">
-    </ul>
+<ul class="groups">
+  <li>
+    <h2>Object Movie Sprites</h2>
 
-    <h2>Object Movie</h2>
-    <div class="sample">
-      <img id='logo' src='samples/logo.png' width='130' height='60' />
-      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Directional Sprite</h3>
-<pre>
-{ speed:        1,
-  opening:      1,
-  frame:        3,
-  delay:        3,
-  directional:  true }
+    <ul class="samples">
+      <li id="sprite-directional">
+        <strong>Directional Sprite</strong>
+        <img class='thumb' src='samples/logo.png' />
+
+<xmp class="html">
+  <img id='image' src='samples/logo.png' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  speed:         1,
+  opening:       1,
+  frame:         3,
+  delay:         3,
+  directional:   true
+});
 
 /*
   `speed` 1 is one revolution
@@ -51,92 +52,163 @@
   after 1 second long `opening` spin
   and a 3 second `delay`.
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='f1' src='samples/f1.jpg' width='276' height='126' />
-      <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-      <h3>Clockwise Sprite</h3>
-<pre>
-{ speed:   -0.3,
-  frames:  35,
-  cw:      true }
+</xmp>
+<xmp class="css">
+#image { width: 130px; height: 60px; }
+</xmp>
+<xmp class="meta">
+  <h3>Directional Sprite</h3>
+  <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+</xmp>
+
+      </li>
+      <li id="sprite-clockwise">
+        <strong>Clockwise Sprite</strong>
+        <img class="thumb" src='samples/f1.jpg' />
+
+<xmp class="html">
+  <img id='image' src='samples/f1.jpg' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  speed:         -0.3,
+  frames:        35,
+  cw:            true
+});
 
 /*
   Unlike the other formula car sample
   this one's sprite is clockwise-
   -organized.
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='f1ccw' src='samples/f1-ccw.jpg' width='276' height='126' />
-      <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-      <h3>Non-Animated Sprite</h3>
-<pre>
-{ frames:  35,
-  opening: 2,
-  entry: 1 }
+</xmp>
+<xmp class="css">
+#image { width: 276px; height: 126px; }
+</xmp>
+<xmp class="meta">
+  <h3>Clockwise Sprite</h3>
+  <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
+</xmp>
+
+      </li>
+      <li id="sprite-non-animated">
+        <strong>Non-Animated Sprite</strong>
+        <img class="thumb" src='samples/f1-ccw.jpg' />
+
+<xmp class="html">
+  <img id='image' src='samples/f1-ccw.jpg' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  frames:        35,
+  opening:       2,
+  entry:         1
+});
 
 /*
   This one isn't fully animated,
   but has a 2 seconds long `opening`
   with `entry` speed of 1 Hz.
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='multirow' src='samples/multi-row.png' width='100' height='100' class="bordered highlighted" />
-      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Multi-Row Sprite</h3>
-<pre>
-{ speed:    0.3,
-  frames:   6,
-  footage:  3,
-  rows:     3,
-  row:      2 }
+</xmp>
+<xmp class="css">
+#image { width: 276px; height: 126px; }
+</xmp>
+<xmp class="meta">
+  <h3>Non-Animated Sprite</h3>
+  <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
+</xmp>
+
+      </li>
+      <li id="sprite-multirow">
+        <strong>Multi-Row Sprite</strong>
+        <img class="thumb" src='samples/multi-row.png' />
+
+<xmp class="html">
+  <img id='image' src='samples/multi-row.png' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  speed:         0.3,
+  frames:        6,
+  footage:       3,
+  rows:          3,
+  row:           2
+});
 
 /*
   Additionally custom class "bordered"
   (the dashed border) is applied
   on the IMG and is being preserved.
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='mini' src='samples/mini.jpg' width='200' height='200' />
-      <div class="credits">photo &copy; <a href="mailto:masmith@photospherix.com">Matt Smith</a></div>
-      <h3>Multi-Row Sequence</h3>
-<pre>
-{ frames:  20,
-  frame:   14,
-  rows:    6,
-  row:     3,
-  speed:   0.3,
-  path:    'samples/mini/',
-  images:  mini_frames() }
+</xmp>
+<xmp class="css">
+#image { width: 100px; height: 100px; }
+</xmp>
+<xmp class="meta">
+  <h3>Multi-Row Sprite</h3>
+  <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+</xmp>
+
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h2>Object Movie Sequences</h2>
+    <ul class="samples">
+      <li id="sequence-multi-row">
+        <strong>Multi-Row Sequence</strong>
+        <img class="thumb" src='samples/mini.jpg' />
+
+<xmp class="html">
+  <img id='image' src='samples/mini.jpg' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  frames:        20,
+  frame:         14,
+  rows:          6,
+  row:           3,
+  speed:         0.3,
+  path:          'samples/mini/',
+  images:        mini_frames()
+});
 
 /*
   Helper function `mini_frames` returns
   simply an array of filenames
   [ '001.jpg',
     '002.jpg',
-    ..
+    ..jpg
     '120.jpg' ]
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='phone' src='samples/phone.png' width='200' height='200' />
-      <h3>Dual-Orbit Sequence</h3>
-<pre>
-{ footage:  10,
-  cw:       true,
-  orbital:  3,
-  inversed: true,
-  speed:    0.7,
-  path:     'samples/phone/',
-  images:   phone_frames(20) }
+</xmp>
+<xmp class="css">
+#image { width: 200px; height: 200px; }
+</xmp>
+<xmp class="meta">
+  <h3>Multi-Row Sequence</h3>
+  <div class="credits">photo &copy; <a href="mailto:masmith@photospherix.com">Matt Smith</a></div>
+</xmp>
+
+      </li>
+      <li id="sequence-dual-orbit">
+        <strong>Dual-Orbit Sequence</strong>
+        <img class="thumb" src='samples/phone.png' />
+
+<xmp class="html">
+  <img id='image' src='samples/phone.png' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  footage:       10,
+  cw:            true,
+  orbital:       3,
+  inversed:      true,
+  speed:         0.7,
+  path:          'samples/phone/',
+  images:        phone_frames(20)
+});
 
 /*
   Helper function `phone_frames` returns
@@ -146,37 +218,62 @@
     ..
     '19.png' ]
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='badge' src='http://code.vostrel.cz/jquery.reel-1.gif' width='120' height='30' />
-      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Sequence</h3>
-<pre>
-{ speed:   2,
-  delay:   1,
-  path:    'samples/',
-  images:  [ 'badge-1.gif',
-             'badge-2.gif',
-             'badge-3.gif',
-             'badge-4.gif' ] }
+</xmp>
+<xmp class="css">
+#image { width: 200px; height: 200px; }
+</xmp>
+<xmp class="meta">
+  <h3>Dual-Orbit Sequence</h3>
+</xmp>
+
+      </li>
+      <li id="sequence-1">
+        <strong>Sequence</strong>
+        <img class="thumb" src='samples/badge-1.gif' />
+
+<xmp class="html">
+  <img id='image' src='samples/badge-1.gif' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  speed:         2,
+  delay:         1,
+  path:          'samples/',
+  images:        [ 'badge-1.gif',
+                   'badge-2.gif',
+                   'badge-3.gif',
+                   'badge-4.gif' ]
+});
 
 /*
   `delay` tells it to wait 1 second
   before starting to play
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='drone' src='samples/drone.png' width='300' height='200' />
-      <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
-      <h3>Sequence</h3>
-<pre>
-{ cw:      true,
-  frame:   32,
-  speed:   -0.2,
-  path:    'samples/drone/',
-  images:  drone_frames() }
+</xmp>
+<xmp class="css">
+#image { width: 120px; height: 30px; }
+</xmp>
+<xmp class="meta">
+  <h3>Sequence</h3>
+  <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+</xmp>
+
+      </li>
+      <li id="sequence-2">
+        <strong>Sequence</strong>
+        <img class="thumb" src='samples/drone.png' />
+
+<xmp class="html">
+  <img id='image' src='samples/drone.png' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  cw:            true,
+  frame:         32,
+  speed:         -0.2,
+  path:          'samples/drone/',
+  images:        drone_frames()
+});
 
 /*
   Helper function `drone_frames` returns
@@ -187,33 +284,60 @@
     ..
     '00179.png' ]
 */
-</pre>
-    </div>
+</xmp>
+<xmp class="css">
+#image { width: 300px; height: 200px; }
+</xmp>
+<xmp class="meta">
+  <h3>Sequence</h3>
+  <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
+</xmp>
 
-    <h2>Panorama Movie</h2>
-    <div class="sample">
-      <img id='green' src='samples/green.jpg' width='200' height='150' />
-      <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Stitched</h3>
-<pre>
-{ frames:   32,
-  footage:  4,
-  speed:    0.1 }
-</pre>
-    </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h2>Panoramas</h2>
+    <ul class="samples">
+      <li id="pano-green">
+        <strong>Stitched</strong>
+        <img class="thumb" src='samples/green.jpg' />
 
-    <h2>Rectilinear Panorama</h2>
-    <div class="sample">
-      <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
-      <div class="credits">photo &copy; <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></div>
-      <h3>Click-Free Stitched</h3>
-<pre>
-{ stitched:   1821,
-  frames:     60,
-  frame:      23,
-  speed:      -0.05,
-  clickfree:  true,
-  wheelable:  false }
+<xmp class="html">
+  <img id='image' src='samples/green.jpg' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  frames:        32,
+  footage:       4,
+  speed:         0.1
+});
+</xmp>
+<xmp class="css">
+#image { width: 200px; height: 150px; }
+</xmp>
+<xmp class="meta">
+  <h3>Stitched</h3>
+  <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+</xmp>
+
+      </li>
+      <li id="pano-click-free">
+        <strong>Click-Free Stitched</strong>
+        <img class="thumb" src='samples/stitched.jpg' />
+
+<xmp class="html">
+  <img id='image' src='samples/stitched.jpg' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  stitched:      1821,
+  frames:        60,
+  frame:         23,
+  speed:         -0.05,
+  clickfree:     true,
+  wheelable:     false
+});
 
 /*
   This one also demonstrates
@@ -221,20 +345,52 @@
   which makes it immune
   to mousewheel control
 */
-</pre>
-    </div>
-    <div class="sample">
-      <img id='chicago' src='samples/chicago.jpg' width='270' height='150' />
-      <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
-      <h3>Non-Looping Stitched</h3>
-<pre>
-{ stitched:  1072,
-  loops:     false,
-  steps:     30,
-  step:      15,
-  speed:     -0.1,
-  timeout:   1 }
-</pre>
+</xmp>
+<xmp class="css">
+#image { width: 297px; height: 167px; }
+</xmp>
+<xmp class="meta">
+  <h3>Click-Free Stitched</h3>
+  <div class="credits">photo &copy; <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></div>
+</xmp>
+
+      </li>
+      <li id="pano-non-looping">
+        <strong>Non-Looping Stitched</strong>
+        <img class="thumb" src='samples/chicago.jpg' />
+
+<xmp class="html">
+  <img id='image' src='samples/chicago.jpg' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+  stitched:      1072,
+  loops:         false,
+  steps:         30,
+  step:          15,
+  speed:         -0.1,
+  timeout:       1
+});
+</xmp>
+<xmp class="css">
+#image { width: 270px; height: 150px; }
+</xmp>
+<xmp class="meta">
+  <h3>Non-Looping Stitched</h3>
+  <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
+</xmp>
+
+      </li>
+    </ul>
+  </li>
+</ul>
+
+    <div id="the_one" class="sample">
+      <div id="meta"></div>
+      <img id="image" src='' />
+      <pre id="html"></pre>
+      <pre id="css"></pre>
+      <pre id="js"></pre>
     </div>
 
     <div class="footer">
@@ -267,8 +423,8 @@ $(function ready(){
 
   /*
   Cookie persistence of last selected sample. You DON'T want to use this either.
-  */
-  $($.cookie('reel.test.sample') || '.sample:first').click();
+   */
+  $('#'+$.cookie('reel.test.sample') || '.groups li:first .samples li:first').click();
 
 });
     </script>
