@@ -33,6 +33,10 @@ $(function ready(){
     return stack
   }
 
+  $('#control_events button').click(function(){
+    $('#image').trigger( $(this).text() );
+  });
+
   $('.samples li').click(function(){
     var
       options= cut_out_object( $('.js', this).text() ),
@@ -43,6 +47,8 @@ $(function ready(){
       width   : parseInt(css.width),
       height  : parseInt(css.height)
     }
+
+    $('#control_events').toggle( !!options.speed );
 
     $('#the_one').addClass('on');
     $('#meta').html( $('.meta', this).text() );
