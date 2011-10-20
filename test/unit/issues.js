@@ -240,4 +240,35 @@
     }
   });
 
+
+  asyncTest( 'GH-62 Implicit teardown', function(){
+    /*
+     * Unable to switch Reels in a simple manner without a manual teardown.
+     */
+    expect( 3 );
+    var
+      image = undefined
+
+    $('#image').bind('loaded', function(){
+      if (image === undefined){
+        image= $(this).data('image');
+        var
+          new_instance= $(this).reel({
+            image: '../example/panorama-reel.jpg'
+          });
+
+        // Finish the test in case reel initialization fails
+        if (!new_instance.length){
+          ok( false, 'Unable to instantitate the same DOM node for the second time');
+          start();
+        }
+      }else{
+        ok( image !== $(this).data('image'), 'The second reel image is different than the starting one');
+        start();
+      }
+    });
+    $('#image').reel();
+
+  });
+
 })(jQuery);
