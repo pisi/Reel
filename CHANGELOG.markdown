@@ -8,6 +8,8 @@ Development (edge)
   above the Reel instance.
 * New option `attr` allows to set custom attributes of the IMG tag
   (useful for re-using DOM nodes).
+* Instances being re-instantiated now perform automatic teardown
+  (GH-62).
 
 
 Version 1.1.3
