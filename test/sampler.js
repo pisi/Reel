@@ -51,7 +51,6 @@ $(function ready(){
 
         $('#images').prev('h4').find('.count').text( 1 +images.length );
         $('#images').empty().append( image($(this).data('backup').src, 'The `<img src>` Original ') );
-        console.log(images)
         if (images.length == 1){
           $('#images').append( image(images[0], 'And The Sprite ') );
         }else{
