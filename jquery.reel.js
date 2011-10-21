@@ -174,7 +174,7 @@ jQuery.reel || (function($, window, document, undefined){
                 height: size.y
               },
               stage_id= '#'+id+opt.suffix,
-              classes= t.attr('class'),
+              classes= t.attr('class') || '',
               overlay_css= { position: 'relative', width: size.x, height: size.y },
               $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }),
               $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
