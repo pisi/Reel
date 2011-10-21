@@ -14,6 +14,18 @@ $(function ready(){
       options= cut_out_object( $('.js', this).text() ),
       css= cut_out_css_object( $('.css', this).text() )
 
+    $('#js_options ul').empty();
+    $.each( options, function( ix, option ){
+      $('#js_options ul').append(
+        $('<li>').append(
+          $('<a>', {
+            href: 'http://jquery.vostrel.cz/reel#'+ix,
+            text: ''+ix
+          })
+        )
+      )
+    } );
+
     options.attr= {
       src     : $('.html', this).text().match(/src='(.+)'/)[1],
       width   : parseInt(css.width),
