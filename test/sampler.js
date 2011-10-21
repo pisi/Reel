@@ -1,51 +1,6 @@
 $(function ready(){
 
   /*
-  Code used in the #drone example; based on one by Mark Leidman
-  */
-  function drone_frames(frames){
-    var frames= 179, every= 5, stack= []
-    for(var i= 1; i <= frames; i+= every){
-      var name= [i, '.png'].join('')
-      while (name.length < 9) name= '0'+name
-      stack.push(name)
-    }
-    return stack
-  }
-
-  function mini_frames(frames){
-    var frames= 120, every= 1, stack= []
-    for(var i= 1; i <= frames; i+= every){
-      var name= [i, '.jpg'].join('')
-      while (name.length < 7) name= '0'+name
-      stack.push(name)
-    }
-    return stack
-  }
-
-  function phone_frames(frames){
-    var every= 1, stack= []
-    for(var i= 1; i <= frames; i+= every){
-      var name= [i, '.png'].join('')
-      while (name.length < 6) name= '0'+name
-      stack.push(name)
-    }
-    return stack
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /*
   Following code is NOT needed to initiate the Reel. It is here for switching Reel samples
   on and off. It essentially is a shortcut for `$(target).reel(options)`
   You don't need (and want) to use it.
