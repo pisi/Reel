@@ -1,10 +1,14 @@
 $(function ready(){
 
   /*
-  Following code is NOT needed to initiate the Reel. It is here for switching Reel samples
-  on and off. It essentially is a shortcut for `$(target).reel(options)`
-  You don't need (and want) to use it.
+  ** YOU DON'T WANT TO USE THE CODE BELOW FOR YOUR PROJECT.
+  ** TRUST ME.
+  **
+  ** Any hidden code (other than the one made visible
+  ** on the sample pages) isn't needed for Reel.
+  ** Everything is explained within the individual samples.
   */
+
   $('#control_events button').click(function(){
     $('#image').trigger( $(this).text() );
   });
