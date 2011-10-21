@@ -11,6 +11,7 @@ Development (edge)
 * Instances being re-instantiated now perform automatic teardown
   (GH-62).
 * Proper image preload events unbinding on teardown (GH-64).
+* Option `scrollable` can disable page scrolling (if needed) on touch devices.
 
 
 Version 1.1.3

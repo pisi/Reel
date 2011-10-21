@@ -80,6 +80,8 @@
     equal( $.reel.def.timeout,                    2, 'idle timeout in seconds' );
     equal( $.reel.def.throwable,               true, 'drag & throw interaction (allowed by default)' );
     equal( $.reel.def.vertical,               false, 'switches orbital object movie to vertical mode' );
+
+    equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
     equal( $.reel.def.wheelable,               true, 'mouse wheel interaction (allowed by default)' );
 
     ok( typeof $.reel.def.attr === 'object',         'initial attribute-value pairs map for the IMG tag' );
