@@ -75,12 +75,12 @@ $(function ready(){
 
   cut_out_object= function(string){
     string= string.substr( string.indexOf('{') );
-    string= string.substr( 0, string.indexOf('}')+1 );
+    string= string.substr( 0, string.lastIndexOf('}')+1 );
     return eval('('+string+')')
   }
   cut_out_css_object= function(string){
     string= string.substr( string.indexOf('{') );
-    string= string.substr( 0, string.indexOf('}')+1 );
+    string= string.substr( 0, string.lastIndexOf('}')+1 );
     string= string.replace(/\: /g, ': "');
     string= string.replace(/\; \}/g, '" }');
     string= string.replace(/\; /g, '", ');
