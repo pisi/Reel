@@ -12,7 +12,7 @@
 
     $.each($reel.data(), function(key){
       // We exclude all jQuery internal keys
-      if (key.match(/^jQuery\d+|events|handle$/)) return;
+      if (key.match(/^(_[a-z]+|jQuery\d+|events|handle)$/)) return;
       count++
     });
     expect(count);
@@ -30,6 +30,7 @@
     ok( is('Number', $reel.data('frames')), '`frames` Number');
     ok( is('String', $reel.data('id')), '`id` String');
     ok( is('String', $reel.data('image')), '`image` String');
+    ok( is('Array', $reel.data('images')), '`images` Object');
     ok( is('Number', $reel.data('opening_ticks')), '`opening_ticks` Number');
     ok( is('Boolean', $reel.data('playing')), '`playing` Boolean');
     ok( is('Boolean', $reel.data('reeling')), '`reeling` Boolean');
@@ -47,8 +48,6 @@
     ok( is('Number', $reel.data('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.data('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.data('wheel_step')), '`wheel_step` Number');
-
-    ok( is('Number', $reel.data('_frame')), '`_frame` Number');
   });
 
   test( 'Contents of attributes backup `.data("backup")`', function(){
