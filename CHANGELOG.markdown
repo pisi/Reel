@@ -10,6 +10,7 @@ Development (edge)
   (useful for re-using DOM nodes).
 * Instances being re-instantiated now perform automatic teardown
   (GH-62).
+* Proper image preload events unbinding on teardown (GH-64).
 
 
 Version 1.1.3
