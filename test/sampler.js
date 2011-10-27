@@ -12,6 +12,11 @@
 
   yepnope( {
     load: [
+      'http://code.jquery.com/jquery-'+(location.params.jq || '1.6.1')+'.min.js',
+      '../jquery.reel-min.js',
+      '../example/inc/jquery.disabletextselect-min.js',
+      '../example/inc/jquery.mousewheel-min.js',
+      '../example/inc/jquery.cookie-min.js'
     ],
     complete: function(){
 
