@@ -15,6 +15,10 @@
     ],
     complete: function(){
 
+      /*
+      Preset common indicator size
+      */
+      $.reel.def.indicator= 5;
 
       $('#control_events button').click(function(){
         $('#image').trigger( $(this).text() );
@@ -70,8 +74,11 @@
         $.cookie('reel.test.sample', $(this).attr('id'));
       });
 
-    $.cookie('reel.test.sample', $(this).attr('id'));
-  });
+      /*
+      Cookie persistence of last selected sample.
+      */
+      var $recovered= $('#'+$.cookie('reel.test.sample'));
+      ( !!$recovered.length && $recovered || $('.groups li:first .samples li:first') ).click();
 
     }
   } );
