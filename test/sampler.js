@@ -1,4 +1,3 @@
-$(function ready(){
 
   /*
   ** YOU DON'T WANT TO USE THE CODE BELOW FOR YOUR PROJECT.
@@ -9,61 +8,75 @@ $(function ready(){
   ** Everything is explained within the individual samples.
   */
 
-  $('#control_events button').click(function(){
-    $('#image').trigger( $(this).text() );
-  });
+(function run(){
 
-  $('.samples li').click(function(){
-    var
-      options= cut_out_object( $('.js', this).text() ),
-      css= cut_out_css_object( $('.css', this).text() )
+  yepnope( {
+    load: [
+    ],
+    complete: function(){
 
-    $('#js_options ul').empty();
-    $.each( options, function( ix, option ){
-      $('#js_options ul').append(
-        $('<li>').append(
-          $('<a>', {
-            href: 'http://jquery.vostrel.cz/reel#'+ix,
-            text: ''+ix
-          })
-        )
-      )
-    } );
 
-    options.attr= {
-      src     : $('.html', this).text().match(/src='(.+)'/)[1],
-      width   : parseInt(css.width),
-      height  : parseInt(css.height)
-    }
+      $('#control_events button').click(function(){
+        $('#image').trigger( $(this).text() );
+      });
 
-    $('#control_events').toggle( !!options.speed );
-
-    $('#the_one').addClass('on');
-    $('#meta').html( $('.meta', this).text() );
-    $('#html').text( $('.html', this).text().trim() );
-    $('#css').text( $('.css', this).text().trim() );
-    $('#js').text( $('.js', this).text().trim() );
-    $('#image')
-      .reel( options )
-      .bind('loaded', function(){
+      $('.samples li').click(function(){
         var
-          images= $(this).data('images')
+          options= cut_out_object( $('.js', this).text() ),
+          css= cut_out_css_object( $('.css', this).text() )
 
-        $('#images').prev('h4').find('.count').text( 1 +images.length );
-        $('#images').empty().append( image($(this).data('backup').src, 'The `<img src>` Original ') );
-        if (images.length == 1){
-          $('#images').append( image(images[0], 'And The Sprite ') );
-        }else{
-          $.each( images, function(ix){
-            $('#images').append( image(this, 'Sequence frame '+(ix+1)+' ') );
-          })
+        $('#js_options ul').empty();
+        $.each( options, function( ix, option ){
+          $('#js_options ul').append(
+            $('<li>').append(
+              $('<a>', {
+                href: 'http://jquery.vostrel.cz/reel#'+ix,
+                text: ''+ix
+              })
+            )
+          )
+        } );
+
+        options.attr= {
+          src     : $('.html', this).text().match(/src='(.+)'/)[1],
+          width   : parseInt(css.width),
+          height  : parseInt(css.height)
         }
+
+        $('#control_events').toggle( !!options.speed );
+
+        $('#the_one').addClass('on');
+        $('#meta').html( $('.meta', this).text() );
+        $('#html').text( $('.html', this).text().trim() );
+        $('#css').text( $('.css', this).text().trim() );
+        $('#js').text( $('.js', this).text().trim() );
+        $('#image')
+          .reel( options )
+          .bind('loaded', function(){
+            var
+              images= $(this).data('images')
+
+            $('#images').prev('h4').find('.count').text( 1 +images.length );
+            $('#images').empty().append( image($(this).data('backup').src, 'The `<img src>` Original ') );
+            if (images.length == 1){
+              $('#images').append( image(images[0], 'And The Sprite ') );
+            }else{
+              $.each( images, function(ix){
+                $('#images').append( image(this, 'Sequence frame '+(ix+1)+' ') );
+              })
+            }
+          });
+
+        $.cookie('reel.test.sample', $(this).attr('id'));
       });
 
     $.cookie('reel.test.sample', $(this).attr('id'));
   });
 
-  image= function(uri, label){
+    }
+  } );
+
+  function image(uri, label){
     var
       $image= $('<div/>', { 'class': 'img' } ),
       $label= $('<span>', { text: label }).appendTo($image),
@@ -72,12 +85,12 @@ $(function ready(){
     return $image
   }
 
-  cut_out_object= function(string){
+  function cut_out_object(string){
     string= string.substr( string.indexOf('{') );
     string= string.substr( 0, string.lastIndexOf('}')+1 );
     return eval('('+string+')')
   }
-  cut_out_css_object= function(string){
+  function cut_out_css_object(string){
     string= string.substr( string.indexOf('{') );
     string= string.substr( 0, string.lastIndexOf('}')+1 );
     string= string.replace(/\: /g, ': "');
@@ -86,4 +99,4 @@ $(function ready(){
     return eval('('+string+')')
   }
 
-});
+})();
