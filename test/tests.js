@@ -27,6 +27,8 @@
     ],
     complete: function(){
 
+      QUnit.load();
+
       QUnit.done = function(failures, total, config) {
         if (failures){
           $('body').addClass('failure');
