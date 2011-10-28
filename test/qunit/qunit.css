@@ -153,6 +153,17 @@ strong b.pass{
 	text-decoration: none;
 }
 
+#qunit-against,
+#qunit-against select{
+  font-size:11px;
+	color:#fff;
+	font-family:"Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+}
+#qunit-against{
+  float:right;
+  margin:18px 24px 0 0;
+}
+
 ul#qunit-modules{
 	background-color:#0d3349;
 	margin:0;

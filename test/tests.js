@@ -79,6 +79,22 @@
         }
       }
 
+      $('#against-jquery-versions')
+      .val( location.params.jq || '1.6.1' )
+      .change( function(){
+        var url= ''
+        if( location.params.jq === undefined ){
+          if( location.search === '' ){
+            url= location.href.replace( /\?$/, '' ) + '?jq='+$(this).val()
+          }else{
+            url= location.href + '&jq=' + $(this).val()
+          }
+        }else{
+          url= location.href.replace( 'jq=' + location.params.jq, 'jq=' + $(this).val() );
+        }
+        location.href= url;
+      } )
+
     }
   } );
 
