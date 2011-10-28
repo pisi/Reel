@@ -46,7 +46,8 @@ var QUnit = {
 	module: function(name, testEnvironment) {
 		config.currentModule = name;
 
-		$(function(){ $('<li/>').append($('<a/>', { href: '?' + name, text: name })).appendTo($('#qunit-modules')); });
+		var jq = location.params.jq ? '&jq=' + location.params.jq : '';
+		$(function(){ $('<li/>').append($('<a/>', { href: '?' + name + jq, text: name })).appendTo($('#qunit-modules')); });
 
 		synchronize(function() {
 			if ( config.currentModule ) {
