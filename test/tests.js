@@ -68,8 +68,25 @@
             agent:      $('#qunit-userAgent').html()
           }
 
-        $('#result_link').attr('href', server+'/view/reel/testrun/result/'+timestamp);
+        $('<a/>', { name: 'receipt' }).appendTo('#qunit-testresult');
+        formatted(report, 'Carbon copy of the receipt, which has been sent out to central Reel test server. Thank you!').appendTo( $('<ul/>').appendTo('#qunit-testresult') );
         $.post(server+'/collect/reel/testrun/results', report);
+
+        function formatted( bit, label ){
+          var $result= $('<li/>')
+          if( typeof bit == 'object' ){
+            if( typeof bit.length != 'number' || bit.length > 0 ){ // Object/Array
+              $result.text( label+':' );
+              var $list= $('<ul/>').appendTo( $result )
+              $.each( bit, function( label, value ){
+                $list.append( formatted(value, label) );
+              } );
+            }
+          }else{ // Value
+            $result.html( label+': '+bit );
+          }
+          return $result
+        }
 
         function dump($collection){
           var collection = [];
