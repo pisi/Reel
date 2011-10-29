@@ -50,25 +50,26 @@
         var
           //server= 'http://au:4567',
           server= 'http://jquery.vostrel.cz',
-          timestamp= +new Date()
+          timestamp= +new Date(),
+          report= {
+            timestamp:  timestamp,
+            filter:     config.filters,
+            count: {
+              total:    total,
+              pass:     total - failures,
+              fail:     failures
+            },
+            fails:      dump($('#qunit-tests li.fail')),
+            version: {
+              jquery:   $().jquery,
+              reel:     $.reel.version
+            },
+            results:    $('#qunit-testresult').html(),
+            agent:      $('#qunit-userAgent').html()
+          }
 
-        $.post(server+'/collect/reel/testrun/results', {
-          timestamp:  timestamp,
-          filter:     config.filters,
-          count: {
-            total:    total,
-            pass:     total - failures,
-            fail:     failures
-          },
-          fails:      dump($('#qunit-tests li.fail')),
-          version: {
-            jquery:   $().jquery,
-            reel:     $.reel.version
-          },
-          results:    $('#qunit-testresult').html(),
-          agent:      $('#qunit-userAgent').html()
-        });
         $('#result_link').attr('href', server+'/view/reel/testrun/result/'+timestamp);
+        $.post(server+'/collect/reel/testrun/results', report);
 
         function dump($collection){
           var collection = [];
