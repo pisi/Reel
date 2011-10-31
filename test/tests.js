@@ -1,7 +1,7 @@
 /**
  * .reel Unit Test
  */
-( function run(){
+window.onload= ( function run(){
 
   yepnope( {
     load: [
@@ -116,4 +116,4 @@
     }
   } );
 
-} )();
+} );
