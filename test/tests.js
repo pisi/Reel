@@ -1,7 +1,7 @@
 /**
  * .reel Unit Test
  */
-window.onload= ( function run(){
+( function run(){
 
   yepnope( {
     load: [
@@ -13,11 +13,11 @@ window.onload= ( function run(){
       'qunit/qunit.js',
       'qunit/quny.js',
 
-      'unit/selector.js',
       'unit/parameters.js',
       'unit/events.js',
       'unit/computation.js',
       'unit/animation.js',
+      'unit/selector.js',
       'unit/rendering.js',
       'unit/data.js',
       'unit/api.js',
@@ -116,4 +116,4 @@ window.onload= ( function run(){
     }
   } );
 
-} );
+} )();
