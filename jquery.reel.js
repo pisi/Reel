@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-10-21
+ * Updated: 2011-10-31
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -177,7 +177,7 @@ jQuery.reel || (function($, window, document, undefined){
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
               overlay_css= { position: 'relative', width: size.x, height: size.y },
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }).bind('openingDone', delay_play),
               $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
               instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
@@ -221,7 +221,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               backup= t.data(_backup_)
-            t.parent().children('img').unbind(ns);
+            t.parent().unbind('openingDone', delay_play).children('img').unbind(ns);
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
               src: backup.src,
@@ -394,7 +394,7 @@ jQuery.reel || (function($, window, document, undefined){
             if (ticks > 1) return;
 
             pool.unbind(_tick_, on.opening_tick);
-            delay_play();
+            t.trigger('openingDone');
           },
           play: function(e, direction){
             var

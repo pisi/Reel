@@ -12,6 +12,8 @@ Development (edge)
   (GH-62).
 * Proper image preload events unbinding on teardown (GH-64).
 * Option `scrollable` can disable page scrolling (if needed) on touch devices.
+* New event `"openingDone"` now announces the end of opening animation
+  (GH-65).
 
 
 Version 1.1.3
