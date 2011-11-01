@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-10-31
+ * Updated: 2011-11-01
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -100,7 +100,8 @@ jQuery.reel || (function($, window, document, undefined){
       wheelable:       true, // mouse wheel interaction (allowed by default)
 
       attr:              {}, // initial attribute-value pairs map for the IMG tag
-      scrollable:      true  // allow page scroll (allowed by default; applies only to touch devices)
+      scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
+      velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
     }
     // [deprecated] options defaults may be gone anytime soon
   }
@@ -195,7 +196,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_stitched_travel_, stitched - (loops ? 0 : size.x));
             set(_stage_, stage_id);
             set(_backwards_, set(_speed_, opt.speed) < 0);
-            set(_velocity_, 0);
+            set(_velocity_, opt.velocity || 0);
             set(_vertical_, opt.vertical);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));

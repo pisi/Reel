@@ -29,7 +29,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 4);
 
-    equal( count, 46, 'Total number of options');
+    equal( count, 47, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -84,6 +84,7 @@
 
     ok( typeof $.reel.def.attr === 'object',         'initial attribute-value pairs map for the IMG tag' );
     equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
+    equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
   });
 
   test( 'jQuery of currently living instances is referenced as `$.reel.instances`', function()
