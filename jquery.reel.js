@@ -321,9 +321,8 @@ jQuery.reel || (function($, window, document, undefined){
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                   if (img_tag.frames == img_tag.preloaded){
                     $preloader.remove();
-                    images.length || t.css({ backgroundImage: url(opt.path+image) });
+                    images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
                     t
-                    .attr({ src: transparent })
                     .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
                     .trigger('loaded');
                     cleanup.call(e);
