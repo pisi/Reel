@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-11-01
+ * Updated: 2011-11-03
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -243,7 +243,6 @@ jQuery.reel || (function($, window, document, undefined){
           /*
           - binds all mouse/touch events (namespaced)
           - prepares stage overlay elements
-          - preloads images if needed
           */
             var
               space= get(_dimensions_),
@@ -287,7 +286,7 @@ jQuery.reel || (function($, window, document, undefined){
             })) || ($monitor= $());
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
-            t.trigger('preload');
+            t.trigger('opening').trigger('preload');
           },
           preload: function(e){
           /*
@@ -298,7 +297,7 @@ jQuery.reel || (function($, window, document, undefined){
               $overlay= t.parent(),
               image= get(_image_),
               images= opt.images,
-              preload= !images.length ? [image] : new Array().concat(images),
+              preload= !images.length ? [image] : $.reel.math.spread(images, opt, get),
               uris= [],
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
@@ -323,12 +322,10 @@ jQuery.reel || (function($, window, document, undefined){
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                   if (img_tag.frames == img_tag.preloaded){
                     $preloader.remove();
-                    images.length || t.css({ backgroundImage: url(opt.path+image) });
+                    images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
                     t
-                    .attr({ src: transparent })
                     .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
-                    .trigger('loaded')
-                    .trigger('opening');
+                    .trigger('loaded');
                     cleanup.call(e);
                   }
                 });
@@ -692,6 +689,31 @@ jQuery.reel || (function($, window, document, undefined){
     },
     interpolate: function(fraction, lo, hi){
       return lo + fraction * (hi - lo)
+    },
+    spread: function(sequence, opt, get){
+      var
+        order= [],
+        present= new Array(frames),
+        row_frames= get(_frames_),
+        rows= opt.orbital ? 2 : opt.rows || 1,
+        passes= rows * 2,
+        frames= row_frames * rows,
+        start= (opt.row-1) * row_frames + opt.frame,
+        granule= frames / passes
+      for(var i= 0; i < passes; i++)
+        add(start + round(i * granule));
+      while(granule > 1)
+        for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
+          add(round(order[i] + granule));
+      for(var i= 0; i < order.length; i++)
+        order[i]= sequence[order[i] - 1];
+      return order
+
+      function add(frame){
+        while(!(frame >= 1 && frame <= frames))
+          frame+= frame < 1 ? +frames : -frames;
+        return present[frame] || (present[frame]= !!order.push(frame))
+      }
     }
   }
 
