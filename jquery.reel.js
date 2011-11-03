@@ -286,7 +286,7 @@ jQuery.reel || (function($, window, document, undefined){
             })) || ($monitor= $());
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
-            t.trigger('opening').trigger('preload');
+            t.trigger('preload');
           },
           preload: function(e){
           /*
@@ -325,7 +325,8 @@ jQuery.reel || (function($, window, document, undefined){
                     images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
                     t
                     .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
-                    .trigger('loaded');
+                    .trigger('loaded')
+                    .trigger('opening');
                     cleanup.call(e);
                   }
                 });
