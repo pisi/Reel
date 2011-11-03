@@ -242,7 +242,6 @@ jQuery.reel || (function($, window, document, undefined){
           /*
           - binds all mouse/touch events (namespaced)
           - prepares stage overlay elements
-          - preloads images if needed
           */
             var
               space= get(_dimensions_),
@@ -286,7 +285,7 @@ jQuery.reel || (function($, window, document, undefined){
             })) || ($monitor= $());
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
-            t.trigger('preload');
+            t.trigger('opening').trigger('preload');
           },
           preload: function(e){
           /*
@@ -326,8 +325,7 @@ jQuery.reel || (function($, window, document, undefined){
                     t
                     .attr({ src: transparent })
                     .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
-                    .trigger('loaded')
-                    .trigger('opening');
+                    .trigger('loaded');
                     cleanup.call(e);
                   }
                 });
