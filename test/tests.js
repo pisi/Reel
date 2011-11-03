@@ -70,7 +70,7 @@
 
         $('<a/>', { name: 'receipt' }).appendTo('#qunit-testresult');
         formatted(report, 'Carbon copy of the receipt, which has been sent out to central Reel test server. Thank you!').appendTo( $('<ul/>').appendTo('#qunit-testresult') );
-        $.post(server+'/collect/reel/testrun/results', report);
+        location.host != 'au' && $.post(server+'/collect/reel/testrun/results', report);
 
         function formatted( bit, label ){
           var $result= $('<li/>')
