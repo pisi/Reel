@@ -77,7 +77,7 @@
   });
 
   test( 'Default `$.reel.math.spread`', function(){
-    expect(14);
+    expect(13 * 2 + 1);
     var
       probes= {
         10: {
@@ -200,6 +200,7 @@
       var
         $reel= $('#image').reel(def.options)
       deepEqual( $reel.data('images'), def.ordered, ix+' frames starting at frame '+def.options.frame);
+      equal( $.unique($reel.data('images')).length, def.ordered.length, 'equal length');
     });
 
   });
