@@ -86,7 +86,7 @@
             frames: 10,
             frame: 1
           },
-          ordered: [1,6,4,9,2,7,5,10,3,8]
+          ordered: '1,6,4,9,2,7,5,10,3,8'.split(/, ?/)
         },
         12: {
           options: {
@@ -94,7 +94,7 @@
             frames: 12,
             frame: 1
           },
-          ordered: [1,7,4,10,3,9,6,12,2,8,5,11]
+          ordered: '1,7,4,10,3,9,6,12,2,8,5,11'.split(/, ?/)
         },
         15: {
           options: {
@@ -102,7 +102,7 @@
             frames: 15,
             frame: 1
           },
-          ordered: [1,9,5,13,3,11,7,15,2,10,6,14,4,12,8]
+          ordered: '1,9,5,13,3,11,7,15,2,10,6,14,4,12,8'.split(/, ?/)
         },
         18: {
           options: {
@@ -110,7 +110,7 @@
             frames: 18,
             frame: 1
           },
-          ordered: [1,10,6,15,3,12,8,17,2,11,7,16,4,13,9,18,5,14]
+          ordered: '1,10,6,15,3,12,8,17,2,11,7,16,4,13,9,18,5,14'.split(/, ?/)
         },
         24: {
           options: {
@@ -118,7 +118,7 @@
             frames: 24,
             frame: 1
           },
-          ordered: [1,13, 7,19, 4,16,10,22, 3,15,9,21,6,18,12,24, 2,14,8,20,5,17,11,23]
+          ordered: '1,13, 7,19, 4,16,10,22, 3,15,9,21,6,18,12,24, 2,14,8,20,5,17,11,23'.split(/, ?/)
         },
         36: {
           options: {
@@ -126,7 +126,7 @@
             frames: 36,
             frame: 1
           },
-          ordered: [1,19, 10,28, 6,24,15,33, 3,21,12,30,8,26,17,35, 2,20,11,29,7,25,16,34,4,22,13,31,9,27,18,36, 5,23,14,32]
+          ordered: '1,19, 10,28, 6,24,15,33, 3,21,12,30,8,26,17,35, 2,20,11,29,7,25,16,34,4,22,13,31,9,27,18,36, 5,23,14,32'.split(/, ?/)
         },
         48: {
           options: {
@@ -134,7 +134,7 @@
             frames: 48,
             frame: 1
           },
-          ordered: [1,25, 13,37, 7,31,19,43, 4,28,16,40,10,34,22,46, 3,27,15,39,9,33,21,45,6,30,18,42,12,36,24,48, 2,26,14,38,8,32,20,44,5,29,17,41,11,35,23,47]
+          ordered: '1,25, 13,37, 7,31,19,43, 4,28,16,40,10,34,22,46, 3,27,15,39,9,33,21,45,6,30,18,42,12,36,24,48, 2,26,14,38,8,32,20,44,5,29,17,41,11,35,23,47'.split(/, ?/)
         },
 
         // Atypicals with different starting points
@@ -144,7 +144,7 @@
             frames: 17,
             frame: 7
           },
-          ordered: [7,16, 11,3, 9,1,13,5, 8,17,12,4,10,2,14,6, 15]
+          ordered: '7,16, 11,3, 9,1,13,5, 8,17,12,4,10,2,14,6, 15'.split(/, ?/)
         },
         23: {
           options: {
@@ -152,7 +152,7 @@
             frames: 23,
             frame: 11
           },
-          ordered: [11,23, 17,6, 14,3,20,9, 12,1,18,7,15,4,21,10, 13,2,19,8,16,5,22]
+          ordered: '11,23, 17,6, 14,3,20,9, 12,1,18,7,15,4,21,10, 13,2,19,8,16,5,22'.split(/, ?/)
         },
         27: {
           options: {
@@ -160,18 +160,16 @@
             frames: 27,
             frame: 27
           },
-          ordered: [27,14, 7,21, 3,17,10,24, 2,16,9,23,5,19,12,26, 1,15,8,22,4,18,11,25,6,20,13]
+          ordered: '27,14, 7,21, 3,17,10,24, 2,16,9,23,5,19,12,26, 1,15,8,22,4,18,11,25,6,20,13'.split(/, ?/)
         }
       }
 
     ok( typeof $.reel.math.spread == 'function', '`$.reel.math.spread` available');
 
-    $.each(probes, function(frames, def){
+    $.each(probes, function(ix, def){
       var
-        $reel= $('#image').reel(def.options),
-        opt= $.extend({}, $.reel.def, def.options),
-        get= function(name){ return $reel.data(name) }
-      deepEqual( $.reel.math.spread(def.options.images, opt, get), def.ordered, frames+' frames starting at frame '+def.start);
+        $reel= $('#image').reel(def.options)
+      deepEqual( $reel.data('images'), def.ordered, ix+' frames starting at frame '+def.options.frame);
     });
 
   });
