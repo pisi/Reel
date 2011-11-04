@@ -705,7 +705,7 @@ jQuery.reel || (function($, window, document, undefined){
         if (!sequence.length) return [];
         var
           order= [],
-          passes= 2 * rows,
+          passes= 4 * rows,
           start= opt.frame,
           frames= sequence.length,
           granule= frames / passes
