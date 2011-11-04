@@ -163,6 +163,10 @@ strong b.pass{
   float:right;
   margin:18px 24px 0 0;
 }
+#qunit-against select{
+  color: black;
+  backgorund: white;
+}
 
 ul#qunit-modules{
 	background-color:#0d3349;
