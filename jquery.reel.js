@@ -702,7 +702,7 @@ jQuery.reel || (function($, window, document, undefined){
         values= new Array().concat(sequence),
         present= new Array(sequence.length),
         priority= rows < 2 ? [] : values.slice(start, start + frames)
-      return spread(priority, 1, start).concat(spread(values, rows, 1))
+      return spread(priority, 1, start).concat(spread(values, rows, 0))
 
       function spread(sequence, rows, offset){
         if (!sequence.length) return [];
