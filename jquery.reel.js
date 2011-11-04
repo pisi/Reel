@@ -693,27 +693,36 @@ jQuery.reel || (function($, window, document, undefined){
     },
     spread: function(sequence, opt, get){
       var
-        order= [],
-        present= new Array(frames),
-        row_frames= get(_frames_),
         rows= opt.orbital ? 2 : opt.rows || 1,
-        passes= rows * 2,
-        frames= row_frames * rows,
-        start= (opt.row-1) * row_frames + opt.frame,
-        granule= frames / passes
-      for(var i= 0; i < passes; i++)
-        add(start + round(i * granule));
-      while(granule > 1)
-        for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
-          add(round(order[i] + granule));
-      for(var i= 0; i < order.length; i++)
-        order[i]= sequence[order[i] - 1];
-      return order
+        frames= opt.orbital ? opt.footage : opt.frames,
+        start= (opt.row-1) * frames,
+        values= new Array().concat(sequence),
+        present= new Array(sequence.length),
+        priority= rows < 2 ? [] : values.slice(start, start + frames)
+      return spread(priority, 1, start).concat(spread(values, rows, 1))
 
-      function add(frame){
-        while(!(frame >= 1 && frame <= frames))
-          frame+= frame < 1 ? +frames : -frames;
-        return present[frame] || (present[frame]= !!order.push(frame))
+      function spread(sequence, rows, offset){
+        if (!sequence.length) return [];
+        var
+          order= [],
+          passes= 2 * rows,
+          start= opt.frame,
+          frames= sequence.length,
+          granule= frames / passes
+        for(var i= 0; i < passes; i++)
+          add(start + round(i * granule));
+        while(granule > 1)
+          for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
+            add(round(order[i] + granule));
+        for(var i= 0; i < order.length; i++)
+          order[i]= sequence[order[i] - 1];
+        return order
+
+        function add(frame){
+          while(!(frame >= 1 && frame <= frames))
+            frame+= frame < 1 ? +frames : -frames;
+          return present[offset + frame] || (present[offset + frame]= !!order.push(frame))
+        }
       }
     }
   }
