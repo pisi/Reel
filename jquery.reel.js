@@ -316,7 +316,8 @@ jQuery.reel || (function($, window, document, undefined){
             while(preload.length){
               var
                 uri= opt.path+preload.shift(),
-                $img= $(new Image()).hide().bind('load'+ns, function update_preloader(){
+                $img= $(new Image()).hide().attr({ width: space.x, height: space.y })
+                .bind('load'+ns, function update_preloader(){
                   img_tag.preloaded++
                   $(this).unbind(ns);
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
