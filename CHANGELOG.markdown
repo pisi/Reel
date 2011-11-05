@@ -14,6 +14,7 @@ Development (edge)
 * Option `scrollable` can disable page scrolling (if needed) on touch devices.
 * New event `"openingDone"` now announces the end of opening animation
   (GH-65).
+* Internal event `slide` renamed to `pan` (GH-51).
 
 
 Version 1.1.3

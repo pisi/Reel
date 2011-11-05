@@ -215,16 +215,16 @@
 
         // Click and drag long way down
         $pano.trigger('down', [ 100, 200 ]);
-        $pano.trigger('slide', [ 100, 400 ]);
+        $pano.trigger('pan', [ 100, 400 ]);
         deepEqual({ row: $pano.data('row'), frame: $pano.data('frame') },
                   { row: 1, frame: rows * frames - frames + frame },
                   'Drag way down on frame '+frame+' / '+frames+', row '+row+' / '+rows);
 
-        // `tick` needs to be triggered manually between `slide`s in order to have the instance slidable again
+        // `tick` needs to be triggered manually between `pan`s in order to have the instance slidable again
         $pano.trigger('tick');
 
         // Then drag it all the way back up to reach the first row
-        $pano.trigger('slide', [ 100, 1 ]);
+        $pano.trigger('pan', [ 100, 1 ]);
         deepEqual({ row: $pano.data('row'), frame: $pano.data('frame') },
                   { row: 0, frame: frame },
                   '& drag way up');
@@ -232,7 +232,7 @@
         $pano.trigger('tick');
 
         // Then drag it back all the way down
-        $pano.trigger('slide', [ 100, 400 ]);
+        $pano.trigger('pan', [ 100, 400 ]);
         deepEqual({ row: $pano.data('row'), frame: $pano.data('frame') },
                   { row: 1, frame: rows * frames - frames + frame },
                   '& drag way down again.');

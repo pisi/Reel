@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-11-03
+ * Updated: 2011-11-06
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -267,7 +267,7 @@ jQuery.reel || (function($, window, document, undefined){
               });
               area
                 .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
-                .bind(_touchmove_, function(e){ t.trigger('slide', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
+                .bind(_touchmove_, function(e){ t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
                 .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                 .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
             }else{
@@ -428,7 +428,7 @@ jQuery.reel || (function($, window, document, undefined){
               if (!touched){
                 stage_pool
                 .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor })
-                .bind(_mousemove_, function(e){ t.trigger('slide', [e.clientX, e.clientY]); cleanup.call(e); return false })
+                .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
                 opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
               }
             }
@@ -453,13 +453,14 @@ jQuery.reel || (function($, window, document, undefined){
             && get(_area_).css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
             cleanup.call(e);
           },
-          slide: function(e, x, y, touched){
+          pan: function(e, x, y, touched){
           /*
           - calculates the X distance from drag center and applies graph on it to get fraction
           - recenters the drag when dragged over limits
           - detects the direction of the motion
           - builds inertial motion bias
-          - (`slide` was originally `drag` which conflicted with MSIE)
+          - (`pan` was originally `slide` which conflicted with Mootools (GH-51))
+          - (and `slide` was once `drag` which conflicted with MSIE)
           */
             if (opt.draggable && slidable){
               // by checking slidable sync with the ticker tempo is achieved
