@@ -96,7 +96,17 @@
     start();
   });
 
-  test( 'Default `$.reel.math.spread`', function(){
+  test( '`$.reel.preload.linear` for linear order of preloaded images', function(){
+    expect(2);
+    var
+      images= '1,2,3,4,5,6,7,8,9,10'.split(/,/),
+      $reel= $('#image').reel({ images: new Array().concat(images), preload: 'linear' })
+
+    ok( typeof $.reel.preload.linear == 'function', '`$.reel.preload.linear` available');
+    deepEqual( $reel.data('images'), images, 'What comes in, comes out');
+  });
+
+  test( '`$.reel.preload.fidelity` for evenly spread preloaded images', function(){
     expect(13 * 2 + 1);
     var
       probes= {
@@ -214,11 +224,12 @@
         }
       }
 
-    ok( typeof $.reel.math.spread == 'function', '`$.reel.math.spread` available');
+    ok( typeof $.reel.preload.fidelity == 'function', '`$.reel.preload.fidelity` available');
 
     $.each(probes, function(ix, def){
       var
         $reel= $('#image').reel(def.options)
+
       deepEqual( $reel.data('images'), def.ordered, ix+' frames starting at frame '+def.options.frame);
       equal( $.unique($reel.data('images')).length, def.ordered.length, 'equal length');
     });
