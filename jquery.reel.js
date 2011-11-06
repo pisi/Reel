@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-11-05
+ * Updated: 2011-11-06
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -100,6 +100,7 @@ jQuery.reel || (function($, window, document, undefined){
       wheelable:       true, // mouse wheel interaction (allowed by default)
 
       attr:              {}, // initial attribute-value pairs map for the IMG tag
+      preload:   'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
     }
@@ -297,7 +298,8 @@ jQuery.reel || (function($, window, document, undefined){
               $overlay= t.parent(),
               image= get(_image_),
               images= opt.images,
-              preload= !images.length ? [image] : $.reel.math.spread(images, opt, get),
+              order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
+              preload= !images.length ? [image] : order(images, opt, get),
               uris= [],
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
@@ -691,8 +693,15 @@ jQuery.reel || (function($, window, document, undefined){
     },
     interpolate: function(fraction, lo, hi){
       return lo + fraction * (hi - lo)
+    }
+  }
+
+  // Preload sequences
+  $.reel.preload= {
+    linear: function(sequence, opt, get){
+      return sequence
     },
-    spread: function(sequence, opt, get){
+    fidelity: function(sequence, opt, get){
       var
         rows= opt.orbital ? 2 : opt.rows || 1,
         frames= opt.orbital ? opt.footage : opt.frames,

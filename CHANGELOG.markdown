@@ -14,6 +14,10 @@ Development (edge)
 * Option `scrollable` can disable page scrolling (if needed) on touch devices.
 * New event `"openingDone"` now announces the end of opening animation
   (GH-65).
+* Improved order of preloaded images gradually increasing fidelity of
+  the image, thus the name `"fidelity"` and this mode is now default.
+  The former order is designated `"linear". Preloading mode is chosen by
+  new `preload` option accepting a mode name. (GH-10).
 
 
 Version 1.1.3
