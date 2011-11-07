@@ -252,10 +252,10 @@ jQuery.reel || (function($, window, document, undefined){
               frame= set(_frame_, round(fraction * frames) + 1),
               loaded= 0,
               id= t.attr('id'),
+              film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 },
               $overlay= t.parent(),
-              $hi= $(_div_tag_, { 'class': hi_klass,
-                css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
-              }).appendTo($overlay),
+              $hi= $(_div_tag_, { 'class': hi_klass, css: film_css }).appendTo($overlay),
+              $annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }).appendTo($hi),
               scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
               area= set(_area_, $(opt.area || $hi ))
             if ($.reel.touchy){
@@ -770,6 +770,7 @@ jQuery.reel || (function($, window, document, undefined){
     preloader_klass= klass + '-preloader',
     monitor_klass= klass + '-monitor',
     hi_klass= klass + '-interface',
+    annotations_klass= klass + '-annotations',
     frame_klass= 'frame-',
 
     // Image resources
