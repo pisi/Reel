@@ -296,7 +296,7 @@ jQuery.reel || (function($, window, document, undefined){
                 note.image || note.link && $note.append($link);
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
-                $note.appendTo($annotations);
+                $note.hide().appendTo($annotations);
               });
             }
             opt.indicator && $overlay.append(indicator('x'));
