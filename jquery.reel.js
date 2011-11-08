@@ -618,8 +618,8 @@ jQuery.reel || (function($, window, document, undefined){
             if (opt.annotations){
               $.each(opt.annotations, function(ida, note){
                 var
-                  x= note.x.length ? note.x[frame - note.start] : note.x,
-                  y= note.y.length ? note.y[frame - note.start] : note.y,
+                  x= typeof note.x!=_object_ ? note.x : note.x[frame - note.start],
+                  y= typeof note.y!=_object_ ? note.y : note.y[frame - note.start],
                   visible= x && y,
                   position= { position: _absolute_, left: x, top: y },
                   $note= $('#'+ida, stage).css(position)
@@ -813,8 +813,8 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Various string primitives
     __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', _div_= 'div', _div_tag_= tag(_div_),
-    _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _px_= 'px', _src_= 'src',
-    _title_= 'title', _width_= 'width'
+    _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _object_= 'object', _px_= 'px',
+    _src_= 'src', _title_= 'title', _width_= 'width'
 
   // Helpers
   function embedded(image){ return knows_data_url && 'data:image/gif;base64,R0lGODlh'+image }
