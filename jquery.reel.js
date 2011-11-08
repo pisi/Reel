@@ -288,6 +288,11 @@ jQuery.reel || (function($, window, document, undefined){
             if (opt.annotations){
               $hi.append($annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }))
               || ($annotations= $());
+              $.each(opt.annotations, function(ida, note){
+                var
+                  $note= $(_div_tag_, note.holder).attr({ id: ida })
+                $note.appendTo($annotations);
+              });
             }
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
