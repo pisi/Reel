@@ -290,7 +290,12 @@ jQuery.reel || (function($, window, document, undefined){
               || ($annotations= $());
               $.each(opt.annotations, function(ida, note){
                 var
-                  $note= $(_div_tag_, note.holder).attr({ id: ida })
+                  $note= $(_div_tag_, note.holder).attr({ id: ida }),
+                  $image= note.image ? $(tag(_img_), note.image) : $(),
+                  $link= note.link ? $(tag(_a_), note.link) : $()
+                note.image || note.link && $note.append($link);
+                note.link || note.image && $note.append($image);
+                note.link && note.image && $note.append($link.append($image));
                 $note.appendTo($annotations);
               });
             }
@@ -795,7 +800,7 @@ jQuery.reel || (function($, window, document, undefined){
     _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
 
     // Various string primitives
-    __= '', ___= ' ', _absolute_= 'absolute', _div_= 'div', _div_tag_= tag(_div_),
+    __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', _div_= 'div', _div_tag_= tag(_div_),
     _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _px_= 'px', _src_= 'src',
     _title_= 'title', _width_= 'width'
 
