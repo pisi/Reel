@@ -578,6 +578,7 @@ jQuery.reel || (function($, window, document, undefined){
               footage= opt.footage,
               space= get(_dimensions_),
               multirow= opt.rows > 1,
+              stage= get(_stage_),
               horizontal= opt.horizontal
             if (get(_vertical_)) var
               frame= opt.inversed ? footage + 1 - frame : frame,
@@ -586,11 +587,11 @@ jQuery.reel || (function($, window, document, undefined){
               travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
               indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
-              $indicator= $(dot(indicator_klass+'.x'), get(_stage_)).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
+              $indicator= $(dot(indicator_klass+'.x'), stage).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
             if (multirow) var
               ytravel= space.y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
-              $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
+              $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
             if (frame != was){
               $(stage).removeClass(frame_klass + was).addClass(frame_klass + frame)
               if (images.length){
@@ -619,7 +620,9 @@ jQuery.reel || (function($, window, document, undefined){
                 var
                   x= note.x.length ? note.x[frame - note.start] : note.x,
                   y= note.y.length ? note.y[frame - note.start] : note.y,
-                  visible= x && y
+                  visible= x && y,
+                  position= { position: _absolute_, left: x, top: y },
+                  $note= $('#'+ida, stage).css(position)
               });
             }
             cleanup.call(e);
