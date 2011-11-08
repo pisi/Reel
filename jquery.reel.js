@@ -256,7 +256,6 @@ jQuery.reel || (function($, window, document, undefined){
               film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 },
               $overlay= t.parent(),
               $hi= $(_div_tag_, { 'class': hi_klass, css: film_css }).appendTo($overlay),
-              $annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }).appendTo($hi),
               scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
               area= set(_area_, $(opt.area || $hi ))
             if ($.reel.touchy){
