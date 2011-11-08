@@ -15,6 +15,7 @@ Development (edge)
 * New event `"openingDone"` now announces the end of opening animation
   (GH-65).
 * Internal event `slide` renamed to `pan` (GH-51).
+* Actual frame number is manifested with a wrapper class name, e.g. `frame-8` (GH-69).
 
 
 Version 1.1.3

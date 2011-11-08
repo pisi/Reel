@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-11-06
+ * Updated: 2011-11-08
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -576,26 +576,28 @@ jQuery.reel || (function($, window, document, undefined){
               ytravel= space.y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
-            if (frame != was)
-            if (images.length){
-              var
-                sprite= images[frame - 1]
-              t.attr({ src: opt.path+sprite })
-            }else{
-              if (!opt.stitched) var
-                minor= (frame % footage) - 1,
-                minor= minor < 0 ? footage - 1 : minor,
-                major= floor((frame - 0.1) / footage),
-                major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
-                spacing= get(_spacing_),
-                a= major * ((horizontal ? space.y : space.x) + spacing),
-                b= minor * ((horizontal ? space.x : space.y) + spacing),
-                shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
-              else var
-                x= round(fraction * get(_stitched_travel_)),
-                y= 0,
-                shift= [-x + _px_, y + _px_]
-              t.css({ backgroundPosition: shift.join(___) })
+            if (frame != was){
+              $(stage).removeClass(frame_klass + was).addClass(frame_klass + frame)
+              if (images.length){
+                var
+                  sprite= images[frame - 1]
+                t.attr({ src: opt.path+sprite })
+              }else{
+                if (!opt.stitched) var
+                  minor= (frame % footage) - 1,
+                  minor= minor < 0 ? footage - 1 : minor,
+                  major= floor((frame - 0.1) / footage),
+                  major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
+                  spacing= get(_spacing_),
+                  a= major * ((horizontal ? space.y : space.x) + spacing),
+                  b= minor * ((horizontal ? space.x : space.y) + spacing),
+                  shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
+                else var
+                  x= round(fraction * get(_stitched_travel_)),
+                  y= 0,
+                  shift= [-x + _px_, y + _px_]
+                t.css({ backgroundPosition: shift.join(___) })
+              }
             }
             cleanup.call(e);
           }
@@ -751,6 +753,7 @@ jQuery.reel || (function($, window, document, undefined){
     preloader_klass= klass + '-preloader',
     monitor_klass= klass + '-monitor',
     hi_klass= klass + '-interface',
+    frame_klass= 'frame-',
 
     // Image resources
     transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
