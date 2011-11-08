@@ -99,6 +99,7 @@ jQuery.reel || (function($, window, document, undefined){
       vertical:       false, // switches orbital object movie to vertical mode
       wheelable:       true, // mouse wheel interaction (allowed by default)
 
+      annotations:undefined, // annotations definition object
       attr:              {}, // initial attribute-value pairs map for the IMG tag
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
