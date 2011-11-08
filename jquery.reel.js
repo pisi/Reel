@@ -284,6 +284,10 @@ jQuery.reel || (function($, window, document, undefined){
               'class': monitor_klass,
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
+            if (opt.annotations){
+              $hi.append($annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }))
+              || ($annotations= $());
+            }
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             t.trigger('preload');
@@ -623,6 +627,7 @@ jQuery.reel || (function($, window, document, undefined){
         },
 
         $monitor,
+        $annotations,
         $preloader,
         indicator= function(axis){
           return $(_div_tag_, {
