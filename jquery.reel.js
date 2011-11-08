@@ -580,7 +580,7 @@ jQuery.reel || (function($, window, document, undefined){
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
             if (frame != was){
-              $(stage).removeClass(frame_klass + was).addClass(frame_klass + frame)
+              $(get(_stage_)).removeClass(frame_klass + was).addClass(frame_klass + frame)
               if (images.length){
                 var
                   sprite= images[frame - 1]
