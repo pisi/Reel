@@ -623,6 +623,7 @@ jQuery.reel || (function($, window, document, undefined){
                   visible= x && y,
                   position= { position: _absolute_, left: x, top: y },
                   $note= $('#'+ida, stage).css(position)
+                visible && $note.filter(':hidden').show() || $note.filter(':visible').hide();
               });
             }
             cleanup.call(e);
