@@ -612,6 +612,14 @@ jQuery.reel || (function($, window, document, undefined){
                 t.css({ backgroundPosition: shift.join(___) })
               }
             }
+            if (opt.annotations){
+              $.each(opt.annotations, function(ida, note){
+                var
+                  x= note.x.length ? note.x[frame - note.start] : note.x,
+                  y= note.y.length ? note.y[frame - note.start] : note.y,
+                  visible= x && y
+              });
+            }
             cleanup.call(e);
           }
         },
