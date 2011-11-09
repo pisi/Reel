@@ -515,15 +515,13 @@ jQuery.reel || (function($, window, document, undefined){
           },
           fractionChange: function(e, fraction){
           /*
-          - normalizes given fraction (if any) - loop/limit and round
           - calculates and changes sprite frame
           - for non-looping panoramas
               - keeps track of ticks spent on edge
               - reverses motion direction if too long
           */
             var
-              fraction= !fraction ? get(_fraction_) : set(_fraction_, fraction),
-              fraction= set(_fraction_, opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction)),
+              fraction= set(_fraction_, normal.fraction(fraction, opt, get)),
               frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
               multirow= opt.rows > 1,
               orbital= opt.orbital,
@@ -724,6 +722,10 @@ jQuery.reel || (function($, window, document, undefined){
 
   // Normalizations
   $.reel.normal= {
+    fraction: function(fraction, opt, get){
+      fraction= fraction != undefined ? fraction : get(_fraction_);
+      return opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
+    }
   }
 
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
