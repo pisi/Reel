@@ -731,10 +731,11 @@ jQuery.reel || (function($, window, document, undefined){
     },
     frame: function(frame, opt, get){
       var
-        frame= round(frame) || get(_frame_),
-        frames= get(_frames_) * (opt.orbital ? 2 : opt.rows || 1)
-      while (frame < 1) frame+= frames;
-      return opt.loops ? frame % frames : min_max(0, frames, frame)
+        frame= frame != undefined ? round(frame) : get(_frame_),
+        rows= (opt.orbital ? 2 : opt.rows || 1),
+        frames= get(_frames_) * rows,
+        result= opt.loops ? frame % frames || frames : min_max(1, frames, frame)
+      return result < 0 ? result + frames : result
     }
   }
 
