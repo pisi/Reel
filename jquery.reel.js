@@ -554,7 +554,7 @@ jQuery.reel || (function($, window, document, undefined){
           - adjusts indicator position
           */
             var
-              fraction= !frame ? get(_fraction_) : set(_fraction_, get(_bit_) * (frame-1)),
+              fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
               was= get(__frame_),
               frame= set(__frame_, set(_frame_, round(frame ? frame : get(_frame_)))),
               images= opt.images,
