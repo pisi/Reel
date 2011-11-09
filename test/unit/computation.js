@@ -57,15 +57,30 @@
   });
 
   asyncTest( '`frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
-    expect(4);
+    expect(19);
     var
       selector= '#image',
-      $reel= $(selector).reel({ frames: 15, rows: 3 }),
+      $reel= $(selector).reel({ frames: 15, rows: 2 }),
       entries= {
+        '1': 1,
+        '2': 2,
         '20': 20,
+        '0': 30,
+        '30': 30,
+        '31': 1,
         '25.3': 25,
-        '50': 5,
-        '-5': 40
+        '50': 20,
+        '60': 30,
+        '90': 30,
+        '-1': 29,
+        '-2': 28,
+        '-5': 25,
+        '-29': 1,
+        '-30': 30,
+        '-31': 29,
+        '-37': 23,
+        '-60': 30,
+        '-90': 30
       }
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
