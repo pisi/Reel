@@ -16,6 +16,10 @@ Development (edge)
   (GH-65).
 * Internal event `slide` renamed to `pan` (GH-51).
 * Actual frame number is manifested with a wrapper class name, e.g. `frame-8` (GH-69).
+* Improved order of preloaded images gradually increasing fidelity of
+  the image, thus the name `"fidelity"` and this mode is now default.
+  The former order is designated `"linear". Preloading mode is chosen by
+  new `preload` option accepting a mode name. (GH-10).
 
 
 Version 1.1.3

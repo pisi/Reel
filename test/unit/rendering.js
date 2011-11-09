@@ -179,6 +179,53 @@
       ok( $('#image-reel').attr('class').match(/frame-[0-9]+/), 'The wrapper carries frame-'+frame+' class name');
       start();
     }, 123);
+
+  asyncTest( 'Preload cache `img`s have defined stage dimensions #10', function(){
+    expect(3);
+    var
+      $reel= $('#image').reel()
+
+    $reel.bind('loaded', function(){
+      var
+        $cached= $reel.siblings('img[width][height]')
+
+      equal($cached.length, 1, 'Image has dimensions');
+      equal($cached.attr('width'), $reel.data('dimensions').x, 'Width equals')
+      equal($cached.attr('height'), $reel.data('dimensions').y, 'Height equals')
+      start();
+    });
+  });
+
+  asyncTest( 'Preload cache `img`s have defined stage dimensions #10', function(){
+    expect(3);
+    var
+      $reel= $('#image').reel()
+
+    $reel.bind('loaded', function(){
+      var
+        $cached= $reel.siblings('img[width][height]')
+
+      equal($cached.length, 1, 'Image has dimensions');
+      equal($cached.attr('width'), $reel.data('dimensions').x, 'Width equals')
+      equal($cached.attr('height'), $reel.data('dimensions').y, 'Height equals')
+      start();
+    });
+  });
+
+  asyncTest( 'Preload cache `img`s have defined stage dimensions #10', function(){
+    expect(3);
+    var
+      $reel= $('#image').reel()
+
+    $reel.bind('loaded', function(){
+      var
+        $cached= $reel.siblings('img[width][height]')
+
+      equal($cached.length, 1, 'Image has dimensions');
+      equal($cached.attr('width'), $reel.data('dimensions').x, 'Width equals')
+      equal($cached.attr('height'), $reel.data('dimensions').y, 'Height equals')
+      start();
+    });
   });
 
 })(jQuery);

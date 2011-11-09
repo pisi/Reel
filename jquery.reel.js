@@ -101,6 +101,7 @@ jQuery.reel || (function($, window, document, undefined){
 
       annotations:undefined, // annotations definition object
       attr:              {}, // initial attribute-value pairs map for the IMG tag
+      preload:   'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
     }
@@ -311,7 +312,8 @@ jQuery.reel || (function($, window, document, undefined){
               $overlay= t.parent(),
               image= get(_image_),
               images= opt.images,
-              preload= !images.length ? [image] : $.reel.math.spread(images, opt, get),
+              order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
+              preload= !images.length ? [image] : order(images, opt, get),
               uris= [],
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
@@ -330,7 +332,8 @@ jQuery.reel || (function($, window, document, undefined){
             while(preload.length){
               var
                 uri= opt.path+preload.shift(),
-                $img= $(new Image()).hide().bind('load'+ns, function update_preloader(){
+                $img= $(new Image()).hide().attr({ width: space.x, height: space.y })
+                .bind('load'+ns, function update_preloader(){
                   img_tag.preloaded++
                   $(this).unbind(ns);
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
@@ -719,30 +722,46 @@ jQuery.reel || (function($, window, document, undefined){
     },
     interpolate: function(fraction, lo, hi){
       return lo + fraction * (hi - lo)
-    },
-    spread: function(sequence, opt, get){
-      var
-        order= [],
-        present= new Array(frames),
-        row_frames= get(_frames_),
-        rows= opt.orbital ? 2 : opt.rows || 1,
-        passes= rows * 2,
-        frames= row_frames * rows,
-        start= (opt.row-1) * row_frames + opt.frame,
-        granule= frames / passes
-      for(var i= 0; i < passes; i++)
-        add(start + round(i * granule));
-      while(granule > 1)
-        for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
-          add(round(order[i] + granule));
-      for(var i= 0; i < order.length; i++)
-        order[i]= sequence[order[i] - 1];
-      return order
+    }
+  }
 
-      function add(frame){
-        while(!(frame >= 1 && frame <= frames))
-          frame+= frame < 1 ? +frames : -frames;
-        return present[frame] || (present[frame]= !!order.push(frame))
+  // Preload sequences
+  $.reel.preload= {
+    linear: function(sequence, opt, get){
+      return sequence
+    },
+    fidelity: function(sequence, opt, get){
+      var
+        rows= opt.orbital ? 2 : opt.rows || 1,
+        frames= opt.orbital ? opt.footage : opt.frames,
+        start= (opt.row-1) * frames,
+        values= new Array().concat(sequence),
+        present= new Array(sequence.length),
+        priority= rows < 2 ? [] : values.slice(start, start + frames)
+      return spread(priority, 1, start).concat(spread(values, rows, 0))
+
+      function spread(sequence, rows, offset){
+        if (!sequence.length) return [];
+        var
+          order= [],
+          passes= 4 * rows,
+          start= opt.frame,
+          frames= sequence.length,
+          granule= frames / passes
+        for(var i= 0; i < passes; i++)
+          add(start + round(i * granule));
+        while(granule > 1)
+          for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
+            add(round(order[i] + granule));
+        for(var i= 0; i < order.length; i++)
+          order[i]= sequence[order[i] - 1];
+        return order
+
+        function add(frame){
+          while(!(frame >= 1 && frame <= frames))
+            frame+= frame < 1 ? +frames : -frames;
+          return present[offset + frame] || (present[offset + frame]= !!order.push(frame))
+        }
       }
     }
   }
