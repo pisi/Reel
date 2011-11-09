@@ -4,7 +4,7 @@
 (function($){
 
   module('Issues', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
+    $('.jquery-reel').unbind('loaded').trigger('teardown');
     $(document).unbind('tick.reel');
   }});
 
@@ -57,10 +57,10 @@
     $pano.trigger('frameChange', 36);
     if ($.browser.msie){
       // MSIE returns undefined backgroundPosition, so we need to check individual ones
-      equiv($pano.css('backgroundPositionX'), -travel+'px', 'Looping - frame 36 (max, X)');
+      equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 36 (max, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');
     }else{
-      equiv($pano.css('backgroundPosition'), -travel+'px 0px', 'Looping - frame 36 (max)');
+      equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 36 (max)');
     }
   });
 
@@ -81,7 +81,7 @@
         images:   phone_frames(20)
       })
 
-    $pano.bind('loaded', function(){
+    $pano.one('loaded', function(){
       equal($pano.attr('src'), 'samples/phone/01.png', 'Image is from the sequence');
       start();
     });

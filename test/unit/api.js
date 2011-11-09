@@ -29,7 +29,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 4);
 
-    equal( count, 48, 'Total number of options');
+    equal( count, 49, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );

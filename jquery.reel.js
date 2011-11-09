@@ -224,7 +224,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               backup= t.data(_backup_)
-            t.parent().unbind('openingDone', delay_play).children('img').unbind(ns);
+            t.parent().unbind('openingDone', delay_play).children(_img_).unbind(ns);
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
               src: backup.src,
