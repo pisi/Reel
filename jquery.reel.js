@@ -556,7 +556,7 @@ jQuery.reel || (function($, window, document, undefined){
             var
               fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
               was= get(__frame_),
-              frame= set(__frame_, set(_frame_, round(frame ? frame : get(_frame_)))),
+              frame= set(__frame_, set(_frame_, normal.frame(frame, opt, get))),
               images= opt.images,
               footage= opt.footage,
               space= get(_dimensions_),
@@ -728,6 +728,13 @@ jQuery.reel || (function($, window, document, undefined){
     },
     row: function(row, opt, get){
       return min_max(0, 1, row != undefined ? (row-1) / (opt.rows-1) : get(_row_))
+    },
+    frame: function(frame, opt, get){
+      var
+        frame= round(frame) || get(_frame_),
+        frames= get(_frames_) * (opt.orbital ? 2 : opt.rows || 1)
+      while (frame < 1) frame+= frames;
+      return opt.loops ? frame % frames : min_max(0, frames, frame)
     }
   }
 

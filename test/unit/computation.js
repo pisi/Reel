@@ -56,6 +56,26 @@
     });
   });
 
+  asyncTest( '`frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
+    expect(4);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ frames: 15, rows: 3 }),
+      entries= {
+        '20': 20,
+        '25.3': 25,
+        '50': 5,
+        '-5': 40
+      }
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.trigger('frameChange', Number(ix));
+        equal( $reel.data('frame'), it, 'Frame '+ix);
+      });
+      start();
+    });
+  });
+
   asyncTest( 'Positive direction/spped is not detected as reversed', function(){
     expect(1);
     var
