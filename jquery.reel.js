@@ -650,6 +650,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // Graph function to be used
         graph= opt.graph || $.reel.math[opt.loops ? 'hatch' : 'envelope'],
+        normal= $.reel.normal,
 
         // Resets the interaction graph's zero point
         recenter_mouse= function(x, y, fraction, revolution, row){
@@ -719,6 +720,10 @@ jQuery.reel || (function($, window, document, undefined){
         return present[frame] || (present[frame]= !!order.push(frame))
       }
     }
+  }
+
+  // Normalizations
+  $.reel.normal= {
   }
 
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
