@@ -57,15 +57,30 @@
   });
 
   asyncTest( '`frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
-    expect(4);
+    expect(19);
     var
       selector= '#image',
-      $reel= $(selector).reel({ frames: 15, rows: 3 }),
+      $reel= $(selector).reel({ frames: 15, rows: 2 }),
       entries= {
+        '1': 1,
+        '2': 2,
         '20': 20,
+        '0': 30,
+        '30': 30,
+        '31': 1,
         '25.3': 25,
-        '50': 5,
-        '-5': 40
+        '50': 20,
+        '60': 30,
+        '90': 30,
+        '-1': 29,
+        '-2': 28,
+        '-5': 25,
+        '-29': 1,
+        '-30': 30,
+        '-31': 29,
+        '-37': 23,
+        '-60': 30,
+        '-90': 30
       }
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
@@ -96,8 +111,18 @@
     start();
   });
 
-  test( 'Default `$.reel.math.spread`', function(){
-    expect(11);
+  test( '`$.reel.preload.linear` for linear order of preloaded images', function(){
+    expect(2);
+    var
+      images= '1,2,3,4,5,6,7,8,9,10'.split(/,/),
+      $reel= $('#image').reel({ images: new Array().concat(images), preload: 'linear' })
+
+    ok( typeof $.reel.preload.linear == 'function', '`$.reel.preload.linear` available');
+    deepEqual( $reel.data('images'), images, 'What comes in, comes out');
+  });
+
+  test( '`$.reel.preload.fidelity` for evenly spread preloaded images', function(){
+    expect(13 * 2 + 1);
     var
       probes= {
         10: {
@@ -106,7 +131,7 @@
             frames: 10,
             frame: 1
           },
-          ordered: [1,6,4,9,2,7,5,10,3,8]
+          ordered: '1,4,6,9, 2,5,7,10, 3,8'.split(/, ?/)
         },
         12: {
           options: {
@@ -114,7 +139,7 @@
             frames: 12,
             frame: 1
           },
-          ordered: [1,7,4,10,3,9,6,12,2,8,5,11]
+          ordered: '1,4,7,10, 3,6,9,12, 2,5,8,11'.split(/, ?/)
         },
         15: {
           options: {
@@ -122,7 +147,7 @@
             frames: 15,
             frame: 1
           },
-          ordered: [1,9,5,13,3,11,7,15,2,10,6,14,4,12,8]
+          ordered: '1,5,9,12, 3,7,11,14, 2,6,10,13,4,8,15'.split(/, ?/)
         },
         18: {
           options: {
@@ -130,7 +155,7 @@
             frames: 18,
             frame: 1
           },
-          ordered: [1,10,6,15,3,12,8,17,2,11,7,16,4,13,9,18,5,14]
+          ordered: '1,6,10,15, 3,8,12,17, 2,7,11,16,4,9,13,18, 5,14'.split(/, ?/)
         },
         24: {
           options: {
@@ -138,7 +163,7 @@
             frames: 24,
             frame: 1
           },
-          ordered: [1,13, 7,19, 4,16,10,22, 3,15,9,21,6,18,12,24, 2,14,8,20,5,17,11,23]
+          ordered: '1,7,13,19, 4,10,16,22, 3,9,15,21,6,12,18,24, 2,8,14,20,5,11,17,23'.split(/, ?/)
         },
         36: {
           options: {
@@ -146,7 +171,7 @@
             frames: 36,
             frame: 1
           },
-          ordered: [1,19, 10,28, 6,24,15,33, 3,21,12,30,8,26,17,35, 2,20,11,29,7,25,16,34,4,22,13,31,9,27,18,36, 5,23,14,32]
+          ordered: '1,10,19,28, 6,15,24,33, 3,12,21,30,8,17,26,35, 2,11,20,29,7,16,25,34,4,13,22,31,9,18,27,36, 5,14,23,32'.split(/, ?/)
         },
         48: {
           options: {
@@ -154,7 +179,7 @@
             frames: 48,
             frame: 1
           },
-          ordered: [1,25, 13,37, 7,31,19,43, 4,28,16,40,10,34,22,46, 3,27,15,39,9,33,21,45,6,30,18,42,12,36,24,48, 2,26,14,38,8,32,20,44,5,29,17,41,11,35,23,47]
+          ordered: '1,13,25,37, 7,19,31,43, 4,16,28,40,10,22,34,46, 3,15,27,39,9,21,33,45,6,18,30,42,12,24,36,48, 2,14,26,38,8,20,32,44,5,17,29,41,11,23,35,47'.split(/, ?/)
         },
 
         // Atypicals with different starting points
@@ -164,7 +189,7 @@
             frames: 17,
             frame: 7
           },
-          ordered: [7,16, 11,3, 9,1,13,5, 8,17,12,4,10,2,14,6, 15]
+          ordered: '7,11,16,3, 9,13,1,5, 8,12,17,4,10,14,2,6, 15'.split(/, ?/)
         },
         23: {
           options: {
@@ -172,7 +197,7 @@
             frames: 23,
             frame: 11
           },
-          ordered: [11,23, 17,6, 14,3,20,9, 12,1,18,7,15,4,21,10, 13,2,19,8,16,5,22]
+          ordered: '11,17,23,5, 14,20,3,8, 12,18,1,6,15,21,4,9, 13,19,2,7,16,22,10'.split(/, ?/)
         },
         27: {
           options: {
@@ -180,18 +205,48 @@
             frames: 27,
             frame: 27
           },
-          ordered: [27,14, 7,21, 3,17,10,24, 2,16,9,23,5,19,12,26, 1,15,8,22,4,18,11,25,6,20,13]
+          ordered: '27,7,14,20, 3,10,17,23, 2,9,16,22,5,12,19,25, 1,8,15,21,4,11,18,24,6,13,26'.split(/, ?/)
+        },
+
+        // Multi-rows
+        '2x10': {
+          options: {
+            images: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+            frames: 10,
+            frame: 1,
+            rows: 2
+          },
+          ordered: '1,4,6,9, 2,5,7,10, 3,8, 11,14,16,19, 12,15,17,20, 13,18'.split(/, ?/)
+        },
+        '4x10': {
+          options: {
+            images: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],
+            frames: 10,
+            frame: 1,
+            rows: 4,
+            row: 2
+          },
+          ordered: '11,14,16,19, 12,15,17,20, 13,18, 1,4,6,9,21,24,26,29,31,34,36,39, 2,5,7,10,22,25,27,30,32,35,37,40, 3,8,23,28,33,38'.split(/, ?/)
+        },
+        'orbital': {
+          options: {
+            images: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+            footage: 9,
+            frame: 1,
+            orbital: 3
+          },
+          ordered: '1,3,6,8, 2,4,7,9, 5, 10,12,15,17, 11,13,16,18, 14'.split(/, ?/)
         }
       }
 
-    ok( typeof $.reel.math.spread == 'function', '`$.reel.math.spread` available');
+    ok( typeof $.reel.preload.fidelity == 'function', '`$.reel.preload.fidelity` available');
 
-    $.each(probes, function(frames, def){
+    $.each(probes, function(ix, def){
       var
-        $reel= $('#image').reel(def.options),
-        opt= $.extend({}, $.reel.def, def.options),
-        get= function(name){ return $reel.data(name) }
-      deepEqual( $.reel.math.spread(def.options.images, opt, get), def.ordered, frames+' frames starting at frame '+def.start);
+        $reel= $('#image').reel(def.options)
+
+      deepEqual( $reel.data('images'), def.ordered, ix+' frames starting at frame '+def.options.frame);
+      equal( $.unique($reel.data('images')).length, def.ordered.length, 'equal length');
     });
 
   });

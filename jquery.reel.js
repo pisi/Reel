@@ -99,7 +99,9 @@ jQuery.reel || (function($, window, document, undefined){
       vertical:       false, // switches orbital object movie to vertical mode
       wheelable:       true, // mouse wheel interaction (allowed by default)
 
+      annotations:undefined, // annotations definition object
       attr:              {}, // initial attribute-value pairs map for the IMG tag
+      preload:   'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
     }
@@ -252,10 +254,9 @@ jQuery.reel || (function($, window, document, undefined){
               frame= set(_frame_, round(fraction * frames) + 1),
               loaded= 0,
               id= t.attr('id'),
+              film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 },
               $overlay= t.parent(),
-              $hi= $(_div_tag_, { 'class': hi_klass,
-                css: { position: _absolute_, left: 0, top: 0, width: space.x, height: space.y, background: _hex_black_, opacity: 0 }
-              }).appendTo($overlay),
+              $hi= $(_div_tag_, { 'class': hi_klass, css: film_css }).appendTo($overlay),
               scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
               area= set(_area_, $(opt.area || $hi ))
             if ($.reel.touchy){
@@ -284,6 +285,20 @@ jQuery.reel || (function($, window, document, undefined){
               'class': monitor_klass,
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
+            if (opt.annotations){
+              $hi.append($annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }))
+              || ($annotations= $());
+              $.each(opt.annotations, function(ida, note){
+                var
+                  $note= $(_div_tag_, note.holder).attr({ id: ida }),
+                  $image= note.image ? $(tag(_img_), note.image) : $(),
+                  $link= note.link ? $(tag(_a_), note.link) : $()
+                note.image || note.link && $note.append($link);
+                note.link || note.image && $note.append($image);
+                note.link && note.image && $note.append($link.append($image));
+                $note.hide().appendTo($annotations);
+              });
+            }
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             t.trigger('preload');
@@ -297,7 +312,8 @@ jQuery.reel || (function($, window, document, undefined){
               $overlay= t.parent(),
               image= get(_image_),
               images= opt.images,
-              preload= !images.length ? [image] : $.reel.math.spread(images, opt, get),
+              order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
+              preload= !images.length ? [image] : order(images, opt, get),
               uris= [],
               img_tag= t[0],
               img_frames= img_tag.frames= preload.length,
@@ -316,7 +332,8 @@ jQuery.reel || (function($, window, document, undefined){
             while(preload.length){
               var
                 uri= opt.path+preload.shift(),
-                $img= $(new Image()).hide().bind('load'+ns, function update_preloader(){
+                $img= $(new Image()).hide().attr({ width: space.x, height: space.y })
+                .bind('load'+ns, function update_preloader(){
                   img_tag.preloaded++
                   $(this).unbind(ns);
                   $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
@@ -561,6 +578,7 @@ jQuery.reel || (function($, window, document, undefined){
               footage= opt.footage,
               space= get(_dimensions_),
               multirow= opt.rows > 1,
+              stage= get(_stage_),
               horizontal= opt.horizontal
             if (get(_vertical_)) var
               frame= opt.inversed ? footage + 1 - frame : frame,
@@ -569,11 +587,11 @@ jQuery.reel || (function($, window, document, undefined){
               travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
               indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
-              $indicator= $(dot(indicator_klass+'.x'), get(_stage_)).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
+              $indicator= $(dot(indicator_klass+'.x'), stage).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
             if (multirow) var
               ytravel= space.y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
-              $yindicator= $(dot(indicator_klass+'.y'), get(_stage_)).css({ top: yindicator })
+              $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
             if (frame != was){
               $(get(_stage_)).removeClass(frame_klass + was).addClass(frame_klass + frame)
               if (images.length){
@@ -596,6 +614,17 @@ jQuery.reel || (function($, window, document, undefined){
                   shift= [-x + _px_, y + _px_]
                 t.css({ backgroundPosition: shift.join(___) })
               }
+            }
+            if (opt.annotations){
+              $.each(opt.annotations, function(ida, note){
+                var
+                  x= typeof note.x!=_object_ ? note.x : note.x[frame - note.start],
+                  y= typeof note.y!=_object_ ? note.y : note.y[frame - note.start],
+                  visible= x && y,
+                  position= { position: _absolute_, left: x, top: y },
+                  $note= $('#'+ida, stage).css(position)
+                visible && $note.filter(':hidden').show() || $note.filter(':visible').hide();
+              });
             }
             cleanup.call(e);
           }
@@ -623,6 +652,7 @@ jQuery.reel || (function($, window, document, undefined){
         },
 
         $monitor,
+        $annotations,
         $preloader,
         indicator= function(axis){
           return $(_div_tag_, {
@@ -692,30 +722,46 @@ jQuery.reel || (function($, window, document, undefined){
     },
     interpolate: function(fraction, lo, hi){
       return lo + fraction * (hi - lo)
-    },
-    spread: function(sequence, opt, get){
-      var
-        order= [],
-        present= new Array(frames),
-        row_frames= get(_frames_),
-        rows= opt.orbital ? 2 : opt.rows || 1,
-        passes= rows * 2,
-        frames= row_frames * rows,
-        start= (opt.row-1) * row_frames + opt.frame,
-        granule= frames / passes
-      for(var i= 0; i < passes; i++)
-        add(start + round(i * granule));
-      while(granule > 1)
-        for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
-          add(round(order[i] + granule));
-      for(var i= 0; i < order.length; i++)
-        order[i]= sequence[order[i] - 1];
-      return order
+    }
+  }
 
-      function add(frame){
-        while(!(frame >= 1 && frame <= frames))
-          frame+= frame < 1 ? +frames : -frames;
-        return present[frame] || (present[frame]= !!order.push(frame))
+  // Preload sequences
+  $.reel.preload= {
+    linear: function(sequence, opt, get){
+      return sequence
+    },
+    fidelity: function(sequence, opt, get){
+      var
+        rows= opt.orbital ? 2 : opt.rows || 1,
+        frames= opt.orbital ? opt.footage : opt.frames,
+        start= (opt.row-1) * frames,
+        values= new Array().concat(sequence),
+        present= new Array(sequence.length),
+        priority= rows < 2 ? [] : values.slice(start, start + frames)
+      return spread(priority, 1, start).concat(spread(values, rows, 0))
+
+      function spread(sequence, rows, offset){
+        if (!sequence.length) return [];
+        var
+          order= [],
+          passes= 4 * rows,
+          start= opt.frame,
+          frames= sequence.length,
+          granule= frames / passes
+        for(var i= 0; i < passes; i++)
+          add(start + round(i * granule));
+        while(granule > 1)
+          for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
+            add(round(order[i] + granule));
+        for(var i= 0; i < order.length; i++)
+          order[i]= sequence[order[i] - 1];
+        return order
+
+        function add(frame){
+          while(!(frame >= 1 && frame <= frames))
+            frame+= frame < 1 ? +frames : -frames;
+          return present[offset + frame] || (present[offset + frame]= !!order.push(frame))
+        }
       }
     }
   }
@@ -771,6 +817,7 @@ jQuery.reel || (function($, window, document, undefined){
     preloader_klass= klass + '-preloader',
     monitor_klass= klass + '-monitor',
     hi_klass= klass + '-interface',
+    annotations_klass= klass + '-annotations',
     frame_klass= 'frame-',
 
     // Image resources
@@ -801,9 +848,9 @@ jQuery.reel || (function($, window, document, undefined){
     _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
 
     // Various string primitives
-    __= '', ___= ' ', _absolute_= 'absolute', _div_= 'div', _div_tag_= tag(_div_),
-    _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _px_= 'px', _src_= 'src',
-    _title_= 'title', _width_= 'width'
+    __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', _div_= 'div', _div_tag_= tag(_div_),
+    _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _object_= 'object', _px_= 'px',
+    _src_= 'src', _title_= 'title', _width_= 'width'
 
   // Helpers
   function embedded(image){ return knows_data_url && 'data:image/gif;base64,R0lGODlh'+image }

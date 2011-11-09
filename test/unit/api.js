@@ -29,7 +29,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 4);
 
-    equal( count, 47, 'Total number of options');
+    equal( count, 48, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -82,7 +82,9 @@
     equal( $.reel.def.vertical,               false, 'switches orbital object movie to vertical mode' );
     equal( $.reel.def.wheelable,               true, 'mouse wheel interaction (allowed by default)' );
 
+    equal( $.reel.def.annotations,        undefined, 'annotations definition object' );
     ok( typeof $.reel.def.attr === 'object',         'initial attribute-value pairs map for the IMG tag' );
+    equal( $.reel.def.preload,           'fidelity', 'preloading order - either "linear" or "fidelity" (default)' );
     equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
     equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
   });
