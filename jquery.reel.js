@@ -540,7 +540,7 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               frame= (get(_fraction_) / get(_bit_)) + 1,
-              row= set(_row_, min_max(0, 1, row != undefined ? (row-1) / (opt.rows-1) : get(_row_))),
+              row= set(_row_, normal.row(row, opt, get)),
               row_shift= min_max(0, opt.rows - 1, floor(row * (opt.rows))),
               frame= set(_frame_, floor(frame + row_shift * opt.frames))
             cleanup.call(e);
@@ -725,6 +725,9 @@ jQuery.reel || (function($, window, document, undefined){
     fraction: function(fraction, opt, get){
       fraction= fraction != undefined ? fraction : get(_fraction_);
       return opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
+    },
+    row: function(row, opt, get){
+      return min_max(0, 1, row != undefined ? (row-1) / (opt.rows-1) : get(_row_))
     }
   }
 
