@@ -19,6 +19,7 @@
       'unit/animation.js',
       'unit/selector.js',
       'unit/rendering.js',
+      'unit/annotations.js',
       'unit/data.js',
       'unit/api.js',
       'unit/interaction.js',
