@@ -618,9 +618,12 @@ jQuery.reel || (function($, window, document, undefined){
             if (opt.annotations){
               $.each(opt.annotations, function(ida, note){
                 var
-                  x= typeof note.x!=_object_ ? note.x : note.x[frame - note.start],
-                  y= typeof note.y!=_object_ ? note.y : note.y[frame - note.start],
-                  visible= x && y,
+                  start= note.start,
+                  end= note.end,
+                  offset= frame - (start || 0),
+                  x= typeof note.x!=_object_ ? note.x : note.x[offset],
+                  y= typeof note.y!=_object_ ? note.y : note.y[offset],
+                  visible= x !== undefined && y !== undefined,
                   position= { position: _absolute_, left: x, top: y },
                   $note= $('#'+ida, stage).css(position)
                 visible && $note.filter(':hidden').show() || $note.filter(':visible').hide();
