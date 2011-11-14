@@ -47,22 +47,21 @@
   });
 
   asyncTest( '`holder` holds a collection of HTML attributes used for the handler\'s `div` tag', function(){
-    expect(6);
+    expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({
         annotations: {
           "my_annotation": {
-            //x: 15,
-            //y: 15,
             holder: {
               text: 'Some text',
               'class': 'some_class_name',
               title: 'Some hint',
               // Any attribute would do as it would for jQuery's `.attr()`
               'any-attribute': 'any-value'
-            }
-          }
+            },
+          },
+          "still_holder": {}
         }
       }),
       $annotations= $('~ * > .jquery-reel-annotations', $reel)
@@ -76,6 +75,8 @@
       ok( !!$('#my_annotation.some_class_name').length, 'Class name applied');
       equal( $('#my_annotation[title]').attr('title'), 'Some hint', '`title` attribute applied');
       equal( $('#my_annotation[any-attribute]').attr('any-attribute'), 'any-value', 'Any attribute would do');
+
+      ok( !!$('div#still_holder').length, 'Holder is always present, even when not defined');
       start();
     });
   });
