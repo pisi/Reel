@@ -151,6 +151,44 @@
     });
   });
 
+  asyncTest( 'Frame-based visibility annotation control properties `start` and `end`', function(){
+    expect(36);
+    var
+      selector= '#image',
+      frames= 36, // Default value
+      should_be= '----+++++++++-----------------------'.split(''),
+      $reel= $(selector).reel({
+        annotations: {
+          "my_annotation": {
+            x: 1, y: 1,
+            start: 5,
+            end: 13
+          }
+        },
+        // And this will autoscroll thorugh all frames once
+        entry: 1,
+        opening: 1
+      }),
+      checked= [],
+      $annotations= $('~ * > .jquery-reel-annotations', $reel),
+      $annotation= $('#my_annotation')
+
+    // Positioning of annotations happens at `frameChange`
+    $reel.bind('frameChange', function(){
+      var
+        frame= $reel.data('frame'),
+        should= should_be[frame - 1] == '+'
+
+      equal( $annotation.is(':visible') , should, (should ? 'On' : 'Off')+' @ frame '+frame );
+
+      checked.push(frame);
+      if (checked.length == frames){
+        $reel.unbind('frameChange');
+        start();
+      }
+    });
+  });
+
   // TODO Add conditional visibility and positioning tests
 
 
