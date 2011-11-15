@@ -160,6 +160,9 @@
       $reel= $(selector).reel({
         annotations: {
           "my_annotation": {
+            holder: {
+              text: "aaa"
+            },
             x: 1, y: 1,
             start: 5,
             end: 13

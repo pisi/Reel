@@ -233,6 +233,7 @@ jQuery.reel || (function($, window, document, undefined){
             t.data(backup.data).siblings().remove();
             t.unwrap();
             remove_instance(t);
+            $style.remove();
             no_bias();
             pool
             .unbind(_tick_, on.tick)
@@ -292,13 +293,30 @@ jQuery.reel || (function($, window, document, undefined){
                 var
                   $note= $(_div_tag_, note.holder).attr({ id: ida }),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
-                  $link= note.link ? $(tag(_a_), note.link) : $()
+                  $link= note.link ? $(tag(_a_), note.link) : $(),
+                  start= note.start,
+                  end= note.end
                 note.image || note.link && $note.append($link);
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
-                $note.hide().appendTo($annotations);
+                $note.appendTo($annotations);
+                rules.push('#'+ida+'{position:absolute;display:none;}');
+                for(var frame= 1; frame <= frames; frame++){
+                  var
+                    offset= frame - (start || 0),
+                    x= typeof note.x!=_object_ ? note.x : note.x[offset],
+                    y= typeof note.y!=_object_ ? note.y : note.y[offset],
+                    visible= x !== undefined && y !== undefined && offset >= 0 && offset <= end - start,
+                    rule= dot(frame_klass+frame)+___+'#'+ida+'{'
+                      +'display:'+(visible? 'block':'none')+';'
+                      +'left:'+(px(x) || 0)+';'
+                      +'top:'+(px(y) || 0)+';'
+                      +'}'
+                  rules.push(rule);
+                }
               });
             }
+            $style= $(tag('style'), { text: rules.join(' '), type: 'text/css' }).insertBefore($('head link, head style').first());
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             t.trigger('preload');
@@ -615,20 +633,6 @@ jQuery.reel || (function($, window, document, undefined){
                 t.css({ backgroundPosition: shift.join(___) })
               }
             }
-            if (opt.annotations){
-              $.each(opt.annotations, function(ida, note){
-                var
-                  start= note.start,
-                  end= note.end,
-                  offset= frame - (start || 0),
-                  x= typeof note.x!=_object_ ? note.x : note.x[offset],
-                  y= typeof note.y!=_object_ ? note.y : note.y[offset],
-                  visible= x !== undefined && y !== undefined,
-                  position= { position: _absolute_, left: x, top: y },
-                  $note= $('#'+ida, stage).css(position)
-                visible && $note.filter(':hidden').show() || $note.filter(':visible').hide();
-              });
-            }
             cleanup.call(e);
           }
         },
@@ -671,6 +675,10 @@ jQuery.reel || (function($, window, document, undefined){
             }
           })
         },
+
+        // CSS rules & stylesheet
+        rules= [],
+        $style,
 
         // Inertia rotation control
         on_edge= 0,
@@ -867,4 +875,5 @@ jQuery.reel || (function($, window, document, undefined){
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return e.originalEvent.touches[0] }
+  function px(value){ return value === undefined || typeof value == 'string' ? value : value+'px' }
 })(jQuery, window, document);
