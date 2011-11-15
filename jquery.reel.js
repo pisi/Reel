@@ -223,9 +223,11 @@ jQuery.reel || (function($, window, document, undefined){
           - reconstructs the original DOM element
           */
             var
-              backup= t.data(_backup_)
+              backup= t.data(_backup_),
+              $style= t.data(_style_)
             t.parent().unbind('openingDone', delay_play).children(_img_).unbind(ns);
-            get(_style_).remove()[0].innerText= __;
+            $style[0].text= __;
+            $style.remove();
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
               src: backup.src,
