@@ -197,4 +197,18 @@
     });
   });
 
+  asyncTest( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
+    expect(4);
+    var
+      $reel= $('#image').reel(),
+      $style= $reel.data('style')
+
+    ok( is('Object', $style), '`"style"` data key on instance');
+    equiv( $style[0].nodeName, 'style', '`<style>` DOM node');
+    ok( !$style.prevAll('style').length, 'At the bottom of the stack (all others inherit from it)');
+
+    $reel.trigger('teardown');
+    equal( $style.text(), '', 'Each instance invalidates its own style at teardown');
+    start();
+  });
 })(jQuery);

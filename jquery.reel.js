@@ -225,6 +225,7 @@ jQuery.reel || (function($, window, document, undefined){
             var
               backup= t.data(_backup_)
             t.parent().unbind('openingDone', delay_play).children(_img_).unbind(ns);
+            get(_style_).remove()[0].innerText= __;
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
               src: backup.src,
@@ -233,7 +234,6 @@ jQuery.reel || (function($, window, document, undefined){
             t.data(backup.data).siblings().remove();
             t.unwrap();
             remove_instance(t);
-            $style.remove();
             no_bias();
             pool
             .unbind(_tick_, on.tick)
@@ -316,7 +316,7 @@ jQuery.reel || (function($, window, document, undefined){
                 }
               });
             }
-            $style= $(tag('style'), { text: rules.join(' '), type: 'text/css' }).insertBefore($('head link, head style').first());
+            set(_style_, $('<style type="text/css">'+rules.join('\n')+'</style>').insertBefore($('head link, head style').first()));
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             t.trigger('preload');
@@ -849,7 +849,7 @@ jQuery.reel || (function($, window, document, undefined){
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _tempo_= 'tempo', _velocity_= 'velocity',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events

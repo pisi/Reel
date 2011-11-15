@@ -44,6 +44,7 @@
     ok( is('Number', $reel.data('stitched')), '`stitched` Number');
     ok( is('Number', $reel.data('stitched_travel')), '`stitched_travel` Number');
     ok( is('Boolean', $reel.data('stopped')), '`stopped` Boolean');
+    ok( is('Object', $reel.data('style')), '`style` Object/jQuery');
     ok( is('Number', $reel.data('tempo')), '`tempo` Number');
     ok( is('Number', $reel.data('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.data('vertical')), '`vertical` Boolean');
