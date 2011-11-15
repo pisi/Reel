@@ -300,19 +300,15 @@ jQuery.reel || (function($, window, document, undefined){
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
                 $note.appendTo($annotations);
-                rules.push('#'+ida+'{position:absolute;display:none;}');
+                rules.push('#'+ida+'{display:none;position:absolute;}');
                 for(var frame= 1; frame <= frames; frame++){
                   var
                     offset= frame - (start || 0),
                     x= typeof note.x!=_object_ ? note.x : note.x[offset],
                     y= typeof note.y!=_object_ ? note.y : note.y[offset],
                     visible= x !== undefined && y !== undefined && offset >= 0 && offset <= end - start,
-                    rule= dot(frame_klass+frame)+___+'#'+ida+'{'
-                      +'display:'+(visible? 'block':'none')+';'
-                      +'left:'+(px(x) || 0)+';'
-                      +'top:'+(px(y) || 0)+';'
-                      +'}'
-                  rules.push(rule);
+                    rule= dot(frame_klass+frame)+___+'#'+ida+'{display:block;left:'+(px(x) || 0)+';top:'+(px(y) || 0)+';}'
+                  visible && rules.push(rule);
                 }
               });
             }
