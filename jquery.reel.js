@@ -591,7 +591,7 @@ jQuery.reel || (function($, window, document, undefined){
             var
               fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
               was= get(__frame_),
-              frame= set(__frame_, set(_frame_, normal.frame(frame, opt, get))),
+              frame= normal.frame(frame, opt, get),
               images= opt.images,
               footage= opt.footage,
               space= get(_dimensions_),
@@ -602,6 +602,7 @@ jQuery.reel || (function($, window, document, undefined){
               frame= opt.inversed ? footage + 1 - frame : frame,
               frame= frame + footage
             var
+              frame= set(__frame_, set(_frame_, frame)),
               travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
               indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
