@@ -180,7 +180,7 @@ jQuery.reel || (function($, window, document, undefined){
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
               overlay_css= { position: 'relative', width: size.x, height: size.y },
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }).bind('openingDone', delay_play),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+opt.frame, css: overlay_css }).bind('openingDone', delay_play),
               $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
               instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
@@ -593,7 +593,7 @@ jQuery.reel || (function($, window, document, undefined){
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
             if (frame != was){
-              $(get(_stage_)).removeClass(frame_klass + was).addClass(frame_klass + frame)
+              $(get(_stage_))[0].className= $(get(_stage_))[0].className.replace(/frame-\d+/g, frame_klass + frame)
               if (images.length){
                 var
                   sprite= images[frame - 1]
