@@ -287,8 +287,9 @@ jQuery.reel || (function($, window, document, undefined){
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
             if (opt.annotations){
-              $hi.append($annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }))
+              rule(true, ___+dot(annotations_klass), film_css);
               opt.crop && rule(true, ___+dot(annotations_klass), { clip: 'rect(0 '+px(space.x)+' '+px(space.y)+' 0)' });
+              $overlay.append($annotations= $(_div_tag_, { 'class': annotations_klass }))
               || ($annotations= $());
               $.each(opt.annotations, function(ida, note){
                 var
@@ -297,19 +298,19 @@ jQuery.reel || (function($, window, document, undefined){
                   $link= note.link ? $(tag(_a_), note.link) : $(),
                   start= note.start,
                   end= note.end
+                rule(false, '#'+ida, { display: 'none', position: _absolute_ });
                 note.image || note.link && $note.append($link);
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
                 $note.appendTo($annotations);
-                rules.push('#'+ida+'{display:none;position:absolute;}');
                 for(var frame= 1; frame <= frames; frame++){
                   var
                     offset= frame - (start || 0),
                     x= typeof note.x!=_object_ ? note.x : note.x[offset],
                     y= typeof note.y!=_object_ ? note.y : note.y[offset],
                     visible= x !== undefined && y !== undefined && offset >= 0 && offset <= end - start,
-                    rule= dot(frame_klass+frame)+___+'#'+ida+'{display:block;left:'+(px(x) || 0)+';top:'+(px(y) || 0)+';}'
-                  visible && rules.push(rule);
+                    style= { display: 'block', left: px(x) || 0, top: px(y) || 0 }
+                  visible && rule(false, dot(frame_klass+frame)+___+'#'+ida, style);
                 }
               });
             }
