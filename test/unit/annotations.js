@@ -9,12 +9,11 @@
   }});
 
   test( 'No (or undefined) `annotations` option doesn\'t result in any sebsequent DOM changes', function(){
-    expect(2);
+    expect(1);
     var
       selector= '#image',
       $reel= $(selector).reel() // `undefined` is default
 
-    ok( !!$reel.parent().find('.jquery-reel-interface').length, 'Shared `.jquery-reel-interface` container present');
     ok( !$reel.parent().find('.jquery-reel-annotations').length, 'The `.jquery-reel-annotations` child not present anywhere in the instance');
   });
 
@@ -27,7 +26,7 @@
         annotations: {}
       })
 
-    ok( !!$('~ .jquery-reel-interface > .jquery-reel-annotations', $reel).length, 'The `.jquery-reel-annotations` child node of `jquery-reel-interface` node present');
+    ok( !!$('~ .jquery-reel-annotations', $reel).length, 'The `.jquery-reel-annotations` child node of `jquery-reel-interface` node present');
   });
 
 
@@ -40,7 +39,7 @@
           "my_annotation_name": {}
         }
       }),
-      $annotations= $('~ * > .jquery-reel-annotations', $reel)
+      $annotations= $('~ .jquery-reel-annotations', $reel)
 
     equal( !!$('div[id]', $annotations).length, 1, 'One annotation node with `id` attribute');
     ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
@@ -64,7 +63,7 @@
           "still_holder": {}
         }
       }),
-      $annotations= $('~ * > .jquery-reel-annotations', $reel)
+      $annotations= $('~ .jquery-reel-annotations', $reel)
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange', function(){
@@ -96,7 +95,7 @@
           }
         }
       }),
-      $annotations= $('~ * > .jquery-reel-annotations', $reel)
+      $annotations= $('~ .jquery-reel-annotations', $reel)
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange', function(){
@@ -133,7 +132,7 @@
           }
         }
       }),
-      $annotations= $('~ * > .jquery-reel-annotations', $reel)
+      $annotations= $('~ .jquery-reel-annotations', $reel)
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange', function(){
@@ -173,7 +172,7 @@
         opening: 1
       }),
       checked= [],
-      $annotations= $('~ * > .jquery-reel-annotations', $reel),
+      $annotations= $('~ .jquery-reel-annotations', $reel),
       $annotation= $('#my_annotation')
 
     // Positioning of annotations happens at `frameChange`
