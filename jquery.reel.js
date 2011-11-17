@@ -101,6 +101,7 @@ jQuery.reel || (function($, window, document, undefined){
 
       annotations:undefined, // annotations definition object
       attr:              {}, // initial attribute-value pairs map for the IMG tag
+      crop:            true, // crop instance area to match image dimensions
       preload:   'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
@@ -288,6 +289,7 @@ jQuery.reel || (function($, window, document, undefined){
             })) || ($monitor= $());
             if (opt.annotations){
               $hi.append($annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }))
+              opt.crop && rule(true, ___+dot(annotations_klass), { clip: 'rect(0 '+px(space.x)+' '+px(space.y)+' 0)' });
               || ($annotations= $());
               $.each(opt.annotations, function(ida, note){
                 var
