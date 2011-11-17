@@ -223,11 +223,9 @@ jQuery.reel || (function($, window, document, undefined){
           - reconstructs the original DOM element
           */
             var
-              backup= t.data(_backup_),
-              $style= t.data(_style_)
+              backup= t.data(_backup_)
             t.parent().unbind('openingDone', delay_play).children(_img_).unbind(ns);
-            $style[0].text= __;
-            $style.remove();
+            get(_style_).remove();
             t.unbind(ns).unbind(on).attr({
              'class': backup.classes,
               src: backup.src,
@@ -875,4 +873,9 @@ jQuery.reel || (function($, window, document, undefined){
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return e.originalEvent.touches[0] }
   function px(value){ return value === undefined || typeof value == 'string' ? value : value+'px' }
+  function css(values){
+    var rules= [];
+    $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)) })
+    return '{'+rules.join(';')+';}';
+  }
 })(jQuery, window, document);

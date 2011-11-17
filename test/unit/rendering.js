@@ -208,7 +208,8 @@
     ok( !$style.prevAll('style').length, 'At the bottom of the stack (all others inherit from it)');
 
     $reel.trigger('teardown');
-    equal( $style.text(), '', 'Each instance invalidates its own style at teardown');
+    console.log($style.parent())
+    ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
     start();
   });
 })(jQuery);
