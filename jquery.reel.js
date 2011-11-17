@@ -675,6 +675,14 @@ jQuery.reel || (function($, window, document, undefined){
 
         // CSS rules & stylesheet
         rules= [],
+        rule= function(prefix, selector, rule){
+          var
+            stage= get(_stage_),
+            selector= selector.split(',')
+          prefix && $.each(selector, function(ix, it){ selector[ix]= stage+it });
+          rules.push(selector.join(',')+css(rule));
+          return rule;
+        },
         $style,
 
         // Inertia rotation control
