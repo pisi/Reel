@@ -312,7 +312,6 @@ jQuery.reel || (function($, window, document, undefined){
                 }
               });
             }
-            set(_style_, $('<style type="text/css">'+rules.join('\n')+'</style>').insertBefore($('head link, head style').first()));
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             t.trigger('preload');
@@ -367,6 +366,7 @@ jQuery.reel || (function($, window, document, undefined){
               setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
             }
             set(_images_, uris);
+            set(_style_, $('<style type="text/css">'+rules.join('\n')+'</style>').insertBefore($('head link, head style').first()));
           },
           tick: function(e){
           /*
