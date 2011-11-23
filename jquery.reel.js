@@ -207,20 +207,67 @@ jQuery.reel || (function($, window, document, undefined){
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
-            set(_opening_ticks_, 0);
+            set(_opening_ticks_, undefined);
             set(_backup_, {
               src: src,
               classes: classes,
               style: styles || __,
               data: data
             });
-            pool.bind(_tick_, on.tick);
+            pool.bind(on.pool);
             cleanup.call(e);
             t.trigger('start');
+          },
+          pool: {
+          'tick.reel': function(e){
+          /*
+          - triggered by pool's `tick.reel` event
+          - keeps track of operated and braked statuses
+          - decreases inertial velocity by braking
+          */
+            var
+              velocity= get(_velocity_)
+            if (braking) var
+              braked= velocity - (get(_brake_) / leader(_tempo_) * braking),
+              done= velocity * braked <= 0 || velocity < abs(braked),
+              velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? braked : (braking= operated= 0))
+            $monitor.text(get(opt.monitor));
+            velocity && braking++;
+            operated && operated++;
+            to_bias(0);
+            slidable= true;
+            if (operated && !velocity) return cleanup.call(e);
+            if (get(_clicked_)) return cleanup.call(e, unidle());
+            var
+              backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
+              step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
+              was= get(_fraction_),
+              fraction= set(_fraction_, was - step * backwards)
+            cleanup.call(e);
+            if (fraction == was) return;
+            t.trigger('fractionChange');
           },
           'tick.reel.fu': function(e){
             t.trigger('fractionChange');
             if (get(_opening_ticks_) === undefined) e.stopImmediatePropagation();
+          },
+          'tick.reel.opening': function(e){
+          /*
+          - ticker listener dedicated to opening animation
+          */
+            var
+              speed= opt.entry || opt.speed,
+              step= speed / leader(_tempo_) * (opt.cw? -1:1),
+              was= get(_fraction_),
+              fraction= set(_fraction_, was + step),
+              ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
+            t.trigger('fractionChange');
+            cleanup.call(e);
+            if (ticks > 1) return;
+
+            pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+            t.trigger('openingDone');
+          }
           },
           teardown: function(e){
           /*
@@ -240,9 +287,7 @@ jQuery.reel || (function($, window, document, undefined){
             t.unwrap();
             remove_instance(t);
             no_bias();
-            pool
-            .unbind(_tick_, on.tick)
-            .unbind(_tick_, on.opening_tick);
+            pool.unbind(on.pool);
             stage_pool
             .unbind(_mouseup_).unbind(_mousemove_);
             cleanup.call(e);
@@ -370,33 +415,6 @@ jQuery.reel || (function($, window, document, undefined){
             set(_images_, uris);
             set(_style_, $('<style type="text/css">'+rules.join('\n')+'</style>').insertBefore($('head link, head style').first()));
           },
-          tick: function(e){
-          /*
-          - triggered by pool's `tick.reel` event
-          - keeps track of operated and braked statuses
-          - decreases inertial velocity by braking
-          */
-            var
-              velocity= get(_velocity_)
-            if (braking) var
-              braked= velocity - (get(_brake_) / leader(_tempo_) * braking),
-              done= velocity * braked <= 0 || velocity < abs(braked),
-              velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? braked : (braking= operated= 0))
-            $monitor.text(get(opt.monitor));
-            velocity && braking++;
-            operated && operated++;
-            to_bias(0);
-            slidable= true;
-            if (operated && !velocity) return cleanup.call(e);
-            if (get(_clicked_)) return cleanup.call(e, unidle());
-            var
-              backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
-              step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
-              was= get(_fraction_),
-              fraction= set(_fraction_, was - step * backwards)
-            cleanup.call(e);
-            if (fraction == was) return;
-          },
           opening: function(e){
           /*
           - initiates opening animation
@@ -408,24 +426,6 @@ jQuery.reel || (function($, window, document, undefined){
               duration= opt.opening,
               start= set(_fraction_, end - speed * opt.opening),
               ticks= set(_opening_ticks_, duration * leader(_tempo_))
-            pool.bind(_tick_, on.opening_tick);
-          },
-          opening_tick: function(e){
-          /*
-          - ticker listener dedicated to opening animation
-          */
-            var
-              speed= opt.entry || opt.speed,
-              step= speed / leader(_tempo_) * (opt.cw? -1:1),
-              was= get(_fraction_),
-              fraction= set(_fraction_, was + step),
-              ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
-            t.trigger('fractionChange');
-            cleanup.call(e);
-            if (ticks > 1) return;
-
-            pool.unbind(_tick_, on.opening_tick);
-            t.trigger('openingDone');
           },
           play: function(e, direction){
             var
@@ -653,7 +653,7 @@ jQuery.reel || (function($, window, document, undefined){
         idle= function(){ return operated= 0 },
         unidle= function(){
           clearTimeout(delay);
-          pool.unbind(_tick_, on.opening_tick);
+          pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
           t.trigger('play');
           return operated= -opt.timeout * leader(_tempo_)
         },

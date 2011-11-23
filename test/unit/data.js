@@ -4,7 +4,7 @@
     $('.jquery-reel').trigger('teardown');
   }});
 
-  test( 'All internal states and values are accessible by jQuery\'s own `.data()`', function(){
+  asyncTest( 'All internal states and values are accessible by jQuery\'s own `.data()`', function(){
 
     var
       $reel= $('#image').reel(),
@@ -15,7 +15,7 @@
       if (key.match(/^(_[a-z]+|jQuery\d+|events|handle)$/)) return;
       count++
     });
-    expect(count);
+    expect(count + 1);
 
     ok( is('Object', $reel.data('area')), '`area` Object (jQuery)');
     ok( is('Object', $reel.data('backup')), '`backup` Object');
@@ -31,7 +31,7 @@
     ok( is('String', $reel.data('id')), '`id` String');
     ok( is('String', $reel.data('image')), '`image` String');
     ok( is('Array', $reel.data('images')), '`images` Object');
-    ok( is('Number', $reel.data('opening_ticks')), '`opening_ticks` Number');
+    ok( is('Undefined', $reel.data('opening_ticks')), '`opening_ticks` Undefined initialy');
     ok( is('Boolean', $reel.data('playing')), '`playing` Boolean');
     ok( is('Boolean', $reel.data('reeling')), '`reeling` Boolean');
     ok( is('Number', $reel.data('revolution')), '`revolution` Number');
@@ -49,6 +49,11 @@
     ok( is('Number', $reel.data('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.data('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.data('wheel_step')), '`wheel_step` Number');
+
+    $(document).one('tick.reel', function(){
+      ok( is('Number', $reel.data('opening_ticks')), '`opening_ticks` Number');
+      start();
+    })
   });
 
   test( 'Contents of attributes backup `.data("backup")`', function(){
