@@ -167,20 +167,6 @@
     }
   });
 
-  asyncTest( 'GH-69 The outter-most DOM element is tagged with `frame-X` class name', function(){
-    expect( 2 );
-    var
-      $reel= $('#image').reel({ speed: 1 });
-
-    setTimeout(function(){
-      var
-        frame= $reel.data('frame')
-      ok( frame, 'Instance stopped at frame '+frame);
-      ok( $('#image-reel').attr('class').match(/frame-[0-9]+/), 'The wrapper carries frame-'+frame+' class name');
-      start();
-    }, 123);
-  });
-
   asyncTest( 'Preload cache `img`s have defined stage dimensions #10', function(){
     expect(3);
     var

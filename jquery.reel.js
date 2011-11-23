@@ -305,7 +305,6 @@ jQuery.reel || (function($, window, document, undefined){
               frame= set(_frame_, round(fraction * frames) + 1),
               loaded= 0,
               id= t.attr('id'),
-              film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 },
               $overlay= t.parent(),
               scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
               area= set(_area_, $(opt.area || $overlay ))
@@ -335,34 +334,6 @@ jQuery.reel || (function($, window, document, undefined){
               'class': monitor_klass,
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
-            if (opt.annotations){
-              rule(true, ___+dot(annotations_klass), film_css);
-              opt.crop && rule(true, ___+dot(annotations_klass), { clip: 'rect(0 '+px(space.x)+' '+px(space.y)+' 0)' });
-              $overlay.append($annotations= $(_div_tag_, { 'class': annotations_klass }))
-              || ($annotations= $());
-              $.each(opt.annotations, function(ida, note){
-                var
-                  $note= $(_div_tag_, note.holder).attr({ id: ida }),
-                  $image= note.image ? $(tag(_img_), note.image) : $(),
-                  $link= note.link ? $(tag(_a_), note.link) : $(),
-                  start= note.start,
-                  end= note.end
-                rule(false, '#'+ida, { display: 'none', position: _absolute_ });
-                note.image || note.link && $note.append($link);
-                note.link || note.image && $note.append($image);
-                note.link && note.image && $note.append($link.append($image));
-                $note.appendTo($annotations);
-                for(var frame= 1; frame <= frames; frame++){
-                  var
-                    offset= frame - (start || 0),
-                    x= typeof note.x!=_object_ ? note.x : note.x[offset],
-                    y= typeof note.y!=_object_ ? note.y : note.y[offset],
-                    visible= x !== undefined && y !== undefined && offset >= 0 && offset <= end - start,
-                    style= { display: 'block', left: px(x) || 0, top: px(y) || 0 }
-                  visible && rule(false, dot(frame_klass+frame)+___+'#'+ida, style);
-                }
-              });
-            }
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
           },
@@ -608,8 +579,8 @@ jQuery.reel || (function($, window, document, undefined){
               ytravel= space.y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
-            if (frame != was){
-              $(get(_stage_))[0].className= $(get(_stage_))[0].className.replace(/frame-\d+/g, frame_klass + frame)
+            if (frame == was) e.stopPropagation()
+            else
               if (images.length){
                 var
                   sprite= images[frame - 1]
@@ -630,13 +601,48 @@ jQuery.reel || (function($, window, document, undefined){
                   shift= [-x + _px_, y + _px_]
                 t.css({ backgroundPosition: shift.join(___) })
               }
-            }
             cleanup.call(e);
           },
 
           'setup.annotations': function(e){
+            if (!opt.annotations) return;
+            var
+              space= get(_dimensions_),
+              $overlay= t.parent(),
+              film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
+            rule(true, ___+dot(annotations_klass), film_css);
+            opt.crop && rule(true, ___+dot(annotations_klass), { clip: 'rect(0 '+px(space.x)+' '+px(space.y)+' 0)' });
+            $overlay.append($annotations= $(_div_tag_, { 'class': annotations_klass+___+frame_klass+opt.frame }))
+            || ($annotations= $());
+            $.each(opt.annotations, function(ida, note){
+              var
+                $note= $(_div_tag_, note.holder).attr({ id: ida }),
+                $image= note.image ? $(tag(_img_), note.image) : $(),
+                $link= note.link ? $(tag(_a_), note.link) : $()
+              rule(false, '#'+ida, { display: 'none', position: _absolute_ });
+              note.image || note.link && $note.append($link);
+              note.link || note.image && $note.append($image);
+              note.link && note.image && $note.append($link.append($image));
+              $note.appendTo($annotations);
+            });
           },
           'frameChange.annotations': function(e, frame){
+            if (!opt.annotations) return;
+            var
+              frame= frame || get(_frame_)
+            $annotations[0].className= $annotations[0].className.replace(/frame-\d+/g, frame_klass + frame);
+            $.each(opt.annotations, function(ida, note){
+              var
+                $note= $('#'+ida, $annotations),
+                start= note.start,
+                end= note.end,
+                offset= frame - (start || 0),
+                x= typeof note.x!=_object_ ? note.x : note.x[offset],
+                y= typeof note.y!=_object_ ? note.y : note.y[offset],
+                visible= x !== undefined && y !== undefined && offset >= 0 && offset <= end - start,
+                style= { display: visible ? 'block':'none', left: px(x) || 0, top: px(y) || 0 }
+              $note.css(style);
+            });
           },
 
           'setup.fu': function(){ t.trigger('start') },
