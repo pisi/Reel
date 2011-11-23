@@ -260,10 +260,8 @@ jQuery.reel || (function($, window, document, undefined){
               was= get(_fraction_),
               fraction= set(_fraction_, was + step),
               ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
-            t.trigger('fractionChange');
             cleanup.call(e);
             if (ticks > 1) return;
-
             pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
             t.trigger('openingDone');
           }
