@@ -181,8 +181,8 @@ jQuery.reel || (function($, window, document, undefined){
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
               overlay_css= { position: 'relative', width: size.x, height: size.y },
-              $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
               $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }).bind('openingDone', delay_play),
+              $instance= t.wrap($overlay.bind(on.instance)).attr({ 'class': klass }).css(style),
               instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_images_, []);
@@ -269,6 +269,7 @@ jQuery.reel || (function($, window, document, undefined){
             t.trigger('openingDone');
           }
           },
+          instance: {
           teardown: function(e){
           /*
           - unbinds events, erases all state data
@@ -278,7 +279,7 @@ jQuery.reel || (function($, window, document, undefined){
               backup= t.data(_backup_)
             t.parent().unbind('openingDone', delay_play).children(_img_).unbind(ns);
             get(_style_).remove();
-            t.unbind(ns).unbind(on).attr({
+            t.unbind(ns).unbind(on.instance).attr({
              'class': backup.classes,
               src: backup.src,
               style: backup.style
@@ -642,6 +643,8 @@ jQuery.reel || (function($, window, document, undefined){
           'setup.fu': function(){ t.trigger('start') },
           'start.fu': function(){ t.trigger('preload') },
           'loaded.fu': function(){ t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange').trigger('opening') }
+
+        }
         },
 
         // Garbage clean-up facility called by every event
