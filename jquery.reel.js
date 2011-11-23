@@ -173,16 +173,10 @@ jQuery.reel || (function($, window, document, undefined){
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
               frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
-              style= {
-                display: 'block',
-                width: size.x,
-                height: size.y
-              },
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
-              overlay_css= { position: 'relative', width: size.x, height: size.y },
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }).bind('openingDone', delay_play),
-              $instance= t.wrap($overlay.bind(on.instance)).attr({ 'class': klass }).css(style),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }).bind('openingDone', delay_play),
+              $instance= t.wrap($overlay.bind(on.instance)).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_images_, []);
@@ -214,6 +208,8 @@ jQuery.reel || (function($, window, document, undefined){
               style: styles || __,
               data: data
             });
+            rule(true, '', { width: size.x, height: size.y });
+            rule(true, ','+___+dot(klass), { display: 'block', position: 'relative' });
             pool.bind(on.pool);
             cleanup.call(e);
             t.trigger('setup');
