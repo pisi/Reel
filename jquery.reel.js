@@ -304,7 +304,7 @@ jQuery.reel || (function($, window, document, undefined){
               area= set(_area_, $(opt.area || $overlay ))
             if ($.reel.touchy){
               // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-              t.css({ WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length
+              rule(true, ___+dot(klass), { WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length
                 ? 'auto'
                 : (get(_stitched_) && get(_stitched_)+'px '+space.y+'px')
                 || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px'
