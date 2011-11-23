@@ -181,8 +181,8 @@ jQuery.reel || (function($, window, document, undefined){
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
               overlay_css= { position: 'relative', width: size.x, height: size.y },
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+opt.frame, css: overlay_css }).bind('openingDone', delay_play),
               $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }).bind('openingDone', delay_play),
               instances_count= instances.push(add_instance($instance)[0])
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_images_, []);
@@ -217,6 +217,10 @@ jQuery.reel || (function($, window, document, undefined){
             pool.bind(_tick_, on.tick);
             cleanup.call(e);
             t.trigger('start');
+          },
+          'tick.reel.fu': function(e){
+            t.trigger('fractionChange');
+            if (get(_opening_ticks_) === undefined) e.stopImmediatePropagation();
           },
           teardown: function(e){
           /*
@@ -316,7 +320,6 @@ jQuery.reel || (function($, window, document, undefined){
             }
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
-            t.trigger('preload');
           },
           preload: function(e){
           /*
@@ -355,10 +358,7 @@ jQuery.reel || (function($, window, document, undefined){
                   if (img_tag.frames == img_tag.preloaded){
                     $preloader.remove();
                     images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
-                    t
-                    .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
-                    .trigger('loaded')
-                    .trigger('opening');
+                    t.trigger('loaded');
                     cleanup.call(e);
                   }
                 });
@@ -396,7 +396,6 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= set(_fraction_, was - step * backwards)
             cleanup.call(e);
             if (fraction == was) return;
-            t.trigger('fractionChange');
           },
           opening: function(e){
           /*
@@ -633,7 +632,16 @@ jQuery.reel || (function($, window, document, undefined){
               }
             }
             cleanup.call(e);
-          }
+          },
+
+          'setup.annotations': function(e){
+          },
+          'frameChange.annotations': function(e, frame){
+          },
+
+          'setup.fu': function(){ t.trigger('start') },
+          'start.fu': function(){ t.trigger('preload') },
+          'loaded.fu': function(){ t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange').trigger('opening') }
         },
 
         // Garbage clean-up facility called by every event
