@@ -319,6 +319,7 @@ jQuery.reel || (function($, window, document, undefined){
                 .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                 .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
             }else{
+              rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
               area
                 .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
                 .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
