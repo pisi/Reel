@@ -216,7 +216,7 @@ jQuery.reel || (function($, window, document, undefined){
             });
             pool.bind(on.pool);
             cleanup.call(e);
-            t.trigger('start');
+            t.trigger('setup');
           },
           pool: {
           'tick.reel': function(e){
@@ -245,7 +245,6 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= set(_fraction_, was - step * backwards)
             cleanup.call(e);
             if (fraction == was) return;
-            t.trigger('fractionChange');
           },
           'tick.reel.fu': function(e){
             t.trigger('fractionChange');
