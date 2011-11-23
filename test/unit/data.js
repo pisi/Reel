@@ -31,7 +31,7 @@
     ok( is('String', $reel.data('id')), '`id` String');
     ok( is('String', $reel.data('image')), '`image` String');
     ok( is('Array', $reel.data('images')), '`images` Object');
-    ok( is('Undefined', $reel.data('opening_ticks')), '`opening_ticks` Undefined initialy');
+    ok( $reel.data('opening_ticks') === undefined, '`opening_ticks` Undefined initialy');
     ok( is('Boolean', $reel.data('playing')), '`playing` Boolean');
     ok( is('Boolean', $reel.data('reeling')), '`reeling` Boolean');
     ok( is('Number', $reel.data('revolution')), '`revolution` Number');

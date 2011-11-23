@@ -125,7 +125,7 @@
 
     $reel.bind('loaded', function(){
       $reel.trigger('frameChange', 5);
-      $reel.bind('frameChange', function(){
+      $reel.one('frameChange', function(){
         var
           after= $('#image-reel .jquery-reel-indicator').css('left');
 
@@ -194,7 +194,6 @@
     ok( !$style.prevAll('style').length, 'At the bottom of the stack (all others inherit from it)');
 
     $reel.trigger('teardown');
-    console.log($style.parent())
     ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
     start();
   });
