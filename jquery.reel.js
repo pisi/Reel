@@ -332,6 +332,7 @@ jQuery.reel || (function($, window, document, undefined){
               'class': monitor_klass,
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
+            rule(true, dot(panning_klass), { cursor: url(drag_cursor_down)+', '+failsafe_cursor });
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
           },
@@ -426,9 +427,9 @@ jQuery.reel || (function($, window, document, undefined){
                 origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
               unidle();
               no_bias();
+              get(_area_).addClass(panning_klass);
               if (!touched){
                 stage_pool
-                .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor })
                 .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
                 opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
               }
@@ -449,9 +450,9 @@ jQuery.reel || (function($, window, document, undefined){
               brakes= braking= velocity ? 1 : 0
             velocity ? idle() : unidle();
             no_bias();
+            get(_area_).removeClass(panning_klass);
             !touched
-            && stage_pool.unbind(_mouseup_).unbind(_mousemove_)
-            && get(_area_).css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
+            && stage_pool.unbind(_mouseup_).unbind(_mousemove_);
             cleanup.call(e);
           },
           pan: function(e, x, y, touched){
@@ -850,6 +851,7 @@ jQuery.reel || (function($, window, document, undefined){
     monitor_klass= klass + '-monitor',
     hi_klass= klass + '-interface',
     annotations_klass= klass + '-annotations',
+    panning_klass= klass + '-panning',
     frame_klass= 'frame-',
 
     // Image resources
