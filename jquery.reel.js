@@ -332,6 +332,13 @@ jQuery.reel || (function($, window, document, undefined){
               'class': monitor_klass,
               css: { position: _absolute_, left: 0, top: 0 }
             })) || ($monitor= $());
+            rule(true, ___+dot(preloader_klass), {
+              position: _absolute_,
+              left: 0, top: space.y - opt.preloader,
+              height: opt.preloader,
+              overflow: _hidden_,
+              backgroundColor: _hex_black_
+            });
             rule(true, dot(panning_klass), { cursor: url(drag_cursor_down)+', '+failsafe_cursor });
             opt.indicator && $overlay.append(indicator('x'));
             opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
@@ -352,16 +359,7 @@ jQuery.reel || (function($, window, document, undefined){
               img_frames= img_tag.frames= preload.length,
               img_preloaded= img_tag.preloaded= 0
             t.trigger('stop');
-            $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass,
-              css: {
-                position: _absolute_,
-                left: 0,
-                top: space.y - opt.preloader,
-                height: opt.preloader,
-                overflow: _hidden_,
-                backgroundColor: _hex_black_
-              }
-            }));
+            $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass }));
             while(preload.length){
               var
                 uri= opt.path+preload.shift(),
