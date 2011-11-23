@@ -327,6 +327,7 @@ jQuery.reel || (function($, window, document, undefined){
             (opt.hint) && area.attr(_title_, opt.hint);
             opt.monitor && $overlay.append($monitor= $(_div_tag_, { 'class': monitor_klass })) || ($monitor= $());
             rule(true, ___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
+            rule(true, ___+dot(cached_klass), { display: 'none' });
             rule(true, ___+dot(preloader_klass), {
               position: _absolute_,
               left: 0, top: space.y - opt.preloader,
@@ -358,7 +359,7 @@ jQuery.reel || (function($, window, document, undefined){
             while(preload.length){
               var
                 uri= opt.path+preload.shift(),
-                $img= $(new Image()).hide().attr({ width: space.x, height: space.y })
+                $img= $(new Image()).addClass(cached_klass).attr({ width: space.x, height: space.y })
                 .bind('load'+ns, function update_preloader(){
                   img_tag.preloaded++
                   $(this).unbind(ns);
@@ -841,6 +842,7 @@ jQuery.reel || (function($, window, document, undefined){
     overlay_klass= klass + '-overlay',
     indicator_klass= klass + '-indicator',
     preloader_klass= klass + '-preloader',
+    cached_klass= klass + '-cached',
     monitor_klass= klass + '-monitor',
     hi_klass= klass + '-interface',
     annotations_klass= klass + '-annotations',
