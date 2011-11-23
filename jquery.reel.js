@@ -325,10 +325,8 @@ jQuery.reel || (function($, window, document, undefined){
                 .disableTextSelect();
             }
             (opt.hint) && area.attr(_title_, opt.hint);
-            opt.monitor && $overlay.append($monitor= $(_div_tag_, {
-              'class': monitor_klass,
-              css: { position: _absolute_, left: 0, top: 0 }
-            })) || ($monitor= $());
+            opt.monitor && $overlay.append($monitor= $(_div_tag_, { 'class': monitor_klass })) || ($monitor= $());
+            rule(true, ___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
             rule(true, ___+dot(preloader_klass), {
               position: _absolute_,
               left: 0, top: space.y - opt.preloader,
