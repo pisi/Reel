@@ -57,7 +57,7 @@
         $reel= $('#image').reel({ indicator: size }),
         $indicator= $('#image-reel .jquery-reel-indicator')
 
-      $reel.bind('loaded.test', function(e){
+      $reel.parent().bind('loaded.test', function(e){
         index++;
         equiv( $indicator.css('top'), 126 - size );
         if (index == samples.length){
@@ -72,18 +72,27 @@
 
   asyncTest( 'Indicator: `indicator` option value is the size of the indicator', function(){
     expect(6);
-    try_different_sizes([5, 10, 30]);
-    start();
+    var
+      samples= [5, 10, 30],
+      index= 0
 
-    function try_different_sizes(sizes){
-      $(sizes).each(function try_size(ix, size){
-        $('#image').trigger('teardown')
-        var
-          $reel= $('#image').reel({ indicator: size }),
-          $indicator= $('#image-reel .jquery-reel-indicator')
+    try_sizes_one_by_one();
 
+    function try_sizes_one_by_one(){
+      var
+        size= samples[index],
+        $reel= $('#image').reel({ indicator: size }),
+        $indicator= $('#image-reel .jquery-reel-indicator')
+
+      $reel.parent().bind('loaded.test', function(){
+        index++;
         equiv( $indicator.css('width'), size );
         equiv( $indicator.css('height'), size );
+        if (index == samples.length){
+          start();
+        }else{
+          try_sizes_one_by_one();
+        }
       });
     }
   });
@@ -95,8 +104,10 @@
       $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
       $indicator= $('#image-reel .jquery-reel-indicator');
 
-    equiv( $indicator.css('left'), '0px' );
-    start();
+    $reel.parent().bind('loaded.test', function(){
+      equiv( $indicator.css('left'), '0px' );
+      start();
+    });
   });
 
   asyncTest( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){

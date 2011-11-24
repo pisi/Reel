@@ -78,7 +78,7 @@
       })
 
     $reel
-      .bind('openingDone', function(){
+      .bind('openingDone.test', function(){
         ok( true, '`"openingDone"` has been triggered and set to prevent event bubbling');
         setTimeout(function(){
           ok( true, 'The cancelled `"play"` correctly didn\'t fire (waited for it half a second)');
@@ -86,7 +86,7 @@
         }, 500);
         return false
       })
-      .bind('play', function(){
+      .bind('play.test', function(){
         start();
       })
   });

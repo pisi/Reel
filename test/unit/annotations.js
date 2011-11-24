@@ -12,7 +12,7 @@
     expect(1);
     var
       selector= '#image',
-      $reel= $(selector).reel() // `undefined` is default
+      $reel= $(selector).reel({ annotations: undefined }) // `undefined` is also the default value
 
     ok( !$reel.parent().find('.jquery-reel-annotations').length, 'The `.jquery-reel-annotations` child not present anywhere in the instance');
   });
