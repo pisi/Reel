@@ -670,18 +670,13 @@ jQuery.reel || (function($, window, document, undefined){
         $annotations,
         $preloader,
         indicator= function(axis){
-          return $(_div_tag_, {
-            'class': [indicator_klass, axis].join(___),
-            css: {
-              width: opt.indicator,
-              height: opt.indicator,
-              overflow: _hidden_,
-              top: get(_dimensions_).y - opt.indicator,
-              left: 0,
-              position: _absolute_,
-              backgroundColor: _hex_black_
-            }
+          rule(true, ___+dot(indicator_klass)+dot(axis), {
+            position: _absolute_,
+            width: opt.indicator, height: opt.indicator,
+            overflow: _hidden_,
+            backgroundColor: _hex_black_
           })
+          return $(_div_tag_, { 'class': [indicator_klass, axis].join(___) })
         },
 
         // CSS rules & stylesheet
