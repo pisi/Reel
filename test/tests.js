@@ -30,9 +30,25 @@
 
       QUnit.load();
 
+      var
+        bads= 0,
+        counts= 0
+
+      QUnit.testDone = function(testName, bad, count) {
+        bad && (bads+= bad);
+        counts+= count;
+        $('#qunit-banner .pass').text(counts - bads);
+        $('#qunit-banner .fail').text(bads || '');
+      }
+
       QUnit.done = function(failures, total, config) {
+        $('body').addClass('done');
         if (failures){
           $('body').addClass('failure');
+          $('#call h2 .number').text(failures);
+          failures <= 1 && $('#failure h2 .plural').hide();
+        }else{
+          $('body').addClass('success');
         }
 
         /*
@@ -70,8 +86,8 @@
           }
 
         $('<a/>', { name: 'receipt' }).appendTo('#qunit-testresult');
-        formatted(report, 'Carbon copy of the receipt, which has been sent out to central Reel test server. Thank you!').appendTo( $('<ul/>').appendTo('#qunit-testresult') );
         location.host != 'au' && $.post(server+'/collect/reel/testrun/results', report);
+        formatted(report, 'Summary').appendTo( $('<ul/>').appendTo('#receipt') );
 
         function formatted( bit, label ){
           var $result= $('<li/>')
