@@ -64,11 +64,12 @@
          *
          * Data collected:
          * - timestamp
-         * - counts (total number of tests, fails, passes)
+         * - counts (total number of tests, fails and passes)
          * - failures themselves
          * - versions (version of jQuery and Reel)
          * - the results summary line with duration
          * - user agent string (your browser name and its version(s))
+         * - test host domain
          */
         var
           //server= 'http://au:4567',
@@ -76,6 +77,7 @@
           timestamp= +new Date(),
           report= {
             timestamp:  timestamp,
+            host:       location.host,
             filter:     config.filters,
             count: {
               total:    total,
@@ -92,8 +94,8 @@
           }
 
         $('<a/>', { name: 'receipt' }).appendTo('#qunit-testresult');
-        location.host != 'au' && $.post(server+'/collect/reel/testrun/results', report);
         formatted(report, 'Summary').appendTo( $('<ul/>').appendTo('#receipt') );
+        $.post(server+'/collect/reel/testrun/results', report);
 
         function formatted( bit, label ){
           var $result= $('<li/>')
