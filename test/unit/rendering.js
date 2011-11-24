@@ -4,7 +4,7 @@
 (function($){
 
   module('Rendering', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded frameChange').trigger('teardown');
+    $('.jquery-reel').unbind('.test').trigger('teardown');
   }});
 
   asyncTest( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
@@ -57,13 +57,13 @@
         $reel= $('#image').reel({ indicator: size }),
         $indicator= $('#image-reel .jquery-reel-indicator')
 
-      $reel.bind('loaded', function(e){
+      $reel.bind('loaded.test', function(e){
         index++;
         equiv( $indicator.css('top'), 126 - size );
         if (index == samples.length){
           start();
         }else{
-          $('#image').unbind('loaded').trigger('teardown')
+          $('#image').unbind('.test').trigger('teardown')
           try_sizes_one_by_one()
         }
       })
@@ -123,7 +123,7 @@
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
       before= $('#image-reel .jquery-reel-indicator').css('left');
 
-    $reel.bind('loaded', function(){
+    $reel.bind('loaded.test', function(){
       $reel.trigger('frameChange', 5);
       $reel.one('frameChange', function(){
         var
@@ -172,7 +172,7 @@
     var
       $reel= $('#image').reel()
 
-    $reel.bind('loaded', function(){
+    $reel.bind('loaded.test', function(){
       var
         $cached= $reel.siblings('img[width][height]')
 

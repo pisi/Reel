@@ -4,7 +4,7 @@
 (function($){
 
   module('Sprite', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded').trigger('teardown');
+    $('.jquery-reel').unbind('.test').trigger('teardown');
   }});
 
   asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
@@ -107,7 +107,7 @@
         row: 3
       })
 
-    $reel.bind('loaded', function(){
+    $reel.bind('loaded.test', function(){
       equal( $reel.data('row'), 1);
       equal( $reel.data('frame'), 17);
       equal( $reel.data('backwards'), false);

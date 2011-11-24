@@ -177,7 +177,7 @@
 
     // Positioning of annotations happens at `frameChange`
     // and we test it bubbled up to instance's parent
-    $reel.parent().bind('frameChange', function(){
+    $reel.parent().bind('frameChange.test', function(){
       var
         frame= $reel.data('frame'),
         should= should_be[frame - 1] == '+'
@@ -186,7 +186,7 @@
 
       checked.push(frame);
       if (checked.length == frames){
-        $reel.parent().unbind('frameChange');
+        $reel.parent().unbind('.test');
         start();
       }
     });

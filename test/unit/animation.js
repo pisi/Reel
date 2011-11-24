@@ -5,14 +5,14 @@
 
   module('Animation', { teardown: function teardown(){
     $('.jquery-reel').trigger('teardown');
-    $(document).unbind('tick.reel');
+    $(document).unbind('.test');
   }});
 
   asyncTest( 'When at least one instance of Reel is present in the DOM a shared ticker is started', function()
   {
     expect(1);
 
-    $(document).bind('tick.reel', tick);
+    $(document).bind('tick.reel.test', tick);
 
     var
       ticks = 0;
@@ -31,7 +31,7 @@
   {
     expect(9);
 
-    $(document).bind('tick.reel', tick);
+    $(document).bind('tick.reel.test', tick);
 
     var
       ticks = 0,
@@ -94,7 +94,7 @@
           bang= +new Date(),
           $reel= $('#image').reel({ tempo: tempo, speed: speed })
 
-        $(document).bind('tick.reel', function tick(){
+        $(document).bind('tick.reel.test', function tick(){
           ticks++;
         });
 

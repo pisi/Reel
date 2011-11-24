@@ -4,8 +4,8 @@
 (function($){
 
   module('Issues', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded').trigger('teardown');
-    $(document).unbind('tick.reel');
+    $('.jquery-reel').trigger('teardown').unbind('.test');
+    $(document).unbind('.test');
   }});
 
   test( 'GH-4 Proper background positioning range for stitched non-looping panoramas', function(){
@@ -118,7 +118,7 @@
     equal(typeof slidable, 'undefined', '`slidable` is undefined in the global scope');
     equal(typeof window.slidable, 'undefined', '`window.slidable` is also undefined');
 
-    $(document).bind('tick.reel', function(){
+    $(document).bind('tick.reel.test', function(){
       ticks++;
       if (ticks == 100){
         ok(true, 'Ticked 100 times - ticker runs ;)');
@@ -159,7 +159,7 @@
      */
     expect( 3 );
 
-    $('#image').reel().click(function(){
+    $('#image').reel().bind('click.test', function(){
       ok( true, 'Event binding is preserved');
     });
 
@@ -249,7 +249,7 @@
     var
       image = undefined
 
-    $('#image').bind('loaded', function(){
+    $('#image').reel().bind('loaded.test', function(){
       if (image === undefined){
         image= $(this).data('image');
         var
