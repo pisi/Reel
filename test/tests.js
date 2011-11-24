@@ -13,7 +13,7 @@
       'qunit/qunit.js',
       'qunit/quny.js',
 
-      'unit/parameters.js',
+      //'unit/parameters.js',
       'unit/events.js',
       'unit/computation.js',
       'unit/animation.js',
@@ -22,7 +22,7 @@
       'unit/annotations.js',
       'unit/data.js',
       'unit/api.js',
-      'unit/interaction.js',
+      //'unit/interaction.js',
       'unit/sprite.js',
       'unit/issues.js'
     ],
