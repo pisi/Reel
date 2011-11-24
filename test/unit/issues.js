@@ -173,7 +173,7 @@
   });
 
 
-  test( 'GH-46 Incorrect `row` to `frame` translation in multi-row movies', function(){
+  asyncTest( 'GH-46 Incorrect `row` to `frame` translation in multi-row movies', function(){
     /* Github issue 46 bugfix
      * http://github.com/pisi/Reel/issues/#issue/46
      * When topmost row has been reached with dragging, the instance freeze in that row
@@ -187,6 +187,7 @@
      */
     var
       try_rows= [ 1, 2 ],
+      done_rows= 0,
       try_frames= [ 1, 2, 3, 4, 5, 6, 7, /*8,*/ 9, 10, 11, 12, 13, 14, /*15,*/ 16, 17, 18, 19, 20,
                     21, 22, 23, 24, 25, 26, 27, 28, /*29,*/ 30, 31, 32, 33, 34, 35, 36 ]
                     /* The three commented-out frame values (8, 15 and 29)
@@ -199,7 +200,7 @@
 
     expect( try_rows * try_frames * 3 ); // 3 test for each combination
 
-    for( var i= 0; i < try_rows.length; i++){
+    for( var i= 0; i < try_rows.length; i++) setTimeout( function(){
       for( var ii= 0; ii < try_frames.length; ii++){
         $('#image').trigger('teardown');
         var
@@ -237,7 +238,9 @@
                   { row: 1, frame: rows * frames - frames + frame },
                   '& drag way down again.');
       }
-    }
+      done_rows++;
+      if (done_rows == rows) start();
+    }, 5);
   });
 
 
