@@ -317,7 +317,6 @@ jQuery.reel || (function($, window, document, undefined){
             }else{
               rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
               area
-                .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
                 .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
                 .bind(_dblclick_, function(e){ t.trigger('play') })
                 .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (e.which != 1) return; t.trigger('down', [e.clientX, e.clientY]); return false })
@@ -839,7 +838,6 @@ jQuery.reel || (function($, window, document, undefined){
     preloader_klass= klass + '-preloader',
     cached_klass= klass + '-cached',
     monitor_klass= klass + '-monitor',
-    hi_klass= klass + '-interface',
     annotations_klass= klass + '-annotations',
     panning_klass= klass + '-panning',
     frame_klass= 'frame-',
