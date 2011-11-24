@@ -455,12 +455,7 @@ QUnit.load = (function() {
 		filter.id = "qunit-filter-pass";
 		filter.disabled = true;
 		addEvent( filter, "click", function() {
-			var li = document.getElementsByTagName("li");
-			for ( var i = 0; i < li.length; i++ ) {
-				if ( li[i].className.indexOf("pass") > -1 ) {
-					li[i].style.display = filter.checked ? "none" : "";
-				}
-			}
+			$('#qunit').toggleClass('filter-pass');
 		});
 		toolbar.appendChild( filter );
 
@@ -528,8 +523,8 @@ function done() {
 
 	var banner = id("qunit-banner"),
 		tests = id("qunit-tests"),
-		html = ['Tests completed in ',
-		+new Date - config.started, ' milliseconds.<br/>',
+		html = ['Tests completed in <span class="completed_in">',
+		+new Date - config.started, '</span> milliseconds. ',
 		'<span class="passed">', config.stats.all - config.stats.bad, '</span> tests of <span class="total">', config.stats.all, '</span> passed, <span class="failed">', config.stats.bad,'</span> failed.'].join('');
 
 	if ( banner ) {
