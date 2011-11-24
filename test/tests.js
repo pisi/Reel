@@ -28,6 +28,10 @@
     ],
     complete: function(){
 
+      location.params.respawn && setTimeout(function(){
+        location.href= location.href;
+      }, location.params.respawn * 1000);
+
       QUnit.load();
 
       var
@@ -44,12 +48,14 @@
       QUnit.done = function(failures, total, config) {
         $('body').addClass('done');
         if (failures){
+          location.params.respawn && $('#qunit-filter-pass').click();
           $('body').addClass('failure');
           $('#call h2 .number').text(failures);
           failures <= 1 && $('#failure h2 .plural').hide();
         }else{
           $('body').addClass('success');
         }
+        $('#qunit-testrunner-toolbar').show();
 
         /*
          * Results of the just finished testrun are automatically submitted
