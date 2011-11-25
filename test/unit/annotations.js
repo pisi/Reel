@@ -4,7 +4,7 @@
 (function($){
 
   module('Annotations', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
+    $('.jquery-reel').unbind('.test').trigger('teardown');
     // The teardown is automatic since 1.2
   }});
 
@@ -206,9 +206,66 @@
     }, 123);
   });
 
+  asyncTest( 'Horizontal position of annotation is defined by `x` property relative to left top corner', function(){
+    expect( 1 );
+    var
+      x= '50%',
+      $reel= $('#image').reel({ annotations: {
+        'x-positioned-annotation': {
+          x: x
+        }
+      }})
 
-  // TODO Add positioning tests
+    $reel.bind('loaded.test', function(){
+      equal( $('#x-positioned-annotation').css('left'), x, '50%');
+      start();
+    });
+  });
 
+  asyncTest( 'Vertical position of annotation is defined by `y` property', function(){
+    expect( 2 );
+    var
+      y= 30,
+      $reel= $('#image').reel({ annotations: {
+        'y-positioned-annotation': {
+          y: y
+        }
+      }})
+
+    $reel.bind('loaded.test', function(){
+      equal( $('#y-positioned-annotation').css('top'), y + 'px', '30px');
+      equiv( $('#y-positioned-annotation').css('top'), y, 'It indeed is 30px');
+      start();
+    });
+  });
+
+  asyncTest( 'Both `x` and `y` properties can accept an Array of positions coordinates', function(){
+    expect( 12 );
+    var
+      frames= 6,
+      checked= 0,
+      xs= [ 10, 20, 30, 20, 10, 0 ],
+      ys= [ 20, 10, 0 , 40, 50, 30 ],
+      y= 30,
+      $reel= $('#image').reel({ frames: frames, speed: 1, annotations: {
+        'xy-positioned-annotation': {
+          x: xs,
+          y: ys
+        }
+      }})
+
+    $reel.parent().bind('frameChange.test', function(){
+      var
+        frame= $reel.data('frame')
+
+      if (frame == checked) return;
+
+      equiv( $('#xy-positioned-annotation').css('left'), xs[checked], 'x @ frame '+frame);
+      equiv( $('#xy-positioned-annotation').css('top'), ys[checked], 'y @ frame '+frame);
+      checked++;
+      if (checked >= frames) start();
+    });
+  });
 
 
 })(jQuery);

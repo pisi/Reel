@@ -629,8 +629,8 @@ jQuery.reel || (function($, window, document, undefined){
                 start= note.start,
                 end= note.end,
                 offset= frame - (start || 0),
-                x= typeof note.x!=_object_ ? note.x : note.x[offset],
-                y= typeof note.y!=_object_ ? note.y : note.y[offset],
+                x= typeof note.x!=_object_ ? note.x : note.x[offset-1],
+                y= typeof note.y!=_object_ ? note.y : note.y[offset-1],
                 visible= x !== undefined && y !== undefined && offset >= 0 && offset <= end - start,
                 style= { display: visible ? 'block':'none', left: px(x) || 0, top: px(y) || 0 }
               $note.css(style);
