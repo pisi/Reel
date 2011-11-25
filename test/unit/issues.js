@@ -3,10 +3,7 @@
  */
 (function($){
 
-  module('Issues', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown').unbind('.test');
-    $(document).unbind('.test');
-  }});
+  module('Issues', reel_test_module_routine);
 
   test( 'GH-4 Proper background positioning range for stitched non-looping panoramas', function(){
     /* Github issue 4 bugfix

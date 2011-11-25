@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('Selector', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
-  }});
+  module('Selector', reel_test_module_routine);
 
   test( 'Does not accept image tag without source', function()
   {

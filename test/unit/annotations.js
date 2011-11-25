@@ -3,10 +3,7 @@
  */
 (function($){
 
-  module('Annotations', { teardown: function teardown(){
-    $('.jquery-reel').unbind('.test').trigger('teardown');
-    // The teardown is automatic since 1.2
-  }});
+  module('Annotations', reel_test_module_routine);
 
   test( 'No (or undefined) `annotations` option doesn\'t result in any sebsequent DOM changes', function(){
     expect(1);

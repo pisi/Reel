@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('Sprite', { teardown: function teardown(){
-    $('.jquery-reel').unbind('.test').trigger('teardown');
-  }});
+  module('Sprite', reel_test_module_routine);
 
   asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
     expect($.browser.msie ? 16 : 12);

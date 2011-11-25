@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('Rendering', { teardown: function teardown(){
-    $('.jquery-reel').unbind('.test').trigger('teardown');
-  }});
+  module('Rendering', reel_test_module_routine);
 
   asyncTest( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
     expect(3);

@@ -3,10 +3,7 @@
  */
 (function($){
 
-  module('Animation', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
-    $(document).unbind('.test');
-  }});
+  module('Animation', reel_test_module_routine);
 
   asyncTest( 'When at least one instance of Reel is present in the DOM a shared ticker is started', function()
   {

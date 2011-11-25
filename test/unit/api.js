@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('API', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
-  }});
+  module('API', reel_test_module_routine);
 
   test( 'Method exposed publicly as jQuery.fn.reel()', function()
   {

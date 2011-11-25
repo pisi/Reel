@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('Events', { teardown: function teardown(){
-    $('.jquery-reel').unbind('.test').trigger('teardown');
-  }});
+  module('Events', reel_test_module_routine);
 
   asyncTest( 'Internal data setting triggers "store" event and passes name and value to the handler', function(){
     expect(3);

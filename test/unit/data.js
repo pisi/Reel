@@ -1,8 +1,6 @@
 (function($){
 
-  module('Data', { teardown: function(){
-    $('.jquery-reel').trigger('teardown');
-  }});
+  module('Data', reel_test_module_routine);
 
   asyncTest( 'All internal states and values are accessible by jQuery\'s own `.data()`', function(){
 

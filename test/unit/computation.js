@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('Computation', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
-  }});
+  module('Computation', reel_test_module_routine);
 
   asyncTest( '`fractionChange` accepts and normalizes any real fraction passed', function(){
     expect(10);
