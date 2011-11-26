@@ -25,9 +25,9 @@
       count= 0
 
     $.each($.reel.def, function(){ count++ });
-    expect(count + 4);
+    expect(count + 7);
 
-    equal( count, 51, 'Total number of options');
+    equal( count, 48, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -35,17 +35,17 @@
     equal( $.reel.def.frames,                    36, 'total number of frames; every 10° for full rotation' );
     equal( $.reel.def.hint,                      '', 'mouse-sensitive area hint tooltip' );
     equal( $.reel.def.horizontal,              true, 'roll flow; defaults to horizontal' );
-    equal( $.reel.def.hotspot,            undefined, '[deprecated] use `area` instead' );
+    ok( $.reel.def.hotspot === undefined,            '[removed] use `area` instead' );
     equal( $.reel.def.indicator,                  0, 'size of a visual indicator of reeling (in pixels)' );
     equal( $.reel.def.klass,                     '', 'plugin instance class name' );
     equal( $.reel.def.loops,                   true, 'is it a loop?' );
-    equal( $.reel.def.reversed,           undefined, '[deprecated] use `cw` instead' );
+    ok( $.reel.def.reversed === undefined,           '[removed] use `cw` instead' );
     ok( $.reel.def.saves === undefined,              '[removed] allow save as?' );
     ok( $.reel.def.sensitivity === undefined,        '[removed] interaction sensitivity' );
     equal( $.reel.def.spacing,                    0, 'space between frames on reel' );
     equal( $.reel.def.stitched,                   0, 'pixel width (length) of a stitched (rectilinear) panoramic reel' );
     equal( $.reel.def.suffix,               '-reel', 'sprite filename suffix (A.jpg\'s sprite is A-reel.jpg by default)' );
-    equal( $.reel.def.tooltip,                   '', '[deprecated] use `hint` instead' );
+    ok( $.reel.def.tooltip === undefined,            '[removed] use `hint` instead' );
 
     // Version 1.1 options
     equal( $.reel.def.area,               undefined, 'custom mouse-sensitive area jQuery collection' );

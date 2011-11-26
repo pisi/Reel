@@ -21,6 +21,12 @@ Development (edge)
   The former order is designated `"linear". Preloading mode is chosen by
   new `preload` option accepting a mode name. (GH-10).
 * New option `crop` for instance cropping control.
+* Deprecated options `hotspot`, `tooltip` and `reversed` have been
+  removed.
+* Bare click on left/right half of the image steps the Reel one frame
+  forward/back. Set `steppable` to false to disable. Comes with `"stepLeft"` and `"stepRight"` events (GH-20).
+* Custom text/graphics can augment the frames using the brand new
+  `annotations` feature (GH-36).
 
 
 Version 1.1.3
