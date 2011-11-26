@@ -322,7 +322,6 @@ jQuery.reel || (function($, window, document, undefined){
               rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
               area
                 .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
-                .bind(_dblclick_, function(e){ t.trigger('play') })
                 .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (e.which != 1) return; t.trigger('down', [e.clientX, e.clientY]); return false })
                 .bind(opt.clickfree ? _mouseleave_ : '', function(e){ t.trigger('up'); return false })
                 .disableTextSelect();
@@ -884,7 +883,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Events
     ns= '.reel',
-    _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
+    _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
     _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
     _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+ns,
     _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
