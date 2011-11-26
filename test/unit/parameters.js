@@ -3,7 +3,7 @@
  */
 (function($){
 
-  module('Parameters');
+  module('Parameters', reel_test_module_routine);
 
   // test( '')
 

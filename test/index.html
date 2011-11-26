@@ -37,24 +37,32 @@
       </div>
       <h1 id="qunit-header">Tests <a href="index.html">/</a> <a href="sampler.html">Sampler »</a></h1>
       <ul id="qunit-modules"><li><a href="?">All</a></li></ul>
-      <h2 id="qunit-banner"></h2>
+      <h2 id="qunit-banner">
+        <div id="code"><span class="fail"></span><span class="pass">0</span></div>
+      </h2>
       <div id="qunit-testrunner-toolbar">
         <div id="failure">
           <!-- Displayed only in case of failing test(s) -->
-          <div id="call">
-            <h2>Wow, you've just found an error. Cool :) And thanks!</h2>
+            <h2>nice catch<span class="plural">es</span>, mate!</h2>
             <p>
-              It's been automatically <a id="result_link" href="#receipt" title="View the report">reported and collected</a> in our database. Don't worry, it's all <u>anonymous</u>.
-              If you want to help us all further, please run this test on as many devices as you can.
+              Test <a id="result_link" href="#receipt" title="View the report receipt" class="red">receipt</a>
+              has been automatically relayed to us, so that we can turn them <span class="green">green</span> soon.
+              Cheers!
             </p>
             <p>
-              <strong>Thank you for taking part in distributed testing of Reel! Together we are powerful.</strong>
+              If you want to help even further, please run this test suite on as many devices as you can.
             </p>
-          </div>
+        </div>
+        <div id="success">
+          <h2>passed tests.</h2>
+        </div>
+        <div id="qunit-thanks">
+          <strong>Thank you for participating in distributed testing of Reel! <u>Together</u> we are powerful.</strong> ~ Petr Vostřel, author
         </div>
       </div>
       <h2 id="qunit-userAgent"></h2>
       <ol id="qunit-tests"></ol>
+      <div id="receipt"></div>
     </div>
 
     <div id="Body" style="position:absolute;left:-1000px;width:900px;">

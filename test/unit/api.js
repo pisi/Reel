@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('API', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
-  }});
+  module('API', reel_test_module_routine);
 
   test( 'Method exposed publicly as jQuery.fn.reel()', function()
   {
@@ -29,7 +27,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 4);
 
-    equal( count, 49, 'Total number of options');
+    equal( count, 51, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -82,10 +80,13 @@
     equal( $.reel.def.vertical,               false, 'switches orbital object movie to vertical mode' );
     equal( $.reel.def.wheelable,               true, 'mouse wheel interaction (allowed by default)' );
 
+    // Version 1.2 options
     equal( $.reel.def.annotations,        undefined, 'annotations definition object' );
+    equal( $.reel.def.crop,                    true, 'crop instance area to match image dimensions' );
     ok( typeof $.reel.def.attr === 'object',         'initial attribute-value pairs map for the IMG tag' );
     equal( $.reel.def.preload,           'fidelity', 'preloading order - either "linear" or "fidelity" (default)' );
     equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
+    equal( $.reel.def.steppable,               true, 'allows to step the view (horizontally) by clicking on image' );
     equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
   });
 

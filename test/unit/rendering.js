@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('Rendering', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded frameChange').trigger('teardown');
-  }});
+  module('Rendering', reel_test_module_routine);
 
   asyncTest( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
     expect(3);
@@ -57,13 +55,13 @@
         $reel= $('#image').reel({ indicator: size }),
         $indicator= $('#image-reel .jquery-reel-indicator')
 
-      $reel.bind('loaded', function(e){
+      $reel.parent().bind('loaded.test', function(e){
         index++;
         equiv( $indicator.css('top'), 126 - size );
         if (index == samples.length){
           start();
         }else{
-          $('#image').unbind('loaded').trigger('teardown')
+          $('#image').unbind('.test').trigger('teardown')
           try_sizes_one_by_one()
         }
       })
@@ -72,18 +70,27 @@
 
   asyncTest( 'Indicator: `indicator` option value is the size of the indicator', function(){
     expect(6);
-    try_different_sizes([5, 10, 30]);
-    start();
+    var
+      samples= [5, 10, 30],
+      index= 0
 
-    function try_different_sizes(sizes){
-      $(sizes).each(function try_size(ix, size){
-        $('#image').trigger('teardown')
-        var
-          $reel= $('#image').reel({ indicator: size }),
-          $indicator= $('#image-reel .jquery-reel-indicator')
+    try_sizes_one_by_one();
 
+    function try_sizes_one_by_one(){
+      var
+        size= samples[index],
+        $reel= $('#image').reel({ indicator: size }),
+        $indicator= $('#image-reel .jquery-reel-indicator')
+
+      $reel.parent().bind('loaded.test', function(){
+        index++;
         equiv( $indicator.css('width'), size );
         equiv( $indicator.css('height'), size );
+        if (index == samples.length){
+          start();
+        }else{
+          try_sizes_one_by_one();
+        }
       });
     }
   });
@@ -95,8 +102,10 @@
       $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
       $indicator= $('#image-reel .jquery-reel-indicator');
 
-    equiv( $indicator.css('left'), '0px' );
-    start();
+    $reel.parent().bind('loaded.test', function(){
+      equiv( $indicator.css('left'), '0px' );
+      start();
+    });
   });
 
   asyncTest( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){
@@ -123,9 +132,9 @@
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
       before= $('#image-reel .jquery-reel-indicator').css('left');
 
-    $reel.bind('loaded', function(){
+    $reel.bind('loaded.test', function(){
       $reel.trigger('frameChange', 5);
-      $reel.bind('frameChange', function(){
+      $reel.one('frameChange', function(){
         var
           after= $('#image-reel .jquery-reel-indicator').css('left');
 
@@ -167,26 +176,12 @@
     }
   });
 
-  asyncTest( 'GH-69 The outter-most DOM element is tagged with `frame-X` class name', function(){
-    expect( 2 );
-    var
-      $reel= $('#image').reel({ speed: 1 });
-
-    setTimeout(function(){
-      var
-        frame= $reel.data('frame')
-      ok( frame, 'Instance stopped at frame '+frame);
-      ok( $('#image-reel').attr('class').match(/frame-[0-9]+/), 'The wrapper carries frame-'+frame+' class name');
-      start();
-    }, 123);
-  });
-
   asyncTest( 'Preload cache `img`s have defined stage dimensions #10', function(){
     expect(3);
     var
       $reel= $('#image').reel()
 
-    $reel.bind('loaded', function(){
+    $reel.bind('loaded.test', function(){
       var
         $cached= $reel.siblings('img[width][height]')
 
@@ -197,4 +192,18 @@
     });
   });
 
+  asyncTest( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
+    expect(4);
+    var
+      $reel= $('#image').reel(),
+      $style= $reel.data('style')
+
+    ok( is('Object', $style), '`"style"` data key on instance');
+    equiv( $style[0].nodeName, 'style', '`<style>` DOM node');
+    ok( !$style.prevAll('style').length, 'At the bottom of the stack (all others inherit from it)');
+
+    $reel.trigger('teardown');
+    ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
+    start();
+  });
 })(jQuery);

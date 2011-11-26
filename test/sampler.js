@@ -56,9 +56,9 @@
 
         $('#the_one').addClass('on');
         $('#meta').html( $('.meta', this).text() );
-        $('#html').text( $('.html', this).text().trim() );
-        $('#css').text( $('.css', this).text().trim() );
-        $('#js').text( $('.js', this).text().trim() );
+        $('#html').text( $.trim($('.html', this).text()) );
+        $('#css').text( $.trim($('.css', this).text()) );
+        $('#js').text( $.trim($('.js', this).text()) );
         $('#image')
           .reel( options )
           .bind('loaded', function(){

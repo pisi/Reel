@@ -3,9 +3,7 @@
  */
 (function($){
 
-  module('Events', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded store recall openingDone play').trigger('teardown');
-  }});
+  module('Events', reel_test_module_routine);
 
   asyncTest( 'Internal data setting triggers "store" event and passes name and value to the handler', function(){
     expect(3);
@@ -14,12 +12,12 @@
       compare= false
 
     $reel
-      .bind('loaded', function(){
+      .bind('loaded.test', function(){
         setTimeout(function(){
           compare= true;
         }, 500);
       })
-      .bind('store', function(e, name, value){
+      .bind('store.test', function(e, name, value){
         if (compare && name == 'frame'){
           ok(name, '`name` is passed as first param');
           ok(value, '`value` is passed as second param');
@@ -37,12 +35,12 @@
       compare= false
 
     $reel
-      .bind('loaded', function(){
+      .bind('loaded.test', function(){
         setTimeout(function(){
           compare= true;
         }, 500);
       })
-      .bind('recall', function(e, name, value){
+      .bind('recall.test', function(e, name, value){
         if (compare){
           ok(true, '"recall" event is being triggered');
           ok(name, '`name` is passed as first param');
@@ -61,10 +59,10 @@
       })
 
     $reel
-      .bind('openingDone', function(){
+      .bind('openingDone.test', function(){
         ok( true, '`"openingDone"` has been triggered');
       })
-      .bind('play', function(){
+      .bind('play.test', function(){
         ok( true, '`"play" event has fired closely following the `"openingDone"`');
         start();
       })
@@ -78,7 +76,7 @@
       })
 
     $reel
-      .bind('openingDone', function(){
+      .bind('openingDone.test', function(){
         ok( true, '`"openingDone"` has been triggered and set to prevent event bubbling');
         setTimeout(function(){
           ok( true, 'The cancelled `"play"` correctly didn\'t fire (waited for it half a second)');
@@ -86,7 +84,7 @@
         }, 500);
         return false
       })
-      .bind('play', function(){
+      .bind('play.test', function(){
         start();
       })
   });

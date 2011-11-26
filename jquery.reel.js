@@ -101,8 +101,10 @@ jQuery.reel || (function($, window, document, undefined){
 
       annotations:undefined, // annotations definition object
       attr:              {}, // initial attribute-value pairs map for the IMG tag
+      crop:            true, // crop instance area to match image dimensions
       preload:   'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
+      steppable:       true, // allows to step the view (horizontally) by clicking on image
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
     }
     // [deprecated] options defaults may be gone anytime soon
@@ -172,17 +174,12 @@ jQuery.reel || (function($, window, document, undefined){
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
               frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
-              style= {
-                display: 'block',
-                width: size.x,
-                height: size.y
-              },
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
-              overlay_css= { position: 'relative', width: size.x, height: size.y },
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass, css: overlay_css }).bind('openingDone', delay_play),
-              $instance= t.wrap($overlay).attr({ 'class': klass }).css(style).bind(on),
-              instances_count= instances.push(add_instance($instance)[0])
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }),
+              $instance= t.wrap($overlay).attr({ 'class': klass }),
+              instances_count= instances.push(add_instance($instance)[0]),
+              $overlay= $instance.parent().bind(on.instance)
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_images_, []);
             set(_frame_, opt.frame);
@@ -206,155 +203,23 @@ jQuery.reel || (function($, window, document, undefined){
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
-            set(_opening_ticks_, 0);
+            set(_opening_ticks_, undefined);
             set(_backup_, {
               src: src,
               classes: classes,
               style: styles || __,
               data: data
             });
-            pool.bind(_tick_, on.tick);
+            opt.steppable || $overlay.unbind('click.steppable');
+            opt.annotations || $overlay.unbind('.annotations');
+            rule(true, '', { width: size.x, height: size.y });
+            rule(true, ','+___+dot(klass), { display: 'block', position: 'relative' });
+            pool.bind(on.pool);
             cleanup.call(e);
-            t.trigger('start');
+            t.trigger('setup');
           },
-          teardown: function(e){
-          /*
-          - unbinds events, erases all state data
-          - reconstructs the original DOM element
-          */
-            var
-              backup= t.data(_backup_)
-            t.parent().unbind('openingDone', delay_play).children(_img_).unbind(ns);
-            t.unbind(ns).unbind(on).attr({
-             'class': backup.classes,
-              src: backup.src,
-              style: backup.style
-            }).removeClass(klass);
-            t.data(backup.data).siblings().remove();
-            t.unwrap();
-            remove_instance(t);
-            no_bias();
-            pool
-            .unbind(_tick_, on.tick)
-            .unbind(_tick_, on.opening_tick);
-            stage_pool
-            .unbind(_mouseup_).unbind(_mousemove_);
-            cleanup.call(e);
-          },
-          start: function(e){
-          /*
-          - binds all mouse/touch events (namespaced)
-          - prepares stage overlay elements
-          */
-            var
-              space= get(_dimensions_),
-              frames= get(_frames_),
-              resolution= max(frames, get(_steps_)),
-              fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
-              frame= set(_frame_, round(fraction * frames) + 1),
-              loaded= 0,
-              id= t.attr('id'),
-              film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 },
-              $overlay= t.parent(),
-              $hi= $(_div_tag_, { 'class': hi_klass, css: film_css }).appendTo($overlay),
-              scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
-              area= set(_area_, $(opt.area || $hi ))
-            if ($.reel.touchy){
-              // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-              t.css({ WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length
-                ? 'auto'
-                : (get(_stitched_) && get(_stitched_)+'px '+space.y+'px')
-                || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px'
-              });
-              area
-                .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
-                .bind(_touchmove_, function(e){ t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
-                .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
-                .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
-            }else{
-              area
-                .css({ cursor: 'url('+drag_cursor+'), '+failsafe_cursor })
-                .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
-                .bind(_dblclick_, function(e){ t.trigger('play') })
-                .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
-                .bind(opt.clickfree ? _mouseleave_ : '', function(e){ t.trigger('up'); return false })
-                .disableTextSelect();
-            }
-            (opt.hint) && area.attr(_title_, opt.hint);
-            opt.monitor && $overlay.append($monitor= $(_div_tag_, {
-              'class': monitor_klass,
-              css: { position: _absolute_, left: 0, top: 0 }
-            })) || ($monitor= $());
-            if (opt.annotations){
-              $hi.append($annotations= $(_div_tag_, { 'class': annotations_klass, css: film_css }))
-              || ($annotations= $());
-              $.each(opt.annotations, function(ida, note){
-                var
-                  $note= $(_div_tag_, note.holder).attr({ id: ida }),
-                  $image= note.image ? $(tag(_img_), note.image) : $(),
-                  $link= note.link ? $(tag(_a_), note.link) : $()
-                note.image || note.link && $note.append($link);
-                note.link || note.image && $note.append($image);
-                note.link && note.image && $note.append($link.append($image));
-                $note.hide().appendTo($annotations);
-              });
-            }
-            opt.indicator && $overlay.append(indicator('x'));
-            opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
-            t.trigger('preload');
-          },
-          preload: function(e){
-          /*
-          - preloads all frames and sprites
-          */
-            var
-              space= get(_dimensions_),
-              $overlay= t.parent(),
-              image= get(_image_),
-              images= opt.images,
-              order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
-              preload= !images.length ? [image] : order(images, opt, get),
-              uris= [],
-              img_tag= t[0],
-              img_frames= img_tag.frames= preload.length,
-              img_preloaded= img_tag.preloaded= 0
-            t.trigger('stop');
-            $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass,
-              css: {
-                position: _absolute_,
-                left: 0,
-                top: space.y - opt.preloader,
-                height: opt.preloader,
-                overflow: _hidden_,
-                backgroundColor: _hex_black_
-              }
-            }));
-            while(preload.length){
-              var
-                uri= opt.path+preload.shift(),
-                $img= $(new Image()).hide().attr({ width: space.x, height: space.y })
-                .bind('load'+ns, function update_preloader(){
-                  img_tag.preloaded++
-                  $(this).unbind(ns);
-                  $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
-                  if (img_tag.frames == img_tag.preloaded){
-                    $preloader.remove();
-                    images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
-                    t
-                    .trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange')
-                    .trigger('loaded')
-                    .trigger('opening');
-                    cleanup.call(e);
-                  }
-                });
-              $overlay.append($img);
-              uris.push(uri);
-              // The actual loading of the image is done asynchronously
-              setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
-            }
-            set(_images_, uris);
-          },
-          tick: function(e){
+          pool: {
+          'tick.reel': function(e){
           /*
           - triggered by pool's `tick.reel` event
           - keeps track of operated and braked statuses
@@ -380,7 +245,141 @@ jQuery.reel || (function($, window, document, undefined){
               fraction= set(_fraction_, was - step * backwards)
             cleanup.call(e);
             if (fraction == was) return;
+          },
+          'tick.reel.fu': function(e){
             t.trigger('fractionChange');
+            if (get(_opening_ticks_) === undefined) e.stopImmediatePropagation();
+          },
+          'tick.reel.opening': function(e){
+          /*
+          - ticker listener dedicated to opening animation
+          */
+            var
+              speed= opt.entry || opt.speed,
+              step= speed / leader(_tempo_) * (opt.cw? -1:1),
+              was= get(_fraction_),
+              fraction= set(_fraction_, was + step),
+              ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
+            cleanup.call(e);
+            if (ticks > 1) return;
+            pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+            t.trigger('openingDone');
+          }
+          },
+          instance: {
+          teardown: function(e){
+          /*
+          - unbinds events, erases all state data
+          - reconstructs the original DOM element
+          */
+            var
+              backup= t.data(_backup_)
+            t.parent().unbind(on.instance).children(_img_).unbind(ns);
+            get(_style_).remove();
+            t.unbind(ns).attr({
+             'class': backup.classes,
+              src: backup.src,
+              style: backup.style
+            }).removeClass(klass);
+            t.data(backup.data).siblings().remove();
+            t.unwrap();
+            remove_instance(t);
+            no_bias();
+            pool.unbind(on.pool);
+            stage_pool
+            .unbind(_mouseup_).unbind(_mousemove_);
+            cleanup.call(e);
+          },
+          start: function(e){
+          /*
+          - binds all mouse/touch events (namespaced)
+          - prepares stage overlay elements
+          */
+            var
+              space= get(_dimensions_),
+              frames= get(_frames_),
+              resolution= max(frames, get(_steps_)),
+              fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
+              frame= set(_frame_, round(fraction * frames) + 1),
+              loaded= 0,
+              id= t.attr('id'),
+              $overlay= t.parent(),
+              scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
+              area= set(_area_, $(opt.area || $overlay ))
+            if ($.reel.touchy){
+              // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
+              rule(true, ___+dot(klass), { WebkitUserSelect: 'none', WebkitBackgroundSize: opt.images.length
+                ? 'auto'
+                : (get(_stitched_) && get(_stitched_)+'px '+space.y+'px')
+                || (space.x * opt.footage)+'px '+(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))+'px'
+              });
+              area
+                .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
+                .bind(_touchmove_, function(e){ t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
+                .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
+                .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
+            }else{
+              rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
+              area
+                .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
+                .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
+                .bind(opt.clickfree ? _mouseleave_ : '', function(e){ t.trigger('up'); return false })
+                .disableTextSelect();
+            }
+            (opt.hint) && area.attr(_title_, opt.hint);
+            opt.monitor && $overlay.append($monitor= $(_div_tag_, { 'class': monitor_klass })) || ($monitor= $());
+            rule(true, ___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
+            rule(true, ___+dot(cached_klass), { display: 'none' });
+            rule(true, ___+dot(preloader_klass), {
+              position: _absolute_,
+              left: 0, top: space.y - opt.preloader,
+              height: opt.preloader,
+              overflow: _hidden_,
+              backgroundColor: _hex_black_
+            });
+            rule(true, dot(panning_klass), { cursor: url(drag_cursor_down)+', '+failsafe_cursor });
+            opt.indicator && $overlay.append(indicator('x'));
+            opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
+          },
+          preload: function(e){
+          /*
+          - preloads all frames and sprites
+          */
+            var
+              space= get(_dimensions_),
+              $overlay= t.parent(),
+              image= get(_image_),
+              images= opt.images,
+              order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
+              preload= !images.length ? [image] : order(images, opt, get),
+              uris= [],
+              img_tag= t[0],
+              img_frames= img_tag.frames= preload.length,
+              img_preloaded= img_tag.preloaded= 0
+            t.trigger('stop');
+            $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass }));
+            while(preload.length){
+              var
+                uri= opt.path+preload.shift(),
+                $img= $(new Image()).addClass(cached_klass).attr({ width: space.x, height: space.y })
+                .bind('load'+ns, function update_preloader(){
+                  img_tag.preloaded++
+                  $(this).unbind(ns);
+                  $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
+                  if (img_tag.frames == img_tag.preloaded){
+                    $preloader.remove();
+                    images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
+                    t.trigger('loaded');
+                    cleanup.call(e);
+                  }
+                });
+              $overlay.append($img);
+              uris.push(uri);
+              // The actual loading of the image is done asynchronously
+              setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
+            }
+            set(_images_, uris);
+            set(_style_, $('<style type="text/css">'+rules.join('\n')+'</style>').insertBefore($('head link, head style').first()));
           },
           opening: function(e){
           /*
@@ -393,24 +392,11 @@ jQuery.reel || (function($, window, document, undefined){
               duration= opt.opening,
               start= set(_fraction_, end - speed * opt.opening),
               ticks= set(_opening_ticks_, duration * leader(_tempo_))
-            pool.bind(_tick_, on.opening_tick);
           },
-          opening_tick: function(e){
-          /*
-          - ticker listener dedicated to opening animation
-          */
-            var
-              speed= opt.entry || opt.speed,
-              step= speed / leader(_tempo_) * (opt.cw? -1:1),
-              was= get(_fraction_),
-              fraction= set(_fraction_, was + step),
-              ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
-            t.trigger('fractionChange');
-            cleanup.call(e);
-            if (ticks > 1) return;
-
-            pool.unbind(_tick_, on.opening_tick);
-            t.trigger('openingDone');
+          openingDone: function(e){
+            delay= setTimeout(function play(){
+              t.trigger('play');
+            }, opt.delay * 1000 || 0);
           },
           play: function(e, direction){
             var
@@ -442,9 +428,10 @@ jQuery.reel || (function($, window, document, undefined){
                 origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
               unidle();
               no_bias();
+              panned= false;
+              get(_area_).addClass(panning_klass);
               if (!touched){
                 stage_pool
-                .css({ cursor: url(drag_cursor_down)+', '+failsafe_cursor })
                 .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
                 opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
               }
@@ -465,9 +452,9 @@ jQuery.reel || (function($, window, document, undefined){
               brakes= braking= velocity ? 1 : 0
             velocity ? idle() : unidle();
             no_bias();
+            get(_area_).removeClass(panning_klass);
             !touched
-            && stage_pool.unbind(_mouseup_).unbind(_mousemove_)
-            && get(_area_).css({ cursor: url(drag_cursor)+', '+failsafe_cursor });
+            && stage_pool.unbind(_mouseup_).unbind(_mousemove_);
             cleanup.call(e);
           },
           pan: function(e, x, y, touched){
@@ -486,6 +473,7 @@ jQuery.reel || (function($, window, document, undefined){
               var
                 delta= { x: x - last.x, y: y - last.y }
               if (abs(delta.x) > 0 || abs(delta.y) > 0){
+                panned= true;
                 last= { x: x, y: y };
                 var
                   revolution= get(_revolution_),
@@ -573,7 +561,7 @@ jQuery.reel || (function($, window, document, undefined){
             var
               fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
               was= get(__frame_),
-              frame= set(__frame_, set(_frame_, normal.frame(frame, opt, get))),
+              frame= normal.frame(frame, opt, get),
               images= opt.images,
               footage= opt.footage,
               space= get(_dimensions_),
@@ -584,6 +572,7 @@ jQuery.reel || (function($, window, document, undefined){
               frame= opt.inversed ? footage + 1 - frame : frame,
               frame= frame + footage
             var
+              frame= set(__frame_, set(_frame_, frame)),
               travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
               indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
               indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
@@ -592,8 +581,8 @@ jQuery.reel || (function($, window, document, undefined){
               ytravel= space.y - opt.indicator,
               yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
               $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
-            if (frame != was){
-              $(get(_stage_)).removeClass(frame_klass + was).addClass(frame_klass + frame)
+            if (frame == was) e.stopPropagation()
+            else
               if (images.length){
                 var
                   sprite= images[frame - 1]
@@ -614,20 +603,68 @@ jQuery.reel || (function($, window, document, undefined){
                   shift= [-x + _px_, y + _px_]
                 t.css({ backgroundPosition: shift.join(___) })
               }
-            }
-            if (opt.annotations){
-              $.each(opt.annotations, function(ida, note){
-                var
-                  x= typeof note.x!=_object_ ? note.x : note.x[frame - note.start],
-                  y= typeof note.y!=_object_ ? note.y : note.y[frame - note.start],
-                  visible= x && y,
-                  position= { position: _absolute_, left: x, top: y },
-                  $note= $('#'+ida, stage).css(position)
-                visible && $note.filter(':hidden').show() || $note.filter(':visible').hide();
-              });
-            }
             cleanup.call(e);
-          }
+          },
+
+          stepLeft: function(e){
+            unidle();
+            set(_backwards_, false);
+            t.trigger('fractionChange', get(_fraction_) - get(_bit_) * get(_cwish_))
+          },
+          stepRight: function(e){
+            unidle();
+            set(_backwards_, true);
+            t.trigger('fractionChange', get(_fraction_) + get(_bit_) * get(_cwish_))
+          },
+          'click.steppable': function(e){
+            if (panned) return e.stopPropagation();
+            t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
+          },
+
+          'setup.annotations': function(e){
+            var
+              space= get(_dimensions_),
+              $overlay= t.parent(),
+              film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
+            rule(true, ___+dot(annotations_klass), film_css);
+            opt.crop && rule(true, ___+dot(annotations_klass), { clip: 'rect(0 '+px(space.x)+' '+px(space.y)+' 0)' });
+            $overlay.append($annotations= $(_div_tag_, { 'class': annotations_klass+___+frame_klass+opt.frame }))
+            || ($annotations= $());
+            $.each(opt.annotations, function(ida, note){
+              var
+                $note= $(_div_tag_, note.holder).attr({ id: ida }),
+                $image= note.image ? $(tag(_img_), note.image) : $(),
+                $link= note.link ? $(tag(_a_), note.link) : $()
+              rule(false, '#'+ida, { display: 'none', position: _absolute_ });
+              note.image || note.link && $note.append($link);
+              note.link || note.image && $note.append($image);
+              note.link && note.image && $note.append($link.append($image));
+              $note.appendTo($annotations);
+            });
+          },
+          'frameChange.annotations': function(e, frame){
+            var
+              frame= frame || get(_frame_)
+            $annotations[0].className= $annotations[0].className.replace(/frame-\d+/g, frame_klass + frame);
+            $.each(opt.annotations, function(ida, note){
+              var
+                $note= $('#'+ida, $annotations),
+                start= note.start,
+                end= note.end,
+                offset= frame - (start || 0),
+                x= typeof note.x!=_object_ ? note.x : note.x[offset-1],
+                y= typeof note.y!=_object_ ? note.y : note.y[offset-1],
+                visible= x !== undefined && y !== undefined && offset >= 0 && (!end || offset <= end - start),
+                style= { display: visible ? 'block':'none', left: px(x) || 0, top: px(y) || 0 }
+              $note.css(style);
+            });
+          },
+
+          'setup.fu': function(){ t.trigger('start') },
+          'start.fu': function(){ t.trigger('preload') },
+          'loaded.fu': function(){ t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange').trigger('opening') }
+
+        }
         },
 
         // Garbage clean-up facility called by every event
@@ -639,35 +676,37 @@ jQuery.reel || (function($, window, document, undefined){
         idle= function(){ return operated= 0 },
         unidle= function(){
           clearTimeout(delay);
-          pool.unbind(_tick_, on.opening_tick);
+          pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
           t.trigger('play');
           return operated= -opt.timeout * leader(_tempo_)
         },
-        delay,
-        // Triggers "play" delayed or immediate play
-        delay_play= function(){
-          delay= setTimeout(function play(){
-            t.trigger('play');
-          }, opt.delay * 1000 || 0);
-        },
+        panned= false,
+        delay, // openingDone's delayed play pointer
 
         $monitor,
         $annotations,
         $preloader,
         indicator= function(axis){
-          return $(_div_tag_, {
-            'class': [indicator_klass, axis].join(___),
-            css: {
-              width: opt.indicator,
-              height: opt.indicator,
-              overflow: _hidden_,
-              top: get(_dimensions_).y - opt.indicator,
-              left: 0,
-              position: _absolute_,
-              backgroundColor: _hex_black_
-            }
+          rule(true, ___+dot(indicator_klass)+dot(axis), {
+            position: _absolute_,
+            width: opt.indicator, height: opt.indicator,
+            overflow: _hidden_,
+            backgroundColor: _hex_black_
           })
+          return $(_div_tag_, { 'class': [indicator_klass, axis].join(___) })
         },
+
+        // CSS rules & stylesheet
+        rules= [],
+        rule= function(prefix, selector, rule){
+          var
+            stage= get(_stage_),
+            selector= selector.split(',')
+          prefix && $.each(selector, function(ix, it){ selector[ix]= stage+it });
+          rules.push(selector.join(',')+css(rule));
+          return rule;
+        },
+        $style,
 
         // Inertia rotation control
         on_edge= 0,
@@ -815,9 +854,10 @@ jQuery.reel || (function($, window, document, undefined){
     overlay_klass= klass + '-overlay',
     indicator_klass= klass + '-indicator',
     preloader_klass= klass + '-preloader',
+    cached_klass= klass + '-cached',
     monitor_klass= klass + '-monitor',
-    hi_klass= klass + '-interface',
     annotations_klass= klass + '-annotations',
+    panning_klass= klass + '-panning',
     frame_klass= 'frame-',
 
     // Image resources
@@ -837,12 +877,12 @@ jQuery.reel || (function($, window, document, undefined){
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
     _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _tempo_= 'tempo', _velocity_= 'velocity',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
     ns= '.reel',
-    _dblclick_= 'dblclick'+ns, _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
+    _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
     _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
     _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+ns,
     _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
@@ -864,4 +904,10 @@ jQuery.reel || (function($, window, document, undefined){
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return e.originalEvent.touches[0] }
+  function px(value){ return value === undefined || typeof value == 'string' ? value : value+'px' }
+  function css(values){
+    var rules= [];
+    $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)) })
+    return '{'+rules.join(';')+';}';
+  }
 })(jQuery, window, document);

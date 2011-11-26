@@ -13,26 +13,49 @@
       'qunit/qunit.js',
       'qunit/quny.js',
 
-      'unit/parameters.js',
+      //'unit/parameters.js',
       'unit/events.js',
       'unit/computation.js',
       'unit/animation.js',
       'unit/selector.js',
       'unit/rendering.js',
+      'unit/annotations.js',
       'unit/data.js',
       'unit/api.js',
-      'unit/interaction.js',
+      //'unit/interaction.js',
       'unit/sprite.js',
       'unit/issues.js'
     ],
     complete: function(){
 
+      location.params.respawn && setTimeout(function(){
+        location.href= location.href;
+      }, location.params.respawn * 1000);
+
       QUnit.load();
 
+      var
+        bads= 0,
+        counts= 0
+
+      QUnit.testDone = function(testName, bad, count) {
+        bad && (bads+= bad);
+        counts+= count;
+        $('#qunit-banner .pass').text(counts - bads);
+        $('#qunit-banner .fail').text(bads || '');
+      }
+
       QUnit.done = function(failures, total, config) {
+        $('body').addClass('done');
         if (failures){
+          location.params.respawn && $('#qunit-filter-pass').click();
           $('body').addClass('failure');
+          $('#call h2 .number').text(failures);
+          failures <= 1 && $('#failure h2 .plural').hide();
+        }else{
+          $('body').addClass('success');
         }
+        $('#qunit-testrunner-toolbar').show();
 
         /*
          * Results of the just finished testrun are automatically submitted
@@ -41,11 +64,12 @@
          *
          * Data collected:
          * - timestamp
-         * - counts (total number of tests, fails, passes)
+         * - counts (total number of tests, fails and passes)
          * - failures themselves
          * - versions (version of jQuery and Reel)
          * - the results summary line with duration
          * - user agent string (your browser name and its version(s))
+         * - test host domain
          */
         var
           //server= 'http://au:4567',
@@ -53,6 +77,7 @@
           timestamp= +new Date(),
           report= {
             timestamp:  timestamp,
+            host:       location.host,
             filter:     config.filters,
             count: {
               total:    total,
@@ -69,8 +94,8 @@
           }
 
         $('<a/>', { name: 'receipt' }).appendTo('#qunit-testresult');
-        formatted(report, 'Carbon copy of the receipt, which has been sent out to central Reel test server. Thank you!').appendTo( $('<ul/>').appendTo('#qunit-testresult') );
-        location.host != 'au' && $.post(server+'/collect/reel/testrun/results', report);
+        formatted(report, 'Summary').appendTo( $('<ul/>').appendTo('#receipt') );
+        $.post(server+'/collect/reel/testrun/results', report);
 
         function formatted( bit, label ){
           var $result= $('<li/>')
@@ -115,5 +140,11 @@
 
     }
   } );
+
+  reel_test_module_routine= {
+    teardown: function(){
+      $('.jquery-reel').trigger('teardown').add(document).unbind('.test');
+    }
+  }
 
 } )();

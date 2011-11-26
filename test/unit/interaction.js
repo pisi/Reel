@@ -3,8 +3,6 @@
  */
 (function($){
 
-  module('Interaction', { teardown: function teardown(){
-    $('.jquery-reel').trigger('teardown');
-  }});
+  module('Interaction', reel_test_module_routine);
 
 })(jQuery);
