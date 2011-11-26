@@ -176,8 +176,9 @@ jQuery.reel || (function($, window, document, undefined){
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
               $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }).bind('openingDone', delay_play),
-              $instance= t.wrap($overlay.bind(on.instance)).attr({ 'class': klass }),
-              instances_count= instances.push(add_instance($instance)[0])
+              $instance= t.wrap($overlay).attr({ 'class': klass }),
+              instances_count= instances.push(add_instance($instance)[0]),
+              $overlay= $instance.parent().bind(on.instance)
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_images_, []);
             set(_frame_, opt.frame);
@@ -208,6 +209,7 @@ jQuery.reel || (function($, window, document, undefined){
               style: styles || __,
               data: data
             });
+            opt.annotations || $overlay.unbind('.annotations');
             rule(true, '', { width: size.x, height: size.y });
             rule(true, ','+___+dot(klass), { display: 'block', position: 'relative' });
             pool.bind(on.pool);
@@ -597,7 +599,6 @@ jQuery.reel || (function($, window, document, undefined){
           },
 
           'setup.annotations': function(e){
-            if (!opt.annotations) return;
             var
               space= get(_dimensions_),
               $overlay= t.parent(),
@@ -619,7 +620,6 @@ jQuery.reel || (function($, window, document, undefined){
             });
           },
           'frameChange.annotations': function(e, frame){
-            if (!opt.annotations) return;
             var
               frame= frame || get(_frame_)
             $annotations[0].className= $annotations[0].className.replace(/frame-\d+/g, frame_klass + frame);
