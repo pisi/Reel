@@ -602,6 +602,16 @@ jQuery.reel || (function($, window, document, undefined){
             cleanup.call(e);
           },
 
+          stepLeft: function(e){
+            unidle();
+            set(_backwards_, false);
+            t.trigger('fractionChange', get(_fraction_) - get(_bit_) * get(_cwish_))
+          },
+          stepRight: function(e){
+            unidle();
+            set(_backwards_, true);
+            t.trigger('fractionChange', get(_fraction_) + get(_bit_) * get(_cwish_))
+          },
           'click.steppable': function(e){
             if (panned) return e.stopPropagation();
             t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
