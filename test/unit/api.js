@@ -86,7 +86,7 @@
     ok( typeof $.reel.def.attr === 'object',         'initial attribute-value pairs map for the IMG tag' );
     equal( $.reel.def.preload,           'fidelity', 'preloading order - either "linear" or "fidelity" (default)' );
     equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
-    equal( $.reel.def.steppable,              false, 'allows to step the view (horizontally) by clicking on image' );
+    equal( $.reel.def.steppable,               true, 'allows to step the view (horizontally) by clicking on image' );
     equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
   });
 

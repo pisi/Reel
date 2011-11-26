@@ -104,7 +104,7 @@ jQuery.reel || (function($, window, document, undefined){
       crop:            true, // crop instance area to match image dimensions
       preload:   'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
-      steppable:      false, // allows to step the view (horizontally) by clicking on image
+      steppable:       true, // allows to step the view (horizontally) by clicking on image
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
     }
     // [deprecated] options defaults may be gone anytime soon
