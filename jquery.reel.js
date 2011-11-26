@@ -176,7 +176,7 @@ jQuery.reel || (function($, window, document, undefined){
               rows= stitched ? 1 : ceil(frames / opt.footage),
               stage_id= '#'+id+opt.suffix,
               classes= t.attr('class') || '',
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }).bind('openingDone', delay_play),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }),
               $instance= t.wrap($overlay).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
@@ -274,9 +274,9 @@ jQuery.reel || (function($, window, document, undefined){
           */
             var
               backup= t.data(_backup_)
-            t.parent().unbind('openingDone', delay_play).children(_img_).unbind(ns);
+            t.parent().unbind(on.instance).children(_img_).unbind(ns);
             get(_style_).remove();
-            t.unbind(ns).unbind(on.instance).attr({
+            t.unbind(ns).attr({
              'class': backup.classes,
               src: backup.src,
               style: backup.style
@@ -392,6 +392,11 @@ jQuery.reel || (function($, window, document, undefined){
               duration= opt.opening,
               start= set(_fraction_, end - speed * opt.opening),
               ticks= set(_opening_ticks_, duration * leader(_tempo_))
+          },
+          openingDone: function(e){
+            delay= setTimeout(function play(){
+              t.trigger('play');
+            }, opt.delay * 1000 || 0);
           },
           play: function(e, direction){
             var
@@ -676,13 +681,7 @@ jQuery.reel || (function($, window, document, undefined){
           return operated= -opt.timeout * leader(_tempo_)
         },
         panned= false,
-        delay,
-        // Triggers "play" delayed or immediate play
-        delay_play= function(){
-          delay= setTimeout(function play(){
-            t.trigger('play');
-          }, opt.delay * 1000 || 0);
-        },
+        delay, // openingDone's delayed play pointer
 
         $monitor,
         $annotations,
