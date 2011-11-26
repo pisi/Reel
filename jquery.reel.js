@@ -104,6 +104,7 @@ jQuery.reel || (function($, window, document, undefined){
       crop:            true, // crop instance area to match image dimensions
       preload:   'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:      true, // allow page scroll (allowed by default; applies only to touch devices)
+      steppable:      false, // allows to step the view (horizontally) by clicking on image
       velocity:           0  // initial velocity of user interaction; washes off quickly with `brake`
     }
     // [deprecated] options defaults may be gone anytime soon
@@ -209,6 +210,7 @@ jQuery.reel || (function($, window, document, undefined){
               style: styles || __,
               data: data
             });
+            opt.steppable || $overlay.unbind('click.steppable');
             opt.annotations || $overlay.unbind('.annotations');
             rule(true, '', { width: size.x, height: size.y });
             rule(true, ','+___+dot(klass), { display: 'block', position: 'relative' });
@@ -422,6 +424,7 @@ jQuery.reel || (function($, window, document, undefined){
                 origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
               unidle();
               no_bias();
+              panned= false;
               get(_area_).addClass(panning_klass);
               if (!touched){
                 stage_pool
@@ -466,6 +469,7 @@ jQuery.reel || (function($, window, document, undefined){
               var
                 delta= { x: x - last.x, y: y - last.y }
               if (abs(delta.x) > 0 || abs(delta.y) > 0){
+                panned= true;
                 last= { x: x, y: y };
                 var
                   revolution= get(_revolution_),
@@ -598,6 +602,11 @@ jQuery.reel || (function($, window, document, undefined){
             cleanup.call(e);
           },
 
+          'click.steppable': function(e){
+            if (panned) return e.stopPropagation();
+            t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
+          },
+
           'setup.annotations': function(e){
             var
               space= get(_dimensions_),
@@ -657,6 +666,7 @@ jQuery.reel || (function($, window, document, undefined){
           t.trigger('play');
           return operated= -opt.timeout * leader(_tempo_)
         },
+        panned= false,
         delay,
         // Triggers "play" delayed or immediate play
         delay_play= function(){
