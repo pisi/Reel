@@ -11,7 +11,7 @@
       selector= '#image',
       $reel= $(selector).reel({ annotations: undefined }) // `undefined` is also the default value
 
-    ok( !$reel.parent().find('.jquery-reel-annotations').length, 'The `.jquery-reel-annotations` child not present anywhere in the instance');
+    ok( !$reel.next('.jquery-reel-annotations').length, 'The `.jquery-reel-annotations` child not present anywhere in the instance');
   });
 
 
@@ -23,7 +23,7 @@
         annotations: {}
       })
 
-    ok( !!$('~ .jquery-reel-annotations', $reel).length, 'The `.jquery-reel-annotations` child node of `jquery-reel-interface` node present');
+    ok( !!$reel.next('.jquery-reel-annotations').length, 'The `.jquery-reel-annotations` child node of `jquery-reel-interface` node present');
   });
 
 
@@ -36,7 +36,7 @@
           "my_annotation_name": {}
         }
       }),
-      $annotations= $('~ .jquery-reel-annotations', $reel)
+      $annotations= $reel.next('.jquery-reel-annotations')
 
     equal( !!$('div[id]', $annotations).length, 1, 'One annotation node with `id` attribute');
     ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
@@ -60,7 +60,7 @@
           "still_node": {}
         }
       }),
-      $annotations= $('~ .jquery-reel-annotations', $reel)
+      $annotations= $reel.next('.jquery-reel-annotations')
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -85,24 +85,22 @@
         annotations: {
           "my_annotation": {
             image: {
-              src: 'some/my/image.jpg',
-              width: 100,
-              height: 50
+              src: 'samples/badge-1.gif',
+              width: 120,
+              height: 30
             }
           }
         }
       }),
-      $annotations= $('~ .jquery-reel-annotations', $reel)
+      $annotations= $reel.next('.jquery-reel-annotations')
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
       ok( !!$('div#my_annotation').length, 'Node node present');
       ok( !!$('div#my_annotation img').length, 'Wrapping an image node');
-      equal( $('#my_annotation img').attr('src'), 'some/my/image.jpg', 'Image `src`');
-      equiv( $('#my_annotation img').css('width'), 100, 'CSS width');
-      equiv( $('#my_annotation img').css('height'), 50, 'CSS height');
-      //equiv( $('#my_annotation img').attr('width'), 100, '`width`');
-      //equiv( $('#my_annotation img').attr('height'), 50, '`height`');
+      equal( $('#my_annotation img').attr('src'), 'samples/badge-1.gif', 'Image `src`');
+      equiv( $('#my_annotation img').attr('width') || $('#my_annotation img').css('width'), 120, 'CSS width');
+      equiv( $('#my_annotation img').attr('height') || $('#my_annotation img').css('height'), 30, 'CSS height');
       start();
     });
   });
@@ -129,7 +127,7 @@
           }
         }
       }),
-      $annotations= $('~ .jquery-reel-annotations', $reel)
+      $annotations= $reel.next('.jquery-reel-annotations')
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -169,7 +167,7 @@
         opening: 1
       }),
       checked= [],
-      $annotations= $('~ .jquery-reel-annotations', $reel),
+      $annotations= $reel.next('.jquery-reel-annotations'),
       $annotation= $('#my_annotation')
 
     // Positioning of annotations happens at `frameChange`
