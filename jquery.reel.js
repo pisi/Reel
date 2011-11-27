@@ -46,6 +46,8 @@
 
 jQuery.reel || (function($, window, document, undefined){
 
+  if (bad_jquery()) return;
+
   $.reel= {
     version: '1.1.3-devel',
 
@@ -904,5 +906,12 @@ jQuery.reel || (function($, window, document, undefined){
     var rules= [];
     $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)) })
     return '{'+rules.join(';')+';}';
+  }
+  function bad_jquery(){
+    var
+      v= $().jquery.split('.'),
+      low= +v[0] <= 1 && (+v[1] < 4 || (+v[1] == 4 && +v[2] < 3 ))
+    low && console.error('FATAL: jQuery Reel plug-in requires at least jQuery 1.4.3');
+    return low;
   }
 })(jQuery, window, document);
