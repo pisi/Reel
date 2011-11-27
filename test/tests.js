@@ -143,7 +143,7 @@
 
   reel_test_module_routine= {
     teardown: function(){
-      $('.jquery-reel').unreel().add(document).unbind('.test');
+      $('.reel').unreel().add(document).unbind('.test');
     }
   }
 

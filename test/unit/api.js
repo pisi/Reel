@@ -124,7 +124,7 @@
     equal( $.reel.instances.length, 2, '... and gets correctly cleaned from `$.reel.instances`');
 
     // And then, teardown the rest
-    $('.jquery-reel').unreel();
+    $('.reel').unreel();
     equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
 
   });

@@ -162,8 +162,8 @@
 
     setTimeout( function(){
       $('#image').trigger('teardown').reel();
-      ok( $('#image').is('.jquery-reel'), 'IMG tag is flagged as a Reel instance');
-      ok( $('#image').parent().is('.jquery-reel-overlay#image-reel'), 'and wrapped in overlay DIV');
+      ok( $('#image').is('.reel'), 'IMG tag is flagged as a Reel instance');
+      ok( $('#image').parent().is('.reel-overlay#image-reel'), 'and wrapped in overlay DIV');
       $('#image').click();
       start();
     }, 500 );

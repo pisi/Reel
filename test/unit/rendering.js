@@ -14,8 +14,8 @@
     // Given ID attribute
     equal( $reel_with_id.attr('id'), 'image');
 
-    // The generated ID consists of "jquery-reel-" followed by a timestamp
-    equal( $reel_without_id.attr('id').substr(0, 12), 'jquery-reel-');
+    // The generated ID consists of "reel-" followed by a timestamp
+    equal( $reel_without_id.attr('id').substr(0, 12), 'reel-');
     equal( Math.floor(+$reel_without_id.attr('id').substr(12) / 10000), Math.floor(+new Date() / 10000));
     start();
   });
@@ -31,13 +31,13 @@
     start();
   });
 
-  asyncTest( 'Overlay: has the proper `jquery-reel-overlay` class', function(){
+  asyncTest( 'Overlay: has the proper `reel-overlay` class', function(){
     expect(1);
     var
       $reel= $('#image').reel(),
       $overlay= $('#image-reel')
 
-    ok( $overlay.hasClass('jquery-reel-overlay'), 'Has the class');
+    ok( $overlay.hasClass('reel-overlay'), 'Has the class');
     start();
   });
 
@@ -53,7 +53,7 @@
       var
         size= samples[index],
         $reel= $('#image').reel({ indicator: size }),
-        $indicator= $('#image-reel .jquery-reel-indicator')
+        $indicator= $('#image-reel .reel-indicator')
 
       $reel.parent().bind('loaded.test', function(e){
         index++;
@@ -80,7 +80,7 @@
       var
         size= samples[index],
         $reel= $('#image').reel({ indicator: size }),
-        $indicator= $('#image-reel .jquery-reel-indicator')
+        $indicator= $('#image-reel .reel-indicator')
 
       $reel.parent().bind('loaded.test', function(){
         index++;
@@ -100,7 +100,7 @@
     var
       size= 10,
       $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
-      $indicator= $('#image-reel .jquery-reel-indicator');
+      $indicator= $('#image-reel .reel-indicator');
 
     $reel.parent().bind('loaded.test', function(){
       equiv( $indicator.css('left'), '0px' );
@@ -114,7 +114,7 @@
       size= 10,
       $reel= $('#image').reel({ indicator: size }),
       width= parseInt($reel.css('width')),
-      $indicator= $('#image-reel .jquery-reel-indicator');
+      $indicator= $('#image-reel .reel-indicator');
 
     /*
     As the indicator indicates the beginning of the frame and not its end we need to simulate
@@ -130,13 +130,13 @@
     expect(1);
     var
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
-      before= $('#image-reel .jquery-reel-indicator').css('left');
+      before= $('#image-reel .reel-indicator').css('left');
 
     $reel.bind('loaded.test', function(){
       $reel.trigger('frameChange', 5);
       $reel.one('frameChange.test', function(){
         var
-          after= $('#image-reel .jquery-reel-indicator').css('left');
+          after= $('#image-reel .reel-indicator').css('left');
 
         ok( before != after, 'Position change after frame change' );
         start();
@@ -144,11 +144,11 @@
     })
   });
 
-  asyncTest( 'Indicator: Custom style may be applied to indicator via `.jquery-reel-indicator`', function(){
+  asyncTest( 'Indicator: Custom style may be applied to indicator via `.reel-indicator`', function(){
     expect(2);
     var
       $reel= $('#image').reel({ indicator: 10 }),
-      $indicator= $('#image-reel .jquery-reel-indicator');
+      $indicator= $('#image-reel .reel-indicator');
 
     $indicator.css({         // This may as well be done in external CSS
       background: '#fff',
@@ -169,7 +169,7 @@
         $('#image').unreel()
         var
           $reel= $('#image').reel({ indicator: value }),
-          $indicator= $('#image-reel .jquery-reel-indicator');
+          $indicator= $('#image-reel .reel-indicator');
 
         equal( $indicator.length, 0, 'When ' + value );
       });
