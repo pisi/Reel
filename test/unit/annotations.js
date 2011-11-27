@@ -63,7 +63,7 @@
       $annotations= $('~ .jquery-reel-annotations', $reel)
 
     // Positioning of annotations happens at `frameChange`
-    $reel.one('frameChange', function(){
+    $reel.one('frameChange.test', function(){
       ok( !!$('div#my_annotation').length, 'Node present');
       //ok( $('#my_annotation').is(':visible'), 'Node visible');
       ok( $('#my_annotation').is(':contains(Some text)'), 'Node text content');
@@ -95,7 +95,7 @@
       $annotations= $('~ .jquery-reel-annotations', $reel)
 
     // Positioning of annotations happens at `frameChange`
-    $reel.one('frameChange', function(){
+    $reel.one('frameChange.test', function(){
       ok( !!$('div#my_annotation').length, 'Node node present');
       ok( !!$('div#my_annotation img').length, 'Wrapping an image node');
       equal( $('#my_annotation img').attr('src'), 'some/my/image.jpg', 'Image `src`');
@@ -132,7 +132,7 @@
       $annotations= $('~ .jquery-reel-annotations', $reel)
 
     // Positioning of annotations happens at `frameChange`
-    $reel.one('frameChange', function(){
+    $reel.one('frameChange.test', function(){
       ok( !!$('div#text_link').length, 'Node node present');
       ok( !!$('div#text_link a').length, 'Wrapping a link node');
       equal( $('#text_link a').attr('href'), 'http://some/location', 'Link `href`');

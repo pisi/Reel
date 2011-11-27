@@ -48,7 +48,7 @@
     ok( is('Boolean', $reel.data('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.data('wheel_step')), '`wheel_step` Number');
 
-    $(document).one('tick.reel', function(){
+    $(document).one('tick.reel.test', function(){
       ok( is('Number', $reel.data('opening_ticks')), '`opening_ticks` Number');
       start();
     })

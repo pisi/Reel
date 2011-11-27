@@ -78,7 +78,7 @@
         images:   phone_frames(20)
       })
 
-    $pano.one('loaded', function(){
+    $pano.one('loaded.test', function(){
       equal($pano.attr('src'), 'samples/phone/01.png', 'Image is from the sequence');
       start();
     });
