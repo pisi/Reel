@@ -123,7 +123,7 @@ jQuery.reel || (function($, window, document, undefined){
           pass.push($this);
         });
         tags.filter(dot(klass)).each(function(ix){
-          pass.push($(this).trigger('teardown'));
+          pass.push($(this).unreel());
         });
         return $(pass);
       })(this),
@@ -741,6 +741,10 @@ jQuery.reel || (function($, window, document, undefined){
     })();
 
     return $(instances);
+  }
+
+  $.fn.unreel= function(){
+    return this.trigger('teardown');
   }
 
   // Mathematics core

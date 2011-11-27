@@ -105,7 +105,7 @@
     equal( $.reel.instances.attr('id'), 'image', '... it is our image (ID comparison)');
 
     // And tear it down
-    $('#image').trigger('teardown');
+    $('#image').unreel();
     equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
 
     // Try two instances setup+teardown
@@ -120,11 +120,11 @@
     ok( $.reel.instances.eq(2).parent().hasClass('no_id'), '... it is our image (class name comparison)');
 
     // First, teardown just one from the first two
-    $('#image').trigger('teardown');
+    $('#image').unreel();
     equal( $.reel.instances.length, 2, '... and gets correctly cleaned from `$.reel.instances`');
 
     // And then, teardown the rest
-    $('.jquery-reel').trigger('teardown');
+    $('.jquery-reel').unreel();
     equal( $.reel.instances.length, 0, '... and gets correctly cleaned from `$.reel.instances`');
 
   });

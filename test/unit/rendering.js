@@ -61,7 +61,7 @@
         if (index == samples.length){
           start();
         }else{
-          $('#image').unbind('.test').trigger('teardown')
+          $('#image').unbind('.test').unreel()
           try_sizes_one_by_one()
         }
       })
@@ -166,7 +166,7 @@
 
     function try_different_values(values){
       $(values).each(function try_value(ix, value){
-        $('#image').trigger('teardown')
+        $('#image').unreel()
         var
           $reel= $('#image').reel({ indicator: value }),
           $indicator= $('#image-reel .jquery-reel-indicator');
@@ -202,7 +202,7 @@
     equiv( $style[0].nodeName, 'style', '`<style>` DOM node');
     ok( !$style.prevAll('style').length, 'At the bottom of the stack (all others inherit from it)');
 
-    $reel.trigger('teardown');
+    $reel.unreel();
     ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
     start();
   });

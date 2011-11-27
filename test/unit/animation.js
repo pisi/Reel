@@ -39,13 +39,13 @@
       deepEqual( $.reel.leader(), $faster.data(), 'Leader\'s data are the first (oldest living) instance\'s data')
       equals( $.reel.leader('tempo'), $faster.data('tempo'), 'Timer keeps faster tempo dictated by the leader');
 
-      ok( $faster.trigger('teardown'), 'The older faster instance destroyed (the latter slower instance remains)');
+      ok( $faster.unreel(), 'The older faster instance destroyed (the latter slower instance remains)');
 
       setTimeout(function(){
         deepEqual( $.reel.leader(), $slower.data(), 'Leader\'s data are the second (now the only) instance\'s data')
         equals( $.reel.leader('tempo'), $slower.data('tempo'), 'Ticker slowed down');
 
-        ok( $slower.trigger('teardown'), 'Slower instance removed too (no instance remains)')
+        ok( $slower.unreel(), 'Slower instance removed too (no instance remains)')
         var
           ticks_copy= ticks;
 
