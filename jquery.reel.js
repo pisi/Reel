@@ -591,8 +591,9 @@ jQuery.reel || (function($, window, document, undefined){
             },
             'frameChange.annotations': function(e, frame){
               var
-                frame= frame || get(_frame_)
-              $annotations[0].className= $annotations[0].className.replace(/frame-\d+/g, frame_klass + frame);
+                frame= frame || get(_frame_),
+                node= $annotations[0]
+              node.className= node.className.replace(/frame-\d+/, frame_klass + frame);
               $.each(opt.annotations, function(ida, note){
                 var
                   $note= $('#'+ida, $annotations),
