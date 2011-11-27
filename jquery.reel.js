@@ -579,7 +579,7 @@ jQuery.reel || (function($, window, document, undefined){
               || ($annotations= $());
               $.each(opt.annotations, function(ida, note){
                 var
-                  $note= $(_div_tag_, note.holder).attr({ id: ida }),
+                  $note= $(_div_tag_, note.node).attr({ id: ida }),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
                 rule(false, '#'+ida, { display: 'none', position: _absolute_ });

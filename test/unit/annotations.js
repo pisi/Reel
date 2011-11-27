@@ -27,7 +27,7 @@
   });
 
 
-  test( 'One annotation DOM container (holder) is rendered per each `annotations` object key/value pair', function(){
+  test( 'One annotation DOM container (node) is rendered per each `annotations` object key/value pair', function(){
     expect(2);
     var
       selector= '#image',
@@ -42,14 +42,14 @@
     ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
   });
 
-  asyncTest( '`holder` holds a collection of HTML attributes used for the handler\'s `div` tag', function(){
+  asyncTest( '`node` holds a collection of HTML attributes used for the handler\'s `div` tag', function(){
     expect(7);
     var
       selector= '#image',
       $reel= $(selector).reel({
         annotations: {
           "my_annotation": {
-            holder: {
+            node: {
               text: 'Some text',
               'class': 'some_class_name',
               title: 'Some hint',
@@ -57,7 +57,7 @@
               'any-attribute': 'any-value'
             },
           },
-          "still_holder": {}
+          "still_node": {}
         }
       }),
       $annotations= $('~ .jquery-reel-annotations', $reel)
@@ -72,12 +72,12 @@
       equal( $('#my_annotation[title]').attr('title'), 'Some hint', '`title` attribute applied');
       equal( $('#my_annotation[any-attribute]').attr('any-attribute'), 'any-value', 'Any attribute would do');
 
-      ok( !!$('div#still_holder').length, 'Holder is always present, even when not defined');
+      ok( !!$('div#still_node').length, 'Node is always present, even when not defined');
       start();
     });
   });
 
-  asyncTest( '`image` holds a collection of HTML attributes used for an `img` tag inside the holder', function(){
+  asyncTest( '`image` holds a collection of HTML attributes used for an `img` tag inside the node', function(){
     expect(5);
     var
       selector= '#image',
@@ -96,7 +96,7 @@
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange', function(){
-      ok( !!$('div#my_annotation').length, 'Holder node present');
+      ok( !!$('div#my_annotation').length, 'Node node present');
       ok( !!$('div#my_annotation img').length, 'Wrapping an image node');
       equal( $('#my_annotation img').attr('src'), 'some/my/image.jpg', 'Image `src`');
       equiv( $('#my_annotation img').css('width'), 100, 'CSS width');
@@ -107,7 +107,7 @@
     });
   });
 
-  asyncTest( '`link` holds a collection of HTML attributes used for an `a` tag inside the holder', function(){
+  asyncTest( '`link` holds a collection of HTML attributes used for an `a` tag inside the node', function(){
     expect(8);
     var
       selector= '#image',
@@ -133,12 +133,12 @@
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange', function(){
-      ok( !!$('div#text_link').length, 'Holder node present');
+      ok( !!$('div#text_link').length, 'Node node present');
       ok( !!$('div#text_link a').length, 'Wrapping a link node');
       equal( $('#text_link a').attr('href'), 'http://some/location', 'Link `href`');
       equal( $('#text_link a').text(), 'Click to navigate away', '`title`');
 
-      ok( !!$('div#image_link').length, 'Holder node present');
+      ok( !!$('div#image_link').length, 'Node node present');
       ok( !!$('div#image_link > a > img').length, 'Wrapping a link node wrapping an image node');
       equal( $('#image_link a').attr('href'), 'http://some/location', 'Link `href`');
       equal( $('#image_link img').attr('src'), 'some/my/image.jpg', 'Image `src`');
@@ -156,7 +156,7 @@
       $reel= $(selector).reel({
         annotations: {
           "my_annotation": {
-            holder: {
+            node: {
               text: "aaa"
             },
             x: 1, y: 1,
