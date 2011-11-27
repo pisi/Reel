@@ -134,7 +134,7 @@
 
     $reel.bind('loaded.test', function(){
       $reel.trigger('frameChange', 5);
-      $reel.one('frameChange', function(){
+      $reel.one('frameChange.test', function(){
         var
           after= $('#image-reel .jquery-reel-indicator').css('left');
 
