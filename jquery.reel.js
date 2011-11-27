@@ -169,7 +169,7 @@ jQuery.reel || (function($, window, document, undefined){
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
               frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
-              stage_id= '#'+id+opt.suffix,
+              stage_id= hash(id+opt.suffix),
               classes= t.attr('class') || '',
               $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }),
               $instance= t.wrap($overlay).attr({ 'class': klass }),
@@ -582,7 +582,7 @@ jQuery.reel || (function($, window, document, undefined){
                   $note= $(_div_tag_, note.node).attr({ id: ida }),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
-                rule(false, '#'+ida, { display: 'none', position: _absolute_ });
+                rule(false, hash(ida), { display: 'none', position: _absolute_ });
                 note.image || note.link && $note.append($link);
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
@@ -595,7 +595,7 @@ jQuery.reel || (function($, window, document, undefined){
               $annotations[0].className= $annotations[0].className.replace(/frame-\d+/g, frame_klass + frame);
               $.each(opt.annotations, function(ida, note){
                 var
-                  $note= $('#'+ida, $annotations),
+                  $note= $(hash(ida), $annotations),
                   start= note.start,
                   end= note.end,
                   offset= frame - (start || 0),
@@ -829,7 +829,7 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.leader= leader;
 
   function add_instance($instance){ return ($.reel.instances.push($instance[0])) && $instance }
-  function remove_instance($instance){ return ($.reel.instances= $.reel.instances.not('#'+$instance.attr(_id_))) && $instance }
+  function remove_instance($instance){ return ($.reel.instances= $.reel.instances.not(hash($instance.attr(_id_)))) && $instance }
 
   // Double plugin functions in case plugin is missing
   double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
@@ -884,7 +884,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Various string primitives
     __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', _div_= 'div', _div_tag_= tag(_div_),
-    _height_= 'height', _hex_black_= '#000', _id_= 'id', _img_= 'img', _object_= 'object', _px_= 'px',
+    _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _object_= 'object', _px_= 'px',
     _src_= 'src', _title_= 'title', _width_= 'width'
 
   // Helpers
@@ -900,6 +900,7 @@ jQuery.reel || (function($, window, document, undefined){
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return e.originalEvent.touches[0] }
   function px(value){ return value === undefined || typeof value == 'string' ? value : value+'px' }
+  function hash(value){ return '#' + value }
   function css(values){
     var rules= [];
     $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)) })
