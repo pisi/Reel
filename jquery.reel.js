@@ -528,7 +528,7 @@ jQuery.reel || (function($, window, document, undefined){
                 ytravel= space.y - opt.indicator,
                 yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
                 $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
-              if (frame == was) e.stopPropagation()
+              if (frame == was) e.stopImmediatePropagation()
               else
                 if (images.length){
                   var
