@@ -27,7 +27,8 @@ Development (edge)
   forward/back. Set `steppable` to false to disable. Comes with `"stepLeft"` and `"stepRight"` events (GH-20).
 * Custom text/graphics can augment the frames using the brand new
   `annotations` feature (GH-36).
-* `.unreel()` function to revert effects of `.reel()`
+* New complementary `.unreel()` function to revert effects of `.reel()`
+  on the DOM.
 
 
 Version 1.1.3
