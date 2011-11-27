@@ -174,7 +174,7 @@ jQuery.reel || (function($, window, document, undefined){
               stage_id= hash(id+opt.suffix),
               classes= t.attr('class') || '',
               $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }),
-              $instance= t.wrap($overlay).attr({ 'class': klass }),
+              $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));

@@ -206,4 +206,18 @@
     ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
     start();
   });
+
+  asyncTest( 'Instance wrapper carries a class name defined by the `klass` option', function(){
+    expect(2);
+    var
+      $reel= $('#image').reel({
+        klass: 'my_own_class'
+      })
+
+    ok( $reel.parent().is('.my_own_class'), '`.my_own_class` it is on the wrapper');
+    ok( !$reel.parent().find('.my_own_class').length, 'and not anywhere within');
+
+    start();
+  });
+
 })(jQuery);
