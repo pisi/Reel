@@ -845,7 +845,7 @@ jQuery.reel || (function($, window, document, undefined){
     ticks= { before: 0, now: new Date() },
 
     // HTML classes
-    klass= 'jquery-reel',
+    klass= 'reel',
     overlay_klass= klass + '-overlay',
     indicator_klass= klass + '-indicator',
     preloader_klass= klass + '-preloader',
