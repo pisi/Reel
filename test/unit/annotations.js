@@ -238,10 +238,10 @@
     expect( 12 );
     var
       frames= 6,
-      checked= 0,
       xs= [ 10, 20, 30, 20, 10, 0 ],
       ys= [ 20, 10, 0 , 40, 50, 30 ],
       y= 30,
+      from= 1,
       $reel= $('#image').reel({ frames: frames, speed: 1, annotations: {
         'xy-positioned-annotation': {
           x: xs,
@@ -251,14 +251,44 @@
 
     $reel.parent().bind('frameChange.test', function(){
       var
-        frame= $reel.data('frame')
+        frame= $reel.data('frame'),
+        index= frame - from
 
-      if (frame == checked) return;
+      if (index < 0) return;
 
-      equiv( $('#xy-positioned-annotation').css('left'), xs[checked], 'x @ frame '+frame);
-      equiv( $('#xy-positioned-annotation').css('top'), ys[checked], 'y @ frame '+frame);
-      checked++;
-      if (checked >= frames) start();
+      equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
+      equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
+      if (index >= xs.length-1) start();
+    });
+  });
+
+  asyncTest( 'Both `x` and `y` properties can accept an Array of positions coordinates when `start` and `end` are set', function(){
+    expect( 8 );
+    var
+      frames= 6,
+      xs= [ 10, 20, 30, 20 ],
+      ys= [ 20, 10, 0 , 40 ],
+      y= 30,
+      from= 2,
+      $reel= $('#image').reel({ frames: frames, frame: 2, speed: 1, annotations: {
+        'xy-positioned-annotation': {
+          start: from,
+          end: 5,
+          x: xs,
+          y: ys
+        }
+      }})
+
+    $reel.parent().bind('frameChange.test', function(){
+      var
+        frame= $reel.data('frame'),
+        index= frame - from
+
+      if (index < 0) return;
+
+      equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
+      equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
+      if (index >= xs.length-1) start();
     });
   });
 
