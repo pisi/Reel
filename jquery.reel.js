@@ -180,6 +180,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_images_, []);
             set(_frame_, opt.frame);
+            set(__frame_, 0);
             set(_spacing_, opt.spacing);
             set(_dimensions_, size);
             set(_fraction_, 0);
@@ -509,18 +510,18 @@ jQuery.reel || (function($, window, document, undefined){
             */
               var
                 fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
-                was= get(__frame_),
-                frame= normal.frame(frame, opt, get),
-                images= opt.images,
-                footage= opt.footage,
-                space= get(_dimensions_),
-                multirow= opt.rows > 1,
-                stage= get(_stage_),
-                horizontal= opt.horizontal
+                frame= normal.frame(frame, opt, get)
+                footage= opt.footage
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
                 frame= frame + footage
+              if (frame == get(__frame_)) return e.stopImmediatePropagation();
               var
+                horizontal= opt.horizontal,
+                stage= get(_stage_),
+                multirow= opt.rows > 1,
+                images= opt.images,
+                space= get(_dimensions_),
                 frame= set(__frame_, set(_frame_, frame)),
                 travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
                 indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
@@ -530,28 +531,26 @@ jQuery.reel || (function($, window, document, undefined){
                 ytravel= space.y - opt.indicator,
                 yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
                 $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
-              if (frame == was) e.stopImmediatePropagation()
-              else
-                if (images.length){
-                  var
-                    sprite= images[frame - 1]
-                  t.attr({ src: opt.path+sprite })
-                }else{
-                  if (!opt.stitched) var
-                    minor= (frame % footage) - 1,
-                    minor= minor < 0 ? footage - 1 : minor,
-                    major= floor((frame - 0.1) / footage),
-                    major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
-                    spacing= get(_spacing_),
-                    a= major * ((horizontal ? space.y : space.x) + spacing),
-                    b= minor * ((horizontal ? space.x : space.y) + spacing),
-                    shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
-                  else var
-                    x= round(fraction * get(_stitched_travel_)),
-                    y= 0,
-                    shift= [-x + _px_, y + _px_]
-                  t.css({ backgroundPosition: shift.join(___) })
-                }
+              if (images.length){
+                var
+                  sprite= images[frame - 1]
+                t.attr({ src: opt.path+sprite })
+              }else{
+                if (!opt.stitched) var
+                  minor= (frame % footage) - 1,
+                  minor= minor < 0 ? footage - 1 : minor,
+                  major= floor((frame - 0.1) / footage),
+                  major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
+                  spacing= get(_spacing_),
+                  a= major * ((horizontal ? space.y : space.x) + spacing),
+                  b= minor * ((horizontal ? space.x : space.y) + spacing),
+                  shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
+                else var
+                  x= round(fraction * get(_stitched_travel_)),
+                  y= 0,
+                  shift= [-x + _px_, y + _px_]
+                t.css({ backgroundPosition: shift.join(___) })
+              }
               cleanup.call(e);
             },
 
@@ -641,7 +640,6 @@ jQuery.reel || (function($, window, document, undefined){
                 was= get(_fraction_),
                 fraction= set(_fraction_, was - step * backwards)
               cleanup.call(e);
-              if (fraction == was) return;
             },
             'tick.reel.fu': function(e){
               t.trigger('fractionChange');
