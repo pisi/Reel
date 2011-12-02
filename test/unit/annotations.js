@@ -172,7 +172,7 @@
       var
         frame= $reel.data('frame')
       ok( frame, 'Instance stopped at frame '+frame);
-      ok( $('#image-reel .reel-annotations').attr('class').match(/frame-[0-9]+/), 'The annotations wrapper carries frame-'+frame+' class name');
+      ok( $('#image-reel').attr('class').match(/frame-[0-9]+/), 'The instance wrapper carries frame-'+frame+' class name');
       start();
     }, 123);
   });
