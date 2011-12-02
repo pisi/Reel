@@ -15,6 +15,7 @@
     });
     expect(count + 1);
 
+    ok( is('Object', $reel.data('annotations')), '`annotations` Object');
     ok( is('Object', $reel.data('area')), '`area` Object (jQuery)');
     ok( is('Object', $reel.data('backup')), '`backup` Object');
     ok( is('Boolean', $reel.data('backwards')), '`backwards` Boolean');

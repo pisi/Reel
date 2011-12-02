@@ -203,6 +203,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
             set(_opening_ticks_, undefined);
+            set(_annotations_, opt.annotations) || $overlay.unbind('.annotations');
             set(_backup_, {
               src: src,
               classes: classes,
@@ -210,7 +211,6 @@ jQuery.reel || (function($, window, document, undefined){
               data: data
             });
             opt.steppable || $overlay.unbind('click.steppable');
-            opt.annotations || $overlay.unbind('.annotations');
             rule(true, '', { width: size.x, height: size.y });
             rule(true, ','+___+dot(klass), { display: 'block', position: 'relative' });
             pool.bind(on.pool);
@@ -575,7 +575,7 @@ jQuery.reel || (function($, window, document, undefined){
                 space= get(_dimensions_),
                 $overlay= t.parent(),
                 film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
-              $.each(opt.annotations, function(ida, note){
+              $.each(get(_annotations_), function(ida, note){
                 var
                   $note= $(_div_tag_, note.node).attr({ id: ida }).addClass(annotation_klass),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
@@ -589,9 +589,9 @@ jQuery.reel || (function($, window, document, undefined){
             },
             'frameChange.annotations': function(e, frame){
               var
-              $.each(opt.annotations, function(ida, note){
                 frame= frame || get(_frame_)
               this.className= this.className.replace(/frame-\d+/, frame_klass + frame);
+              $.each(get(_annotations_), function(ida, note){
                 var
                   $note= $(hash(ida)),
                   start= note.start,
@@ -866,6 +866,7 @@ jQuery.reel || (function($, window, document, undefined){
     number= parseInt,
 
     // Storage keys
+    _annotations_= 'annotations',
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
