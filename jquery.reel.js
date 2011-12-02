@@ -169,11 +169,12 @@ jQuery.reel || (function($, window, document, undefined){
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
+              frame= set(_frame_, opt.frame),
               frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               stage_id= hash(id+opt.suffix),
               classes= t.attr('class') || '',
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+frame }),
               $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
@@ -574,30 +575,25 @@ jQuery.reel || (function($, window, document, undefined){
                 space= get(_dimensions_),
                 $overlay= t.parent(),
                 film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
-              rule(true, ___+dot(annotations_klass), film_css);
-              opt.crop && rule(true, ___+dot(annotations_klass), { clip: 'rect(0 '+px(space.x)+' '+px(space.y)+' 0)' });
-              $overlay.append($annotations= $(_div_tag_, { 'class': annotations_klass+___+frame_klass+opt.frame }))
-              || ($annotations= $());
               $.each(opt.annotations, function(ida, note){
                 var
-                  $note= $(_div_tag_, note.node).attr({ id: ida }),
+                  $note= $(_div_tag_, note.node).attr({ id: ida }).addClass(annotation_klass),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
                 rule(false, hash(ida), { display: 'none', position: _absolute_ });
                 note.image || note.link && $note.append($link);
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
-                $note.appendTo($annotations);
+                $note.appendTo($overlay);
               });
             },
             'frameChange.annotations': function(e, frame){
               var
-                frame= frame || get(_frame_),
-                node= $annotations[0]
-              node.className= node.className.replace(/frame-\d+/, frame_klass + frame);
               $.each(opt.annotations, function(ida, note){
+                frame= frame || get(_frame_)
+              this.className= this.className.replace(/frame-\d+/, frame_klass + frame);
                 var
-                  $note= $(hash(ida), $annotations),
+                  $note= $(hash(ida)),
                   start= note.start,
                   end= note.end,
                   offset= frame - (start || 1),
@@ -680,7 +676,6 @@ jQuery.reel || (function($, window, document, undefined){
         delay, // openingDone's delayed play pointer
 
         $monitor,
-        $annotations,
         $preloader,
         indicator= function(axis){
           rule(true, ___+dot(indicator_klass)+dot(axis), {
@@ -856,7 +851,7 @@ jQuery.reel || (function($, window, document, undefined){
     preloader_klass= klass + '-preloader',
     cached_klass= klass + '-cached',
     monitor_klass= klass + '-monitor',
-    annotations_klass= klass + '-annotations',
+    annotation_klass= klass + '-annotation',
     panning_klass= klass + '-panning',
     frame_klass= 'frame-',
 

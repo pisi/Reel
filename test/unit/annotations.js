@@ -5,28 +5,6 @@
 
   module('Annotations', reel_test_module_routine);
 
-  test( 'No (or undefined) `annotations` option doesn\'t result in any sebsequent DOM changes', function(){
-    expect(1);
-    var
-      selector= '#image',
-      $reel= $(selector).reel({ annotations: undefined }) // `undefined` is also the default value
-
-    ok( !$reel.next('.reel-annotations').length, 'The `.reel-annotations` child not present anywhere in the instance');
-  });
-
-
-  test( 'Defining an annotations object results in rendering of respective DOM node container', function(){
-    expect(1);
-    var
-      selector= '#image',
-      $reel= $(selector).reel({
-        annotations: {}
-      })
-
-    ok( !!$reel.next('.reel-annotations').length, 'The `.reel-annotations` node present');
-  });
-
-
   test( 'One annotation DOM container (node) is rendered per each `annotations` object key/value pair', function(){
     expect(2);
     var
@@ -36,9 +14,9 @@
           "my_annotation_name": {}
         }
       }),
-      $annotations= $reel.next('.reel-annotations')
+      $instance= $reel.parent()
 
-    equal( !!$('div[id]', $annotations).length, 1, 'One annotation node with `id` attribute');
+    equal( !!$reel.siblings('.reel-annotation[id]').length, 1, 'One annotation node with `id` attribute');
     ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
   });
 
@@ -60,7 +38,7 @@
           "still_node": {}
         }
       }),
-      $annotations= $reel.next('.reel-annotations')
+      $instance= $reel.parent()
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -92,7 +70,7 @@
           }
         }
       }),
-      $annotations= $reel.next('.reel-annotations')
+      $instance= $reel.parent()
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -126,8 +104,7 @@
             }
           }
         }
-      }),
-      $annotations= $reel.next('.reel-annotations')
+      })
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -167,7 +144,6 @@
         opening: 1
       }),
       checked= [],
-      $annotations= $reel.next('.reel-annotations'),
       $annotation= $('#my_annotation')
 
     // Positioning of annotations happens at `frameChange`
