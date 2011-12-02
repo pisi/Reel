@@ -586,6 +586,7 @@ jQuery.reel || (function($, window, document, undefined){
                 note.link && note.image && $note.append($link.append($image));
                 $note.appendTo($overlay);
               });
+              t.trigger('frameChange.annotations');
             },
             'frameChange.annotations': function(e, frame){
               var
