@@ -99,7 +99,6 @@ jQuery.reel || (function($, window, document, undefined){
       // [NEW] in version 1.2
       annotations:  undefined, // annotations definition object
       attr:                {}, // initial attribute-value pairs map for the IMG tag
-      crop:              true, // crop instance area to match image dimensions
       preload:     'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:        true, // allow page scroll (allowed by default; applies only to touch devices)
       steppable:         true, // allows to step the view (horizontally) by clicking on image
@@ -211,7 +210,7 @@ jQuery.reel || (function($, window, document, undefined){
               data: data
             });
             opt.steppable || $overlay.unbind('click.steppable');
-            rule(true, '', { width: size.x, height: size.y });
+            rule(true, __, { width: size.x, height: size.y, overflow: _hidden_ });
             rule(true, ','+___+dot(klass), { display: 'block', position: 'relative' });
             pool.bind(on.pool);
             cleanup.call(e);
