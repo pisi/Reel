@@ -307,7 +307,6 @@ jQuery.reel || (function($, window, document, undefined){
                 img_tag= t[0],
                 img_frames= img_tag.frames= preload.length,
                 img_preloaded= img_tag.preloaded= 0
-              t.trigger('stop');
               $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass }));
               while(preload.length){
                 var
