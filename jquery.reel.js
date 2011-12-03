@@ -515,7 +515,7 @@ jQuery.reel || (function($, window, document, undefined){
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
                 frame= frame + footage
-              if (frame == get(__frame_)) return e.stopImmediatePropagation();
+              if (frame == get(__frame_)) return kill(e);
               var
                 horizontal= opt.horizontal,
                 stage= get(_stage_),
@@ -565,7 +565,7 @@ jQuery.reel || (function($, window, document, undefined){
               t.trigger('fractionChange', get(_fraction_) + get(_bit_) * get(_cwish_))
             },
             'click.steppable': function(e){
-              if (panned) return e.stopPropagation();
+              if (panned) return kill(e);
               t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
             },
 
@@ -628,8 +628,9 @@ jQuery.reel || (function($, window, document, undefined){
               operated && operated++;
               to_bias(0);
               slidable= true;
-              if (operated && !velocity) return cleanup.call(e);
-              if (get(_clicked_)) return cleanup.call(e, unidle());
+              if (operated && !velocity) return kill(e);
+              if (get(_clicked_)) return kill(e, unidle());
+              if (get(_opening_ticks_)) return;
               var
                 backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
                 step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
@@ -639,7 +640,7 @@ jQuery.reel || (function($, window, document, undefined){
             },
             'tick.reel.fu': function(e){
               t.trigger('fractionChange');
-              if (get(_opening_ticks_) === undefined) e.stopImmediatePropagation();
+              if (!get(_opening_ticks_)) kill(e);
             },
             'tick.reel.opening': function(e){
             /*
@@ -652,7 +653,7 @@ jQuery.reel || (function($, window, document, undefined){
                 fraction= set(_fraction_, was + step),
                 ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
               cleanup.call(e);
-              if (ticks > 1) return;
+              if (ticks > 0) return;
               pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
               t.trigger('openingDone');
             }
@@ -661,6 +662,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // Garbage clean-up facility called by every event
         cleanup= function(pass){ ie || delete this; return pass },
+        kill= function(e, result){ e.stopImmediatePropagation() || cleanup.call(e) || result },
 
         // User idle control
         operated,
@@ -669,6 +671,7 @@ jQuery.reel || (function($, window, document, undefined){
         unidle= function(){
           clearTimeout(delay);
           pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+          set(_opening_ticks_, 0);
           t.trigger('play');
           return operated= -opt.timeout * leader(_tempo_)
         },
