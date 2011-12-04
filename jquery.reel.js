@@ -580,6 +580,11 @@ jQuery.reel || (function($, window, document, undefined){
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
                 rule(false, hash(ida), { display: 'none', position: _absolute_ });
+                $link.bind({
+                  'click.annotations': function(e){
+                    e.stopPropagation();
+                  }
+                })
                 note.image || note.link && $note.append($link);
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
