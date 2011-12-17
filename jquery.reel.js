@@ -307,6 +307,7 @@ jQuery.reel || (function($, window, document, undefined){
                 img_frames= img_tag.frames= preload.length,
                 img_preloaded= img_tag.preloaded= 0
               $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass }));
+              t.trigger('stop');
               while(preload.length){
                 var
                   uri= opt.path+preload.shift(),
@@ -335,6 +336,7 @@ jQuery.reel || (function($, window, document, undefined){
             - initiates opening animation
             - or simply plays the reel when without opening
             */
+              if (!opt.opening) return t.trigger('openingDone');
               var
                 speed= opt.entry || opt.speed,
                 end= get(_fraction_),
