@@ -28,6 +28,7 @@ Development (edge)
   `annotations` feature (GH-36).
 * New complementary `.unreel()` function to revert effects of `.reel()`
   on the DOM.
+* Control event `play` now accepts optional `speed` parameter.
 
 
 Version 1.1.3

@@ -89,4 +89,67 @@
       })
   });
 
+  asyncTest( '`"play"` event starts to animate when `speed` option is set', function(){
+    expect(2);
+    var
+      speed= 0.5,
+      $reel= $('#image').reel({
+        speed: speed
+      })
+
+    $reel
+      .bind('openingDone.test', function(){
+        setTimeout(function(){
+          $reel.trigger('play');
+        }, 50);
+        setTimeout(function(){
+          equal( $reel.data('playing'), true, 'Instance played with non-zero `speed` parameter starts to play');
+          equal( $reel.data('speed'), speed, 'Stored internal speed value');
+          start();
+        }, 100);
+      });
+  });
+
+  asyncTest( '`"play"` event has no effect, when no `speed` option was specified or is zero', function(){
+    expect(2);
+    var
+      $reel= $('#image').reel()
+
+    $reel
+      .bind('openingDone.test', function(){
+        setTimeout(function(){
+          $reel.trigger('play');
+        }, 50);
+        setTimeout(function(){
+          equal( $reel.data('playing'), false, 'Instance played with non-zero `speed` parameter starts to play');
+          equal( $reel.data('speed'), 0, 'Stored internal speed value');
+          start();
+        }, 100);
+      });
+  });
+
+  asyncTest( '`"play"` event accepts optional `speed` parameter, which overrides the one specified in options', function(){
+    expect(4);
+    var
+      initial_speed= 0,
+      new_speed= 1.23,
+      $reel= $('#image').reel({
+        speed: initial_speed // which is also the default value
+      })
+
+    $reel
+      .bind('openingDone.test', function(){
+        setTimeout(function(){
+          equal( $reel.data('playing'), false, 'Instance initiated with `speed: 0` is not playing');
+          equal( $reel.data('speed'), initial_speed, 'Stored internal speed value');
+          $reel.trigger('play', [ new_speed ]);
+        }, 50);
+        setTimeout(function(){
+          equal( $reel.data('playing'), true, 'Instance played with non-zero `speed` parameter starts to play');
+          equal( $reel.data('speed'), new_speed, 'Stored internal speed value');
+          start();
+        }, 100);
+      });
+  });
+
 })(jQuery);

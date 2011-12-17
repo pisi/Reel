@@ -349,9 +349,10 @@ jQuery.reel || (function($, window, document, undefined){
                 t.trigger('play');
               }, opt.delay * 1000 || 0);
             },
-            play: function(e, direction){
+            play: function(e, speed){
               var
-                playing= set(_playing_, true),
+                speed= set(_speed_, speed || get(_speed_)),
+                playing= set(_playing_, !!speed),
                 stopped= set(_stopped_, !playing)
               idle();
               cleanup.call(e);
