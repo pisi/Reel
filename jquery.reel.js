@@ -240,7 +240,7 @@ jQuery.reel || (function($, window, document, undefined){
               .unbind(_mouseup_).unbind(_mousemove_);
               cleanup.call(e);
             },
-            start: function(e){
+            setup: function(e){
             /*
             - binds all mouse/touch events (namespaced)
             - prepares stage overlay elements
@@ -611,8 +611,7 @@ jQuery.reel || (function($, window, document, undefined){
               });
             },
 
-            'setup.fu': function(){ t.trigger('start') },
-            'start.fu': function(){ t.trigger('preload') },
+            'setup.fu': function(){ t.trigger('preload') },
             'loaded.fu': function(){ t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange').trigger('opening') }
 
           },
