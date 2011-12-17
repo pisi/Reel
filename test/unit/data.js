@@ -5,7 +5,9 @@
   test( 'All internal states and values are accessible by jQuery\'s own `.data()`', function(){
 
     var
-      $reel= $('#image').reel(),
+      $reel= $('#image').reel({
+        annotations: {}
+      }),
       count= 0;
 
     $.each($reel.data(), function(key){
