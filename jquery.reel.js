@@ -724,7 +724,9 @@ jQuery.reel || (function($, window, document, undefined){
           return x && set(_clicked_location_, { x: x, y: y }) || undefined
         },
         slidable= true,
-        stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document))
+        stage_pool
+      try{ stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document)) }
+      catch(e){ stage_pool= pool }
       on.setup();
     });
 
