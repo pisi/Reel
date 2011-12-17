@@ -458,7 +458,7 @@ jQuery.reel || (function($, window, document, undefined){
               var
                 delta= ceil(sqrt(abs(distance)) / 2),
                 delta= negative_when(delta, distance > 0),
-                revolution= 0.2 * get(_revolution_), // Wheel's revolution is just 20 % of full revolution
+                revolution= 0.0833 * get(_revolution_), // Wheel's revolution is 1/12 of full revolution
                 origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_row_)),
                 fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
                 backwards= delta && set(_backwards_, delta < 0),
