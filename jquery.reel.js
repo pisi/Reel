@@ -272,7 +272,7 @@ jQuery.reel || (function($, window, document, undefined){
                 rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
-                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
+                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
                   .bind(opt.clickfree ? _mouseleave_ : '', function(e){ t.trigger('up'); return false })
                   .disableTextSelect();
               }
@@ -846,6 +846,7 @@ jQuery.reel || (function($, window, document, undefined){
     browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
     knows_data_url= !(ie && browser_version < 8),
+    inverted_buttons= (ie && browser_version <= 8),
     failsafe_cursor= 'ew-resize',
     ticker,
     ticks= { before: 0, now: new Date() },
