@@ -668,7 +668,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // Garbage clean-up facility called by every event
         cleanup= function(pass){ ie || delete this; return pass },
-        kill= function(e, result){ e.stopImmediatePropagation() || cleanup.call(e) || result },
+        kill= function(e, result){ return e.stopImmediatePropagation() || cleanup.call(e) || result },
 
         // User idle control
         operated,
