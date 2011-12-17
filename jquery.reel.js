@@ -201,7 +201,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
-            set(_opening_ticks_, undefined);
+            set(_opening_ticks_, 0);
             set(_annotations_, opt.annotations) || $overlay.unbind('.annotations');
             set(_backup_, {
               src: src,
@@ -644,10 +644,6 @@ jQuery.reel || (function($, window, document, undefined){
                 fraction= set(_fraction_, was - step * backwards)
               cleanup.call(e);
             },
-            'tick.reel.fu': function(e){
-              t.trigger('fractionChange');
-              if (!get(_opening_ticks_)) kill(e);
-            },
             'tick.reel.opening': function(e){
             /*
             - ticker listener dedicated to opening animation
@@ -659,10 +655,12 @@ jQuery.reel || (function($, window, document, undefined){
                 fraction= set(_fraction_, was + step),
                 ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
               cleanup.call(e);
-              if (ticks > 0) return;
-              pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+              if (ticks) return;
               t.trigger('openingDone');
-            }
+              pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+            },
+
+            'tick.reel.fu': function(e){ t.trigger('fractionChange') }
           }
         },
 
