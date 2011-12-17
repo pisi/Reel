@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-11-27
+ * Updated: 2011-12-17
  *
  * Requires jQuery 1.4.3 or higher
  */
@@ -917,7 +917,7 @@ jQuery.reel || (function($, window, document, undefined){
     var
       v= $().jquery.split('.'),
       low= +v[0] <= 1 && (+v[1] < 4 || (+v[1] == 4 && +v[2] < 3 ))
-    low && console.error('FATAL: jQuery Reel plug-in requires at least jQuery 1.4.3');
-    return low;
+    if (low) try{ console.error('FATAL: jQuery Reel plug-in requires at least jQuery 1.4.3') }catch(e){}
+    return low
   }
 })(jQuery, window, document);
