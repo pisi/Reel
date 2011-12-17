@@ -516,7 +516,7 @@ jQuery.reel || (function($, window, document, undefined){
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
                 frame= frame + footage
-              if (frame == get(__frame_)) return kill(e);
+              if (frame == get(__frame_)) return mute(e);
               var
                 horizontal= opt.horizontal,
                 stage= get(_stage_),
@@ -566,7 +566,7 @@ jQuery.reel || (function($, window, document, undefined){
               t.trigger('fractionChange', get(_fraction_) + get(_bit_) * get(_cwish_))
             },
             'click.steppable': function(e){
-              if (panned) return kill(e);
+              if (panned) return mute(e);
               t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
             },
 
@@ -634,8 +634,8 @@ jQuery.reel || (function($, window, document, undefined){
               operated && operated++;
               to_bias(0);
               slidable= true;
-              if (operated && !velocity) return kill(e);
-              if (get(_clicked_)) return kill(e, unidle());
+              if (operated && !velocity) return mute(e);
+              if (get(_clicked_)) return mute(e, unidle());
               if (get(_opening_ticks_)) return;
               var
                 backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
@@ -646,7 +646,7 @@ jQuery.reel || (function($, window, document, undefined){
             },
             'tick.reel.fu': function(e){
               t.trigger('fractionChange');
-              if (!get(_opening_ticks_)) kill(e);
+              if (!get(_opening_ticks_)) mute(e);
             },
             'tick.reel.opening': function(e){
             /*
@@ -668,7 +668,9 @@ jQuery.reel || (function($, window, document, undefined){
 
         // Garbage clean-up facility called by every event
         cleanup= function(pass){ ie || delete this; return pass },
-        kill= function(e, result){ return e.stopImmediatePropagation() || cleanup.call(e) || result },
+
+        // Events propagation stopper / muter
+        mute= function(e, result){ return e.stopImmediatePropagation() || cleanup.call(e) || result },
 
         // User idle control
         operated,
