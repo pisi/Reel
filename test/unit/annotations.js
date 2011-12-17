@@ -5,28 +5,6 @@
 
   module('Annotations', reel_test_module_routine);
 
-  test( 'No (or undefined) `annotations` option doesn\'t result in any sebsequent DOM changes', function(){
-    expect(1);
-    var
-      selector= '#image',
-      $reel= $(selector).reel({ annotations: undefined }) // `undefined` is also the default value
-
-    ok( !$reel.next('.reel-annotations').length, 'The `.reel-annotations` child not present anywhere in the instance');
-  });
-
-
-  test( 'Defining an annotations object results in rendering of respective DOM node container', function(){
-    expect(1);
-    var
-      selector= '#image',
-      $reel= $(selector).reel({
-        annotations: {}
-      })
-
-    ok( !!$reel.next('.reel-annotations').length, 'The `.reel-annotations` node present');
-  });
-
-
   test( 'One annotation DOM container (node) is rendered per each `annotations` object key/value pair', function(){
     expect(2);
     var
@@ -36,9 +14,9 @@
           "my_annotation_name": {}
         }
       }),
-      $annotations= $reel.next('.reel-annotations')
+      $instance= $reel.parent()
 
-    equal( !!$('div[id]', $annotations).length, 1, 'One annotation node with `id` attribute');
+    equal( !!$reel.siblings('.reel-annotation[id]').length, 1, 'One annotation node with `id` attribute');
     ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
   });
 
@@ -60,7 +38,7 @@
           "still_node": {}
         }
       }),
-      $annotations= $reel.next('.reel-annotations')
+      $instance= $reel.parent()
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -92,7 +70,7 @@
           }
         }
       }),
-      $annotations= $reel.next('.reel-annotations')
+      $instance= $reel.parent()
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -126,8 +104,7 @@
             }
           }
         }
-      }),
-      $annotations= $reel.next('.reel-annotations')
+      })
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -167,7 +144,6 @@
         opening: 1
       }),
       checked= [],
-      $annotations= $reel.next('.reel-annotations'),
       $annotation= $('#my_annotation')
 
     // Positioning of annotations happens at `frameChange`
@@ -196,7 +172,7 @@
       var
         frame= $reel.data('frame')
       ok( frame, 'Instance stopped at frame '+frame);
-      ok( $('#image-reel .reel-annotations').attr('class').match(/frame-[0-9]+/), 'The annotations wrapper carries frame-'+frame+' class name');
+      ok( $('#image-reel').attr('class').match(/frame-[0-9]+/), 'The instance wrapper carries frame-'+frame+' class name');
       start();
     }, 123);
   });
@@ -238,10 +214,10 @@
     expect( 12 );
     var
       frames= 6,
-      checked= 0,
       xs= [ 10, 20, 30, 20, 10, 0 ],
       ys= [ 20, 10, 0 , 40, 50, 30 ],
       y= 30,
+      from= 1,
       $reel= $('#image').reel({ frames: frames, speed: 1, annotations: {
         'xy-positioned-annotation': {
           x: xs,
@@ -251,15 +227,73 @@
 
     $reel.parent().bind('frameChange.test', function(){
       var
-        frame= $reel.data('frame')
+        frame= $reel.data('frame'),
+        index= frame - from
 
-      if (frame == checked) return;
+      if (index < 0) return;
 
-      equiv( $('#xy-positioned-annotation').css('left'), xs[checked], 'x @ frame '+frame);
-      equiv( $('#xy-positioned-annotation').css('top'), ys[checked], 'y @ frame '+frame);
-      checked++;
-      if (checked >= frames) start();
+      equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
+      equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
+      if (index >= xs.length-1) start();
     });
+  });
+
+  asyncTest( 'Both `x` and `y` properties can accept an Array of positions coordinates when `start` and `end` are set', function(){
+    expect( 8 );
+    var
+      frames= 6,
+      xs= [ 10, 20, 30, 20 ],
+      ys= [ 20, 10, 0 , 40 ],
+      y= 30,
+      from= 2,
+      $reel= $('#image').reel({ frames: frames, frame: 2, speed: 1, annotations: {
+        'xy-positioned-annotation': {
+          start: from,
+          end: 5,
+          x: xs,
+          y: ys
+        }
+      }})
+
+    $reel.parent().bind('frameChange.test', function(){
+      var
+        frame= $reel.data('frame'),
+        index= frame - from
+
+      if (index < 0) return;
+
+      equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
+      equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
+      if (index >= xs.length-1) start();
+    });
+  });
+
+  asyncTest( 'GH-79 `click` event on annotation is not propagated up, where it would cause Reel to advance left/right', function(){
+    expect( 1 );
+    var
+      $reel= $('#image').reel({ annotations: {
+        'annotation': {
+          x: 10,
+          y: 10,
+          link: {
+            click: function(){
+              ok( true, 'Annotation `click` handler fired.');
+            }
+          }
+        }
+      }})
+
+    $('#annotation a')
+    .parent()
+    .bind('click.test', function(){
+      ok( false, '`click` propagated to the annotation wrapper...');
+    })
+    .parent()
+    .bind('click.test', function(){
+      ok( false, '`click` Cpropagated to the instance wrapper...');
+    })
+    $('#annotation a').click();
+    start();
   });
 
 

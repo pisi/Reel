@@ -99,7 +99,6 @@ jQuery.reel || (function($, window, document, undefined){
       // [NEW] in version 1.2
       annotations:  undefined, // annotations definition object
       attr:                {}, // initial attribute-value pairs map for the IMG tag
-      crop:              true, // crop instance area to match image dimensions
       preload:     'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:        true, // allow page scroll (allowed by default; applies only to touch devices)
       steppable:         true, // allows to step the view (horizontally) by clicking on image
@@ -169,11 +168,12 @@ jQuery.reel || (function($, window, document, undefined){
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
+              frame= set(_frame_, opt.frame),
               frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               stage_id= hash(id+opt.suffix),
               classes= t.attr('class') || '',
-              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass }),
+              $overlay= $(_div_tag_, { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+frame }),
               $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
@@ -201,7 +201,8 @@ jQuery.reel || (function($, window, document, undefined){
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
-            set(_opening_ticks_, undefined);
+            set(_opening_ticks_, 0);
+            set(_annotations_, opt.annotations) || $overlay.unbind('.annotations');
             set(_backup_, {
               src: src,
               classes: classes,
@@ -209,8 +210,7 @@ jQuery.reel || (function($, window, document, undefined){
               data: data
             });
             opt.steppable || $overlay.unbind('click.steppable');
-            opt.annotations || $overlay.unbind('.annotations');
-            rule(true, '', { width: size.x, height: size.y });
+            rule(true, __, { width: size.x, height: size.y, overflow: _hidden_ });
             rule(true, ','+___+dot(klass), { display: 'block', position: 'relative' });
             pool.bind(on.pool);
             cleanup.call(e);
@@ -240,7 +240,7 @@ jQuery.reel || (function($, window, document, undefined){
               .unbind(_mouseup_).unbind(_mousemove_);
               cleanup.call(e);
             },
-            start: function(e){
+            setup: function(e){
             /*
             - binds all mouse/touch events (namespaced)
             - prepares stage overlay elements
@@ -272,7 +272,7 @@ jQuery.reel || (function($, window, document, undefined){
                 rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
-                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
+                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
                   .bind(opt.clickfree ? _mouseleave_ : '', function(e){ t.trigger('up'); return false })
                   .disableTextSelect();
               }
@@ -306,8 +306,8 @@ jQuery.reel || (function($, window, document, undefined){
                 img_tag= t[0],
                 img_frames= img_tag.frames= preload.length,
                 img_preloaded= img_tag.preloaded= 0
-              t.trigger('stop');
               $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass }));
+              t.trigger('stop');
               while(preload.length){
                 var
                   uri= opt.path+preload.shift(),
@@ -336,6 +336,7 @@ jQuery.reel || (function($, window, document, undefined){
             - initiates opening animation
             - or simply plays the reel when without opening
             */
+              if (!opt.opening) return t.trigger('openingDone');
               var
                 speed= opt.entry || opt.speed,
                 end= get(_fraction_),
@@ -348,9 +349,10 @@ jQuery.reel || (function($, window, document, undefined){
                 t.trigger('play');
               }, opt.delay * 1000 || 0);
             },
-            play: function(e, direction){
+            play: function(e, speed){
               var
-                playing= set(_playing_, true),
+                speed= set(_speed_, speed || get(_speed_)),
+                playing= set(_playing_, !!speed),
                 stopped= set(_stopped_, !playing)
               idle();
               cleanup.call(e);
@@ -515,7 +517,7 @@ jQuery.reel || (function($, window, document, undefined){
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
                 frame= frame + footage
-              if (frame == get(__frame_)) return e.stopImmediatePropagation();
+              if (frame == get(__frame_)) return mute(e);
               var
                 horizontal= opt.horizontal,
                 stage= get(_stage_),
@@ -565,7 +567,7 @@ jQuery.reel || (function($, window, document, undefined){
               t.trigger('fractionChange', get(_fraction_) + get(_bit_) * get(_cwish_))
             },
             'click.steppable': function(e){
-              if (panned) return e.stopPropagation();
+              if (panned) return mute(e);
               t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
             },
 
@@ -574,43 +576,43 @@ jQuery.reel || (function($, window, document, undefined){
                 space= get(_dimensions_),
                 $overlay= t.parent(),
                 film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
-              rule(true, ___+dot(annotations_klass), film_css);
-              opt.crop && rule(true, ___+dot(annotations_klass), { clip: 'rect(0 '+px(space.x)+' '+px(space.y)+' 0)' });
-              $overlay.append($annotations= $(_div_tag_, { 'class': annotations_klass+___+frame_klass+opt.frame }))
-              || ($annotations= $());
-              $.each(opt.annotations, function(ida, note){
+              $.each(get(_annotations_), function(ida, note){
                 var
-                  $note= $(_div_tag_, note.node).attr({ id: ida }),
+                  $note= $(_div_tag_, note.node).attr({ id: ida }).addClass(annotation_klass),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
                 rule(false, hash(ida), { display: 'none', position: _absolute_ });
+                $link.bind({
+                  'click.annotations': function(e){
+                    e.stopPropagation();
+                  }
+                })
                 note.image || note.link && $note.append($link);
                 note.link || note.image && $note.append($image);
                 note.link && note.image && $note.append($link.append($image));
-                $note.appendTo($annotations);
+                $note.appendTo($overlay);
               });
+              t.trigger('frameChange.annotations');
             },
             'frameChange.annotations': function(e, frame){
               var
-                frame= frame || get(_frame_),
-                node= $annotations[0]
-              node.className= node.className.replace(/frame-\d+/, frame_klass + frame);
-              $.each(opt.annotations, function(ida, note){
+                frame= frame || get(_frame_)
+              this.className= this.className.replace(/frame-\d+/, frame_klass + frame);
+              $.each(get(_annotations_), function(ida, note){
                 var
-                  $note= $(hash(ida), $annotations),
+                  $note= $(hash(ida)),
                   start= note.start,
                   end= note.end,
-                  offset= frame - (start || 0),
-                  x= typeof note.x!=_object_ ? note.x : note.x[offset-1],
-                  y= typeof note.y!=_object_ ? note.y : note.y[offset-1],
+                  offset= frame - (start || 1),
+                  x= typeof note.x!=_object_ ? note.x : note.x[offset],
+                  y= typeof note.y!=_object_ ? note.y : note.y[offset],
                   visible= x !== undefined && y !== undefined && offset >= 0 && (!end || offset <= end - start),
                   style= { display: visible ? 'block':'none', left: px(x) || 0, top: px(y) || 0 }
                 $note.css(style);
               });
             },
 
-            'setup.fu': function(){ t.trigger('start') },
-            'start.fu': function(){ t.trigger('preload') },
+            'setup.fu': function(){ t.trigger('preload') },
             'loaded.fu': function(){ t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange').trigger('opening') }
 
           },
@@ -632,18 +634,15 @@ jQuery.reel || (function($, window, document, undefined){
               operated && operated++;
               to_bias(0);
               slidable= true;
-              if (operated && !velocity) return cleanup.call(e);
-              if (get(_clicked_)) return cleanup.call(e, unidle());
+              if (operated && !velocity) return mute(e);
+              if (get(_clicked_)) return mute(e, unidle());
+              if (get(_opening_ticks_)) return;
               var
                 backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
                 step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                 was= get(_fraction_),
                 fraction= set(_fraction_, was - step * backwards)
               cleanup.call(e);
-            },
-            'tick.reel.fu': function(e){
-              t.trigger('fractionChange');
-              if (get(_opening_ticks_) === undefined) e.stopImmediatePropagation();
             },
             'tick.reel.opening': function(e){
             /*
@@ -656,15 +655,20 @@ jQuery.reel || (function($, window, document, undefined){
                 fraction= set(_fraction_, was + step),
                 ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
               cleanup.call(e);
-              if (ticks > 1) return;
-              pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+              if (ticks) return;
               t.trigger('openingDone');
-            }
+              pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+            },
+
+            'tick.reel.fu': function(e){ t.trigger('fractionChange') }
           }
         },
 
         // Garbage clean-up facility called by every event
         cleanup= function(pass){ ie || delete this; return pass },
+
+        // Events propagation stopper / muter
+        mute= function(e, result){ return e.stopImmediatePropagation() || cleanup.call(e) || result },
 
         // User idle control
         operated,
@@ -673,6 +677,7 @@ jQuery.reel || (function($, window, document, undefined){
         unidle= function(){
           clearTimeout(delay);
           pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
+          set(_opening_ticks_, 0);
           t.trigger('play');
           return operated= -opt.timeout * leader(_tempo_)
         },
@@ -680,7 +685,6 @@ jQuery.reel || (function($, window, document, undefined){
         delay, // openingDone's delayed play pointer
 
         $monitor,
-        $annotations,
         $preloader,
         indicator= function(axis){
           rule(true, ___+dot(indicator_klass)+dot(axis), {
@@ -847,6 +851,7 @@ jQuery.reel || (function($, window, document, undefined){
     browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
     knows_data_url= !(ie && browser_version < 8),
+    inverted_buttons= (ie && browser_version <= 8),
     failsafe_cursor= 'ew-resize',
     ticker,
     ticks= { before: 0, now: new Date() },
@@ -858,7 +863,7 @@ jQuery.reel || (function($, window, document, undefined){
     preloader_klass= klass + '-preloader',
     cached_klass= klass + '-cached',
     monitor_klass= klass + '-monitor',
-    annotations_klass= klass + '-annotations',
+    annotation_klass= klass + '-annotation',
     panning_klass= klass + '-panning',
     frame_klass= 'frame-',
 
@@ -873,6 +878,7 @@ jQuery.reel || (function($, window, document, undefined){
     number= parseInt,
 
     // Storage keys
+    _annotations_= 'annotations',
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
