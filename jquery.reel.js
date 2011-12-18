@@ -381,7 +381,7 @@ jQuery.reel || (function($, window, document, undefined){
                 unidle();
                 no_bias();
                 panned= false;
-                get(_area_).addClass(panning_klass);
+                $body.addClass(panning_klass);
                 if (!touched){
                   stage_pool
                   .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
@@ -404,7 +404,7 @@ jQuery.reel || (function($, window, document, undefined){
                 brakes= braking= velocity ? 1 : 0
               velocity ? idle() : unidle();
               no_bias();
-              get(_area_).removeClass(panning_klass);
+              $body.removeClass(panning_klass);
               !touched
               && stage_pool.unbind(_mouseup_).unbind(_mousemove_);
               cleanup.call(e);
@@ -848,6 +848,7 @@ jQuery.reel || (function($, window, document, undefined){
   // PRIVATE
   var
     pool= $(document),
+    $body= $('body'),
     browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
     knows_data_url= !(ie && browser_version < 8),
