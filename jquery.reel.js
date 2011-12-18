@@ -269,7 +269,7 @@ jQuery.reel || (function($, window, document, undefined){
                   .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                   .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
               }else{
-                rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
+                rule(true, '', { cursor: drag_cursor });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
@@ -287,7 +287,7 @@ jQuery.reel || (function($, window, document, undefined){
                 overflow: _hidden_,
                 backgroundColor: _hex_black_
               });
-              rule(true, dot(panning_klass), { cursor: url(drag_cursor_down)+', '+failsafe_cursor });
+              rule(false, dot(panning_klass)+', '+dot(panning_klass)+' *', { cursor: drag_cursor_down });
               opt.indicator && $overlay.append(indicator('x'));
               opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             },
@@ -851,7 +851,6 @@ jQuery.reel || (function($, window, document, undefined){
     $body= $('body'),
     browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
-    knows_data_url= !(ie && browser_version < 8),
     inverted_buttons= (ie && browser_version <= 8),
     failsafe_cursor= 'ew-resize',
     ticker,
@@ -870,8 +869,8 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Image resources
     transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
-    drag_cursor= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7') || cdn('jquery.reel.cursor-drag.gif'),
-    drag_cursor_down= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==') || cdn('jquery.reel.cursor-drag-down.gif'),
+    drag_cursor= url(embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7'))+', '+url(cdn('jquery.reel.cursor-drag.gif'))+', '+failsafe_cursor,
+    drag_cursor_down= url(embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw=='))+', '+url(cdn('jquery.reel.cursor-drag-down.gif'))+', '+failsafe_cursor+' !important',
 
     // Shortcuts
     round= Math.round, floor= Math.floor, ceil= Math.ceil,
@@ -902,7 +901,7 @@ jQuery.reel || (function($, window, document, undefined){
     _src_= 'src', _title_= 'title', _width_= 'width'
 
   // Helpers
-  function embedded(image){ return knows_data_url && 'data:image/gif;base64,R0lGODlh'+image }
+  function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
   function cdn(path){ return 'http://code.vostrel.cz/' + path }
