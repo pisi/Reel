@@ -853,6 +853,12 @@ jQuery.reel || (function($, window, document, undefined){
     $body= $('body'),
     browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
+    client= navigator.userAgent,
+    os= {
+      linux: (/linux/i).test(client),
+      windows: (/windows/i).test(client),
+      mac: (/macintosh/i).test(client)
+    },
     inverted_buttons= (ie && browser_version <= 8),
     failsafe_cursor= 'ew-resize',
     ticker,
@@ -899,6 +905,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Image resources
     transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
+    reel_cursor= cdn(_jquery_reel_+'-'+(os.mac ? 'black':'white')+__cur_),
     drag_cursor= cdn(_jquery_reel_+'-drag'+__cur_),
     drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+__cur_)
 
