@@ -869,11 +869,6 @@ jQuery.reel || (function($, window, document, undefined){
     panning_klass= klass + '-panning',
     frame_klass= 'frame-',
 
-    // Image resources
-    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
-    drag_cursor= url(embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7'))+', '+url(cdn('jquery.reel.cursor-drag.gif'))+', '+failsafe_cursor,
-    drag_cursor_down= url(embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw=='))+', '+url(cdn('jquery.reel.cursor-drag-down.gif'))+', '+failsafe_cursor+' !important',
-
     // Shortcuts
     round= Math.round, floor= Math.floor, ceil= Math.ceil,
     min= Math.min, max= Math.max, abs= Math.abs, sqrt= Math.sqrt,
@@ -898,9 +893,14 @@ jQuery.reel || (function($, window, document, undefined){
     _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
 
     // Various string primitives
-    __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', _div_= 'div', _div_tag_= tag(_div_),
-    _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _object_= 'object', _px_= 'px',
-    _src_= 'src', _title_= 'title', _width_= 'width'
+    __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', __cur_= '.cur', _div_= 'div', _div_tag_= tag(_div_),
+    _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _jquery_reel_= 'jquery.reel', _object_= 'object',
+    _px_= 'px', _src_= 'src', _title_= 'title', _width_= 'width',
+
+    // Image resources
+    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
+    drag_cursor= cdn(_jquery_reel_+'-drag'+__cur_),
+    drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+__cur_)
 
   // Helpers
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
