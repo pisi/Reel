@@ -833,6 +833,8 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
+  $.reel.cdn= 'http://code.vostrel.cz/',
+
   $.reel.instances= $();
   $.reel.cost= 0;
 
@@ -904,7 +906,7 @@ jQuery.reel || (function($, window, document, undefined){
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
-  function cdn(path){ return 'http://code.vostrel.cz/' + path }
+  function cdn(path){ return $.reel.cdn + path }
   function url(location){ return 'url(' + location + ')' }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);

@@ -140,4 +140,11 @@
 
   });
 
+  test( 'Path to CDN used for fetching cursor graphics', function(){
+    expect(2);
+
+    equal( typeof $.reel.cdn, 'string', 'exposed as `$.reel.cdn`');
+    equal( $.reel.cdn, 'http://code.vostrel.cz/', 'URL');
+  });
+
 })(jQuery);
