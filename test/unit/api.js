@@ -27,7 +27,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 7);
 
-    equal( count, 47, 'Total number of options');
+    equal( count, 48, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -83,6 +83,7 @@
     // Version 1.2 options
     equal( $.reel.def.annotations,        undefined, 'annotations definition object' );
     ok( typeof $.reel.def.attr === 'object',         'initial attribute-value pairs map for the IMG tag' );
+    equal( $.reel.def.cursor,             undefined, 'mouse cursor overriding the default one' );
     equal( $.reel.def.preload,           'fidelity', 'preloading order - either "linear" or "fidelity" (default)' );
     equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
     equal( $.reel.def.steppable,               true, 'allows to step the view (horizontally) by clicking on image' );

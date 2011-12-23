@@ -220,4 +220,49 @@
     start();
   });
 
+  asyncTest( 'When no `cursor` option is specified, default cursor is used with color based on OS (black for Mac, white for Windows and Linux)', function(){
+    expect(1);
+    var
+      mac= (/macintosh/i).test(navigator.userAgent),
+      $reel= $('#image').reel({
+      })
+
+    $reel.bind('loaded.test', function(){
+      equal( $(this).css('cursor').replace(' ', ''), 'url(http://code.vostrel.cz/jquery.reel-'+(mac? 'black':'white')+'.cur),move');
+      start();
+    });
+  });
+
+  asyncTest( 'When `cursor: "hand"` is given the legacy grasping hand cursor will be used', function(){
+    expect(2);
+    var
+      $reel= $('#image').reel({
+        cursor: 'hand'
+      })
+
+    $reel.bind('loaded.test', function(){
+      equal( $(this).css('cursor').replace(' ', ''), 'url(http://code.vostrel.cz/jquery.reel-drag.cur),move');
+
+      // Simulate dragging/panning
+      $('html').addClass('reel-panning');
+      equal( $(this).css('cursor').replace(' ', ''), 'url(http://code.vostrel.cz/jquery.reel-drag-down.cur),move');
+      $('html').removeClass('reel-panning');
+
+      start();
+    });
+  });
+
+  asyncTest( 'Otherwise `cursor` option accepts any valid CSS cursor declaration', function(){
+    expect(1);
+    var
+      $reel= $('#image').reel({
+        cursor: 'pointer'
+      })
+
+    $reel.bind('loaded.test', function(){
+      equal( $(this).css('cursor'), 'pointer');
+      start();
+    });
+  });
+
 })(jQuery);

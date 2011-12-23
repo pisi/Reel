@@ -99,6 +99,7 @@ jQuery.reel || (function($, window, document, undefined){
       // [NEW] in version 1.2
       annotations:  undefined, // annotations definition object
       attr:                {}, // initial attribute-value pairs map for the IMG tag
+      cursor:       undefined, // mouse cursor overriding the default one
       preload:     'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:        true, // allow page scroll (allowed by default; applies only to touch devices)
       steppable:         true, // allows to step the view (horizontally) by clicking on image
@@ -269,7 +270,11 @@ jQuery.reel || (function($, window, document, undefined){
                   .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                   .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
               }else{
-                rule(true, '', { cursor: drag_cursor });
+                var
+                  cursor= opt.cursor == 'hand' ? url(drag_cursor)+','+_move_ : opt.cursor || url(reel_cursor)+','+_move_,
+                  cursor_down= opt.cursor == 'hand' ? url(drag_cursor_down)+','+_move_+' !important' : false
+                rule(true, __, { cursor: cursor });
+                cursor_down && rule(false, dot(panning_klass)+', '+dot(panning_klass)+' *', { cursor: cursor_down });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
@@ -287,7 +292,6 @@ jQuery.reel || (function($, window, document, undefined){
                 overflow: _hidden_,
                 backgroundColor: _hex_black_
               });
-              rule(false, dot(panning_klass)+', '+dot(panning_klass)+' *', { cursor: drag_cursor_down });
               opt.indicator && $overlay.append(indicator('x'));
               opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             },
