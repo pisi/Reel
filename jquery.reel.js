@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2011-12-17
+ * Updated: 2011-12-23
  *
  * Requires jQuery 1.4.3 or higher
  */
@@ -517,41 +517,47 @@ jQuery.reel || (function($, window, document, undefined){
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
                 frame= frame + footage
-              if (frame == get(__frame_)) return mute(e);
-              var
-                horizontal= opt.horizontal,
-                stage= get(_stage_),
-                multirow= opt.rows > 1,
-                images= opt.images,
-                space= get(_dimensions_),
-                frame= set(__frame_, set(_frame_, frame)),
-                travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
-                indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
-                indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
-                $indicator= $(dot(indicator_klass+'.x'), stage).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator });
-              if (multirow) var
-                ytravel= space.y - opt.indicator,
-                yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
-                $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
-              if (images.length){
+              if (frame == get(__frame_)) mute(e)
+              else{
                 var
-                  sprite= images[frame - 1]
-                t.attr({ src: opt.path+sprite })
-              }else{
-                if (!opt.stitched) var
-                  minor= (frame % footage) - 1,
-                  minor= minor < 0 ? footage - 1 : minor,
-                  major= floor((frame - 0.1) / footage),
-                  major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
-                  spacing= get(_spacing_),
-                  a= major * ((horizontal ? space.y : space.x) + spacing),
-                  b= minor * ((horizontal ? space.x : space.y) + spacing),
-                  shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
-                else var
-                  x= round(fraction * get(_stitched_travel_)),
-                  y= 0,
-                  shift= [-x + _px_, y + _px_]
-                t.css({ backgroundPosition: shift.join(___) })
+                  horizontal= opt.horizontal,
+                  images= opt.images,
+                  space= get(_dimensions_),
+                  frame= set(__frame_, set(_frame_, frame))
+                if (images.length){
+                  var
+                    sprite= images[frame - 1]
+                  t.attr({ src: opt.path+sprite })
+                }else{
+                  if (!opt.stitched) var
+                    minor= (frame % footage) - 1,
+                    minor= minor < 0 ? footage - 1 : minor,
+                    major= floor((frame - 0.1) / footage),
+                    major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
+                    spacing= get(_spacing_),
+                    a= major * ((horizontal ? space.y : space.x) + spacing),
+                    b= minor * ((horizontal ? space.x : space.y) + spacing),
+                    shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
+                  else var
+                    x= round(fraction * get(_stitched_travel_)),
+                    y= 0,
+                    shift= [-x + _px_, y + _px_]
+                  t.css({ backgroundPosition: shift.join(___) })
+                }
+              }
+              if (opt.indicator){
+                var
+                  stage= get(_stage_),
+                  multirow= opt.rows > 1,
+                  space= get(_dimensions_),
+                  travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
+                  indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
+                  indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
+                  $indicator= $(dot(indicator_klass+'.x'), stage).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator })
+                if (multirow) var
+                  ytravel= space.y - opt.indicator,
+                  yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
+                  $yindicator= $(dot(indicator_klass+'.y'), stage).css({ top: yindicator })
               }
               cleanup.call(e);
             },
