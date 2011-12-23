@@ -518,7 +518,7 @@ jQuery.reel || (function($, window, document, undefined){
             */
               var
                 fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
-                frame= normal.frame(frame, opt, get)
+                frame= normal.frame(frame, opt, get),
                 footage= opt.footage
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
@@ -907,8 +907,8 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Various string primitives
     __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', __cur_= '.cur', _div_= 'div', _div_tag_= tag(_div_),
-    _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _jquery_reel_= 'jquery.reel', _object_= 'object',
-    _px_= 'px', _src_= 'src', _title_= 'title', _width_= 'width',
+    _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _jquery_reel_= 'jquery.reel', _move_= 'move',
+    _object_= 'object', _px_= 'px', _src_= 'src', _title_= 'title', _width_= 'width',
 
     // Image resources
     transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
