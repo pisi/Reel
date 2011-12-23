@@ -202,7 +202,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
-            set(_opening_ticks_, 0);
+            set(_opening_ticks_, -1);
             set(_annotations_, opt.annotations) || $overlay.unbind('.annotations');
             set(_backup_, {
               src: src,
@@ -648,7 +648,7 @@ jQuery.reel || (function($, window, document, undefined){
               slidable= true;
               if (operated && !velocity) return mute(e);
               if (get(_clicked_)) return mute(e, unidle());
-              if (get(_opening_ticks_)) return;
+              if (get(_opening_ticks_) > 0) return;
               var
                 backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
                 step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
@@ -660,15 +660,18 @@ jQuery.reel || (function($, window, document, undefined){
             /*
             - ticker listener dedicated to opening animation
             */
-              var
-                speed= opt.entry || opt.speed,
-                step= speed / leader(_tempo_) * (opt.cw? -1:1),
-                was= get(_fraction_),
-                fraction= set(_fraction_, was + step),
-                ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
-              cleanup.call(e);
-              if (ticks) return;
-              t.trigger('openingDone');
+              if (opt.opening){
+                if (get(_opening_ticks_) <= 0) return;
+                var
+                  speed= opt.entry || opt.speed,
+                  step= speed / leader(_tempo_) * (opt.cw? -1:1),
+                  was= get(_fraction_),
+                  fraction= set(_fraction_, was + step),
+                  ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
+                cleanup.call(e);
+                if (ticks > 0) return;
+                t.trigger('openingDone');
+              }
               pool.unbind(_tick_+'.opening', on.pool[_tick_+'.opening']);
             },
 
