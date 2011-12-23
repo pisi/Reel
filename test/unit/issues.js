@@ -144,6 +144,18 @@
     }, 100)
   });
 
+  asyncTest( '`footage` private variable leaked into global scope', function()
+  {
+    expect(1);
+
+    var
+      $reel= $('#image').reel()
+
+    setTimeout(function(){
+      ok( typeof footage === 'undefined', 'No leaked `footage` accessible in the global scope');
+      start();
+    }, 100)
+  });
 
   asyncTest( 'Teardown doesn\'t propagate the cloned original image down the chain', function(){
     /*
