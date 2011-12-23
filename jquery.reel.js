@@ -625,7 +625,7 @@ jQuery.reel || (function($, window, document, undefined){
             },
 
             'setup.fu': function(){ t.trigger('preload') },
-            'loaded.fu': function(){ t.trigger(opt.rows > 1 && !opt.stitched ? 'rowChange' : 'frameChange').trigger('opening') }
+            'loaded.fu': function(){ t.trigger('opening') }
 
           },
           pool: {

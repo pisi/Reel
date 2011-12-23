@@ -136,4 +136,38 @@
 
   });
 
+  asyncTest( 'Removal of redundant `rowChange` and untimately the `frameChange` event from `loaded.fu` handler left the functionality untouched)', function()
+  {
+    var
+      index= 0,
+      setups= [
+        { /* No `opening` equals `opening: 0` */ },
+        { opening: 0 },
+        { opening: 1.23 }
+      ]
+    expect(setups.length);
+
+    try_one();
+
+    function try_one(){
+      var
+        $reel= $('#image').reel(setups[index]),
+        ticked= false
+
+      $reel.bind('frameChange.test', function(){
+        ok( !ticked, '`openingDone` induced `frameChange` triggered before the first tick');
+
+        $reel.unbind('.test').unreel();
+        $(document).unbind('.test');
+        index++;
+
+        if (index < setups.length) try_one()
+        else start();
+      });
+      $(document).bind('tick.reel.test', function(){
+        ticked= true;
+      });
+    }
+  });
+
 })(jQuery);
