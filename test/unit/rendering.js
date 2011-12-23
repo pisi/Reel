@@ -228,7 +228,7 @@
       })
 
     $reel.bind('loaded.test', function(){
-      equal( $(this).css('cursor').replace(' ', ''), 'url(http://code.vostrel.cz/jquery.reel-'+(mac? 'black':'white')+'.cur),move');
+      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)');
       start();
     });
   });
@@ -241,11 +241,11 @@
       })
 
     $reel.bind('loaded.test', function(){
-      equal( $(this).css('cursor').replace(' ', ''), 'url(http://code.vostrel.cz/jquery.reel-drag.cur),move');
+      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag.cur)');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equal( $(this).css('cursor').replace(' ', ''), 'url(http://code.vostrel.cz/jquery.reel-drag-down.cur),move');
+      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)');
       $('html').removeClass('reel-panning');
 
       start();
