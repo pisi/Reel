@@ -274,6 +274,7 @@ jQuery.reel || (function($, window, document, undefined){
                   cursor= opt.cursor == 'hand' ? url(drag_cursor)+','+_move_ : opt.cursor || url(reel_cursor)+','+_move_,
                   cursor_down= opt.cursor == 'hand' ? url(drag_cursor_down)+','+_move_+' !important' : false
                 rule(true, __, { cursor: cursor });
+                rule(true, dot(loading_klass), { cursor: busy_cursor });
                 cursor_down && rule(false, dot(panning_klass)+', '+dot(panning_klass)+' *', { cursor: cursor_down });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
@@ -310,7 +311,7 @@ jQuery.reel || (function($, window, document, undefined){
                 img_tag= t[0],
                 img_frames= img_tag.frames= preload.length,
                 img_preloaded= img_tag.preloaded= 0
-              $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass }));
+              $overlay.addClass(loading_klass).append($preloader= $(_div_tag_, { 'class': preloader_klass }));
               t.trigger('stop');
               while(preload.length){
                 var
@@ -323,6 +324,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (img_tag.frames == img_tag.preloaded){
                       $preloader.remove();
                       images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
+                      $overlay.removeClass(loading_klass);
                       t.trigger('loaded');
                       cleanup.call(e);
                     }
@@ -877,6 +879,7 @@ jQuery.reel || (function($, window, document, undefined){
     monitor_klass= klass + '-monitor',
     annotation_klass= klass + '-annotation',
     panning_klass= klass + '-panning',
+    loading_klass= klass + '-loading',
     frame_klass= 'frame-',
 
     // Shortcuts
@@ -909,6 +912,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Image resources
     transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
+    busy_cursor= 'wait',
     reel_cursor= cdn(_jquery_reel_+'-'+(os.mac ? 'black':'white')+__cur_),
     drag_cursor= cdn(_jquery_reel_+'-drag'+__cur_),
     drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+__cur_)

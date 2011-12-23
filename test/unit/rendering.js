@@ -265,4 +265,19 @@
     });
   });
 
+  asyncTest( 'Instance being preloaded has a "hourglass" cursor to indicate the pending loading', function(){
+    expect(4);
+    var
+      $reel= $('#image').reel({
+      })
+
+    ok( $reel.parent().is('.reel-loading'), 'Is `reel-loading` at the very start');
+    equal ($reel.css('cursor'), 'wait', 'Has the "wait" cursor');
+    $reel.bind('loaded.test', function(){
+      ok( !$reel.parent().is('.reel-loading'), 'No longer has the `reel-loading` class when loaded');
+      ok ($reel.css('cursor') != 'wait', 'Does not have the "wait" cursor after the load');
+      start();
+    });
+  });
+
 })(jQuery);
