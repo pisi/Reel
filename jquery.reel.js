@@ -54,7 +54,7 @@ jQuery.reel || (function($, window, document, undefined){
     // Options defaults
     def: {
       area:         undefined, // custom mouse-sensitive area jQuery collection
-      brake:              0.5, // brake force of the inertial rotation
+      brake:             0.23, // brake force of the inertial rotation
       clickfree:        false, // binds to mouse leave/enter events instead of down/up
       cw:               false, // true for clockwise organization of sprite
       delay:               -1, // delay before autoplay in seconds (no autoplay by default (-1))

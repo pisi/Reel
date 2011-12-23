@@ -49,7 +49,7 @@
 
     // Version 1.1 options
     equal( $.reel.def.area,               undefined, 'custom mouse-sensitive area jQuery collection' );
-    equal( $.reel.def.brake,                    0.5, 'brake force of the inertial rotation' );
+    equal( $.reel.def.brake,                   0.23, 'brake force of the inertial rotation' );
     equal( $.reel.def.clickfree,              false, 'binds to mouse leave/enter events instead of down/up' );
     equal( $.reel.def.cw,                     false, 'true for clockwise organization of sprite' );
     equal( $.reel.def.delay,                     -1, 'delay before autoplay in seconds (no autoplay by default)' );
