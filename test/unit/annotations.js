@@ -180,7 +180,7 @@
   asyncTest( 'Horizontal position of annotation is defined by `x` property relative to left top corner', function(){
     expect( 1 );
     var
-      x= '50%',
+      x= '120px',
       $reel= $('#image').reel({ annotations: {
         'x-positioned-annotation': {
           x: x
@@ -188,7 +188,7 @@
       }})
 
     $reel.bind('loaded.test', function(){
-      equal( $('#x-positioned-annotation').css('left'), x, '50%');
+      equal( $('#x-positioned-annotation').css('left'), x, '120px');
       start();
     });
   });
