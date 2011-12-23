@@ -99,6 +99,7 @@ jQuery.reel || (function($, window, document, undefined){
       // [NEW] in version 1.2
       annotations:  undefined, // annotations definition object
       attr:                {}, // initial attribute-value pairs map for the IMG tag
+      cursor:       undefined, // mouse cursor overriding the default one
       preload:     'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:        true, // allow page scroll (allowed by default; applies only to touch devices)
       steppable:         true, // allows to step the view (horizontally) by clicking on image
@@ -269,7 +270,12 @@ jQuery.reel || (function($, window, document, undefined){
                   .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                   .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
               }else{
-                rule(true, '', { cursor: 'url('+drag_cursor+'), '+failsafe_cursor });
+                var
+                  cursor= opt.cursor == 'hand' ? url(drag_cursor)+','+_move_ : opt.cursor || url(reel_cursor)+','+_move_,
+                  cursor_down= opt.cursor == 'hand' ? url(drag_cursor_down)+','+_move_+' !important' : false
+                rule(true, __, { cursor: cursor });
+                rule(true, dot(loading_klass), { cursor: busy_cursor });
+                cursor_down && rule(false, dot(panning_klass)+', '+dot(panning_klass)+' *', { cursor: cursor_down });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
@@ -287,7 +293,6 @@ jQuery.reel || (function($, window, document, undefined){
                 overflow: _hidden_,
                 backgroundColor: _hex_black_
               });
-              rule(true, dot(panning_klass), { cursor: url(drag_cursor_down)+', '+failsafe_cursor });
               opt.indicator && $overlay.append(indicator('x'));
               opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
             },
@@ -306,7 +311,7 @@ jQuery.reel || (function($, window, document, undefined){
                 img_tag= t[0],
                 img_frames= img_tag.frames= preload.length,
                 img_preloaded= img_tag.preloaded= 0
-              $overlay.append($preloader= $(_div_tag_, { 'class': preloader_klass }));
+              $overlay.addClass(loading_klass).append($preloader= $(_div_tag_, { 'class': preloader_klass }));
               t.trigger('stop');
               while(preload.length){
                 var
@@ -319,6 +324,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (img_tag.frames == img_tag.preloaded){
                       $preloader.remove();
                       images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
+                      $overlay.removeClass(loading_klass);
                       t.trigger('loaded');
                       cleanup.call(e);
                     }
@@ -381,7 +387,7 @@ jQuery.reel || (function($, window, document, undefined){
                 unidle();
                 no_bias();
                 panned= false;
-                get(_area_).addClass(panning_klass);
+                $root.addClass(panning_klass);
                 if (!touched){
                   stage_pool
                   .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
@@ -404,7 +410,7 @@ jQuery.reel || (function($, window, document, undefined){
                 brakes= braking= velocity ? 1 : 0
               velocity ? idle() : unidle();
               no_bias();
-              get(_area_).removeClass(panning_klass);
+              $root.removeClass(panning_klass);
               !touched
               && stage_pool.unbind(_mouseup_).unbind(_mousemove_);
               cleanup.call(e);
@@ -512,7 +518,7 @@ jQuery.reel || (function($, window, document, undefined){
             */
               var
                 fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
-                frame= normal.frame(frame, opt, get)
+                frame= normal.frame(frame, opt, get),
                 footage= opt.footage
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
@@ -839,6 +845,8 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
+  $.reel.cdn= 'http://code.vostrel.cz/',
+
   $.reel.instances= $();
   $.reel.cost= 0;
 
@@ -854,9 +862,15 @@ jQuery.reel || (function($, window, document, undefined){
   // PRIVATE
   var
     pool= $(document),
+    $root= $('html'),
     browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
-    knows_data_url= !(ie && browser_version < 8),
+    client= navigator.userAgent,
+    os= {
+      linux: (/linux/i).test(client),
+      windows: (/windows/i).test(client),
+      mac: (/macintosh/i).test(client)
+    },
     inverted_buttons= (ie && browser_version <= 8),
     failsafe_cursor= 'ew-resize',
     ticker,
@@ -871,12 +885,8 @@ jQuery.reel || (function($, window, document, undefined){
     monitor_klass= klass + '-monitor',
     annotation_klass= klass + '-annotation',
     panning_klass= klass + '-panning',
+    loading_klass= klass + '-loading',
     frame_klass= 'frame-',
-
-    // Image resources
-    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
-    drag_cursor= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAI3lC8AeBDvgosQxQtne7yvLWGStVBelXBKqDJpNzLKq3xWBlU2nUs4C/O8cCvU0EfZGUwt19FYAAA7') || cdn('jquery.reel.cursor-drag.gif'),
-    drag_cursor_down= embedded('EAAQAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAAQABAAQAIslI95EB3MHECxNjBVdE/5b2zcRV1QBabqhwltq41St4hj5konmVioZ6OtEgUAOw==') || cdn('jquery.reel.cursor-drag-down.gif'),
 
     // Shortcuts
     round= Math.round, floor= Math.floor, ceil= Math.ceil,
@@ -902,15 +912,22 @@ jQuery.reel || (function($, window, document, undefined){
     _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
 
     // Various string primitives
-    __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', _div_= 'div', _div_tag_= tag(_div_),
-    _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _object_= 'object', _px_= 'px',
-    _src_= 'src', _title_= 'title', _width_= 'width'
+    __= '', ___= ' ', _absolute_= 'absolute', _a_= 'a', __cur_= '.cur', _div_= 'div', _div_tag_= tag(_div_),
+    _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _jquery_reel_= 'jquery.reel', _move_= 'move',
+    _object_= 'object', _px_= 'px', _src_= 'src', _title_= 'title', _width_= 'width',
+
+    // Image resources
+    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
+    busy_cursor= 'wait',
+    reel_cursor= cdn(_jquery_reel_+'-'+(os.mac ? 'black':'white')+__cur_),
+    drag_cursor= cdn(_jquery_reel_+'-drag'+__cur_),
+    drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+__cur_)
 
   // Helpers
-  function embedded(image){ return knows_data_url && 'data:image/gif;base64,R0lGODlh'+image }
+  function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + string }
-  function cdn(path){ return 'http://code.vostrel.cz/' + path }
+  function cdn(path){ return $.reel.cdn + path }
   function url(location){ return 'url(' + location + ')' }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);

@@ -29,6 +29,8 @@ Development (edge)
 * New complementary `.unreel()` function to revert effects of `.reel()`
   on the DOM.
 * Control event `play` now accepts optional `speed` parameter.
+* Mouse cursor is now customizable with the new `cursor` option. The new
+  failsafe cursor is now `"move"`.
 
 
 Version 1.1.3
