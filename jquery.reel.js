@@ -327,7 +327,7 @@ jQuery.reel || (function($, window, document, undefined){
                     $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                     if (img_tag.frames == img_tag.preloaded){
                       $preloader.remove();
-                      images.length || t.attr({ src: transparent }).css({ backgroundImage: url(opt.path+image) });
+                      images.length || t.css({ backgroundImage: url(opt.path+image) }).attr({ src: transparent });
                       $overlay.removeClass(loading_klass);
                       t.trigger('loaded');
                       cleanup.call(e);
