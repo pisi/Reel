@@ -176,18 +176,41 @@
     }
   });
 
-  asyncTest( 'Preload cache `img`s have defined stage dimensions #10', function(){
+  asyncTest( 'Preload cache `img`s have defined dimensions of the stage #10', function(){
     expect(3);
     var
-      $reel= $('#image').reel()
+      $reel= $('#image').reel({
+        images: [ 'samples/f1.jpg' ]
+      })
 
     $reel.bind('loaded.test', function(){
       var
-        $cached= $reel.siblings('img[width][height]')
+        $cached= $reel.siblings('img[width][height]').first()
 
       equal($cached.length, 1, 'Image has dimensions');
       equal($cached.attr('width'), $reel.data('dimensions').x, 'Width equals')
       equal($cached.attr('height'), $reel.data('dimensions').y, 'Height equals')
+      start();
+    });
+  });
+
+  asyncTest( 'Preload cache `img`s have defined sprite dimensions in multiplies of stage #10', function(){
+    expect(3);
+    var
+      footage= 6,
+      frames= 36,
+      $reel= $('#image').reel({
+        footage: footage,
+        frames: frames
+      })
+
+    $reel.bind('loaded.test', function(){
+      var
+        $cached= $reel.siblings('img[width][height]').first()
+
+      equal($cached.length, 1, 'Image has dimensions');
+      equal($cached.attr('width'), $reel.data('dimensions').x * footage, 'Width equals')
+      equal($cached.attr('height'), $reel.data('dimensions').y * (frames / footage), 'Height equals')
       start();
     });
   });

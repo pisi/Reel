@@ -305,8 +305,10 @@ jQuery.reel || (function($, window, document, undefined){
                 $overlay= t.parent(),
                 image= get(_image_),
                 images= opt.images,
+                is_sprite= !images.length,
+                frames= get(_frames_),
                 order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
-                preload= !images.length ? [image] : order(images, opt, get),
+                preload= is_sprite ? [image] : order(images, opt, get),
                 uris= [],
                 img_tag= t[0],
                 img_frames= img_tag.frames= preload.length,
@@ -316,7 +318,9 @@ jQuery.reel || (function($, window, document, undefined){
               while(preload.length){
                 var
                   uri= opt.path+preload.shift(),
-                  $img= $(new Image()).addClass(cached_klass).attr({ width: space.x, height: space.y })
+                  width= space.x * (!is_sprite ? 1 : opt.footage),
+                  height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
+                  $img= $(new Image()).addClass(cached_klass).attr({ width: width, height: height })
                   .bind('load'+ns, function update_preloader(){
                     img_tag.preloaded++
                     $(this).unbind(ns);
