@@ -441,7 +441,7 @@ jQuery.reel || (function($, window, document, undefined){
                     revolution= get(_revolution_),
                     origin= get(_clicked_location_),
                     vertical= get(_vertical_),
-                    fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
+                    fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_), vertical ? y - origin.y : x - origin.x)),
                     reeling= set(_reeling_, get(_reeling_) || get(_frame_) != get(_clicked_)),
                     motion= to_bias(vertical ? delta.y : delta.x || 0),
                     backwards= motion && set(_backwards_, motion < 0)
@@ -775,11 +775,12 @@ jQuery.reel || (function($, window, document, undefined){
 
   // Mathematics core
   $.reel.math= {
-    envelope: function(x, start, revolution, lo, hi, cwness){
-      return start + max(lo, min(hi, - x * cwness)) / revolution
+    envelope: function(x, start, revolution, lo, hi, cwness, vertical, y){
+      return start + max(lo, min(hi, - (vertical? y:x) * cwness)) / revolution
     },
-    hatch: function(x, start, revolution, lo, hi, cwness){
+    hatch: function(x, start, revolution, lo, hi, cwness, vertical, y){
       var
+        x= vertical? y:x,
         x= (x < lo ? hi : 0) + x % hi, // Looping
         fraction= start + (- x * cwness) / revolution
       return fraction - floor(fraction)
