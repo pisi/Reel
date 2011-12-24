@@ -275,7 +275,7 @@ jQuery.reel || (function($, window, document, undefined){
                   cursor_down= opt.cursor == 'hand' ? url(drag_cursor_down)+','+_move_+' !important' : false
                 rule(true, __, { cursor: cursor });
                 rule(true, dot(loading_klass), { cursor: busy_cursor });
-                cursor_down && rule(false, dot(panning_klass)+', '+dot(panning_klass)+' *', { cursor: cursor_down });
+                rule(false, dot(panning_klass)+', '+dot(panning_klass)+' *', { cursor: cursor_down || cursor });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : '', function(e, delta){ t.trigger('wheel', [delta]); return false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })

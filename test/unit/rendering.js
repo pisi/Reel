@@ -244,20 +244,27 @@
   });
 
   asyncTest( 'When no `cursor` option is specified, default cursor is used with color based on OS (black for Mac, white for Windows and Linux)', function(){
-    expect(1);
+    expect(4);
     var
       mac= (/macintosh/i).test(navigator.userAgent),
       $reel= $('#image').reel({
       })
 
     $reel.bind('loaded.test', function(){
-      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)');
+      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
+
+      // Simulate dragging/panning
+      $('html').addClass('reel-panning');
+      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html *`');
+      $('html').removeClass('reel-panning');
       start();
     });
   });
 
   asyncTest( 'When `cursor: "hand"` is given the legacy grasping hand cursor will be used', function(){
-    expect(2);
+    expect(4);
     var
       $reel= $('#image').reel({
         cursor: 'hand'
@@ -268,7 +275,9 @@
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)');
+      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html *`');
       $('html').removeClass('reel-panning');
 
       start();
@@ -276,7 +285,7 @@
   });
 
   asyncTest( 'Otherwise `cursor` option accepts any valid CSS cursor declaration', function(){
-    expect(1);
+    expect(4);
     var
       $reel= $('#image').reel({
         cursor: 'pointer'
@@ -284,6 +293,14 @@
 
     $reel.bind('loaded.test', function(){
       equal( $(this).css('cursor'), 'pointer');
+
+      // Simulate dragging/panning
+      $('html').addClass('reel-panning');
+      equiv( $(this).css('cursor').split(/, ?/)[0], 'pointer', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], 'pointer', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], 'pointer', '`html *`');
+      $('html').removeClass('reel-panning');
+
       start();
     });
   });
