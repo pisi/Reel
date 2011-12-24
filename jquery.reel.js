@@ -775,12 +775,11 @@ jQuery.reel || (function($, window, document, undefined){
 
   // Mathematics core
   $.reel.math= {
-    envelope: function(x, start, revolution, lo, hi, cwness, vertical, y){
-      return start + max(lo, min(hi, - (vertical? y:x) * cwness)) / revolution
+    envelope: function(x, start, revolution, lo, hi, cwness, y){
+      return start + max(lo, min(hi, - x * cwness)) / revolution
     },
-    hatch: function(x, start, revolution, lo, hi, cwness, vertical, y){
+    hatch: function(x, start, revolution, lo, hi, cwness, y){
       var
-        x= vertical? y:x,
         x= (x < lo ? hi : 0) + x % hi, // Looping
         fraction= start + (- x * cwness) / revolution
       return fraction - floor(fraction)
