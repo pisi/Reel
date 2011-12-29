@@ -268,6 +268,57 @@
     });
   });
 
+  asyncTest( 'Visibility via position skipping', function(){
+    expect( 6 );
+    var
+      frames= 6,
+      xs= [ 10, 20, undefined, 30, , 20 ],
+      ys= [ 20, undefined, 10, 0 , 40,  ],
+      $reel= $('#image').reel({ frames: frames, speed: 1, annotations: {
+        'xy-positioned-annotation': {
+          x: xs,
+          y: ys
+        }
+      }})
+
+    $reel.parent().bind('frameChange.test', function(){
+      var
+        frame= $reel.data('frame'),
+        index= frame - 1
+
+      if (index < 0) return;
+
+      equiv( $('#xy-positioned-annotation').css('display'), xs[index] === undefined || ys[index] === undefined ? 'none':'block', 'visibility @ frame '+frame);
+      if (index >= xs.length-1) start();
+    });
+  });
+
+  asyncTest( 'Visibility via position skipping with one fixed axis (works for the other too)', function(){
+    expect( 8 );
+    var
+      frames= 6,
+      xs= [ 10, 20, 30, 20 ],
+      y= 30,
+      $reel= $('#image').reel({ frames: frames, speed: 1, annotations: {
+        'xy-positioned-annotation': {
+          x: xs,
+          y: y
+        }
+      }})
+
+    $reel.parent().bind('frameChange.test', function(){
+      var
+        frame= $reel.data('frame'),
+        index= frame - 1
+
+      if (index < 0) return;
+
+      equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
+      equiv( $('#xy-positioned-annotation').css('top'), y, 'y @ frame '+frame);
+      if (index >= xs.length-1) start();
+    });
+  });
+
   asyncTest( 'Visibility switching with `at`', function(){
     expect( 6 );
     var
