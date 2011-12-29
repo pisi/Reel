@@ -614,7 +614,7 @@ jQuery.reel || (function($, window, document, undefined){
               var
                 frame= frame || get(_frame_)
               this.className= this.className.replace(frame_klass_pattern, frame_klass + frame);
-              $.each(get(_annotations_), function(ida, note){
+              if (!get(_velocity_)) $.each(get(_annotations_), function(ida, note){
                 var
                   $note= $(hash(ida)),
                   start= note.start || 1,
@@ -646,8 +646,7 @@ jQuery.reel || (function($, window, document, undefined){
                 velocity= get(_velocity_)
               if (braking) var
                 braked= velocity - (get(_brake_) / leader(_tempo_) * braking),
-                done= velocity * braked <= 0 || velocity < abs(braked),
-                velocity= !done && set(_velocity_, velocity > abs(get(_speed_)) ? braked : (braking= operated= 0))
+                velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
               $monitor.text(get(opt.monitor));
               velocity && braking++;
               operated && operated++;
