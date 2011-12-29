@@ -268,6 +268,31 @@
     });
   });
 
+  asyncTest( 'Visibility switching with `at`', function(){
+    expect( 6 );
+    var
+      frames= 6,
+      at= '-+-++-',
+      x= 20,
+      y= 30,
+      count= 0,
+      $reel= $('#image').reel({ frames: frames, frame: 1, speed: 1, annotations: {
+        'at-controlled-annotation': {
+          at: at,
+          x: x,
+          y: y
+        }
+      }})
+
+    $reel.parent().bind('frameChange.test', function(){
+      var
+        frame= $reel.data('frame')
+
+      equiv( $('#at-controlled-annotation').css('display'), at[frame - 1] == '+' ? 'block':'none', 'visibility @ frame '+frame);
+      if (count++ >= at.length - 1) start();
+    });
+  });
+
   asyncTest( 'GH-79 `click` event on annotation is not propagated up, where it would cause Reel to advance left/right', function(){
     expect( 1 );
     var

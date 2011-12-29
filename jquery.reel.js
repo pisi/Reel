@@ -617,12 +617,15 @@ jQuery.reel || (function($, window, document, undefined){
               $.each(get(_annotations_), function(ida, note){
                 var
                   $note= $(hash(ida)),
-                  start= note.start,
+                  start= note.start || 1,
                   end= note.end,
-                  offset= frame - (start || 1),
+                  offset= frame - 1,
+                  at= note.at ? (note.at[offset] == '+') : false,
+                  offset= note.at ? offset : offset - start + 1,
                   x= typeof note.x!=_object_ ? note.x : note.x[offset],
                   y= typeof note.y!=_object_ ? note.y : note.y[offset],
-                  visible= x !== undefined && y !== undefined && offset >= 0 && (!end || offset <= end - start),
+                  placed= x !== undefined && y !== undefined,
+                  visible= placed && (note.at ? at : (offset >= 0 && (!end || offset <= end - start))),
                   style= { display: visible ? _block_:_none_, left: px(x) || 0, top: px(y) || 0 }
                 $note.css(style);
               });
