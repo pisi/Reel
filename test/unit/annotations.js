@@ -218,7 +218,10 @@
       ys= [ 20, 10, 0 , 40, 50, 30 ],
       y= 30,
       from= 1,
-      $reel= $('#image').reel({ frames: frames, speed: 1, annotations: {
+      // This test is making problems in that first `frameChange` event is for frame 2 not 1.
+      // Thus have to start on last 6th frame.
+      count= 0,
+      $reel= $('#image').reel({ frames: frames, frame: 6, speed: 1, annotations: {
         'xy-positioned-annotation': {
           x: xs,
           y: ys
@@ -230,11 +233,9 @@
         frame= $reel.data('frame'),
         index= frame - from
 
-      if (index < 0) return;
-
       equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
       equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
-      if (index >= xs.length-1) start();
+      if (count++ >= xs.length-1) start();
     });
   });
 
