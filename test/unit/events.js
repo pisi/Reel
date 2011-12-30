@@ -152,4 +152,20 @@
       });
   });
 
+  asyncTest( '`"wheel"` event cancels eventual running `"pan" event', function(){
+    expect(2);
+    var
+      $reel= $('#image').reel()
+
+    $reel.parent().bind('up.test', function(){
+      ok( true, '`"wheel"` event caused the `"up"` event to trigger and cancel `"pan"`');
+      ok( !$('html').hasClass('reel-panning'), 'HTML is not flagged as "panning in progress"')
+      start();
+    })
+
+    $reel
+      .trigger('down')
+      .trigger('wheel')
+  });
+
 })(jQuery);
