@@ -477,6 +477,7 @@ jQuery.reel || (function($, window, document, undefined){
                 velocity= set(_velocity_, 0)
               unidle();
               cleanup.call(e);
+              stage_pool.trigger(_mouseup_);
               t.trigger('fractionChange');
               return false;
             },
