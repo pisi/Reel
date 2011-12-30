@@ -1,26 +1,51 @@
 jQuery Reel Test Suite
 ======================
-To date we have **162 tests in 39 tasks and 8 modules**, that's far more than 450% compared in comparison with last version). The suite will keep on growing as enhancements are made or new bugs discovered. The test suite grows independent on regular version releases.
+Reel is very well tested. To date we have **655 tests in 94 tasks and 10 modules**, that's 404% increase compared with previous version). The suite will keep on growing as enhancements are made or new bugs discovered. The test suite grows independent on regular version releases.
 
 Usage?
 ------------
 Just run `index.html` in your own browser.
 
-If you have a positive test in a browser not listed here, I would love to know about!
-
 Positive Results
 ----------------
 See [detailed report][tests]. Tests were success in every case tried. With the exception of Opera Mini.
 
-iPhone / iPad
--------------
+Test Results
+------------
 
-On iPhone, besides these automated tests, there's also the *touch* part of the deal.
-Browse [`example/iphone.html`][iphone-example] in your iPhone
-or watch short **[test session video][iphone-test]**
-kindly recorded by [Michael Crane][mick] (thanks Mick!).
+In 1.1 I asked you to submit failing tests reports to me. You did and it
+helped. I thank you very much for doing so!
 
-[iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
-[iphone-example]: http://jquery.vostrel.cz/reel/example/iphone.html
-[mick]: http://www.mickiwiki.com
+In 1.2 the report gathering and submission is automated, so
+you don't need to do a thing to help. You take part in the distributed
+testing efforts merely by running the tests. __Run the tests on as
+many different devices as you can (even exotic ones) to help me more.__
+
+After each test run finishes, its anonymous results are then automatically submitted on-line
+for collection and analysis. The report contains this:
+
+``` json
+    {
+      timestamp:  "1325202485687",
+      filter:     [
+        // Listed filtered modules (if any)
+      ],
+      count: {
+        total:    655,
+        pass:     655,
+        fail:     0
+      },
+      fails:      [
+        // List of all failing tests
+      ],
+      version: {
+        jquery:   "1.7.1",
+        reel:     "1.2"
+      },
+      host:       "jquery.vostrel.cz", // This would be your domain name
+      results:    "Tests completed in 44106 milliseconds. 655 tests of 655 passed, 0 failed.",
+      agent:      "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7"
+    }
+```
+
 [tests]: http://github.com/pisi/Reel/blob/development/TESTS.markdown
