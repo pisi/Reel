@@ -196,6 +196,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, opt.velocity || 0);
             set(_vertical_, opt.vertical);
+            set(_preloaded_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_reeling_, false);
@@ -308,7 +309,8 @@ jQuery.reel || (function($, window, document, undefined){
                 is_sprite= !images.length,
                 frames= get(_frames_),
                 order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
-                preload= is_sprite ? [image] : order(images, opt, get),
+                preload= is_sprite ? [image] : order(images.slice(), opt, get),
+                preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                 uris= [],
                 img_tag= t[0],
                 img_frames= img_tag.frames= preload.length,
@@ -320,7 +322,6 @@ jQuery.reel || (function($, window, document, undefined){
                   uri= opt.path+preload.shift(),
                   width= space.x * (!is_sprite ? 1 : opt.footage),
                   height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
-                  $img= $(new Image()).addClass(cached_klass).attr({ width: width, height: height })
                   .bind('load'+ns, function update_preloader(){
                     img_tag.preloaded++
                     $(this).unbind(ns);
@@ -333,10 +334,14 @@ jQuery.reel || (function($, window, document, undefined){
                       cleanup.call(e);
                     }
                   });
-                $overlay.append($img);
                 uris.push(uri);
+                  $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height })
+                $img.appendTo($overlay);
                 // The actual loading of the image is done asynchronously
-                setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
+                setTimeout(function(){
+                  $img.attr({ src: uri })
+                  t.triggerAfter('frameLoad', function(){ return $img[0].complete })
+                }, load_frames - preload.length);
               }
               set(_images_, uris);
               set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo('head'));
@@ -663,6 +668,17 @@ jQuery.reel || (function($, window, document, undefined){
                 fraction= set(_fraction_, was - step * backwards)
               cleanup.call(e);
             },
+            'tick.reel.preload': function(e){
+              var
+                space= get(_dimensions_),
+                current= parseInt($preloader.css(_width_)),
+                target= round(get(_preloaded_) * space.x)
+              $preloader.css({ width: (target + current) / 2 + 1 })
+              if (get(_preloaded_) === 1 && current > space.x - 2){
+                $preloader.fadeOut(300, function(){ $preloader.remove() });
+                pool.unbind('tick.reel.preload', on.pool['tick.reel.preload']);
+              }
+            },
             'tick.reel.opening': function(e){
             /*
             - ticker listener dedicated to opening animation
@@ -911,8 +927,8 @@ jQuery.reel || (function($, window, document, undefined){
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
-    _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
+    _lo_= 'lo', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
+    _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
@@ -937,6 +953,14 @@ jQuery.reel || (function($, window, document, undefined){
     drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_))
 
   // Helpers
+  $.fn.triggerAfter= function(evnt, condition){
+    return try_now($(this))
+    function try_now($node){
+      if (condition()) $node.trigger(evnt)
+      else setTimeout(function(){ try_now($node) }, 100);
+      return $node
+    }
+  }
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + (string || '') }

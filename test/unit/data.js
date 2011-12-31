@@ -34,6 +34,7 @@
     ok( is('Array', $reel.data('images')), '`images` Object');
     ok( is('Number', $reel.data('opening_ticks')), '`opening_ticks` Number');
     ok( is('Boolean', $reel.data('playing')), '`playing` Boolean');
+    ok( is('Number', $reel.data('preloaded')), '`preloaded` Number');
     ok( is('Boolean', $reel.data('reeling')), '`reeling` Boolean');
     ok( is('Number', $reel.data('revolution')), '`revolution` Number');
     ok( is('Number', $reel.data('row')), '`row` Number');
