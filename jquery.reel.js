@@ -814,12 +814,13 @@ jQuery.reel || (function($, window, document, undefined){
           passes= 4 * rows,
           start= opt.frame,
           frames= sequence.length,
+          plus= true,
           granule= frames / passes
         for(var i= 0; i < passes; i++)
           add(start + round(i * granule));
         while(granule > 1)
-          for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
-            add(round(order[i] + granule));
+          for(var i= 0, length= order.length, granule= granule / 2, p= plus= !plus; i < length; i++)
+            add(order[i] + (plus? 1:-1) * round(granule));
         for(var i= 0; i < order.length; i++)
           order[i]= sequence[order[i] - 1];
         return order
