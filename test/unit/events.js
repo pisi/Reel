@@ -168,4 +168,21 @@
       .trigger('wheel')
   });
 
+  asyncTest( 'Improper mouse wheel event triggers (with no reasonable delta) don\'t make it to the Reel\'s `"wheel"` event', function(){
+    expect(1);
+    var
+      $reel= $('#image').reel(),
+      waiter= setTimeout(function(){
+        ok( true, '`didn\'tmake it to the `"wheel"` event');
+        start();
+      }, 100);
+
+    $reel.bind('wheel.test', function(){
+      ok( false, '`"wheel"` event should not be fired, but was');
+      clearTimeout(waiter);
+      start();
+    })
+    $reel.trigger('mousewheel');
+  });
+
 })(jQuery);

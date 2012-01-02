@@ -18,14 +18,14 @@
  * ===========
  * The 360 plugin for jQuery
  *
- * @license Copyright (c) 2009-2011 Petr Vostrel (http://petr.vostrel.cz/)
+ * @license Copyright (c) 2009-2012 Petr Vostrel (http://petr.vostrel.cz/)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.2alpha
- * Updated: 2011-12-30
+ * Version: 1.1.3-devel
+ * Updated: 2012-01-02
  *
  * Requires jQuery 1.4.3 or higher
  */
@@ -277,7 +277,7 @@ jQuery.reel || (function($, window, document, undefined){
                 rule(true, dot(loading_klass), { cursor: busy_cursor });
                 rule(false, dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor });
                 area
-                  .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ t.trigger('wheel', [delta]); return false })
+                  .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return !delta || t.trigger('wheel', [delta]) && false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
                   .bind(opt.clickfree ? _mouseleave_ : __, function(e){ t.trigger('up'); return false })
                   .disableTextSelect();
