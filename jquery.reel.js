@@ -178,7 +178,7 @@ jQuery.reel || (function($, window, document, undefined){
               $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
-            set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
+            set(_image_, images.length ? __ : opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
             set(_images_, []);
             set(_frame_, opt.frame);
             set(__frame_, 0);
