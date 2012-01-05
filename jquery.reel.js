@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2012-01-02
+ * Updated: 2012-01-05
  *
  * Requires jQuery 1.4.3 or higher
  */
@@ -855,7 +855,7 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
-  $.reel.cdn= 'http://code.vostrel.cz/',
+  $.reel.cdn= 'http://code.vostrel.cz/';
 
   $.reel.instances= $();
   $.reel.cost= 0;
