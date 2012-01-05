@@ -103,6 +103,7 @@ jQuery.reel || (function($, window, document, undefined){
       preload:     'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:        true, // allow page scroll (allowed by default; applies only to touch devices)
       steppable:         true, // allows to step the view (horizontally) by clicking on image
+      sequence:            '', // URL of sequence images containing the hash placeholder
       velocity:             0  // initial velocity of user interaction; washes off quickly with `brake`
     }
     // [deprecated] options defaults may be gone anytime soon
@@ -165,7 +166,8 @@ jQuery.reel || (function($, window, document, undefined){
               id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
               styles= t.attr(_style_),
               data= $.extend({}, t.data()),
-              images= opt.images,
+              sequence= $.reel.sequence_pattern.exec(set(_sequence_, opt.sequence)),
+              images= set(_images_, sequence ? $.reel.build_sequence(sequence, opt, get) : opt.images),
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
@@ -178,9 +180,9 @@ jQuery.reel || (function($, window, document, undefined){
               $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
-            set(_image_, images.length && images.length || opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
-            set(_images_, []);
-            set(_frame_, opt.frame);
+            set(_options_, opt);
+            set(_image_, images.length ? __ : opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
+            set(_cached_, []);
             set(__frame_, 0);
             set(_spacing_, opt.spacing);
             set(_dimensions_, size);
@@ -304,7 +306,7 @@ jQuery.reel || (function($, window, document, undefined){
                 space= get(_dimensions_),
                 $overlay= t.parent(),
                 image= get(_image_),
-                images= opt.images,
+                images= get(_images_),
                 is_sprite= !images.length,
                 frames= get(_frames_),
                 order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
@@ -327,7 +329,7 @@ jQuery.reel || (function($, window, document, undefined){
                     $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                     if (img_tag.frames == img_tag.preloaded){
                       $preloader.remove();
-                      images.length || t.css({ backgroundImage: url(opt.path+image) }).attr({ src: transparent });
+                      is_sprite && t.css({ backgroundImage: url(opt.path+image) }).attr({ src: transparent });
                       $overlay.removeClass(loading_klass);
                       t.trigger('loaded');
                       cleanup.call(e);
@@ -338,7 +340,7 @@ jQuery.reel || (function($, window, document, undefined){
                 // The actual loading of the image is done asynchronously
                 setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
               }
-              set(_images_, uris);
+              set(_cached_, uris);
               set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo('head'));
             },
             opening: function(e){
@@ -524,6 +526,7 @@ jQuery.reel || (function($, window, document, undefined){
               var
                 fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
                 frame= normal.frame(frame, opt, get),
+                is_sprite= get(_cached_).length == 1,
                 footage= opt.footage
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
@@ -532,13 +535,13 @@ jQuery.reel || (function($, window, document, undefined){
               else{
                 var
                   horizontal= opt.horizontal,
-                  images= opt.images,
+                  images= get(_images_),
                   space= get(_dimensions_),
                   frame= set(__frame_, set(_frame_, frame))
-                if (images.length){
+                if (!is_sprite){
                   var
-                    sprite= images[frame - 1]
-                  t.attr({ src: opt.path+sprite })
+                    frameshot= images[frame - 1]
+                  t.attr({ src: opt.path + frameshot })
                 }else{
                   if (!opt.stitched) var
                     minor= (frame % footage) - 1,
@@ -852,6 +855,31 @@ jQuery.reel || (function($, window, document, undefined){
     }
   }
 
+  $.reel.sequence_pattern= /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/;
+  $.reel.build_sequence= function(sequence, opt){
+    if (sequence.length <= 1) return opt.images;
+    var
+      images= [],
+      url= sequence[1],
+      placeholder= sequence[2],
+      start= +sequence[4] || 1,
+      rows= opt.orbital ? 2 : opt.rows || 1,
+      frames= opt.orbital ? opt.footage : opt.frames,
+      end= +(sequence[5] || rows * frames),
+      total= end - start,
+      increment= +sequence[7] || 1,
+      counter= 0
+    while(counter < end){
+      images.push(url.replace(placeholder, pad((start + counter + __), placeholder.length, '0')));
+      counter+= increment;
+    }
+    return images;
+    function pad(string, len, fill){
+      while (string.length < len) string= fill + string;
+      return string;
+    }
+  }
+
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
@@ -906,12 +934,12 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Storage keys
     _annotations_= 'annotations',
-    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _center_= 'center',
+    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
-    _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
+    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
+    _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 

@@ -116,7 +116,7 @@
       $reel= $('#image').reel({ images: new Array().concat(images), preload: 'linear' })
 
     ok( typeof $.reel.preload.linear == 'function', '`$.reel.preload.linear` available');
-    deepEqual( $reel.data('images'), images, 'What comes in, comes out');
+    deepEqual( $reel.data('cached'), images, 'What comes in, comes out');
   });
 
   test( '`$.reel.preload.fidelity` for evenly spread preloaded images', function(){
@@ -243,10 +243,129 @@
       var
         $reel= $('#image').reel(def.options)
 
-      deepEqual( $reel.data('images'), def.ordered, ix+' frames starting at frame '+def.options.frame);
-      equal( $.unique($reel.data('images')).length, def.ordered.length, 'equal length');
+      deepEqual( $reel.data('cached'), def.ordered, ix+' frames starting at frame '+def.options.frame);
+      equal( $.unique($reel.data('cached')).length, def.ordered.length, 'equal length');
     });
 
+  });
+
+  test( 'Sequence: Passes of the `$.reel.sequence_pattern` regular epression', function(){
+    var
+      samples= [
+        '####',
+        'folder/####',
+        'folder/subfolder/####',
+        '/folder/subfolder/####',
+        '//server/folder/subfolder/####',
+        'http://server/folder/subfolder/####',
+        'https://server/folder/subfolder/####',
+        'folder/####.jpg',
+        'folder/prefix_####',
+        'folder/prefix_####.jpg',
+        'folder/prefix_####.gif',
+        'folder/prefix_####.png',
+        'folder/prefix_####.svg',
+        'samples/mini/###.jpg|3..43|2'
+      ]
+
+    $.each(samples, function(){
+      ok( this.match($.reel.sequence_pattern), this + ' passed');
+    });
+  });
+
+  test( 'Sequence: `$.reel.sequence_pattern` regular epression mapping', function(){
+    var
+      samples= {
+        '###': [
+          '###',        // [0]
+                        // Counter URL:
+          '###',        // [1] entire segment
+          '###'         // [2] counter
+        ],
+        'image_#####_small.png': [
+          'image_#####_small.png',  // [0]
+                                    // Counter URL:
+          'image_#####_small.png',  // [1] entire segment
+          '#####'                   // [2] counter
+        ],
+        'image_#####_small.png|1..36': [
+          'image_#####_small.png|1..36',  // [0]
+                                          // Counter URL:
+          'image_#####_small.png',        // [1] entire segment
+          '#####',                        // [2] counter
+                                          // Optional range:
+          '|1..36',                       // [3] entire range segment
+          '1',                            // [4] start
+          '36'                            // [5] end
+        ],
+        '##_small.jpg|20..50|3': [
+          '##_small.jpg|20..50|3',  // [0]
+                                    // Counter URL:
+          '##_small.jpg',           // [1] entire segment
+          '##',                     // [2] counter
+                                    // Optional range:
+          '|20..50',                // [3] entire segment
+          '20',                     // [4] start
+          '50',                     // [5] end
+                                    // Optional counter increment:
+          '|3',                     // [6] entire segment
+          '3'                       // [7] increment
+        ],
+        'samples/mini/###.jpg|3..43|2': [
+          'samples/mini/###.jpg|3..43|2', // [0]
+                                          // Counter URL:
+          'samples/mini/###.jpg',         // [1] entire segment
+          '###',                          // [2] counter
+                                          // Optional range:
+          '|3..43',                       // [3] entire segment
+          '3',                            // [4] start
+          '43',                           // [5] end
+                                          // Optional counter increment:
+          '|2',                           // [6] entire segment
+          '2'                             // [7] increment
+        ]
+      }
+
+    $.each(samples, function(image){
+      var
+        sequence= $.reel.sequence_pattern.exec( image ) || []
+      sequence && equal( sequence.length, 8, 'correct length');
+      equal( sequence.join(''), this.join(''), image + ' passed');
+    });
+  });
+
+  test( 'Sequence: `$.reel.build_sequence()` generates the "images" array from given sequence pattern match', function(){
+    var
+      options= {
+        frames: 4
+      },
+      samples= {
+        '####': [
+          '0001',
+          '0002',
+          '0003',
+          '0004'
+        ],
+        'prefix###.jpg': [
+          'prefix001.jpg',
+          'prefix002.jpg',
+          'prefix003.jpg',
+          'prefix004.jpg'
+        ],
+        'prefix#.jpg|1..16|4': [ // Single `#` doesn't left pad the counter number with zero `0`
+          'prefix1.jpg',
+          'prefix5.jpg',
+          'prefix9.jpg',
+          'prefix13.jpg'
+        ]
+      }
+
+    $.each(samples, function(sample){
+      var
+        sequence= $.reel.sequence_pattern.exec(sample)
+
+      equal( $.reel.build_sequence(sequence, options).join(', '), this.join(', '), sample + ' generates');
+    });
   });
 
 })(jQuery);

@@ -33,6 +33,7 @@
     ok( is('String', $reel.data('image')), '`image` String');
     ok( is('Array', $reel.data('images')), '`images` Object');
     ok( is('Number', $reel.data('opening_ticks')), '`opening_ticks` Number');
+    ok( is('Object', $reel.data('options')), '`options` Object');
     ok( is('Boolean', $reel.data('playing')), '`playing` Boolean');
     ok( is('Boolean', $reel.data('reeling')), '`reeling` Boolean');
     ok( is('Number', $reel.data('revolution')), '`revolution` Number');

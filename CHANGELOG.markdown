@@ -31,6 +31,8 @@ Development
 * Control event `play` now accepts optional `speed` parameter.
 * Mouse cursor is now customizable with the new `cursor` option. The new
   failsafe cursor is now `"move"`.
+* New `sequence` option for easy definition of sequence frames by one
+  path with a counter placeholder.
 
 
 Version 1.1.3
