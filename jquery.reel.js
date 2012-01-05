@@ -181,7 +181,6 @@ jQuery.reel || (function($, window, document, undefined){
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
             set(_image_, images.length ? __ : opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
-            set(_frame_, opt.frame);
             set(_cached_, []);
             set(__frame_, 0);
             set(_spacing_, opt.spacing);
