@@ -63,6 +63,7 @@
           .reel( options )
           .bind('loaded', function(){
             var
+              options= $(this).data('options'),
               images= $(this).data('images')
 
             $('#images').prev('h4').find('.count').text( 1 +images.length );
@@ -71,7 +72,7 @@
               $('#images').append( image(images[0], 'And The Sprite ') );
             }else{
               $.each( images, function(ix){
-                $('#images').append( image(this, 'Sequence frame '+(ix+1)+' ') );
+                $('#images').append( image(options.path + this, 'Sequence frame '+(ix+1)+' ') );
               })
             }
           });

@@ -173,23 +173,8 @@ $('#image').reel({
     rows:        6,
     row:         3,
     speed:       0.3,
-    path:        'samples/mini/',
-    images:
-      /*
-          Typing all 120 images would be tedious. Machine will do it.
-          Function returns [ '001.jpg', '002.jpg', .. '120.jpg' ]
-      */
-      ( function(){
-          var start= 1, every= 1, frames= 120,
-              ext= 'jpg', length= 7, fill= '0',
-              array= []
-          for( var i= start; i <= frames; i+= every ){
-              var name= [ i, ext ].join('.')
-              while( name.length < length ) name= fill+name
-              array.push( name )
-          }
-          return array
-      } )()
+    path:        'samples/',
+    sequence:    'mini/###.jpg'
 });
 </xmp>
 <xmp class="css">
@@ -215,23 +200,7 @@ $('#image').reel({
     orbital:     3,
     inversed:    true,
     speed:       0.7,
-    path:        'samples/phone/',
-    images:
-      /*
-          Typing all 20 images might be tedious. Machine will do it.
-          Function returns [ '01.png', '02.png', .. '20.png' ]
-      */
-      ( function(){
-          var start= 1, every= 1, frames= 20,
-              ext= 'png', length= 6, fill= '0',
-              array= []
-          for( var i= start; i <= frames; i+= every ){
-              var name= [ i, ext ].join('.')
-              while( name.length < length ) name= fill+name
-              array.push( name )
-          }
-          return array
-      } )()
+    sequence:    'samples/phone/##.png'
 });
 </xmp>
 <xmp class="css">
@@ -242,8 +211,34 @@ $('#image').reel({
 </xmp>
 
       </li>
-      <li id="sequence-slideshow">
-        <strong>Slideshow</strong>
+      <li id="sequence-clockwise">
+        <strong>Clockwise</strong>
+        <img class="thumb" src='samples/drone.png' />
+
+<xmp class="html">
+  <img id='image' src='samples/drone.png' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+    cw:          true,
+    frame:       32,
+    speed:       -0.2,
+    velocity:    3,
+    brake:       0.2,
+    sequence:    'samples/drone/#####.png|1..179|5'
+});
+</xmp>
+<xmp class="css">
+#image { width: 300px; height: 200px; }
+</xmp>
+<xmp class="meta">
+  <h3>Clockwise Sequence</h3>
+  <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
+</xmp>
+
+      </li>
+      <li id="sequence-direct">
+        <strong>Direct</strong>
         <img class="thumb" src='samples/badge-1.gif' />
 
 <xmp class="html">
@@ -261,7 +256,8 @@ $('#image').reel({
 });
 
 /*
-  `delay` tells it to wait 1 second before starting to play
+  The very same could be achieved by using`sequence: "badge-#.gif"`
+  instead of `images`
 */
 </xmp>
 <xmp class="css">
@@ -270,48 +266,6 @@ $('#image').reel({
 <xmp class="meta">
   <h3>Slideshow Sequence</h3>
   <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-</xmp>
-
-      </li>
-      <li id="sequence-clockwise">
-        <strong>Clockwise</strong>
-        <img class="thumb" src='samples/drone.png' />
-
-<xmp class="html">
-  <img id='image' src='samples/drone.png' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    cw:          true,
-    frame:       32,
-    speed:       -0.2,
-    path:        'samples/drone/',
-    velocity:    3,
-    brake:       0.2,
-    images:
-      /*
-          Typing all all images might be tedious. Machine will do it.
-          Function returns [ '00001.png', '00006.png', .. '00179.png' ]
-      */
-      ( function(){
-          var start= 1, every= 5, frames= 179,
-              ext= 'png', length= 9, fill= '0',
-              array= []
-          for( var i= start; i <= frames; i+= every ){
-              var name= [ i, ext ].join('.')
-              while( name.length < length ) name= fill+name
-              array.push( name )
-          }
-          return array
-      } )()
-});
-</xmp>
-<xmp class="css">
-#image { width: 300px; height: 200px; }
-</xmp>
-<xmp class="meta">
-  <h3>Clockwise Sequence</h3>
-  <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
 </xmp>
 
       </li>
