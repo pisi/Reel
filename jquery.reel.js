@@ -306,7 +306,7 @@ jQuery.reel || (function($, window, document, undefined){
                 space= get(_dimensions_),
                 $overlay= t.parent(),
                 image= get(_image_),
-                images= opt.images,
+                images= get(_images_),
                 is_sprite= !images.length,
                 frames= get(_frames_),
                 order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
@@ -329,7 +329,7 @@ jQuery.reel || (function($, window, document, undefined){
                     $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
                     if (img_tag.frames == img_tag.preloaded){
                       $preloader.remove();
-                      images.length || t.css({ backgroundImage: url(opt.path+image) }).attr({ src: transparent });
+                      is_sprite && t.css({ backgroundImage: url(opt.path+image) }).attr({ src: transparent });
                       $overlay.removeClass(loading_klass);
                       t.trigger('loaded');
                       cleanup.call(e);
@@ -526,6 +526,7 @@ jQuery.reel || (function($, window, document, undefined){
               var
                 fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
                 frame= normal.frame(frame, opt, get),
+                is_sprite= get(_cached_).length == 1,
                 footage= opt.footage
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
@@ -537,10 +538,10 @@ jQuery.reel || (function($, window, document, undefined){
                   images= get(_images_),
                   space= get(_dimensions_),
                   frame= set(__frame_, set(_frame_, frame))
-                if (images.length){
+                if (!is_sprite){
                   var
-                    sprite= images[frame - 1]
-                  t.attr({ src: opt.path+sprite })
+                    frameshot= images[frame - 1]
+                  t.attr({ src: opt.path + frameshot })
                 }else{
                   if (!opt.stitched) var
                     minor= (frame % footage) - 1,
