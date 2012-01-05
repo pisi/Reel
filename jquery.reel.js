@@ -166,8 +166,8 @@ jQuery.reel || (function($, window, document, undefined){
               id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
               styles= t.attr(_style_),
               data= $.extend({}, t.data()),
-              images= opt.images,
               sequence= $.reel.sequence_pattern.exec(set(_sequence_, opt.sequence)),
+              images= set(_images_, sequence ? $.reel.build_sequence(sequence, opt, get) : opt.images),
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
@@ -855,6 +855,30 @@ jQuery.reel || (function($, window, document, undefined){
   }
 
   $.reel.sequence_pattern= /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/;
+  $.reel.build_sequence= function(sequence, opt, get){
+    if (sequence.length <= 1) return opt.images;
+    var
+      images= [],
+      url= sequence[1],
+      placeholder= sequence[2],
+      start= +sequence[4] || 1,
+      rows= opt.orbital ? 2 : opt.rows || 1,
+      frames= opt.orbital ? opt.footage : opt.frames,
+      end= +(sequence[5] || rows * frames),
+      total= end - start,
+      increment= +sequence[7] || 1,
+      counter= 0
+    while(counter < end){
+      images.push(url.replace(placeholder, pad((start + counter + __), placeholder.length, '0')));
+      counter+= increment;
+    }
+    return images;
+    function pad(string, len, fill){
+      while (string.length < len) string= fill + string;
+      return string;
+    }
+  }
+
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 

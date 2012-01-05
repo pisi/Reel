@@ -334,4 +334,38 @@
     });
   });
 
+  test( 'Sequence: `$.reel.build_sequence()` generates the "images" array from given sequence pattern match', function(){
+    var
+      options= {
+        frames: 4
+      },
+      samples= {
+        '####': [
+          '0001',
+          '0002',
+          '0003',
+          '0004'
+        ],
+        'prefix###.jpg': [
+          'prefix001.jpg',
+          'prefix002.jpg',
+          'prefix003.jpg',
+          'prefix004.jpg'
+        ],
+        'prefix#.jpg|1..16|4': [ // Single `#` doesn't left pad the counter number with zero `0`
+          'prefix1.jpg',
+          'prefix5.jpg',
+          'prefix9.jpg',
+          'prefix13.jpg'
+        ]
+      }
+
+    $.each(samples, function(sample){
+      var
+        sequence= $.reel.sequence_pattern.exec(sample)
+
+      equal( $.reel.build_sequence(sequence, options).join(', '), this.join(', '), sample + ' generates');
+    });
+  });
+
 })(jQuery);
