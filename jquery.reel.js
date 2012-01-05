@@ -855,7 +855,7 @@ jQuery.reel || (function($, window, document, undefined){
   }
 
   $.reel.sequence_pattern= /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/;
-  $.reel.build_sequence= function(sequence, opt, get){
+  $.reel.build_sequence= function(sequence, opt){
     if (sequence.length <= 1) return opt.images;
     var
       images= [],
