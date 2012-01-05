@@ -167,6 +167,7 @@ jQuery.reel || (function($, window, document, undefined){
               styles= t.attr(_style_),
               data= $.extend({}, t.data()),
               images= opt.images,
+              sequence= $.reel.sequence_pattern.exec(set(_sequence_, opt.sequence)),
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
@@ -853,6 +854,7 @@ jQuery.reel || (function($, window, document, undefined){
     }
   }
 
+  $.reel.sequence_pattern= /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/;
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
@@ -912,7 +914,7 @@ jQuery.reel || (function($, window, document, undefined){
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
-    _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
+    _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
