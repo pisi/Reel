@@ -116,7 +116,7 @@
       $reel= $('#image').reel({ images: new Array().concat(images), preload: 'linear' })
 
     ok( typeof $.reel.preload.linear == 'function', '`$.reel.preload.linear` available');
-    deepEqual( $reel.data('images'), images, 'What comes in, comes out');
+    deepEqual( $reel.data('cached'), images, 'What comes in, comes out');
   });
 
   test( '`$.reel.preload.fidelity` for evenly spread preloaded images', function(){
@@ -243,8 +243,8 @@
       var
         $reel= $('#image').reel(def.options)
 
-      deepEqual( $reel.data('images'), def.ordered, ix+' frames starting at frame '+def.options.frame);
-      equal( $.unique($reel.data('images')).length, def.ordered.length, 'equal length');
+      deepEqual( $reel.data('cached'), def.ordered, ix+' frames starting at frame '+def.options.frame);
+      equal( $.unique($reel.data('cached')).length, def.ordered.length, 'equal length');
     });
 
   });

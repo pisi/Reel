@@ -180,8 +180,8 @@ jQuery.reel || (function($, window, document, undefined){
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
             set(_image_, images.length ? __ : opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
-            set(_images_, []);
             set(_frame_, opt.frame);
+            set(_cached_, []);
             set(__frame_, 0);
             set(_spacing_, opt.spacing);
             set(_dimensions_, size);
@@ -339,7 +339,7 @@ jQuery.reel || (function($, window, document, undefined){
                 // The actual loading of the image is done asynchronously
                 setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
               }
-              set(_images_, uris);
+              set(_cached_, uris);
               set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo('head'));
             },
             opening: function(e){
@@ -533,7 +533,7 @@ jQuery.reel || (function($, window, document, undefined){
               else{
                 var
                   horizontal= opt.horizontal,
-                  images= opt.images,
+                  images= get(_images_),
                   space= get(_dimensions_),
                   frame= set(__frame_, set(_frame_, frame))
                 if (images.length){
@@ -907,7 +907,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Storage keys
     _annotations_= 'annotations',
-    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _center_= 'center',
+    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
