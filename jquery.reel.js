@@ -323,7 +323,7 @@ jQuery.reel || (function($, window, document, undefined){
                 // The actual loading of the image is done asynchronously
                 setTimeout(function(){
                   $img.attr({ src: uri })
-                  t.triggerAfter('preloaded', function(){ return $img[0].complete })
+                  t.triggerAfter('preloaded', function(){ return !!$img.parent().length && $img[0].complete })
                 }, uris.length - preload.length);
                 uris.push(uri);
               }
