@@ -855,7 +855,7 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
-  $.reel.cdn= 'http://code.vostrel.cz/',
+  $.reel.cdn= 'http://code.vostrel.cz/';
 
   $.reel.instances= $();
   $.reel.cost= 0;
