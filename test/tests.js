@@ -95,7 +95,8 @@
 
         $('<a/>', { name: 'receipt' }).appendTo('#qunit-testresult');
         formatted(report, 'Summary').appendTo( $('<ul/>').appendTo('#receipt') );
-        $.post(server+'/collect/reel/testrun/results', report);
+        try{ $.post(server+'/collect/reel/testrun/results', report) }
+        catch(e){}
 
         function formatted( bit, label ){
           var $result= $('<li/>')
