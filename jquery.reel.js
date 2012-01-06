@@ -78,7 +78,7 @@ jQuery.reel || (function($, window, document, undefined){
       opening:              0, // duration of opening animation (in seconds)
       orbital:              0, // view centering tolerance in frames for dual-orbit object movies
       path:                '', // URL path to be prepended to `image` or `images` filenames
-      preloader:            4, // size (height) of a image loading indicator (in pixels)
+      preloader:            2, // size (height) of a image loading indicator (in pixels)
       rebound:            0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution:   undefined, // distance mouse must be dragged for full revolution
                                // (defaults to double the viewport size or half the `stitched` option)
