@@ -669,7 +669,7 @@ jQuery.reel || (function($, window, document, undefined){
                 space= get(_dimensions_),
                 current= parseInt($preloader.css(_width_)),
                 target= round(1 / get(_images_).length * get(_preloaded_) * space.x)
-              $preloader.css({ width: (target + current) / 2 + 1 })
+              $preloader.css({ width: current + (target - current) / 3 + 1 })
               if (get(_preloaded_) === get(_images_).length && current > space.x - 2){
                 $preloader.fadeOut(300, function(){ $preloader.remove() });
                 pool.unbind('tick.reel.preload', on.pool['tick.reel.preload']);
