@@ -5,7 +5,7 @@
 
   module('Sprite', reel_test_module_routine);
 
-  asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
+  test( 'Multi-row: Frame shifting (4 rows)', function(){
     expect($.browser.msie ? 16 : 12);
     var
       selector= '#image',
@@ -48,10 +48,9 @@
         equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
       }
     });
-    start();
   });
 
-  asyncTest( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
+  test( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
     expect($.browser.msie ? 12 : 9);
     var
       selector= '#image',
@@ -90,7 +89,6 @@
         equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
       }
     });
-    start();
   });
 
   asyncTest( 'Multi-row: Immune to `backwards` value', function(){
