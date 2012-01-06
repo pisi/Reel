@@ -200,6 +200,9 @@ jQuery.reel || (function($, window, document, undefined){
             set(_vertical_, opt.vertical);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
+            set(_clicked_, false);
+            set(_clicked_on_, set(_clicked_row_, 0));
+            set(_lo_, set(_hi_, 0));
             set(_reeling_, false);
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
