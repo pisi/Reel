@@ -143,9 +143,7 @@
 
   reel_test_module_routine= {
     teardown: function(){
-      $('.reel-overlay').unbind('.test');
-      $('.reel').unreel().unbind('.test');
-      $(document).unbind('.test');
+      $('.reel-overlay, .reel').add(document).unbind('.test').unreel();
     }
   }
 

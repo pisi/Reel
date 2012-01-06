@@ -230,16 +230,13 @@ jQuery.reel || (function($, window, document, undefined){
             */
               var
                 backup= t.data(_backup_)
-              t.parent().unbind(on.instance).children(_img_).unbind(ns);
+              t.parent().unbind(on.instance);
               get(_style_).remove();
-              t.unbind(ns).attr({
+              remove_instance(t.unbind(ns).siblings().unbind(ns).remove().end().attr({
                'class': backup.classes,
                 src: backup.src,
                 style: backup.style
-              }).removeClass(klass);
-              t.data(backup.data).siblings().remove();
-              t.unwrap();
-              remove_instance(t);
+              }).data(backup.data).unwrap());
               no_bias();
               pool.unbind(on.pool);
               stage_pool
