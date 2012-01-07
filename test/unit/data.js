@@ -23,13 +23,16 @@
     ok( is('Boolean', $reel.data('backwards')), '`backwards` Boolean');
     ok( is('Number', $reel.data('bit')), '`bit` Number');
     ok( is('Number', $reel.data('brake')), '`brake` Number');
+    //ok( is('Object', $reel.data('cached')), '`cached` Object');
     ok( is('Boolean', $reel.data('center')), '`center` Boolean');
     ok( is('Boolean', $reel.data('clicked')), '`clicked` Boolean');
+    ok( is('Object', $reel.data('clicked_location')), '`clicked_location` Object');
     ok( is('Number', $reel.data('clicked_on')), '`clicked_on` Number');
     ok( is('Number', $reel.data('clicked_row')), '`clicked_row` Number');
     ok( is('Number', $reel.data('cwish')), '`cwish` Number');
     ok( is('Object', $reel.data('dimensions')), '`dimensions` Object');
     ok( is('Number', $reel.data('fraction')), '`fraction` Number');
+    ok( is('Number', $reel.data('_frame')), '`_frame` Number');
     ok( is('Number', $reel.data('frame')), '`frame` Number');
     ok( is('Number', $reel.data('frames')), '`frames` Number');
     ok( is('Number', $reel.data('hi')), '`hi` Number');
@@ -45,6 +48,7 @@
     ok( is('Number', $reel.data('revolution')), '`revolution` Number');
     ok( is('Number', $reel.data('row')), '`row` Number');
     ok( is('Number', $reel.data('rows')), '`rows` Number');
+    ok( is('String', $reel.data('sequence')), '`sequence` String');
     ok( is('Number', $reel.data('spacing')), '`spacing` Number');
     ok( is('Number', $reel.data('speed')), '`speed` Number');
     ok( is('String', $reel.data('stage')), '`stage` String');

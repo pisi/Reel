@@ -201,6 +201,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_preloaded_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
+            set(_clicked_location_, {});
             set(_clicked_, false);
             set(_clicked_on_, set(_clicked_row_, 0));
             set(_lo_, set(_hi_, 0));

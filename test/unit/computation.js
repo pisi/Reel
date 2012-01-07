@@ -264,8 +264,8 @@
       var
         $reel= $('#image').reel(def.options)
 
-      equal( $reel.data('images').join(', '), def.ordered.join(', '), ix+' frames starting at frame '+def.options.frame);
-      equal( $.unique($reel.data('images')).length, def.ordered.length, 'equal length');
+      equal( $reel.data('cached').join(', '), def.ordered.join(', '), ix+' frames starting at frame '+def.options.frame);
+      equal( $.unique($reel.data('cached')).length, def.ordered.length, 'equal length');
     });
 
   });
