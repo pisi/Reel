@@ -357,15 +357,15 @@ jQuery.reel || (function($, window, document, undefined){
                 ticks= set(_opening_ticks_, duration * leader(_tempo_))
             },
             openingDone: function(e){
-              delay= setTimeout(function play(){
-                t.trigger('play');
-              }, opt.delay * 1000 || 0);
+              if (opt.delay) delay= setTimeout(function play(){ t.trigger('play') }, opt.delay * 1000)
+              else t.trigger('play');
             },
             play: function(e, speed){
               var
                 speed= set(_speed_, speed || get(_speed_)),
                 playing= set(_playing_, !!speed),
                 stopped= set(_stopped_, !playing)
+              t.trigger('frameChange');
               idle();
               cleanup.call(e);
             },
