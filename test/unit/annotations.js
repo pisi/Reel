@@ -178,35 +178,24 @@
   });
 
   asyncTest( 'Horizontal position of annotation is defined by `x` property relative to left top corner', function(){
-    expect( 1 );
+    expect( 3 );
     var
       x= '120px',
-      $reel= $('#image').reel({ annotations: {
-        'x-positioned-annotation': {
-          x: x
-        }
-      }})
-
-    $reel.bind('loaded.test', function(){
-      equal( $('#x-positioned-annotation').css('left'), x, '120px');
-      start();
-    });
-  });
-
-  asyncTest( 'Vertical position of annotation is defined by `y` property', function(){
-    expect( 2 );
-    var
       y= 30,
       $reel= $('#image').reel({ annotations: {
-        'y-positioned-annotation': {
+        'positioned-annotation': {
+          x: x,
           y: y
         }
       }})
 
     $reel.bind('loaded.test', function(){
-      equal( $('#y-positioned-annotation').css('top'), y + 'px', '30px');
-      equiv( $('#y-positioned-annotation').css('top'), y, 'It indeed is 30px');
-      start();
+      setTimeout(function(){
+        equal( $('#positioned-annotation').css('left'), x, '120px');
+        equal( $('#positioned-annotation').css('top'), y + 'px', '30px');
+        equiv( $('#positioned-annotation').css('top'), y, 'It indeed is 30px');
+        start();
+      }, 100);
     });
   });
 

@@ -200,6 +200,9 @@ jQuery.reel || (function($, window, document, undefined){
             set(_vertical_, opt.vertical);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
+            set(_clicked_, false);
+            set(_clicked_on_, set(_clicked_row_, 0));
+            set(_lo_, set(_hi_, 0));
             set(_reeling_, false);
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
@@ -213,8 +216,8 @@ jQuery.reel || (function($, window, document, undefined){
               data: data
             });
             opt.steppable || $overlay.unbind('click.steppable');
-            rule(true, __, { width: size.x, height: size.y, overflow: _hidden_ });
-            rule(true, ____+dot(klass), { display: _block_, position: 'relative' });
+            rule(true, __, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
+            rule(true, ____+___+dot(klass), { display: _block_ });
             pool.bind(on.pool);
             cleanup.call(e);
             t.trigger('setup');
@@ -227,16 +230,13 @@ jQuery.reel || (function($, window, document, undefined){
             */
               var
                 backup= t.data(_backup_)
-              t.parent().unbind(on.instance).children(_img_).unbind(ns);
+              t.parent().unbind(on.instance);
               get(_style_).remove();
-              t.unbind(ns).attr({
+              remove_instance(t.unbind(ns).siblings().unbind(ns).remove().end().attr({
                'class': backup.classes,
                 src: backup.src,
                 style: backup.style
-              }).removeClass(klass);
-              t.data(backup.data).siblings().remove();
-              t.unwrap();
-              remove_instance(t);
+              }).data(backup.data).unwrap());
               no_bias();
               pool.unbind(on.pool);
               stage_pool
@@ -357,15 +357,15 @@ jQuery.reel || (function($, window, document, undefined){
                 ticks= set(_opening_ticks_, duration * leader(_tempo_))
             },
             openingDone: function(e){
-              delay= setTimeout(function play(){
-                t.trigger('play');
-              }, opt.delay * 1000 || 0);
+              if (opt.delay) delay= setTimeout(function play(){ t.trigger('play') }, opt.delay * 1000)
+              else t.trigger('play');
             },
             play: function(e, speed){
               var
                 speed= set(_speed_, speed || get(_speed_)),
                 playing= set(_playing_, !!speed),
                 stopped= set(_stopped_, !playing)
+              t.trigger('frameChange');
               idle();
               cleanup.call(e);
             },
