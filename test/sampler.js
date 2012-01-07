@@ -61,7 +61,9 @@
         $('#js').text( $.trim($('.js', this).text()) );
         $('#image')
           .reel( options )
-          .bind('loaded', function(){
+          .unbind('.sampler')
+          .bind('loaded.sampler', function(){
+            return;
             var
               options= $(this).data('options'),
               images= $(this).data('images')
