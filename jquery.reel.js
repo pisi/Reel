@@ -216,8 +216,8 @@ jQuery.reel || (function($, window, document, undefined){
               data: data
             });
             opt.steppable || $overlay.unbind('click.steppable');
-            rule(true, __, { width: size.x, height: size.y, overflow: _hidden_ });
-            rule(true, ____+dot(klass), { display: _block_, position: 'relative' });
+            rule(true, __, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
+            rule(true, ____+___+dot(klass), { display: _block_ });
             pool.bind(on.pool);
             cleanup.call(e);
             t.trigger('setup');
