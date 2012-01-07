@@ -225,7 +225,22 @@ $('#image').reel({
     speed:       -0.2,
     velocity:    3,
     brake:       0.2,
-    sequence:    'samples/drone/#####.png|1..179|5'
+    sequence:    'samples/drone/#####.png|1..179|5',
+    annotations: {
+      'link_to_producer': {
+        node: {
+          html: '<strong>Penguin B</strong> by '
+        },
+        link: {
+          href: 'http://bit.ly/tnXfDZ',
+          text: 'UAV Factory'
+        },
+        start: 24,
+        end: 33,
+        at: '+-++-++-+-+-+----+-+-+-+-+-+-+--+-+-+-+--+--+--',
+        x: [50,,,,,,,,50,50,100,,,,,,3], y: 170
+      }
+    }
 });
 </xmp>
 <xmp class="css">
