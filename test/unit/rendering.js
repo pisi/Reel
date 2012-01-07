@@ -247,17 +247,20 @@
     expect(4);
     var
       mac= (/macintosh/i).test(navigator.userAgent),
+      // Touch clients and Opera don't support custom cursors
+      opera= (/opera/i).test(navigator.userAgent),
+      touchy= $.reel.touchy,
       $reel= $('#image').reel({
       })
 
     $reel.bind('loaded.test', function(){
-      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
+      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
-      equiv( $('html').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html`');
-      equiv( $('body').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html *`');
+      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html *`');
       $('html').removeClass('reel-panning');
       start();
     });
@@ -266,18 +269,21 @@
   asyncTest( 'When `cursor: "hand"` is given the legacy grasping hand cursor will be used', function(){
     expect(4);
     var
+      // Touch clients and Opera don't support custom cursors
+      opera= (/opera/i).test(navigator.userAgent),
+      touchy= $.reel.touchy,
       $reel= $('#image').reel({
         cursor: 'hand'
       })
 
     $reel.bind('loaded.test', function(){
-      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag.cur)');
+      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag.cur)');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', 'instance');
-      equiv( $('html').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html`');
-      equiv( $('body').css('cursor').split(/, ?/)[0], 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html *`');
+      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html *`');
       $('html').removeClass('reel-panning');
 
       start();
@@ -287,18 +293,21 @@
   asyncTest( 'Otherwise `cursor` option accepts any valid CSS cursor declaration', function(){
     expect(4);
     var
+      // Touch clients and Opera don't support custom cursors
+      opera= (/opera/i).test(navigator.userAgent),
+      touchy= $.reel.touchy,
       $reel= $('#image').reel({
         cursor: 'pointer'
       })
 
     $reel.bind('loaded.test', function(){
-      equal( $(this).css('cursor'), 'pointer');
+      equal( $(this).css('cursor'), touchy ? 'auto' : 'pointer');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], 'pointer', 'instance');
-      equiv( $('html').css('cursor').split(/, ?/)[0], 'pointer', '`html`');
-      equiv( $('body').css('cursor').split(/, ?/)[0], 'pointer', '`html *`');
+      equiv( $(this).css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', '`html *`');
       $('html').removeClass('reel-panning');
 
       start();
@@ -308,11 +317,13 @@
   asyncTest( 'Instance being preloaded has a "hourglass" cursor to indicate the pending loading', function(){
     expect(4);
     var
+      // Touch clients don't support cursors
+      touchy= $.reel.touchy,
       $reel= $('#image').reel({
       })
 
     ok( $reel.parent().is('.reel-loading'), 'Is `reel-loading` at the very start');
-    equal ($reel.css('cursor'), 'wait', 'Has the "wait" cursor');
+    equal ($reel.css('cursor'), touchy ? 'auto' : 'wait', 'Has the "wait" cursor');
     $reel.bind('loaded.test', function(){
       ok( !$reel.parent().is('.reel-loading'), 'No longer has the `reel-loading` class when loaded');
       ok ($reel.css('cursor') != 'wait', 'Does not have the "wait" cursor after the load');
