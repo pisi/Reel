@@ -78,7 +78,7 @@ jQuery.reel || (function($, window, document, undefined){
       opening:              0, // duration of opening animation (in seconds)
       orbital:              0, // view centering tolerance in frames for dual-orbit object movies
       path:                '', // URL path to be prepended to `image` or `images` filenames
-      preloader:            4, // size (height) of a image loading indicator (in pixels)
+      preloader:            2, // size (height) of a image loading indicator (in pixels)
       rebound:            0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
       revolution:   undefined, // distance mouse must be dragged for full revolution
                                // (defaults to double the viewport size or half the `stitched` option)
@@ -198,6 +198,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_backwards_, set(_speed_, opt.speed) < 0);
             set(_velocity_, opt.velocity || 0);
             set(_vertical_, opt.vertical);
+            set(_preloaded_, 0);
             set(_row_, (opt.row - 1) / (opt.rows - 1));
             set(_cwish_, negative_when(1, !opt.cw && !stitched));
             set(_clicked_, false);
@@ -310,11 +311,9 @@ jQuery.reel || (function($, window, document, undefined){
                 is_sprite= !images.length,
                 frames= get(_frames_),
                 order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
-                preload= is_sprite ? [image] : order(images, opt, get),
-                uris= [],
-                img_tag= t[0],
-                img_frames= img_tag.frames= preload.length,
-                img_preloaded= img_tag.preloaded= 0
+                preload= is_sprite ? [image] : order(images.slice(), opt, get),
+                preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
+                uris= []
               $overlay.addClass(loading_klass).append($preloader= $(tag(_div_), { 'class': preloader_klass }));
               t.trigger('stop');
               while(preload.length){
@@ -322,26 +321,28 @@ jQuery.reel || (function($, window, document, undefined){
                   uri= opt.path+preload.shift(),
                   width= space.x * (!is_sprite ? 1 : opt.footage),
                   height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
-                  $img= $(new Image()).addClass(cached_klass).attr({ width: width, height: height })
-                  .bind('load'+ns, function update_preloader(){
-                    img_tag.preloaded++
-                    $(this).unbind(ns);
-                    $preloader.css({ width: 1 / img_tag.frames * img_tag.preloaded * space.x })
-                    if (img_tag.frames == img_tag.preloaded){
-                      $preloader.remove();
-                      is_sprite && t.css({ backgroundImage: url(opt.path+image) }).attr({ src: transparent });
-                      $overlay.removeClass(loading_klass);
-                      t.trigger('loaded');
-                      cleanup.call(e);
-                    }
-                  });
-                $overlay.append($img);
-                uris.push(uri);
+                  $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
                 // The actual loading of the image is done asynchronously
-                setTimeout((function($img, uri){ return function(){ $img.attr({ src: uri }) } })($img, uri), 0);
+                setTimeout(function(){
+                  $img.attr({ src: uri })
+                  t.triggerAfter('preloaded', function(){ return !!$img.parent().length && $img[0].complete })
+                }, uris.length - preload.length);
+                uris.push(uri);
               }
               set(_cached_, uris);
               set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo('head'));
+              cleanup.call(e);
+            },
+            preloaded: function(e){
+              var
+                images= get(_images_).length
+              if (set(_preloaded_, min(get(_preloaded_) + 1, images)) === images){
+                t.unbind('preloaded', on.instance.preloaded);
+                images > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
+                t.parent().removeClass(loading_klass);
+                t.trigger('loaded');
+                cleanup.call(e);
+              }
             },
             opening: function(e){
             /*
@@ -666,6 +667,17 @@ jQuery.reel || (function($, window, document, undefined){
                 fraction= set(_fraction_, was - step * backwards)
               cleanup.call(e);
             },
+            'tick.reel.preload': function(e){
+              var
+                space= get(_dimensions_),
+                current= parseInt($preloader.css(_width_)),
+                target= round(1 / get(_images_).length * get(_preloaded_) * space.x)
+              $preloader.css({ width: current + (target - current) / 3 + 1 })
+              if (get(_preloaded_) === get(_images_).length && current > space.x - 2){
+                $preloader.fadeOut(300, function(){ $preloader.remove() });
+                pool.unbind('tick.reel.preload', on.pool['tick.reel.preload']);
+              }
+            },
             'tick.reel.opening': function(e){
             /*
             - ticker listener dedicated to opening animation
@@ -817,12 +829,13 @@ jQuery.reel || (function($, window, document, undefined){
           passes= 4 * rows,
           start= opt.frame,
           frames= sequence.length,
+          plus= true,
           granule= frames / passes
         for(var i= 0; i < passes; i++)
           add(start + round(i * granule));
         while(granule > 1)
-          for(var i= 0, length= order.length, granule= granule / 2; i < length; i++)
-            add(round(order[i] + granule));
+          for(var i= 0, length= order.length, granule= granule / 2, p= plus= !plus; i < length; i++)
+            add(order[i] + (plus? 1:-1) * round(granule));
         for(var i= 0; i < order.length; i++)
           order[i]= sequence[order[i] - 1];
         return order
@@ -938,8 +951,8 @@ jQuery.reel || (function($, window, document, undefined){
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
-    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row', _rows_= 'rows',
-    _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
+    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
+    _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
@@ -964,6 +977,14 @@ jQuery.reel || (function($, window, document, undefined){
     drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_))
 
   // Helpers
+  $.fn.triggerAfter= function(evnt, condition){
+    return try_now($(this))
+    function try_now($node){
+      if (condition()) $node.trigger(evnt)
+      else setTimeout(function(){ try_now($node) }, 100);
+      return $node
+    }
+  }
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + (string || '') }

@@ -66,7 +66,7 @@
     equal( $.reel.def.opening,                    0, 'duration of opening animation (in seconds)' );
     equal( $.reel.def.orbital,                    0, 'view centering tolerance in frames for dual-orbit object movies' );
     equal( $.reel.def.path,                      '', 'URL path to be prepended to `image` or `images` filenames' );
-    equal( $.reel.def.preloader,                  4, 'size (height) of a image loading indicator (in pixels)' );
+    equal( $.reel.def.preloader,                  2, 'size (height) of a image loading indicator (in pixels)' );
     equal( $.reel.def.rebound,                  0.5, 'time spent on the edge (in seconds) of a non-looping panorama before it bounces back' );
     equal( $.reel.def.revolution,         undefined, 'distance mouse must be dragged for full revolution' );
     equal( $.reel.def.row,                        1, 'initial row' );
