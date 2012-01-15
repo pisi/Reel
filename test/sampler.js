@@ -22,7 +22,7 @@
       });
 
       $('.samples li a').click(function(e){
-        if (!e.metaKey && !e.shiftKey && !e.ctrlKey){
+        if (!e.button && !e.metaKey && !e.shiftKey && !e.ctrlKey){
         var
           url= $(this).attr('href'),
           id= $(this).parent().attr('id'),
