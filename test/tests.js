@@ -7,11 +7,11 @@
     load: [
       'http://code.jquery.com/jquery-'+(location.params.jq || '1.6.4')+'.min.js',
       '../jquery.reel-min.js',
-      '../example/inc/jquery.disabletextselect-min.js',
-      '../example/inc/jquery.mousewheel-min.js',
+      'lib/vendor/jquery.disabletextselect-min.js',
+      'lib/vendor/jquery.mousewheel-min.js',
 
-      'qunit/qunit.js',
-      'qunit/quny.js',
+      'lib/vendor/qunit.js',
+      'lib/quny.js',
 
       //'unit/parameters.js',
       'unit/events.js',

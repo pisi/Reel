@@ -74,12 +74,12 @@
         cw:       true,
         orbital:  3,
         inversed: true,
-        path:     'samples/phone/',
+        path:     'resources/phone/',
         images:   phone_frames(20)
       })
 
     $pano.one('loaded.test', function(){
-      equal($pano.attr('src'), 'samples/phone/01.png', 'Image is from the sequence');
+      equal($pano.attr('src'), 'resources/phone/01.png', 'Image is from the sequence');
       start();
     });
 
