@@ -2,6 +2,7 @@ html, button{ background: #ddd; font-size: 1em; font-family: 'Helvetica Neue Lig
 body{ margin: 20px; }
 a{ color: #2B81AF; text-decoration: underline; }
 a:hover{ text-decoration: none; }
+#test_stage{ position: relative; left: 0; right: 0; bottom: 0; width: 680px; height: 500px; border: 1px solid black; background: #ddd; }
 .sample{ position: relative; text-align: left; display: none; }
 .sample.on{ display: block; }
 .sample img, .sample iframe{ display: block; margin: 0 auto; }
@@ -10,22 +11,13 @@ h1{ font-size: 2em; font-weight: normal; margin: 0; }
 h2{ display: inline; color: #999; font-size: 1.5em; font-weight: normal; }
 .sample h3{ color: black; font-size: 3em; margin: 0; font-weight: normal; }
 .sample h4{ color: #666; font-size: 1em; margin: 15px 0 -4px 0; font-weight: normal; }
-.sample #control_events{ margin: 10px 0 0 0; }
-.sample #control_events button{ background: white; color: #2B81AF; text-decoration: underline; }
+#control_events{ margin: 10px 0 0 0; }
+#control_events button{ background: white; color: #2B81AF; text-decoration: underline; }
 .sample .credits{ font-size: .9em; color: black; }
-.sample pre{ font-size: .8em; margin: 0 ; font-family: Monaco; padding: 0;
+pre{ font-size: .8em; margin: 0 ; font-family: Monaco; padding: 0;
   background: #666; padding: 15px; color: white; border-radius: 0 12px 0 12px; }
-.sample #images{ background: #666; padding: 20px; border: 6px solid #666; color: white; }
-.sample #images a{ color: #4BD1FF; }
-.sample #images img{ outline: 1px dashed white; margin: 3px 0 15px 0; display: block; max-width: 100%; background: white; }
-.sample #js_options{ color: #666; font-size: 0.8em; text-align: right; }
-.sample #js_options ul{ margin: 0; padding: 0; display: inline; }
-.sample #js_options ul li{ list-style-type: none; display: inline; margin-left: 10px; font-weight: bold; }
 .footer{ clear: left; padding: 10px 0 0 0; color: #999; }
 .footer strong{ color: #333; }
-.sample .hint{ position: absolute; right: 20px; bottom: 20px; color: #666; text-decoration: underline; }
-.sample:hover .hint{ color: #2B81AF; }
-.sample.on .hint{ display: none; }
 
 .groups{ padding: 0; margin: 15px 0 20px 0; }
 .groups li{ list-style-type: none; margin: 0 0 5px 0; border-bottom: 1px solid #ccc; }

@@ -12,104 +12,79 @@
 
   yepnope( {
     load: [
-      'http://code.jquery.com/jquery-'+(location.params.jq || '1.6.4')+'.min.js',
-      '../jquery.reel-min.js',
-      '../example/inc/jquery.disabletextselect-min.js',
-      '../example/inc/jquery.mousewheel-min.js',
+      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7.1')+'.min.js',
       '../example/inc/jquery.cookie-min.js'
     ],
     complete: function(){
 
-      /*
-      Preset common indicator size
-      */
-      $.reel.def.indicator= 5;
-
       $('#control_events button').click(function(){
-        $('#image').trigger( $(this).text() );
+        $('#image', $('#test_stage').contents()).trigger( $(this).text() );
       });
 
-      $('.samples li').click(function(){
+      $('.samples li a').click(function(e){
+        if (!e.metaKey && !e.shiftKey && !e.ctrlKey){
         var
-          options= cut_out_object( $('.js', this).text() ),
-          css= cut_out_css_object( $('.css', this).text() )
+          url= $(this).attr('href'),
+          id= $(this).parent().attr('id'),
+          hijacked= false,
+          call
 
-        $('#js_options ul').empty();
-        $.each( options, function( ix, option ){
-          $('#js_options ul').append(
-            $('<li>').append(
-              $('<a>', {
-                href: 'http://jquery.vostrel.cz/reel#'+ix,
-                text: ''+ix
-              })
-            )
-          )
-        } );
+        $('#test_stage').attr({
+          src: url
+        }).one('load', function(){
+          // Once the test stage is loaded,
+          // we want to hijack the Reel from example
+          // and take over with the local version for testing
+          with(frames.test_stage){
+            $(function(){
+              $('#image').trigger('teardown');
+              delete jQuery.reel;
+              var script= document.createElement('script');
+              script.type= "text/javascript";
+              script.src= "../../jquery.reel.js";
+              script.onload= wait_for_source;
+              document.getElementsByTagName('head')[0].appendChild(script);
+              // We wait for source via XHR to execute it again
+              function wait_for_source(){
+                var
+                  wait= setInterval(function(){
+                    if (call){
+                      clearInterval(wait);
+                      eval(call);
+                    }
+                }, 300);
+              }
+            })
+          }
+          $.ajax(url, {
+            success: function(a,b,xhr){
+              var
+                iframe_pool= $('#test_stage').contents()
 
-        options.attr= {
-          src     : $('.html', this).text().match(/src='(.+)'/)[1],
-          width   : parseInt(css.width),
-          height  : parseInt(css.height)
-        }
+              iframe_pool.ready(function(){
+                var
+                  iframe_pool= $('#test_stage').contents(),
+                  source= xhr.responseText
 
-        $('#control_events').toggle( !!options.speed );
-
-        $('#the_one').addClass('on');
-        $('#meta').html( $('.meta', this).text() );
-        $('#html').text( $.trim($('.html', this).text()) );
-        $('#css').text( $.trim($('.css', this).text()) );
-        $('#js').text( $.trim($('.js', this).text()) );
-        $('#image')
-          .reel( options )
-          .bind('loaded', function(){
-            var
-              options= $(this).data('options'),
-              images= $(this).data('images')
-
-            $('#images').prev('h4').find('.count').text( 1 +images.length );
-            $('#images').empty().append( image($(this).data('backup').src, 'The `<img src>` Original ') );
-            if (images.length == 1){
-              $('#images').append( image(images[0], 'And The Sprite ') );
-            }else{
-              $.each( images, function(ix){
-                $('#images').append( image(options.path + this, 'Sequence frame '+(ix+1)+' ') );
+                call= /<script>\n((.|\n)+)<\/script>/.exec(source)[1]
+                //$('body', iframe_pool).append($('<pre/>', { id: 'source', text: source }))
               })
             }
           });
+        });
 
-        $.cookie('reel.test.sample', $(this).attr('id'));
+        $.cookie('reel.test.sample', id);
+        return false;
+        }
       });
 
       /*
       Cookie persistence of last selected sample.
       */
-      var $recovered= $('#'+$.cookie('reel.test.sample'));
-      ( !!$recovered.length && $recovered || $('.groups li:first .samples li:first') ).click();
+      var $recovered= $('#'+$.cookie('reel.test.sample')+' a');
+      ( !!$recovered.length && $recovered || $('.groups li:first .samples li:first a') ).click();
 
     }
   } );
-
-  function image(uri, label){
-    var
-      $image= $('<div/>', { 'class': 'img' } ),
-      $label= $('<span>', { text: label }).appendTo($image),
-      $link= $('<a/>', { href: uri, text: ''+uri }).appendTo($image),
-      $img= $('<img/>', { src: uri }).appendTo($link)
-    return $image
-  }
-
-  function cut_out_object(string){
-    string= string.substr( string.indexOf('{') );
-    string= string.substr( 0, string.lastIndexOf('}')+1 );
-    return eval('('+string+')')
-  }
-  function cut_out_css_object(string){
-    string= string.substr( string.indexOf('{') );
-    string= string.substr( 0, string.lastIndexOf('}')+1 );
-    string= string.replace(/\: /g, ': "');
-    string= string.replace(/\; \}/g, '" }');
-    string= string.replace(/\; /g, '", ');
-    return eval('('+string+')')
-  }
 
 })();

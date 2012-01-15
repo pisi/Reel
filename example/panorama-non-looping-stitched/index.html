@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="panorama-non-looping">
+  <head>
+    <title>jQuery Reel Non-Looping Stitched Panorama Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.7.min.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-bundle.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Non-Looping Stitched Panorama</h1>
+
+    <img id="image" src='chicago.jpg' width="270" height="150" />
+    <script>
+      $(function(){ // when DOM ready
+
+        $('#image').reel({
+          indicator:   5, // For no indicator just remove this line
+          stitched:    1072,
+          loops:       false,
+          steps:       30,
+          step:        15,
+          speed:       -0.1,
+          timeout:     1
+        });
+
+      });
+    </script>
+
+    <p class="credits photo"><a href="mailto:g@miernicki.com">Greg Miernicki</a></p>
+  </body>
+</html>
+

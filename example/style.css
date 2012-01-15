@@ -1,0 +1,9 @@
+html, button{ background: #ddd; font-size: 1em; font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Calibri, Helvetica, Arial; }
+body{ margin: 20px; }
+a{ color: #2B81AF; text-decoration: underline; }
+a:hover{ text-decoration: none; }
+h1{ color: black; font-size: 3em; margin: 0; font-weight: normal; }
+.credits{ font-size: .9em; color: black; }
+.credits.photo:before{ content: 'Photo '; }
+.credits.graphic:before{ content: 'Graphic '; }
+

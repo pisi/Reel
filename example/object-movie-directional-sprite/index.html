@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="sprite-directional">
+  <head>
+    <title>jQuery Reel Directional Sprite Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.7.min.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-bundle.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Directional Sprite</h1>
+    <p class="credits graphic"><a href="mailto:petr@vostrel.cz">Petr Vostřel</a></p>
+
+    <img id="image" src='logo.png' width="130" height="60" />
+    <script>
+      $(function(){ // when DOM ready
+
+        $('#image').reel({
+          indicator:   5, // For no indicator just remove this line
+          speed:       1,
+          opening:     1,
+          frame:       3,
+          delay:       3,
+          directional: true
+        });
+
+/*
+    `speed` 1 is one revolution per second (1 Hz).
+    It is animated after 1 second long `opening` spin
+    and a 3 second `delay`.
+*/
+      });
+    </script>
+
+  </body>
+</html>
+
+
