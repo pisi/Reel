@@ -240,9 +240,7 @@ jQuery.reel || (function($, window, document, undefined){
                 style: backup.style
               }).data(backup.data).unwrap());
               no_bias();
-              pool.unbind(on.pool);
-              stage_pool
-              .unbind(_mouseup_).unbind(_mousemove_);
+              pools.unbind(pns);
               cleanup.call(e);
             },
             setup: function(e){
@@ -259,9 +257,8 @@ jQuery.reel || (function($, window, document, undefined){
                 loaded= 0,
                 id= t.attr(_id_),
                 $overlay= t.parent(),
-                scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
                 area= set(_area_, $(opt.area || $overlay ))
-              if ($.reel.touchy){
+              if (touchy){
                 // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                 rule(true, ___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: opt.images.length
                   ? 'auto'
@@ -269,10 +266,7 @@ jQuery.reel || (function($, window, document, undefined){
                   || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                 });
                 area
-                  .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
-                  .bind(_touchmove_, function(e){ t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
-                  .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
-                  .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
+                  .bind(_touchstart_, press())
               }else{
                 var
                   cursor= opt.cursor == _hand_ ? url(drag_cursor)+____+_move_ : opt.cursor || url(reel_cursor)+____+_move_,
@@ -282,10 +276,10 @@ jQuery.reel || (function($, window, document, undefined){
                 rule(false, dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return !delta || t.trigger('wheel', [delta]) && false })
-                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
-                  .bind(opt.clickfree ? _mouseleave_ : __, function(e){ t.trigger('up'); return false })
+                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
                   .disableTextSelect();
               }
+              function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && cleanup.call(e) || r }}
               (opt.hint) && area.attr(_title_, opt.hint);
               opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass })) || ($monitor= $());
               rule(true, ___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
@@ -383,7 +377,7 @@ jQuery.reel || (function($, window, document, undefined){
                 playing= set(_playing_, !stopped)
               cleanup.call(e);
             },
-            down: function(e, x, y, touched){
+            down: function(e, x, y){
             /*
             - starts the dragging operation by binding dragging events to the pool
             */
@@ -391,20 +385,27 @@ jQuery.reel || (function($, window, document, undefined){
                 var
                   clicked= set(_clicked_, get(_frame_)),
                   velocity= set(_velocity_, 0),
+                  scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
                   origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
                 unidle();
                 no_bias();
                 panned= false;
                 $root.addClass(panning_klass);
-                if (!touched){
-                  stage_pool
-                  .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
-                  opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
+                if (touchy){
+                  pools
+                  .bind(_touchmove_, drag(!scrollable))
+                  .bind(_touchend_+___+_touchcancel_, lift())
+                }else{
+                  pools
+                  .bind(_mousemove_, drag())
+                  .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift())
                 }
+                function drag(r){ return function(e){ e.preventDefault(); t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]); cleanup.call(e); return r }}
+                function lift(r){ return function(e){ e.preventDefault(); t.trigger('up'); cleanup.call(e); return r }}
               }
               cleanup.call(e);
             },
-            up: function(e, touched){
+            up: function(e){
             /*
             - ends dragging operation by calculating velocity by summing the bias
             - unbinds dragging events from pool
@@ -419,11 +420,10 @@ jQuery.reel || (function($, window, document, undefined){
               velocity ? idle() : unidle();
               no_bias();
               $root.removeClass(panning_klass);
-              !touched
-              && stage_pool.unbind(_mouseup_).unbind(_mousemove_);
+              pools.unbind(pns);
               cleanup.call(e);
             },
-            pan: function(e, x, y, touched){
+            pan: function(e, x, y, ev){
             /*
             - calculates the X distance from drag center and applies graph on it to get fraction
             - recenters the drag when dragged over limits
@@ -923,7 +923,7 @@ jQuery.reel || (function($, window, document, undefined){
       windows: (/windows/i).test(client),
       mac: (/macintosh/i).test(client)
     },
-    inverted_buttons= (ie && browser_version <= 8),
+    touchy= $.reel.touchy,
     failsafe_cursor= 'ew-resize',
     ticker,
     ticks= { before: 0, now: new Date() },
@@ -959,10 +959,11 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Events
     ns= '.reel',
+    pns= '.pan' + ns,
     _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
-    _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
-    _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+ns,
-    _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
+    _mouseleave_= 'mouseleave'+pns, _mousemove_= 'mousemove'+pns, _mouseup_= 'mouseup'+pns,
+    _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+pns,
+    _touchend_= 'touchend'+pns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+pns,
 
     // Various string primitives
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _a_= 'a', _block_= 'block', _cur_= 'cur', _div_= 'div',
@@ -975,7 +976,9 @@ jQuery.reel || (function($, window, document, undefined){
     busy_cursor= 'wait',
     reel_cursor= cdn(_jquery_reel_+'-'+(os.mac ? 'black':'white')+dot(_cur_)),
     drag_cursor= cdn(_jquery_reel_+'-drag'+dot(_cur_)),
-    drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_))
+    drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_)),
+
+    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
   // Helpers
   $.fn.triggerAfter= function(evnt, condition){
@@ -996,7 +999,7 @@ jQuery.reel || (function($, window, document, undefined){
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
-  function finger(e){ return e.originalEvent.touches[0] }
+  function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
   function px(value){ return value === undefined || typeof value == 'string' ? value : value + _px_ }
   function hash(value){ return '#' + value }
   function css(values){
