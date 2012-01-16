@@ -257,7 +257,6 @@ jQuery.reel || (function($, window, document, undefined){
                 loaded= 0,
                 id= t.attr(_id_),
                 $overlay= t.parent(),
-                scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
                 area= set(_area_, $(opt.area || $overlay ))
               if (touchy){
                 // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
@@ -267,9 +266,6 @@ jQuery.reel || (function($, window, document, undefined){
                   || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                 });
                 area
-                  .bind(_touchmove_, function(e){ t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
-                  .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
-                  .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
                   .bind(_touchstart_, press())
               }else{
                 var
@@ -280,7 +276,6 @@ jQuery.reel || (function($, window, document, undefined){
                 rule(false, dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return !delta || t.trigger('wheel', [delta]) && false })
-                  .bind(opt.clickfree ? _mouseleave_ : __, function(e){ t.trigger('up'); return false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
                   .disableTextSelect();
               }
@@ -390,16 +385,23 @@ jQuery.reel || (function($, window, document, undefined){
                 var
                   clicked= set(_clicked_, get(_frame_)),
                   velocity= set(_velocity_, 0),
+                  scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
                   origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
                 unidle();
                 no_bias();
                 panned= false;
                 $root.addClass(panning_klass);
-                  stage_pool
-                  .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
-                  opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
                 if (touchy){
+                  pools
+                  .bind(_touchmove_, drag(!scrollable))
+                  .bind(_touchend_+___+_touchcancel_, lift())
+                }else{
+                  pools
+                  .bind(_mousemove_, drag())
+                  .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift())
                 }
+                function drag(r){ return function(e){ e.preventDefault(); t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]); cleanup.call(e); return r }}
+                function lift(r){ return function(e){ e.preventDefault(); t.trigger('up'); cleanup.call(e); return r }}
               }
               cleanup.call(e);
             },
