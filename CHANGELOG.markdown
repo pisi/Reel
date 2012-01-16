@@ -34,6 +34,7 @@ Development
 * New `sequence` option for easy definition of sequence frames by one
   path with a counter placeholder.
 * Default height of the preloader progress bar reduced to 2 pixels.
+* Completely reworked, centralized and enhanced naked examples with descriptions.
 
 
 Version 1.1.3

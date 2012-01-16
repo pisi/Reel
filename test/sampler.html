@@ -3,27 +3,11 @@
   <head>
     <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
     <title>jQuery Reel Test Sampler</title>
-    <!--
-        In order to make your getting into Reel much easier
-        I advise you to not investigate the source code of the testbed.
-        The code is far more elaborate, than you will need to get things running
-        for your project. Instead pay close attention to instructions
-        published on the website.
-        To include Reel script into your jQuery-enabled site,
-        just link to http://code.vostrel.cz/jquery.reel-bundle.js
-        and you're set to go.
-    -->
     <script src='lib/params.js' type='text/javascript'></script>
     <script src='lib/vendor/yepnope.js' type='text/javascript'></script>
     <script src='sampler.js' type='text/javascript'></script>
     <link href='sampler.css' language='text/css' rel='stylesheet' />
     <meta name='viewport' content='width=680' />
-    <style type="text/css">
-      /*
-      Piece of CSS style used by #multirow sample to test classes persistence
-      */
-      .bordered{ border: 2px dashed black; }
-    </style>
   </head>
   <body>
     <h1>
@@ -37,465 +21,65 @@
     <h2>Object Movie Sprites</h2>
 
     <ul class="samples">
-      <li id="sprite-directional">
-        <strong>Directional</strong>
-        <img class='thumb' src='samples/logo.png' />
-
-<xmp class="html">
-  <img id='image' src='samples/logo.png' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    speed:       1,
-    opening:     1,
-    frame:       3,
-    delay:       3,
-    directional: true
-});
-
-/*
-    `speed` 1 is one revolution per second (1 Hz).
-    It is animated after 1 second long `opening` spin
-    and a 3 second `delay`.
-*/
-</xmp>
-<xmp class="css">
-#image { width: 130px; height: 60px; }
-</xmp>
-<xmp class="meta">
-  <h3>Directional Sprite</h3>
-  <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-</xmp>
-
+      <li id="object-movie-directional-sprite">
+        <a href="../example/object-movie-directional-sprite/index.html">Directional</a>
       </li>
-      <li id="sprite-clockwise">
-        <strong>Clockwise</strong>
-        <img class="thumb" src='samples/f1.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/f1.jpg' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    speed:       -0.3,
-    frames:      35,
-    cw:          true
-});
-
-/*
-    Unlike the other formula car sample
-    this one's sprite is clockwise-organized.
-*/
-</xmp>
-<xmp class="css">
-#image { width: 276px; height: 126px; }
-</xmp>
-<xmp class="meta">
-  <h3>Clockwise Sprite</h3>
-  <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-</xmp>
-
+      <li id="object-movie-clockwise-sprite">
+        <a href="../example/object-movie-clockwise-sprite/index.html">Clockwise</a>
       </li>
-      <li id="sprite-non-animated">
-        <strong>Non-Animated</strong>
-        <img class="thumb" src='samples/f1-ccw.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/f1-ccw.jpg' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    frames:      35,
-    opening:     2,
-    entry:       1
-});
-
-/*
-    This one isn't fully animated,
-    but has a 2 seconds long `opening` with `entry` speed of 1 Hz.
-*/
-</xmp>
-<xmp class="css">
-#image { width: 276px; height: 126px; }
-</xmp>
-<xmp class="meta">
-  <h3>Non-Animated Sprite</h3>
-  <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-</xmp>
-
+      <li id="object-movie-non-animated-sprite">
+        <a href="../example/object-movie-non-animated-sprite/index.html">Non-Animated</a>
       </li>
-      <li id="sprite-multirow">
-        <strong>Multi-Row</strong>
-        <img class="thumb" src='samples/multi-row.png' />
-
-<xmp class="html">
-  <img id='image' src='samples/multi-row.png' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    speed:       0.3,
-    frames:      6,
-    footage:     3,
-    rows:        3,
-    row:         2
-});
-
-/*
-    Additionally custom class "bordered" (the dashed border)
-    is applied on the IMG and is being preserved.
-*/
-</xmp>
-<xmp class="css">
-#image { width: 100px; height: 100px; }
-</xmp>
-<xmp class="meta">
-  <h3>Multi-Row Sprite</h3>
-  <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-</xmp>
-
+      <li id="object-movie-multi-row-sprite">
+        <a href="../example/object-movie-multi-row-sprite/index.html">Multi-Row</a>
       </li>
     </ul>
   </li>
   <li>
     <h2>Object Movie Sequences</h2>
     <ul class="samples">
-      <li id="sequence-multi-row">
-        <strong>Multi-Row</strong>
-        <img class="thumb" src='samples/mini.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/mini.jpg' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    frames:      20,
-    frame:       14,
-    rows:        6,
-    row:         3,
-    speed:       0.3,
-    path:        'samples/',
-    sequence:    'mini/###.jpg'
-});
-</xmp>
-<xmp class="css">
-#image { width: 200px; height: 200px; }
-</xmp>
-<xmp class="meta">
-  <h3>Multi-Row Sequence</h3>
-  <div class="credits">photo &copy; <a href="mailto:masmith@photospherix.com">Matt Smith</a></div>
-</xmp>
-
+      <li id="object-movie-multi-row-sequence">
+        <a href="../example/object-movie-multi-row-sequence/index.html">Multi-Row</a>
       </li>
-      <li id="sequence-dual-orbit">
-        <strong>Dual-Orbit</strong>
-        <img class="thumb" src='samples/phone.png' />
-
-<xmp class="html">
-  <img id='image' src='samples/phone.png' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    footage:     10,
-    cw:          true,
-    orbital:     3,
-    inversed:    true,
-    speed:       0.7,
-    sequence:    'samples/phone/##.png'
-});
-</xmp>
-<xmp class="css">
-#image { width: 200px; height: 200px; }
-</xmp>
-<xmp class="meta">
-  <h3>Dual-Orbit Sequence</h3>
-</xmp>
-
+      <li id="object-movie-dual-orbit-sequence">
+        <a href="../example/object-movie-dual-orbit-sequence/index.html">Dual-Orbit</a>
       </li>
-      <li id="sequence-clockwise">
-        <strong>Clockwise</strong>
-        <img class="thumb" src='samples/drone.png' />
-
-<xmp class="html">
-  <img id='image' src='samples/drone.png' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    cw:          true,
-    frame:       32,
-    speed:       -0.2,
-    velocity:    3,
-    brake:       0.2,
-    sequence:    'samples/drone/#####.png|1..179|5',
-    annotations: {
-      'link_to_producer': {
-        node: {
-          html: '<strong>Penguin B</strong> by '
-        },
-        link: {
-          href: 'http://bit.ly/tnXfDZ',
-          text: 'UAV Factory'
-        },
-        start: 24,
-        end: 33,
-        at: '+-++-++-+-+-+----+-+-+-+-+-+-+--+-+-+-+--+--+--',
-        x: [50,,,,,,,,50,50,100,,,,,,3], y: 170
-      }
-    }
-});
-</xmp>
-<xmp class="css">
-#image { width: 300px; height: 200px; }
-</xmp>
-<xmp class="meta">
-  <h3>Clockwise Sequence</h3>
-  <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
-</xmp>
-
+      <li id="object-movie-clockwise-sequence">
+        <a href="../example/object-movie-clockwise-sequence/index.html">Clockwise</a>
       </li>
-      <li id="sequence-direct">
-        <strong>Direct</strong>
-        <img class="thumb" src='samples/badge-1.gif' />
-
-<xmp class="html">
-  <img id='image' src='samples/badge-1.gif' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    speed:       2,
-    delay:       1,
-    path:        'samples/',
-    images:      [ 'badge-1.gif',
-                   'badge-2.gif',
-                   'badge-3.gif',
-                   'badge-4.gif' ]
-});
-
-/*
-  The very same could be achieved by using`sequence: "badge-#.gif"`
-  instead of `images`
-*/
-</xmp>
-<xmp class="css">
-#image { width: 120px; height: 30px; }
-</xmp>
-<xmp class="meta">
-  <h3>Slideshow Sequence</h3>
-  <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-</xmp>
-
+      <li id="object-movie-direct-sequence">
+        <a href="../example/object-movie-direct-sequence/index.html">Direct</a>
       </li>
     </ul>
   </li>
   <li>
     <h2>Panoramas</h2>
     <ul class="samples">
-      <li id="pano-framed">
-        <strong>Framed</strong>
-        <img class="thumb" src='samples/green.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/green.jpg' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    frames:      32,
-    footage:     4,
-    speed:       0.1
-});
-</xmp>
-<xmp class="css">
-#image { width: 200px; height: 150px; }
-</xmp>
-<xmp class="meta">
-  <h3>Framed Panorama</h3>
-  <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-</xmp>
-
+      <li id="panorama-sprite">
+        <a href="../example/panorama-sprite/index.html">Sprite</a>
       </li>
-      <li id="pano-click-free">
-        <strong>Click-Free Stitched</strong>
-        <img class="thumb" src='samples/stitched.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/stitched.jpg' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    stitched:    1821,
-    frames:      60,
-    frame:       23,
-    speed:       -0.05,
-    clickfree:   true,
-    wheelable:   false
-});
-
-/*
-    This one also demonstrates the `wheelable` option,
-    which makes it immune to mousewheel control
-*/
-</xmp>
-<xmp class="css">
-#image { width: 297px; height: 167px; }
-</xmp>
-<xmp class="meta">
-  <h3>Click-Free Stitched Panorama</h3>
-  <div class="credits">photo &copy; <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></div>
-</xmp>
-
+      <li id="panorama-click-free-stitched">
+        <a href="../example/panorama-click-free-stitched/index.html">Click-Free Stitched</a>
       </li>
-      <li id="pano-non-looping">
-        <strong>Non-Looping Stitched</strong>
-        <img class="thumb" src='samples/chicago.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/chicago.jpg' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    stitched:    1072,
-    loops:       false,
-    steps:       30,
-    step:        15,
-    speed:       -0.1,
-    timeout:     1
-});
-</xmp>
-<xmp class="css">
-#image { width: 270px; height: 150px; }
-</xmp>
-<xmp class="meta">
-  <h3>Non-Looping Stitched Panorama</h3>
-  <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
-</xmp>
-
-      </li>
-    </ul>
-  </li>
-  <li>
-    <h2>Tours</h2>
-    <ul class="samples">
-      <li id="annotated-a">
-        <strong>Room A</strong>
-        <img class="thumb" src='samples/A.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/A.jpg' />
-</xmp>
-<xmp class="js" contenteditable="true">
-$('#image').reel({
-    footage:     4,
-    frame:       10,
-    //monitor:     'frame',
-    revolution:  1500,
-    frames:      24,
-    annotations: {
-      "next_room": {
-        x: [-40,153,273,383,513],
-        y: 60,
-        start: 10,
-        end: 14,
-        link: {
-          title: 'To room B',
-          css: {
-            border: '4px dashed red',
-            display: 'block',
-            cursor: 'pointer',
-            width: 120,
-            height: 130
-          },
-          click: function(e){
-            $('#annotated-b').click();
-            e.stopPropagation();
-          }
-        }
-      }
-    }
-});
-</xmp>
-<xmp class="css">
-#image { width: 375px; height: 251px; }
-</xmp>
-<xmp class="meta">
-  <h3>Linked - room A</h3>
-  <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-</xmp>
-
-      </li>
-      <li id="annotated-b">
-        <strong>Room B</strong>
-        <img class="thumb" src='samples/B.jpg' />
-
-<xmp class="html">
-  <img id='image' src='samples/B.jpg' />
-</xmp>
-<xmp class="js">
-$('#image').reel({
-    footage:     4,
-    frame:       15,
-    monitor: 'frame',
-    revolution:  1500,
-    frames:      24,
-    annotations: {
-      "next_room": {
-        x: [23,153,273,383,513],
-        y: 123,
-        start: 19,
-        end: 24,
-        node: {
-          title: 'To room A',
-          css: {
-            border: '4px dashed red',
-            width: 120,
-            height: 180
-          },
-          click: function(e){
-            $('#annotated-a').click();
-            return false
-          }
-        }
-      }
-    }
-});
-</xmp>
-<xmp class="css">
-#image { width: 375px; height: 251px; }
-</xmp>
-<xmp class="meta">
-  <h3>Interconnection - room B</h3>
-  <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-</xmp>
-
+      <li id="panorama-non-looping-stitched">
+        <a href="../example/panorama-non-looping-stitched/index.html">Non-Looping Stitched</a>
       </li>
     </ul>
   </li>
 </ul>
 
-    <div id="the_one" class="sample">
-      <div id="meta"></div>
-      <img id="image" src='' />
-      <h4>HTML</h4>
-      <pre id="html"></pre>
-      <h4>CSS</h4>
-      <pre id="css"></pre>
-      <h4>JS</h4>
-      <pre id="js"></pre>
-      <div id="js_options">
-        More on options:
-        <ul></ul>
-      </div>
-      <h4>and <span class="count">X</span> Images</h4>
-      <div id="images"></div>
-      <div id="control_events">
-        Animated Reels can also be controlled using events
-        <button title="will result in Reel playing after a `delay`">pause</button>
-        <button title="will result in stopped Reel">stop</button>
-        or
-        <button title="will result in Reel playing">play</button>
-      </div>
+    <iframe src="" name="test_stage" id="test_stage"></iframe>
+
+    <div id="control_events">
+      Animated Reels can also be controlled using events
+      <button title="will result in Reel playing after a `delay`">pause</button>
+      <button title="will result in stopped Reel">stop</button>
+      or
+      <button title="will result in Reel playing">play</button>
     </div>
 
     <div class="footer">
-      &copy; 2009-2011 Petr Vostřel, part of <strong>jQuery Reel project - <a href="http://jquery.vostrel.cz/reel">http://jquery.vostrel.cz/reel</a></strong>
+      &copy; 2009-2012 Petr Vostřel, part of <strong>jQuery Reel project - <a href="http://jquery.vostrel.cz/reel">http://jquery.vostrel.cz/reel</a></strong>
     </div>
 
   </body>
