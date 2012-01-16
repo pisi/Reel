@@ -267,10 +267,10 @@ jQuery.reel || (function($, window, document, undefined){
                   || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                 });
                 area
-                  .bind(_touchstart_, function(e){ t.trigger('down', [finger(e).clientX, finger(e).clientY, true]); })
                   .bind(_touchmove_, function(e){ t.trigger('pan', [finger(e).clientX, finger(e).clientY, true]); return !scrollable })
                   .bind(_touchend_, function(e){ t.trigger('up', [true]); return false })
                   .bind(_touchcancel_, function(e){ t.trigger('up', [true]); return false })
+                  .bind(_touchstart_, press())
               }else{
                 var
                   cursor= opt.cursor == _hand_ ? url(drag_cursor)+____+_move_ : opt.cursor || url(reel_cursor)+____+_move_,
@@ -280,10 +280,11 @@ jQuery.reel || (function($, window, document, undefined){
                 rule(false, dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor });
                 area
                   .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return !delta || t.trigger('wheel', [delta]) && false })
-                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, function(e){ if (inverted_buttons ? !e.button : !!e.button) return; t.trigger('down', [e.clientX, e.clientY]); return false })
                   .bind(opt.clickfree ? _mouseleave_ : __, function(e){ t.trigger('up'); return false })
+                  .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
                   .disableTextSelect();
               }
+              function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && cleanup.call(e) || r }}
               (opt.hint) && area.attr(_title_, opt.hint);
               opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass })) || ($monitor= $());
               rule(true, ___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
@@ -920,7 +921,6 @@ jQuery.reel || (function($, window, document, undefined){
       windows: (/windows/i).test(client),
       mac: (/macintosh/i).test(client)
     },
-    inverted_buttons= (ie && browser_version <= 8),
     touchy= $.reel.touchy,
     failsafe_cursor= 'ew-resize',
     ticker,
@@ -974,7 +974,9 @@ jQuery.reel || (function($, window, document, undefined){
     busy_cursor= 'wait',
     reel_cursor= cdn(_jquery_reel_+'-'+(os.mac ? 'black':'white')+dot(_cur_)),
     drag_cursor= cdn(_jquery_reel_+'-drag'+dot(_cur_)),
-    drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_))
+    drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_)),
+
+    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
   // Helpers
   $.fn.triggerAfter= function(evnt, condition){
@@ -995,7 +997,7 @@ jQuery.reel || (function($, window, document, undefined){
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
-  function finger(e){ return e.originalEvent.touches[0] }
+  function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
   function px(value){ return value === undefined || typeof value == 'string' ? value : value + _px_ }
   function hash(value){ return '#' + value }
   function css(values){
