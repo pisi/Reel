@@ -606,7 +606,7 @@ jQuery.reel || (function($, window, document, undefined){
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
                 rule(false, hash(ida), { display: _none_, position: _absolute_ });
-                $link.bind({
+                $note.bind({
                   'click.annotations': function(e){
                     e.stopPropagation();
                   }
