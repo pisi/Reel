@@ -2,7 +2,7 @@ html, button{ background: #ddd; font-size: 1em; font-family: 'Helvetica Neue Lig
 body{ margin: 20px; }
 a{ color: #2B81AF; text-decoration: underline; }
 a:hover{ text-decoration: none; }
-#test_stage{ position: relative; left: 0; right: 0; bottom: 0; width: 680px; height: 500px; border: 1px solid black; background: #ddd; }
+#test_stage{ position: relative; left: 0; right: 0; bottom: 0; width: 640px; height: 500px; border: 1px solid black; background: #ddd; }
 .sample{ position: relative; text-align: left; display: none; }
 .sample.on{ display: block; }
 .sample img, .sample iframe{ display: block; margin: 0 auto; }
