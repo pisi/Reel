@@ -436,6 +436,9 @@ jQuery.reel || (function($, window, document, undefined){
                 slidable= false;
                 unidle();
                 var
+                  host_offset= !$(ev.currentTarget).is(pool) ? $iframe.offset() : { left: 0, top: 0 },
+                  y= y - host_offset.top,
+                  x= x - host_offset.left,
                   delta= { x: x - last.x, y: y - last.y }
                 if (abs(delta.x) > 0 || abs(delta.y) > 0){
                   panned= true;
