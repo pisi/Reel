@@ -240,9 +240,7 @@ jQuery.reel || (function($, window, document, undefined){
                 style: backup.style
               }).data(backup.data).unwrap());
               no_bias();
-              pool.unbind(on.pool);
-              stage_pool
-              .unbind(_mouseup_).unbind(_mousemove_);
+              pools.unbind(pns);
               cleanup.call(e);
             },
             setup: function(e){
@@ -419,8 +417,7 @@ jQuery.reel || (function($, window, document, undefined){
               velocity ? idle() : unidle();
               no_bias();
               $root.removeClass(panning_klass);
-              !touched
-              && stage_pool.unbind(_mouseup_).unbind(_mousemove_);
+              pools.unbind(pns);
               cleanup.call(e);
             },
             pan: function(e, x, y, touched){
@@ -959,10 +956,11 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Events
     ns= '.reel',
+    pns= '.pan' + ns,
     _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
-    _mouseleave_= 'mouseleave'+ns, _mousemove_= 'mousemove'+ns, _mouseup_= 'mouseup'+ns,
-    _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+ns,
-    _touchend_= 'touchend'+ns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+ns,
+    _mouseleave_= 'mouseleave'+pns, _mousemove_= 'mousemove'+pns, _mouseup_= 'mouseup'+pns,
+    _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+pns,
+    _touchend_= 'touchend'+pns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+pns,
 
     // Various string primitives
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _a_= 'a', _block_= 'block', _cur_= 'cur', _div_= 'div',
