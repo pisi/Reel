@@ -241,8 +241,7 @@ jQuery.reel || (function($, window, document, undefined){
               }).data(backup.data).unwrap());
               no_bias();
               pool.unbind(on.pool);
-              stage_pool
-              .unbind(_mouseup_).unbind(_mousemove_);
+              pools.unbind(_mouseup_).unbind(_mousemove_);
               cleanup.call(e);
             },
             setup: function(e){
@@ -397,9 +396,9 @@ jQuery.reel || (function($, window, document, undefined){
                 panned= false;
                 $root.addClass(panning_klass);
                 if (!touched){
-                  stage_pool
                   .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
-                  opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
+                  pools
+                  opt.clickfree || pools.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
                 }
               }
               cleanup.call(e);
@@ -420,7 +419,7 @@ jQuery.reel || (function($, window, document, undefined){
               no_bias();
               $root.removeClass(panning_klass);
               !touched
-              && stage_pool.unbind(_mouseup_).unbind(_mousemove_);
+              && pools.unbind(_mouseup_).unbind(_mousemove_);
               cleanup.call(e);
             },
             pan: function(e, x, y, touched){
@@ -766,9 +765,9 @@ jQuery.reel || (function($, window, document, undefined){
           return x && set(_clicked_location_, { x: x, y: y }) || undefined
         },
         slidable= true,
-        stage_pool
-      try{ stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document)) }
-      catch(e){ stage_pool= pool }
+        pools
+      try{ pools= $.unique(pool.add(window.top.document)) }
+      catch(e){ pools= pool }
       on.setup();
     });
 
