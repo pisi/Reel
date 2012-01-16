@@ -259,7 +259,7 @@ jQuery.reel || (function($, window, document, undefined){
                 $overlay= t.parent(),
                 scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
                 area= set(_area_, $(opt.area || $overlay ))
-              if ($.reel.touchy){
+              if (touchy){
                 // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                 rule(true, ___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: opt.images.length
                   ? 'auto'
@@ -381,7 +381,7 @@ jQuery.reel || (function($, window, document, undefined){
                 playing= set(_playing_, !stopped)
               cleanup.call(e);
             },
-            down: function(e, x, y, touched){
+            down: function(e, x, y){
             /*
             - starts the dragging operation by binding dragging events to the pool
             */
@@ -394,15 +394,15 @@ jQuery.reel || (function($, window, document, undefined){
                 no_bias();
                 panned= false;
                 $root.addClass(panning_klass);
-                if (!touched){
                   stage_pool
                   .bind(_mousemove_, function(e){ t.trigger('pan', [e.clientX, e.clientY]); cleanup.call(e); return false })
                   opt.clickfree || stage_pool.bind(_mouseup_, function(e){ t.trigger('up'); cleanup.call(e) })
+                if (touchy){
                 }
               }
               cleanup.call(e);
             },
-            up: function(e, touched){
+            up: function(e){
             /*
             - ends dragging operation by calculating velocity by summing the bias
             - unbinds dragging events from pool
@@ -420,7 +420,7 @@ jQuery.reel || (function($, window, document, undefined){
               pools.unbind(pns);
               cleanup.call(e);
             },
-            pan: function(e, x, y, touched){
+            pan: function(e, x, y, ev){
             /*
             - calculates the X distance from drag center and applies graph on it to get fraction
             - recenters the drag when dragged over limits
@@ -921,6 +921,7 @@ jQuery.reel || (function($, window, document, undefined){
       mac: (/macintosh/i).test(client)
     },
     inverted_buttons= (ie && browser_version <= 8),
+    touchy= $.reel.touchy,
     failsafe_cursor= 'ew-resize',
     ticker,
     ticks= { before: 0, now: new Date() },
