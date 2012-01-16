@@ -240,6 +240,7 @@ jQuery.reel || (function($, window, document, undefined){
                 style: backup.style
               }).data(backup.data).unwrap());
               no_bias();
+              pool.unbind(on.pool);
               pools.unbind(pns);
               cleanup.call(e);
             },
@@ -325,7 +326,7 @@ jQuery.reel || (function($, window, document, undefined){
                 uris.push(uri);
               }
               set(_cached_, uris);
-              set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo('head'));
+              set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
               cleanup.call(e);
             },
             preloaded: function(e){
@@ -437,6 +438,9 @@ jQuery.reel || (function($, window, document, undefined){
                 slidable= false;
                 unidle();
                 var
+                  host_offset= !$(ev.currentTarget).is(pool) ? $iframe.offset() : { left: 0, top: 0 },
+                  y= y - host_offset.top,
+                  x= x - host_offset.left,
                   delta= { x: x - last.x, y: y - last.y }
                 if (abs(delta.x) > 0 || abs(delta.y) > 0){
                   panned= true;
@@ -766,9 +770,17 @@ jQuery.reel || (function($, window, document, undefined){
           return x && set(_clicked_location_, { x: x, y: y }) || undefined
         },
         slidable= true,
-        stage_pool
-      try{ stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document)) }
-      catch(e){ stage_pool= pool }
+        pools
+      try{ pools= $.unique(pool.add(window.top.document)) }
+      catch(e){ pools= pool }
+      var
+        $iframe= top === self ? $() : (function sense_iframe($ifr){
+          $('iframe', pools.last()).each(function(){
+            try{ if ($(this).contents().find(_head_).html() == $(_head_).html()) return ($ifr= $(this)) && false }
+            catch(e){}
+          })
+          return $ifr
+        })()
       on.setup();
     });
 
@@ -951,7 +963,7 @@ jQuery.reel || (function($, window, document, undefined){
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
-    _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
+    _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
