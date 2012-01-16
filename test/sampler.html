@@ -225,7 +225,22 @@ $('#image').reel({
     speed:       -0.2,
     velocity:    3,
     brake:       0.2,
-    sequence:    'samples/drone/#####.png|1..179|5'
+    sequence:    'samples/drone/#####.png|1..179|5',
+    annotations: {
+      'link_to_producer': {
+        node: {
+          html: '<strong>Penguin B</strong> by '
+        },
+        link: {
+          href: 'http://bit.ly/tnXfDZ',
+          text: 'UAV Factory'
+        },
+        start: 24,
+        end: 33,
+        at: '+-++-++-+-+-+----+-+-+-+-+-+-+--+-+-+-+--+--+--',
+        x: [50,,,,,,,,50,50,100,,,,,,3], y: 170
+      }
+    }
 });
 </xmp>
 <xmp class="css">
@@ -351,6 +366,103 @@ $('#image').reel({
 <xmp class="meta">
   <h3>Non-Looping Stitched Panorama</h3>
   <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
+</xmp>
+
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h2>Tours</h2>
+    <ul class="samples">
+      <li id="annotated-a">
+        <strong>Room A</strong>
+        <img class="thumb" src='samples/A.jpg' />
+
+<xmp class="html">
+  <img id='image' src='samples/A.jpg' />
+</xmp>
+<xmp class="js" contenteditable="true">
+$('#image').reel({
+    footage:     4,
+    frame:       10,
+    //monitor:     'frame',
+    revolution:  1500,
+    frames:      24,
+    annotations: {
+      "next_room": {
+        x: [-40,153,273,383,513],
+        y: 60,
+        start: 10,
+        end: 14,
+        link: {
+          title: 'To room B',
+          css: {
+            border: '4px dashed red',
+            display: 'block',
+            cursor: 'pointer',
+            width: 120,
+            height: 130
+          },
+          click: function(e){
+            $('#annotated-b').click();
+            e.stopPropagation();
+          }
+        }
+      }
+    }
+});
+</xmp>
+<xmp class="css">
+#image { width: 375px; height: 251px; }
+</xmp>
+<xmp class="meta">
+  <h3>Linked - room A</h3>
+  <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
+</xmp>
+
+      </li>
+      <li id="annotated-b">
+        <strong>Room B</strong>
+        <img class="thumb" src='samples/B.jpg' />
+
+<xmp class="html">
+  <img id='image' src='samples/B.jpg' />
+</xmp>
+<xmp class="js">
+$('#image').reel({
+    footage:     4,
+    frame:       15,
+    monitor: 'frame',
+    revolution:  1500,
+    frames:      24,
+    annotations: {
+      "next_room": {
+        x: [23,153,273,383,513],
+        y: 123,
+        start: 19,
+        end: 24,
+        node: {
+          title: 'To room A',
+          css: {
+            border: '4px dashed red',
+            width: 120,
+            height: 180
+          },
+          click: function(e){
+            $('#annotated-a').click();
+            return false
+          }
+        }
+      }
+    }
+});
+</xmp>
+<xmp class="css">
+#image { width: 375px; height: 251px; }
+</xmp>
+<xmp class="meta">
+  <h3>Interconnection - room B</h3>
+  <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
 </xmp>
 
       </li>
