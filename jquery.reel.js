@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2012-01-07
+ * Updated: 2012-01-16
  *
  * Requires jQuery 1.4.3 or higher
  */
@@ -481,7 +481,7 @@ jQuery.reel || (function($, window, document, undefined){
                 velocity= set(_velocity_, 0)
               unidle();
               cleanup.call(e);
-              stage_pool.trigger(_mouseup_);
+              t.trigger('up');
               t.trigger('fractionChange');
               return false;
             },
