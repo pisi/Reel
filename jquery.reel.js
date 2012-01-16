@@ -600,7 +600,9 @@ jQuery.reel || (function($, window, document, undefined){
                 film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
               $.each(get(_annotations_), function(ida, note){
                 var
-                  $note= $(tag(_div_), note.node).attr({ id: ida }).addClass(annotation_klass),
+                  $note= typeof note.node == 'string' ? $(note.node) : note.node || {},
+                  $note= $note.jquery ? $note : $(tag(_div_), $note),
+                  $note= $note.attr({ id: ida }).addClass(annotation_klass),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
                 rule(false, hash(ida), { display: _none_, position: _absolute_ });
