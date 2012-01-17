@@ -271,8 +271,8 @@ var
                   .bind(_touchstart_, press())
               }else{
                 var
-                  cursor= opt.cursor == _hand_ ? url(drag_cursor)+____+_move_ : opt.cursor || url(reel_cursor)+____+_move_,
-                  cursor_down= opt.cursor == _hand_ ? url(drag_cursor_down)+____+_move_+' !important' : false
+                  cursor= opt.cursor == _hand_ ? drag_cursor : opt.cursor || reel_cursor,
+                  cursor_down= opt.cursor == _hand_ ? drag_cursor_down+___+'!important' : false
                 rule(__, { cursor: cursor });
                 rule(dot(loading_klass), { cursor: busy_cursor });
                 rule(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor }, true);
@@ -391,7 +391,7 @@ var
                 unidle();
                 no_bias();
                 panned= false;
-                $root.addClass(panning_klass);
+                $(_html_, pools).addClass(panning_klass);
                 if (touchy){
                   pools
                   .bind(_touchmove_, drag(!scrollable))
@@ -420,7 +420,7 @@ var
                 brakes= braking= velocity ? 1 : 0
               velocity ? idle() : unidle();
               no_bias();
-              $root.removeClass(panning_klass);
+              $(_html_, pools).removeClass(panning_klass);
               pools.unbind(pns);
               cleanup.call(e);
             },
@@ -603,7 +603,7 @@ var
                 film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
               $.each(get(_annotations_), function(ida, note){
                 var
-                  $note= typeof note.node == 'string' ? $(note.node) : note.node || {},
+                  $note= typeof note.node == _string_ ? $(note.node) : note.node || {},
                   $note= $note.jquery ? $note : $(tag(_div_), $note),
                   $note= $note.attr({ id: ida }).addClass(annotation_klass),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
@@ -681,7 +681,7 @@ var
               $preloader.css({ width: current + (target - current) / 3 + 1 })
               if (get(_preloaded_) === get(_images_).length && current > space.x - 2){
                 $preloader.fadeOut(300, function(){ $preloader.remove() });
-                pool.unbind('tick.reel.preload', on.pool['tick.reel.preload']);
+                pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
               }
             },
             'tick.reel.opening': function(e){
@@ -931,12 +931,10 @@ var
   // PRIVATE
   var
     pool= $(document),
-    $root= $('html'),
     browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
     ie= $.browser.msie,
     client= navigator.userAgent,
     touchy= reel.touchy,
-    failsafe_cursor= 'ew-resize',
     ticker,
     ticks= { before: 0, now: new Date() },
 
@@ -970,7 +968,7 @@ var
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
-    ns= '.reel',
+    ns= dot(klass),
     pns= '.pan' + ns,
     _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
     _mouseleave_= 'mouseleave'+pns, _mousemove_= 'mousemove'+pns, _mouseup_= 'mouseup'+pns,
@@ -979,16 +977,17 @@ var
 
     // Various string primitives
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _a_= 'a', _block_= 'block', _cur_= 'cur', _div_= 'div',
-    _hand_= 'hand', _height_= 'height', _hex_black_= hash('000'), _id_= 'id', _img_= 'img', _jquery_reel_= 'jquery.reel',
-    _move_= 'move', _none_= 'none', _object_= 'object', _opening_= 'opening', _px_= 'px', _src_= 'src', _title_= 'title',
+    _drag_= 'drag', _hand_= 'hand', _height_= 'height', _hex_black_= hash('000'), _html_= 'html', _id_= 'id',
+    _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
+    _opening_= 'opening', _preload_= 'preload', _px_= 'px', _src_= 'src', _string_= 'string', _title_= 'title',
     _width_= 'width', _x_= 'x', _y_= 'y',
 
     // Image resources
     transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
     busy_cursor= 'wait',
-    reel_cursor= cdn(_jquery_reel_+dot(_cur_)),
-    drag_cursor= cdn(_jquery_reel_+'-drag'+dot(_cur_)),
-    drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_)),
+    reel_cursor= url(cdn(_jquery_reel_+dot(_cur_)))+____+_move_,
+    drag_cursor= url(cdn(_jquery_reel_+'-'+_drag_+dot(_cur_)))+____+_move_,
+    drag_cursor_down= url(cdn(_jquery_reel_+'-'+_drag_+'-down'+dot(_cur_)))+____+_move_,
 
     DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
@@ -1012,7 +1011,7 @@ var
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
-  function px(value){ return value === undefined || typeof value == 'string' ? value : value + _px_ }
+  function px(value){ return value === undefined || typeof value == _string_ ? value : value + _px_ }
   function hash(value){ return '#' + value }
   function css(values){
     var rules= [];
