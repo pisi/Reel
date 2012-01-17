@@ -48,7 +48,8 @@ jQuery.reel || (function($, window, document, undefined){
 
   if (bad_jquery()) return;
 
-  $.reel= {
+var
+  reel= $.reel= {
     version: '1.2alpha',
 
     // Options defaults
@@ -111,7 +112,7 @@ jQuery.reel || (function($, window, document, undefined){
 
   $.fn.reel= function(options){
     var
-      opt= $.extend({}, $.reel.def, options),
+      opt= $.extend({}, reel.def, options),
       applicable= (function(tags){
         // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
         var
@@ -166,8 +167,8 @@ jQuery.reel || (function($, window, document, undefined){
               id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
               styles= t.attr(_style_),
               data= $.extend({}, t.data()),
-              sequence= $.reel.sequence_pattern.exec(set(_sequence_, opt.sequence)),
-              images= set(_images_, sequence ? $.reel.build_sequence(sequence, opt, get) : opt.images),
+              sequence= reel.re.sequence.exec(set(_sequence_, opt.sequence)),
+              images= set(_images_, sequence ? reel.build_sequence(sequence, opt, get) : opt.images),
               stitched= opt.stitched,
               loops= opt.loops,
               size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
@@ -208,7 +209,7 @@ jQuery.reel || (function($, window, document, undefined){
             set(_reeling_, false);
             set(_brake_, opt.brake);
             set(_center_, !!opt.orbital);
-            set(_tempo_, opt.tempo / ($.reel.lazy? opt.laziness : 1));
+            set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
             set(_opening_ticks_, -1);
             set(_annotations_, opt.annotations) || $overlay.unbind('.annotations');
             set(_backup_, {
@@ -306,7 +307,7 @@ jQuery.reel || (function($, window, document, undefined){
                 images= get(_images_),
                 is_sprite= !images.length,
                 frames= get(_frames_),
-                order= $.reel.preload[opt.preload] || $.reel.preload[$.reel.def.preload],
+                order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
                 preload= is_sprite ? [image] : order(images.slice(), opt, get),
                 preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                 uris= []
@@ -460,7 +461,7 @@ jQuery.reel || (function($, window, document, undefined){
                     space_y= get(_dimensions_).y,
                     start= get(_clicked_row_),
                     lo= - start * space_y,
-                    row= set(_row_, $.reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1))
+                    row= set(_row_, reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1))
                   var
                     origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
                   t.trigger('fractionChange');
@@ -571,12 +572,12 @@ jQuery.reel || (function($, window, document, undefined){
                   multirow= opt.rows > 1,
                   space= get(_dimensions_),
                   travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
-                  indicator= min_max(0, travel, round($.reel.math.interpolate(get(_fraction_), -1, travel+2))),
+                  indicator= min_max(0, travel, round(reel.math.interpolate(get(_fraction_), -1, travel+2))),
                   indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
                   $indicator= $(dot(indicator_klass+dot(_x_)), stage).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator })
                 if (multirow) var
                   ytravel= space.y - opt.indicator,
-                  yindicator= min_max(0, ytravel, round($.reel.math.interpolate(get(_row_), -1, ytravel+2))),
+                  yindicator= min_max(0, ytravel, round(reel.math.interpolate(get(_row_), -1, ytravel+2))),
                   $yindicator= $(dot(indicator_klass+dot(_y_)), stage).css({ top: yindicator })
               }
               cleanup.call(e);
@@ -760,8 +761,8 @@ jQuery.reel || (function($, window, document, undefined){
         bias= no_bias(),
 
         // Graph function to be used
-        graph= opt.graph || $.reel.math[opt.loops ? 'hatch' : 'envelope'],
-        normal= $.reel.normal,
+        graph= opt.graph || reel.math[opt.loops ? 'hatch' : 'envelope'],
+        normal= reel.normal,
 
         // Resets the interaction graph's zero point
         recenter_mouse= function(x, y, fraction, revolution, row){
@@ -792,8 +793,8 @@ jQuery.reel || (function($, window, document, undefined){
         tempo= leader(_tempo_);
       if (tempo){
         pool.trigger(_tick_);
-        $.reel.cost= (+new Date() + $.reel.cost - start) / 2;
-        return ticker= setTimeout(tick, max(4, 1000 / tempo - $.reel.cost));
+        reel.cost= (+new Date() + reel.cost - start) / 2;
+        return ticker= setTimeout(tick, max(4, 1000 / tempo - reel.cost));
       }else{
         return ticker= undefined
       }
@@ -807,7 +808,7 @@ jQuery.reel || (function($, window, document, undefined){
   }
 
   // Mathematics core
-  $.reel.math= {
+  reel.math= {
     envelope: function(x, start, revolution, lo, hi, cwness, y){
       return start + max(lo, min(hi, - x * cwness)) / revolution
     },
@@ -823,7 +824,7 @@ jQuery.reel || (function($, window, document, undefined){
   }
 
   // Preload sequences
-  $.reel.preload= {
+  reel.preload= {
     linear: function(sequence, opt, get){
       return sequence
     },
@@ -865,7 +866,7 @@ jQuery.reel || (function($, window, document, undefined){
   }
 
   // Normalizations
-  $.reel.normal= {
+  reel.normal= {
     fraction: function(fraction, opt, get){
       fraction= fraction != undefined ? fraction : get(_fraction_);
       return opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
@@ -884,7 +885,10 @@ jQuery.reel || (function($, window, document, undefined){
   }
 
   $.reel.sequence_pattern= /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/;
-  $.reel.build_sequence= function(sequence, opt){
+
+  reel.cdn= 'http://code.vostrel.cz/';
+
+  reel.build_sequence= function(sequence, opt){
     if (sequence.length <= 1) return opt.images;
     var
       images= [],
@@ -911,16 +915,14 @@ jQuery.reel || (function($, window, document, undefined){
   $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
   $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
 
-  $.reel.cdn= 'http://code.vostrel.cz/';
+  reel.instances= $();
+  reel.cost= 0;
 
-  $.reel.instances= $();
-  $.reel.cost= 0;
+  function leader(key){ return reel.instances.length ? reel.instances.first().data(key) : null }
+  reel.leader= leader;
 
-  function leader(key){ return $.reel.instances.length ? $.reel.instances.first().data(key) : null }
-  $.reel.leader= leader;
-
-  function add_instance($instance){ return ($.reel.instances.push($instance[0])) && $instance }
-  function remove_instance($instance){ return ($.reel.instances= $.reel.instances.not(hash($instance.attr(_id_)))) && $instance }
+  function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
+  function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
 
   // Double plugin functions in case plugin is missing
   double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
@@ -937,7 +939,7 @@ jQuery.reel || (function($, window, document, undefined){
       windows: (/windows/i).test(client),
       mac: (/macintosh/i).test(client)
     },
-    touchy= $.reel.touchy,
+    touchy= reel.touchy,
     failsafe_cursor= 'ew-resize',
     ticker,
     ticks= { before: 0, now: new Date() },
@@ -1006,7 +1008,7 @@ jQuery.reel || (function($, window, document, undefined){
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + (string || '') }
-  function cdn(path){ return $.reel.cdn + path }
+  function cdn(path){ return reel.cdn + path }
   function url(location){ return 'url(' + location + ')' }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);
