@@ -322,7 +322,7 @@ var
                 // The actual loading of the image is done asynchronously
                 setTimeout(function(){
                   $img.attr({ src: uri })
-                  t.triggerAfter('preloaded', function(){ return !!$img.parent().length && $img[0].complete })
+                  t.reelTriggerOnce('preloaded', function(){ return !!$img.parent().length && $img[0].complete })
                 }, uris.length - preload.length);
                 uris.push(uri);
               }
@@ -993,7 +993,7 @@ var
     DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
   // Helpers
-  $.fn.triggerAfter= function(evnt, condition){
+  $.fn.reelTriggerOnce= function(evnt, condition){
     return try_now($(this))
     function try_now($node){
       if (condition()) $node.trigger(evnt)
