@@ -43,7 +43,7 @@
   ],
   "homepage": "http://jquery.vostrel.cz/reel",
   "dependencies": {
-    "jquery": ">=1.4.3",
+    "jquery": ">=1.5",
     "mousewheel": ">=3.0.5",
     "disableTextSelect": "*"
   },

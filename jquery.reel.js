@@ -27,7 +27,7 @@
  * Version: 1.1.3-devel
  * Updated: 2012-01-16
  *
- * Requires jQuery 1.4.3 or higher
+ * Requires jQuery 1.5 or higher
  */
 /*
  * Have it served by a cloud CDN:
@@ -46,7 +46,7 @@
 
 jQuery.reel || (function($, window, document, undefined){
 
-  if (bad_jquery()) return;
+  if (low_jquery()) return;
 
 var
   reel= $.reel= {
@@ -1018,11 +1018,11 @@ var
     $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)) })
     return '{'+rules.join(';')+';}';
   }
-  function bad_jquery(){
+  function low_jquery(){
     var
       v= $().jquery.split('.'),
-      low= +v[0] <= 1 && (+v[1] < 4 || (+v[1] == 4 && +v[2] < 3 ))
-    if (low) try{ console.error('FATAL: jQuery Reel plug-in requires at least jQuery 1.4.3') }catch(e){}
+      low= +v[0]*10 + +v[1] < 15
+    if (low) throw 'FATAL: Reel needs jQuery 1.5 or higher'
     return low
   }
 })(jQuery, window, document);
