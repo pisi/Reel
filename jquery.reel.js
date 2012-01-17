@@ -937,11 +937,6 @@ var
     browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
     ie= $.browser.msie,
     client= navigator.userAgent,
-    os= {
-      linux: (/linux/i).test(client),
-      windows: (/windows/i).test(client),
-      mac: (/macintosh/i).test(client)
-    },
     touchy= reel.touchy,
     failsafe_cursor= 'ew-resize',
     ticker,
@@ -993,7 +988,7 @@ var
     // Image resources
     transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
     busy_cursor= 'wait',
-    reel_cursor= cdn(_jquery_reel_+'-'+(os.mac ? 'black':'white')+dot(_cur_)),
+    reel_cursor= cdn(_jquery_reel_+dot(_cur_)),
     drag_cursor= cdn(_jquery_reel_+'-drag'+dot(_cur_)),
     drag_cursor_down= cdn(_jquery_reel_+'-drag-down'+dot(_cur_)),
 

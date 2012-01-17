@@ -243,10 +243,9 @@
     start();
   });
 
-  asyncTest( 'When no `cursor` option is specified, default cursor is used with color based on OS (black for Mac, white for Windows and Linux)', function(){
+  asyncTest( 'When no `cursor` option is specified, default cursor is used', function(){
     expect(4);
     var
-      mac= (/macintosh/i).test(navigator.userAgent),
       // Touch clients and Opera don't support custom cursors
       opera= (/opera/i).test(navigator.userAgent),
       touchy= $.reel.touchy,
@@ -254,13 +253,13 @@
       })
 
     $reel.bind('loaded.test', function(){
-      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
+      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', 'instance');
-      equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html`');
-      equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-'+(mac? 'black':'white')+'.cur)', '`html *`');
+      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', '`html *`');
       $('html').removeClass('reel-panning');
       start();
     });
