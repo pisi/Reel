@@ -182,7 +182,7 @@ var
               instances_count= instances.push(add_instance($instance)[0]),
               $overlay= $instance.parent().bind(on.instance)
             set(_options_, opt);
-            set(_image_, images.length ? __ : opt.image || src.replace(/^(.*)\.(jpg|jpeg|png|gif)$/, '$1' + opt.suffix + '.$2'));
+            set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
             set(_cached_, []);
             set(__frame_, 0);
             set(_spacing_, opt.spacing);
@@ -884,7 +884,12 @@ var
     }
   }
 
-  $.reel.sequence_pattern= /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/;
+  reel.re= {
+    image:         /^(.*)\.(jpg|jpeg|png|gif)$/,
+    touchy_agent:  /iphone|ipod|ipad|android/i,
+    lazy_agent:    /iphone|ipod|android/i,
+    sequence:      /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/
+  }
 
   reel.cdn= 'http://code.vostrel.cz/';
 
@@ -912,8 +917,8 @@ var
     }
   }
 
-  $.reel.touchy= (/iphone|ipod|ipad|android/i).test(navigator.userAgent);
-  $.reel.lazy= (/iphone|ipod|android/i).test(navigator.userAgent);
+  reel.touchy= (reel.re.touchy_agent).test(navigator.userAgent);
+  reel.lazy= (reel.re.lazy_agent).test(navigator.userAgent);
 
   reel.instances= $();
   reel.cost= 0;
