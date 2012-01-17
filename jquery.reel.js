@@ -277,7 +277,7 @@ var
                 rule(dot(loading_klass), { cursor: busy_cursor });
                 rule(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor }, true);
                 area
-                  .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return !delta || t.trigger('wheel', [delta]) && false })
+                  .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return e.preventDefault() || !delta || t.trigger('wheel', [delta]) && false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
                   .disableTextSelect();
               }
