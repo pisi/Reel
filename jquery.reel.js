@@ -176,7 +176,7 @@ var
               frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
               rows= stitched ? 1 : ceil(frames / opt.footage),
               stage_id= hash(id+opt.suffix),
-              classes= t.attr('class') || '',
+              classes= t.attr('class') || __,
               $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+frame }),
               $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
               instances_count= instances.push(add_instance($instance)[0]),
@@ -211,7 +211,7 @@ var
             set(_center_, !!opt.orbital);
             set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
             set(_opening_ticks_, -1);
-            set(_annotations_, opt.annotations) || $overlay.unbind('.annotations');
+            set(_annotations_, opt.annotations) || $overlay.unbind(dot(_annotations_));
             set(_backup_, {
               src: src,
               classes: classes,
@@ -336,8 +336,7 @@ var
               if (set(_preloaded_, min(get(_preloaded_) + 1, images)) === images){
                 t.unbind('preloaded', on.instance.preloaded);
                 images > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
-                t.parent().removeClass(loading_klass);
-                t.trigger('loaded');
+                t.trigger('loaded').parent().removeClass(loading_klass);
                 cleanup.call(e);
               }
             },
@@ -486,8 +485,7 @@ var
                 velocity= set(_velocity_, 0)
               unidle();
               cleanup.call(e);
-              t.trigger('up');
-              t.trigger('fractionChange');
+              t.trigger('up').trigger('fractionChange');
               return false;
             },
             fractionChange: function(e, fraction){
@@ -1005,7 +1003,7 @@ var
   }
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
-  function dot(string){ return '.' + (string || '') }
+  function dot(string){ return '.' + (string || __) }
   function cdn(path){ return reel.cdn + path }
   function url(location){ return 'url(' + location + ')' }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
