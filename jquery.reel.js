@@ -219,8 +219,8 @@ var
               data: data
             });
             opt.steppable || $overlay.unbind('click.steppable');
-            rule(true, __, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
-            rule(true, ____+___+dot(klass), { display: _block_ });
+            rule(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
+            rule(____+___+dot(klass), { display: _block_ });
             pool.bind(on.pool);
             cleanup.call(e);
             t.trigger('setup');
@@ -262,7 +262,7 @@ var
                 area= set(_area_, $(opt.area || $overlay ))
               if (touchy){
                 // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-                rule(true, ___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: opt.images.length
+                rule(___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: opt.images.length
                   ? 'auto'
                   : (get(_stitched_) && px(get(_stitched_))+___+px(space.y))
                   || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
@@ -273,9 +273,9 @@ var
                 var
                   cursor= opt.cursor == _hand_ ? url(drag_cursor)+____+_move_ : opt.cursor || url(reel_cursor)+____+_move_,
                   cursor_down= opt.cursor == _hand_ ? url(drag_cursor_down)+____+_move_+' !important' : false
-                rule(true, __, { cursor: cursor });
-                rule(true, dot(loading_klass), { cursor: busy_cursor });
-                rule(false, dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor });
+                rule(__, { cursor: cursor });
+                rule(dot(loading_klass), { cursor: busy_cursor });
+                rule(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor }, true);
                 area
                   .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return !delta || t.trigger('wheel', [delta]) && false })
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
@@ -284,9 +284,9 @@ var
               function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && cleanup.call(e) || r }}
               (opt.hint) && area.attr(_title_, opt.hint);
               opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass })) || ($monitor= $());
-              rule(true, ___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
-              rule(true, ___+dot(cached_klass), { display: _none_ });
-              rule(true, ___+dot(preloader_klass), {
+              rule(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
+              rule(___+dot(cached_klass), { display: _none_ });
+              rule(___+dot(preloader_klass), {
                 position: _absolute_,
                 left: 0, top: space.y - opt.preloader,
                 height: opt.preloader,
@@ -610,7 +610,7 @@ var
                   $note= $note.attr({ id: ida }).addClass(annotation_klass),
                   $image= note.image ? $(tag(_img_), note.image) : $(),
                   $link= note.link ? $(tag(_a_), note.link) : $()
-                rule(false, hash(ida), { display: _none_, position: _absolute_ });
+                rule(hash(ida), { display: _none_, position: _absolute_ }, true);
                 $note.bind({
                   'click.annotations': function(e){
                     e.stopPropagation();
@@ -732,7 +732,7 @@ var
         $monitor,
         $preloader,
         indicator= function(axis){
-          rule(true, ___+dot(indicator_klass)+dot(axis), {
+          rule(___+dot(indicator_klass)+dot(axis), {
             position: _absolute_,
             width: opt.indicator, height: opt.indicator,
             overflow: _hidden_,
@@ -743,13 +743,11 @@ var
 
         // CSS rules & stylesheet
         rules= [],
-        rule= function(prefix, selector, rule){
+        rule= function(selector, rule, global){
           var
-            stage= get(_stage_),
-            selector= selector.split(____)
-          prefix && $.each(selector, function(ix, it){ selector[ix]= stage+it });
-          rules.push(selector.join(____)+css(rule));
-          return rule;
+            stage= global ? __ : get(_stage_),
+            selector= selector.replace(/^/, stage).replace(____, ____+stage)
+          return rules.push(selector+css(rule)) && rule;
         },
         $style,
 
