@@ -351,12 +351,9 @@
 
     $('#annotation a')
     .parent()
-    .bind('click.test', function(){
-      ok( false, '`click` propagated to the annotation wrapper...');
-    })
     .parent()
     .bind('click.test', function(){
-      ok( false, '`click` Cpropagated to the instance wrapper...');
+      ok( false, '`click` propagated to the instance wrapper...');
     })
     $('#annotation a').click();
     start();

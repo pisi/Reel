@@ -290,7 +290,7 @@
       ]
 
     $.each(samples, function(){
-      ok( this.match($.reel.sequence_pattern), this + ' passed');
+      ok( this.match($.reel.re.sequence), this + ' passed');
     });
   });
 
@@ -349,7 +349,7 @@
 
     $.each(samples, function(image){
       var
-        sequence= $.reel.sequence_pattern.exec( image ) || []
+        sequence= $.reel.re.sequence.exec( image ) || []
       sequence && equal( sequence.length, 8, 'correct length');
       equal( sequence.join(''), this.join(''), image + ' passed');
     });
@@ -383,7 +383,7 @@
 
     $.each(samples, function(sample){
       var
-        sequence= $.reel.sequence_pattern.exec(sample)
+        sequence= $.reel.re.sequence.exec(sample)
 
       equal( $.reel.build_sequence(sequence, options).join(', '), this.join(', '), sample + ' generates');
     });
