@@ -255,7 +255,6 @@ var
                 resolution= max(frames, get(_steps_)),
                 fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
                 frame= set(_frame_, round(fraction * frames) + 1),
-                loaded= 0,
                 id= t.attr(_id_),
                 $overlay= t.parent(),
                 area= set(_area_, $(opt.area || $overlay ))
@@ -333,16 +332,13 @@ var
               var
                 images= get(_images_).length || 1,
                 preloaded= set(_preloaded_, min(get(_preloaded_) + 1, images))
-//console.log("PRELOADED", images, preloaded)
               if (preloaded === images){
                 t.parent().removeClass(loading_klass);
                 t.unbind(_preloaded_, on.instance.preloaded).trigger('loaded')
               }
             },
             loaded: function(e){
-//console.log("LOAD");
               get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
-              //t.parent().removeClass(loading_klass);
             },
             opening: function(e){
             /*
@@ -446,8 +442,8 @@ var
                 unidle();
                 var
                   host_offset= ev && !$(ev.currentTarget).is(pool) ? $iframe.offset() : { left: 0, top: 0 },
-                  y= y - host_offset.top,
                   x= x - host_offset.left,
+                  y= y - host_offset.top,
                   delta= { x: x - last.x, y: y - last.y }
                 if (abs(delta.x) > 0 || abs(delta.y) > 0){
                   panned= true;
