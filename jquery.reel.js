@@ -281,9 +281,9 @@ var
                   .disableTextSelect();
               }
               function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && r }}
-              (opt.hint) && area.attr(_title_, opt.hint);
-              opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass })) || ($monitor= $());
-              rule(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
+              opt.hint && area.attr(_title_, opt.hint);
+              opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
+                          && rule(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
               rule(___+dot(cached_klass), { display: _none_ });
               rule(___+dot(preloader_klass), {
                 position: _absolute_,
@@ -722,8 +722,8 @@ var
         panned= false,
         delay, // openingDone's delayed play pointer
 
-        $monitor,
-        $preloader,
+        $monitor= $(),
+        $preloader= $(),
         indicator= function(axis){
           rule(___+dot(indicator_klass)+dot(axis), {
             position: _absolute_,
