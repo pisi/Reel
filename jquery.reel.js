@@ -103,6 +103,7 @@ jQuery.reel || (function($, window, document, undefined){
       preload:     'fidelity', // preloading order - either "linear" or "fidelity" (default)
       scrollable:        true, // allow page scroll (allowed by default; applies only to touch devices)
       steppable:         true, // allows to step the view (horizontally) by clicking on image
+      snaps:             true, // snaps to exact center points of frames and rows
       sequence:            '', // URL of sequence images containing the hash placeholder
       velocity:             0  // initial velocity of user interaction; washes off quickly with `brake`
     }
@@ -417,12 +418,17 @@ jQuery.reel || (function($, window, document, undefined){
                 clicked= set(_clicked_, false),
                 reeling= set(_reeling_, false),
                 velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
-                brakes= braking= velocity ? 1 : 0
+                brakes= braking= velocity ? 1 : 0,
+                row= snap(_row_, opt.rows > 1, opt.rows),
+                fraction= snap(_fraction_, !velocity, get(_frames_))
               velocity ? idle() : unidle();
               no_bias();
               $root.removeClass(panning_klass);
               pools.unbind(pns);
               cleanup.call(e);
+              function snap(name, condition, total){
+                if (condition && opt.snaps) return set(name, 1 / total * (min_max(0, total - 1, floor(get(name) * total)) + 0.5))
+              }
             },
             pan: function(e, x, y, ev){
             /*
