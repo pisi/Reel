@@ -209,12 +209,12 @@
 
     expect( try_rows * try_frames * 3 ); // 3 test for each combination
 
-    for( var i= 0; i < try_rows.length; i++) setTimeout( function(){
+    for( var i= 0; i < try_rows.length; i++) (function(ix){ setTimeout( function(){
       for( var ii= 0; ii < try_frames.length; ii++){
         $('#image').unreel();
         var
           frame= try_frames[ ii ],
-          row= try_rows[ i ],
+          row= try_rows[ ix ],
           rows= 2,
           frames= 36, // default
           $pano= $('#image').reel({
@@ -250,7 +250,7 @@
       }
       done_rows++;
       if (done_rows == rows) start();
-    }, 5);
+    }, 5) })(i)
   });
 
 
