@@ -261,9 +261,9 @@ var
                 area= set(_area_, $(opt.area || $overlay ))
               if (touchy){
                 // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-                rule(___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: opt.images.length
                   ? 'auto'
                   : (get(_stitched_) && px(get(_stitched_))+___+px(space.y))
+                rule(___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: get(_images_).length
                   || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                 });
                 area
@@ -531,7 +531,6 @@ var
               var
                 fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
                 frame= normal.frame(frame, opt, get),
-                is_sprite= get(_cached_).length == 1,
                 footage= opt.footage
               if (get(_vertical_)) var
                 frame= opt.inversed ? footage + 1 - frame : frame,
@@ -541,6 +540,7 @@ var
                 var
                   horizontal= opt.horizontal,
                   images= get(_images_),
+                  is_sprite= !images.length,
                   space= get(_dimensions_),
                   frame= set(__frame_, set(_frame_, frame))
                 if (!is_sprite){
@@ -675,9 +675,10 @@ var
               var
                 space= get(_dimensions_),
                 current= parseInt($preloader.css(_width_)),
-                target= round(1 / get(_images_).length * get(_preloaded_) * space.x)
+                images= get(_images_).length || 1,
+                target= round(1 / images * get(_preloaded_) * space.x)
               $preloader.css({ width: current + (target - current) / 3 + 1 })
-              if (get(_preloaded_) === get(_images_).length && current > space.x - 2){
+              if (get(_preloaded_) === images && current > space.x - 2){
                 $preloader.fadeOut(300, function(){ $preloader.remove() });
                 pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
               }
