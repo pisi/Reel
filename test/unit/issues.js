@@ -247,6 +247,9 @@
         deepEqual({ row: $pano.data('row'), frame: $pano.data('frame') },
                   { row: 1, frame: rows * frames - frames + frame },
                   '& drag way down again.');
+
+        // Conclude the drag
+        $pano.trigger('up');
       }
       done_rows++;
       if (done_rows == rows) start();
