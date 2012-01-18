@@ -73,9 +73,9 @@
     $reel.one('frameChange.test', function(){
       ok( !!$('div#my_annotation').length, 'Node node present');
       ok( !!$('div#my_annotation img').length, 'Wrapping an image node');
-      equiv( $('#my_annotation img').attr('width') || $('#my_annotation img').css('width'), 120, 'CSS width');
-      equiv( $('#my_annotation img').attr('height') || $('#my_annotation img').css('height'), 30, 'CSS height');
       equal( $('#my_annotation img').attr('src'), 'resources/badge-1.gif', 'Image `src`');
+      equiv( parseInt($('#my_annotation img').attr('width')) || $('#my_annotation img').css('width'), 120, 'CSS width');
+      equiv( parseInt($('#my_annotation img').attr('height')) || $('#my_annotation img').css('height'), 30, 'CSS height');
       start();
     });
   });
@@ -154,7 +154,6 @@
 
       checked.push(frame);
       if (checked.length == frames){
-        $reel.parent().unbind('.test');
         start();
       }
     });
