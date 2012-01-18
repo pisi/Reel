@@ -35,6 +35,7 @@ Development
   path with a counter placeholder.
 * Default height of the preloader progress bar reduced to 2 pixels.
 * Completely reworked, centralized and enhanced naked examples with descriptions.
+* The minimal required version of jQuery has been increased to 1.5.
 
 
 Version 1.1.3

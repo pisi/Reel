@@ -38,7 +38,7 @@ For list of options head to plugin [on-line reference][options] page.
 
 Requirements
 ------------
-* **[jQuery 1.4.3 or higher][jquery]**
+* **[jQuery 1.5 or higher][jquery]**
 * Optionaly you can also include these handy jQuery plugins (recommended)
     * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
     * or [jQuery.event.special.wheel][wheel] is a nice alternative
