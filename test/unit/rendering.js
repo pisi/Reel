@@ -99,7 +99,12 @@
     expect(1);
     var
       size= 10,
-      $reel= $('#image').reel({ indicator: size, frames: 36, frame: 1 }),
+      $reel= $('#image').reel({
+        snaps: false, // The default snapping is not desirable in this precision test
+        indicator: size,
+        frames: 36,
+        frame: 1
+      }),
       $indicator= $('#image-reel .reel-indicator');
 
     $reel.parent().bind('loaded.test', function(){

@@ -96,6 +96,7 @@
     var
       selector= '#image',
       $reel= $(selector).reel({
+        snaps: false, // The default snapping is not desirable in this precision test
         frames: 6,
         footage: 4,
         frame: 5,
