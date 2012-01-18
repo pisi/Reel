@@ -261,9 +261,8 @@ var
                 area= set(_area_, $(opt.area || $overlay ))
               if (touchy){
                 // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-                  ? 'auto'
-                  : (get(_stitched_) && px(get(_stitched_))+___+px(space.y))
                 rule(___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: get(_images_).length
+                  ? undefined : get(_stitched_) && px(get(_stitched_))+___+px(space.y)
                   || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                 });
                 area
