@@ -317,11 +317,13 @@ var
                   uri= opt.path+preload.shift(),
                   width= space.x * (!is_sprite ? 1 : opt.footage),
                   height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
-                  $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
+                  $img= $(tag(_img_)).attr({ 'class': cached_klass }).appendTo($overlay)
                 // The actual loading of the image is done asynchronously
                 setTimeout(function(){
-                  $img.attr({ src: uri })
-                  t.reelTriggerOnce('preloaded', function(){ return !!$img.parent().length && $img[0].complete })
+                  if ($img.parent().length){
+                    $img.attr({ src: uri, width: width, height: height });
+                    t.reelTriggerOnce('preloaded', function(){ return !!$img.parent().length && $img[0].complete })
+                  }
                 }, uris.length - preload.length);
                 uris.push(uri);
               }
