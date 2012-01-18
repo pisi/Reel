@@ -162,7 +162,7 @@ var
           - fills up the data storage with values based on options
           - binds to ticker
           */
-            if (t.hasClass(klass)) return cleanup.call(e);
+            if (t.hasClass(klass)) return;
             var
               src= t.attr(opt.attr).attr(_src_),
               id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
@@ -223,7 +223,6 @@ var
             rule(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
             rule(____+___+dot(klass), { display: _block_ });
             pool.bind(on.pool);
-            cleanup.call(e);
             t.trigger('setup');
           },
           instance: {
@@ -244,7 +243,6 @@ var
               no_bias();
               pool.unbind(on.pool);
               pools.unbind(pns);
-              cleanup.call(e);
             },
             setup: function(e){
             /*
@@ -282,7 +280,7 @@ var
                   .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
                   .disableTextSelect();
               }
-              function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && cleanup.call(e) || r }}
+              function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && r }}
               (opt.hint) && area.attr(_title_, opt.hint);
               opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass })) || ($monitor= $());
               rule(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
@@ -329,17 +327,22 @@ var
               }
               set(_cached_, uris);
               set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
-              cleanup.call(e);
             },
             preloaded: function(e){
               var
-                images= get(_images_).length
-              if (set(_preloaded_, min(get(_preloaded_) + 1, images)) === images){
-                t.unbind('preloaded', on.instance.preloaded);
-                images > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
-                t.trigger('loaded').parent().removeClass(loading_klass);
-                cleanup.call(e);
+                images= get(_images_).length || 1,
+                preloaded= set(_preloaded_, min(get(_preloaded_) + 1, images))
+//console.log("PRELOADED", images, preloaded)
+              if (preloaded === images){
+                t.parent().removeClass(loading_klass);
+                t.unbind(_preloaded_, on.instance.preloaded).trigger('loaded')
               }
+            },
+            loaded: function(e){
+//console.log("LOAD");
+              get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
+              //t.parent().removeClass(loading_klass);
+              t.trigger('opening');
             },
             opening: function(e){
             /*
@@ -365,19 +368,16 @@ var
                 stopped= set(_stopped_, !playing)
               t.trigger('frameChange');
               idle();
-              cleanup.call(e);
             },
             pause: function(e){
               var
                 playing= set(_playing_, false)
               unidle();
-              cleanup.call(e);
             },
             stop: function(e){
               var
                 stopped= set(_stopped_, true),
                 playing= set(_playing_, !stopped)
-              cleanup.call(e);
             },
             down: function(e, x, y){
             /*
@@ -402,10 +402,9 @@ var
                   .bind(_mousemove_, drag())
                   .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift())
                 }
-                function drag(r){ return function(e){ e.preventDefault(); t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]); cleanup.call(e); return r }}
-                function lift(r){ return function(e){ e.preventDefault(); t.trigger('up'); cleanup.call(e); return r }}
               }
-              cleanup.call(e);
+              function drag(r){ return function(e){ e.preventDefault(); t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]); return r }}
+              function lift(r){ return function(e){ e.preventDefault(); t.trigger('up'); return r }}
             },
             up: function(e){
             /*
@@ -413,7 +412,7 @@ var
             - unbinds dragging events from pool
             - resets the mouse cursor
             */
-              if (!opt.draggable) return cleanup.call(e);
+              if (!opt.draggable) return;
               var
                 clicked= set(_clicked_, false),
                 reeling= set(_reeling_, false),
@@ -425,7 +424,6 @@ var
               no_bias();
               $(_html_, pools).removeClass(panning_klass);
               pools.unbind(pns);
-              cleanup.call(e);
               function snap(name, condition, total){
                 if (condition && opt.snaps) return set(name, 1 / total * (min_max(0, total - 1, floor(get(name) * total)) + 0.5))
               }
@@ -472,7 +470,6 @@ var
                   t.trigger('fractionChange');
                 }
               }
-              cleanup.call(e);
             },
             wheel: function(e, distance){
             /*
@@ -490,7 +487,6 @@ var
                 backwards= delta && set(_backwards_, delta < 0),
                 velocity= set(_velocity_, 0)
               unidle();
-              cleanup.call(e);
               t.trigger('up').trigger('fractionChange');
               return false;
             },
@@ -512,7 +508,6 @@ var
                 bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
                 backwards= bounce && set(_backwards_, !get(_backwards_))
               t.trigger(multirow ? 'rowChange' : 'frameChange');
-              cleanup.call(e);
             },
             rowChange: function(e, row){
             /*
@@ -524,7 +519,6 @@ var
                 row= set(_row_, normal.row(row, opt, get)),
                 row_shift= min_max(0, opt.rows - 1, floor(row * (opt.rows))),
                 frame= set(_frame_, floor(frame + row_shift * opt.frames))
-              cleanup.call(e);
               t.trigger('frameChange');
             },
             frameChange: function(e, frame){
@@ -584,7 +578,6 @@ var
                   yindicator= min_max(0, ytravel, round(reel.math.interpolate(get(_row_), -1, ytravel+2))),
                   $yindicator= $(dot(indicator_klass+dot(_y_)), stage).css({ top: yindicator })
               }
-              cleanup.call(e);
             },
 
             stepLeft: function(e){
@@ -677,7 +670,6 @@ var
                 step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                 was= get(_fraction_),
                 fraction= set(_fraction_, was - step * backwards)
-              cleanup.call(e);
             },
             'tick.reel.preload': function(e){
               var
@@ -702,7 +694,6 @@ var
                   was= get(_fraction_),
                   fraction= set(_fraction_, was + step),
                   ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
-                cleanup.call(e);
                 if (ticks > 0) return;
                 t.trigger('openingDone');
               }
@@ -713,11 +704,8 @@ var
           }
         },
 
-        // Garbage clean-up facility called by every event
-        cleanup= function(pass){ ie || delete this; return pass },
-
         // Events propagation stopper / muter
-        mute= function(e, result){ return e.stopImmediatePropagation() || cleanup.call(e) || result },
+        mute= function(e, result){ return e.stopImmediatePropagation() || result },
 
         // User idle control
         operated,
