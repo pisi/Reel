@@ -342,7 +342,6 @@ var
 //console.log("LOAD");
               get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
               //t.parent().removeClass(loading_klass);
-              t.trigger('opening');
             },
             opening: function(e){
             /*
@@ -417,13 +416,16 @@ var
                 clicked= set(_clicked_, false),
                 reeling= set(_reeling_, false),
                 velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
-                brakes= braking= velocity ? 1 : 0,
-                row= snap(_row_, opt.rows > 1, opt.rows),
-                fraction= snap(_fraction_, !velocity, get(_frames_))
+                brakes= braking= velocity ? 1 : 0
               velocity ? idle() : unidle();
               no_bias();
               $(_html_, pools).removeClass(panning_klass);
               pools.unbind(pns);
+            },
+            snap: function(e){
+              var
+                row= snap(_row_, opt.rows > 1, opt.rows),
+                fraction= snap(_fraction_, !get(_velocity_), get(_frames_))
               function snap(name, condition, total){
                 if (condition && opt.snaps) return set(name, 1 / total * (min_max(0, total - 1, floor(get(name) * total)) + 0.5))
               }
@@ -641,8 +643,9 @@ var
               });
             },
 
-            'setup.fu': function(){ t.trigger('up').trigger('preload') },
-            'loaded.fu': function(){ t.trigger('opening') }
+            'setup.fu': function(){ t.trigger('preload') },
+            'loaded.fu': function(){ t.trigger('opening') },
+            'setup.fu up.fu': function(){ t.trigger('snap') }
 
           },
           pool: {
