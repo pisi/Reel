@@ -121,7 +121,7 @@ var
         tags.filter(_img_).each(function(ix){
           var
             $this= $(this),
-            src= opt.images.length && opt.images || opt.image || opt.attr.src || $this.attr(_src_),
+            src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr(_src_),
             width= number(opt.attr.width || $this.css(_width_)),
             height= number(opt.attr.height || $this.css(_height_))
           if (!src || src == __ || !width || !height) return;
