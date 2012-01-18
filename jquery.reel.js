@@ -649,7 +649,7 @@ jQuery.reel || (function($, window, document, undefined){
               });
             },
 
-            'setup.fu': function(){ t.trigger('preload') },
+            'setup.fu': function(){ t.trigger('up').trigger('preload') },
             'loaded.fu': function(){ t.trigger('opening') }
 
           },
