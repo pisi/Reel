@@ -917,13 +917,12 @@ var
   reel.lazy= (reel.re.lazy_agent).test(navigator.userAgent);
 
   reel.instances= $();
-  reel.cost= 0;
+  function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
+  function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
 
   function leader(key){ return reel.instances.length ? reel.instances.first().data(key) : null }
   reel.leader= leader;
-
-  function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
-  function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
+  reel.cost= 0;
 
   // Double plugin functions in case plugin is missing
   double_for('mousewheel disableTextSelect enableTextSelect'.split(/ /));
