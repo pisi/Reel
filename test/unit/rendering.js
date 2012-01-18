@@ -188,7 +188,7 @@
         images: [ 'resources/f1.jpg' ]
       })
 
-    $reel.bind('loaded.test', function(){
+    $reel.parent().bind('loaded.test', function(){
       var
         $cached= $reel.siblings('img[width][height]').first()
 
