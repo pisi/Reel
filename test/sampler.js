@@ -22,7 +22,7 @@
       });
 
       $('.samples li a').click(function(e){
-        if (!e.button && !e.metaKey && !e.shiftKey && !e.ctrlKey){
+        if (e.button || e.metaKey || e.shiftKey || e.ctrlKey) return;
         var
           url= $(this).attr('href'),
           id= $(this).parent().attr('id'),
@@ -74,7 +74,6 @@
 
         $.cookie('reel.test.sample', id);
         return false;
-        }
       });
 
       /*
