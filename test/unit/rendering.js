@@ -185,7 +185,7 @@
     expect(3);
     var
       $reel= $('#image').reel({
-        images: [ 'samples/f1.jpg' ]
+        images: [ 'resources/f1.jpg' ]
       })
 
     $reel.bind('loaded.test', function(){

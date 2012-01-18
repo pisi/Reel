@@ -286,7 +286,7 @@
         'folder/prefix_####.gif',
         'folder/prefix_####.png',
         'folder/prefix_####.svg',
-        'samples/mini/###.jpg|3..43|2'
+        'resources/mini/###.jpg|3..43|2'
       ]
 
     $.each(samples, function(){
@@ -332,18 +332,18 @@
           '|3',                     // [6] entire segment
           '3'                       // [7] increment
         ],
-        'samples/mini/###.jpg|3..43|2': [
-          'samples/mini/###.jpg|3..43|2', // [0]
-                                          // Counter URL:
-          'samples/mini/###.jpg',         // [1] entire segment
-          '###',                          // [2] counter
-                                          // Optional range:
-          '|3..43',                       // [3] entire segment
-          '3',                            // [4] start
-          '43',                           // [5] end
-                                          // Optional counter increment:
-          '|2',                           // [6] entire segment
-          '2'                             // [7] increment
+        'resources/mini/###.jpg|3..43|2': [
+          'resources/mini/###.jpg|3..43|2',   // [0]
+                                              // Counter URL:
+          'resources/mini/###.jpg',           // [1] entire segment
+          '###',                              // [2] counter
+                                              // Optional range:
+          '|3..43',                           // [3] entire segment
+          '3',                                // [4] start
+          '43',                               // [5] end
+                                              // Optional counter increment:
+          '|2',                               // [6] entire segment
+          '2'                                 // [7] increment
         ]
       }
 

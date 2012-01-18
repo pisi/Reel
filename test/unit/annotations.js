@@ -13,8 +13,7 @@
         annotations: {
           "my_annotation_name": {}
         }
-      }),
-      $instance= $reel.parent()
+      })
 
     equal( !!$reel.siblings('.reel-annotation[id]').length, 1, 'One annotation node with `id` attribute');
     ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
@@ -37,8 +36,7 @@
           },
           "still_node": {}
         }
-      }),
-      $instance= $reel.parent()
+      })
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
@@ -63,22 +61,21 @@
         annotations: {
           "my_annotation": {
             image: {
-              src: 'samples/badge-1.gif',
+              src: 'resources/badge-1.gif',
               width: 120,
               height: 30
             }
           }
         }
-      }),
-      $instance= $reel.parent()
+      })
 
     // Positioning of annotations happens at `frameChange`
     $reel.one('frameChange.test', function(){
       ok( !!$('div#my_annotation').length, 'Node node present');
       ok( !!$('div#my_annotation img').length, 'Wrapping an image node');
-      equal( $('#my_annotation img').attr('src'), 'samples/badge-1.gif', 'Image `src`');
       equiv( $('#my_annotation img').attr('width') || $('#my_annotation img').css('width'), 120, 'CSS width');
       equiv( $('#my_annotation img').attr('height') || $('#my_annotation img').css('height'), 30, 'CSS height');
+      equal( $('#my_annotation img').attr('src'), 'resources/badge-1.gif', 'Image `src`');
       start();
     });
   });

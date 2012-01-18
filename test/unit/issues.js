@@ -267,7 +267,7 @@
         image= $(this).data('image');
         var
           new_instance= $(this).reel({
-            image: '../example/panorama-reel.jpg'
+            image: 'resources/green-reel.jpg'
           });
 
         // Finish the test in case reel initialization fails
