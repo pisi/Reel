@@ -307,7 +307,7 @@ var
                 is_sprite= !images.length,
                 frames= get(_frames_),
                 order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
-                preload= is_sprite ? [image] : order(images.slice(), opt, get),
+                preload= is_sprite ? [image] : order(images.slice(0), opt, get),
                 preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                 uris= []
               $overlay.addClass(loading_klass).append($preloader= $(tag(_div_), { 'class': preloader_klass }));
