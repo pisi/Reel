@@ -46,7 +46,8 @@
 
 jQuery.reel || (function($, window, document, undefined){
 
-  if (low_jquery()) return;
+  if (+$().jquery.replace(dot(), '').substr(0, 2) < 15)
+    throw 'VersionError: far too old jQuery for running Reel'
 
   var
     reel= $.reel= {
@@ -1000,7 +1001,7 @@ jQuery.reel || (function($, window, document, undefined){
   function leader(key){ return reel.instances.length ? reel.instances.first().data(key) : null }
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
-  function dot(string){ return '.' + (string || __) }
+  function dot(string){ return '.' + (string || '') }
   function cdn(path){ return reel.cdn + path }
   function url(location){ return 'url(' + location + ')' }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
@@ -1015,12 +1016,5 @@ jQuery.reel || (function($, window, document, undefined){
     var rules= [];
     $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)) })
     return '{'+rules.join(';')+';}';
-  }
-  function low_jquery(){
-    var
-      v= $().jquery.split('.'),
-      low= +v[0]*10 + +v[1] < 15
-    if (low) throw 'FATAL: Reel needs jQuery 1.5 or higher'
-    return low
   }
 })(jQuery, window, document);
