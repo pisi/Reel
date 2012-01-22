@@ -125,8 +125,7 @@ jQuery.reel || (function($, window, document, undefined){
                   src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr(_src_),
                   width= number(opt.attr.width || $this.css(_width_)),
                   height= number(opt.attr.height || $this.css(_height_))
-                if (!src || src == __ || !width || !height) return;
-                pass.push($this);
+                if (src && src != __ && width && height) pass.push($this);
               });
               tags.filter(dot(klass)).each(function(ix){
                 pass.push($(this).unreel());
