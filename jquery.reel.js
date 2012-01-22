@@ -257,10 +257,8 @@ jQuery.reel || (function($, window, document, undefined){
                       space= get(_dimensions_),
                       frames= get(_frames_),
                       resolution= max(frames, get(_steps_)),
-                      fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1)),
-                      frame= set(_frame_, round(fraction * frames) + 1),
                       id= t.attr(_id_),
-                      $overlay= t.parent(),
+                      $overlay= t.parent()
                       area= set(_area_, $(opt.area || $overlay ))
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
@@ -296,6 +294,8 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                     opt.indicator && $overlay.append(indicator(_x_));
                     opt.rows > 1 && opt.indicator && $overlay.append(indicator(_y_));
+                    var
+                      fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1))
                   },
                   preload: function(e){
                   /*
@@ -455,7 +455,7 @@ jQuery.reel || (function($, window, document, undefined){
                           revolution= get(_revolution_),
                           origin= get(_clicked_location_),
                           vertical= get(_vertical_),
-                          fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_), vertical ? y - origin.y : x - origin.x)),
+                          fraction= graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_), vertical ? y - origin.y : x - origin.x),
                           reeling= set(_reeling_, get(_reeling_) || get(_frame_) != get(_clicked_)),
                           motion= to_bias(vertical ? delta.y : delta.x || 0),
                           backwards= motion && set(_backwards_, motion < 0)
@@ -468,8 +468,8 @@ jQuery.reel || (function($, window, document, undefined){
                           lo= - start * space_y,
                           row= set(_row_, reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1))
                         var
-                          origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_))
-                        t.trigger('fractionChange');
+                          origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_)),
+                          fraction= set(_fraction_, fraction)
                       }
                     }
                   },
@@ -485,9 +485,9 @@ jQuery.reel || (function($, window, document, undefined){
                       delta= negative_when(delta, distance > 0),
                       revolution= 0.0833 * get(_revolution_), // Wheel's revolution is 1/12 of full revolution
                       origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_row_)),
-                      fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_))),
                       backwards= delta && set(_backwards_, delta < 0),
-                      velocity= set(_velocity_, 0)
+                      velocity= set(_velocity_, 0),
+                      fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
                     unidle();
                     t.trigger('up')
                     return false;
@@ -500,8 +500,7 @@ jQuery.reel || (function($, window, document, undefined){
                       - reverses motion direction if too long
                   */
                     var
-                      fraction= set(_fraction_, normal.fraction(fraction, opt, get)),
-                      frame= set(_frame_, 1 + floor(fraction / get(_bit_))),
+                      frame= 1 + floor(fraction / get(_bit_)),
                       multirow= opt.rows > 1,
                       orbital= opt.orbital,
                       center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
@@ -685,13 +684,12 @@ jQuery.reel || (function($, window, document, undefined){
                       var
                         speed= opt.entry || opt.speed,
                         step= speed / leader(_tempo_) * (opt.cw? -1:1),
-                        was= get(_fraction_),
-                        fraction= set(_fraction_, was + step),
                         ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
                       if (ticks > 0) return;
                       t.trigger('openingDone');
                     }
                     pool.unbind(_tick_+dot(_opening_), on.pool[_tick_+dot(_opening_)]);
+                        fraction= set(_fraction_, get(_fraction_) + step)
                   }
                 }
               },
