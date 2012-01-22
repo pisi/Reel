@@ -190,7 +190,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_options_, opt);
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cached_, []);
-                  set(__frame_, 0);
                   set(_spacing_, opt.spacing);
                   set(_dimensions_, size);
                   set(_fraction_, 0);
@@ -530,40 +529,35 @@ jQuery.reel || (function($, window, document, undefined){
                   - adjusts indicator position
                   */
                     var
-                      fraction= set(_fraction_, normal.fraction(!frame ? undefined : get(_bit_) * (frame-1), opt, get)),
-                      frame= normal.frame(frame, opt, get),
+                      fraction= get(_fraction_),
                       footage= opt.footage
                     if (get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
                       frame= frame + footage
-                    if (frame == get(__frame_)) mute(e)
-                    else{
+                    var
+                      horizontal= opt.horizontal,
+                      images= get(_images_),
+                      is_sprite= !images.length,
+                      space= get(_dimensions_)
+                    if (!is_sprite){
                       var
-                        horizontal= opt.horizontal,
-                        images= get(_images_),
-                        is_sprite= !images.length,
-                        space= get(_dimensions_),
-                        frame= set(__frame_, set(_frame_, frame))
-                      if (!is_sprite){
-                        var
-                          frameshot= images[frame - 1]
-                        t.attr({ src: opt.path + frameshot })
-                      }else{
-                        if (!opt.stitched) var
-                          minor= (frame % footage) - 1,
-                          minor= minor < 0 ? footage - 1 : minor,
-                          major= floor((frame - 0.1) / footage),
-                          major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
-                          spacing= get(_spacing_),
-                          a= major * ((horizontal ? space.y : space.x) + spacing),
-                          b= minor * ((horizontal ? space.x : space.y) + spacing),
-                          shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
-                        else var
-                          x= round(fraction * get(_stitched_travel_)),
-                          y= 0,
-                          shift= [-x + _px_, y + _px_]
-                        t.css({ backgroundPosition: shift.join(___) })
-                      }
+                        frameshot= images[frame - 1]
+                      t.attr({ src: opt.path + frameshot })
+                    }else{
+                      if (!opt.stitched) var
+                        minor= (frame % footage) - 1,
+                        minor= minor < 0 ? footage - 1 : minor,
+                        major= floor((frame - 0.1) / footage),
+                        major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
+                        spacing= get(_spacing_),
+                        a= major * ((horizontal ? space.y : space.x) + spacing),
+                        b= minor * ((horizontal ? space.x : space.y) + spacing),
+                        shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
+                      else var
+                        x= round(fraction * get(_stitched_travel_)),
+                        y= 0,
+                        shift= [-x + _px_, y + _px_]
+                      t.css({ backgroundPosition: shift.join(___) })
                     }
                     if (opt.indicator){
                       var
@@ -621,8 +615,6 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'frameChange.annotations': function(e, frame){
-                    var
-                      frame= frame || get(_frame_)
                     this.className= this.className.replace(frame_klass_pattern, frame_klass + frame);
                     if (!get(_velocity_)) $.each(get(_annotations_), function(ida, note){
                       var
@@ -868,17 +860,14 @@ jQuery.reel || (function($, window, document, undefined){
       // Normalizations
       normal: {
         fraction: function(fraction, opt, get){
-          fraction= fraction != undefined ? fraction : get(_fraction_);
           return opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
         },
         row: function(row, opt, get){
-          return min_max(0, 1, row != undefined ? (row-1) / (opt.rows-1) : get(_row_))
+          return min_max(0, 1, row)
         },
         frame: function(frame, opt, get){
           var
-            frame= frame != undefined ? round(frame) : get(_frame_),
-            rows= (opt.orbital ? 2 : opt.rows || 1),
-            frames= get(_frames_) * rows,
+            frames= get(_frames_) * (opt.orbital ? 2 : opt.rows || 1),
             result= opt.loops ? frame % frames || frames : min_max(1, frames, frame)
           return result < 0 ? result + frames : result
         }
@@ -945,7 +934,7 @@ jQuery.reel || (function($, window, document, undefined){
     _annotations_= 'annotations',
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
-    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', __frame_= '_frame',
+    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
