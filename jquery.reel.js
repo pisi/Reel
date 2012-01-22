@@ -146,9 +146,13 @@ jQuery.reel || (function($, window, document, undefined){
 
               // Data storage
               set= function(name, value){
-                data[name]= value;
+                try{ value= reel.normal[name](value, opt, get) }catch(e){ }
+                if (data[name] !== value){
+                  if (data[name] === undefined) data[name]= value
+                  else t.trigger(name+'Change', [ data[name]= value ]);
+                }
                 t.trigger('store', [name, value]);
-                return value;
+                return value
               },
               get= function(name){
                 var value= data[name];
