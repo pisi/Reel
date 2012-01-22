@@ -221,8 +221,8 @@ jQuery.reel || (function($, window, document, undefined){
                     data: data
                   });
                   opt.steppable || $overlay.unbind('click.steppable');
-                  rule(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
-                  rule(____+___+dot(klass), { display: _block_ });
+                  css(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
+                  css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
                   t.trigger('setup');
                 },
@@ -261,7 +261,7 @@ jQuery.reel || (function($, window, document, undefined){
                       area= set(_area_, $(opt.area || $overlay ))
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-                      rule(___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: get(_images_).length
+                      css(___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: get(_images_).length
                         ? undefined : get(_stitched_) && px(get(_stitched_))+___+px(space.y)
                         || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                       });
@@ -270,10 +270,10 @@ jQuery.reel || (function($, window, document, undefined){
                     }else{
                       var
                         cursor= opt.cursor == _hand_ ? drag_cursor : opt.cursor || reel_cursor,
-                        cursor_down= opt.cursor == _hand_ ? drag_cursor_down+___+'!important' : false
-                      rule(__, { cursor: cursor });
-                      rule(dot(loading_klass), { cursor: busy_cursor });
-                      rule(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor }, true);
+                        cursor_down= opt.cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
+                      css(__, { cursor: cursor });
+                      css(dot(loading_klass), { cursor: busy_cursor });
+                      css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor }, true);
                       area
                         .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return e.preventDefault() || !delta || t.trigger('wheel', [delta]) && false })
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
@@ -293,6 +293,8 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                     opt.indicator && $overlay.append(indicator(_x_));
                     opt.rows > 1 && opt.indicator && $overlay.append(indicator(_y_));
+                                && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
+                    css(___+dot(cached_klass), { display: _none_ });
                   },
                   preload: function(e){
                   /*
@@ -327,7 +329,7 @@ jQuery.reel || (function($, window, document, undefined){
                       uris.push(uri);
                     }
                     set(_cached_, uris);
-                    set(_style_, $('<'+_style_+' type="text/css">'+rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
+                    set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                   },
                   preloaded: function(e){
                     var
@@ -726,7 +728,7 @@ jQuery.reel || (function($, window, document, undefined){
               $monitor= $(),
               $preloader= $(),
               indicator= function(axis){
-                rule(___+dot(indicator_klass)+dot(axis), {
+                css(___+dot(indicator_klass)+dot(axis), {
                   position: _absolute_,
                   width: opt.indicator, height: opt.indicator,
                   overflow: _hidden_,
@@ -736,12 +738,16 @@ jQuery.reel || (function($, window, document, undefined){
               },
 
               // CSS rules & stylesheet
-              rules= [],
-              rule= function(selector, rule, global){
+              css= function(selector, definition, global){
                 var
                   stage= global ? __ : get(_stage_),
                   selector= selector.replace(/^/, stage).replace(____, ____+stage)
-                return rules.push(selector+css(rule)) && rule;
+                return css.rules.push(selector+cssize(definition)) && definition
+                function cssize(values){
+                  var rules= [];
+                  $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)+';') });
+                  return '{'+rules.join(__)+'}'
+                }
               },
               $style,
 
@@ -776,6 +782,7 @@ jQuery.reel || (function($, window, document, undefined){
                 })
                 return $ifr
               })()
+            css.rules= [];
             on.setup();
           });
 
@@ -1012,9 +1019,5 @@ jQuery.reel || (function($, window, document, undefined){
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
   function px(value){ return value === undefined || typeof value == _string_ ? value : value + _px_ }
   function hash(value){ return '#' + value }
-  function css(values){
-    var rules= [];
-    $.each(values, function(key, value){ rules.push(key.replace(/([A-Z])/g, '-$1').toLowerCase()+':'+px(value)) })
-    return '{'+rules.join(';')+';}';
   }
 })(jQuery, window, document);
