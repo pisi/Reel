@@ -777,14 +777,14 @@ jQuery.reel || (function($, window, document, undefined){
           ticker= ticker || (function tick(){
             var
               start= +new Date(),
-              tempo= leader(_tempo_);
+              tempo= leader(_tempo_),
+              ticker
             if (tempo){
               pool.trigger(_tick_);
               reel.cost= (+new Date() + reel.cost - start) / 2;
-              return ticker= setTimeout(tick, max(4, 1000 / tempo - reel.cost));
-            }else{
-              return ticker= undefined
+              ticker= setTimeout(tick, max(4, 1000 / tempo - reel.cost));
             }
+            return ticker
           })();
 
           return $(instances);
