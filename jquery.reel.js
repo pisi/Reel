@@ -105,7 +105,6 @@ jQuery.reel || (function($, window, document, undefined){
         preload:       'fidelity', // preloading order - either "linear" or "fidelity" (default)
         scrollable:          true, // allow page scroll (allowed by default; applies only to touch devices)
         steppable:           true, // allows to step the view (horizontally) by clicking on image
-        snaps:               true, // snaps to exact center points of frames and rows
         sequence:              '', // URL of sequence images containing the hash placeholder
         velocity:               0  // initial velocity of user interaction; washes off quickly with `brake`
       },

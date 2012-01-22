@@ -27,7 +27,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 7);
 
-    equal( count, 50, 'Total number of options');
+    equal( count, 49, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -87,7 +87,6 @@
     equal( $.reel.def.preload,           'fidelity', 'preloading order - either "linear" or "fidelity" (default)' );
     equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
     equal( $.reel.def.sequence,                  '', 'URL of sequence images containing the hash placeholder' );
-    equal( $.reel.def.snaps,                   true, 'snaps to exact center points of frames and rows' );
     equal( $.reel.def.steppable,               true, 'allows to step the view (horizontally) by clicking on image' );
     equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
   });
