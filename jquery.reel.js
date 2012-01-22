@@ -981,12 +981,11 @@ jQuery.reel || (function($, window, document, undefined){
 
   // Helpers
   $.fn.reelTriggerOnce= function(evnt, condition){
-    return try_now($(this))
-    function try_now($node){
+    return (function try_now($node){
       if (condition()) $node.trigger(evnt)
       else setTimeout(function(){ try_now($node) }, 100);
       return $node
-    }
+    })($(this))
   }
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
