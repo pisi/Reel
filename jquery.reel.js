@@ -970,8 +970,8 @@ jQuery.reel || (function($, window, document, undefined){
 
     DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
-  reel.touchy= (reel.re.touchy_agent).test(navigator.userAgent);
-  reel.lazy= (reel.re.lazy_agent).test(navigator.userAgent);
+  reel.touchy= (reel.re.touchy_agent).test(client);
+  reel.lazy= (reel.re.lazy_agent).test(client);
 
   // Double for missing plugin functions
   double_for('disableTextSelect enableTextSelect'.split(/ /));
