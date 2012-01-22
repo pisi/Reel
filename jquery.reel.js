@@ -613,7 +613,7 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'frameChange.annotations': function(e, frame){
-                    this.className= this.className.replace(frame_klass_pattern, frame_klass + frame);
+                    this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     if (!get(_velocity_)) $.each(get(_annotations_), function(ida, note){
                       var
                         $note= $(hash(ida)),
@@ -805,6 +805,7 @@ jQuery.reel || (function($, window, document, undefined){
         image:         /^(.*)\.(jpg|jpeg|png|gif)$/,
         touchy_agent:  /iphone|ipod|ipad|android/i,
         lazy_agent:    /iphone|ipod|android/i,
+        frame_klass:   /frame-\d+/,
         sequence:      /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/
       },
 
@@ -934,7 +935,6 @@ jQuery.reel || (function($, window, document, undefined){
     panning_klass= klass + '-panning',
     loading_klass= klass + '-loading',
     frame_klass= 'frame-',
-    frame_klass_pattern= /frame-\d+/,
 
     // Shortcuts
     round= Math.round, floor= Math.floor, ceil= Math.ceil,
