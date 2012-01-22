@@ -457,9 +457,10 @@ jQuery.reel || (function($, window, document, undefined){
                           origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
                         if (opt.rows > 1) var
                           space_y= get(_dimensions_).y,
+                          revolution_y= opt.rows > 3 ? space_y : space_y / (5 - opt.rows),
                           start= get(_clicked_row_),
-                          lo= - start * space_y,
-                          row= set(_row_, reel.math.envelope(y - origin.y, start, space_y, lo, lo + space_y, -1))
+                          lo= - start * revolution_y,
+                          row= set(_row_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
                         var
                           origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_)),
                           fraction= set(_fraction_, fraction)
