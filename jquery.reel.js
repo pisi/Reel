@@ -672,17 +672,17 @@ jQuery.reel || (function($, window, document, undefined){
                   /*
                   - ticker listener dedicated to opening animation
                   */
-                    if (opt.opening){
-                      if (get(_opening_ticks_) <= 0) return;
+                      var
+                        evnt= _tick_+dot(_opening_)
+                      if (!opt.opening || !get(_opening_ticks_)) return pool.unbind(evnt, on.pool[evnt]);
                       var
                         speed= opt.entry || opt.speed,
                         step= speed / leader(_tempo_) * (opt.cw? -1:1),
-                        ticks= set(_opening_ticks_, get(_opening_ticks_) - 1)
-                      if (ticks > 0) return;
-                      t.trigger('openingDone');
-                    }
-                    pool.unbind(_tick_+dot(_opening_), on.pool[_tick_+dot(_opening_)]);
+                        was= get(_fraction_),
+                        fraction= set(_fraction_, was + step),
+                        ticks= set(_opening_ticks_, get(_opening_ticks_) - 1),
                         fraction= set(_fraction_, get(_fraction_) + step)
+                      ticks || t.trigger('openingDone');
                   }
                 }
               },
