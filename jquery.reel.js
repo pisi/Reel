@@ -523,7 +523,7 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       fraction= get(_fraction_),
                       footage= opt.footage
-                    if (get(_vertical_)) var
+                    if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
                       frame= frame + footage
                     var
