@@ -281,18 +281,9 @@ jQuery.reel || (function($, window, document, undefined){
                     }
                     function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && r }}
                     opt.hint && area.attr(_title_, opt.hint);
-                    opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
-                                && rule(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
-                    rule(___+dot(cached_klass), { display: _none_ });
-                    rule(___+dot(preloader_klass), {
-                      position: _absolute_,
-                      left: 0, top: space.y - opt.preloader,
-                      height: opt.preloader,
-                      overflow: _hidden_,
-                      backgroundColor: _hex_black_
-                    });
                     opt.indicator && $overlay.append(indicator(_x_));
                     opt.rows > 1 && opt.indicator && $overlay.append(indicator(_y_));
+                    opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
                   },
@@ -311,7 +302,7 @@ jQuery.reel || (function($, window, document, undefined){
                       preload= is_sprite ? [image] : order(images.slice(0), opt, get),
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                       uris= []
-                    $overlay.addClass(loading_klass).append($preloader= $(tag(_div_), { 'class': preloader_klass }));
+                    $overlay.addClass(loading_klass).append(preloader());
                     t.trigger('stop');
                     while(preload.length){
                       var
@@ -572,13 +563,13 @@ jQuery.reel || (function($, window, document, undefined){
                         multirow= opt.rows > 1,
                         space= get(_dimensions_),
                         travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
-                        indicator= min_max(0, travel, round(reel.math.interpolate(get(_fraction_), -1, travel+2))),
-                        indicator= !opt.cw || opt.stitched ? indicator : travel - indicator,
-                        $indicator= $(dot(indicator_klass+dot(_x_)), stage).css(get(_vertical_) ? { left: 0, top: indicator } : { left: indicator, top: space.y - opt.indicator })
+                        indicate= min_max(0, travel, round(reel.math.interpolate(fraction, -1, travel+2))),
+                        indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
+                        $indicator= indicator.$x.css(get(_vertical_) ? { left: 0, top: indicate } : { left: indicate, top: space.y - opt.indicator })
                       if (multirow) var
                         ytravel= space.y - opt.indicator,
-                        yindicator= min_max(0, ytravel, round(reel.math.interpolate(get(_row_), -1, ytravel+2))),
-                        $yindicator= $(dot(indicator_klass+dot(_y_)), stage).css({ top: yindicator })
+                        yindicate= min_max(0, ytravel, round(reel.math.interpolate(get(_row_), -1, ytravel+2))),
+                        $yindicator= indicator.$y.css({ top: yindicate })
                     }
                   },
 
@@ -609,7 +600,7 @@ jQuery.reel || (function($, window, document, undefined){
                         $note= $note.attr({ id: ida }).addClass(annotation_klass),
                         $image= note.image ? $(tag(_img_), note.image) : $(),
                         $link= note.link ? $(tag(_a_), note.link) : $()
-                      rule(hash(ida), { display: _none_, position: _absolute_ }, true);
+                      css(hash(ida), { display: _none_, position: _absolute_ }, true);
                       $note.bind({
                         'click.annotations': function(e){
                           e.stopPropagation();
@@ -677,12 +668,12 @@ jQuery.reel || (function($, window, document, undefined){
                   'tick.reel.preload': function(e){
                     var
                       space= get(_dimensions_),
-                      current= parseInt($preloader.css(_width_)),
+                      current= parseInt(preloader.$.css(_width_)),
                       images= get(_images_).length || 1,
                       target= round(1 / images * get(_preloaded_) * space.x)
-                    $preloader.css({ width: current + (target - current) / 3 + 1 })
+                    preloader.$.css({ width: current + (target - current) / 3 + 1 })
                     if (get(_preloaded_) === images && current > space.x - 2){
-                      $preloader.fadeOut(300, function(){ $preloader.remove() });
+                      preloader.$.fadeOut(300, function(){ preloader.$.remove() });
                       pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     }
                   },
@@ -726,15 +717,24 @@ jQuery.reel || (function($, window, document, undefined){
               delay, // openingDone's delayed play pointer
 
               $monitor= $(),
-              $preloader= $(),
+              preloader= function(){
+                css(___+dot(preloader_klass), {
+                  position: _absolute_,
+                  left: 0, top: get(_dimensions_).y - opt.preloader,
+                  height: opt.preloader,
+                  overflow: _hidden_,
+                  backgroundColor: _hex_black_
+                });
+                return preloader.$= $(tag(_div_), { 'class': preloader_klass })
+              },
               indicator= function(axis){
                 css(___+dot(indicator_klass)+dot(axis), {
                   position: _absolute_,
                   width: opt.indicator, height: opt.indicator,
                   overflow: _hidden_,
                   backgroundColor: _hex_black_
-                })
-                return $(tag(_div_), { 'class': [indicator_klass, axis].join(___) })
+                });
+                return indicator['$'+axis]= $(tag(_div_), { 'class': indicator_klass+___+axis })
               },
 
               // CSS rules & stylesheet
