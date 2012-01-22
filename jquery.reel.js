@@ -367,7 +367,6 @@ jQuery.reel || (function($, window, document, undefined){
                       speed= set(_speed_, speed || get(_speed_)),
                       playing= set(_playing_, !!speed),
                       stopped= set(_stopped_, !playing)
-                    t.trigger('frameChange');
                     idle();
                   },
                   pause: function(e){
@@ -491,7 +490,7 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= delta && set(_backwards_, delta < 0),
                       velocity= set(_velocity_, 0)
                     unidle();
-                    t.trigger('up').trigger('fractionChange');
+                    t.trigger('up')
                     return false;
                   },
                   fractionChange: function(e, fraction){
@@ -511,7 +510,6 @@ jQuery.reel || (function($, window, document, undefined){
                       edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
                       bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
                       backwards= bounce && set(_backwards_, !get(_backwards_))
-                    t.trigger(multirow ? 'rowChange' : 'frameChange');
                   },
                   rowChange: function(e, row){
                   /*
@@ -523,7 +521,6 @@ jQuery.reel || (function($, window, document, undefined){
                       row= set(_row_, normal.row(row, opt, get)),
                       row_shift= min_max(0, opt.rows - 1, floor(row * (opt.rows))),
                       frame= set(_frame_, floor(frame + row_shift * opt.frames))
-                    t.trigger('frameChange');
                   },
                   frameChange: function(e, frame){
                   /*
@@ -587,12 +584,12 @@ jQuery.reel || (function($, window, document, undefined){
                   stepLeft: function(e){
                     unidle();
                     set(_backwards_, false);
-                    t.trigger('fractionChange', get(_fraction_) - get(_bit_) * get(_cwish_))
+                    set(_fraction_, get(_fraction_) - get(_bit_) * get(_cwish_));
                   },
                   stepRight: function(e){
                     unidle();
                     set(_backwards_, true);
-                    t.trigger('fractionChange', get(_fraction_) + get(_bit_) * get(_cwish_))
+                    set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
                   },
                   'click.steppable': function(e){
                     if (panned) return mute(e);
@@ -622,7 +619,6 @@ jQuery.reel || (function($, window, document, undefined){
                       note.link && note.image && $note.append($link.append($image));
                       $note.appendTo($overlay);
                     });
-                    t.trigger('frameChange.annotations');
                   },
                   'frameChange.annotations': function(e, frame){
                     var
@@ -704,9 +700,7 @@ jQuery.reel || (function($, window, document, undefined){
                       t.trigger('openingDone');
                     }
                     pool.unbind(_tick_+dot(_opening_), on.pool[_tick_+dot(_opening_)]);
-                  },
-
-                  'tick.reel.fu': function(e){ t.trigger('fractionChange') }
+                  }
                 }
               },
 
