@@ -414,14 +414,14 @@ jQuery.reel || (function($, window, document, undefined){
                     $(_html_, pools).removeClass(panning_klass);
                     pools.unbind(pns);
                   },
-                  snap: function(e){
+                  /*snap: function(e){
                     var
                       row= snap(_row_, opt.rows > 1, opt.rows),
                       fraction= snap(_fraction_, !get(_velocity_), get(_frames_))
                     function snap(name, condition, total){
                       if (condition && opt.snaps) return set(name, 1 / total * (min_max(0, total - 1, floor(get(name) * total)) + 0.5))
                     }
-                  },
+                  },*/
                   pan: function(e, x, y, ev){
                   /*
                   - calculates the X distance from drag center and applies graph on it to get fraction
@@ -632,8 +632,7 @@ jQuery.reel || (function($, window, document, undefined){
                   },
 
                   'setup.fu': function(){ t.trigger('preload') },
-                  'loaded.fu': function(){ t.trigger('opening') },
-                  'setup.fu up.fu': function(){ t.trigger('snap') }
+                  'loaded.fu': function(){ t.trigger('opening') }
 
                 },
                 pool: {
