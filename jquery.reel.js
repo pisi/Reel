@@ -584,7 +584,7 @@ jQuery.reel || (function($, window, document, undefined){
                     set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
                   },
                   'click.steppable': function(e){
-                    if (panned) return mute(e);
+                    if (panned) return mute(e, false);
                     t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
                   },
 
