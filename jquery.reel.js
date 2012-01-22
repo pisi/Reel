@@ -501,17 +501,23 @@ jQuery.reel || (function($, window, document, undefined){
                       edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
                       bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
                       backwards= bounce && set(_backwards_, !get(_backwards_))
+                    if (multirow) var
+                      row_shift= min_max(0, opt.rows - 1, floor(get(_row_) * opt.rows)),
+                      frame= floor(frame + row_shift * opt.frames)
+                    var
+                      frame= set(_frame_, frame)
                   },
                   rowChange: function(e, row){
                   /*
                   - recalculates frame from fraction in order to have fresh unshifted value
                   - shifts the stored frame to a desired row
                   */
-                    var
-                      frame= (get(_fraction_) / get(_bit_)) + 1,
-                      row= set(_row_, normal.row(row, opt, get)),
-                      row_shift= min_max(0, opt.rows - 1, floor(row * (opt.rows))),
-                      frame= set(_frame_, floor(frame + row_shift * opt.frames))
+/*                    var
+                      frame= log("frame in", get(_frame_)),
+                      frame= log("frame", round(get(_fraction_) * get(_frames_)) + 1), //(get(_fraction_) / get(_bit_)) + 1),
+                      //row= set(_row_, normal.row(row, opt, get)),
+                      row_shift= log("row shift", min_max(0, opt.rows - 1, floor(log("row row", row) * (opt.rows)))),
+                      frame= log("frame in row", set(_frame_, floor(log("FRAAME", frame) + row_shift * opt.frames)))*/
                   },
                   frameChange: function(e, frame){
                   /*
