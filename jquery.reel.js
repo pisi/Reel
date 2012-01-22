@@ -173,7 +173,7 @@ jQuery.reel || (function($, window, document, undefined){
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
                     sequence= reel.re.sequence.exec(set(_sequence_, opt.sequence)),
-                    images= set(_images_, sequence ? reel.build_sequence(sequence, opt, get) : opt.images),
+                    images= set(_images_, sequence ? reel.sequence(sequence, opt, get) : opt.images),
                     stitched= opt.stitched,
                     loops= opt.loops,
                     size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
@@ -885,7 +885,7 @@ jQuery.reel || (function($, window, document, undefined){
         }
       },
 
-      build_sequence: function(sequence, opt){
+      sequence: function(sequence, opt){
         if (sequence.length <= 1) return opt.images;
         var
           images= [],
