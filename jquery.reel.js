@@ -859,7 +859,6 @@ jQuery.reel || (function($, window, document, undefined){
             for(var i= 0; i < order.length; i++)
               order[i]= sequence[order[i] - 1];
             return order
-
             function add(frame){
               while(!(frame >= 1 && frame <= frames))
                 frame+= frame < 1 ? +frames : -frames;
@@ -922,7 +921,6 @@ jQuery.reel || (function($, window, document, undefined){
     client= navigator.userAgent,
     touchy= reel.touchy,
     ticker,
-    ticks= { before: 0, now: new Date() },
 
     // HTML classes
     klass= 'reel',
