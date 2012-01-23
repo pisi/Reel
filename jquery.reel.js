@@ -147,7 +147,7 @@ jQuery.reel || (function($, window, document, undefined){
                 try{ value= reel.normal[name](value, opt, get) }catch(e){ }
                 if (data[name] !== value){
                   if (data[name] === undefined) data[name]= value
-                  else t.trigger(name+'Change', [ data[name]= value ]);
+                  else t.trigger(name+'Change', [ undefined, data[name]= value ]);
                 }
                 t.trigger('store', [name, value]);
                 return value
@@ -485,13 +485,14 @@ jQuery.reel || (function($, window, document, undefined){
                     t.trigger('up')
                     return false;
                   },
-                  fractionChange: function(e, fraction){
+                  fractionChange: function(e, set_fraction, fraction){
                   /*
                   - calculates and changes sprite frame
                   - for non-looping panoramas
                       - keeps track of ticks spent on edge
                       - reverses motion direction if too long
                   */
+                    if (set_fraction !== undefined) return set(_fraction_, set_fraction);
                     var
                       frame= 1 + floor(fraction / get(_bit_)),
                       multirow= opt.rows > 1,
@@ -507,11 +508,12 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       frame= set(_frame_, frame)
                   },
-                  rowChange: function(e, row){
+                  rowChange: function(e, set_row, row){
                   /*
                   - recalculates frame from fraction in order to have fresh unshifted value
                   - shifts the stored frame to a desired row
                   */
+                    if (set_row !== undefined) return set(_row_, set_row);
 /*                    var
                       frame= log("frame in", get(_frame_)),
                       frame= log("frame", round(get(_fraction_) * get(_frames_)) + 1), //(get(_fraction_) / get(_bit_)) + 1),
@@ -519,13 +521,14 @@ jQuery.reel || (function($, window, document, undefined){
                       row_shift= log("row shift", min_max(0, opt.rows - 1, floor(log("row row", row) * (opt.rows)))),
                       frame= log("frame in row", set(_frame_, floor(log("FRAAME", frame) + row_shift * opt.frames)))*/
                   },
-                  frameChange: function(e, frame){
+                  frameChange: function(e, set_frame, frame){
                   /*
                   - rounds given frame (if any) and calculates fraction using it
                   - calculates sprite background position shift and applies it
                     or changes sprite image
                   - adjusts indicator position
                   */
+                    if (set_frame !== undefined) return set(_frame_, set_frame);
                     var
                       fraction= get(_fraction_),
                       footage= opt.footage
