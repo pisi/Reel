@@ -36,8 +36,6 @@ Development
 * Default height of the preloader progress bar reduced to 2 pixels.
 * Completely reworked, centralized and enhanced naked examples with descriptions.
 * The minimal required version of jQuery has been increased to 1.5.
-* When released (not thrown) or wheeled, the inner frame and row values
-  will snap to center points of their respective area.
 
 
 Version 1.1.3
