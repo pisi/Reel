@@ -111,9 +111,35 @@ jQuery.reel || (function($, window, document, undefined){
       // [deprecated] options defaults may be gone anytime soon
 
       fn: {
-        reel: function(options){
+        reel: function(/*
+          .reel( options )            // makes an image reel
+          .reel( name, [ value ] )    // interfaces reel image's control data
+        */){
           var
-            opt= $.extend({}, reel.def, options),
+            args= arguments,
+            t= $(this),
+            data= t.data(),
+            name= args[0],
+            value= args[1]
+          if (args.length == 2){
+            if (value !== undefined){
+              try{ value= reel.normal[name](value, data) }catch(e){ }
+              if (data[name] !== value){
+                if (data[name] === undefined) data[name]= value
+                else t.trigger(name+'Change', [ undefined, data[name]= value ]);
+              }
+            }
+            return t.trigger('store', [name, value]);
+
+          }else if (typeof name == 'string'){
+            var
+              value= data[name]
+            t.trigger('recall', [name, value]);
+            return value;
+
+          }else{
+          var
+            opt= $.extend({}, reel.def, name),
             applicable= (function(tags){
               // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
               var
@@ -140,23 +166,10 @@ jQuery.reel || (function($, window, document, undefined){
           applicable.each(function(){
             var
               t= $(this),
-              data= t.data(),
 
-              // Data storage
-              set= function(name, value){
-                try{ value= reel.normal[name](value, opt, get) }catch(e){ }
-                if (data[name] !== value){
-                  if (data[name] === undefined) data[name]= value
-                  else t.trigger(name+'Change', [ undefined, data[name]= value ]);
-                }
-                t.trigger('store', [name, value]);
-                return value
-              },
-              get= function(name){
-                var value= data[name];
-                t.trigger('recall', [name, value]);
-                return value;
-              },
+              // Quick data interface
+              set= function(name, value){ return t.reel(name, value) && value },
+              get= function(name){ return t.reel(name) },
 
               // Events & handlers
               on= {
@@ -864,16 +877,17 @@ jQuery.reel || (function($, window, document, undefined){
 
       // Normalizations
       normal: {
-        fraction: function(fraction, opt, get){
-          return opt.loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
+        fraction: function(fraction, data){
+          return data[_options_].loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
         },
-        row: function(row, opt, get){
+        row: function(row, data){
           return min_max(0, 1, row)
         },
-        frame: function(frame, opt, get){
+        frame: function(frame, data){
           var
-            frames= get(_frames_) * (opt.orbital ? 2 : opt.rows || 1),
-            result= opt.loops ? frame % frames || frames : min_max(1, frames, frame)
+            opt= data[_options_],
+            frames= data[_frames_] * (opt.orbital ? 2 : opt.rows || 1),
+            result= round(opt.loops ? frame % frames || frames : min_max(1, frames, frame))
           return result < 0 ? result + frames : result
         }
       },
