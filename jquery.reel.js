@@ -251,7 +251,7 @@ jQuery.reel || (function($, window, document, undefined){
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
                     get(_area_).enableTextSelect();
-                    remove_instance(t.unbind(ns).siblings().unbind(ns).remove().end().attr({
+                    remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
                       src: backup.src,
                       style: backup.style

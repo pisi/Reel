@@ -92,9 +92,9 @@
     expect(1);
     var
       $reel= $('#image').reel(),
-      value= $reel.reel('something', 5)
+      value= 5
 
-    // Try some random data values
+    $reel.reel('something', value);
     equal( $reel.reel('something'), value, '`"something"` value set' )
 
   });
@@ -119,7 +119,6 @@
 
   });
 
-
   test( 'Setting a value for the first time does not trigger change event', function(){
 
     expect(1);
@@ -136,6 +135,34 @@
 
   });
 
+  test( 'Instance data get cleared on teardown and original data are recovered from the backup', function(){
+
+    expect(12);
+    var
+      value= 5,
+      key= 'test_probe',
+      value= 'test_value',
+      $image= $('#image').data(key, value),
+      $reel= $image.reel()
+
+    ok( $image.data(key), 'Test probe key exists in the data prior to `.reel()` call');
+    equal( $image.data(key), value, 'And it indeed is our verified probe');
+
+    $image.reel();
+    ok( $image.data(key), 'Test probe exists even in the running instance after the `.reel() call');
+    equal( $image.data(key), value, 'And it still is the same probe');
+    ok( is('Number', $image.data('frame')), 'Instance data are accessible (`"frame"`)');
+    ok( is('Object', $image.data('dimensions')), 'Instance data are gone (`"dimensions"`)');
+    ok( is('Array', $image.data('images')), 'Instance data are accessible (`"images"`)');
+
+    $image.unreel();
+    ok( $image.data(key), 'Test probe is still present even after `.unreel() call');
+    equal( $image.data(key), value, 'And it is our probe');
+    ok( is('Undefined', $image.data('frame')), 'Instance data are gone (`"frame"`)');
+    ok( is('Undefined', $image.data('dimensions')), 'Instance data are gone (`"dimensions"`)');
+    ok( is('Undefined', $image.data('images')), 'Instance data are gone (`"images"`)');
+
+  });
 
 
 })(jQuery);
