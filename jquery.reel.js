@@ -801,6 +801,7 @@ jQuery.reel || (function($, window, document, undefined){
           })();
 
           return $(instances);
+          }
         },
 
         unreel: function(){
