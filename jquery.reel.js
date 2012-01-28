@@ -496,7 +496,7 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= bounce && set(_backwards_, !get(_backwards_))
                     if (multirow) var
                       row_shift= min_max(0, opt.rows - 1, floor(get(_row_) * opt.rows)),
-                      frame= floor(frame + row_shift * opt.frames)
+                      frame= frame + row_shift * opt.frames
                     var
                       frame= set(_frame_, frame)
                   },
