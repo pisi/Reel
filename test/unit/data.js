@@ -164,5 +164,16 @@
 
   });
 
+  test( 'Options used in `.reel(options)` call are stored in `"options"` data key', function(){
+
+    expect(2);
+    var
+      path= 'test_path',
+      $reel= $('#image').reel({ path: path })
+
+    equal( $reel.data('options').path, path, '`path` key exists and equals');
+    equal( $reel.data('options').frames, 36, 'along with defaults for all other options');
+
+  });
 
 })(jQuery);

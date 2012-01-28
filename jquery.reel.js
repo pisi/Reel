@@ -179,6 +179,7 @@ jQuery.reel || (function($, window, document, undefined){
                 - binds to ticker
                 */
                   if (t.hasClass(klass)) return;
+                  set(_options_, opt);
                   var
                     src= t.attr(opt.attr).attr(_src_),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
@@ -198,7 +199,6 @@ jQuery.reel || (function($, window, document, undefined){
                     $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
-                  set(_options_, opt);
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
@@ -227,7 +227,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_center_, !!opt.orbital);
                   set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
                   set(_opening_ticks_, -1);
-                  set(_annotations_, opt.annotations) || $overlay.unbind(dot(_annotations_));
+                  set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
                   set(_backup_, {
                     src: src,
                     classes: classes,
@@ -509,7 +509,7 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= bounce && set(_backwards_, !get(_backwards_))
                     if (multirow) var
                       row_shift= min_max(0, opt.rows - 1, floor(get(_row_) * opt.rows)),
-                      frame= floor(frame + row_shift * opt.frames)
+                      frame= frame + row_shift * opt.frames
                     var
                       frame= set(_frame_, frame)
                   },
@@ -519,12 +519,11 @@ jQuery.reel || (function($, window, document, undefined){
                   - shifts the stored frame to a desired row
                   */
                     if (set_row !== undefined) return set(_row_, set_row);
-/*                    var
-                      frame= log("frame in", get(_frame_)),
-                      frame= log("frame", round(get(_fraction_) * get(_frames_)) + 1), //(get(_fraction_) / get(_bit_)) + 1),
-                      //row= set(_row_, normal.row(row, opt, get)),
-                      row_shift= log("row shift", min_max(0, opt.rows - 1, floor(log("row row", row) * (opt.rows)))),
-                      frame= log("frame in row", set(_frame_, floor(log("FRAAME", frame) + row_shift * opt.frames)))*/
+                    var
+                      frames= get(_frames_),
+                      frame= get(_frame_) % frames || frames,
+                      row_shift= min_max(0, opt.rows - 1, floor(row * opt.rows)),
+                      frame= set(_frame_, frame + row_shift * opt.frames)
                   },
                   frameChange: function(e, set_frame, frame){
                   /*
@@ -684,17 +683,15 @@ jQuery.reel || (function($, window, document, undefined){
                   /*
                   - ticker listener dedicated to opening animation
                   */
-                      var
-                        evnt= _tick_+dot(_opening_)
-                      if (!opt.opening || !get(_opening_ticks_)) return pool.unbind(evnt, on.pool[evnt]);
-                      var
-                        speed= opt.entry || opt.speed,
-                        step= speed / leader(_tempo_) * (opt.cw? -1:1),
-                        was= get(_fraction_),
-                        fraction= set(_fraction_, was + step),
-                        ticks= set(_opening_ticks_, get(_opening_ticks_) - 1),
-                        fraction= set(_fraction_, get(_fraction_) + step)
-                      ticks || t.trigger('openingDone');
+                    var
+                      evnt= _tick_+dot(_opening_)
+                    if (!opt.opening || !get(_opening_ticks_)) return pool.unbind(evnt, on.pool[evnt]);
+                    var
+                      speed= opt.entry || opt.speed,
+                      step= speed / leader(_tempo_) * (opt.cw? -1:1),
+                      ticks= set(_opening_ticks_, get(_opening_ticks_) - 1),
+                      fraction= set(_fraction_, get(_fraction_) + step)
+                    ticks || t.trigger('openingDone');
                   }
                 }
               },

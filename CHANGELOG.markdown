@@ -36,6 +36,9 @@ Development
 * Default height of the preloader progress bar reduced to 2 pixels.
 * Completely reworked, centralized and enhanced naked examples with descriptions.
 * The minimal required version of jQuery has been increased to 1.5.
+* A brand new data interface with automatic change events is in place
+  for easy external control of the instance. See
+  [Data](/pisi/Reel/wiki/Data) for more.
 
 
 Version 1.1.3
