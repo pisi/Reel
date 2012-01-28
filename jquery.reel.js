@@ -948,10 +948,11 @@ jQuery.reel || (function($, window, document, undefined){
     // Events
     ns= dot(klass),
     pns= '.pan' + ns,
-    _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
-    _mouseleave_= 'mouseleave'+pns, _mousemove_= 'mousemove'+pns, _mouseup_= 'mouseup'+pns,
-    _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+pns,
-    _touchend_= 'touchend'+pns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+pns,
+    _touch_= 'touch', _mouse_= 'mouse',
+    _mousedown_= _mouse_+'down'+ns, _mouseenter_= _mouse_+'enter'+ns,
+    _mouseleave_= _mouse_+'leave'+pns, _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns,
+    _mousewheel_= _mouse_+'wheel'+ns, _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns,
+    _touchend_= _touch_+'end'+pns, _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
 
     // Various string primitives
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _a_= 'a', _block_= 'block', _cur_= 'cur', _div_= 'div',
