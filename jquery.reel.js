@@ -522,6 +522,7 @@ jQuery.reel || (function($, window, document, undefined){
                   - adjusts indicator position
                   */
                     if (set_frame !== undefined) return set(_frame_, set_frame);
+                    this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
                       fraction= get(_fraction_),
                       footage= opt.footage
@@ -609,7 +610,6 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'frameChange.annotations': function(e, frame){
-                    this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     if (!get(_velocity_)) $.each(get(_annotations_), function(ida, note){
                       var
                         $note= $(hash(ida)),
