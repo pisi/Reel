@@ -133,10 +133,6 @@ jQuery.reel || (function($, window, document, undefined){
             })(this),
             instances= []
 
-          // Backward-compatibility of [deprecated] legacy options
-          opt.tooltip && (opt.hint= opt.tooltip);
-          opt.hotspot && (opt.area= opt.hotspot);
-
           applicable.each(function(){
             var
               t= $(this),
