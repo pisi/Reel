@@ -166,6 +166,7 @@ jQuery.reel || (function($, window, document, undefined){
                 - binds to ticker
                 */
                   if (t.hasClass(klass)) return;
+                  set(_options_, opt);
                   var
                     src= t.attr(opt.attr).attr(_src_),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
@@ -185,7 +186,6 @@ jQuery.reel || (function($, window, document, undefined){
                     $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
-                  set(_options_, opt);
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
