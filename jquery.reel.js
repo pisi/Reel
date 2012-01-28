@@ -214,7 +214,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_center_, !!opt.orbital);
                   set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
                   set(_opening_ticks_, -1);
-                  set(_annotations_, opt.annotations) || $overlay.unbind(dot(_annotations_));
+                  set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
                   set(_backup_, {
                     src: src,
                     classes: classes,
