@@ -186,12 +186,11 @@ jQuery.reel || (function($, window, document, undefined){
                     stitched= opt.stitched,
                     loops= opt.loops,
                     size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
-                    frame= set(_frame_, opt.frame),
                     frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
                     rows= stitched ? 1 : ceil(frames / opt.footage),
                     stage_id= hash(id+opt.suffix),
                     classes= t.attr('class') || __,
-                    $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+frame }),
+                    $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+'0' }),
                     $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
@@ -199,7 +198,9 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
                   set(_dimensions_, size);
-                  set(_fraction_, 0);
+                  set(_frame_, undefined);
+                  set(_fraction_, undefined);
+                  set(_row_, undefined);
                   set(_steps_, opt.steps || opt.frames);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_rows_, rows);
@@ -212,7 +213,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_velocity_, opt.velocity || 0);
                   set(_vertical_, opt.vertical);
                   set(_preloaded_, 0);
-                  set(_row_, (opt.row - 1) / (opt.rows - 1));
                   set(_cwish_, negative_when(1, !opt.cw && !stitched));
                   set(_clicked_location_, {});
                   set(_clicked_, false);
@@ -296,6 +296,7 @@ jQuery.reel || (function($, window, document, undefined){
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
                     var
+                      row= set(_row_, (opt.row - 1) / (opt.rows - 1)),
                       fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1))
                   },
                   preload: function(e){
@@ -529,6 +530,7 @@ jQuery.reel || (function($, window, document, undefined){
                   - adjusts indicator position
                   */
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
+                    this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
                       fraction= get(_fraction_),
                       footage= opt.footage
@@ -616,7 +618,6 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'frameChange.annotations': function(e, frame){
-                    this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     if (!get(_velocity_)) $.each(get(_annotations_), function(ida, note){
                       var
                         $note= $(hash(ida)),
