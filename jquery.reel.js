@@ -929,8 +929,9 @@ jQuery.reel || (function($, window, document, undefined){
     frame_klass= 'frame-',
 
     // Shortcuts
-    round= Math.round, floor= Math.floor, ceil= Math.ceil,
-    min= Math.min, max= Math.max, abs= Math.abs, sqrt= Math.sqrt,
+    math= Math,
+    round= math.round, floor= math.floor, ceil= math.ceil,
+    min= math.min, max= math.max, abs= math.abs, sqrt= math.sqrt,
     number= parseInt,
 
     // Storage keys
