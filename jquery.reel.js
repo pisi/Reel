@@ -913,7 +913,6 @@ jQuery.reel || (function($, window, document, undefined){
     browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
     ie= $.browser.msie,
     client= navigator.userAgent,
-    touchy= reel.touchy,
     ticker,
 
     // HTML classes
@@ -968,10 +967,10 @@ jQuery.reel || (function($, window, document, undefined){
     drag_cursor= url(cdn(_jquery_reel_+'-'+_drag_+dot(_cur_)))+____+_move_,
     drag_cursor_down= url(cdn(_jquery_reel_+'-'+_drag_+'-down'+dot(_cur_)))+____+_move_,
 
-    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
+    touchy= reel.touchy= (reel.re.touchy_agent).test(client),
+    lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
-  reel.touchy= (reel.re.touchy_agent).test(client);
-  reel.lazy= (reel.re.lazy_agent).test(client);
+    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
   // Double for missing plugin functions
   double_for('disableTextSelect enableTextSelect'.split(/ /));
