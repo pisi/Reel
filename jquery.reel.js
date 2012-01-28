@@ -323,13 +323,14 @@ jQuery.reel || (function($, window, document, undefined){
                         height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
                         $img= $(tag(_img_)).attr({ 'class': cached_klass }).appendTo($overlay)
                       // The actual loading of the image is done asynchronously
-                      setTimeout(function(){
+                      load(uri, $img);
+                      uris.push(uri);
+                      function load(uri, $img){ setTimeout(function(){
                         if ($img.parent().length){
                           $img.attr({ src: uri, width: width, height: height });
                           t.reelTriggerOnce('preloaded', function(){ return !!$img.parent().length && $img[0].complete })
                         }
-                      }, uris.length - preload.length);
-                      uris.push(uri);
+                      }, uris.length - preload.length) }
                     }
                     set(_cached_, uris);
                     set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
@@ -339,8 +340,8 @@ jQuery.reel || (function($, window, document, undefined){
                       images= get(_images_).length || 1,
                       preloaded= set(_preloaded_, min(get(_preloaded_) + 1, images))
                     if (preloaded === images){
-                      t.parent().removeClass(loading_klass);
-                      t.unbind(_preloaded_, on.instance.preloaded).trigger('loaded')
+                      t.parent().removeClass(loading_klass).unbind(_preloaded_, on.instance.preloaded);
+                      t.trigger('loaded');
                     }
                   },
                   loaded: function(e){
@@ -640,6 +641,18 @@ jQuery.reel || (function($, window, document, undefined){
 
                 },
                 pool: {
+                  'tick.reel.preload': function(e){
+                    var
+                      space= get(_dimensions_),
+                      current= parseInt(preloader.$.css(_width_)),
+                      images= get(_images_).length || 1,
+                      target= round(1 / images * get(_preloaded_) * space.x)
+                    preloader.$.css({ width: current + (target - current) / 3 + 1 })
+                    if (get(_preloaded_) === images && current > space.x - 1){
+                      preloader.$.fadeOut(300, function(){ preloader.$.remove() });
+                      pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
+                    }
+                  },
                   'tick.reel': function(e){
                   /*
                   - triggered by pool's `tick.reel` event
@@ -663,18 +676,6 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
                       step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                       fraction= set(_fraction_, get(_fraction_) - step * backwards)
-                  },
-                  'tick.reel.preload': function(e){
-                    var
-                      space= get(_dimensions_),
-                      current= parseInt(preloader.$.css(_width_)),
-                      images= get(_images_).length || 1,
-                      target= round(1 / images * get(_preloaded_) * space.x)
-                    preloader.$.css({ width: current + (target - current) / 3 + 1 })
-                    if (get(_preloaded_) === images && current > space.x - 2){
-                      preloader.$.fadeOut(300, function(){ preloader.$.remove() });
-                      pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
-                    }
                   },
                   'tick.reel.opening': function(e){
                   /*

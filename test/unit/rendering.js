@@ -335,4 +335,25 @@
     });
   });
 
+  asyncTest( 'Instance being preloaded has a "hourglass" cursor to indicate the pending loading', function(){
+    expect(3);
+    var
+      frames= 5,
+      $reel= $('#image').reel({
+        frames: frames,
+        preload: 'linear', // Using linear for simplicity of testing the last frame
+        sequence: '###.jpg'
+      })
+
+    setTimeout(function(){
+      var
+        $images= $reel.siblings('img.reel-cached')
+
+      equal( $images.length, frames, frames+' cached images found');
+      equal( $images.first().attr('src'), '001.jpg', 'First cache image `src` is set');
+      ok( $images.first().attr('src') != $images.last().attr('src'), '`src` of last image differs from the first');
+      start();
+    }, 100);
+  });
+
 })(jQuery);
