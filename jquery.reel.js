@@ -568,19 +568,20 @@ jQuery.reel || (function($, window, document, undefined){
                     }
                   },
 
-                  stepLeft: function(e){
+                  'click.steppable': function(e){
+                    if (panned) return mute(e, false);
+                    t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
+                  },
+                  'stepLeft stepRight': function(e){
                     unidle();
+                  },
+                  stepLeft: function(e){
                     set(_backwards_, false);
                     set(_fraction_, get(_fraction_) - get(_bit_) * get(_cwish_));
                   },
                   stepRight: function(e){
-                    unidle();
                     set(_backwards_, true);
                     set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
-                  },
-                  'click.steppable': function(e){
-                    if (panned) return mute(e, false);
-                    t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
                   },
 
                   'setup.annotations': function(e){
