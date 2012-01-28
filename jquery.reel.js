@@ -666,8 +666,7 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
                       step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
-                      was= get(_fraction_),
-                      fraction= set(_fraction_, was - step * backwards)
+                      fraction= set(_fraction_, get(_fraction_) - step * backwards)
                   },
                   'tick.reel.preload': function(e){
                     var
