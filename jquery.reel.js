@@ -655,7 +655,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (braking) var
                       braked= velocity - (get(_brake_) / leader(_tempo_) * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
-                    $monitor.text(get(opt.monitor));
+                    opt.monitor && $monitor.text(get(opt.monitor));
                     velocity && braking++;
                     operated && operated++;
                     to_bias(0);
