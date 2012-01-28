@@ -506,12 +506,11 @@ jQuery.reel || (function($, window, document, undefined){
                   - shifts the stored frame to a desired row
                   */
                     if (set_row !== undefined) return set(_row_, set_row);
-/*                    var
-                      frame= log("frame in", get(_frame_)),
-                      frame= log("frame", round(get(_fraction_) * get(_frames_)) + 1), //(get(_fraction_) / get(_bit_)) + 1),
-                      //row= set(_row_, normal.row(row, opt, get)),
-                      row_shift= log("row shift", min_max(0, opt.rows - 1, floor(log("row row", row) * (opt.rows)))),
-                      frame= log("frame in row", set(_frame_, floor(log("FRAAME", frame) + row_shift * opt.frames)))*/
+                    var
+                      frames= get(_frames_),
+                      frame= get(_frame_) % frames || frames,
+                      row_shift= min_max(0, opt.rows - 1, floor(row * opt.rows)),
+                      frame= set(_frame_, frame + row_shift * opt.frames)
                   },
                   frameChange: function(e, set_frame, frame){
                   /*
