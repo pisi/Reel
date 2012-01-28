@@ -5,7 +5,7 @@
 
   module('Rendering', reel_test_module_routine);
 
-  asyncTest( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
+  test( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
     expect(3);
     var
       $reel_with_id= $('#image').reel(),
@@ -17,10 +17,9 @@
     // The generated ID consists of "reel-" followed by a timestamp
     equal( $reel_without_id.attr('id').substr(0, 5), 'reel-');
     equal( Math.floor(+$reel_without_id.attr('id').substr(5) / 10000), Math.floor(+new Date() / 10000));
-    start();
   });
 
-  asyncTest( 'Overlay: is created with proper ID', function(){
+  test( 'Overlay: is created with proper ID', function(){
     expect(1);
     var
       suffix= '-abc',
@@ -28,17 +27,15 @@
       $overlay= $('#image' + suffix)
 
     ok( $overlay.length, 'Has the right ID (original image ID + `suffix`)' );
-    start();
   });
 
-  asyncTest( 'Overlay: has the proper `reel-overlay` class', function(){
+  test( 'Overlay: has the proper `reel-overlay` class', function(){
     expect(1);
     var
       $reel= $('#image').reel(),
       $overlay= $('#image-reel')
 
     ok( $overlay.hasClass('reel-overlay'), 'Has the class');
-    start();
   });
 
   asyncTest( 'Indicator: is sticked to the bottom edge of the container', function(){
@@ -68,7 +65,7 @@
     }
   });
 
-  asyncTest( 'Indicator: `indicator` option value is the size of the indicator', function(){
+  asyncTest( 'Indicator: `indicator` option value is the height of the indicator', function(){
     expect(6);
     var
       samples= [5, 10, 30],
@@ -79,12 +76,13 @@
     function try_sizes_one_by_one(){
       var
         size= samples[index],
-        $reel= $('#image').reel({ indicator: size }),
+        $reel= $('#image').reel({ indicator: size, speed: 2 }),
+        portion= Math.round($('#image').width() / 36),
         $indicator= $('#image-reel .reel-indicator')
 
-      $reel.parent().bind('loaded.test', function(){
+      $reel.parent().one('fractionChange.test', function(){
         index++;
-        equiv( $indicator.css('width'), size );
+        equiv( $indicator.css('width'), portion );
         equiv( $indicator.css('height'), size );
         if (index == samples.length){
           start();
@@ -113,11 +111,12 @@
     });
   });
 
-  asyncTest( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){
+  test( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){
     expect(1);
     var
-      size= 10,
-      $reel= $('#image').reel({ indicator: size }),
+      $image= $('#image'),
+      weight= $image.width() / 36,
+      $reel= $image.reel({ indicator: 10 }),
       width= parseInt($reel.css('width')),
       $indicator= $('#image-reel .reel-indicator');
 
@@ -149,7 +148,7 @@
     })
   });
 
-  asyncTest( 'Indicator: Custom style may be applied to indicator via `.reel-indicator`', function(){
+  test( 'Indicator: Custom style may be applied to indicator via `.reel-indicator`', function(){
     expect(2);
     var
       $reel= $('#image').reel({ indicator: 10 }),
@@ -161,13 +160,11 @@
     })
     equiv( $indicator.css('backgroundColor'), '#ffffff', 'Custom background' );
     equiv( $indicator.css('opacity'), '0.5', 'Custom opacity' );
-    start();
   });
 
-  asyncTest( 'Indicator:  is disabled (not rendered) when `indicator` option evaluates false', function(){
+  test( 'Indicator:  is disabled (not rendered) when `indicator` option evaluates false', function(){
     expect(3);
     try_different_values([false, undefined, 0]);
-    start();
 
     function try_different_values(values){
       $(values).each(function try_value(ix, value){
@@ -220,7 +217,7 @@
     });
   });
 
-  asyncTest( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
+  test( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
     expect(4);
     var
       $reel= $('#image').reel(),
@@ -232,10 +229,9 @@
 
     $reel.unreel();
     ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
-    start();
   });
 
-  asyncTest( 'Instance wrapper carries a class name defined by the `klass` option', function(){
+  test( 'Instance wrapper carries a class name defined by the `klass` option', function(){
     expect(2);
     var
       $reel= $('#image').reel({
@@ -244,8 +240,6 @@
 
     ok( $reel.parent().is('.my_own_class'), '`.my_own_class` it is on the wrapper');
     ok( !$reel.parent().find('.my_own_class').length, 'and not anywhere within');
-
-    start();
   });
 
   asyncTest( 'When no `cursor` option is specified, default cursor is used', function(){

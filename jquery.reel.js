@@ -231,6 +231,7 @@ jQuery.reel || (function($, window, document, undefined){
                     data: data
                   });
                   opt.steppable || $overlay.unbind('click.steppable');
+                  opt.indicator || $overlay.unbind('.indicator');
                   css(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
@@ -563,20 +564,6 @@ jQuery.reel || (function($, window, document, undefined){
                         shift= [-x + _px_, y + _px_]
                       t.css({ backgroundPosition: shift.join(___) })
                     }
-                    if (opt.indicator){
-                      var
-                        stage= get(_stage_),
-                        multirow= opt.rows > 1,
-                        space= get(_dimensions_),
-                        travel= (get(_vertical_) ? space.y : space.x) - opt.indicator,
-                        indicate= min_max(0, travel, round(reel.math.interpolate(fraction, -1, travel+2))),
-                        indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
-                        $indicator= indicator.$x.css(get(_vertical_) ? { left: 0, top: indicate } : { left: indicate, top: space.y - opt.indicator })
-                      if (multirow) var
-                        ytravel= space.y - opt.indicator,
-                        yindicate= min_max(0, ytravel, round(reel.math.interpolate(get(_row_), -1, ytravel+2))),
-                        $yindicator= indicator.$y.css({ top: yindicate })
-                    }
                   },
 
                   'click.steppable': function(e){
@@ -593,6 +580,32 @@ jQuery.reel || (function($, window, document, undefined){
                   stepRight: function(e){
                     set(_backwards_, true);
                     set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
+                  },
+
+                  'fractionChange.indicator': function(e, deprecated_set, fraction){
+                    if (deprecated_set === undefined && opt.indicator) var
+                      space= get(_dimensions_),
+                      travel= opt.orbital && get(_vertical_) ? space.y : space.x,
+                      slots= opt.orbital ? opt.footage : opt.images.length || opt.frames || opt.steps,
+                      size= opt.indicator,
+                      weight= ceil(travel / slots),
+                      travel= travel - weight,
+                      indicate= round(fraction * travel),
+                      indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
+                      $indicator= indicator.$x.css(get(_vertical_)
+                      ? { left: 0, top: px(indicate), bottom: null, width: size, height: weight }
+                      : { bottom: 0, left: px(indicate), top: null, width: weight, height: size })
+                  },
+                  'rowChange.indicator': function(e, deprecated_set, row){
+                    if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
+                      space= get(_dimensions_),
+                      travel= space.y,
+                      slots= opt.rows,
+                      size= opt.indicator,
+                      weight= ceil(travel / opt.rows),
+                      travel= travel - weight,
+                      indicate= round(row * travel),
+                      $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
                   },
 
                   'setup.annotations': function(e){
@@ -726,7 +739,7 @@ jQuery.reel || (function($, window, document, undefined){
               indicator= function(axis){
                 css(___+dot(indicator_klass)+dot(axis), {
                   position: _absolute_,
-                  width: opt.indicator, height: opt.indicator,
+                  width: 0, height: 0,
                   overflow: _hidden_,
                   backgroundColor: _hex_black_
                 });
