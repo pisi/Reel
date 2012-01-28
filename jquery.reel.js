@@ -159,10 +159,6 @@ jQuery.reel || (function($, window, document, undefined){
             })(this),
             instances= []
 
-          // Backward-compatibility of [deprecated] legacy options
-          opt.tooltip && (opt.hint= opt.tooltip);
-          opt.hotspot && (opt.area= opt.hotspot);
-
           applicable.each(function(){
             var
               t= $(this),
@@ -924,7 +920,6 @@ jQuery.reel || (function($, window, document, undefined){
     browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
     ie= $.browser.msie,
     client= navigator.userAgent,
-    touchy= reel.touchy,
     ticker,
 
     // HTML classes
@@ -940,8 +935,9 @@ jQuery.reel || (function($, window, document, undefined){
     frame_klass= 'frame-',
 
     // Shortcuts
-    round= Math.round, floor= Math.floor, ceil= Math.ceil,
-    min= Math.min, max= Math.max, abs= Math.abs, sqrt= Math.sqrt,
+    math= Math,
+    round= math.round, floor= math.floor, ceil= math.ceil,
+    min= math.min, max= math.max, abs= math.abs, sqrt= math.sqrt,
     number= parseInt,
 
     // Storage keys
@@ -958,10 +954,11 @@ jQuery.reel || (function($, window, document, undefined){
     // Events
     ns= dot(klass),
     pns= '.pan' + ns,
-    _mousedown_= 'mousedown'+ns, _mouseenter_= 'mouseenter'+ns,
-    _mouseleave_= 'mouseleave'+pns, _mousemove_= 'mousemove'+pns, _mouseup_= 'mouseup'+pns,
-    _mousewheel_= 'mousewheel'+ns, _tick_= 'tick'+ns, _touchcancel_= 'touchcancel'+pns,
-    _touchend_= 'touchend'+pns, _touchstart_= 'touchstart'+ns, _touchmove_= 'touchmove'+pns,
+    _touch_= 'touch', _mouse_= 'mouse',
+    _mousedown_= _mouse_+'down'+ns, _mouseenter_= _mouse_+'enter'+ns,
+    _mouseleave_= _mouse_+'leave'+pns, _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns,
+    _mousewheel_= _mouse_+'wheel'+ns, _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns,
+    _touchend_= _touch_+'end'+pns, _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
 
     // Various string primitives
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _a_= 'a', _block_= 'block', _cur_= 'cur', _div_= 'div',
@@ -977,10 +974,10 @@ jQuery.reel || (function($, window, document, undefined){
     drag_cursor= url(cdn(_jquery_reel_+'-'+_drag_+dot(_cur_)))+____+_move_,
     drag_cursor_down= url(cdn(_jquery_reel_+'-'+_drag_+'-down'+dot(_cur_)))+____+_move_,
 
-    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
+    touchy= reel.touchy= (reel.re.touchy_agent).test(client),
+    lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
-  reel.touchy= (reel.re.touchy_agent).test(client);
-  reel.lazy= (reel.re.lazy_agent).test(client);
+    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
   // Double for missing plugin functions
   double_for('disableTextSelect enableTextSelect'.split(/ /));
