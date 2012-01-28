@@ -497,7 +497,7 @@ jQuery.reel || (function($, window, document, undefined){
                       - keeps track of ticks spent on edge
                       - reverses motion direction if too long
                   */
-                    if (set_fraction !== undefined) return set(_fraction_, set_fraction);
+                    if (set_fraction !== undefined) return deprecated(set(_fraction_, set_fraction));
                     var
                       frame= 1 + floor(fraction / get(_bit_)),
                       multirow= opt.rows > 1,
@@ -532,7 +532,7 @@ jQuery.reel || (function($, window, document, undefined){
                     or changes sprite image
                   - adjusts indicator position
                   */
-                    if (set_frame !== undefined) return set(_frame_, set_frame);
+                    if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     var
                       fraction= get(_fraction_),
                       footage= opt.footage
@@ -1012,4 +1012,5 @@ jQuery.reel || (function($, window, document, undefined){
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
   function px(value){ return value === undefined || typeof value == _string_ ? value : value + _px_ }
   function hash(value){ return '#' + value }
+  function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);
