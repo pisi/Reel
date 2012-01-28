@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.3-devel
- * Updated: 2012-01-19
+ * Updated: 2012-01-28
  *
  * Requires jQuery 1.5 or higher
  */
@@ -1015,5 +1015,4 @@ jQuery.reel || (function($, window, document, undefined){
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
   function px(value){ return value === undefined || typeof value == _string_ ? value : value + _px_ }
   function hash(value){ return '#' + value }
-  }
 })(jQuery, window, document);
