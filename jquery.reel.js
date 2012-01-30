@@ -201,6 +201,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_frame_, undefined);
                   set(_fraction_, undefined);
                   set(_row_, undefined);
+                  set(_tier_, undefined);
                   set(_steps_, opt.steps || opt.frames);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_rows_, rows);
@@ -297,7 +298,7 @@ jQuery.reel || (function($, window, document, undefined){
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
                     var
-                      row= set(_row_, (opt.row - 1) / (opt.rows - 1)),
+                      tier= set(_tier_, (opt.row - 1) / (opt.rows - 1)),
                       fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1))
                   },
                   preload: function(e){
@@ -391,7 +392,7 @@ jQuery.reel || (function($, window, document, undefined){
                         clicked= set(_clicked_, get(_frame_)),
                         velocity= set(_velocity_, 0),
                         scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
-                        origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
+                        origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_tier_))
                       unidle();
                       no_bias();
                       panned= false;
@@ -457,15 +458,15 @@ jQuery.reel || (function($, window, document, undefined){
                           backwards= motion && set(_backwards_, motion < 0)
                         if (opt.orbital && get(_center_)) var
                           vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
-                          origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
+                          origin= recenter_mouse(x, y, fraction, revolution, get(_tier_))
                         if (opt.rows > 1) var
                           space_y= get(_dimensions_).y,
                           revolution_y= opt.rows > 3 ? space_y : space_y / (5 - opt.rows),
                           start= get(_clicked_row_),
                           lo= - start * revolution_y,
-                          row= set(_row_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
+                          tier= set(_tier_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
                         var
-                          origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_)),
+                          origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_tier_)),
                           fraction= set(_fraction_, fraction)
                       }
                     }
@@ -481,7 +482,7 @@ jQuery.reel || (function($, window, document, undefined){
                       delta= ceil(sqrt(abs(distance)) / 2),
                       delta= negative_when(delta, distance > 0),
                       revolution= 0.0833 * get(_revolution_), // Wheel's revolution is 1/12 of full revolution
-                      origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_row_)),
+                      origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_tier_)),
                       backwards= delta && set(_backwards_, delta < 0),
                       velocity= set(_velocity_, 0),
                       fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
@@ -772,7 +773,7 @@ jQuery.reel || (function($, window, document, undefined){
               normal= reel.normal,
 
               // Resets the interaction graph's zero point
-              recenter_mouse= function(x, y, fraction, revolution, row){
+              recenter_mouse= function(x, y, fraction, revolution, tier){
                 set(_clicked_on_, fraction);
                 set(_clicked_row_, row);
                 set(_lo_, opt.loops ? 0 : - fraction * revolution);
@@ -889,8 +890,11 @@ jQuery.reel || (function($, window, document, undefined){
         fraction: function(fraction, data){
           return data[_options_].loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
         },
+        tier: function(tier, data){
+          return min_max(0, 1, tier)
+        },
         row: function(row, data){
-          return min_max(0, 1, row)
+          return round(min_max(1, data[_options_].rows, row))
         },
         frame: function(frame, data){
           var
@@ -964,7 +968,7 @@ jQuery.reel || (function($, window, document, undefined){
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier', _velocity_= 'velocity',
     _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
