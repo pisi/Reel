@@ -217,7 +217,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_cwish_, negative_when(1, !opt.cw && !stitched));
                   set(_clicked_location_, {});
                   set(_clicked_, false);
-                  set(_clicked_on_, set(_clicked_row_, 0));
+                  set(_clicked_on_, set(_clicked_tier_, 0));
                   set(_lo_, set(_hi_, 0));
                   set(_reeling_, false);
                   set(_brake_, opt.brake);
@@ -462,7 +462,7 @@ jQuery.reel || (function($, window, document, undefined){
                         if (opt.rows > 1) var
                           space_y= get(_dimensions_).y,
                           revolution_y= opt.rows > 3 ? space_y : space_y / (5 - opt.rows),
-                          start= get(_clicked_row_),
+                          start= get(_clicked_tier_),
                           lo= - start * revolution_y,
                           tier= set(_tier_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
                         var
@@ -775,7 +775,7 @@ jQuery.reel || (function($, window, document, undefined){
               // Resets the interaction graph's zero point
               recenter_mouse= function(x, y, fraction, revolution, tier){
                 set(_clicked_on_, fraction);
-                set(_clicked_row_, row);
+                set(_clicked_tier_, tier);
                 set(_lo_, opt.loops ? 0 : - fraction * revolution);
                 set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
                 return x && set(_clicked_location_, { x: x, y: y }) || undefined
@@ -963,7 +963,7 @@ jQuery.reel || (function($, window, document, undefined){
     // Storage keys
     _annotations_= 'annotations',
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
-    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
+    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',

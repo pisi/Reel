@@ -28,7 +28,7 @@
     ok( is('Boolean', $reel.reel('clicked')), '`clicked` Boolean');
     ok( is('Object', $reel.reel('clicked_location')), '`clicked_location` Object');
     ok( is('Number', $reel.reel('clicked_on')), '`clicked_on` Number');
-    ok( is('Number', $reel.reel('clicked_row')), '`clicked_row` Number');
+    ok( is('Number', $reel.reel('clicked_tier')), '`clicked_tier` Number');
     ok( is('Number', $reel.reel('cwish')), '`cwish` Number');
     ok( is('Object', $reel.reel('dimensions')), '`dimensions` Object');
     ok( is('Number', $reel.reel('fraction')), '`fraction` Number');
