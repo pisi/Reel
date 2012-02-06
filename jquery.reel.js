@@ -401,7 +401,7 @@ jQuery.reel || (function($, window, document, undefined){
                         .bind(_touchmove_, drag(!scrollable))
                         .bind(_touchend_+___+_touchcancel_, lift())
                       }else{
-                        pools
+                        (opt.clickfree ? get(_area_) : pools)
                         .bind(_mousemove_, drag())
                         .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift())
                       }
@@ -984,7 +984,7 @@ jQuery.reel || (function($, window, document, undefined){
     _width_= 'width', _x_= 'x', _y_= 'y',
 
     // Image resources
-    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') || cdn('blank.gif'),
+    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7'),
     busy_cursor= 'wait',
     reel_cursor= url(cdn(_jquery_reel_+dot(_cur_)))+____+_move_,
     drag_cursor= url(cdn(_jquery_reel_+'-'+_drag_+dot(_cur_)))+____+_move_,
