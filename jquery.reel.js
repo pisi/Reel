@@ -1002,11 +1002,11 @@ jQuery.reel || (function($, window, document, undefined){
   $.extend($.fn, reel.fn);
 
   // Helpers
-    return (function try_now($node){
-      else setTimeout(function(){ try_now($node) }, 100);
   $.fn.reelTriggerOnce= function(evnt, condition, abort){
+    if (this.is(dot(klass))) return (function try_trigger_now($node){
       if (abort()) return $node
       else if (condition()) $node.trigger(evnt)
+      else setTimeout(function(){ try_trigger_now($node) }, 100);
       return $node
     })($(this))
   }
