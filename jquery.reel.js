@@ -421,7 +421,7 @@ jQuery.reel || (function($, window, document, undefined){
                       reeling= set(_reeling_, false),
                       velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
                       brakes= braking= velocity ? 1 : 0
-                    velocity ? idle() : unidle();
+                    unidle();
                     no_bias();
                     $(_html_, pools).removeClass(panning_klass);
                     pools.unbind(pns);
