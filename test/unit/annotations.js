@@ -38,8 +38,7 @@
         }
       })
 
-    // Positioning of annotations happens at `frameChange`
-    $reel.one('frameChange.test', function(){
+    $reel.one('loaded.test', function(){
       ok( !!$('div#my_annotation').length, 'Node present');
       //ok( $('#my_annotation').is(':visible'), 'Node visible');
       ok( $('#my_annotation').is(':contains(Some text)'), 'Node text content');
@@ -69,8 +68,7 @@
         }
       })
 
-    // Positioning of annotations happens at `frameChange`
-    $reel.one('frameChange.test', function(){
+    $reel.one('loaded.test', function(){
       ok( !!$('div#my_annotation').length, 'Node node present');
       ok( !!$('div#my_annotation img').length, 'Wrapping an image node');
       equal( $('#my_annotation img').attr('src'), 'resources/badge-1.gif', 'Image `src`');
@@ -80,7 +78,7 @@
     });
   });
 
-  asyncTest( '`link` holds a collection of HTML attributes used for an `a` tag inside the node', function(){
+  test( '`link` holds a collection of HTML attributes used for an `a` tag inside the node', function(){
     expect(8);
     var
       selector= '#image',
@@ -103,20 +101,15 @@
         }
       })
 
-    // Positioning of annotations happens at `frameChange`
-    $reel.one('frameChange.test', function(){
-      ok( !!$('div#text_link').length, 'Node node present');
-      ok( !!$('div#text_link a').length, 'Wrapping a link node');
-      equal( $('#text_link a').attr('href'), 'http://some/location', 'Link `href`');
-      equal( $('#text_link a').text(), 'Click to navigate away', '`title`');
+    ok( !!$('div#text_link').length, 'Node node present');
+    ok( !!$('div#text_link a').length, 'Wrapping a link node');
+    equal( $('#text_link a').attr('href'), 'http://some/location', 'Link `href`');
+    equal( $('#text_link a').text(), 'Click to navigate away', '`title`');
 
-      ok( !!$('div#image_link').length, 'Node node present');
-      ok( !!$('div#image_link > a > img').length, 'Wrapping a link node wrapping an image node');
-      equal( $('#image_link a').attr('href'), 'http://some/location', 'Link `href`');
-      equal( $('#image_link img').attr('src'), 'some/my/image.jpg', 'Image `src`');
-
-      start();
-    });
+    ok( !!$('div#image_link').length, 'Node node present');
+    ok( !!$('div#image_link > a > img').length, 'Wrapping a link node wrapping an image node');
+    equal( $('#image_link a').attr('href'), 'http://some/location', 'Link `href`');
+    equal( $('#image_link img').attr('src'), 'some/my/image.jpg', 'Image `src`');
   });
 
   asyncTest( 'Frame-based visibility annotation control properties `start` and `end`', function(){
@@ -143,7 +136,6 @@
       checked= [],
       $annotation= $('#my_annotation')
 
-    // Positioning of annotations happens at `frameChange`
     // and we test it bubbled up to instance's parent
     $reel.parent().bind('frameChange.test', function(){
       var

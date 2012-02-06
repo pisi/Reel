@@ -632,8 +632,8 @@ jQuery.reel || (function($, window, document, undefined){
                       $note.appendTo($overlay);
                     });
                   },
-                  'frameChange.annotations': function(e, frame){
-                    if (!get(_velocity_)) $.each(get(_annotations_), function(ida, note){
+                  'frameChange.annotations': function(e, deprecation, frame){
+                    if (deprecation === undefined && !get(_velocity_)) $.each(get(_annotations_), function(ida, note){
                       var
                         $note= $(hash(ida)),
                         start= note.start || 1,
