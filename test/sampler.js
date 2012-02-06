@@ -12,13 +12,18 @@
 
   yepnope( {
     load: [
-      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7.1')+'.min.js',
+      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7')+'.min.js',
       'lib/vendor/jquery.cookie-min.js'
     ],
     complete: function(){
 
       $('#control_events button').click(function(){
-        $('#image', $('#test_stage').contents()).trigger( $(this).text() );
+        var
+          command= $(this).text()
+
+        with(frames.test_stage){
+          $('#image').trigger( command );
+        }
       });
 
       $('.samples li a').click(function(e){

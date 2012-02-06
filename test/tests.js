@@ -5,12 +5,13 @@
 
   yepnope( {
     load: [
-      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7.1')+'.min.js',
       '../jquery.reel-min.js',
+      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7')+'.min.js',
       'lib/vendor/jquery.disabletextselect-min.js',
       'lib/vendor/jquery.mousewheel-min.js',
 
       'lib/vendor/qunit.js',
+      'lib/vendor/jquery.cookie-min.js',
       'lib/quny.js',
 
       //'unit/parameters.js',
@@ -124,7 +125,7 @@
       }
 
       $('#against-jquery-versions')
-      .val( location.params.jq || '1.7.1' )
+      .val( location.params.jq || '1.7' )
       .change( function(){
         var url= ''
         if( location.params.jq === undefined ){

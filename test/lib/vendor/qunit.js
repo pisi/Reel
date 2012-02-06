@@ -46,8 +46,24 @@ var QUnit = {
 	module: function(name, testEnvironment) {
 		config.currentModule = name;
 
-		var jq = location.params.jq ? '&jq=' + location.params.jq : '';
-		$(function(){ $('<li/>').append($('<a/>', { href: '?' + name + jq, text: name })).appendTo($('#qunit-modules')); });
+		var jq = location.params.jq ? '&jq=' + location.params.jq : '',
+      cookie_id = function(name){ return 'test:module#' + name + '-pass' },
+      module_cookie = $.cookie(cookie_id(name)),
+      module_class= module_cookie === null ? 'void' : module_cookie == 'true' ? 'ok' : 'failure';
+
+		$('<li/>', { 'class': module_class }).append($('<a/>', { href: '?' + name + jq, text: name })).appendTo($('#qunit-modules'));
+
+    QUnit.moduleDone = function(name, failures, total) {
+      if ( total > 1 ) {
+        $.cookie('test:module#' + name + '-pass', !failures);
+        var $li = $('#qunit-modules li:contains(' + name + ')');
+        if ( failures ) {
+          $li.addClass('failure').removeClass('ok void');
+        }else{
+          $li.addClass('ok').removeClass('failure void');
+        }
+      }
+    }
 
 		synchronize(function() {
 			if ( config.currentModule ) {

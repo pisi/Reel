@@ -220,10 +220,10 @@ body.done #qunit-thanks {
 }
 
 ul#qunit-modules{
-	background-color:#ddd;
+	background-color:#222;
   border-bottom: 1px solid #333;
 	margin:0;
-	padding:0 0 1em 2em;
+	padding:.4em 0 .5em 2em;
 	color:#fff;
 }
 ul#qunit-modules li{
@@ -231,8 +231,15 @@ ul#qunit-modules li{
 	list-style-type: none;
 	margin-right: 5px;
 }
+ul#qunit-modules li.void a{
+  color: #575757;
+}
+ul#qunit-modules li.failure a{
+  color: #EE5757;
+  font-weight: bold;
+}
 ul#qunit-modules li a{
-	color:#2b81af;
+	color:#C6E746;
 }
 #qunit-filter-pass, #qunit-filter-missing{
   color: #eee;
