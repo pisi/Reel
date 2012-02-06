@@ -317,6 +317,7 @@ jQuery.reel || (function($, window, document, undefined){
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());
+                    set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     t.trigger('stop');
                     while(preload.length){
                       var
@@ -335,7 +336,6 @@ jQuery.reel || (function($, window, document, undefined){
                       }, (to_load - preload.length) * 2) }
                     }
                     set(_cached_, uris);
-                    set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                   },
                   preloaded: function(e){
                     var
