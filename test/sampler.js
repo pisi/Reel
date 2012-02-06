@@ -18,7 +18,12 @@
     complete: function(){
 
       $('#control_events button').click(function(){
-        $('#image', $('#test_stage').contents()).trigger( $(this).text() );
+        var
+          command= $(this).text()
+
+        with(frames.test_stage){
+          $('#image').trigger( command );
+        }
       });
 
       $('.samples li a').click(function(e){
