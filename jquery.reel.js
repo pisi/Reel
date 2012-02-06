@@ -560,7 +560,7 @@ jQuery.reel || (function($, window, document, undefined){
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
                       else var
-                        x= round(fraction * get(_stitched_travel_)),
+                        x= round(interpolate(fraction, 0, get(_stitched_travel_))),
                         y= 0,
                         shift= [-x + _px_, y + _px_]
                       t.css({ backgroundPosition: shift.join(___) })
@@ -591,7 +591,7 @@ jQuery.reel || (function($, window, document, undefined){
                       size= opt.indicator,
                       weight= ceil(travel / slots),
                       travel= travel - weight,
-                      indicate= round(fraction * travel),
+                      indicate= round(interpolate(fraction, 0, travel)),
                       indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
                       $indicator= indicator.$x.css(get(_vertical_)
                       ? { left: 0, top: px(indicate), bottom: null, width: size, height: weight }
@@ -955,6 +955,7 @@ jQuery.reel || (function($, window, document, undefined){
     round= math.round, floor= math.floor, ceil= math.ceil,
     min= math.min, max= math.max, abs= math.abs, sqrt= math.sqrt,
     number= parseInt,
+    interpolate= reel.math.interpolate,
 
     // Storage keys
     _annotations_= 'annotations',
