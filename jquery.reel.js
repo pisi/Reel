@@ -313,6 +313,7 @@ jQuery.reel || (function($, window, document, undefined){
                       frames= get(_frames_),
                       order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
                       preload= is_sprite ? [image] : order(images.slice(0), opt, get),
+                      to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());
@@ -331,7 +332,7 @@ jQuery.reel || (function($, window, document, undefined){
                           $img.attr({ src: uri, width: width, height: height });
                           t.reelTriggerOnce('preloaded', function(){ return $img[0].complete }, function(){ return !$img.parent().length })
                         }
-                      }, uris.length - preload.length) }
+                      }, (to_load - preload.length) * 2) }
                     }
                     set(_cached_, uris);
                     set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
