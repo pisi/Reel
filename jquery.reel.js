@@ -219,6 +219,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_clicked_on_, set(_clicked_row_, 0));
                   set(_lo_, set(_hi_, 0));
                   set(_reeling_, false);
+                  set(_opening_, false);
                   set(_brake_, opt.brake);
                   set(_center_, !!opt.orbital);
                   set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
@@ -356,6 +357,8 @@ jQuery.reel || (function($, window, document, undefined){
                   */
                     if (!opt.opening) return t.trigger('openingDone');
                     var
+                      opening= set(_opening_, true),
+                      stopped= set(_stopped_, !get(_speed_)),
                       speed= opt.entry || opt.speed,
                       end= get(_fraction_),
                       duration= opt.opening,
@@ -363,7 +366,10 @@ jQuery.reel || (function($, window, document, undefined){
                       ticks= set(_opening_ticks_, duration * leader(_tempo_))
                   },
                   openingDone: function(e){
-                    if (opt.delay) delay= setTimeout(function play(){ t.trigger('play') }, opt.delay * 1000)
+                    var
+                      playing= set(_playing_, false),
+                      opening= set(_opening_, false)
+                    if (opt.delay > 0) delay= setTimeout(function play(){ t.trigger('play') }, opt.delay * 1000)
                     else t.trigger('play');
                   },
                   play: function(e, speed){
@@ -690,7 +696,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (get(_opening_ticks_) > 0) return;
                     var
                       backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
-                      step= (get(_stopped_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
+                      step= (!get(_playing_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                       fraction= set(_fraction_, get(_fraction_) - step * backwards)
                   },
                   'tick.reel.opening': function(e){
@@ -963,7 +969,7 @@ jQuery.reel || (function($, window, document, undefined){
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
-    _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
+    _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',

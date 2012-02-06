@@ -39,6 +39,7 @@
     ok( is('String', $reel.reel('image')), '`image` String');
     ok( is('Array', $reel.reel('images')), '`images` Object');
     ok( is('Number', $reel.reel('lo')), '`lo` Number');
+    ok( is('Boolean', $reel.reel('opening')), '`opening` Boolean');
     ok( is('Number', $reel.reel('opening_ticks')), '`opening_ticks` Number');
     ok( is('Object', $reel.reel('options')), '`options` Object');
     ok( is('Boolean', $reel.reel('playing')), '`playing` Boolean');
