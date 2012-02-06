@@ -57,6 +57,7 @@
     ok( is('Boolean', $reel.reel('stopped')), '`stopped` Boolean');
     ok( is('Object', $reel.reel('style')), '`style` Object/jQuery');
     ok( is('Number', $reel.reel('tempo')), '`tempo` Number');
+    ok( is('Number', $reel.reel('tier')), '`tier` Number');
     ok( is('Number', $reel.reel('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.reel('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.reel('wheel_step')), '`wheel_step` Number');
@@ -173,6 +174,49 @@
 
     equal( $reel.data('options').path, path, '`path` key exists and equals');
     equal( $reel.data('options').frames, 36, 'along with defaults for all other options');
+
+  });
+
+  $.each({
+    'tier2row': {
+      change: 'tier', verify: 'row',
+      samples: [ 0.99, 0.5, 0.03, .6, 0.1 ],
+      options: {
+        rows: 3
+      }
+    },
+    'tier2frame': {
+      change: 'tier', verify: 'frame',
+      samples: [ 0.99, 0.5, 0.03, .6, 0.1 ],
+      options: {
+        rows: 3
+      }
+    }
+  }, function(name, def){
+
+    test( 'Change events: Changing `"'+def.change+'"` results in a `"'+def.verify+'"` change', function(){
+
+      var
+        $reel= $('#image').reel(def.options),
+        before
+
+      expect(def.samples.length * 2);
+
+      $.each(def.samples, function(ix, sample){
+
+        $reel.one(def.change+'Change.test', function(evnt, depr, probe){
+          equal( probe, sample, 'Change had been reported with the `"'+def.change+'Change"` event');
+        });
+
+        $reel.one(def.verify+'Change.test', function(evnt, depr, probe){
+          ok( probe != before, 'Change had been reported with the `"'+def.verify+'Change"` event');
+        });
+
+        before= $reel.reel(def.verify);
+        $reel.reel(def.change, sample);
+      });
+
+    });
 
   });
 

@@ -513,6 +513,13 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       frame= set(_frame_, frame)
                   },
+                  tierChange: function(e, deprecated_set, tier){
+                    if (deprecated_set === undefined && opt.rows > 1) var
+                      row= set(_row_, round(interpolate(tier, 1, opt.rows))),
+                      frames= get(_frames_),
+                      frame= get(_frame_) % frames || frames,
+                      frame= set(_frame_, frame + row * frames - frames)
+                  },
                   rowChange: function(e, set_row, row){
                   /*
                   - recalculates frame from fraction in order to have fresh unshifted value
@@ -597,7 +604,7 @@ jQuery.reel || (function($, window, document, undefined){
                       ? { left: 0, top: px(indicate), bottom: null, width: size, height: weight }
                       : { bottom: 0, left: px(indicate), top: null, width: weight, height: size })
                   },
-                  'rowChange.indicator': function(e, deprecated_set, row){
+                  'tierChange.indicator': function(e, deprecated_set, tier){
                     if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
                       space= get(_dimensions_),
                       travel= space.y,
@@ -605,7 +612,7 @@ jQuery.reel || (function($, window, document, undefined){
                       size= opt.indicator,
                       weight= ceil(travel / opt.rows),
                       travel= travel - weight,
-                      indicate= round(row * travel),
+                      indicate= round(tier * travel),
                       $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
                   },
 

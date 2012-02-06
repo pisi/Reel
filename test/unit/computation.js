@@ -32,6 +32,7 @@
   });
 
   asyncTest( '`rowChange` accepts and normalizes any real row fraction passed', function(){
+  asyncTest( '`.reel("tier")` accepts and normalizes any real row tier passed', function(){
     expect(7);
     var
       selector= '#image',
@@ -47,8 +48,31 @@
       }
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
-        $reel.trigger('rowChange', Number(ix));
-        equal( $reel.data('row').toFixed(4), it, 'Fraction '+ix);
+        $reel.reel('tier', Number(ix));
+        equal( $reel.data('tier').toFixed(4), it, 'Tier '+ix);
+      });
+      start();
+    });
+  });
+
+  asyncTest( '`.reel("row")` accepts and normalizes any real row fraction passed', function(){
+    expect(7);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ rows: 3 }),
+      entries= {
+        '4': 3,
+        '-2.1': 1,
+        '1.8': 2,
+        '0.4': 1,
+        '-0.3': 1,
+        '1.23456': 1,
+        '-1.23456': 1
+      }
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('row', Number(ix));
+        equal( $reel.reel('row').toFixed(4), it, 'Fraction '+ix);
       });
       start();
     });
