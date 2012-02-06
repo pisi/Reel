@@ -5,7 +5,7 @@
 
   module('Computation', reel_test_module_routine);
 
-  asyncTest( '`fractionChange` accepts and normalizes any real fraction passed', function(){
+  asyncTest( '(Deprecated) `fractionChange` accepts and normalizes any real fraction passed', function(){
     expect(10);
     var
       selector= '#image',
@@ -31,7 +31,64 @@
     });
   });
 
-  asyncTest( '`rowChange` accepts and normalizes any real row fraction passed', function(){
+  asyncTest( '(Deprecated) `rowChange` accepts and normalizes any real row fraction passed', function(){
+    expect(7);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ rows: 3 }),
+      entries= {
+        '4': 3,
+        '-2.1': 1,
+        '1.8': 2,
+        '0.4': 1,
+        '-0.3': 1,
+        '1.23456': 1,
+        '-1.23456': 1
+      }
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.trigger('rowChange', Number(ix));
+        equal( $reel.data('row').toFixed(4), it, 'Fraction '+ix);
+      });
+      start();
+    });
+  });
+
+  asyncTest( '(Deprecated) `frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
+    expect(19);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ frames: 15, rows: 2 }),
+      entries= {
+        '1': 1,
+        '2': 2,
+        '20': 20,
+        '0': 30,
+        '30': 30,
+        '31': 1,
+        '25.3': 25,
+        '50': 20,
+        '60': 30,
+        '90': 30,
+        '-1': 29,
+        '-2': 28,
+        '-5': 25,
+        '-29': 1,
+        '-30': 30,
+        '-31': 29,
+        '-37': 23,
+        '-60': 30,
+        '-90': 30
+      }
+    $reel.bind('loaded.test', function(){
+      $.each(entries, function(ix,it){
+        $reel.trigger('frameChange', Number(ix));
+        equal( $reel.data('frame'), it, 'Frame '+ix);
+      });
+    });
+  });
+
+  asyncTest( '`.reel("tier")` accepts and normalizes any real row tier passed', function(){
     expect(7);
     var
       selector= '#image',
@@ -47,14 +104,63 @@
       }
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
-        $reel.trigger('rowChange', Number(ix));
-        equal( $reel.data('row').toFixed(4), it, 'Fraction '+ix);
+        $reel.reel('tier', Number(ix));
+        equal( $reel.data('tier').toFixed(4), it, 'Tier '+ix);
       });
       start();
     });
   });
 
-  asyncTest( '`frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
+  asyncTest( '`.reel("row")` accepts and normalizes any real row fraction passed', function(){
+    expect(7);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ rows: 3 }),
+      entries= {
+        '4': 3,
+        '-2.1': 1,
+        '1.8': 2,
+        '0.4': 1,
+        '-0.3': 1,
+        '1.23456': 1,
+        '-1.23456': 1
+      }
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('row', Number(ix));
+        equal( $reel.reel('row').toFixed(4), it, 'Fraction '+ix);
+      });
+      start();
+    });
+  });
+
+  asyncTest( '`.reel("fraction")` accepts and normalizes any real fraction passed', function(){
+    expect(10);
+    var
+      selector= '#image',
+      $reel= $(selector).reel(),
+      entries= {
+        '3': 0,
+        '-2.1': 0.9,
+        '-3.7': 0.3,
+        '1.8': 0.8,
+        '3.4': 0.4,
+        '3.5': 0.5,
+        '-0.3': 0.7,
+        '1.23456': 0.2346,
+        '-1.23456': 0.7654,
+        '-1.2': 0.8
+      }
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('fraction', Number(ix));
+        equal( $reel.reel('fraction').toFixed(4), it, 'Passed '+ix);
+      });
+      start();
+    });
+  });
+
+  asyncTest( '`.reel("frame")` accepts and normalizes any frame passed across all rows or orbits', function(){
     expect(19);
     var
       selector= '#image',
@@ -82,8 +188,8 @@
       }
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
-        $reel.trigger('frameChange', Number(ix));
-        equal( $reel.data('frame'), it, 'Frame '+ix);
+        $reel.reel('frame', Number(ix));
+        equal( $reel.reel('frame'), it, 'Frame '+ix);
       });
       start();
     });

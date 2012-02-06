@@ -28,7 +28,7 @@
     ok( is('Boolean', $reel.reel('clicked')), '`clicked` Boolean');
     ok( is('Object', $reel.reel('clicked_location')), '`clicked_location` Object');
     ok( is('Number', $reel.reel('clicked_on')), '`clicked_on` Number');
-    ok( is('Number', $reel.reel('clicked_row')), '`clicked_row` Number');
+    ok( is('Number', $reel.reel('clicked_tier')), '`clicked_tier` Number');
     ok( is('Number', $reel.reel('cwish')), '`cwish` Number');
     ok( is('Object', $reel.reel('dimensions')), '`dimensions` Object');
     ok( is('Number', $reel.reel('fraction')), '`fraction` Number');
@@ -58,6 +58,8 @@
     ok( is('Boolean', $reel.reel('stopped')), '`stopped` Boolean');
     ok( is('Object', $reel.reel('style')), '`style` Object/jQuery');
     ok( is('Number', $reel.reel('tempo')), '`tempo` Number');
+    ok( is('Number', $reel.reel('tier')), '`tier` Number');
+    ok( is('Number', $reel.reel('vbit')), '`vbit` Number');
     ok( is('Number', $reel.reel('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.reel('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.reel('wheel_step')), '`wheel_step` Number');
@@ -174,6 +176,78 @@
 
     equal( $reel.data('options').path, path, '`path` key exists and equals');
     equal( $reel.data('options').frames, 36, 'along with defaults for all other options');
+
+  });
+
+  $.each({
+    'frame2fraction': {
+      change: 'frame', verify: 'fraction',
+      samples: [ 10, 36, 18, 19, 9, 3, 1 ],
+      options: {
+        frame: 3
+      }
+    },
+    'frame2tier': {
+      change: 'frame', verify: 'tier',
+      samples: [ 40, 36, 70, 60, 108, 3, 91 ],
+      options: {
+        rows: 3,
+        frame: 3
+      }
+    },
+    'row2tier': {
+      change: 'row', verify: 'tier',
+      samples: [ 5, 1, 3, 6, 2 ],
+      options: {
+        rows: 6,
+        frames: 12
+      }
+    },
+    'fraction2frame': {
+      change: 'fraction', verify: 'frame',
+      samples: [ 0.1, 0.5, 0.03, .6, 0.99 ],
+      options: {
+      }
+    },
+    'tier2row': {
+      change: 'tier', verify: 'row',
+      samples: [ 0.99, 0.5, 0.03, .6, 0.1 ],
+      options: {
+        rows: 3
+      }
+    },
+    'tier2frame': {
+      change: 'tier', verify: 'frame',
+      samples: [ 0.99, 0.5, 0.03, .6, 0.1 ],
+      options: {
+        rows: 3
+      }
+    }
+  }, function(name, def){
+
+    test( 'Change events: Changing `"'+def.change+'"` results in a `"'+def.verify+'"` change', function(){
+
+      var
+        $reel= $('#image').reel(def.options),
+        before
+
+      expect(def.samples.length * 2);
+
+      $.each(def.samples, function(ix, sample){
+
+        $reel.one(def.change+'Change.test', function(evnt, depr, probe){
+          equal( probe, sample, 'Change had been reported with the `"'+def.change+'Change"` event');
+        });
+
+        $reel.one(def.verify+'Change.test', function(evnt, depr, probe){
+          ok( probe != before, 'Change had been reported with the `"'+def.verify+'Change"` event');
+        });
+
+        before= $reel.reel(def.verify);
+        $reel.reel(def.change, sample);
+      });
+
+    });
 
   });
 

@@ -166,6 +166,7 @@ jQuery.reel || (function($, window, document, undefined){
               // Quick data interface
               set= function(name, value){ return t.reel(name, value) && value },
               get= function(name){ return t.reel(name) },
+              preset= function(name, value){ return t.data(name, value) && value },
 
               // Events & handlers
               on= {
@@ -197,14 +198,14 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
+                  set(_rows_, rows);
                   set(_dimensions_, size);
-                  set(_frame_, undefined);
-                  set(_fraction_, undefined);
-                  set(_row_, undefined);
+                  preset(_frame_, preset(_row_, 0));
+                  preset(_tier_, preset(_fraction_, -1));
                   set(_steps_, opt.steps || opt.frames);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
-                  set(_rows_, rows);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
+                  set(_vbit_, 1 / (rows - 1));
                   set(_wheel_step_, 1 / max(frames, get(_steps_)));
                   set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
@@ -216,7 +217,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_cwish_, negative_when(1, !opt.cw && !stitched));
                   set(_clicked_location_, {});
                   set(_clicked_, false);
-                  set(_clicked_on_, set(_clicked_row_, 0));
+                  set(_clicked_on_, set(_clicked_tier_, 0));
                   set(_lo_, set(_hi_, 0));
                   set(_reeling_, false);
                   set(_opening_, false);
@@ -266,7 +267,6 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       space= get(_dimensions_),
                       frames= get(_frames_),
-                      resolution= max(frames, get(_steps_)),
                       id= t.attr(_id_),
                       $overlay= t.parent()
                       area= set(_area_, $(opt.area || $overlay ))
@@ -298,8 +298,8 @@ jQuery.reel || (function($, window, document, undefined){
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
                     var
-                      row= set(_row_, (opt.row - 1) / (opt.rows - 1)),
-                      fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1))
+                      resolution= max(get(_frames_), get(_steps_)),
+                      frame= set(_frame_, (opt.step || opt.frame) + (opt.row - 1) * resolution)
                   },
                   preload: function(e){
                   /*
@@ -398,7 +398,7 @@ jQuery.reel || (function($, window, document, undefined){
                         clicked= set(_clicked_, get(_frame_)),
                         velocity= set(_velocity_, 0),
                         scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
-                        origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_row_))
+                        origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_tier_))
                       unidle();
                       no_bias();
                       panned= false;
@@ -465,15 +465,15 @@ jQuery.reel || (function($, window, document, undefined){
                           backwards= motion && set(_backwards_, motion < 0)
                         if (opt.orbital && get(_center_)) var
                           vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
-                          origin= recenter_mouse(x, y, fraction, revolution, get(_row_))
+                          origin= recenter_mouse(x, y, fraction, revolution, get(_tier_))
                         if (opt.rows > 1) var
                           space_y= get(_dimensions_).y,
                           revolution_y= opt.rows > 3 ? space_y : space_y / (5 - opt.rows),
-                          start= get(_clicked_row_),
+                          start= get(_clicked_tier_),
                           lo= - start * revolution_y,
-                          row= set(_row_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
+                          tier= set(_tier_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
                         var
-                          origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_row_)),
+                          origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_tier_)),
                           fraction= set(_fraction_, fraction)
                       }
                     }
@@ -489,7 +489,7 @@ jQuery.reel || (function($, window, document, undefined){
                       delta= ceil(sqrt(abs(distance)) / 2),
                       delta= negative_when(delta, distance > 0),
                       revolution= 0.0833 * get(_revolution_), // Wheel's revolution is 1/12 of full revolution
-                      origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_row_)),
+                      origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_tier_)),
                       backwards= delta && set(_backwards_, delta < 0),
                       velocity= set(_velocity_, 0),
                       fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
@@ -515,10 +515,16 @@ jQuery.reel || (function($, window, document, undefined){
                       bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
                       backwards= bounce && set(_backwards_, !get(_backwards_))
                     if (multirow) var
-                      row_shift= min_max(0, opt.rows - 1, floor(get(_row_) * opt.rows)),
-                      frame= frame + row_shift * opt.frames
+                      frame= frame + (get(_row_) - 1) * opt.frames
                     var
                       frame= set(_frame_, frame)
+                  },
+                  tierChange: function(e, deprecated_set, tier){
+                    if (deprecated_set === undefined && opt.rows > 1) var
+                      row= set(_row_, round(interpolate(tier, 1, opt.rows))),
+                      frames= get(_frames_),
+                      frame= get(_frame_) % frames || frames,
+                      frame= set(_frame_, frame + row * frames - frames)
                   },
                   rowChange: function(e, set_row, row){
                   /*
@@ -527,10 +533,7 @@ jQuery.reel || (function($, window, document, undefined){
                   */
                     if (set_row !== undefined) return set(_row_, set_row);
                     var
-                      frames= get(_frames_),
-                      frame= get(_frame_) % frames || frames,
-                      row_shift= min_max(0, opt.rows - 1, floor(row * opt.rows)),
-                      frame= set(_frame_, frame + row_shift * opt.frames)
+                      tier= set(_tier_, 1 / (opt.rows - 1) * (row - 1))
                   },
                   frameChange: function(e, set_frame, frame){
                   /*
@@ -542,7 +545,15 @@ jQuery.reel || (function($, window, document, undefined){
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
+                      frames= opt.frames,
+                      base= frame % frames || frames,
                       fraction= get(_fraction_),
+                      _fraction= min((base - 1) / (frames - 1), 0.9999),
+                      fraction= abs(fraction - _fraction) < get(_bit_) ? fraction : set(_fraction_, _fraction),
+                      row= (frame - base) / frames + 1,
+                      tier= get(_tier_),
+                      _tier= (row - 1) / (opt.rows - 1),
+                      tier= abs(tier - _tier) < get(_vbit_) ? tier : set(_tier_, _tier),
                       footage= opt.footage
                     if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
@@ -567,7 +578,7 @@ jQuery.reel || (function($, window, document, undefined){
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
                       else var
-                        x= round(interpolate(fraction, 0, get(_stitched_travel_))),
+                        x= round(interpolate(fraction, 0, get(_stitched_travel_))) % opt.stitched,
                         y= 0,
                         shift= [-x + _px_, y + _px_]
                       t.css({ backgroundPosition: shift.join(___) })
@@ -604,7 +615,7 @@ jQuery.reel || (function($, window, document, undefined){
                       ? { left: 0, top: px(indicate), bottom: null, width: size, height: weight }
                       : { bottom: 0, left: px(indicate), top: null, width: weight, height: size })
                   },
-                  'rowChange.indicator': function(e, deprecated_set, row){
+                  'tierChange.indicator': function(e, deprecated_set, tier){
                     if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
                       space= get(_dimensions_),
                       travel= space.y,
@@ -612,7 +623,7 @@ jQuery.reel || (function($, window, document, undefined){
                       size= opt.indicator,
                       weight= ceil(travel / opt.rows),
                       travel= travel - weight,
-                      indicate= round(row * travel),
+                      indicate= round(tier * travel),
                       $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
                   },
 
@@ -779,9 +790,9 @@ jQuery.reel || (function($, window, document, undefined){
               normal= reel.normal,
 
               // Resets the interaction graph's zero point
-              recenter_mouse= function(x, y, fraction, revolution, row){
+              recenter_mouse= function(x, y, fraction, revolution, tier){
                 set(_clicked_on_, fraction);
-                set(_clicked_row_, row);
+                set(_clicked_tier_, tier);
                 set(_lo_, opt.loops ? 0 : - fraction * revolution);
                 set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
                 return x && set(_clicked_location_, { x: x, y: y }) || undefined
@@ -896,8 +907,11 @@ jQuery.reel || (function($, window, document, undefined){
         fraction: function(fraction, data){
           return data[_options_].loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
         },
+        tier: function(tier, data){
+          return min_max(0, 1, tier)
+        },
         row: function(row, data){
-          return min_max(0, 1, row)
+          return round(min_max(1, data[_options_].rows, row))
         },
         frame: function(frame, data){
           var
@@ -967,13 +981,13 @@ jQuery.reel || (function($, window, document, undefined){
     // Storage keys
     _annotations_= 'annotations',
     _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
-    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_row_= 'clicked_row',
+    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _velocity_= 'velocity',
-    _vertical_= 'vertical', _wheel_step_= 'wheel_step',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier', _vbit_= 'vbit',
+    _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
     ns= dot(klass),
