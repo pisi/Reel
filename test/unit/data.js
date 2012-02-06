@@ -178,6 +178,14 @@
   });
 
   $.each({
+    'row2tier': {
+      change: 'row', verify: 'tier',
+      samples: [ 5, 1, 3, 6, 2 ],
+      options: {
+        rows: 6,
+        frames: 12
+      }
+    },
     'tier2row': {
       change: 'tier', verify: 'row',
       samples: [ 0.99, 0.5, 0.03, .6, 0.1 ],

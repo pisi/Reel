@@ -527,10 +527,7 @@ jQuery.reel || (function($, window, document, undefined){
                   */
                     if (set_row !== undefined) return set(_row_, set_row);
                     var
-                      frames= get(_frames_),
-                      frame= get(_frame_) % frames || frames,
-                      row_shift= min_max(0, opt.rows - 1, floor(row * opt.rows)),
-                      frame= set(_frame_, frame + row_shift * opt.frames)
+                      tier= set(_tier_, 1 / (opt.rows - 1) * (row - 1))
                   },
                   frameChange: function(e, set_frame, frame){
                   /*
