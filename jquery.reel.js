@@ -423,6 +423,7 @@ jQuery.reel || (function($, window, document, undefined){
                       brakes= braking= velocity ? 1 : 0
                     unidle();
                     no_bias();
+                    get(_stopped_) || t.trigger('play');
                     $(_html_, pools).removeClass(panning_klass);
                     pools.unbind(pns);
                   },
@@ -719,7 +720,6 @@ jQuery.reel || (function($, window, document, undefined){
                 clearTimeout(delay);
                 pool.unbind(_tick_+dot(_opening_), on.pool[_tick_+dot(_opening_)]);
                 set(_opening_ticks_, 0);
-                t.trigger('play');
                 return operated= -opt.timeout * leader(_tempo_)
               },
               panned= false,
