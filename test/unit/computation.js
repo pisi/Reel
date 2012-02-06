@@ -54,6 +54,40 @@
     });
   });
 
+  asyncTest( '(Deprecated) `frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
+    expect(19);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ frames: 15, rows: 2 }),
+      entries= {
+        '1': 1,
+        '2': 2,
+        '20': 20,
+        '0': 30,
+        '30': 30,
+        '31': 1,
+        '25.3': 25,
+        '50': 20,
+        '60': 30,
+        '90': 30,
+        '-1': 29,
+        '-2': 28,
+        '-5': 25,
+        '-29': 1,
+        '-30': 30,
+        '-31': 29,
+        '-37': 23,
+        '-60': 30,
+        '-90': 30
+      }
+    $reel.bind('loaded.test', function(){
+      $.each(entries, function(ix,it){
+        $reel.trigger('frameChange', Number(ix));
+        equal( $reel.data('frame'), it, 'Frame '+ix);
+      });
+    });
+  });
+
   asyncTest( '`.reel("tier")` accepts and normalizes any real row tier passed', function(){
     expect(7);
     var
@@ -100,7 +134,6 @@
     });
   });
 
-  asyncTest( '`frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
   asyncTest( '`.reel("fraction")` accepts and normalizes any real fraction passed', function(){
     expect(10);
     var
@@ -127,6 +160,7 @@
     });
   });
 
+  asyncTest( '`.reel("frame")` accepts and normalizes any frame passed across all rows or orbits', function(){
     expect(19);
     var
       selector= '#image',
@@ -154,8 +188,8 @@
       }
     $reel.one('loaded', function(){
       $.each(entries, function(ix,it){
-        $reel.trigger('frameChange', Number(ix));
-        equal( $reel.data('frame'), it, 'Frame '+ix);
+        $reel.reel('frame', Number(ix));
+        equal( $reel.reel('frame'), it, 'Frame '+ix);
       });
       start();
     });

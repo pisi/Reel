@@ -267,7 +267,6 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       space= get(_dimensions_),
                       frames= get(_frames_),
-                      resolution= max(frames, get(_steps_)),
                       id= t.attr(_id_),
                       $overlay= t.parent()
                       area= set(_area_, $(opt.area || $overlay ))
@@ -299,8 +298,8 @@ jQuery.reel || (function($, window, document, undefined){
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
                     var
-                      tier= set(_tier_, (opt.row - 1) / (opt.rows - 1)),
-                      fraction= set(_fraction_, 1 / resolution * ((opt.step || opt.frame) - 1))
+                      resolution= max(get(_frames_), get(_steps_)),
+                      frame= set(_frame_, (opt.step || opt.frame) + (opt.row - 1) * resolution)
                   },
                   preload: function(e){
                   /*
