@@ -508,8 +508,7 @@ jQuery.reel || (function($, window, document, undefined){
                       bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
                       backwards= bounce && set(_backwards_, !get(_backwards_))
                     if (multirow) var
-                      row_shift= min_max(0, opt.rows - 1, floor(get(_row_) * opt.rows)),
-                      frame= frame + row_shift * opt.frames
+                      frame= frame + (get(_row_) - 1) * opt.frames
                     var
                       frame= set(_frame_, frame)
                   },

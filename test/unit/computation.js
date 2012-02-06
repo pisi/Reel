@@ -5,7 +5,7 @@
 
   module('Computation', reel_test_module_routine);
 
-  asyncTest( '`fractionChange` accepts and normalizes any real fraction passed', function(){
+  asyncTest( '(Deprecated) `fractionChange` accepts and normalizes any real fraction passed', function(){
     expect(10);
     var
       selector= '#image',
@@ -101,6 +101,32 @@
   });
 
   asyncTest( '`frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
+  asyncTest( '`.reel("fraction")` accepts and normalizes any real fraction passed', function(){
+    expect(10);
+    var
+      selector= '#image',
+      $reel= $(selector).reel(),
+      entries= {
+        '3': 0,
+        '-2.1': 0.9,
+        '-3.7': 0.3,
+        '1.8': 0.8,
+        '3.4': 0.4,
+        '3.5': 0.5,
+        '-0.3': 0.7,
+        '1.23456': 0.2346,
+        '-1.23456': 0.7654,
+        '-1.2': 0.8
+      }
+    $reel.one('loaded', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('fraction', Number(ix));
+        equal( $reel.reel('fraction').toFixed(4), it, 'Passed '+ix);
+      });
+      start();
+    });
+  });
+
     expect(19);
     var
       selector= '#image',

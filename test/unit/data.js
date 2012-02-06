@@ -186,6 +186,12 @@
         frames: 12
       }
     },
+    'fraction2frame': {
+      change: 'fraction', verify: 'frame',
+      samples: [ 0.1, 0.5, 0.03, .6, 0.99 ],
+      options: {
+      }
+    },
     'tier2row': {
       change: 'tier', verify: 'row',
       samples: [ 0.99, 0.5, 0.03, .6, 0.1 ],
