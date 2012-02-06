@@ -12,7 +12,7 @@
 
   yepnope( {
     load: [
-      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7.1')+'.min.js',
+      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7')+'.min.js',
       'lib/vendor/jquery.cookie-min.js'
     ],
     complete: function(){
