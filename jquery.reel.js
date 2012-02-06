@@ -206,6 +206,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_rows_, rows);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
+                  set(_vbit_, 1 / (rows - 1));
                   set(_wheel_step_, 1 / max(frames, get(_steps_)));
                   set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
@@ -538,7 +539,15 @@ jQuery.reel || (function($, window, document, undefined){
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
+                      frames= opt.frames,
+                      base= frame % frames || frames,
                       fraction= get(_fraction_),
+                      _fraction= min((base - 1) / (frames - 1), 0.9999),
+                      fraction= abs(fraction - _fraction) < get(_bit_) ? fraction : set(_fraction_, _fraction),
+                      row= (frame - base) / frames + 1,
+                      tier= get(_tier_),
+                      _tier= (row - 1) / (opt.rows - 1),
+                      tier= abs(tier - _tier) < get(_vbit_) ? tier : set(_tier_, _tier),
                       footage= opt.footage
                     if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
@@ -563,7 +572,7 @@ jQuery.reel || (function($, window, document, undefined){
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
                       else var
-                        x= round(fraction * get(_stitched_travel_)),
+                        x= round(fraction * get(_stitched_travel_)) % opt.stitched,
                         y= 0,
                         shift= [-x + _px_, y + _px_]
                       t.css({ backgroundPosition: shift.join(___) })
@@ -971,8 +980,8 @@ jQuery.reel || (function($, window, document, undefined){
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_ticks_= 'opening_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier', _velocity_= 'velocity',
-    _vertical_= 'vertical', _wheel_step_= 'wheel_step',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier', _vbit_= 'vbit',
+    _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 
     // Events
     ns= dot(klass),

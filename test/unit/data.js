@@ -58,6 +58,7 @@
     ok( is('Object', $reel.reel('style')), '`style` Object/jQuery');
     ok( is('Number', $reel.reel('tempo')), '`tempo` Number');
     ok( is('Number', $reel.reel('tier')), '`tier` Number');
+    ok( is('Number', $reel.reel('vbit')), '`vbit` Number');
     ok( is('Number', $reel.reel('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.reel('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.reel('wheel_step')), '`wheel_step` Number');
@@ -178,6 +179,21 @@
   });
 
   $.each({
+    'frame2fraction': {
+      change: 'frame', verify: 'fraction',
+      samples: [ 10, 36, 18, 19, 9, 3, 1 ],
+      options: {
+        frame: 3
+      }
+    },
+    'frame2tier': {
+      change: 'frame', verify: 'tier',
+      samples: [ 40, 36, 70, 60, 108, 3, 91 ],
+      options: {
+        rows: 3,
+        frame: 3
+      }
+    },
     'row2tier': {
       change: 'row', verify: 'tier',
       samples: [ 5, 1, 3, 6, 2 ],
