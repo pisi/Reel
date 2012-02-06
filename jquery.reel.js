@@ -421,8 +421,9 @@ jQuery.reel || (function($, window, document, undefined){
                       reeling= set(_reeling_, false),
                       velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
                       brakes= braking= velocity ? 1 : 0
-                    velocity ? idle() : unidle();
+                    unidle();
                     no_bias();
+                    get(_stopped_) || t.trigger('play');
                     $(_html_, pools).removeClass(panning_klass);
                     pools.unbind(pns);
                   },
@@ -719,7 +720,6 @@ jQuery.reel || (function($, window, document, undefined){
                 clearTimeout(delay);
                 pool.unbind(_tick_+dot(_opening_), on.pool[_tick_+dot(_opening_)]);
                 set(_opening_ticks_, 0);
-                t.trigger('play');
                 return operated= -opt.timeout * leader(_tempo_)
               },
               panned= false,
