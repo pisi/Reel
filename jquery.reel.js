@@ -518,7 +518,7 @@ jQuery.reel || (function($, window, document, undefined){
                       frame= set(_frame_, frame)
                   },
                   tierChange: function(e, deprecated_set, tier){
-                    if (deprecated_set === undefined && opt.rows > 1) var
+                    if (deprecated_set === undefined) var
                       row= set(_row_, round(interpolate(tier, 1, opt.rows))),
                       frames= get(_frames_),
                       frame= get(_frame_) % frames || frames,
