@@ -565,7 +565,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (!is_sprite){
                       var
                         frameshot= images[frame - 1]
-                      t.attr({ src: opt.path + frameshot })
+                      ready && t.attr({ src: opt.path + frameshot })
                     }else{
                       if (!opt.stitched) var
                         minor= (frame % footage) - 1,
