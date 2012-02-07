@@ -170,20 +170,18 @@
     var
       x= '120px',
       y= 30,
-      $reel= $('#image').reel({ annotations: {
+      $reel= $('#image').reel({ speed: 1, annotations: {
         'positioned-annotation': {
           x: x,
           y: y
         }
       }})
 
-    $reel.bind('loaded.test', function(){
-      setTimeout(function(){
-        equal( $('#positioned-annotation').css('left'), x, '120px');
-        equal( $('#positioned-annotation').css('top'), y + 'px', '30px');
-        equiv( $('#positioned-annotation').css('top'), y, 'It indeed is 30px');
-        start();
-      }, 100);
+    $reel.parent().bind('frameChange.test', function(){
+      equal( $('#positioned-annotation').css('left'), x, '120px');
+      equal( $('#positioned-annotation').css('top'), y + 'px', '30px');
+      equiv( $('#positioned-annotation').css('top'), y, 'It indeed is 30px');
+      start();
     });
   });
 
