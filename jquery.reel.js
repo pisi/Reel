@@ -166,7 +166,6 @@ jQuery.reel || (function($, window, document, undefined){
               // Quick data interface
               set= function(name, value){ return t.reel(name, value) && value },
               get= function(name){ return t.reel(name) },
-              preset= function(name, value){ return t.data(name, value) && value },
 
               // Events & handlers
               on= {
@@ -200,8 +199,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_spacing_, opt.spacing);
                   set(_rows_, rows);
                   set(_dimensions_, size);
-                  preset(_frame_, preset(_row_, 0));
-                  preset(_tier_, preset(_fraction_, -1));
                   set(_steps_, opt.steps || opt.frames);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
@@ -298,8 +295,7 @@ jQuery.reel || (function($, window, document, undefined){
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
                     var
-                      resolution= max(get(_frames_), get(_steps_)),
-                      frame= set(_frame_, (opt.step || opt.frame) + (opt.row - 1) * resolution)
+                      frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
                   },
                   preload: function(e){
                   /*
@@ -537,10 +533,9 @@ jQuery.reel || (function($, window, document, undefined){
                   },
                   frameChange: function(e, set_frame, frame){
                   /*
-                  - rounds given frame (if any) and calculates fraction using it
+                  - calculates and eventually sets fraction (and tier) from given frame
                   - calculates sprite background position shift and applies it
                     or changes sprite image
-                  - adjusts indicator position
                   */
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
