@@ -205,7 +205,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_dimensions_, size);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
-                  set(_wheel_step_, 1 / max(frames, get(_steps_)));
+                  set(_wheel_step_, 1 / frames);
                   set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
                   set(_stage_, stage_id);
