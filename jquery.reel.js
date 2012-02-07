@@ -88,8 +88,8 @@ jQuery.reel || (function($, window, document, undefined){
         rows:                   0, // number of rows for a multi-row setup (zero from one-row setup)
         spacing:                0, // space between frames on reel
         speed:                  0, // animated rotation speed in revolutions per second (Hz)
-        step:           undefined, // initial step (overrides `frame`)
-        steps:          undefined, // number of steps a revolution is divided in (by default equal to `frames`)
+        step:           undefined, // [deprecated] use `frame` instead
+        steps:          undefined, // [deprecated] use `frames` instead
         stitched:               0, // pixel width (length) of a stitched (rectilinear) panoramic reel
         suffix:           '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
         tempo:                 36, // shared ticker tempo in ticks per second
@@ -159,6 +159,10 @@ jQuery.reel || (function($, window, document, undefined){
             })(this),
             instances= []
 
+          // Backward-compatibility of [deprecated] legacy options
+          opt.step && (opt.frame= opt.step);
+          opt.steps && (opt.frames= opt.steps);
+
           applicable.each(function(){
             var
               t= $(this),
@@ -199,7 +203,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_spacing_, opt.spacing);
                   set(_rows_, rows);
                   set(_dimensions_, size);
-                  set(_steps_, opt.steps || opt.frames);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
                   set(_wheel_step_, 1 / max(frames, get(_steps_)));
@@ -601,7 +604,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (deprecated_set === undefined && opt.indicator) var
                       space= get(_dimensions_),
                       travel= opt.orbital && get(_vertical_) ? space.y : space.x,
-                      slots= opt.orbital ? opt.footage : opt.images.length || opt.frames || opt.steps,
+                      slots= opt.orbital ? opt.footage : opt.images.length || opt.frames,
                       size= opt.indicator,
                       weight= ceil(travel / slots),
                       travel= travel - weight,
@@ -981,7 +984,7 @@ jQuery.reel || (function($, window, document, undefined){
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
-    _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
+    _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
     _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
 

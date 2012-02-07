@@ -52,7 +52,6 @@
     ok( is('Number', $reel.reel('spacing')), '`spacing` Number');
     ok( is('Number', $reel.reel('speed')), '`speed` Number');
     ok( is('String', $reel.reel('stage')), '`stage` String');
-    ok( is('Number', $reel.reel('steps')), '`steps` Number');
     ok( is('Number', $reel.reel('stitched')), '`stitched` Number');
     ok( is('Number', $reel.reel('stitched_travel')), '`stitched_travel` Number');
     ok( is('Boolean', $reel.reel('stopped')), '`stopped` Boolean');

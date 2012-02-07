@@ -39,6 +39,7 @@ Development
 * A brand new data interface with automatic change events is in place
   for easy external control of the instance. See
   [Data](/pisi/Reel/wiki/Data) for more.
+* The `step` and `steps` options deprecated in favor to `frame` and `frames`.
 
 
 Version 1.1.3

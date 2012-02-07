@@ -72,8 +72,8 @@
     equal( $.reel.def.row,                        1, 'initial row' );
     equal( $.reel.def.rows,                       0, 'number of rows for a multi-row setup (zero from one-row setup)' );
     equal( $.reel.def.speed,                      0, 'animated rotation speed in revolutions per second (Hz)' );
-    equal( $.reel.def.step,               undefined, 'initial step (overrides `frame`)' );
-    equal( $.reel.def.steps,              undefined, 'number of steps a revolution is divided in (by default equal to `frames`)' );
+    equal( $.reel.def.step,               undefined, '[deprecated] use `frame` instead' );
+    equal( $.reel.def.steps,              undefined, '[deprecated] use `frames` instead' );
     equal( $.reel.def.tempo,                     36, 'shared ticker tempo in ticks per second' );
     equal( $.reel.def.timeout,                    2, 'idle timeout in seconds' );
     equal( $.reel.def.throwable,               true, 'drag & throw interaction (allowed by default)' );
