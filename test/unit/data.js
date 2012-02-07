@@ -59,7 +59,6 @@
     ok( is('Object', $reel.reel('style')), '`style` Object/jQuery');
     ok( is('Number', $reel.reel('tempo')), '`tempo` Number');
     ok( is('Number', $reel.reel('tier')), '`tier` Number');
-    ok( is('Number', $reel.reel('vbit')), '`vbit` Number');
     ok( is('Number', $reel.reel('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.reel('vertical')), '`vertical` Boolean');
     ok( is('Number', $reel.reel('wheel_step')), '`wheel_step` Number');
