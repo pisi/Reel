@@ -544,7 +544,8 @@ jQuery.reel || (function($, window, document, undefined){
                       frame_fraction= min((base - 1) / (frames - 1), 0.9999),
                       row_shift= get(_row_) * frames - frames,
                       fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
-                      fraction= ready && fraction_frame === frame ? get(_fraction_) : set(_fraction_, frame_fraction),
+                      same_spot= abs((get(_fraction_) || 0) - frame_fraction) < 1 / get(_frames_),
+                      fraction= ready && (fraction_frame === frame && same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
                       footage= opt.footage
                     if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
