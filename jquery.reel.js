@@ -540,7 +540,7 @@ jQuery.reel || (function($, window, document, undefined){
                       frame_row= (frame - base) / frames + 1,
                       frame_tier= (frame_row - 1) / (opt.rows - 1),
                       tier_row= round(interpolate(frame_tier, 1, opt.rows)),
-                      tier= ready && tier_row === frame_row ? get(_tier_) : set(_tier_, frame_tier),
+                      tier= ready && tier_row === get(_row_) ? get(_tier_) : set(_tier_, frame_tier),
                       frame_fraction= min((base - 1) / (frames - 1), 0.9999),
                       row_shift= get(_row_) * frames - frames,
                       fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
