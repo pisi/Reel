@@ -612,8 +612,8 @@ jQuery.reel || (function($, window, document, undefined){
                       indicate= round(interpolate(fraction, 0, travel)),
                       indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
                       $indicator= indicator.$x.css(get(_vertical_)
-                      ? { left: 0, top: px(indicate), bottom: null, width: size, height: weight }
-                      : { bottom: 0, left: px(indicate), top: null, width: weight, height: size })
+                      ? { left: 0, top: px(indicate), bottom: _auto_, width: size, height: weight }
+                      : { bottom: 0, left: px(indicate), top: _auto_, width: weight, height: size })
                   },
                   'tierChange.indicator': function(e, deprecated_set, tier){
                     if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
@@ -980,7 +980,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Storage keys
     _annotations_= 'annotations',
-    _area_= 'area', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
+    _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
