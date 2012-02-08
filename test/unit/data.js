@@ -100,7 +100,7 @@
 
   });
 
-  test( 'Changing an already set data key value triggers respective change event', function(){
+  test( 'Changing a data key value triggers respective change event', function(){
 
     expect(4);
     var
@@ -113,26 +113,7 @@
       ok( is('Undefined', nothing), 'always `undefined` as the second argument,');
       equal( something, value, 'and finally the actual value as the third/last argument');
     })
-    // First set doesn't trigger change event
-    $reel.reel('something', 10);
-    // So we need to change the value set in order to get the change event triggered
     $reel.reel('something', value);
-
-  });
-
-  test( 'Setting a value for the first time does not trigger change event', function(){
-
-    expect(1);
-    var
-      value= 5,
-      $reel= $('#image').reel()
-
-
-    $reel.bind('somethingChange', function(){
-      ok(false, 'Change event should not be triggered');
-    })
-    $reel.reel('something', value);
-    ok(true);
 
   });
 

@@ -124,10 +124,7 @@ jQuery.reel || (function($, window, document, undefined){
           if (args.length == 2){
             if (value !== undefined){
               try{ value= reel.normal[name](value, data) }catch(e){ }
-              if (data[name] !== value){
-                if (data[name] === undefined) data[name]= value
-                else t.trigger(name+'Change', [ undefined, data[name]= value ]);
-              }
+              if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
             }
             return t.trigger('store', [name, value]);
 
