@@ -202,7 +202,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_dimensions_, size);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
-                  set(_wheel_step_, 1 / frames);
                   set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
                   set(_stage_, stage_id);
@@ -988,7 +987,7 @@ jQuery.reel || (function($, window, document, undefined){
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
-    _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
+    _velocity_= 'velocity', _vertical_= 'vertical',
 
     // Events
     ns= dot(klass),
