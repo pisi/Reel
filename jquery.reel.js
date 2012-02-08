@@ -293,8 +293,6 @@ jQuery.reel || (function($, window, document, undefined){
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
-                    var
-                      frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
                   },
                   preload: function(e){
                   /*
@@ -341,6 +339,8 @@ jQuery.reel || (function($, window, document, undefined){
                       t.parent().removeClass(loading_klass).unbind(_preloaded_, on.instance.preloaded);
                       t.trigger('loaded');
                     }
+                    if (preloaded === 1) var
+                      frame= t.trigger('frameChange', [undefined, get(_frame_)])
                   },
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
@@ -665,7 +665,12 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
 
-                  'setup.fu': function(){ t.trigger('preload') },
+                  // Follow-ups
+                  'setup.fu': function(e){
+                    var
+                      frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
+                    t.trigger('preload')
+                  },
                   'loaded.fu': function(){ t.trigger('opening') }
 
                 },
