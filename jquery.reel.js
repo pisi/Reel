@@ -510,7 +510,7 @@ jQuery.reel || (function($, window, document, undefined){
                       bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
                       backwards= bounce && set(_backwards_, !get(_backwards_))
                     if (multirow) var
-                      frame= frame + (get(_row_) - 1) * opt.frames
+                      frame= frame + (get(_row_) - 1) * get(_frames_)
                     var
                       frame= set(_frame_, frame)
                   },
@@ -539,7 +539,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
-                      frames= opt.frames,
+                      frames= get(_frames_),
                       base= frame % frames || frames,
                       ready= !!get(_preloaded_),
                       frame_row= (frame - base) / frames + 1,
@@ -601,7 +601,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (deprecated_set === undefined && opt.indicator) var
                       space= get(_dimensions_),
                       travel= opt.orbital && get(_vertical_) ? space.y : space.x,
-                      slots= opt.orbital ? opt.footage : opt.images.length || opt.frames,
+                      slots= opt.orbital ? opt.footage : opt.images.length || get(_frames_),
                       size= opt.indicator,
                       weight= ceil(travel / slots),
                       travel= travel - weight,
@@ -870,7 +870,7 @@ jQuery.reel || (function($, window, document, undefined){
         fidelity: function(sequence, opt, get){
           var
             rows= opt.orbital ? 2 : opt.rows || 1,
-            frames= opt.orbital ? opt.footage : opt.frames,
+            frames= opt.orbital ? opt.footage : get(_frames_),
             start= (opt.row-1) * frames,
             values= new Array().concat(sequence),
             present= new Array(sequence.length),
