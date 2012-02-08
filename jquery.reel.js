@@ -504,10 +504,6 @@ jQuery.reel || (function($, window, document, undefined){
                       multirow= opt.rows > 1,
                       orbital= opt.orbital,
                       center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
-                    if (!opt.loops && opt.rebound) var
-                      edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
-                      bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
-                      backwards= bounce && set(_backwards_, !get(_backwards_))
                     if (multirow) var
                       frame= frame + (get(_row_) - 1) * get(_frames_)
                     var
@@ -671,7 +667,6 @@ jQuery.reel || (function($, window, document, undefined){
                     t.trigger('preload')
                   },
                   'loaded.fu': function(){ t.trigger('opening') }
-
                 },
                 pool: {
                   'tick.reel.preload': function(e){
@@ -693,9 +688,10 @@ jQuery.reel || (function($, window, document, undefined){
                   - decreases inertial velocity by braking
                   */
                     var
-                      velocity= get(_velocity_)
+                      velocity= get(_velocity_),
+                      leader_tempo= leader(_tempo_)
                     if (braking) var
-                      braked= velocity - (get(_brake_) / leader(_tempo_) * braking),
+                      braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
                     opt.monitor && $monitor.text(get(opt.monitor));
                     velocity && braking++;
@@ -705,10 +701,14 @@ jQuery.reel || (function($, window, document, undefined){
                     if (operated && !velocity) return mute(e);
                     if (get(_clicked_)) return mute(e, unidle());
                     if (get(_opening_ticks_) > 0) return;
+                    if (!opt.loops && opt.rebound) var
+                      edgy= !operated && !(get(_fraction_) % 1) ? on_edge++ : (on_edge= 0),
+                      bounce= on_edge >= opt.rebound * 1000 / leader_tempo,
+                      backwards= bounce && set(_backwards_, !get(_backwards_))
                     var
-                      backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
+                      direction= get(_cwish_) * negative_when(1, get(_backwards_)),
                       step= (!get(_playing_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
-                      fraction= set(_fraction_, get(_fraction_) - step * backwards)
+                      fraction= set(_fraction_, get(_fraction_) - step * direction)
                   },
                   'tick.reel.opening': function(e){
                   /*
