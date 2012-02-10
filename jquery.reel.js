@@ -88,8 +88,8 @@ jQuery.reel || (function($, window, document, undefined){
         rows:                   0, // number of rows for a multi-row setup (zero from one-row setup)
         spacing:                0, // space between frames on reel
         speed:                  0, // animated rotation speed in revolutions per second (Hz)
-        step:           undefined, // initial step (overrides `frame`)
-        steps:          undefined, // number of steps a revolution is divided in (by default equal to `frames`)
+        step:           undefined, // [deprecated] use `frame` instead
+        steps:          undefined, // [deprecated] use `frames` instead
         stitched:               0, // pixel width (length) of a stitched (rectilinear) panoramic reel
         suffix:           '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
         tempo:                 36, // shared ticker tempo in ticks per second
@@ -124,10 +124,7 @@ jQuery.reel || (function($, window, document, undefined){
           if (args.length == 2){
             if (value !== undefined){
               try{ value= reel.normal[name](value, data) }catch(e){ }
-              if (data[name] !== value){
-                if (data[name] === undefined) data[name]= value
-                else t.trigger(name+'Change', [ undefined, data[name]= value ]);
-              }
+              if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
             }
             return t.trigger('store', [name, value]);
 
@@ -159,6 +156,10 @@ jQuery.reel || (function($, window, document, undefined){
             })(this),
             instances= []
 
+          // Backward-compatibility of [deprecated] legacy options
+          opt.step && (opt.frame= opt.step);
+          opt.steps && (opt.frames= opt.steps);
+
           applicable.each(function(){
             var
               t= $(this),
@@ -166,7 +167,6 @@ jQuery.reel || (function($, window, document, undefined){
               // Quick data interface
               set= function(name, value){ return t.reel(name, value) && value },
               get= function(name){ return t.reel(name) },
-              preset= function(name, value){ return t.data(name, value) && value },
 
               // Events & handlers
               on= {
@@ -200,13 +200,8 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_spacing_, opt.spacing);
                   set(_rows_, rows);
                   set(_dimensions_, size);
-                  preset(_frame_, preset(_row_, 0));
-                  preset(_tier_, preset(_fraction_, -1));
-                  set(_steps_, opt.steps || opt.frames);
                   set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
-                  set(_vbit_, 1 / (rows - 1));
-                  set(_wheel_step_, 1 / max(frames, get(_steps_)));
                   set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
                   set(_stage_, stage_id);
@@ -297,9 +292,6 @@ jQuery.reel || (function($, window, document, undefined){
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
-                    var
-                      resolution= max(get(_frames_), get(_steps_)),
-                      frame= set(_frame_, (opt.step || opt.frame) + (opt.row - 1) * resolution)
                   },
                   preload: function(e){
                   /*
@@ -346,6 +338,8 @@ jQuery.reel || (function($, window, document, undefined){
                       t.parent().removeClass(loading_klass).unbind(_preloaded_, on.instance.preloaded);
                       t.trigger('loaded');
                     }
+                    if (preloaded === 1) var
+                      frame= t.trigger('frameChange', [undefined, get(_frame_)])
                   },
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
@@ -510,17 +504,13 @@ jQuery.reel || (function($, window, document, undefined){
                       multirow= opt.rows > 1,
                       orbital= opt.orbital,
                       center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
-                    if (!opt.loops && opt.rebound) var
-                      edgy= !operated && !(fraction % 1) ? on_edge++ : (on_edge= 0),
-                      bounce= on_edge >= opt.rebound * 1000 / leader(_tempo_),
-                      backwards= bounce && set(_backwards_, !get(_backwards_))
                     if (multirow) var
-                      frame= frame + (get(_row_) - 1) * opt.frames
+                      frame= frame + (get(_row_) - 1) * get(_frames_)
                     var
                       frame= set(_frame_, frame)
                   },
                   tierChange: function(e, deprecated_set, tier){
-                    if (deprecated_set === undefined && opt.rows > 1) var
+                    if (deprecated_set === undefined) var
                       row= set(_row_, round(interpolate(tier, 1, opt.rows))),
                       frames= get(_frames_),
                       frame= get(_frame_) % frames || frames,
@@ -537,23 +527,25 @@ jQuery.reel || (function($, window, document, undefined){
                   },
                   frameChange: function(e, set_frame, frame){
                   /*
-                  - rounds given frame (if any) and calculates fraction using it
+                  - calculates and eventually sets fraction (and tier) from given frame
                   - calculates sprite background position shift and applies it
                     or changes sprite image
-                  - adjusts indicator position
                   */
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
-                      frames= opt.frames,
+                      frames= get(_frames_),
                       base= frame % frames || frames,
-                      fraction= get(_fraction_),
-                      _fraction= min((base - 1) / (frames - 1), 0.9999),
-                      fraction= abs(fraction - _fraction) < get(_bit_) ? fraction : set(_fraction_, _fraction),
-                      row= (frame - base) / frames + 1,
-                      tier= get(_tier_),
-                      _tier= (row - 1) / (opt.rows - 1),
-                      tier= abs(tier - _tier) < get(_vbit_) ? tier : set(_tier_, _tier),
+                      ready= !!get(_preloaded_),
+                      frame_row= (frame - base) / frames + 1,
+                      frame_tier= (frame_row - 1) / (opt.rows - 1),
+                      tier_row= round(interpolate(frame_tier, 1, opt.rows)),
+                      tier= ready && tier_row === get(_row_) ? get(_tier_) : set(_tier_, frame_tier),
+                      frame_fraction= min((base - 1) / (frames - 1), 0.9999),
+                      row_shift= get(_row_) * frames - frames,
+                      fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
+                      same_spot= abs((get(_fraction_) || 0) - frame_fraction) < 1 / get(_frames_),
+                      fraction= ready && (fraction_frame === frame && same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
                       footage= opt.footage
                     if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
@@ -566,7 +558,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (!is_sprite){
                       var
                         frameshot= images[frame - 1]
-                      t.attr({ src: opt.path + frameshot })
+                      ready && t.attr({ src: opt.path + frameshot })
                     }else{
                       if (!opt.stitched) var
                         minor= (frame % footage) - 1,
@@ -605,7 +597,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (deprecated_set === undefined && opt.indicator) var
                       space= get(_dimensions_),
                       travel= opt.orbital && get(_vertical_) ? space.y : space.x,
-                      slots= opt.orbital ? opt.footage : opt.images.length || opt.frames || opt.steps,
+                      slots= opt.orbital ? opt.footage : opt.images.length || get(_frames_),
                       size= opt.indicator,
                       weight= ceil(travel / slots),
                       travel= travel - weight,
@@ -669,9 +661,13 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
 
-                  'setup.fu': function(){ t.trigger('preload') },
+                  // Follow-ups
+                  'setup.fu': function(e){
+                    var
+                      frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
+                    t.trigger('preload')
+                  },
                   'loaded.fu': function(){ t.trigger('opening') }
-
                 },
                 pool: {
                   'tick.reel.preload': function(e){
@@ -693,9 +689,10 @@ jQuery.reel || (function($, window, document, undefined){
                   - decreases inertial velocity by braking
                   */
                     var
-                      velocity= get(_velocity_)
+                      velocity= get(_velocity_),
+                      leader_tempo= leader(_tempo_)
                     if (braking) var
-                      braked= velocity - (get(_brake_) / leader(_tempo_) * braking),
+                      braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
                     opt.monitor && $monitor.text(get(opt.monitor));
                     velocity && braking++;
@@ -705,10 +702,14 @@ jQuery.reel || (function($, window, document, undefined){
                     if (operated && !velocity) return mute(e);
                     if (get(_clicked_)) return mute(e, unidle());
                     if (get(_opening_ticks_) > 0) return;
+                    if (!opt.loops && opt.rebound) var
+                      edgy= !operated && !(get(_fraction_) % 1) ? on_edge++ : (on_edge= 0),
+                      bounce= on_edge >= opt.rebound * 1000 / leader_tempo,
+                      backwards= bounce && set(_backwards_, !get(_backwards_))
                     var
-                      backwards= get(_cwish_) * negative_when(1, get(_backwards_)),
+                      direction= get(_cwish_) * negative_when(1, get(_backwards_)),
                       step= (!get(_playing_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
-                      fraction= set(_fraction_, get(_fraction_) - step * backwards)
+                      fraction= set(_fraction_, get(_fraction_) - step * direction)
                   },
                   'tick.reel.opening': function(e){
                   /*
@@ -869,7 +870,7 @@ jQuery.reel || (function($, window, document, undefined){
         fidelity: function(sequence, opt, get){
           var
             rows= opt.orbital ? 2 : opt.rows || 1,
-            frames= opt.orbital ? opt.footage : opt.frames,
+            frames= opt.orbital ? opt.footage : get(_frames_),
             start= (opt.row-1) * frames,
             values= new Array().concat(sequence),
             present= new Array(sequence.length),
@@ -985,9 +986,9 @@ jQuery.reel || (function($, window, document, undefined){
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
-    _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _steps_= 'steps', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier', _vbit_= 'vbit',
-    _velocity_= 'velocity', _vertical_= 'vertical', _wheel_step_= 'wheel_step',
+    _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
+    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
+    _velocity_= 'velocity', _vertical_= 'vertical',
 
     // Events
     ns= dot(klass),

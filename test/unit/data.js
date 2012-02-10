@@ -52,17 +52,14 @@
     ok( is('Number', $reel.reel('spacing')), '`spacing` Number');
     ok( is('Number', $reel.reel('speed')), '`speed` Number');
     ok( is('String', $reel.reel('stage')), '`stage` String');
-    ok( is('Number', $reel.reel('steps')), '`steps` Number');
     ok( is('Number', $reel.reel('stitched')), '`stitched` Number');
     ok( is('Number', $reel.reel('stitched_travel')), '`stitched_travel` Number');
     ok( is('Boolean', $reel.reel('stopped')), '`stopped` Boolean');
     ok( is('Object', $reel.reel('style')), '`style` Object/jQuery');
     ok( is('Number', $reel.reel('tempo')), '`tempo` Number');
     ok( is('Number', $reel.reel('tier')), '`tier` Number');
-    ok( is('Number', $reel.reel('vbit')), '`vbit` Number');
     ok( is('Number', $reel.reel('velocity')), '`velocity` Number');
     ok( is('Boolean', $reel.reel('vertical')), '`vertical` Boolean');
-    ok( is('Number', $reel.reel('wheel_step')), '`wheel_step` Number');
   });
 
   test( 'Contents of attributes backup `.reel("backup")`', function(){
@@ -102,7 +99,7 @@
 
   });
 
-  test( 'Changing an already set data key value triggers respective change event', function(){
+  test( 'Changing a data key value triggers respective change event', function(){
 
     expect(4);
     var
@@ -115,26 +112,7 @@
       ok( is('Undefined', nothing), 'always `undefined` as the second argument,');
       equal( something, value, 'and finally the actual value as the third/last argument');
     })
-    // First set doesn't trigger change event
-    $reel.reel('something', 10);
-    // So we need to change the value set in order to get the change event triggered
     $reel.reel('something', value);
-
-  });
-
-  test( 'Setting a value for the first time does not trigger change event', function(){
-
-    expect(1);
-    var
-      value= 5,
-      $reel= $('#image').reel()
-
-
-    $reel.bind('somethingChange', function(){
-      ok(false, 'Change event should not be triggered');
-    })
-    $reel.reel('something', value);
-    ok(true);
 
   });
 
