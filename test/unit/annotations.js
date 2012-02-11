@@ -5,7 +5,7 @@
 
   module('Annotations', reel_test_module_routine);
 
-  test( 'One annotation DOM container (node) is rendered per each `annotations` object key/value pair', function(){
+  asyncTest( 'One annotation DOM container (node) is rendered per each `annotations` object key/value pair', function(){
     expect(2);
     var
       selector= '#image',
@@ -15,8 +15,11 @@
         }
       })
 
-    equal( !!$reel.siblings('.reel-annotation[id]').length, 1, 'One annotation node with `id` attribute');
-    ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
+    $(document).bind('loaded.test', function(){
+      equal( !!$reel.siblings('.reel-annotation[id]').length, 1, 'One annotation node with `id` attribute');
+      ok( !!$('#my_annotation_name').length, 'Reachable by an `id` selector equal to annotation key');
+      start();
+    });
   });
 
   asyncTest( '`node` holds a collection of HTML attributes used for the handler\'s `div` tag', function(){
@@ -78,7 +81,7 @@
     });
   });
 
-  test( '`link` holds a collection of HTML attributes used for an `a` tag inside the node', function(){
+  asyncTest( '`link` holds a collection of HTML attributes used for an `a` tag inside the node', function(){
     expect(8);
     var
       selector= '#image',
@@ -101,15 +104,18 @@
         }
       })
 
-    ok( !!$('div#text_link').length, 'Node node present');
-    ok( !!$('div#text_link a').length, 'Wrapping a link node');
-    equal( $('#text_link a').attr('href'), 'http://some/location', 'Link `href`');
-    equal( $('#text_link a').text(), 'Click to navigate away', '`title`');
+    $(document).bind('loaded.test', function(){
+      ok( !!$('div#text_link').length, 'Node node present');
+      ok( !!$('div#text_link a').length, 'Wrapping a link node');
+      equal( $('#text_link a').attr('href'), 'http://some/location', 'Link `href`');
+      equal( $('#text_link a').text(), 'Click to navigate away', '`title`');
 
-    ok( !!$('div#image_link').length, 'Node node present');
-    ok( !!$('div#image_link > a > img').length, 'Wrapping a link node wrapping an image node');
-    equal( $('#image_link a').attr('href'), 'http://some/location', 'Link `href`');
-    equal( $('#image_link img').attr('src'), 'some/my/image.jpg', 'Image `src`');
+      ok( !!$('div#image_link').length, 'Node node present');
+      ok( !!$('div#image_link > a > img').length, 'Wrapping a link node wrapping an image node');
+      equal( $('#image_link a').attr('href'), 'http://some/location', 'Link `href`');
+      equal( $('#image_link img').attr('src'), 'some/my/image.jpg', 'Image `src`');
+      start();
+    })
   });
 
   asyncTest( 'Frame-based visibility annotation control properties `start` and `end`', function(){
@@ -136,17 +142,19 @@
       checked= [],
       $annotation= $('#my_annotation')
 
-    $(document).bind('frameChange.test', function(){
-      var
-        frame= $reel.data('frame'),
-        should= should_be[frame - 1] == '+'
+    $(document).bind('loaded.test', function(){
+      $(document).bind('frameChange.test', function(){
+        var
+          frame= $reel.data('frame'),
+          should= should_be[frame - 1] == '+'
 
-      equal( $annotation.is(':visible') , should, (should ? 'On' : 'Off')+' @ frame '+frame );
+        equal( $annotation.is(':visible') , should, (should ? 'On' : 'Off')+' @ frame '+frame );
 
-      checked.push(frame);
-      if (checked.length == frames){
-        start();
-      }
+        checked.push(frame);
+        if (checked.length == frames){
+          start();
+        }
+      });
     });
   });
 
