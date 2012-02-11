@@ -205,7 +205,7 @@
                      * is much better then before and I'm happy with it. At least for now.
                      */
 
-    expect( try_rows * try_frames * 3 ); // 3 test for each combination
+    expect( try_rows.length * try_frames.length * 3 ); // 3 test for each combination
 
     for( var i= 0; i < try_rows.length; i++) (function(ix){ setTimeout( function(){
       for( var ii= 0; ii < try_frames.length; ii++){
