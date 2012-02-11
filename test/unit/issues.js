@@ -123,8 +123,7 @@
         var
           protocol= $('#image').attr('src').split(':')[0]
 
-        if ($.browser.msie && +$.browser.version <= 7) equal(protocol, 'http', 'CDN-served transparent image.')
-        else equal(protocol, 'data', 'Embedded transparent image.');
+        equal(protocol, 'data', 'Embedded transparent image.');
 
         start();
       }
@@ -180,7 +179,6 @@
       start();
     }, 500 );
   });
-
 
   asyncTest( 'GH-46 Incorrect `row` to `frame` translation in multi-row movies', function(){
     /* Github issue 46 bugfix
@@ -254,7 +252,6 @@
       if (done_rows == rows) start();
     }, 5) })(i)
   });
-
 
   asyncTest( 'GH-62 Implicit teardown', function(){
     /*
