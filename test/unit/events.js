@@ -5,7 +5,7 @@
 
   module('Events', reel_test_module_routine);
 
-  asyncTest( 'Internal data setting triggers "store" event and passes name and value to the handler', function(){
+  asyncTest( '(Deprecated) Internal data setting triggers "store" event and passes name and value to the handler', function(){
     expect(3);
     var
       $reel= $('#image').reel({ frame: 1, speed: 1 }),
@@ -28,7 +28,7 @@
       })
   });
 
-  asyncTest( 'Internal data getting triggers "recall" event and passes name of the value in question', function(){
+  asyncTest( '(Deprecated) Internal data getting triggers "recall" event and passes name of the value in question', function(){
     expect(3);
     var
       $reel= $('#image').reel(),
@@ -58,12 +58,12 @@
         opening: 1
       })
 
-    $reel
+    $(document)
+      .bind('play.test', function(){
+        ok( true, '`"play" event has fired just preceeding the `"openingDone"`');
+      })
       .bind('openingDone.test', function(){
         ok( true, '`"openingDone"` has been triggered');
-      })
-      .bind('play.test', function(){
-        ok( true, '`"play" event has fired closely following the `"openingDone"`');
         start();
       })
   });
