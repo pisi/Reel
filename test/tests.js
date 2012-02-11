@@ -32,8 +32,8 @@
       location.params.respawn && setTimeout(function(){
         location.href= location.href;
       }, location.params.respawn * 1000);
-
       QUnit.load();
+      QUnit.stop();
 
       var
         bads= 0,
