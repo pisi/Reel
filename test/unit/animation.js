@@ -8,20 +8,18 @@
   asyncTest( 'When at least one instance of Reel is present in the DOM a shared ticker is started', function()
   {
     expect(1);
-
-    $(document).bind('tick.reel.test', tick);
-
     var
       ticks = 0;
 
-    setTimeout(function(){
-      ok( ticks == 0, 'Ticker isn\'t running when no Reel is on');
-      start();
-    }, 1000);
-
-    function tick(){
+    $(document).bind('tick.reel.test', function tick(){
+      ok( false, 'Ticker should not be running');
       ticks++
-    }
+    });
+
+    setTimeout(function(){
+      equal( ticks, 0, 'Ticker isn\'t running when no Reel is on');
+      start();
+    }, 100);
   });
 
   asyncTest( 'Ticker is driven by `leader`\'s data from `$.reel.leader()`', function()
