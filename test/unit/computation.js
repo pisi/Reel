@@ -85,6 +85,7 @@
         $reel.trigger('frameChange', Number(ix));
         equal( $reel.data('frame'), it, 'Frame '+ix);
       });
+      start();
     });
   });
 
@@ -97,7 +98,7 @@
         '4': 1,
         '-2.1': 0,
         '1.8': 1,
-        '0.4': 0.4,
+        '0.8': 0.8,
         '-0.3': 0,
         '1.23456': 1,
         '-1.23456': 0
@@ -461,7 +462,7 @@
     });
   });
 
-  test( 'Sequence: `$.reel.build_sequence()` generates the "images" array from given sequence pattern match', function(){
+  test( 'Sequence: `$.reel.sequence()` generates the "images" array from given sequence pattern match', function(){
     var
       options= {
         frames: 4
@@ -491,7 +492,7 @@
       var
         sequence= $.reel.re.sequence.exec(sample)
 
-      equal( $.reel.build_sequence(sequence, options).join(', '), this.join(', '), sample + ' generates');
+      equal( $.reel.sequence(sequence, options).join(', '), this.join(', '), sample + ' generates');
     });
   });
 
