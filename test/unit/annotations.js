@@ -208,14 +208,16 @@
         }
       }})
 
-    $(document).bind('frameChange.test', function(){
-      var
-        frame= $reel.data('frame'),
-        index= frame - from
+    $(document).bind('loaded.test', function(){
+      $(document).bind('frameChange.test', function(){
+        var
+          frame= $reel.data('frame'),
+          index= frame - from
 
-      equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
-      equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
-      if (count++ >= xs.length-1) start();
+        equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
+        equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
+        if (count++ >= xs.length-1) start();
+      });
     });
   });
 
