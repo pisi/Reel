@@ -67,7 +67,7 @@
   });
 
   asyncTest( 'Indicator: is sticked to the bottom left corner when on min frame (1)', function(){
-    expect(1);
+    expect(2);
     var
       size= 10,
       $reel= $('#image').reel({
@@ -78,6 +78,7 @@
       $indicator= $('#image-reel .reel-indicator');
 
     $(document).bind('loaded.test', function(){
+      equal( $reel.data('frame'), 1, 'It is frame number 1');
       equiv( $indicator.css('left'), '0px' );
       start();
     });
