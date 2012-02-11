@@ -104,18 +104,16 @@
     expect(1);
     var
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
-      before= $('#image-reel .reel-indicator').css('left');
+      $indicator= $('#image-reel .reel-indicator'),
+      before= $indicator.css('left')
 
-      $reel.trigger('frameChange', 5);
-      $reel.one('frameChange.test', function(){
-        var
-          after= $('#image-reel .reel-indicator').css('left');
-
-        ok( before != after, 'Position change after frame change' );
-        start();
       $(document).bind('loaded.test', function(){
+        $reel.reel('frame', 3);
+        $(document).bind('frameChange.test', function(e, depr, frame){
+          ok( before != $indicator.css('left'), 'Position change after frame change' );
+          start();
+        });
       });
-    })
   });
 
   test( 'Indicator: Custom style may be applied to indicator via `.reel-indicator`', function(){
