@@ -219,7 +219,7 @@
       ys= [ 20, 10, 0 , 40 ],
       y= 30,
       from= 2,
-      $reel= $('#image').reel({ frames: frames, frame: 2, speed: 1, annotations: {
+      $reel= $('#image').reel({ frames: frames, frame: from, speed: 1, annotations: {
         'xy-positioned-annotation': {
           start: from,
           end: 5,
@@ -232,8 +232,6 @@
       var
         frame= $reel.data('frame'),
         index= frame - from
-
-      if (index < 0) return;
 
       equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
       equiv( $('#xy-positioned-annotation').css('top'), ys[index], 'y @ frame '+frame);
@@ -259,8 +257,6 @@
         frame= $reel.data('frame'),
         index= frame - 1
 
-      if (index < 0) return;
-
       equiv( $('#xy-positioned-annotation').css('display'), xs[index] === undefined || ys[index] === undefined ? 'none':'block', 'visibility @ frame '+frame);
       if (index >= xs.length-1) start();
     });
@@ -283,8 +279,6 @@
       var
         frame= $reel.data('frame'),
         index= frame - 1
-
-      if (index < 0) return;
 
       equiv( $('#xy-positioned-annotation').css('left'), xs[index], 'x @ frame '+frame);
       equiv( $('#xy-positioned-annotation').css('top'), y, 'y @ frame '+frame);
