@@ -136,8 +136,7 @@
       checked= [],
       $annotation= $('#my_annotation')
 
-    // and we test it bubbled up to instance's parent
-    $reel.parent().bind('frameChange.test', function(){
+    $(document).bind('frameChange.test', function(){
       var
         frame= $reel.data('frame'),
         should= should_be[frame - 1] == '+'
@@ -177,7 +176,7 @@
         }
       }})
 
-    $reel.parent().bind('frameChange.test', function(){
+    $(document).bind('frameChange.test', function(){
       equal( $('#positioned-annotation').css('left'), x, '120px');
       equal( $('#positioned-annotation').css('top'), y + 'px', '30px');
       equiv( $('#positioned-annotation').css('top'), y, 'It indeed is 30px');
@@ -201,7 +200,7 @@
         }
       }})
 
-    $reel.parent().bind('frameChange.test', function(){
+    $(document).bind('frameChange.test', function(){
       var
         frame= $reel.data('frame'),
         index= frame - from
@@ -229,7 +228,7 @@
         }
       }})
 
-    $reel.parent().bind('frameChange.test', function(){
+    $(document).bind('frameChange.test', function(){
       var
         frame= $reel.data('frame'),
         index= frame - from
@@ -255,7 +254,7 @@
         }
       }})
 
-    $reel.parent().bind('frameChange.test', function(){
+    $(document).bind('frameChange.test', function(){
       var
         frame= $reel.data('frame'),
         index= frame - 1
@@ -280,7 +279,7 @@
         }
       }})
 
-    $reel.parent().bind('frameChange.test', function(){
+    $(document).bind('frameChange.test', function(){
       var
         frame= $reel.data('frame'),
         index= frame - 1
@@ -309,7 +308,7 @@
         }
       }})
 
-    $reel.parent().bind('frameChange.test', function(){
+    $(document).bind('frameChange.test', function(){
       var
         frame= $reel.data('frame')
 

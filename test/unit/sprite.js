@@ -109,7 +109,7 @@
         row: 3
       })
 
-    $reel.bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       equal( $reel.data('row'), 3);
       equal( $reel.data('frame'), 17);
       equal( $reel.data('backwards'), false);

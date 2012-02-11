@@ -157,7 +157,7 @@
     var
       $reel= $('#image').reel()
 
-    $reel.parent().bind('up.test', function(){
+    $(document).bind('up.test', function(){
       ok( true, '`"wheel"` event caused the `"up"` event to trigger and cancel `"pan"`');
       ok( !$('html').hasClass('reel-panning'), 'HTML is not flagged as "panning in progress"')
       start();
@@ -177,7 +177,7 @@
         start();
       }, 100);
 
-    $reel.bind('wheel.test', function(){
+    $(document).bind('wheel.test', function(){
       ok( false, '`"wheel"` event should not be fired, but was');
       clearTimeout(waiter);
       start();

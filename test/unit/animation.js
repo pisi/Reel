@@ -154,7 +154,7 @@
         $reel= $('#image').reel(setups[index]),
         ticked= false
 
-      $reel.bind('frameChange.test', function(){
+      $(document).bind('frameChange.test', function(){
         ok( !ticked, '`openingDone` induced `frameChange` triggered before the first tick');
 
         $reel.unbind('.test').unreel();

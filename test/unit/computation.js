@@ -80,7 +80,7 @@
         '-60': 30,
         '-90': 30
       }
-    $reel.bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       $.each(entries, function(ix,it){
         $reel.trigger('frameChange', Number(ix));
         equal( $reel.data('frame'), it, 'Frame '+ix);

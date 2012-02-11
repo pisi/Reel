@@ -52,7 +52,6 @@
         $reel= $('#image').reel({ indicator: size }),
         $indicator= $('#image-reel .reel-indicator')
 
-      $reel.parent().bind('loaded.test', function(e){
         index++;
         equiv( $indicator.css('top'), 126 - size );
         if (index == samples.length){
@@ -63,6 +62,7 @@
         }
       })
     }
+    $(document).bind('loaded.test', function(e){
   });
 
   asyncTest( 'Indicator: `indicator` option value is the height of the indicator', function(){
@@ -105,7 +105,7 @@
       }),
       $indicator= $('#image-reel .reel-indicator');
 
-    $reel.parent().bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       equiv( $indicator.css('left'), '0px' );
       start();
     });
@@ -136,7 +136,6 @@
       $reel= $('#image').reel({ indicator: 20, frame: 1 }),
       before= $('#image-reel .reel-indicator').css('left');
 
-    $reel.bind('loaded.test', function(){
       $reel.trigger('frameChange', 5);
       $reel.one('frameChange.test', function(){
         var
@@ -144,6 +143,7 @@
 
         ok( before != after, 'Position change after frame change' );
         start();
+      $(document).bind('loaded.test', function(){
       });
     })
   });
@@ -185,7 +185,7 @@
         images: [ 'resources/f1.jpg' ]
       })
 
-    $reel.parent().bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       var
         $cached= $reel.siblings('img[width][height]').first()
 
@@ -206,7 +206,7 @@
         frames: frames
       })
 
-    $reel.bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       var
         $cached= $reel.siblings('img[width][height]').first()
 
@@ -251,12 +251,12 @@
       $reel= $('#image').reel({
       })
 
-    $reel.bind('loaded.test', function(){
-      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
+    $(document).bind('loaded.test', function(){
+      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
+      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
       equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', '`html`');
       equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', '`html *`');
       $('html').removeClass('reel-panning');
@@ -274,12 +274,12 @@
         cursor: 'hand'
       })
 
-    $reel.bind('loaded.test', function(){
-      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag.cur)');
+    $(document).bind('loaded.test', function(){
+      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag.cur)');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', 'instance');
+      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', 'instance');
       equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html`');
       equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html *`');
       $('html').removeClass('reel-panning');
@@ -298,12 +298,12 @@
         cursor: 'pointer'
       })
 
-    $reel.bind('loaded.test', function(){
-      equal( $(this).css('cursor'), touchy ? 'auto' : 'pointer');
+    $(document).bind('loaded.test', function(){
+      equal( $reel.css('cursor'), touchy ? 'auto' : 'pointer');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $(this).css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', 'instance');
+      equiv( $reel.css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', 'instance');
       equiv( $('html').css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', '`html`');
       equiv( $('body').css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', '`html *`');
       $('html').removeClass('reel-panning');
@@ -322,7 +322,7 @@
 
     ok( $reel.parent().is('.reel-loading'), 'Is `reel-loading` at the very start');
     equal ($reel.css('cursor'), touchy ? 'auto' : 'wait', 'Has the "wait" cursor');
-    $reel.bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       ok( !$reel.parent().is('.reel-loading'), 'No longer has the `reel-loading` class when loaded');
       ok ($reel.css('cursor') != 'wait', 'Does not have the "wait" cursor after the load');
       start();
@@ -339,7 +339,7 @@
         sequence: '###.jpg'
       })
 
-    setTimeout(function(){
+    $(document).bind('loaded.test', function(){
       var
         $images= $reel.siblings('img.reel-cached')
 
@@ -347,7 +347,7 @@
       equal( $images.first().attr('src'), '001.jpg', 'First cache image `src` is set');
       ok( $images.first().attr('src') != $images.last().attr('src'), '`src` of last image differs from the first');
       start();
-    }, 100);
+    });
   });
 
 })(jQuery);
