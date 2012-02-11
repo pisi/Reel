@@ -71,7 +71,6 @@
     var
       size= 10,
       $reel= $('#image').reel({
-        snaps: false, // The default snapping is not desirable in this precision test
         indicator: size,
         frames: 36,
         frame: 1
