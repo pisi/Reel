@@ -72,18 +72,14 @@
     var
       one_second= 1000,
       lazy_tempo= tempo / ($.reel.lazy? $.reel.def.laziness : 1),
-      tolerate= 10, // percents
-      tolerance= {
-        lo: 1 - tolerate / 100,
-        hi: 1 + tolerate / 100
-      }
+      tolerate= 10 // percents
 
     // We also try both animated and non-animated
     $.each([0, 1], function(ixx, speed){
 
       asyncTest( 'Measuring 1 second timing accuracy when running ' + (speed ? 'animated' : 'non-animated') + ' instance at `tempo: ' + lazy_tempo + '`', function()
       {
-        expect(2);
+        expect(1);
 
         var
           ticks= 0,
@@ -96,10 +92,11 @@
         });
 
         setTimeout(function(duration){
-          var filled;
-          duration= +new Date() - bang;
-          ok( (filled= duration / one_second) >= tolerance.lo && filled <= tolerance.hi, duration + ' ms is within the ' + tolerate + ' % tolerance.');
-          ok( true, 'Received ' + ticks + ' ticks');
+          var
+            duration= +new Date() - bang,
+            excess= duration % one_second / 10
+
+          ok( excess < tolerate, 'Yielded ' + ticks + ' ticks with ' + excess + ' % of measured overdue');
           start();
         }, one_second);
       });
