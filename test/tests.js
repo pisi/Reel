@@ -14,18 +14,16 @@
       'lib/vendor/jquery.cookie-min.js',
       'lib/quny.js',
 
-      //'unit/parameters.js',
-      'unit/events.js',
-      'unit/computation.js',
-      'unit/animation.js',
+      'unit/annotations.js',
+      'unit/issues.js',
+      'unit/data.js',
       'unit/selector.js',
       'unit/rendering.js',
-      'unit/annotations.js',
-      'unit/data.js',
       'unit/api.js',
-      //'unit/interaction.js',
+      'unit/computation.js',
       'unit/sprite.js',
-      'unit/issues.js'
+      'unit/events.js',
+      'unit/animation.js'
     ],
     complete: function(){
 
