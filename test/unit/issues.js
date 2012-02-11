@@ -219,7 +219,6 @@
           frames= 36, // default
           $pano= $('#image').reel({
             frame: frame,
-            snaps: false, // The default snapping is not desirable in this precision test
             rows: rows,
             row: row
           })
