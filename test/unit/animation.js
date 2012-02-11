@@ -53,11 +53,11 @@
           equals( ticks_copy, ticks, 'Ticker is stopped.');
 
           start();
-        }, 1000);
+        }, 100);
 
-      }, 1000);
+      }, 100);
 
-    }, 1000);
+    }, 100);
 
     function tick(){
       ticks++
