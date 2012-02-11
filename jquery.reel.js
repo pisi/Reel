@@ -321,14 +321,14 @@ jQuery.reel || (function($, window, document, undefined){
                       // The actual loading of the image is done asynchronously
                       load(uri, $img);
                       uris.push(uri);
-                      function load(uri, $img){ setTimeout(function(){
-                        if ($img.parent().length){
-                          $img.attr({ src: uri, width: width, height: height });
-                          t.reelTriggerOnce('preloaded', function(){ return $img[0].complete }, function(){ return !$img.parent().length })
-                        }
-                      }, (to_load - preload.length) * 2) }
                     }
                     set(_cached_, uris);
+                    function load(uri, $img){ setTimeout(function(){
+                      if ($img.parent().length){
+                        $img.attr({ src: uri, width: width, height: height });
+                        t.reelTriggerOnce('preloaded', function(){ return $img[0].complete }, function(){ return !$img.parent().length })
+                      }
+                    }, (to_load - preload.length) * 2) }
                   },
                   preloaded: function(e){
                     var
