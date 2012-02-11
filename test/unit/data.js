@@ -106,7 +106,7 @@
       value= 5,
       $reel= $('#image').reel()
 
-    $reel.bind('somethingChange', function(evnt, nothing, something){
+    $reel.bind('somethingChange.test', function(evnt, nothing, something){
       ok(true, 'Change event has been triggered once');
       ok( is('Object', evnt), 'The event handler is passed the event as first argument as usual,');
       ok( is('Undefined', nothing), 'always `undefined` as the second argument,');
