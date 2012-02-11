@@ -105,7 +105,7 @@
 
   asyncTest( 'Running instances have their overall running cost (in ms) exposed as `$.reel.cost`', function()
   {
-    expect(4);
+    expect(3);
 
     $('#image').reel({ speed: 1 });
 
@@ -123,8 +123,7 @@
         var
           cost_of_three= $.reel.cost
 
-        ok( cost_of_three > 0, 'Non-zero cost of two instances (' + cost_of_three + ' ms)' )
-        ok( cost_of_three > cost_of_one, 'Running cost of three instances is higher then of one' )
+        ok( cost_of_three > 0, 'Non-zero cost of two more instances (' + cost_of_three + ' ms)' )
         start();
 
       }, 100);
