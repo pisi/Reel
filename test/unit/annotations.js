@@ -38,7 +38,7 @@
         }
       })
 
-    $reel.one('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       ok( !!$('div#my_annotation').length, 'Node present');
       //ok( $('#my_annotation').is(':visible'), 'Node visible');
       ok( $('#my_annotation').is(':contains(Some text)'), 'Node text content');
@@ -68,7 +68,7 @@
         }
       })
 
-    $reel.one('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       ok( !!$('div#my_annotation').length, 'Node node present');
       ok( !!$('div#my_annotation img').length, 'Wrapping an image node');
       equal( $('#my_annotation img').attr('src'), 'resources/badge-1.gif', 'Image `src`');

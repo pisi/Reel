@@ -22,7 +22,7 @@
         '-1.23456': 0.7654,
         '-1.2': 0.8
       }
-    $reel.one('loaded', function(){
+    $(document).bind('loaded.test', function(){
       $.each(entries, function(ix,it){
         $reel.trigger('fractionChange', Number(ix));
         equal( $reel.data('fraction').toFixed(4), it, 'Passed '+ix);
@@ -45,7 +45,7 @@
         '1.23456': 1,
         '-1.23456': 1
       }
-    $reel.one('loaded', function(){
+    $(document).bind('loaded.test', function(){
       $.each(entries, function(ix,it){
         $reel.trigger('rowChange', Number(ix));
         equal( $reel.data('row').toFixed(4), it, 'Fraction '+ix);
@@ -103,7 +103,7 @@
         '1.23456': 1,
         '-1.23456': 0
       }
-    $reel.one('loaded', function(){
+    $(document).bind('loaded.test', function(){
       $.each(entries, function(ix,it){
         $reel.reel('tier', Number(ix));
         equal( $reel.data('tier').toFixed(4), it, 'Tier '+ix);
@@ -126,7 +126,7 @@
         '1.23456': 1,
         '-1.23456': 1
       }
-    $reel.one('loaded', function(){
+    $(document).bind('loaded.test', function(){
       $.each(entries, function(ix,it){
         $reel.reel('row', Number(ix));
         equal( $reel.reel('row').toFixed(4), it, 'Fraction '+ix);
@@ -152,7 +152,7 @@
         '-1.23456': 0.7654,
         '-1.2': 0.8
       }
-    $reel.one('loaded', function(){
+    $(document).bind('loaded.test', function(){
       $.each(entries, function(ix,it){
         $reel.reel('fraction', Number(ix));
         equal( $reel.reel('fraction').toFixed(4), it, 'Passed '+ix);
@@ -187,7 +187,7 @@
         '-60': 30,
         '-90': 30
       }
-    $reel.one('loaded', function(){
+    $(document).bind('loaded.test', function(){
       $.each(entries, function(ix,it){
         $reel.reel('frame', Number(ix));
         equal( $reel.reel('frame'), it, 'Frame '+ix);
