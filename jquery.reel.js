@@ -324,7 +324,7 @@ jQuery.reel || (function($, window, document, undefined){
                       function load(uri, $img){ setTimeout(function(){
                         if ($img.parent().length){
                           $img.attr({ src: uri, width: width, height: height });
-                          t.reelTriggerOnce('preloaded', function(){ return $img[0].complete }, function(){ return !$img.parent().length })
+                          t.reelTriggerOnce('preloaded', function(){ return $img[0].complete || !$img.parent().length })
                         }
                       }, (to_load - preload.length) * 2) }
                     }
@@ -1025,10 +1025,9 @@ jQuery.reel || (function($, window, document, undefined){
   $.extend($.fn, reel.fn);
 
   // Helpers
-  $.fn.reelTriggerOnce= function(evnt, condition, abort){
+  $.fn.reelTriggerOnce= function(evnt, condition){
     if (this.is(dot(klass))) return (function try_trigger_now($node){
-      if (abort()) return $node
-      else if (condition()) $node.trigger(evnt)
+      if (condition()) $node.trigger(evnt)
       else setTimeout(function(){ try_trigger_now($node) }, 100);
       return $node
     })($(this))
