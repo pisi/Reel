@@ -140,6 +140,12 @@
         location.href= url;
       } )
 
+      var oldstart= window.start;
+      window.start= function(){
+        $(document).unbind('.test');
+        oldstart();
+      }
+
     }
   } );
 
