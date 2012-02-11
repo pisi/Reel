@@ -344,6 +344,8 @@ jQuery.reel || (function($, window, document, undefined){
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
                   },
+
+                  // Opening animation
                   opening: function(e){
                   /*
                   - initiates opening animation
@@ -366,6 +368,8 @@ jQuery.reel || (function($, window, document, undefined){
                     if (opt.delay > 0) delay= setTimeout(function play(){ t.trigger('play') }, opt.delay * 1000)
                     else t.trigger('play');
                   },
+
+                  // Playback
                   play: function(e, speed){
                     var
                       speed= set(_speed_, speed || get(_speed_)),
@@ -383,6 +387,8 @@ jQuery.reel || (function($, window, document, undefined){
                       stopped= set(_stopped_, true),
                       playing= set(_playing_, !stopped)
                   },
+
+                  // Mouse or touch interactivity
                   down: function(e, x, y){
                   /*
                   - starts the dragging operation by binding dragging events to the pool
@@ -491,6 +497,8 @@ jQuery.reel || (function($, window, document, undefined){
                     t.trigger('up')
                     return false;
                   },
+
+                  // Data change reactions
                   fractionChange: function(e, set_fraction, fraction){
                   /*
                   - calculates and changes sprite frame
@@ -577,6 +585,7 @@ jQuery.reel || (function($, window, document, undefined){
                     }
                   },
 
+                  // Stepping
                   'click.steppable': function(e){
                     if (panned) return mute(e, false);
                     t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
@@ -593,6 +602,7 @@ jQuery.reel || (function($, window, document, undefined){
                     set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
                   },
 
+                  // Indicators
                   'fractionChange.indicator': function(e, deprecated_set, fraction){
                     if (deprecated_set === undefined && opt.indicator) var
                       space= get(_dimensions_),
@@ -619,6 +629,7 @@ jQuery.reel || (function($, window, document, undefined){
                       $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
                   },
 
+                  // Annotations
                   'setup.annotations': function(e){
                     var
                       space= get(_dimensions_),
