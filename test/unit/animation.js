@@ -136,38 +136,30 @@
 
   });
 
-  asyncTest( 'Removal of redundant `rowChange` and untimately the `frameChange` event from `loaded.fu` handler left the functionality untouched)', function()
-  {
-    var
-      index= 0,
-      setups= [
-        { /* No `opening` equals `opening: 0` */ },
-        { opening: 0 },
-        { opening: 1.23 }
-      ]
-    expect(setups.length);
-
-    try_one();
-
-    function try_one(){
+  $.each({
+    'no opening': { /* No `opening` equals `opening: 0` */ },
+    'zero opening': { opening: 0 },
+    'valid opening': { opening: 1.23 }
+  },
+  function(ix, setup){
+    asyncTest( 'Removal of redundant `rowChange` and untimately the `frameChange` event from `loaded.fu` handler left the functionality untouched when ' + ix + ' is set', function()
+    {
+      expect(1);
       var
-        $reel= $('#image').reel(setups[index]),
-        ticked= false
+        ticked,
+        $reel= $('#image').reel(setup)
 
-      $(document).bind('frameChange.test', function(){
-        ok( !ticked, '`openingDone` induced `frameChange` triggered before the first tick');
-
-        $reel.unbind('.test').unreel();
-        $(document).unbind('.test');
-        index++;
-
-        if (index < setups.length) try_one()
-        else start();
+      $(document).bind('loaded.test', function(){
+        $(document).bind('frameChange.test', function(){
+          ok( !ticked, '`openingDone` induced `frameChange` triggered before the first tick');
+          start();
+        })
+        $(document).bind('tick.reel.test', function(){
+          ticked= true;
+        });
       });
-      $(document).bind('tick.reel.test', function(){
-        ticked= true;
-      });
-    }
+
+    });
   });
 
 })(jQuery);

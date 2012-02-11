@@ -65,32 +65,21 @@
     $(document).bind('loaded.test', function(e){
   });
 
-  asyncTest( 'Indicator: `indicator` option value is the height of the indicator', function(){
-    expect(6);
-    var
-      samples= [5, 10, 30],
-      index= 0
-
-    try_sizes_one_by_one();
-
-    function try_sizes_one_by_one(){
+  $.each([5, 10, 30], function(index, sample){
+    asyncTest( 'Indicator: `indicator` option value ('+sample+')is the height of the indicator', function(){
+      expect(2);
       var
-        size= samples[index],
+        size= sample,
         $reel= $('#image').reel({ indicator: size, speed: 2 }),
         portion= Math.round($('#image').width() / 36),
         $indicator= $('#image-reel .reel-indicator')
 
-      $reel.parent().one('fractionChange.test', function(){
-        index++;
+      $(document).bind('loaded.test', function(){
         equiv( $indicator.css('width'), portion );
         equiv( $indicator.css('height'), size );
-        if (index == samples.length){
-          start();
-        }else{
-          try_sizes_one_by_one();
-        }
+        start();
       });
-    }
+    });
   });
 
   asyncTest( 'Indicator: is sticked to the bottom left corner when on min frame (1)', function(){
