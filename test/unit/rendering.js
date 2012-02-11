@@ -38,31 +38,15 @@
     ok( $overlay.hasClass('reel-overlay'), 'Has the class');
   });
 
-  asyncTest( 'Indicator: is sticked to the bottom edge of the container', function(){
-    expect(4);
+  asyncTest( 'Indicator: is sticked to the bottom edge of the container no matter its size', function(){
+    expect(1);
     var
-      samples= [10, 20, 50, 100],
-      index= 0
+      $reel= $('#image').reel({ indicator: 5 })
 
-    try_sizes_one_by_one();
-
-    function try_sizes_one_by_one(){
-      var
-        size= samples[index],
-        $reel= $('#image').reel({ indicator: size }),
-        $indicator= $('#image-reel .reel-indicator')
-
-        index++;
-        equiv( $indicator.css('top'), 126 - size );
-        if (index == samples.length){
-          start();
-        }else{
-          $('#image').unbind('.test').unreel()
-          try_sizes_one_by_one()
-        }
-      })
-    }
     $(document).bind('loaded.test', function(e){
+      equiv( $('#image-reel .reel-indicator').css('bottom'), 0 );
+      start();
+    });
   });
 
   $.each([5, 10, 30], function(index, sample){
