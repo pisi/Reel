@@ -180,7 +180,6 @@
     }, 500 );
   });
 
-  asyncTest( 'GH-46 Incorrect `row` to `frame` translation in multi-row movies', function(){
     /* Github issue 46 bugfix
      * http://github.com/pisi/Reel/issues/#issue/46
      * When topmost row has been reached with dragging, the instance freeze in that row
@@ -192,27 +191,21 @@
      * and preventing proper `row` > `frame` propagation unless horizontal drag
      * is performed.
      */
-    var
-      try_rows= [ 1, 2 ],
-      done_rows= 0,
-      try_frames= [ 1, 2, 3, 4, 5, 6, 7, /*8,*/ 9, 10, 11, 12, 13, 14, /*15,*/ 16, 17, 18, 19, 20,
-                    21, 22, 23, 24, 25, 26, 27, 28, /*29,*/ 30, 31, 32, 33, 34, 35, 36 ]
-                    /* The three commented-out frame values (8, 15 and 29)
-                     * are known exceptions from the rule and the actual calculated value is
-                     * always one less. Exactly why this happens and especially why it is
-                     * independent on `frames` value is still a true mystery for me.
-                     * Anyway, it yields 96.3% accuracy, which is as far as I could get it,
-                     * is much better then before and I'm happy with it. At least for now.
-                     */
-
-    expect( try_rows.length * try_frames.length * 3 ); // 3 test for each combination
-
-    for( var i= 0; i < try_rows.length; i++) (function(ix){ setTimeout( function(){
-      for( var ii= 0; ii < try_frames.length; ii++){
-        $('#image').unreel();
+  $.each([
+    1,
+    2
+  ],
+  function(ix, row){
+    $.each([
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+      11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+      31, 32, 33, 34, 35, 36
+    ],
+    function(iix, frame){
+      asyncTest( 'GH-46 Incorrect `row` to `frame` translation in multi-row movies (' + row + '/2 to ' + frame + '/36)', function(){
+        expect( 3 );
         var
-          frame= try_frames[ ii ],
-          row= try_rows[ ix ],
           rows= 2,
           frames= 36, // default
           $pano= $('#image').reel({
@@ -247,10 +240,9 @@
 
         // Conclude the drag
         $pano.trigger('up');
-      }
-      done_rows++;
-      if (done_rows == rows) start();
-    }, 5) })(i)
+        start();
+      });
+    });
   });
 
   asyncTest( 'GH-62 Implicit teardown', function(){
