@@ -78,7 +78,7 @@
         images:   phone_frames(20)
       })
 
-    $pano.one('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       equal($pano.attr('src'), 'resources/phone/01.png', 'Image is from the sequence');
       start();
     });
@@ -121,9 +121,16 @@
         ok(true, 'Ticked 100 times - ticker runs ;)');
 
         var
-          protocol= $('#image').attr('src').split(':')[0]
+          protocol= $('#image').attr('src').split(':')[0],
+          dot= '.',
+          browser_version= +$.browser.version.split(dot).slice(0,2).join(dot),
+          ie= $.browser.msie
 
-        equal(protocol, 'data', 'Embedded transparent image.');
+        if (!ie || (ie && browser_version > 6)){
+          equal(protocol, 'data', 'Embedded transparent image.');
+        }else{
+          equal(protocol, 'http', 'Transparent image from CDN.');
+        }
 
         start();
       }
@@ -167,15 +174,16 @@
      */
     expect( 3 );
 
-    $('#image').reel().bind('click.test', function(){
-      ok( true, 'Event binding is preserved');
-    });
+    var
+      $reel= $('#image').reel().bind('click.test', function(){
+        ok( true, 'Event binding is preserved');
+      });
 
     setTimeout( function(){
-      $('#image').trigger('teardown').reel();
-      ok( $('#image').is('.reel'), 'IMG tag is flagged as a Reel instance');
-      ok( $('#image').parent().is('.reel-overlay#image-reel'), 'and wrapped in overlay DIV');
-      $('#image').click();
+      $reel.unreel().reel();
+      ok( $reel.is('.reel'), 'IMG tag is flagged as a Reel instance');
+      ok( $reel.parent().is('.reel-overlay[id=image-reel]'), 'and wrapped in overlay DIV');
+      $reel.click();
       start();
     }, 500 );
   });

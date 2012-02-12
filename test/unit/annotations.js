@@ -35,7 +35,7 @@
               title: 'Some hint',
               // Any attribute would do as it would for jQuery's `.attr()`
               'any-attribute': 'any-value'
-            },
+            }
           },
           "still_node": {}
         }
@@ -62,6 +62,8 @@
       $reel= $(selector).reel({
         annotations: {
           "my_annotation": {
+            x: 0,
+            y: 0,
             image: {
               src: 'resources/badge-1.gif',
               width: 120,
@@ -163,13 +165,15 @@
     var
       $reel= $('#image').reel({ annotations: {}, speed: 1 });
 
+    $(document).bind('loaded.test', function(){
     setTimeout(function(){
       var
         frame= $reel.data('frame')
       ok( frame, 'Instance stopped at frame '+frame);
-      ok( $('#image-reel').attr('class').match(/frame-[0-9]+/), 'The instance wrapper carries frame-'+frame+' class name');
+      ok( $('#image-reel')[0].className.match(/frame-[0-9]+/), 'The instance wrapper carries frame-'+frame+' class name');
       start();
     }, 123);
+    })
   });
 
   asyncTest( 'Horizontal position of annotation is defined by `x` property relative to left top corner', function(){
