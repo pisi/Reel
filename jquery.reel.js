@@ -317,7 +317,7 @@ jQuery.reel || (function($, window, document, undefined){
                         uri= opt.path+preload.shift(),
                         width= space.x * (!is_sprite ? 1 : opt.footage),
                         height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
-                        $img= $(tag(_img_)).attr({ 'class': cached_klass }).appendTo($overlay)
+                        $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
                       // The actual loading of the image is done asynchronously
                       $img.bind('error load', function(){
                         return !!$(this).parent().length && t.trigger('preloaded') && false;
