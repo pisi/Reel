@@ -35,7 +35,7 @@
               title: 'Some hint',
               // Any attribute would do as it would for jQuery's `.attr()`
               'any-attribute': 'any-value'
-            },
+            }
           },
           "still_node": {}
         }
@@ -62,6 +62,8 @@
       $reel= $(selector).reel({
         annotations: {
           "my_annotation": {
+            x: 0,
+            y: 0,
             image: {
               src: 'resources/badge-1.gif',
               width: 120,
