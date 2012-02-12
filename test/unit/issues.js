@@ -121,9 +121,16 @@
         ok(true, 'Ticked 100 times - ticker runs ;)');
 
         var
-          protocol= $('#image').attr('src').split(':')[0]
+          protocol= $('#image').attr('src').split(':')[0],
+          dot= '.',
+          browser_version= +$.browser.version.split(dot).slice(0,2).join(dot),
+          ie= $.browser.msie
 
-        equal(protocol, 'data', 'Embedded transparent image.');
+        if (!ie || (ie && browser_version > 6)){
+          equal(protocol, 'data', 'Embedded transparent image.');
+        }else{
+          equal(protocol, 'http', 'Transparent image from CDN.');
+        }
 
         start();
       }

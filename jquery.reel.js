@@ -968,6 +968,7 @@ jQuery.reel || (function($, window, document, undefined){
     pool= $(document),
     browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
     ie= $.browser.msie,
+    knows_data_urls= !ie || (ie && browser_version > 6),
     client= navigator.userAgent,
     ticker,
 
@@ -1018,7 +1019,7 @@ jQuery.reel || (function($, window, document, undefined){
     _width_= 'width', _x_= 'x', _y_= 'y',
 
     // Image resources
-    transparent= embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7'),
+    transparent= knows_data_urls ? embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') : cdn('blank.gif'),
     busy_cursor= 'wait',
     reel_cursor= url(cdn(_jquery_reel_+dot(_cur_)))+____+_move_,
     drag_cursor= url(cdn(_jquery_reel_+'-'+_drag_+dot(_cur_)))+____+_move_,
