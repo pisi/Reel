@@ -109,7 +109,7 @@
     $(document).bind('somethingChange.test', function(evnt, nothing, something){
       ok(true, 'Change event has been triggered once');
       ok( is('Object', evnt), 'The event handler is passed the event as first argument as usual,');
-      ok( is('Undefined', nothing), 'always `undefined` as the second argument,');
+      ok( typeof nothing === 'undefined', 'always `undefined` as the second argument,');
       equal( something, value, 'and finally the actual value as the third/last argument');
     })
     $reel.reel('something', value);
@@ -139,9 +139,9 @@
     $image.unreel();
     ok( $image.data(key), 'Test probe is still present even after `.unreel() call');
     equal( $image.data(key), value, 'And it is our probe');
-    ok( is('Undefined', $image.data('frame')), 'Instance data are gone (`"frame"`)');
-    ok( is('Undefined', $image.data('dimensions')), 'Instance data are gone (`"dimensions"`)');
-    ok( is('Undefined', $image.data('images')), 'Instance data are gone (`"images"`)');
+    ok( typeof $image.data('frame') === 'undefined', 'Instance data are gone (`"frame"`)');
+    ok( typeof $image.data('dimensions') === 'undefined', 'Instance data are gone (`"dimensions"`)');
+    ok( typeof $image.data('images') === 'undefined', 'Instance data are gone (`"images"`)');
 
   });
 
