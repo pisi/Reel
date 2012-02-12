@@ -33,10 +33,9 @@ Desktop-class
 
 ### Firefox
 
-* `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0) Gecko/20100101 Firefox/4.0`
+* `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:8.0.1) Gecko/20100101 Firefox/8.0.1`
   * **OK** -- Unit
   * **OK** -- Interaction
-  * Firefox 4 reports 0px background shift as 0% which doesn't affect function.
 * `Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16`
   * **OK** -- Unit
   * **OK** -- Interaction
@@ -47,8 +46,7 @@ Desktop-class
 * `Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; SLCC2; Media Center PC 6.0)`
   * **OK** -- Unit
   * **OK** -- Interaction
-  * IE 9 reports color as rgb not in hex without affecting function.
-* `Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)`
+* `Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; Media Center PC 6.0)`
   * **OK** -- Unit
   * **OK** -- Interaction
 * `Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)`
@@ -61,17 +59,17 @@ Desktop-class
 
 ### Safari / WebKit
 
-* `Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5) AppleWebKit/533.18.1 Version/5.0.2 Safari/533.18.5`
+* `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.6+ (KHTML, like Gecko) Version/5.1 Safari/534.50`
   * **OK** -- Unit
   * **OK** -- Interaction
-* `Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8) AppleWebKit/531.22.7 Version/4.0.5 Safari/531.22.7`
+* `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50`
   * **OK** -- Unit
   * **OK** -- Interaction
 
 
 ### Opera
 
-* `Opera/9.80 (Macintosh; Intel Mac OS X; U) Presto/2.2.15 Version/10.10`
+* `Opera/9.80 (Macintosh; Intel Mac OS X; U; en) Presto/2.2.15 Version/10.10`
   * **OK** -- Unit
   * **OK** -- Interaction
 
@@ -88,12 +86,19 @@ Mobile-class
 Unles noted otherwise mobile browsers are tested using their respective emulator software running on MacOSX 10.5.8.
 
 
-### Safari
+### iOS Safari
 
 * `Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X) AppleWebKit/533.17.9 Version/5.0.2 Mobile/8C148 Safari/6533.18.5`
   * **OK** -- Unit
   * **OK** -- Interaction
 * `Mozilla/5.0 (iPhone Simulator; U; CPU iPhone OS 3_0) AppleWebKit/528.18 Version/4.0 Mobile/7A341 Safari/528.16`
+  * **OK** -- Unit
+  * **OK** -- Interaction
+
+
+### Android WebKit
+
+* `Mozilla/5.0 (Linux; U; Android 2.3.5; ZTE-SKATE) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1`
   * **OK** -- Unit
   * **OK** -- Interaction
 
