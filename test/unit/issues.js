@@ -167,15 +167,16 @@
      */
     expect( 3 );
 
-    $('#image').reel().bind('click.test', function(){
-      ok( true, 'Event binding is preserved');
-    });
+    var
+      $reel= $('#image').reel().bind('click.test', function(){
+        ok( true, 'Event binding is preserved');
+      });
 
     setTimeout( function(){
-      $('#image').trigger('teardown').reel();
-      ok( $('#image').is('.reel'), 'IMG tag is flagged as a Reel instance');
-      ok( $('#image').parent().is('.reel-overlay#image-reel'), 'and wrapped in overlay DIV');
-      $('#image').click();
+      $reel.unreel().reel();
+      ok( $reel.is('.reel'), 'IMG tag is flagged as a Reel instance');
+      ok( $reel.parent().is('.reel-overlay[id=image-reel]'), 'and wrapped in overlay DIV');
+      $reel.click();
       start();
     }, 500 );
   });
