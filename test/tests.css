@@ -72,7 +72,7 @@ body.done #receipt {
 h1#qunit-header{
 	background-color:#ddd;
 	margin:0;
-	padding:20px 0 0 1em;
+	padding:20px 0 10px 1em;
 	color:#000;
 }
 h1#qunit-header a{
@@ -80,7 +80,7 @@ h1#qunit-header a{
 	font-weight:normal;
 }
 h2#qunit-banner{
-  padding: 0 30px;
+  padding: 20px 30px 0;
   font-size:14px;
   color: #fff;
 	margin:0;
@@ -203,27 +203,20 @@ body.done #qunit-thanks {
   font-size: 23px;
 }
 
-#qunit-against,
-#qunit-against select{
-	color:#555;
+h1 label{
+  font-weight: normal;
 }
-#qunit-against{
-  float:right;
-  font-size:11px;
-  margin:18px 24px 0 0;
-}
-#qunit-against select{
+select#against-jqeury-versions{
   color: black;
-  font-size: 36px;
   font-weight: bold;
   background: white;
 }
 
 ul#qunit-modules{
-	background-color:#222;
-  border-bottom: 1px solid #333;
+	background-color:#555;
+  position:absolute;
 	margin:0;
-	padding:.4em 0 .5em 2em;
+	padding:.5em 0 .2em 2em;
 	color:#fff;
 }
 ul#qunit-modules li{
@@ -236,9 +229,9 @@ ul#qunit-modules li.void a{
 }
 ul#qunit-modules li.failure a{
   color: #EE5757;
-  font-weight: bold;
 }
 ul#qunit-modules li a{
+  font-weight: bold;
 	color:#C6E746;
 }
 #qunit-filter-pass, #qunit-filter-missing{
