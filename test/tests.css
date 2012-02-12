@@ -225,7 +225,7 @@ ul#qunit-modules li{
 	margin-right: 5px;
 }
 ul#qunit-modules li.void a{
-  color: #575757;
+  color: #777;
 }
 ul#qunit-modules li.failure a{
   color: #EE5757;
