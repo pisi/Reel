@@ -5,8 +5,8 @@
 
   yepnope( {
     load: [
-      '../jquery.reel-min.js',
       'http://code.jquery.com/jquery-'+(location.params.jq || '1.7')+'.min.js',
+      '../jquery.reel-min.js',
       'lib/vendor/jquery.disabletextselect-min.js',
       'lib/vendor/jquery.mousewheel-min.js',
 
