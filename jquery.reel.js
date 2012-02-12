@@ -319,15 +319,15 @@ jQuery.reel || (function($, window, document, undefined){
                         height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
                         $img= $(tag(_img_)).attr({ 'class': cached_klass }).appendTo($overlay)
                       // The actual loading of the image is done asynchronously
+                      $img.bind('error load', function(){
+                        return !!$(this).parent().length && t.trigger('preloaded') && false;
+                      });
                       load(uri, $img);
                       uris.push(uri);
                     }
                     set(_cached_, uris);
                     function load(uri, $img){ setTimeout(function(){
-                      if ($img.parent().length){
-                        $img.attr({ src: uri, width: width, height: height });
-                        t.reelTriggerOnce('preloaded', function(){ return $img[0].complete }, function(){ return !$img.parent().length })
-                      }
+                      $img.parent().length && $img.attr({ src: uri });
                     }, (to_load - preload.length) * 2) }
                   },
                   preloaded: function(e){
@@ -1036,13 +1036,6 @@ jQuery.reel || (function($, window, document, undefined){
   $.extend($.fn, reel.fn);
 
   // Helpers
-  $.fn.reelTriggerOnce= function(evnt, condition){
-    if (this.is(dot(klass))) return (function try_trigger_now($node){
-      if (condition()) $node.trigger(evnt)
-      else setTimeout(function(){ try_trigger_now($node) }, 100);
-      return $node
-    })($(this))
-  }
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
   function leader(key){ return reel.instances.length ? reel.instances.first().data(key) : null }
