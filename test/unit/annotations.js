@@ -163,13 +163,15 @@
     var
       $reel= $('#image').reel({ annotations: {}, speed: 1 });
 
+    $(document).bind('loaded.test', function(){
     setTimeout(function(){
       var
         frame= $reel.data('frame')
       ok( frame, 'Instance stopped at frame '+frame);
-      ok( $('#image-reel').attr('class').match(/frame-[0-9]+/), 'The instance wrapper carries frame-'+frame+' class name');
+      ok( $('#image-reel')[0].className.match(/frame-[0-9]+/), 'The instance wrapper carries frame-'+frame+' class name');
       start();
     }, 123);
+    })
   });
 
   asyncTest( 'Horizontal position of annotation is defined by `x` property relative to left top corner', function(){
