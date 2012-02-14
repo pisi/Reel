@@ -576,11 +576,11 @@ jQuery.reel || (function($, window, document, undefined){
                         spacing= get(_spacing_),
                         a= major * ((horizontal ? space.y : space.x) + spacing),
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
-                        shift= images.length ? [0, 0] : horizontal ? [-b + _px_, -a + _px_] : [-a + _px_, -b + _px_]
+                        shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
                       else var
                         x= round(interpolate(fraction, 0, get(_stitched_travel_))) % opt.stitched,
                         y= 0,
-                        shift= [-x + _px_, y + _px_]
+                        shift= [px(-x), px(y)]
                       t.css({ backgroundPosition: shift.join(___) })
                     }
                   },
@@ -1015,7 +1015,7 @@ jQuery.reel || (function($, window, document, undefined){
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _div_= 'div',
     _hand_= 'hand', _head_= 'head', _height_= 'height', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
-    _preload_= 'preload', _px_= 'px', _src_= 'src', _string_= 'string', _title_= 'title',
+    _preload_= 'preload', _src_= 'src', _string_= 'string', _title_= 'title',
     _width_= 'width', _x_= 'x', _y_= 'y',
 
     // Image resources
@@ -1051,7 +1051,7 @@ jQuery.reel || (function($, window, document, undefined){
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
-  function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + _px_ }
+  function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + 'px' }
   function hash(value){ return '#' + value }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);
