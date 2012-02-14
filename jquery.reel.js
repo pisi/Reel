@@ -641,7 +641,7 @@ jQuery.reel || (function($, window, document, undefined){
                         $note= $note.jquery ? $note : $(tag(_div_), $note),
                         $note= $note.attr({ id: ida }).addClass(annotation_klass),
                         $image= note.image ? $(tag(_img_), note.image) : $(),
-                        $link= note.link ? $(tag(_a_), note.link) : $()
+                        $link= note.link ? $(tag('a'), note.link) : $()
                       css(hash(ida), { display: _none_, position: _absolute_ }, true);
                       $note.bind({
                         'click.annotations': function(e){
@@ -762,7 +762,7 @@ jQuery.reel || (function($, window, document, undefined){
                   left: 0, top: get(_dimensions_).y - opt.preloader,
                   height: opt.preloader,
                   overflow: _hidden_,
-                  backgroundColor: _hex_black_
+                  backgroundColor: '#000'
                 });
                 return preloader.$= $(tag(_div_), { 'class': preloader_klass })
               },
@@ -771,7 +771,7 @@ jQuery.reel || (function($, window, document, undefined){
                   position: _absolute_,
                   width: 0, height: 0,
                   overflow: _hidden_,
-                  backgroundColor: _hex_black_
+                  backgroundColor: '#000'
                 });
                 return indicator['$'+axis]= $(tag(_div_), { 'class': indicator_klass+___+axis })
               },
@@ -1012,8 +1012,8 @@ jQuery.reel || (function($, window, document, undefined){
     _touchend_= _touch_+'end'+pns, _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
 
     // Various string primitives
-    __= '', ___= ' ', ____=',', _absolute_= 'absolute', _a_= 'a', _block_= 'block', _cur_= 'cur', _div_= 'div',
-    _drag_= 'drag', _hand_= 'hand', _head_= 'head', _height_= 'height', _hex_black_= hash('000'), _html_= 'html', _id_= 'id',
+    __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _div_= 'div',
+    _hand_= 'hand', _head_= 'head', _height_= 'height', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
     _preload_= 'preload', _px_= 'px', _src_= 'src', _string_= 'string', _title_= 'title',
     _width_= 'width', _x_= 'x', _y_= 'y',
@@ -1021,9 +1021,9 @@ jQuery.reel || (function($, window, document, undefined){
     // Image resources
     transparent= knows_data_urls ? embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') : cdn('blank.gif'),
     busy_cursor= 'wait',
-    reel_cursor= url(cdn(_jquery_reel_+dot(_cur_)))+____+_move_,
-    drag_cursor= url(cdn(_jquery_reel_+'-'+_drag_+dot(_cur_)))+____+_move_,
-    drag_cursor_down= url(cdn(_jquery_reel_+'-'+_drag_+'-down'+dot(_cur_)))+____+_move_,
+    reel_cursor= url(cdn(_jquery_reel_+'.cur'))+____+_move_,
+    drag_cursor= url(cdn(_jquery_reel_+'-drag.cur'))+____+_move_,
+    drag_cursor_down= url(cdn(_jquery_reel_+'-drag-down.cur'))+____+_move_,
 
     touchy= reel.touchy= (reel.re.touchy_agent).test(client),
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
