@@ -486,7 +486,7 @@ jQuery.reel || (function($, window, document, undefined){
                   */
                     if (!distance) return;
                     var
-                      delta= ceil(sqrt(abs(distance)) / 2),
+                      delta= ceil(math.sqrt(abs(distance)) / 2),
                       delta= negative_when(delta, distance > 0),
                       revolution= 0.0833 * get(_revolution_), // Wheel's revolution is 1/12 of full revolution
                       origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_tier_)),
@@ -987,7 +987,7 @@ jQuery.reel || (function($, window, document, undefined){
     // Shortcuts
     math= Math,
     round= math.round, floor= math.floor, ceil= math.ceil,
-    min= math.min, max= math.max, abs= math.abs, sqrt= math.sqrt,
+    min= math.min, max= math.max, abs= math.abs,
     number= parseInt,
     interpolate= reel.math.interpolate,
 
