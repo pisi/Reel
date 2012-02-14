@@ -8,6 +8,50 @@
       $reel= $('#image').reel({
         annotations: {}
       }),
+      probes= {
+        annotations: 'Object',
+        area: 'Object',
+        backup: 'Object',
+        backwards: 'Boolean',
+        bit: 'Number',
+        brake: 'Number',
+        cached: 'Array',
+        center: 'Boolean',
+        clicked: 'Boolean',
+        clicked_location: 'Object',
+        clicked_on: 'Number',
+        clicked_tier: 'Number',
+        cwish: 'Number',
+        dimensions: 'Object',
+        fraction: 'Number',
+        frame: 'Number',
+        frames: 'Number',
+        hi: 'Number',
+        id: 'String',
+        image: 'String',
+        images: 'Array',
+        lo: 'Number',
+        opening: 'Boolean',
+        opening_ticks: 'Number',
+        options: 'Object',
+        playing: 'Boolean',
+        preloaded: 'Number',
+        reeling: 'Boolean',
+        revolution: 'Number',
+        row: 'Number',
+        rows: 'Number',
+        spacing: 'Number',
+        speed: 'Number',
+        stage: 'String',
+        stitched: 'Number',
+        stitched_travel: 'Number',
+        stopped: 'Boolean',
+        style: 'Object', // (jQuery)
+        tempo: 'Number',
+        tier: 'Number',
+        velocity: 'Number',
+        vertical: 'Boolean'
+      }
       count= 0;
 
     $.each($reel.data(), function(key){
@@ -15,50 +59,12 @@
       if (key.match(/^(_[a-z]+|jQuery\d+|events|handle)$/)) return;
       count++
     });
-    expect(count);
+    expect(count * 2);
 
-    ok( is('Object', $reel.reel('annotations')), '`annotations` Object');
-    ok( is('Object', $reel.reel('area')), '`area` Object (jQuery)');
-    ok( is('Object', $reel.reel('backup')), '`backup` Object');
-    ok( is('Boolean', $reel.reel('backwards')), '`backwards` Boolean');
-    ok( is('Number', $reel.reel('bit')), '`bit` Number');
-    ok( is('Number', $reel.reel('brake')), '`brake` Number');
-    ok( is('Array', $reel.reel('cached')), '`cached` Array');
-    ok( is('Boolean', $reel.reel('center')), '`center` Boolean');
-    ok( is('Boolean', $reel.reel('clicked')), '`clicked` Boolean');
-    ok( is('Object', $reel.reel('clicked_location')), '`clicked_location` Object');
-    ok( is('Number', $reel.reel('clicked_on')), '`clicked_on` Number');
-    ok( is('Number', $reel.reel('clicked_tier')), '`clicked_tier` Number');
-    ok( is('Number', $reel.reel('cwish')), '`cwish` Number');
-    ok( is('Object', $reel.reel('dimensions')), '`dimensions` Object');
-    ok( is('Number', $reel.reel('fraction')), '`fraction` Number');
-    ok( is('Number', $reel.reel('frame')), '`frame` Number');
-    ok( is('Number', $reel.reel('frames')), '`frames` Number');
-    ok( is('Number', $reel.reel('hi')), '`hi` Number');
-    ok( is('String', $reel.reel('id')), '`id` String');
-    ok( is('String', $reel.reel('image')), '`image` String');
-    ok( is('Array', $reel.reel('images')), '`images` Object');
-    ok( is('Number', $reel.reel('lo')), '`lo` Number');
-    ok( is('Boolean', $reel.reel('opening')), '`opening` Boolean');
-    ok( is('Number', $reel.reel('opening_ticks')), '`opening_ticks` Number');
-    ok( is('Object', $reel.reel('options')), '`options` Object');
-    ok( is('Boolean', $reel.reel('playing')), '`playing` Boolean');
-    ok( is('Number', $reel.reel('preloaded')), '`preloaded` Number');
-    ok( is('Boolean', $reel.reel('reeling')), '`reeling` Boolean');
-    ok( is('Number', $reel.reel('revolution')), '`revolution` Number');
-    ok( is('Number', $reel.reel('row')), '`row` Number');
-    ok( is('Number', $reel.reel('rows')), '`rows` Number');
-    ok( is('Number', $reel.reel('spacing')), '`spacing` Number');
-    ok( is('Number', $reel.reel('speed')), '`speed` Number');
-    ok( is('String', $reel.reel('stage')), '`stage` String');
-    ok( is('Number', $reel.reel('stitched')), '`stitched` Number');
-    ok( is('Number', $reel.reel('stitched_travel')), '`stitched_travel` Number');
-    ok( is('Boolean', $reel.reel('stopped')), '`stopped` Boolean');
-    ok( is('Object', $reel.reel('style')), '`style` Object/jQuery');
-    ok( is('Number', $reel.reel('tempo')), '`tempo` Number');
-    ok( is('Number', $reel.reel('tier')), '`tier` Number');
-    ok( is('Number', $reel.reel('velocity')), '`velocity` Number');
-    ok( is('Boolean', $reel.reel('vertical')), '`vertical` Boolean');
+    $.each(probes, function(key, type){
+      ok( is(type, $reel.data(key)), '`'+key+'` '+type+' with `.data("'+key+'")`'); // 1.1 way
+      ok( is(type, $reel.reel(key)), '`'+key+'` '+type+' with `.reel("'+key+'")`'); // 1.2 way
+    });
   });
 
   test( 'Contents of attributes backup `.reel("backup")`', function(){
