@@ -182,7 +182,7 @@ jQuery.reel || (function($, window, document, undefined){
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
-                    sequence= reel.re.sequence.exec(set(_sequence_, opt.sequence)),
+                    sequence= reel.re.sequence.exec(opt.sequence),
                     images= set(_images_, sequence ? reel.sequence(sequence, opt, get) : opt.images),
                     stitched= opt.stitched,
                     loops= opt.loops,
@@ -998,7 +998,7 @@ jQuery.reel || (function($, window, document, undefined){
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
-    _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
+    _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
     _velocity_= 'velocity', _vertical_= 'vertical',
 

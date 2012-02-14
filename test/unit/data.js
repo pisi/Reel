@@ -48,7 +48,6 @@
     ok( is('Number', $reel.reel('revolution')), '`revolution` Number');
     ok( is('Number', $reel.reel('row')), '`row` Number');
     ok( is('Number', $reel.reel('rows')), '`rows` Number');
-    ok( is('String', $reel.reel('sequence')), '`sequence` String');
     ok( is('Number', $reel.reel('spacing')), '`spacing` Number');
     ok( is('Number', $reel.reel('speed')), '`speed` Number');
     ok( is('String', $reel.reel('stage')), '`stage` String');
