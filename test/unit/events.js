@@ -165,7 +165,9 @@
 
     $reel
       .trigger('down')
-      .trigger('wheel')
+      .trigger('wheel', [1])
+      // Because of IE the non-zero distance parameter to the event is
+      // required to be present
   });
 
   asyncTest( 'Improper mouse wheel event triggers (with no reasonable delta) don\'t make it to the Reel\'s `"wheel"` event', function(){
