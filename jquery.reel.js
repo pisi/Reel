@@ -997,7 +997,7 @@ jQuery.reel || (function($, window, document, undefined){
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
-    _frames_= 'frames', _head_= 'head', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
+    _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _sequence_= 'sequence', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
     _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
@@ -1014,9 +1014,9 @@ jQuery.reel || (function($, window, document, undefined){
 
     // Various string primitives
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _a_= 'a', _block_= 'block', _cur_= 'cur', _div_= 'div',
-    _drag_= 'drag', _hand_= 'hand', _height_= 'height', _hex_black_= hash('000'), _html_= 'html', _id_= 'id',
+    _drag_= 'drag', _hand_= 'hand', _head_= 'head', _height_= 'height', _hex_black_= hash('000'), _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
-    _opening_= 'opening', _preload_= 'preload', _px_= 'px', _src_= 'src', _string_= 'string', _title_= 'title',
+    _preload_= 'preload', _px_= 'px', _src_= 'src', _string_= 'string', _title_= 'title',
     _width_= 'width', _x_= 'x', _y_= 'y',
 
     // Image resources
