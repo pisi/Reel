@@ -684,7 +684,7 @@ jQuery.reel || (function($, window, document, undefined){
                   'tick.reel.preload': function(e){
                     var
                       space= get(_dimensions_),
-                      current= parseInt(preloader.$.css(_width_)),
+                      current= number(preloader.$.css(_width_)),
                       images= get(_images_).length || 1,
                       target= round(1 / images * get(_preloaded_) * space.x)
                     preloader.$.css({ width: current + (target - current) / 3 + 1 })
@@ -860,7 +860,7 @@ jQuery.reel || (function($, window, document, undefined){
       // Mathematics core
       math: {
         envelope: function(x, start, revolution, lo, hi, cwness, y){
-          return start + max(lo, min(hi, - x * cwness)) / revolution
+          return start + min_max(lo, hi, - x * cwness) / revolution
         },
         hatch: function(x, start, revolution, lo, hi, cwness, y){
           var
