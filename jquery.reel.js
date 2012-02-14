@@ -668,7 +668,7 @@ jQuery.reel || (function($, window, document, undefined){
                         y= typeof note.y!=_object_ ? note.y : note.y[offset],
                         placed= x !== undefined && y !== undefined,
                         visible= placed && (note.at ? at : (offset >= 0 && (!end || offset <= end - start))),
-                        style= { display: visible ? _block_:_none_, left: px(x) || 0, top: px(y) || 0 }
+                        style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
                     });
                   },
@@ -1052,7 +1052,7 @@ jQuery.reel || (function($, window, document, undefined){
   }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
-  function px(value){ return value === undefined || typeof value == _string_ ? value : value + _px_ }
+  function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + _px_ }
   function hash(value){ return '#' + value }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);
