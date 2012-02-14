@@ -485,6 +485,7 @@ jQuery.reel || (function($, window, document, undefined){
                   - detects motion direction
                   - nullifies the velocity
                   */
+                    if (!distance) return;
                     var
                       delta= ceil(sqrt(abs(distance)) / 2),
                       delta= negative_when(delta, distance > 0),
