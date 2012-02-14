@@ -300,12 +300,11 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       space= get(_dimensions_),
                       $overlay= t.parent(),
-                      image= get(_image_),
                       images= get(_images_),
                       is_sprite= !images.length,
                       frames= get(_frames_),
                       order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
-                      preload= is_sprite ? [image] : order(images.slice(0), opt, get),
+                      preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                       uris= []
