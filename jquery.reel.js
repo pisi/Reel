@@ -51,7 +51,7 @@ jQuery.reel || (function($, window, document, undefined){
 
   var
     reel= $.reel= {
-      version: '1.2alpha',
+      version: '1.1.3devel',
 
       // Options defaults
       def: {
@@ -397,7 +397,7 @@ jQuery.reel || (function($, window, document, undefined){
                         clicked= set(_clicked_, get(_frame_)),
                         velocity= set(_velocity_, 0),
                         scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
-                        origin= last= recenter_mouse(x, y, get(_fraction_), get(_revolution_), get(_tier_))
+                        origin= last= recenter_mouse(get(_revolution_), x, y)
                       unidle();
                       no_bias();
                       panned= false;
@@ -458,22 +458,21 @@ jQuery.reel || (function($, window, document, undefined){
                           revolution= get(_revolution_),
                           origin= get(_clicked_location_),
                           vertical= get(_vertical_),
-                          fraction= graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_), vertical ? y - origin.y : x - origin.x),
+                          fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_), vertical ? y - origin.y : x - origin.x)),
                           reeling= set(_reeling_, get(_reeling_) || get(_frame_) != get(_clicked_)),
                           motion= to_bias(vertical ? delta.y : delta.x || 0),
                           backwards= motion && set(_backwards_, motion < 0)
                         if (opt.orbital && get(_center_)) var
                           vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
-                          origin= recenter_mouse(x, y, fraction, revolution, get(_tier_))
+                          origin= recenter_mouse(revolution, x, y)
                         if (opt.rows > 1) var
                           space_y= get(_dimensions_).y,
                           revolution_y= opt.rows > 3 ? space_y : space_y / (5 - opt.rows),
                           start= get(_clicked_tier_),
                           lo= - start * revolution_y,
                           tier= set(_tier_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
-                        var
-                          origin= !(fraction % 1) && !opt.loops && recenter_mouse(x, y, fraction, revolution, get(_tier_)),
-                          fraction= set(_fraction_, fraction)
+                        if (!(fraction % 1) && !opt.loops) var
+                          origin= recenter_mouse(revolution, x, y)
                       }
                     }
                   },
@@ -489,7 +488,7 @@ jQuery.reel || (function($, window, document, undefined){
                       delta= ceil(math.sqrt(abs(distance)) / 2),
                       delta= negative_when(delta, distance > 0),
                       revolution= 0.0833 * get(_revolution_), // Wheel's revolution is 1/12 of full revolution
-                      origin= recenter_mouse(undefined, undefined, get(_fraction_), revolution, get(_tier_)),
+                      origin= recenter_mouse(revolution),
                       backwards= delta && set(_backwards_, delta < 0),
                       velocity= set(_velocity_, 0),
                       fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
@@ -802,9 +801,10 @@ jQuery.reel || (function($, window, document, undefined){
               normal= reel.normal,
 
               // Resets the interaction graph's zero point
-              recenter_mouse= function(x, y, fraction, revolution, tier){
-                set(_clicked_on_, fraction);
-                set(_clicked_tier_, tier);
+              recenter_mouse= function(revolution, x, y){
+                var
+                  fraction= set(_clicked_on_, get(_fraction_)),
+                  tier= set(_clicked_tier_, get(_tier_))
                 set(_lo_, opt.loops ? 0 : - fraction * revolution);
                 set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
                 return x && set(_clicked_location_, { x: x, y: y }) || undefined
