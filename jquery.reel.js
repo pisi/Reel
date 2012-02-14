@@ -144,7 +144,7 @@ jQuery.reel || (function($, window, document, undefined){
               tags.filter(_img_).each(function(ix){
                 var
                   $this= $(this),
-                  src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr(_src_),
+                  src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr('src'),
                   width= number(opt.attr.width || $this.css(_width_)),
                   height= number(opt.attr.height || $this.css(_height_))
                 if (src && src != __ && width && height) pass.push($this);
@@ -178,7 +178,7 @@ jQuery.reel || (function($, window, document, undefined){
                   if (t.hasClass(klass)) return;
                   set(_options_, opt);
                   var
-                    src= t.attr(opt.attr).attr(_src_),
+                    src= t.attr(opt.attr).attr('src'),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
@@ -278,7 +278,7 @@ jQuery.reel || (function($, window, document, undefined){
                         cursor= opt.cursor == _hand_ ? drag_cursor : opt.cursor || reel_cursor,
                         cursor_down= opt.cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
                       css(__, { cursor: cursor });
-                      css(dot(loading_klass), { cursor: busy_cursor });
+                      css(dot(loading_klass), { cursor: 'wait' });
                       css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor }, true);
                       area
                         .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return e.preventDefault() || !delta || t.trigger('wheel', [delta]) && false })
@@ -286,9 +286,9 @@ jQuery.reel || (function($, window, document, undefined){
                         .disableTextSelect();
                     }
                     function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && r }}
-                    opt.hint && area.attr(_title_, opt.hint);
-                    opt.indicator && $overlay.append(indicator(_x_));
-                    opt.rows > 1 && opt.indicator && $overlay.append(indicator(_y_));
+                    opt.hint && area.attr('title', opt.hint);
+                    opt.indicator && $overlay.append(indicator('x'));
+                    opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
@@ -1015,12 +1015,11 @@ jQuery.reel || (function($, window, document, undefined){
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _div_= 'div',
     _hand_= 'hand', _head_= 'head', _height_= 'height', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
-    _preload_= 'preload', _src_= 'src', _string_= 'string', _title_= 'title',
-    _width_= 'width', _x_= 'x', _y_= 'y',
+    _preload_= 'preload', _string_= 'string',
+    _width_= 'width',
 
     // Image resources
     transparent= knows_data_urls ? embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') : cdn('blank.gif'),
-    busy_cursor= 'wait',
     reel_cursor= url(cdn(_jquery_reel_+'.cur'))+____+_move_,
     drag_cursor= url(cdn(_jquery_reel_+'-drag.cur'))+____+_move_,
     drag_cursor_down= url(cdn(_jquery_reel_+'-drag-down.cur'))+____+_move_,
