@@ -7,10 +7,14 @@ significant vertical resolution to the object. This example has 6 rows
 each with 20 frames and starts on 14th frame on the 3rd row. It also is
 animated with one revolution per ~3 seconds.
 
+It also showcases (1) how to place annotations into certain rows and (2)
+how to configure the frame-based positioning of an annotation.
+
 
 Options Employed In This Example
 --------------------------------
 
+- [annotations](http://jquery.vostrel.cz/reel#annotations)
 - [frame](http://jquery.vostrel.cz/reel#frame)
 - [frames](http://jquery.vostrel.cz/reel#frames)
 - [row](http://jquery.vostrel.cz/reel#row)

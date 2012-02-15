@@ -26,11 +26,19 @@
           speed:       0.3,
           sequence:    'mini/###.jpg',
           annotations: {
-            "copyright": {
-              node: $('<div><a href="http://www.photospherix.com">Photospherix.com</a></div>'),
-              x:    0,
-              y:    170,
-              at:   '++--++--++--++++++-----+++++++'
+            "first_row": {
+              node: { text: 'First Row', css: { width: 100 } },
+              start: 1,
+              end: 20,
+              x: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105],
+              y: 10
+            },
+            "last_row": {
+              node: { text: 'Last Row', css: { width: 100 } },
+              start: 101,
+              end: 120,
+              x: [105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10],
+              y: 175
             }
           }
         });
