@@ -45,6 +45,7 @@
         stage: 'String',
         stitched: 'Number',
         stitched_travel: 'Number',
+        stitched_shift: 'Number',
         stopped: 'Boolean',
         style: 'Object', // (jQuery)
         tempo: 'Number',
