@@ -450,7 +450,7 @@ jQuery.reel || (function($, window, document, undefined){
                       slidable= false;
                       unidle();
                       var
-                        host_offset= ev && !$(ev.currentTarget).is(pool) ? $iframe.offset() : { left: 0, top: 0 },
+                        host_offset= ev && !$(ev.currentTarget).is(pool) && $iframe.offset() || { left: 0, top: 0 },
                         x= x - host_offset.left,
                         y= y - host_offset.top,
                         delta= { x: x - last.x, y: y - last.y }
