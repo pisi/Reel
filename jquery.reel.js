@@ -884,7 +884,7 @@ jQuery.reel || (function($, window, document, undefined){
             frames= opt.orbital ? opt.footage : get(_frames_),
             start= (opt.row-1) * frames,
             values= new Array().concat(sequence),
-            present= new Array(sequence.length),
+            present= new Array(sequence.length + 1),
             priority= rows < 2 ? [] : values.slice(start, start + frames)
           return spread(priority, 1, start).concat(spread(values, rows, 0))
 
@@ -902,6 +902,7 @@ jQuery.reel || (function($, window, document, undefined){
             while(granule > 1)
               for(var i= 0, length= order.length, granule= granule / 2, p= plus= !plus; i < length; i++)
                 add(order[i] + (plus? 1:-1) * round(granule));
+            for(var i=0; i <= frames; i++) add(i);
             for(var i= 0; i < order.length; i++)
               order[i]= sequence[order[i] - 1];
             return order
