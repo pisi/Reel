@@ -6,10 +6,15 @@ featuring this formula 1 toy (object-movie-non-animated-sprite), this one has
 the sprite organized and flowing in clockwise fashion. It also animates
 and finishes one revolution in ± 3.3 seconds.
 
+It also showcases how HTML annotation can be configured into the picture
+at specific frames with definition of range with `start` and `end`
+properties, and at the same time demonstrates inline CSS styling.
+
 
 Options Employed In This Example
 --------------------------------
 
+- [annotations](http://jquery.vostrel.cz/reel#annotations)
 - [cw](http://jquery.vostrel.cz/reel#cw)
 - [frames](http://jquery.vostrel.cz/reel#frames)
 - [speed](http://jquery.vostrel.cz/reel#speed)
