@@ -358,12 +358,14 @@ jQuery.reel || (function($, window, document, undefined){
                       end= get(_fraction_),
                       duration= opt.opening,
                       start= set(_fraction_, end - speed * opt.opening),
-                      ticks= set(_opening_ticks_, duration * leader(_tempo_))
+                      ticks= set(_opening_ticks_, ceil(duration * leader(_tempo_)))
                   },
                   openingDone: function(e){
                     var
                       playing= set(_playing_, false),
-                      opening= set(_opening_, false)
+                      opening= set(_opening_, false),
+                      evnt= _tick_+dot(_opening_)
+                    pool.unbind(evnt, on.pool[evnt]);
                     if (opt.delay > 0) delay= setTimeout(function play(){ t.trigger('play') }, opt.delay * 1000)
                     else t.trigger('play');
                   },
@@ -725,9 +727,7 @@ jQuery.reel || (function($, window, document, undefined){
                   /*
                   - ticker listener dedicated to opening animation
                   */
-                    var
-                      evnt= _tick_+dot(_opening_)
-                    if (!opt.opening || !get(_opening_ticks_)) return pool.unbind(evnt, on.pool[evnt]);
+                    if (!get(_opening_)) return;
                     var
                       speed= opt.entry || opt.speed,
                       step= speed / leader(_tempo_) * (opt.cw? -1:1),
