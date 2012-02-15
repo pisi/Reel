@@ -657,7 +657,7 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'frameChange.annotations': function(e, deprecation, frame){
-                    if (deprecation === undefined && !get(_velocity_)) $.each(get(_annotations_), function(ida, note){
+                    if (deprecation === undefined) $.each(get(_annotations_), function(ida, note){
                       var
                         $note= $(hash(ida)),
                         start= note.start || 1,
