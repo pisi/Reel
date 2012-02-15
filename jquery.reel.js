@@ -204,6 +204,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
                   set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
+                  set(_stitched_shift_, 0);
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
                   set(_velocity_, opt.velocity || 0);
@@ -579,7 +580,7 @@ jQuery.reel || (function($, window, document, undefined){
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
                       else var
-                        x= round(interpolate(fraction, 0, get(_stitched_travel_))) % opt.stitched,
+                        x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % opt.stitched),
                         y= 0,
                         shift= [px(-x), px(y)]
                       t.css({ backgroundPosition: shift.join(___) })
@@ -668,6 +669,7 @@ jQuery.reel || (function($, window, document, undefined){
                         y= typeof note.y!=_object_ ? note.y : note.y[offset],
                         placed= x !== undefined && y !== undefined,
                         visible= placed && (note.at ? at : (offset >= 0 && (!end || offset <= end - start))),
+                        x= !opt.stitched ? x : x - get(_stitched_shift_),
                         style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
                     });
@@ -1000,7 +1002,7 @@ jQuery.reel || (function($, window, document, undefined){
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
     _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
-    _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
+    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
     _velocity_= 'velocity', _vertical_= 'vertical',
 
     // Events

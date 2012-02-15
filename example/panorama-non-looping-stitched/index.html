@@ -9,6 +9,18 @@
 
     <!-- Common examples style (gray background, thin fonts etc.) -->
     <link href="../style.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      .reel-annotation {
+        white-space: nowrap;
+        font-size: 13px;
+        color: white;
+      }
+      #waterfront {
+        font-size: 23px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <h1>Non-Looping Stitched Panorama</h1>
@@ -22,9 +34,31 @@
           stitched:    1072,
           loops:       false,
           steps:       30,
-          step:        15,
+          step:        13,
           speed:       -0.1,
-          timeout:     1
+          timeout:     1,
+          annotations: {
+            "waterfront": {
+              node: { text: "Chicago Waterfront" },
+              x: 430,
+              y: 120,
+            },
+            "foster_beach": {
+              node: { text: "Foster Beach" },
+              x: 700,
+              y: 80
+            },
+            "montrose_beach": {
+              node: { text: "Montrose Beach" },
+              x: 90,
+              y: 70
+            },
+            "lakefront_trail": {
+              node: { text: "Lakefront Trail" },
+              x: 850,
+              y: 75
+            }
+          }
         });
 
       });
