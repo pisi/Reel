@@ -9,6 +9,14 @@
 
     <!-- Common examples style (gray background, thin fonts etc.) -->
     <link href="../style.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      #green_marker {
+        width: 20px;
+        height: 20px;
+        background: green;
+      }
+    </style>
   </head>
   <body>
     <h1>Dual-Orbit Sequence</h1>
@@ -26,11 +34,10 @@
           speed:       0.7,
           sequence:    'phone/##.png',
           annotations: {
-            "copyright": {
-              node: { html: "&copy; 2008 ", css: { width: '100%', background: 'black', textAlign: 'center' } },
-              link: { html: "Photospherix.com", href: "http://www.photospherix.com" },
-              x: 0, y: 170,
-              at: '++--++--++--++++++-----+++++++'
+            "green_marker": {
+              node: $('<div/>'),
+              x: 180, y: 0,
+              at: '+++-----++'
             }
           }
         });
