@@ -137,9 +137,7 @@
             end: 13
           }
         },
-        // And this will autoscroll thorugh all frames once
-        entry: 1,
-        opening: 1
+        speed: 0.5
       }),
       checked= [],
       $annotation= $('#my_annotation')
