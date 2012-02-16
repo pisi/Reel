@@ -46,7 +46,9 @@ Requirements
 
 License
 -------
-* Available for use in all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses.
+* Available for free to use in all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses.
+
+<a href='http://www.pledgie.com/campaigns/9596'><img alt='Click here to lend your support to: Reel and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/9596.png?skin_name=chrome' border='0' /></a>
 
 Download version 1.2 Alpha
 --------------------------
