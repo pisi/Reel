@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Development
------------
+Version 1.2 Beta
+----------------
 
 * Non-`wheelable` Reels now allow scrolling of the page when wheeling
   above the Reel instance.

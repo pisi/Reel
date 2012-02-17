@@ -15,7 +15,7 @@ I could as well leave out this JavaScript-disabled browser completely to have it
 Statistics
 ----------
 
-Between releases (1.1.3 and 1.2), the unit test coverage has been **improved by 519%**. We now have 841 tests in 221 tasks and 10 modules.
+Between releases (1.1.3 and 1.2), the unit test coverage has been **improved by 360%**. We now have 884 tests in 221 tasks and 10 modules.
 
 
 Desktop-class
