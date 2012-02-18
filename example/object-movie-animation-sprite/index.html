@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="object-movie-animation-sprite">
+  <head>
+    <title>jQuery Reel Animation Sprite Object Movie Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.7.min.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-1.2-bundle.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Animation Sprite</h1>
+
+    <img id="image" src='animal.jpg' width="165" height="109" />
+    <script>
+      $(function(){ // when DOM ready
+
+        $('#image').reel({
+          indicator:   5, // For no indicator just remove this line
+          frames:      19,
+          frame:       8,
+          footage:     5,
+          suffix:      '-locomotion',
+          speed:       0.4
+        });
+
+      });
+    </script>
+
+    <p class="credits photo"><a href="http://bpl.org">Boston Public Library</a></p>
+  </body>
+</html>
+
