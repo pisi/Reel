@@ -1,5 +1,5 @@
 
-jQuery Reel 1.1.2
+jQuery Reel 1.1.4
 =================
 
 **Reel** is a jQuery plugin which takes an image tag and makes it a live "projection" of pre-built animation frames sequence. Its aim is to provide a 360° view of something or someplace. Great alternative to widely used Flash and Java techniques.
@@ -46,12 +46,12 @@ License
 * Available for use in all personal or commercial projects under both 
 [MIT][license-mit] and [GPL][license-gpl] licenses.
 
-Download version 1.1.2
+Download version 1.1.4
 ----------------------
-* **[Open source][source] (~ 34,6 kB)**
+* **[Open source][source] (~ 34,7 kB)**
 * or [minified version][min] (~ 11,7 kB)
 
-Use [Reel's cloud CDN][cdn] (1.1.2)
+Use [Reel's cloud CDN][cdn] (1.1.4)
 -----------------------------------
 * **[Bundled with plugins & minified][cdn-bundle] (~ 5,9 kB; gzipped)**
 * or [just minified][cdn-min] (~ 5,2 kB; gzipped)
@@ -61,15 +61,15 @@ Use [Reel's cloud CDN][cdn] (1.1.2)
 
 [demo]: http://jquery.vostrel.cz/reel#demo
 [options]: http://jquery.vostrel.cz/reel#options
-[changelog]: http://github.com/pisi/Reel/blob/v1.1.2/CHANGELOG.markdown
-[license-mit]: http://github.com/pisi/Reel/blob/v1.1.2/MIT-LICENSE.txt
-[license-gpl]: http://github.com/pisi/Reel/blob/v1.1.2/GPL-LICENSE.txt
+[changelog]: http://github.com/pisi/Reel/blob/v1.1.4/CHANGELOG.markdown
+[license-mit]: http://github.com/pisi/Reel/blob/v1.1.4/MIT-LICENSE.txt
+[license-gpl]: http://github.com/pisi/Reel/blob/v1.1.4/GPL-LICENSE.txt
 [jquery]: http://www.jquery.com/
 [disabletextselect]: http://www.jdempster.com/category/jquery/disabletextselect/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
-[source]: http://github.com/pisi/Reel/raw/v1.1.2/jquery.reel.js
-[min]: http://github.com/pisi/Reel/raw/v1.1.2/jquery.reel-min.js
+[source]: http://github.com/pisi/Reel/raw/v1.1.4/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/v1.1.4/jquery.reel-min.js
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [cdn]: http://wiki.github.com/pisi/Reel/cdn
 [cdn-min]: http://code.vostrel.cz/jquery.reel.js

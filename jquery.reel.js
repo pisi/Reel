@@ -18,14 +18,14 @@
  * ===========
  * 360° projection plugin for jQuery
  *
- * @license Copyright (c) 2009-2011 Petr Vostrel (http://petr.vostrel.cz/)
+ * @license Copyright (c) 2009-2012 Petr Vostrel (http://petr.vostrel.cz/)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1.3
- * Updated: 2011-05-08
+ * Version: 1.1.4
+ * Updated: 2012-02-27
  *
  * Requires jQuery 1.4.2 or higher
  */
@@ -47,7 +47,7 @@
 jQuery.reel || (function($, window, document, undefined){
 
   $.reel= {
-    version: '1.1.3',
+    version: '1.1.4',
 
     // Options defaults
     def: {
