@@ -1,6 +1,9 @@
 Changelog
 =========
 
+* Patches incompatibility issues with jQuery 1.7 in IE (GH-93).
+
+
 Version 1.1.3
 -------------
 

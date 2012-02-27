@@ -148,8 +148,7 @@ jQuery.reel || (function($, window, document, undefined){
         },
 
         // Events & handlers
-        on= {
-          setup: function(e){
+          setup= function(e){
           /*
           - fills up the data storage with values based on options
           - binds to ticker
@@ -206,8 +205,9 @@ jQuery.reel || (function($, window, document, undefined){
             });
             pool.bind(_tick_, on.tick);
             cleanup.call(e);
-            t.trigger('start');
+            t.trigger('setup');
           },
+        on= {
           teardown: function(e){
           /*
           - unbinds events, erases all state data
@@ -239,7 +239,7 @@ jQuery.reel || (function($, window, document, undefined){
             .unbind(_mouseup_).unbind(_mousemove_);
             cleanup.call(e);
           },
-          start: function(e){
+          setup: function(e){
           /*
           - binds all mouse/touch events (namespaced)
           - prepares stage overlay elements
@@ -656,7 +656,7 @@ jQuery.reel || (function($, window, document, undefined){
         },
         slidable= true,
         stage_pool= $.browser.opera ? pool : $.unique(pool.add(window.top.document))
-      on.setup();
+      setup();
     });
 
     ticker= ticker || (function tick(){
