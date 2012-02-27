@@ -2,6 +2,7 @@ Changelog
 =========
 
 * Patches incompatibility issues with jQuery 1.7 in IE (GH-93).
+* Patches mouse wheel issues in IE. Upgrade of mousewheel plug-in is required (GH-105).
 
 
 Version 1.1.3

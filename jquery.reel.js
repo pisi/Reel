@@ -497,7 +497,7 @@ jQuery.reel || (function($, window, document, undefined){
           - detects motion direction
           - nullifies the velocity
           */
-            if (!opt.wheelable) return cleanup.call(e);
+            if (!opt.wheelable || !distance) return cleanup.call(e);
             var
               delta= ceil(sqrt(abs(distance)) / 2),
               delta= negative_when(delta, distance > 0),
