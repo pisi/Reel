@@ -267,7 +267,7 @@
       }
     }
   }, function(testcase, def){
-    test( 'Normalization of '+testcase+' fraction', function(){
+    test( 'Normalization of '+testcase+' `"fraction"`', function(){
       expect(5);
       var
         data= {
@@ -379,7 +379,7 @@
       }
     },
   }, function(testcase, def){
-    test( 'Normalization of '+testcase+' frame', function(){
+    test( 'Normalization of '+testcase+' `"frame"`', function(){
       expect(5);
       var
         data= def.data
@@ -388,6 +388,44 @@
         equal( $.reel.normal.frame(Number(ix), data), it, 'Frame '+ix+' became '+it);
       });
 
+    });
+  });
+
+  test( 'Normalization of `"tier"`', function(){
+    expect(5);
+    var
+      probes= {
+        '3': 1,
+        '1.8': 1,
+        '0.4': 0.4,
+        '-0.3': 0,
+        '-1.2': 0
+      },
+      data= {}
+
+    $.each(probes, function(ix, it){
+      equal( $.reel.normal.tier(Number(ix), data).toFixed(4), it, 'Tier '+ix+' became '+it);
+    });
+  });
+
+  test( 'Normalization of `"row"`', function(){
+    expect(5);
+    var
+      probes= {
+        '9': 4,
+        '6': 4,
+        '2': 2,
+        '-1': 1,
+        '-5': 1
+      },
+      data= {
+        options: {
+          rows: 4
+        }
+      }
+
+    $.each(probes, function(ix, it){
+      equal( $.reel.normal.row(Number(ix), data), it, 'Row '+ix+' became '+it);
     });
   });
 

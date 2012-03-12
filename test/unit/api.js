@@ -188,6 +188,7 @@
     ok( typeof $.reel.normal.tier == 'function',         '`$.reel.normal.tier()`' );
     ok( typeof $.reel.normal.row == 'function',          '`$.reel.normal.row()`' );
     ok( typeof $.reel.normal.frame == 'function',        '`$.reel.normal.frame()`' );
+    // Functionally of individual `$.reel.normal` methods is tested in the Data module
 
     ok( typeof $.reel.sequence == 'function',            '`$.reel.sequence()` - builds the images array from given `sequence` option' );
     // Functionally of `$.reel.sequence()` is tested in the Computations module
