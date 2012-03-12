@@ -149,7 +149,7 @@
     equal( $.reel.cdn, 'http://code.vostrel.cz/', 'URL');
   });
 
-  test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (overview)', function(){
+  test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
     expect(29);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
@@ -170,7 +170,8 @@
     ok( $.reel.re.frame_klass instanceof RegExp,          '`$.reel.re.frame_klass`' );
     ok( $.reel.re.sequence instanceof RegExp,             '`$.reel.re.sequence`' );
 
-    ok( typeof $.reel.cdn == 'string',                    '`$.reel.cdn` - URL to the CDN server used to provide cursors' );
+    ok( typeof $.reel.cdn == 'string',                    '`$.reel.cdn` - URL to the CDN server used to provide resources' );
+    // Functionally tested further
 
     ok( typeof $.reel.math == 'object',                   '`$.reel.math` - mathematics core' );
     ok( typeof $.reel.math.envelope == 'function',        '`$.reel.math.envelope()`' );
@@ -190,6 +191,14 @@
 
     ok( typeof $.reel.sequence == 'function',            '`$.reel.sequence()` - builds the images array from given `sequence` option' );
     // Functionally of `$.reel.sequence()` is tested in the Computations module
+  });
+
+  test( 'CDN address configuration in `$.reel.cdn`', function(){
+    expect(2);
+
+    ok( $.reel.cdn.match(/^https?\:\/\/...+\...+\//), 'proper HTTP(S) URL' );
+    equal( $.reel.cdn, 'http://code.vostrel.cz/', 'default value' );
+    // Bunch of other [[Rendering]] tests also challenge the integrity of `$.reel.cdn` value
   });
 
 })(jQuery);
