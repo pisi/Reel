@@ -149,4 +149,47 @@
     equal( $.reel.cdn, 'http://code.vostrel.cz/', 'URL');
   });
 
+  test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (overview)', function(){
+    expect(29);
+
+    ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
+    ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
+    ok( typeof $.reel.def == 'object',                    '`$.reel.def` - default values tested rigorously on their own few tests back in this module' );
+    ok( $.reel.instances instanceof jQuery,               '`$.reel.instances` - jQuery collection of all Reel instances in the document' );
+    ok( typeof $.reel.cost == 'number',                   '`$.reel.cost` - running costs of Reel (collectively)' );
+    ok( typeof $.reel.leader == 'function',               '`$.reel.leader()` - returns the leader instance to which ticker syncs' );
+
+    ok( typeof $.reel.fn == 'object',                     '`$.reel.fn` - `jQuery.fn` extensions' );
+    ok( typeof $.reel.fn.reel == 'function',              '`$.reel.fn.reel()`' );
+    ok( typeof $.reel.fn.unreel == 'function',            '`$.reel.fn.unreel()`' );
+
+    ok( typeof $.reel.re == 'object',                     '`$.reel.re` - regular expressions used by the plugin' );
+    ok( $.reel.re.image instanceof RegExp,                '`$.reel.re.image`' );
+    ok( $.reel.re.touchy_agent instanceof RegExp,         '`$.reel.re.touchy_agent`' );
+    ok( $.reel.re.lazy_agent instanceof RegExp,           '`$.reel.re.lazy_agent`' );
+    ok( $.reel.re.frame_klass instanceof RegExp,          '`$.reel.re.frame_klass`' );
+    ok( $.reel.re.sequence instanceof RegExp,             '`$.reel.re.sequence`' );
+
+    ok( typeof $.reel.cdn == 'string',                    '`$.reel.cdn` - URL to the CDN server used to provide cursors' );
+
+    ok( typeof $.reel.math == 'object',                   '`$.reel.math` - mathematics core' );
+    ok( typeof $.reel.math.envelope == 'function',        '`$.reel.math.envelope()`' );
+    ok( typeof $.reel.math.hatch == 'function',           '`$.reel.math.hatch()`' );
+    ok( typeof $.reel.math.interpolate == 'function',     '`$.reel.math.interpolate()`' );
+
+    ok( typeof $.reel.preload == 'object',                '`$.reel.preload` - preload ordering options' );
+    ok( typeof $.reel.preload.linear == 'function',       '`$.reel.preload.linear()`' );
+    ok( typeof $.reel.preload.fidelity == 'function',     '`$.reel.preload.fidelity()`' );
+    // Functionally of individual `$.reel.preload` methods is tested in the Computations module
+
+    ok( typeof $.reel.normal == 'object',                '`$.reel.normal` - normalization of selected data values' );
+    ok( typeof $.reel.normal.fraction == 'function',     '`$.reel.normal.fraction()`' );
+    ok( typeof $.reel.normal.tier == 'function',         '`$.reel.normal.tier()`' );
+    ok( typeof $.reel.normal.row == 'function',          '`$.reel.normal.row()`' );
+    ok( typeof $.reel.normal.frame == 'function',        '`$.reel.normal.frame()`' );
+
+    ok( typeof $.reel.sequence == 'function',            '`$.reel.sequence()` - builds the images array from given `sequence` option' );
+    // Functionally of `$.reel.sequence()` is tested in the Computations module
+  });
+
 })(jQuery);
