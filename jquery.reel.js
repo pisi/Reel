@@ -111,10 +111,7 @@ jQuery.reel || (function($, window, document, undefined){
       // [deprecated] options defaults may be gone anytime soon
 
       fn: {
-        reel: function(/*
-          .reel( options )            // makes an image reel
-          .reel( name, [ value ] )    // interfaces reel image's control data
-        */){
+        reel: function(/* options | name, [value] */){
           var
             args= arguments,
             t= $(this),
