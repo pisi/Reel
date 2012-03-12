@@ -196,7 +196,7 @@
     });
   });
 
-  asyncTest( 'Positive direction/spped is not detected as reversed', function(){
+  asyncTest( 'Positive direction/speed is not detected as reversed', function(){
     expect(1);
     var
       selector= '#image',
@@ -206,7 +206,7 @@
     start();
   });
 
-  asyncTest( 'Negative direction/spped is detected as reversed', function(){
+  asyncTest( 'Negative direction/speed is detected as reversed', function(){
     expect(1);
     var
       selector= '#image',
@@ -395,7 +395,7 @@
     'resources/mini/###.jpg|3..43|2'
   ],
   function(ix, probe){
-    test( 'Sequence: "' + probe + '" matches the `$.reel.sequence_pattern` regular epression', function(){
+    test( 'Sequence: "' + probe + '" matches the `$.reel.sequence_pattern` regular expression', function(){
       ok( probe.match($.reel.re.sequence), 'Matched');
     });
   });
@@ -451,7 +451,7 @@
     ]
   },
   function(image, probe){
-    test( 'Sequence: `$.reel.sequence_pattern` regular epression mapping of "' + image + '"', function(){
+    test( 'Sequence: `$.reel.sequence_pattern` regular expression mapping of "' + image + '"', function(){
       var
         sequence= $.reel.re.sequence.exec( image ) || []
 
