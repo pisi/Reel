@@ -238,4 +238,157 @@
 
   });
 
+  // Data normalization is already tested indirectly in the Computations module when assigning `frame`s `fraction`s and `row`s
+  // and testing the looping or non-looping nature of the result. Here's a very similar testing only direct and aimed
+  // on the normalization of edge cases and extremes
+  $.each({
+    'looping': {
+      options: {
+        loops: true
+      },
+      probes: {
+        '3': 0,
+        '1.8': 0.8,
+        '0.6': 0.6,
+        '-0.3': 0.7,
+        '-1.2': 0.8
+      }
+    },
+    'non-looping': {
+      options: {
+        loops: false
+      },
+      probes: {
+        '3': 1,
+        '1.8': 1,
+        '0.4': 0.4,
+        '-0.3': 0,
+        '-1.2': 0
+      }
+    }
+  }, function(testcase, def){
+    test( 'Normalization of '+testcase+' fraction', function(){
+      expect(5);
+      var
+        data= {
+          options: def.options
+        }
+
+      $.each(def.probes, function(ix, it){
+        equal( $.reel.normal.fraction(Number(ix), data).toFixed(4), it, 'Fraction '+ix+' became '+it);
+      });
+
+    });
+  });
+
+  $.each({
+    'looping': {
+      data: {
+        frames: 18,
+        options: {
+          orbital: 0,
+          loops: true
+        }
+      },
+      probes: {
+        '53': 17,
+        '23': 5,
+        '13': 13,
+        '-3': 15,
+        '-32': 4
+      }
+    },
+    'looping-orbital': {
+      data: {
+        frames: 18,
+        options: {
+          loops: true,
+          orbital: 2
+        }
+      },
+      probes: {
+        '53': 17,
+        '23': 23,
+        '13': 13,
+        '-3': 33,
+        '-32': 4
+      }
+    },
+    'looping-multirow': {
+      data: {
+        frames: 18,
+        options: {
+          loops: true,
+          rows: 3
+        }
+      },
+      probes: {
+        '83': 29,
+        '43': 43,
+        '13': 13,
+        '-13': 41,
+        '-62': 46
+      }
+    },
+    'non-looping': {
+      data: {
+        frames: 18,
+        options: {
+          orbital: 0,
+          loops: false
+        }
+      },
+      probes: {
+        '53': 18,
+        '23': 18,
+        '13': 13,
+        '-3': 1,
+        '-32': 1
+      }
+    },
+    'non-looping-orbital': {
+      data: {
+        frames: 18,
+        options: {
+          loops: false,
+          orbital: 2
+        }
+      },
+      probes: {
+        '53': 36,
+        '23': 23,
+        '13': 13,
+        '-3': 1,
+        '-32': 1
+      }
+    },
+    'non-looping-multirow': {
+      data: {
+        frames: 18,
+        options: {
+          loops: false,
+          rows: 3
+        }
+      },
+      probes: {
+        '83': 54,
+        '43': 43,
+        '13': 13,
+        '-13': 1,
+        '-62': 1
+      }
+    },
+  }, function(testcase, def){
+    test( 'Normalization of '+testcase+' frame', function(){
+      expect(5);
+      var
+        data= def.data
+
+      $.each(def.probes, function(ix, it){
+        equal( $.reel.normal.frame(Number(ix), data), it, 'Frame '+ix+' became '+it);
+      });
+
+    });
+  });
+
 })(jQuery);
