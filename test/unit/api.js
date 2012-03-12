@@ -202,4 +202,22 @@
     // Bunch of other [[Rendering]] tests also challenge the integrity of `$.reel.cdn` value
   });
 
+  $.each({
+    'some_image.jpg': true,
+    'image.jpeg':     true,
+    'img.gif':        true,
+    '_image.png':     true,
+    '_.png?':         true,
+    '1.jpg?nocache':  true,
+    'image.php':      false,
+    'image':          false,
+  },
+  function(filename, pass){
+    test( '`$.reel.re.image` Image `src` "'+filename+'" '+(pass? 'qualifies':'doesn\'t qualify')+' as an image', function(){
+      expect(1);
+
+      ok( $.reel.re.image.test(filename) == pass );
+    });
+  });
+
 })(jQuery);
