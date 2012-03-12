@@ -282,4 +282,32 @@
     $('#image').reel();
   });
 
+  asyncTest( 'GH-103 Incorrect frame with vertical sprite organization', function(){
+    /*
+     * When using 'vertical:true' with images array the reel starts at frame (image) number 7
+     * and continue past the end of the array with image url "undefined"
+     */
+    expect( 4 );
+    var
+      images = (function(){
+        var images= []
+        for (var i= 0; i < 15; i++) images.push('samples/phone/01.png?' + (i+1))
+        return images
+      })(),
+      $reel = $('#image').reel({
+        vertical: true,
+        images: images
+      })
+
+    $reel.bind('loaded.test', function(){
+      equal( $reel.data('frame'), 1);
+      equal( $reel.attr('src'), images[0]);
+
+      $reel.reel('frame', 15);
+      equal( $reel.data('frame'), 15);
+      equal( $reel.attr('src'), images[14]);
+      start();
+    })
+  });
+
 })(jQuery);
