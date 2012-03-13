@@ -220,9 +220,8 @@
     });
   });
 
-  $.each({
-    pass: {
-      // iOS
+  var
+    user_agent= {
       'iPhone': [
         'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3',
         'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
@@ -253,17 +252,32 @@
       ],
       'T-Mobile': [
         'Mozilla/5.0 (Linux; U; Android 2.3.4; en-us; T-Mobile myTouch 3G Slide Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
-      ]
-    },
-    fail: {
+      ],
       'Desktop browser': [
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7'
       ]
     }
+
+  $.each({
+    pass: [
+      'iPhone',
+      'iPod',
+      'iPad',
+      'Generic Android',
+      'LG',
+      'HTC',
+      'T-Mobile'
+    ],
+    fail: [
+      'Desktop browser'
+    ]
   },
-  function(result, agents){
-    $.each(agents, function(name, agent_strings){
-      test( '`$.reel.re.touchy_agent` '+name+' '+(result? 'qualifies' : 'doesn\'t qualify')+' as "touchy" device', function(){
+  function(result, agent_ids){
+    $.each(agent_ids, function(ix, group){
+      test( '`$.reel.re.touchy_agent` '+group+' '+(result? 'qualifies' : 'doesn\'t qualify')+' as "touchy" device', function(){
+        var
+          agent_strings= user_agent[group]
+
         expect(agent_strings.length);
 
         $.each(agent_strings, function(){
@@ -271,7 +285,6 @@
         })
       });
     });
-  }
-  );
+  });
 
 })(jQuery);
