@@ -287,4 +287,33 @@
     });
   });
 
+  $.each({
+    pass: [
+      'iPhone',
+      'iPod',
+      'Generic Android',
+      'LG',
+      'HTC',
+      'T-Mobile'
+    ],
+    fail: [
+      'iPad',
+      'Desktop browser'
+    ]
+  },
+  function(result, agent_ids){
+    $.each(agent_ids, function(ix, group){
+      test( '`$.reel.re.lazy_agent` '+group+' '+(result? 'qualifies' : 'doesn\'t qualify')+' as "lazy" device', function(){
+        var
+          agent_strings= user_agent[group]
+
+        expect(agent_strings.length);
+
+        $.each(agent_strings, function(){
+          ok( $.reel.re.lazy_agent.test(this) == (result == 'pass'), this );
+        })
+      });
+    });
+  });
+
 })(jQuery);
