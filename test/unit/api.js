@@ -158,6 +158,7 @@
     ok( $.reel.instances instanceof jQuery,               '`$.reel.instances` - jQuery collection of all Reel instances in the document' );
     ok( typeof $.reel.cost == 'number',                   '`$.reel.cost` - running costs of Reel (collectively)' );
     ok( typeof $.reel.leader == 'function',               '`$.reel.leader()` - returns the leader instance to which ticker syncs' );
+    // Functionality of the leader gets tested in the Animation module
 
     ok( typeof $.reel.fn == 'object',                     '`$.reel.fn` - `jQuery.fn` extensions' );
     ok( typeof $.reel.fn.reel == 'function',              '`$.reel.fn.reel()`' );
@@ -222,6 +223,7 @@
     });
   });
 
+
   var
     user_agent= {
       'iPhone': [
@@ -257,6 +259,10 @@
       ],
       'Desktop browser': [
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7'
+      ],
+      // Third-party browsers
+      'Fennec': [
+        'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2a1pre) Gecko/20090317 Fennec/1.0b1'
       ]
     }
 
@@ -268,7 +274,8 @@
       'Generic Android',
       'LG',
       'HTC',
-      'T-Mobile'
+      'T-Mobile',
+      'Fennec'
     ],
     fail: [
       'Desktop browser'
@@ -296,7 +303,8 @@
       'Generic Android',
       'LG',
       'HTC',
-      'T-Mobile'
+      'T-Mobile',
+      'Fennec'
     ],
     fail: [
       'iPad',
