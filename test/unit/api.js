@@ -169,6 +169,7 @@
     ok( $.reel.re.lazy_agent instanceof RegExp,           '`$.reel.re.lazy_agent`' );
     ok( $.reel.re.frame_klass instanceof RegExp,          '`$.reel.re.frame_klass`' );
     ok( $.reel.re.sequence instanceof RegExp,             '`$.reel.re.sequence`' );
+    // Functionally tested further except `sequence`, which is being throughfully tested in Computations module
 
     ok( typeof $.reel.cdn == 'string',                    '`$.reel.cdn` - URL to the CDN server used to provide resources' );
     // Functionally tested further
@@ -213,7 +214,7 @@
     'image':          false,
   },
   function(filename, pass){
-    test( '`$.reel.re.image` Image `src` "'+filename+'" '+(pass? 'qualifies':'doesn\'t qualify')+' as an image', function(){
+    test( '`$.reel.re.image` Image `src` "'+filename+'" '+(pass? 'qualifies':'does NOT qualify')+' as an image', function(){
       expect(1);
 
       ok( $.reel.re.image.test(filename) == pass );
@@ -274,7 +275,7 @@
   },
   function(result, agent_ids){
     $.each(agent_ids, function(ix, group){
-      test( '`$.reel.re.touchy_agent` '+group+' '+(result? 'qualifies' : 'doesn\'t qualify')+' as "touchy" device', function(){
+      test( '`$.reel.re.touchy_agent` '+group+' '+(result? 'qualifies' : 'does NOT qualify')+' as "touchy" device', function(){
         var
           agent_strings= user_agent[group]
 
@@ -303,7 +304,7 @@
   },
   function(result, agent_ids){
     $.each(agent_ids, function(ix, group){
-      test( '`$.reel.re.lazy_agent` '+group+' '+(result? 'qualifies' : 'doesn\'t qualify')+' as "lazy" device', function(){
+      test( '`$.reel.re.lazy_agent` '+group+' '+(result? 'qualifies' : 'does NOT qualify')+' as "lazy" device', function(){
         var
           agent_strings= user_agent[group]
 
@@ -313,6 +314,27 @@
           ok( $.reel.re.lazy_agent.test(this) == (result == 'pass'), this );
         })
       });
+    });
+  });
+
+  $.each({
+    // Valid
+    'frame-1':   true,
+    'frame-35':  true,
+    'frame-106': true,
+    'frame-0':   true,
+    // Invalid
+    'frame-':    false,
+    'frame':     false,
+    'frame--2':  false,
+    'frame2':    false,
+    'fr02':      false
+  },
+  function(klass, pass){
+    test( '`$.reel.re.frame_klass` Class name "'+klass+'" '+(pass? 'qualifies':'does NOT qualify')+' as "frame class"', function(){
+      expect(1);
+
+      ok( $.reel.re.frame_klass.test(klass) == pass );
     });
   });
 
