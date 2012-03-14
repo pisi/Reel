@@ -504,7 +504,7 @@
       0.5,
         1
     ], function(ii, start){
-      test( '`$.reel.math.envelope( start: '+start+', cwness: '+cwness+' )', function(){
+      test( '`$.reel.math.envelope( start: '+start+', cwness: '+cwness+' )`', function(){
         expect(5);
         var
           revolution= 100,
@@ -538,7 +538,7 @@
       0.5,
         1
     ], function(ii, start){
-      test( '`$.reel.math.hatch( start: '+start+', cwness: '+cwness+' )', function(){
+      test( '`$.reel.math.hatch( start: '+start+', cwness: '+cwness+' )`', function(){
         expect(5);
         var
           revolution= 100,
@@ -557,6 +557,30 @@
         equal( $.reel.math.hatch(       zero * cwness, start, revolution, lo, hi, cwness),                  0, 'Result after drag '+zero+'px to reach 0' );
         equal( $.reel.math.hatch( below_zero * cwness, start, revolution, lo, hi, cwness),  (0.5 + start) % 1, 'Result after drag '+below_zero+'px to reach far below 0' );
       });
+    });
+  });
+
+  // Purpose of `interpolate` is to calculate a value within a given range based on given fraction
+  $.each({
+    '0.2, 20, 30': 22,
+    '0, 5, 13': 5,
+    '0.1, 0, 100': 10,
+    '0.75, 0, 200': 150,
+    '0.23, 50, 100': 61.5,
+    '0.0, 100, 1000': 100,
+    '1, 0, 200': 200,
+    '1.0, 100, 150': 150
+  }, function(definition, result){
+    var
+      def= definition.split(/, */),
+      fraction= +def[0],
+      min= +def[1],
+      max= +def[2]
+
+    test( '`$.reel.math.interpolate( fraction: '+fraction+', minimum: '+min+', maximum: '+max+' )`', function(){
+      expect(1);
+
+      equal( $.reel.math.interpolate( fraction, min, max ), result );
     });
   });
 

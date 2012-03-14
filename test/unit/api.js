@@ -178,6 +178,7 @@
     ok( typeof $.reel.math.envelope == 'function',        '`$.reel.math.envelope()`' );
     ok( typeof $.reel.math.hatch == 'function',           '`$.reel.math.hatch()`' );
     ok( typeof $.reel.math.interpolate == 'function',     '`$.reel.math.interpolate()`' );
+    // Functionally of individual `$.reel.math` methods is tested in the Computations module
 
     ok( typeof $.reel.preload == 'object',                '`$.reel.preload` - preload ordering options' );
     ok( typeof $.reel.preload.linear == 'function',       '`$.reel.preload.linear()`' );
