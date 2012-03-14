@@ -492,4 +492,38 @@
     });
   });
 
+  // Purpose of `envelope` is to calculate frame based on the movement
+  // and make sure it doesn't loop and stays within bounds
+  $.each([
+    -1,
+     1
+  ], function(i, cwness){
+    $.each([
+        0,
+      0.2,
+      0.5,
+        1
+    ], function(ii, start){
+      test( '`$.reel.math.envelope( start: '+start+', cwness: '+cwness+' )', function(){
+        expect(5);
+        var
+          revolution= 100,
+          lo= -start * revolution,
+          hi= revolution - start * revolution,
+
+          below_zero= 2 * revolution,
+          zero= 100 * start,
+          meridian= 0,
+          one= 100 * start - 100,
+          above_one= -2 * revolution
+
+        equal( $.reel.math.envelope(  above_one * cwness, start, revolution, lo, hi, cwness),     1, 'Result after drag '+above_one+'px to reach far above 1' );
+        equal( $.reel.math.envelope(        one * cwness, start, revolution, lo, hi, cwness),     1, 'Result after drag '+one+'px to reach 1' );
+        equal( $.reel.math.envelope(            meridian, start, revolution, lo, hi, cwness), start, 'Result at the meridian' );
+        equal( $.reel.math.envelope(       zero * cwness, start, revolution, lo, hi, cwness),     0, 'Result after drag '+zero+'px to reach 0' );
+        equal( $.reel.math.envelope( below_zero * cwness, start, revolution, lo, hi, cwness),     0, 'Result after drag '+below_zero+'px to reach far below 0' );
+      });
+    });
+  });
+
 })(jQuery);
