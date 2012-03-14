@@ -1,6 +1,6 @@
 jQuery Reel Test Suite
 ======================
-Reel is very well tested. To date we have **884 tests in 221 tasks and 10 modules**, that's 360% increase compared with previous version). The suite will keep on growing as enhancements are made or new bugs discovered. The test suite grows independent on regular version releases.
+Reel is very well tested. To date we have **1155 tests in 298 tasks and 10 modules**, that's 470% increase compared with previous version). The coverage is 99%. The suite will keep on growing as enhancements are made or new bugs discovered. The test suite grows independent on regular version releases.
 
 Usage?
 ------------
@@ -16,7 +16,7 @@ Test Results
 In 1.1 I asked you to submit failing tests reports to me. You did and it
 helped. I thank you very much for doing so!
 
-In 1.2 the report gathering and submission is automated, so
+In 1.2 the report gathering and submission is fully automated, so
 you don't need to do a thing to help. You take part in the distributed
 testing efforts merely by running the tests. __Run the tests on as
 many different devices as you can (even exotic ones) to help me more.__

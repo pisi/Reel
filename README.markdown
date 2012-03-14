@@ -1,6 +1,6 @@
 
-jQuery Reel 1.2 Beta
-====================
+jQuery Reel 1.1.4 Development Preview
+=====================================
 
 **Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `img` HTML tag used on 100+ websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
 
