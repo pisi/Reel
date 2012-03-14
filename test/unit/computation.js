@@ -511,17 +511,51 @@
           lo= -start * revolution,
           hi= revolution - start * revolution,
 
-          below_zero= 2 * revolution,
+          below_zero= 1.5 * revolution,
           zero= 100 * start,
           meridian= 0,
           one= 100 * start - 100,
-          above_one= -2 * revolution
+          above_one= -1.5 * revolution
 
         equal( $.reel.math.envelope(  above_one * cwness, start, revolution, lo, hi, cwness),     1, 'Result after drag '+above_one+'px to reach far above 1' );
         equal( $.reel.math.envelope(        one * cwness, start, revolution, lo, hi, cwness),     1, 'Result after drag '+one+'px to reach 1' );
         equal( $.reel.math.envelope(            meridian, start, revolution, lo, hi, cwness), start, 'Result at the meridian' );
         equal( $.reel.math.envelope(       zero * cwness, start, revolution, lo, hi, cwness),     0, 'Result after drag '+zero+'px to reach 0' );
         equal( $.reel.math.envelope( below_zero * cwness, start, revolution, lo, hi, cwness),     0, 'Result after drag '+below_zero+'px to reach far below 0' );
+      });
+    });
+  });
+
+  // Purpose of `hatch` is similar - to calculate frame based on the movement
+  // and this time make sure it loops out-of-bounds input
+  $.each([
+    -1,
+     1
+  ], function(i, cwness){
+    $.each([
+        0,
+      0.2,
+      0.5,
+        1
+    ], function(ii, start){
+      test( '`$.reel.math.hatch( start: '+start+', cwness: '+cwness+' )', function(){
+        expect(5);
+        var
+          revolution= 100,
+          lo= 0,
+          hi= revolution,
+
+          below_zero= 1.5 * revolution,
+          zero= 100 * start,
+          meridian= 0,
+          one= 100 * start - 100,
+          above_one= -1.5 * revolution
+
+        equal( $.reel.math.hatch(  above_one * cwness, start, revolution, lo, hi, cwness),  (0.5 + start) % 1, 'Result after drag '+above_one+'px to reach far above 1' );
+        equal( $.reel.math.hatch(        one * cwness, start, revolution, lo, hi, cwness),                  0, 'Result after drag '+one+'px to reach 1' );
+        equal( $.reel.math.hatch(            meridian, start, revolution, lo, hi, cwness),          start % 1, 'Result at the meridian' );
+        equal( $.reel.math.hatch(       zero * cwness, start, revolution, lo, hi, cwness),                  0, 'Result after drag '+zero+'px to reach 0' );
+        equal( $.reel.math.hatch( below_zero * cwness, start, revolution, lo, hi, cwness),  (0.5 + start) % 1, 'Result after drag '+below_zero+'px to reach far below 0' );
       });
     });
   });
