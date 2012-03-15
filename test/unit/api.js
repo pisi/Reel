@@ -302,6 +302,7 @@
       'iPhone',
       'iPod',
       'iPad',
+      'RIM',
       'Generic Android',
       'LG',
       'HTC',
@@ -333,6 +334,7 @@
     pass: [
       'iPhone',
       'iPod',
+      'Blackberry',
       'Generic Android',
       'LG',
       'HTC',

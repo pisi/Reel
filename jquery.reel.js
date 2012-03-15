@@ -849,8 +849,8 @@ jQuery.reel || (function($, window, document, undefined){
 
       re: {
         image:         /^(.*)\.(jpg|jpeg|png|gif)\??.*$/,
-        touchy_agent:  /iphone|ipod|ipad|android|fennec/i,
-        lazy_agent:    /\(iphone|ipod|android|fennec/i,
+        touchy_agent:  /iphone|ipod|ipad|android|fennec|rim tablet/i,
+        lazy_agent:    /\(iphone|ipod|android|fennec|blackberry/i,
         frame_klass:   /frame-\d+/,
         sequence:      /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/
       },
