@@ -379,7 +379,7 @@
     expect(5);
 
     ok( $.reel.version.length >= 3,                                   'Minimal length' );
-    ok( $.reel.version.match(/^([^.]+.[^.]+|[^.]+.[^.]+.[^.])$/),     'Is formatted major.minor.patch, where patch segment is optional' );
+    ok( $.reel.version.match(/^.\...?\.?.?.?-?.*$/),                  'Is formatted major.minor.patch, where patch segment is optional' );
     ok( $.reel.version.split('.').length > 1,                         'Is splittable by dot `.` into `[ major, minor, patch ]`' );
     ok( $.reel.version.split('.')[0].match(/^[0-9]+$/),               'Major is strictly a number' );
     ok( $.reel.version.split('.')[1].match(/^[0-9]+(|-[a-z0-9]+)$/),  'Minor may contain additional lowercase letters after hyphen (like 1.2-beta)' );
