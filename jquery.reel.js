@@ -53,58 +53,230 @@ jQuery.reel || (function($, window, document, undefined){
     reel= $.reel= {
       version: '1.1.4-devel',
 
-      // Options defaults
+      // Options
+      // -------
+      //
+      // When calling `.reel()` method you have plenty of options (far too many) available.
+      // You collect them into one hash and supply them with your call.
+      //
+      // ___Example:__ For a non-looping Reel with 12 frames:_
+      //
+      //     .reel({
+      //       frames: 12,
+      //       looping: false
+      //     })
+      //
+      // All options are optional and if omitted, default value is used instead.
+      // Defaults are being housed as members of `$.reel.def` hash.
+      // If you customize any default value therein, all subsequent `.reel()` calls
+      // will use the new value as default.
+      //
+      // ___Example:__ Change default initial frame to 5th:_
+      //
+      //     $.reel.def.frame = 5
+      //
       def: {
+        // Reel is just fine with you not setting any options, however if you don't have
+        // 36 frames or beginning at frame 1, you will want to set total number
+        // of `frames` and pick a different starting `frame`.
+        //
+        frame:                  1, // Number
+        frames:                36, // Number
+
+        // Another common characteristics of any Reel is whether it `loops` and covers
+        // entire 360°.
+        //
+        loops:               true, // Boolean
+
+        //
+        // ### Interaction ######
+        //
+        // Using boolean switches many user interaction aspects can be turned on and off.
+        // You can disable the mouse wheel control with `wheelable`, the drag & throw
+        // action with `throwable`, disallow the dragging completely with `draggable`,
+        // on "touchy" devices you can disable the browser's decision to scroll the page
+        // instead of Reel script and you can of course disable the stepping of Reel by
+        // clicking on either half of the image with `steppable`.
+        //
+        draggable:           true, // Boolean
+        scrollable:          true, // Boolean [NEW] in 1.2
+        steppable:           true, // Boolean
+        throwable:           true, // Boolean
+        wheelable:           true, // Boolean
+
+        // You can even enable `clickfree` operation,
+        // which will cause Reel to bind to mouse enter/leave events instead of mouse down/up,
+        // thus allowing a click-free dragging.
+        //
+        clickfree:          false, // Boolean
+
+        //
+        // ### Rectilinear Panorama ######
+        //
+        // The easiest of all is the stitched panorama mode. For this mode, instead of the sprite,
+        // a single seamlessly stitched stretched image is used and the view scrolls the image.
+        // This mode is triggered by setting a pixel width of the `stitched` image.
+        //
+        stitched:               0, // Number
+
+        //
+        // ### Directional Mode ######
+        //
+        // As you may have noticed on Reel's homepage or in [this example][logo]
+        // when you drag the arrow will point to either direction. In such `directional` mode, the sprite
+        // is actually 2 in 1 - one file contains two sprites one tightly following the other, one
+        // for visually going one way (`A`) and one for the other (`B`).
+        //
+        //     A01 A02 A03 A04 A05 A06
+        //     A07 A08 A09 A10 A11 A12
+        //     A13 A14 A15 B01 B02 B03
+        //     B04 B05 B06 B07 B08 B09
+        //     B10 B11 B12 B13 B14 B15
+        //
+        // Switching between `A` and `B` frames is based on direction of the drag. Directional mode isn't
+        // limited to sprites only, sequences also apply. The figure below shows the very same setup like
+        // the above figure, only translated into actual frames of the sequence.
+        //
+        //     001 002 003 004 005 006
+        //     007 008 009 010 011 012
+        //     013 014 015 016 017 018
+        //     019 020 021 022 023 024
+        //     025 026 027 028 029 030
+        //
+        // Frame `016` represents the `B01` so it actually is first frame of the other direction.
+        //
+        directional:        false, // Boolean
+
+        //
+        // ### Multi-Row Mode ######
+        //
+        // As [this example][mini] very nicely demonstrates, in multi-row arrangement you can perform
+        // a two-axis manipulation allowing you to add one or more vertical angles. Think of it as
+        // a layered cake, each new elevation of the camera during shooting creates one layer of the cake -
+        // - a _row_. One plain horizontal object movie full spin is one row:
+        //
+        //     A01 A02 A03 A04 A05 A06
+        //     A07 A08 A09 A10 A11 A12
+        //     A13 A14 A15
+        //
+        // Second row tightly follows after the first one:
+        //
+        //     A01 A02 A03 A04 A05 A06
+        //     A07 A08 A09 A10 A11 A12
+        //     A13 A14 A15 B01 B02 B03
+        //     B04 B05 B06 B07 B08 B09
+        //     B10 B11 B12 B13 B14 B15
+        //     C01...
+        //
+        // This way you stack up any number of __`rows`__ you wish and set the initial `row` to start with.
+        // Again, not limited to sprites, sequences also apply.
+        //
+        row:                    1, // Number
+        rows:                   0, // Number
+
+        //
+        // ### Dual-Orbit Mode ######
+        //
+        // Special form of multi-axis movie is the dual-axis mode. In this mode the object offers two plain
+        // spins - horizontal and vertical orbits combined together crossing each other at the `frame`
+        // forming sort of a cross if envisioned. [This example][phone] demonstrate this setup. When the
+        // phone in the example is facing you (marked in the example with green square in the top right),
+        // you are at the center. That is within the distance (in frames) defined by the `orbital` option.
+        // Translation from horizontal to vertical orbit can be achieved on this sweet-spot. By default
+        // horizontal orbit is chosen first, unless `vertical` option is used against.
+        //
+        // In case the image doesn't follow the vertical drag, you may have your vertical orbit `inversed`.
+        //
+        // Technically it is just a two-layer movie:
+        //
+        //     A01 A02 A03 A04 A05 A06
+        //     A07 A08 A09 A10 A11 A12
+        //     A13 A14 A15 B01 B02 B03
+        //     B04 B05 B06 B07 B08 B09
+        //     B10 B11 B12 B13 B14 B15
+        //
+        //
+        orbital:                0, // Number
+        vertical:           false, // Boolean
+        inversed:           false, // Boolean
+
+        //
+        // ### Sprite Layout ######
+        //
+        // For both object movies and panoramas Reel presumes you use a combined _Sprite_
+        // to hold all your frames in a single file.
+        // This powerful technique of using a sheet of several individual images has many
+        // advantages in terms of compactness, loading, caching, etc. However, know your
+        // enemy, be also aware of the limitations, which stem from memory limits
+        // of mobile (learn more in [FAQ](https://github.com/pisi/Reel/wiki/FAQ)).
+        //
+        // Inside the sprite, individual frames are laid down one by one, to the right of the previous one
+        // in a straight _Line_:
+        //
+        //     01 02 03 04 05 06
+        //     07...
+        //
+        // Horizontal length of the line is reffered to as `footage`. Unless frames `spacing` in pixels
+        // is set, edges of frames must touch.
+        //
+        //     01 02 03 04 05 06
+        //     07 08 09 10 11 12
+        //     13 14 15 16 17 18
+        //     19 20 21 22 23 24
+        //     25 26 27 28 29 30
+        //     31 32 33 34 35 36
+        //
+        // This is what you'll get by calling `.reel()` without any options. All frames laid out 6 in line.
+        // By default nicely even 6 x 6 grid like, which also inherits the aspect ratio of your frames.
+        //
+        // By setting `horizontal` to `false`, instead of forming lines, frames are expected to form
+        // _Columns_. All starts at the top left corner in both cases.
+        //
+        //     01 07 13 19 25 31
+        //     02 08 14 20 26 32
+        //     03 09 15 21 27 33
+        //     04 10 16 22 28 34
+        //     05 11 17 23 29 35
+        //     06 12 18 24 30 36
+        //
+        // URL for the sprite image file is being build from the name of the original `<img>` `src` image
+        // by adding a `suffix` to it. By default this results in `"object-reel.jpg"` for `"object.jpg"`.
+        // You can also take full control over the sprite `image` URL that will be used.
+        //
+        footage:                6, // Number
+        spacing:                0, // Number
+        horizontal:          true, // Boolean
+        suffix:           '-reel', // String
+        image:          undefined, // String
         area:           undefined, // custom mouse-sensitive area jQuery collection
         brake:               0.23, // brake force of the inertial rotation
-        clickfree:          false, // binds to mouse leave/enter events instead of down/up
         cw:                 false, // true for clockwise organization of sprite
         delay:                 -1, // delay before autoplay in seconds (no autoplay by default (-1))
-        directional:        false, // two sets of frames (for forward and backward motion) are used when true
-        draggable:           true, // mouse or finger drag interaction (allowed by default)
-        footage:                6, // number of frames per line/column
         entry:          undefined, // speed of the opening animation (Hz, defaults to value of `speed`)
-        frame:                  1, // initial frame
-        frames:                36, // total number of frames; every 10° for full rotation
         graph:          undefined, // custom graph function
         hint:                  '', // mouse-sensitive area hint tooltip
-        horizontal:          true, // roll flow; defaults to horizontal
-        image:          undefined, // image sprite to be used
         images:                [], // sequence array of individual images to be used instead of sprite
         indicator:              0, // size of a visual indicator of reeling (in pixels)
-        inversed:           false, // flags inversed organization of frames in orbital object movie
         klass:                 '', // plugin instance class name
         laziness:               6, // on "lazy" devices tempo is divided by this divisor for better performace
-        loops:               true, // is it a loop?
         monitor:        undefined, // stored value name to monitor in the upper left corner of the viewport
         opening:                0, // duration of opening animation (in seconds)
-        orbital:                0, // view centering tolerance in frames for dual-orbit object movies
         path:                  '', // URL path to be prepended to `image` or `images` filenames
         preloader:              2, // size (height) of a image loading indicator (in pixels)
         rebound:              0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
         revolution:     undefined, // distance mouse must be dragged for full revolution
                                    // (defaults to double the viewport size or half the `stitched` option)
-        row:                    1, // initial row
-        rows:                   0, // number of rows for a multi-row setup (zero from one-row setup)
-        spacing:                0, // space between frames on reel
         speed:                  0, // animated rotation speed in revolutions per second (Hz)
         step:           undefined, // [deprecated] use `frame` instead
         steps:          undefined, // [deprecated] use `frames` instead
-        stitched:               0, // pixel width (length) of a stitched (rectilinear) panoramic reel
-        suffix:           '-reel', // sprite filename suffix (A.jpg's sprite is A-reel.jpg by default)
         tempo:                 36, // shared ticker tempo in ticks per second
         timeout:                2, // idle timeout in seconds
-        throwable:           true, // drag & throw interaction (allowed by default)
-        vertical:           false, // switches orbital object movie to vertical mode
-        wheelable:           true, // mouse wheel interaction (allowed by default)
 
         // [NEW] in version 1.2
         annotations:    undefined, // annotations definition object
         attr:                  {}, // initial attribute-value pairs map for the IMG tag
         cursor:         undefined, // mouse cursor overriding the default one
         preload:       'fidelity', // preloading order - either "linear" or "fidelity" (default)
-        scrollable:          true, // allow page scroll (allowed by default; applies only to touch devices)
-        steppable:           true, // allows to step the view (horizontally) by clicking on image
         sequence:              '', // URL of sequence images containing the hash placeholder
         velocity:               0  // initial velocity of user interaction; washes off quickly with `brake`
       },
