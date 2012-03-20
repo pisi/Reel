@@ -158,4 +158,21 @@
     });
   });
 
+  asyncTest( 'Playing the instance with speed parameter set has the power to reverse the animation direction', function(){
+    expect(2);
+    var
+      $reel= $('#image').reel({
+        speed: 0.5
+      })
+
+    $(document).bind('openingDone.test', function(){
+      equal( $reel.reel('backwards'), false, 'Animates forward' );
+      $reel.trigger('play', -0.5);
+
+      equal( $reel.reel('backwards'), true, 'Animates backwards' );
+      start();
+    });
+
+  });
+
 })(jQuery);

@@ -372,6 +372,7 @@ jQuery.reel || (function($, window, document, undefined){
                   play: function(e, speed){
                     var
                       speed= set(_speed_, speed || get(_speed_)),
+                      backwards= set(_backwards_, speed < 0),
                       playing= set(_playing_, !!speed),
                       stopped= set(_stopped_, !playing)
                     idle();
