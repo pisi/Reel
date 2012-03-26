@@ -65,7 +65,7 @@ jQuery.reel || (function($, window, document, undefined){
       //       frames: 12,
       //       looping: false
       //     })
-      //
+
       // All options are optional and if omitted, default value is used instead.
       // Defaults are being housed as members of `$.reel.def` hash.
       // If you customize any default value therein, all subsequent `.reel()` calls
@@ -79,16 +79,26 @@ jQuery.reel || (function($, window, document, undefined){
         // Reel is just fine with you not setting any options, however if you don't have
         // 36 frames or beginning at frame 1, you will want to set total number
         // of `frames` and pick a different starting `frame`.
-        //
-        frame:                  1, // Number
-        frames:                36, // Number
 
+        // #### `frame` ####
+        // Number (frames), since 1.0
+        frame:                  1,
+
+        // #### `frames` ####
+        // Number (frames), since 1.0
+        frames:                36,
+
+        // ~~~
+        //
         // Another common characteristics of any Reel is whether it `loops` and covers
-        // entire 360°.
-        //
-        loops:               true, // Boolean
+        // entire 360° or not.
 
-        //
+        // #### `loops` ####
+        // Boolean, since 1.0
+        loops:               true,
+
+
+        // ---
         // ### Interaction ######
         //
         // Using boolean switches many user interaction aspects can be turned on and off.
@@ -98,28 +108,72 @@ jQuery.reel || (function($, window, document, undefined){
         // instead of Reel script and you can of course disable the stepping of Reel by
         // clicking on either half of the image with `steppable`.
         //
-        draggable:           true, // Boolean
-        scrollable:          true, // Boolean [NEW] in 1.2
-        steppable:           true, // Boolean
-        throwable:           true, // Boolean
-        wheelable:           true, // Boolean
-
         // You can even enable `clickfree` operation,
         // which will cause Reel to bind to mouse enter/leave events instead of mouse down/up,
         // thus allowing a click-free dragging.
-        //
-        clickfree:          false, // Boolean
 
+        // #### `clickfree` ####
+        // Boolean, since 1.1
+        clickfree:          false,
+        // #### `draggable` ####
+        // Boolean, since 1.1
+        draggable:           true,
+
+        // #### `scrollable` ####
+        // Boolean, [NEW] in 1.2
+        scrollable:          true,
+
+        // #### `steppable` ####
+        // Boolean, [NEW] in 1.2
+        steppable:           true,
+
+        // #### `throwable` ####
+        // Boolean, since 1.1
+        throwable:           true,
+
+        // #### `wheelable` ####
+        // Boolean, since 1.1
+        wheelable:           true,
+
+
+        // ---
+        // ### Order of Images ######
         //
+        // Reel presumes counter-clockwise order of the pictures taken. If the neerer facing
+        // side doesn't follow your cursor/finger, you did clockwise. Use the `cw` option to
+        // correct this.
+
+        // #### `cw` ####
+        // Boolean, since 1.1
+        cw:                 false,
+
+
+        // ---
+        // ### Sensitivity ######
+        //
+        // In Reel sensitivity is set through the `revolution` parameter, which represents horizontal
+        // dragging distance one must cover to perform one full revolution. By default this value
+        // is calculated based on the setup you have - it is either twice the width of the image
+        // or half the width of stitched panorama. You may also set your own.
+
+        // #### `revolution` ####
+        // Number (pixels), since 1.1
+        revolution:     undefined,
+
+
+        // ---
         // ### Rectilinear Panorama ######
         //
         // The easiest of all is the stitched panorama mode. For this mode, instead of the sprite,
         // a single seamlessly stitched stretched image is used and the view scrolls the image.
         // This mode is triggered by setting a pixel width of the `stitched` image.
-        //
-        stitched:               0, // Number
 
-        //
+        // #### `stitched` ####
+        // Number (pixels), since 1.0
+        stitched:               0,
+
+
+        // ---
         // ### Directional Mode ######
         //
         // As you may have noticed on Reel's homepage or in [this example][logo]
@@ -144,14 +198,17 @@ jQuery.reel || (function($, window, document, undefined){
         //     025 026 027 028 029 030
         //
         // Frame `016` represents the `B01` so it actually is first frame of the other direction.
-        //
-        directional:        false, // Boolean
 
-        //
+        // #### `directional` ####
+        // Boolean, since 1.1
+        directional:        false,
+
+
+        // ---
         // ### Multi-Row Mode ######
         //
-        // As [this example][mini] very nicely demonstrates, in multi-row arrangement you can perform
-        // a two-axis manipulation allowing you to add one or more vertical angles. Think of it as
+        // As `example/object-movie-multirow-sequence` very nicely demonstrates, in multi-row arrangement you
+        // can perform two-axis manipulation allowing you to add one or more vertical angles. Think of it as
         // a layered cake, each new elevation of the camera during shooting creates one layer of the cake -
         // - a _row_. One plain horizontal object movie full spin is one row:
         //
@@ -170,11 +227,17 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // This way you stack up any number of __`rows`__ you wish and set the initial `row` to start with.
         // Again, not limited to sprites, sequences also apply.
-        //
-        row:                    1, // Number
-        rows:                   0, // Number
 
-        //
+        // #### `row` ####
+        // Number (rows), since 1.1
+        row:                    1,
+
+        // #### `rows` ####
+        // Number (rows), since 1.1
+        rows:                   0,
+
+
+        // ---
         // ### Dual-Orbit Mode ######
         //
         // Special form of multi-axis movie is the dual-axis mode. In this mode the object offers two plain
@@ -195,20 +258,28 @@ jQuery.reel || (function($, window, document, undefined){
         //     B04 B05 B06 B07 B08 B09
         //     B10 B11 B12 B13 B14 B15
         //
-        //
-        orbital:                0, // Number
-        vertical:           false, // Boolean
-        inversed:           false, // Boolean
 
-        //
+        // #### `orbital` ####
+        // Number (frames), since 1.1
+        orbital:                0,
+
+        // #### `vertical` ####
+        // Boolean, since 1.1
+        vertical:           false,
+
+        // #### `inversed` ####
+        // Boolean, since 1.1
+        inversed:           false,
+
+
+        // ---
         // ### Sprite Layout ######
         //
-        // For both object movies and panoramas Reel presumes you use a combined _Sprite_
-        // to hold all your frames in a single file.
-        // This powerful technique of using a sheet of several individual images has many
-        // advantages in terms of compactness, loading, caching, etc. However, know your
-        // enemy, be also aware of the limitations, which stem from memory limits
-        // of mobile (learn more in [FAQ](https://github.com/pisi/Reel/wiki/FAQ)).
+        // For both object movies and panoramas Reel presumes you use a combined _Sprite_ to hold all your
+        // frames in a single file. This powerful technique of using a sheet of several individual images
+        // has many advantages in terms of compactness, loading, caching, etc. However, know your enemy,
+        // be also aware of the limitations, which stem from memory limits of mobile
+        // (learn more in [FAQ](https://github.com/pisi/Reel/wiki/FAQ)).
         //
         // Inside the sprite, individual frames are laid down one by one, to the right of the previous one
         // in a straight _Line_:
@@ -242,45 +313,268 @@ jQuery.reel || (function($, window, document, undefined){
         // URL for the sprite image file is being build from the name of the original `<img>` `src` image
         // by adding a `suffix` to it. By default this results in `"object-reel.jpg"` for `"object.jpg"`.
         // You can also take full control over the sprite `image` URL that will be used.
-        //
-        footage:                6, // Number
-        spacing:                0, // Number
-        horizontal:          true, // Boolean
-        suffix:           '-reel', // String
-        image:          undefined, // String
-        area:           undefined, // custom mouse-sensitive area jQuery collection
-        brake:               0.23, // brake force of the inertial rotation
-        cw:                 false, // true for clockwise organization of sprite
-        delay:                 -1, // delay before autoplay in seconds (no autoplay by default (-1))
-        entry:          undefined, // speed of the opening animation (Hz, defaults to value of `speed`)
-        graph:          undefined, // custom graph function
-        hint:                  '', // mouse-sensitive area hint tooltip
-        images:                [], // sequence array of individual images to be used instead of sprite
-        indicator:              0, // size of a visual indicator of reeling (in pixels)
-        klass:                 '', // plugin instance class name
-        laziness:               6, // on "lazy" devices tempo is divided by this divisor for better performace
-        monitor:        undefined, // stored value name to monitor in the upper left corner of the viewport
-        opening:                0, // duration of opening animation (in seconds)
-        path:                  '', // URL path to be prepended to `image` or `images` filenames
-        preloader:              2, // size (height) of a image loading indicator (in pixels)
-        rebound:              0.5, // time spent on the edge (in seconds) of a non-looping panorama before it bounces back
-        revolution:     undefined, // distance mouse must be dragged for full revolution
-                                   // (defaults to double the viewport size or half the `stitched` option)
-        speed:                  0, // animated rotation speed in revolutions per second (Hz)
-        step:           undefined, // [deprecated] use `frame` instead
-        steps:          undefined, // [deprecated] use `frames` instead
-        tempo:                 36, // shared ticker tempo in ticks per second
-        timeout:                2, // idle timeout in seconds
 
-        // [NEW] in version 1.2
-        annotations:    undefined, // annotations definition object
-        attr:                  {}, // initial attribute-value pairs map for the IMG tag
-        cursor:         undefined, // mouse cursor overriding the default one
-        preload:       'fidelity', // preloading order - either "linear" or "fidelity" (default)
-        sequence:              '', // URL of sequence images containing the hash placeholder
-        velocity:               0  // initial velocity of user interaction; washes off quickly with `brake`
+        // #### `footage` ####
+        // Number (frames), since 1.0
+        footage:                6,
+
+        // #### `spacing` ####
+        // Number (pixels), since 1.0
+        spacing:                0,
+
+        // #### `horizontal` ####
+        // Boolean, since 1.0
+        horizontal:          true,
+
+        // #### `suffix` ####
+        // String, since 1.0
+        suffix:           '-reel',
+
+        // #### `image` ####
+        // String, since 1.1
+        image:          undefined,
+
+
+        // ---
+        // ### Sequence ######
+        //
+        // Collection of individual frame images is called _Sequence_ and it this way one HTTP request per
+        // frame is made carried out as opposed to sprite with one request per entire sprite. Define it with
+        // string like: `"image_###.jpg"`. The `#` placeholders will be replaced with a numeric +1 counter
+        // padded to the placeholders length.
+        // Learn more about [sequences](Sequences).
+        //
+        // In case you work with hashed filenames like `64bc654d21cb.jpg`, where no counter element can
+        // be indentified, or you prefer direct control, `images` can also accept array of plain URL strings.
+        //
+        // All images are retrieved from a specified `path`.
+
+        // #### `images` ####
+        // String or Array, since 1.1, [IMPROVED] in 1.2
+        images:                '',
+
+        // #### `path` ####
+        // String (URL path), since 1.1
+        path:                  '',
+
+
+        // ---
+        // ### Images Preload Order ######
+        //
+        // Given sequence images can be additionally reordered to achieve a perceived faster preloading.
+        // Value given to `preload` option must match a name of a pre-registered function within
+        // `$.reel.preload` object. There are two functions built-in:
+        //
+        // - `"fidelity"` - non-linear way that ensures even spreading of preloaded images around the entire
+        //   revolution leaving the gaps in-between as small as possible. This results in a gradually
+        //   increasing fidelity of the image rather than having one large shrinking gap. This is the default
+        //   behavior.
+        // - `"linear"` - linear order of preloading
+
+        // #### `preload` ####
+        // String, [NEW] in 1.2
+        preload:       'fidelity',
+
+
+        // ---
+        // ### Animation ######
+        //
+        // Your object movie or a panorama can perform an autonomous sustained motion in one direction.
+        // When `speed` is set in revolutions per second (Hz), after a given `delay` the instance will
+        // animate and advance frames by itself.
+        //
+        //     t
+        //     |-------›|-----------›
+        //       Delay    Animation
+        //
+        // Start and resume of animation happens when given `timeout` has elapsed since user became idle.
+        //
+        //     t
+        //     |-----------›|= == ==  = === = = |          |-----------›
+        //       Animation    User interaction    Timeout    Animation
+        //
+        // When a scene doesn't loop (see `loops`) and the animation reaches one end, it stays there
+        // for a while and then reversing the direction of the animation it bounces back towards the other
+        // end. The time spent on the edge can be customized with `rebound`.
+
+        // #### `speed` ####
+        // Number (Hz), since 1.1
+        speed:                  0,
+
+        // #### `delay` ####
+        // Number (seconds), since 1.1
+        delay:                  0,
+
+        // #### `timeout` ####
+        // Number (seconds), since 1.1
+        timeout:                2,
+
+        // #### `rebound` ####
+        // Number (seconds), since 1.1
+        rebound:              0.5,
+
+
+        // ---
+        // ### Opening Animation ######
+        //
+        // Chance is you want the object to spin a little to attract attention and then stop and wait
+        // for the user to engage. This is called "opening animation" and it is performed for given number
+        // of seconds (`opening`) at dedicated `entry` speed. The `entry` speed defaults to value of `speed`
+        // option. After the opening animation has passed, regular animation procedure begins starting with
+        // the delay (if any).
+        //
+        //     t
+        //     |--------›|-------›|-----------›
+        //       Opening   Delay    Animation
+
+        // #### `entry` ####
+        // Number (Hz), since 1.1
+        entry:          undefined,
+
+        // #### `opening` ####
+        // Number (seconds), since 1.1
+        opening:                0,
+
+
+        // ---
+        // ### Momentum ######
+        //
+        // Often also called inertial motion is a result of measuring a velocity of dragging. This velocity
+        // builds up momentum, so when a drag is released, the image still retains the momentum and continues
+        // to spin on itself. Naturally the momentum soon wears off as `brake` is being applied.
+        //
+        // One can utilize this momentum for a different kind of an opening animation. By setting initial
+        // `velocity`, the instance gets artificial momentum and spins to slow down to stop.
+
+        // #### `brake` ####
+        // Number, since 1.1, where it also has a different default `0.5`
+        brake:               0.23,
+
+        // #### `velocity` ####
+        // Number, [NEW] in 1.2
+        velocity:               0,
+
+
+        // ---
+        // ### Ticker ######
+        //
+        // For purposes of animation, Reel starts and maintains a timer device which emits ticks timing all
+        // animations. There is only one ticker running in the document and all instances subscribe to this
+        // one ticker. Ticker is equipped with a mechanism, which compensates for the  measured costs
+        // of running Reels to ensure the ticker ticks on time. The `tempo` (in Hz) of the ticker can be
+        // specified.
+        //
+        // Please note, that ticker is synchronized with a _leader_, the oldest living instance on page,
+        // and adjusts to his tempo.
+
+        // #### `tempo` ####
+        // Number (Hz, ticks per second), since 1.1
+        tempo:                 36,
+
+
+        // ---
+        // ### Customization ######
+        //
+        // You can customize Reel on both functional and visual front. The most visible thing you can
+        // customize is probably the `cursor`, size of the `preloader`, perhaps add visual `indicator`(s)
+        // of Reel's position within the range. You can also set custom `hint` for the tooltip, which appears
+        // when you mouse over the image area. Last but not least you can also add custom class name `klass`
+        // to the instance.
+
+        // #### `cursor` ####
+        // String, [NEW] in 1.2
+        cursor:         undefined,
+
+        // #### `hint` ####
+        // String, since 1.0
+        hint:                  '',
+
+        // #### `indicator` ####
+        // Number (pixels), since 1.0
+        indicator:              0,
+
+        // #### `klass` ####
+        // String, since 1.0
+        klass:                 '',
+
+        // #### `preloader` ####
+        // Number (pixels), since 1.1
+        preloader:              2,
+
+        // ~~~
+        //
+        // You can use custom attributes (`attr`) on the node - it accepts the same name-value pairs object
+        // jQuery `.attr()` does. In case you want to delegate full interaction control over the instance
+        // to some other DOM element(s) on page, you can with `area`.
+
+        // #### `area` ####
+        // jQuery, since 1.
+        area:           undefined,
+
+        // #### `attr` ####
+        // Object, [NEW] in 1.2
+        attr:                  {},
+
+
+        // ---
+        // ### Annotations ######
+        //
+        // To further visually describe your scene you can place all kinds of in-picture HTML annotations
+        // by defining an `annotations` object. Learn more about [Annotations][1] in a dedicated article.
+        //
+        // [1]:https://github.com/pisi/Reel/wiki/Annotations
+
+        // #### `annotations` ####
+        // Object, [NEW] in 1.2
+        annotations:    undefined,
+
+
+        // ---
+        // ### Mathematics ######
+        //
+        // When reeling, instance conforms to a graph function, which defines whether it will loop
+        // (`$.reel.math.hatch`) or it won't (`$.reel.math.envelope`). My math is far from flawless
+        // and I'm sure there are much better ways how to handle things. the `graph` option is there for you
+        // shall you need it. It accepts a function, which should process given criteria and return
+        // a fraction of 1.
+        //
+        //     function( x, start, revolution, lo, hi, cwness, y ){
+        //       return fraction  // 0.0 - 1.0
+        //     }
+
+        // #### `graph` ####
+        // Function, since 1.1
+        graph:          undefined,
+
+
+        // ---
+        // ### Developer Tools ######
+        //
+        // In fact, there's just one tool so far and that is the data `monitor`. Specify a string data key
+        // and you will see its real-time value dumped in the upper-left corner of the viewport. Its visual
+        // can be customized by CSS using `.jquery-reel-monitor` selector.
+
+        // #### `monitor` ####
+        // String (data key), since 1.1
+        monitor:        undefined,
+
+
+        // ---
+        // ### Deprecated Options ######
+        //
+        // Two options are currently deprecated in version 1.2. Learn more about [Deprecations][1]
+        //
+        // [1]:https://github.com/pisi/Reel/wiki/Deprecations
+
+        // #### `step` ####
+        // Number, since 1.1
+        step:           undefined, // use `frame` instead
+
+        // #### `steps` ####
+        // Number, since 1.1
+        steps:          undefined // use `frames` instead
+
       },
-      // [deprecated] options defaults may be gone anytime soon
 
       fn: {
         reel: function(/* options | name, [value] */){
