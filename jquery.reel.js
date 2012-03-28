@@ -633,11 +633,18 @@ jQuery.reel || (function($, window, document, undefined){
 
               // Events & handlers
               on= {
+
+                // --------------
+                // Initialization
+                // --------------
+                //
+                // This internally called private pseudo-handler:
+                //
+                // - initiates all data store keys
+                // - binds to ticker
+                // - triggers `"setup` Event when finished
+                //
                 setup: function(e){
-                /*
-                - fills up the data storage with values based on options
-                - binds to ticker
-                */
                   if (t.hasClass(klass)) return;
                   set(_options_, opt);
                   var
@@ -698,12 +705,40 @@ jQuery.reel || (function($, window, document, undefined){
                   pool.bind(on.pool);
                   t.trigger('setup');
                 },
+
+                // ---------------------
+                // Initialization Events
+                // ---------------------
+                //
+                // Reel is completely event-driven meaning there are many events, which can be called
+                // (triggered). By binding event handler to any of the events you can easily hook on to any
+                // event to inject your custom behavior where and when this event was triggered.
+                // _For example to make `#image` element reel and execute some code right after the newly
+                // created instance is initialized and completely loaded:_
+                //
+                //     $("#image")
+                //     .reel()
+                //     .bind("loaded", function(ev){
+                //       // Your code
+                //     })
+                //
+
+                // Events bound to all individual instances.
+                //
                 instance: {
+
+                  // ### `teardown` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // This event does do how it sounds like. It will teardown an instance with all its
+                  // belongings leaving no trace.
+                  //
+                  // - It reconstructs the original `<img>` element,
+                  // - wipes out the data store,
+                  // - removes instance stylesheet
+                  // - and unbinds all its events.
+                  //
                   teardown: function(e){
-                  /*
-                  - unbinds events, erases all state data
-                  - reconstructs the original DOM element
-                  */
                     var
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
@@ -718,11 +753,17 @@ jQuery.reel || (function($, window, document, undefined){
                     pool.unbind(on.pool);
                     pools.unbind(pns);
                   },
+
+                  // ### `setup` Event ######
+                  // `Event`, since 1.0
+                  //
+                  // `"setup` Event continues with what has been started by the private `on.setup()`
+                  // handler.
+                  //
+                  // - It prepares all additional on-stage DOM elements,
+                  // - and cursors for the instance stylesheet.
+                  //
                   setup: function(e){
-                  /*
-                  - binds all mouse/touch events (namespaced)
-                  - prepares stage overlay elements
-                  */
                     var
                       space= get(_dimensions_),
                       frames= get(_frames_),
@@ -757,6 +798,15 @@ jQuery.reel || (function($, window, document, undefined){
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
                   },
+
+                  // ### `preload` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // Reel keeps a cache of all images it needs for its operation. Either a sprite or all
+                  // sequence images. Physically, this cache is made up of a hidden `<img>` sibling for each
+                  // preloaded image. It first determines the order of requesting the images and then
+                  // asynchronously loads all of them.
+                  //
                   preload: function(e){
                   /*
                   - preloads all frames and sprites
@@ -773,6 +823,7 @@ jQuery.reel || (function($, window, document, undefined){
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());
+                    // It also finalizes the instance stylesheet and prepends it to the head.
                     set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     t.trigger('stop');
                     while(preload.length){
@@ -781,7 +832,7 @@ jQuery.reel || (function($, window, document, undefined){
                         width= space.x * (!is_sprite ? 1 : opt.footage),
                         height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
                         $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
-                      // The actual loading of the image is done asynchronously
+                      // Each image, which finishes the load triggers `"preloaded` Event.
                       $img.bind('load error abort', function(){
                         return !!$(this).parent().length && t.trigger('preloaded') && false;
                       });
@@ -793,6 +844,13 @@ jQuery.reel || (function($, window, document, undefined){
                       $img.parent().length && $img.attr({ src: uri });
                     }, (to_load - preload.length) * 2) }
                   },
+
+                  // ### `preloaded` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // This event is fired by every preloaded image and adjusts the preloader indicator's
+                  // target position. Once all images are preloaded, `"loaded` Event is triggered.
+                  //
                   preloaded: function(e){
                     var
                       images= get(_images_).length || 1,
@@ -804,11 +862,29 @@ jQuery.reel || (function($, window, document, undefined){
                     if (preloaded === 1) var
                       frame= t.trigger('frameChange', [undefined, get(_frame_)])
                   },
+
+                  // ### `loaded` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // `"loaded` Event is the one announcing when the instance is "locked and loaded".
+                  // At this time, all is prepared, preloaded and configured for user interaction
+                  // or animation.
+                  //
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
                   },
 
-                  // Opening animation
+                  // ----------------
+                  // Animation Events
+                  // ----------------
+
+                  // ### `opening` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // When [opening animation](#Opening-Animation) is configured for the instance, `"opening"`
+                  // event engages the animation by pre-calculating some of its properties, which will make
+                  // the tick handler
+                  //
                   opening: function(e){
                   /*
                   - initiates opening animation
@@ -824,6 +900,14 @@ jQuery.reel || (function($, window, document, undefined){
                       start= set(_fraction_, end - speed * opt.opening),
                       ticks= set(_opening_ticks_, ceil(duration * leader(_tempo_)))
                   },
+
+                  // ### `openingDone` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // `"openingDone"` is fired onceWhen [opening animation](#Opening-Animation) is configured for the instance, `"opening"`
+                  // event engages the animation by pre-calculating some of its properties, which will make
+                  // the tick handler
+                  //
                   openingDone: function(e){
                     var
                       playing= set(_playing_, false),
@@ -834,7 +918,16 @@ jQuery.reel || (function($, window, document, undefined){
                     else t.trigger('play');
                   },
 
-                  // Playback
+                  // -----------------------
+                  // Playback Control Events
+                  // -----------------------
+
+                  // ### `play` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // `"play` Event can optionally accept a `speed` parameter (in Hz) to change the animation
+                  // speed on the fly.
+                  //
                   play: function(e, speed){
                     var
                       speed= set(_speed_, speed || get(_speed_)),
@@ -843,22 +936,41 @@ jQuery.reel || (function($, window, document, undefined){
                       stopped= set(_stopped_, !playing)
                     idle();
                   },
+
+                  // ### `pause` Event ######
+                  // `Event`, since 1.1
                   pause: function(e){
                     var
                       playing= set(_playing_, false)
                     unidle();
                   },
+
+                  // ### `stop` Event ######
+                  // `Event`, since 1.1
                   stop: function(e){
                     var
                       stopped= set(_stopped_, true),
                       playing= set(_playing_, !stopped)
                   },
 
-                  // Mouse or touch interactivity
+                  // ------------------------
+                  // Human Interaction Events
+                  // ------------------------
+
+                  // ### `down` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // Marks the very beginning of touch or mouse interaction. It receives `x` and `y`
+                  // coordinates in arguments. It:
+                  //
+                  // - calibrates the center point (origin),
+                  // - considers user active not idle,
+                  // - flags the `<html>` tag with `.reel-panning` class name,
+                  // - and binds dragging events for move and lift. These
+                  // are usually bound to the pool (document itself) to get a consistent treating regardless
+                  // the event target element. However in click-free mode, it binds directly to the instance.
+                  //
                   down: function(e, x, y){
-                  /*
-                  - starts the dragging operation by binding dragging events to the pool
-                  */
                     if (opt.draggable){
                       var
                         clicked= set(_clicked_, get(_frame_)),
@@ -869,6 +981,8 @@ jQuery.reel || (function($, window, document, undefined){
                       no_bias();
                       panned= false;
                       $(_html_, pools).addClass(panning_klass);
+                      // Browser events differ for touch and mouse, but both of them are treated equally and
+                      // forwarded to the same `"pan"` or `"up` Events.
                       if (touchy){
                         pools
                         .bind(_touchmove_, drag(!scrollable))
@@ -882,12 +996,18 @@ jQuery.reel || (function($, window, document, undefined){
                     function drag(r){ return function(e){ e.preventDefault(); t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]); return r }}
                     function lift(r){ return function(e){ e.preventDefault(); t.trigger('up'); return r }}
                   },
+
+                  // ### `up` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // This marks the termination of user's interaction. She either released the mouse button
+                  // or lift the finger of the touch screen. This event handler:
+                  //
+                  // - calculates the velocity of the drag at that very moment,
+                  // - removes the `.reel-panning` class from `<body>`,
+                  // - and unbinds dragging events from the pool.
+                  //
                   up: function(e){
-                  /*
-                  - ends dragging operation by calculating velocity by summing the bias
-                  - unbinds dragging events from pool
-                  - resets the mouse cursor
-                  */
                     if (!opt.draggable) return;
                     var
                       clicked= set(_clicked_, false),
@@ -900,17 +1020,28 @@ jQuery.reel || (function($, window, document, undefined){
                     $(_html_, pools).removeClass(panning_klass);
                     pools.unbind(pns);
                   },
+
+                  // ### `pan` Event ######
+                  // [RENAMED] `Event`, since 1.2
+                  //
+                  // Regardles the actual source of movement (mouse or touch), this event is always triggered
+                  // in response and similar to the `"down` Event it receives `x` and `y` coordinates
+                  // in arguments and in addition it is passed a reference to the original browser event.
+                  // This handler:
+                  //
+                  // - syncs with timer to achieve good performance,
+                  // - calculates the distance from drag center and applies graph on it to get `fraction`,
+                  // - recenters the drag when dragged over limits,
+                  // - detects the direction of the motion,
+                  // - and builds up inertial motion bias.
+                  //
+                  // Historically `pan` was once called `slide` (conflicted with Mootools - [GH-51][1])
+                  // or `drag` (that conflicted with MSIE).
+                  //
+                  // [1]:https://github.com/pisi/Reel/issues/51
+                  //
                   pan: function(e, x, y, ev){
-                  /*
-                  - calculates the X distance from drag center and applies graph on it to get fraction
-                  - recenters the drag when dragged over limits
-                  - detects the direction of the motion
-                  - builds inertial motion bias
-                  - (`pan` was originally `slide` which conflicted with Mootools (GH-51))
-                  - (and `slide` was once `drag` which conflicted with MSIE)
-                  */
                     if (opt.draggable && slidable){
-                      // by checking slidable sync with the ticker tempo is achieved
                       slidable= false;
                       unidle();
                       var
@@ -943,13 +1074,25 @@ jQuery.reel || (function($, window, document, undefined){
                       }
                     }
                   },
+
+                  // ### `wheel` Event ######
+                  // `Event`, since 1.0
+                  //
+                  // Maps Reel to mouse wheel position change event which is provided by a nifty plug-in
+                  // written by Brandon Aaron - the [Mousewheel plug-in][1], which you will need to enable
+                  // the mousewheel wheel for reeling. You can also choose to use [Wheel Special Event
+                  // plug-in][2] by Three Dub Media instead. Either way `"wheel` Event handler receives
+                  // the positive or negative wheeled distance in arguments. This event:
+                  //
+                  // - calculates wheel input delta and adjusts the `fraction` using the graph,
+                  // - recenters the "drag" each and every time,
+                  // - detects motion direction,
+                  // - and nullifies the velocity.
+                  //
+                  // [1]:https://github.com/brandonaaron/jquery-mousewheel
+                  // [2]:http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
+                  //
                   wheel: function(e, distance){
-                  /*
-                  - calculates wheel input delta and adjusts fraction using the graph
-                  - recenters the "drag" each and every time
-                  - detects motion direction
-                  - nullifies the velocity
-                  */
                     if (!distance) return;
                     var
                       delta= ceil(math.sqrt(abs(distance)) / 2),
@@ -964,14 +1107,38 @@ jQuery.reel || (function($, window, document, undefined){
                     return false;
                   },
 
-                  // Data change reactions
+                  // ------------------
+                  // Data Change Events
+                  // ------------------
+                  //
+                  // Besides Reel being event-driven, it also is data-driven respectively data-change-driven
+                  // meaning that there is a mechanism in place, which detects real changes in data being
+                  // stored with `.reel(name, value)`. Learn more about [data changes](#Changes).
+                  //
+                  // These data change bindings are for internal use only and you don't ever trigger them
+                  // per se, you change data and that will trigger respective change event. If the value
+                  // being stored is the same as the one already stored, nothing will be triggered.
+                  // _For example to change Reel's `frame` you don't trigger `"frameChange"` and instead
+                  // you do:
+                  //
+                  //     .reel("frame", 15)
+                  //
+                  // Change events always receive the actual data key value in the third argument.
+                  // _For example this will log each viewed frame number into the developers console.
+                  //
+                  //     .bind("frameChange", function(e, d, frame){
+                  //         console.log(frame)
+                  //     })
+                  //
+
+                  // ### `fractionChange` Event ######
+                  // `Event`, since 1.0
+                  //
+                  // Internally Reel doesn't really work with the frames you set it up with. It uses
+                  // __fraction__, which is a numeric value ranging from 0.0 to 1.0. When `fraction` changes
+                  // this handler basically calculates and sets new value of `frame`.
+                  //
                   fractionChange: function(e, set_fraction, fraction){
-                  /*
-                  - calculates and changes sprite frame
-                  - for non-looping panoramas
-                      - keeps track of ticks spent on edge
-                      - reverses motion direction if too long
-                  */
                     if (set_fraction !== undefined) return deprecated(set(_fraction_, set_fraction));
                     var
                       frame= 1 + floor(fraction / get(_bit_)),
@@ -983,6 +1150,14 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       frame= set(_frame_, frame)
                   },
+
+                  // ### `tierChange` Event ######
+                  // `Event`, since 1.2
+                  //
+                  // The situation of `tier` is very much similar to the one of `fraction`. In multi-row
+                  // movies, __tier__ is an internal value for the vertical axis. Its value also ranges from
+                  // 0.0 to 1.0. Handler calculates and sets new value of `frame`.
+                  //
                   tierChange: function(e, deprecated_set, tier){
                     if (deprecated_set === undefined) var
                       row= set(_row_, round(interpolate(tier, 1, opt.rows))),
@@ -990,21 +1165,34 @@ jQuery.reel || (function($, window, document, undefined){
                       frame= get(_frame_) % frames || frames,
                       frame= set(_frame_, frame + row * frames - frames)
                   },
+
+                  // ### `rowChange` Event ######
+                  // `Event`, since 1.1
+                  //
+                  // The physical vertical position of Reel is expressed in __rows__ and ranges
+                  // from 1 to the total number of rows defined with [`rows`](#rows-Option). This handler
+                  // only converts `row` value to `tier` and sets it.
+                  //
                   rowChange: function(e, set_row, row){
-                  /*
-                  - recalculates frame from fraction in order to have fresh unshifted value
-                  - shifts the stored frame to a desired row
-                  */
                     if (set_row !== undefined) return set(_row_, set_row);
                     var
                       tier= set(_tier_, 1 / (opt.rows - 1) * (row - 1))
                   },
+
+                  // ### `frameChange` Event ######
+                  // `Event`, since 1.0
+                  //
+                  // The physical horizontal position of Reel is expressed in __frames__ and ranges
+                  // from 1 to the total number of frames configured with [`frames`](#frames-Option).
+                  // This handler converts `row` value to `tier` and sets it. This default handler:
+                  //
+                  // - flags the instance's outter wrapper with `.frame-X` class name
+                  //   (where `X` is the actual frame number),
+                  // - calculates and eventually sets `fraction` (and `tier` for multi-rows) from given frame,
+                  // - for sequences, it switches the `<img>`'s `src` to the right frame,
+                  // - for sprites it recalculates sprite's 'background position shift and applies it.
+                  //
                   frameChange: function(e, set_frame, frame){
-                  /*
-                  - calculates and eventually sets fraction (and tier) from given frame
-                  - calculates sprite background position shift and applies it
-                    or changes sprite image
-                  */
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
@@ -1051,7 +1239,18 @@ jQuery.reel || (function($, window, document, undefined){
                     }
                   },
 
-                  // Stepping
+                  // ---------------------------
+                  // [NEW] Click Stepping Events
+                  // ---------------------------
+                  //
+                  // For devices without drag support or for developers, who want to use some sort
+                  // of left & right buttons on their site to control your instance from outside, Reel
+                  // supports ordinary click with added detection of left half or right half and resulting
+                  // triggering of `stepLeft` and `stepRight` events respectively.
+                  //
+
+                  // This behavior can be disabled by the [`steppable`](#steppable-Option) option.
+                  //
                   'click.steppable': function(e){
                     if (panned) return mute(e, false);
                     t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
@@ -1059,16 +1258,33 @@ jQuery.reel || (function($, window, document, undefined){
                   'stepLeft stepRight': function(e){
                     unidle();
                   },
+
+                  // ### `stepLeft` Event ######
+                  // `Event`, since 1.2
                   stepLeft: function(e){
                     set(_backwards_, false);
                     set(_fraction_, get(_fraction_) - get(_bit_) * get(_cwish_));
                   },
+
+                  // ### `stepRight` Event ######
+                  // `Event`, since 1.2
                   stepRight: function(e){
                     set(_backwards_, true);
                     set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
                   },
 
-                  // Indicators
+                  // ---------
+                  // Indicator
+                  // ---------
+                  //
+                  // When configured with the [`indicator`](#indicator-Option) option, Reel adds to the scene
+                  // a visual indicator in a form of a black rectangle traveling along the bottom edge
+                  // of the image. It bears two distinct messages:
+                  //
+                  // - its horizontal position accurately reflects actual `fraction`
+                  // - and its width reflect one frame's share on the whole (more frames mean narrower
+                  //   indicator).
+                  //
                   'fractionChange.indicator': function(e, deprecated_set, fraction){
                     if (deprecated_set === undefined && opt.indicator) var
                       space= get(_dimensions_),
@@ -1083,6 +1299,14 @@ jQuery.reel || (function($, window, document, undefined){
                       ? { left: 0, top: px(indicate), bottom: _auto_, width: size, height: weight }
                       : { bottom: 0, left: px(indicate), top: _auto_, width: weight, height: size })
                   },
+
+                  // For multi-row object movies, there's a second indicator sticked to the left edge
+                  // and communicates:
+                  //
+                  // - its vertical position accurately reflects actual `tier`
+                  // - and its height reflect one row's share on the whole (more rows mean narrower
+                  //   indicator).
+                  //
                   'tierChange.indicator': function(e, deprecated_set, tier){
                     if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
                       space= get(_dimensions_),
@@ -1095,7 +1319,25 @@ jQuery.reel || (function($, window, document, undefined){
                       $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
                   },
 
-                  // Annotations
+                  // Indicators are bound to `fraction` or `row` changes, meaning they alone can consume
+                  // more CPU resources than the entire Reel scene. Use them for development only.
+                  //
+
+                  // -----------------
+                  // [NEW] Annotations
+                  // -----------------
+                  //
+                  // If you want to annotate features of your scene to better describe the subject,
+                  // there's annotations for you. Annotations feature allows you to place virtually any
+                  // HTML content over or into the image and have its position and visibility synchronized
+                  // with the position of Reel. These two easy looking handlers do a lot more than to fit
+                  // in here.
+                  //
+                  // Learn more about [Annotations][1] in the wiki, where a great care has been taken
+                  // to in-depth explain this new exciting functionality.
+                  //
+                  // [1]:https://github.com/pisi/Reel/wiki/Annotations
+                  //
                   'setup.annotations': function(e){
                     var
                       space= get(_dimensions_),
@@ -1140,7 +1382,15 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
 
-                  // Follow-ups
+                  // ----------------
+                  // Follow-up Events
+                  // ----------------
+                  //
+                  // When some event as a result triggers another event, it preferably is not triggered
+                  // directly, because it would disallow preventing the event propagation / chaining
+                  // to happen. Instead a followup handler is bound to the first event and it triggers the
+                  // second one.
+                  //
                   'setup.fu': function(e){
                     var
                       frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
@@ -1148,7 +1398,21 @@ jQuery.reel || (function($, window, document, undefined){
                   },
                   'loaded.fu': function(){ t.trigger('opening') }
                 },
+
+                // -------------
+                // Tick Handlers
+                // -------------
+
+                // As opposed to the events bound to the instance itself, there is a [ticker](#Ticker)
+                // in place, which emits `tick.reel` event on the document level by default every 1/36
+                // of a second and drives all the animations. Three handlers currently bind each instance
+                // to the tick.
+                //
                 pool: {
+
+                  // This handler has a responsibility of continuously updating the preloading indicator
+                  // until all images are loaded and to unbind itself then.
+                  //
                   'tick.reel.preload': function(e){
                     var
                       space= get(_dimensions_),
@@ -1161,12 +1425,20 @@ jQuery.reel || (function($, window, document, undefined){
                       pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     }
                   },
+
+                  // This handler binds to the document's ticks at all times, regardless the situation.
+                  // It serves several tasks:
+                  //
+                  // - keeps track of how long the instance is being operated by the user,
+                  // - or for how long it is braking the velocity inertia,
+                  // - decreases gained velocity by applying power of the [`brake`](#brake-Option) option,
+                  // - flags the instance as `slidable` again, so that `pan` event handler can be executed
+                  //   again,
+                  // - updates the [`monitor`](#monitor-Option) value,
+                  // - bounces off the edges for non-looping panoramas,
+                  // - and most importantly it animates the Reel if [`speed`](#speed-Option) is configured.
+                  //
                   'tick.reel': function(e){
-                  /*
-                  - triggered by pool's `tick.reel` event
-                  - keeps track of operated and braked statuses
-                  - decreases inertial velocity by braking
-                  */
                     var
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_)
@@ -1190,10 +1462,11 @@ jQuery.reel || (function($, window, document, undefined){
                       step= (!get(_playing_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                       fraction= set(_fraction_, get(_fraction_) - step * direction)
                   },
+
+                  // This handler performs the opening animation duty when during it the normal animation
+                  // is halted until the opening finishes.
+                  //
                   'tick.reel.opening': function(e){
-                  /*
-                  - ticker listener dedicated to opening animation
-                  */
                     if (!get(_opening_)) return;
                     var
                       speed= opt.entry || opt.speed,
@@ -1205,10 +1478,16 @@ jQuery.reel || (function($, window, document, undefined){
                 }
               },
 
-              // Events propagation stopper / muter
+              // ------------------------
+              // Instance Private Helpers
+              // ------------------------
+
+              // - Events propagation stopper / muter
+              //
               mute= function(e, result){ return e.stopImmediatePropagation() || result },
 
-              // User idle control
+              // - User idle control
+              //
               operated,
               braking= 0,
               idle= function(){ return operated= 0 },
@@ -1221,6 +1500,8 @@ jQuery.reel || (function($, window, document, undefined){
               panned= false,
               delay, // openingDone's delayed play pointer
 
+              // - Constructors of UI elements
+              //
               $monitor= $(),
               preloader= function(){
                 css(___+dot(preloader_klass), {
@@ -1242,7 +1523,8 @@ jQuery.reel || (function($, window, document, undefined){
                 return indicator['$'+axis]= $(tag(_div_), { 'class': indicator_klass+___+axis })
               },
 
-              // CSS rules & stylesheet
+              // - CSS rules & stylesheet
+              //
               css= function(selector, definition, global){
                 var
                   stage= global ? __ : get(_stage_),
@@ -1256,18 +1538,21 @@ jQuery.reel || (function($, window, document, undefined){
               },
               $style,
 
-              // Inertia rotation control
+              // - Inertia rotation control
+              //
               on_edge= 0,
               last= { x: 0, y: 0 },
               to_bias= function(value){ return bias.push(value) && bias.shift() && value },
               no_bias= function(){ return bias= [0,0] },
               bias= no_bias(),
 
-              // Graph function to be used
+              // - Graph function to be used
+              //
               graph= opt.graph || reel.math[opt.loops ? 'hatch' : 'envelope'],
               normal= reel.normal,
 
-              // Resets the interaction graph's zero point
+              // - Interaction graph's zero point reset
+              //
               recenter_mouse= function(revolution, x, y){
                 var
                   fraction= set(_clicked_on_, get(_fraction_)),
@@ -1277,9 +1562,19 @@ jQuery.reel || (function($, window, document, undefined){
                 return x && set(_clicked_location_, { x: x, y: y }) || undefined
               },
               slidable= true,
+
+              // ~~~
+              //
+              // Global events are bound to the pool (`document`), but to make it work inside an `<iframe>`
+              // we need to bind to the parent document too to maintain the dragging even outside the area
+              // of the `<iframe>`.
+              //
               pools
             try{ pools= $.unique(pool.add(window.top.document)) }
             catch(e){ pools= pool }
+
+            // A private flag `$iframe` is established to indicate Reel being viewed inside `<iframe>`.
+            //
             var
               $iframe= top === self ? $() : (function sense_iframe($ifr){
                 $('iframe', pools.last()).each(function(){
@@ -1292,6 +1587,14 @@ jQuery.reel || (function($, window, document, undefined){
             on.setup();
           });
 
+          // ~~~
+          //
+          // Reel maintains a ticker, which guides all animations. There's only one ticker per document
+          // and all instances bind to it. Ticker's mechanism measures and compares times before and after
+          // the `tick.reel` event trigger to estimate the time spent on executing `tick.reel`'s handlers.
+          // The actual timeout time is then adjusted by the amount to run as close to expected tempo
+          // as possible.
+          //
           ticker= ticker || (function tick(){
             var
               start= +new Date(),
