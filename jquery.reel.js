@@ -16,7 +16,7 @@
  *
  * jQuery Reel
  * ===========
- * The 360 plugin for jQuery
+ * The 360° plugin for jQuery
  *
  * @license Copyright (c) 2009-2012 Petr Vostrel (http://petr.vostrel.cz/)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
@@ -28,20 +28,22 @@
  * Updated: 2012-03-20
  *
  * Requires jQuery 1.5 or higher
- */
-/*
- * Have it served by a cloud CDN:
+ *
+
+ * CDN
+ * ---
  * - http://code.vostrel.cz/jquery.reel-bundle.js (recommended)
  * - http://code.vostrel.cz/jquery.reel.js
  * - http://code.vostrel.cz/jquery.reel-debug.js
  * - or http://code.vostrel.cz/jquery.reel-edge.js if you feel like it ;)
  *
- * Optional nice-to-have plugins:
+ * Optional Plugins
+ * ----------------
  * - jQuery.disableTextSelect [B] (James Dempster, http://www.jdempster.com/category/jquery/disabletextselect/)
  * - jQuery.mouseWheel [B] (Brandon Aaron, http://plugins.jquery.com/project/mousewheel)
  * - or jQuery.event.special.wheel (Three Dub Media, http://blog.threedubmedia.com/2008/08/eventspecialwheel.html)
  *
- * [B] Marked plugins are contained (with permissions) in the "bundle" version
+ * [B] Marked plugins are contained (with permissions) in the "bundle" version from the CDN
  */
 
 jQuery.reel || (function($, window, document, undefined){
