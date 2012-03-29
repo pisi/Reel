@@ -76,25 +76,33 @@ jQuery.reel || (function($, window, document, undefined){
       //     $.reel.def.frame = 5
       //
       def: {
+        // ---
+        // ### Basic Definition ######
+        //
         // Reel is just fine with you not setting any options, however if you don't have
         // 36 frames or beginning at frame 1, you will want to set total number
         // of `frames` and pick a different starting `frame`.
+        //
 
-        // #### `frame` ####
-        // Number (frames), since 1.0
+        // #### `frame` Option ####
+        // `Number` (frames), since 1.0
+        //
         frame:                  1,
 
-        // #### `frames` ####
-        // Number (frames), since 1.0
+        // #### `frames` Option ####
+        // `Number` (frames), since 1.0
+        //
         frames:                36,
 
         // ~~~
         //
         // Another common characteristics of any Reel is whether it `loops` and covers
         // entire 360° or not.
+        //
 
-        // #### `loops` ####
-        // Boolean, since 1.0
+        // #### `loops` Option ####
+        // `Boolean`, since 1.0
+        //
         loops:               true,
 
 
@@ -111,28 +119,36 @@ jQuery.reel || (function($, window, document, undefined){
         // You can even enable `clickfree` operation,
         // which will cause Reel to bind to mouse enter/leave events instead of mouse down/up,
         // thus allowing a click-free dragging.
+        //
 
-        // #### `clickfree` ####
-        // Boolean, since 1.1
+        // #### `clickfree` Option ####
+        // `Boolean`, since 1.1
+        //
         clickfree:          false,
-        // #### `draggable` ####
-        // Boolean, since 1.1
+
+        // #### `draggable` Option ####
+        // `Boolean`, since 1.1
+        //
         draggable:           true,
 
-        // #### `scrollable` ####
-        // Boolean, [NEW] in 1.2
+        // #### `scrollable` Option ####
+        // [NEW] `Boolean`, since 1.2
+        //
         scrollable:          true,
 
-        // #### `steppable` ####
-        // Boolean, [NEW] in 1.2
+        // #### `steppable` Option ####
+        // [NEW] `Boolean`, since 1.2
+        //
         steppable:           true,
 
-        // #### `throwable` ####
-        // Boolean, since 1.1
+        // #### `throwable` Option ####
+        // `Boolean`, since 1.1
+        //
         throwable:           true,
 
-        // #### `wheelable` ####
-        // Boolean, since 1.1
+        // #### `wheelable` Option ####
+        // `Boolean`, since 1.1
+        //
         wheelable:           true,
 
 
@@ -142,9 +158,11 @@ jQuery.reel || (function($, window, document, undefined){
         // Reel presumes counter-clockwise order of the pictures taken. If the neerer facing
         // side doesn't follow your cursor/finger, you did clockwise. Use the `cw` option to
         // correct this.
+        //
 
-        // #### `cw` ####
-        // Boolean, since 1.1
+        // #### `cw` Option ####
+        // `Boolean`, since 1.1
+        //
         cw:                 false,
 
 
@@ -155,9 +173,11 @@ jQuery.reel || (function($, window, document, undefined){
         // dragging distance one must cover to perform one full revolution. By default this value
         // is calculated based on the setup you have - it is either twice the width of the image
         // or half the width of stitched panorama. You may also set your own.
+        //
 
-        // #### `revolution` ####
-        // Number (pixels), since 1.1
+        // #### `revolution` Option ####
+        // `Number` (pixels), since 1.1
+        //
         revolution:     undefined,
 
 
@@ -167,9 +187,11 @@ jQuery.reel || (function($, window, document, undefined){
         // The easiest of all is the stitched panorama mode. For this mode, instead of the sprite,
         // a single seamlessly stitched stretched image is used and the view scrolls the image.
         // This mode is triggered by setting a pixel width of the `stitched` image.
+        //
 
-        // #### `stitched` ####
-        // Number (pixels), since 1.0
+        // #### `stitched` Option ####
+        // `Number` (pixels), since 1.0
+        //
         stitched:               0,
 
 
@@ -198,9 +220,11 @@ jQuery.reel || (function($, window, document, undefined){
         //     025 026 027 028 029 030
         //
         // Frame `016` represents the `B01` so it actually is first frame of the other direction.
+        //
 
-        // #### `directional` ####
-        // Boolean, since 1.1
+        // #### `directional` Option ####
+        // `Boolean`, since 1.1
+        //
         directional:        false,
 
 
@@ -227,13 +251,16 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // This way you stack up any number of __`rows`__ you wish and set the initial `row` to start with.
         // Again, not limited to sprites, sequences also apply.
+        //
 
-        // #### `row` ####
-        // Number (rows), since 1.1
+        // #### `row` Option ####
+        // `Number` (rows), since 1.1
+        //
         row:                    1,
 
-        // #### `rows` ####
-        // Number (rows), since 1.1
+        // #### `rows` Option ####
+        // `Number` (rows), since 1.1
+        //
         rows:                   0,
 
 
@@ -259,16 +286,19 @@ jQuery.reel || (function($, window, document, undefined){
         //     B10 B11 B12 B13 B14 B15
         //
 
-        // #### `orbital` ####
-        // Number (frames), since 1.1
+        // #### `orbital` Option ####
+        // `Number` (frames), since 1.1
+        //
         orbital:                0,
 
-        // #### `vertical` ####
-        // Boolean, since 1.1
+        // #### `vertical` Option ####
+        // `Boolean`, since 1.1
+        //
         vertical:           false,
 
-        // #### `inversed` ####
-        // Boolean, since 1.1
+        // #### `inversed` Option ####
+        // `Boolean`, since 1.1
+        //
         inversed:           false,
 
 
@@ -313,25 +343,31 @@ jQuery.reel || (function($, window, document, undefined){
         // URL for the sprite image file is being build from the name of the original `<img>` `src` image
         // by adding a `suffix` to it. By default this results in `"object-reel.jpg"` for `"object.jpg"`.
         // You can also take full control over the sprite `image` URL that will be used.
+        //
 
-        // #### `footage` ####
-        // Number (frames), since 1.0
+        // #### `footage` Option ####
+        // `Number` (frames), since 1.0
+        //
         footage:                6,
 
-        // #### `spacing` ####
-        // Number (pixels), since 1.0
+        // #### `spacing` Option ####
+        // `Number` (pixels), since 1.0
+        //
         spacing:                0,
 
-        // #### `horizontal` ####
-        // Boolean, since 1.0
+        // #### `horizontal` Option ####
+        // `Boolean`, since 1.0
+        //
         horizontal:          true,
 
-        // #### `suffix` ####
-        // String, since 1.0
+        // #### `suffix` Option ####
+        // `String`, since 1.0
+        //
         suffix:           '-reel',
 
-        // #### `image` ####
-        // String, since 1.1
+        // #### `image` Option ####
+        // `String`, since 1.1
+        //
         image:          undefined,
 
 
@@ -348,13 +384,16 @@ jQuery.reel || (function($, window, document, undefined){
         // be indentified, or you prefer direct control, `images` can also accept array of plain URL strings.
         //
         // All images are retrieved from a specified `path`.
+        //
 
-        // #### `images` ####
-        // String or Array, since 1.1, [IMPROVED] in 1.2
+        // #### `images` Option ####
+        // [IMPROVED] `String` or `Array`, since 1.1
+        //
         images:                '',
 
-        // #### `path` ####
-        // String (URL path), since 1.1
+        // #### `path` Option ####
+        // `String` (URL path), since 1.1
+        //
         path:                  '',
 
 
@@ -370,9 +409,11 @@ jQuery.reel || (function($, window, document, undefined){
         //   increasing fidelity of the image rather than having one large shrinking gap. This is the default
         //   behavior.
         // - `"linear"` - linear order of preloading
+        //
 
-        // #### `preload` ####
-        // String, [NEW] in 1.2
+        // #### `preload` Option ####
+        // [NEW] `String`, since 1.2
+        //
         preload:       'fidelity',
 
 
@@ -396,21 +437,26 @@ jQuery.reel || (function($, window, document, undefined){
         // When a scene doesn't loop (see `loops`) and the animation reaches one end, it stays there
         // for a while and then reversing the direction of the animation it bounces back towards the other
         // end. The time spent on the edge can be customized with `rebound`.
+        //
 
-        // #### `speed` ####
-        // Number (Hz), since 1.1
+        // #### `speed` Option ####
+        // `Number` (Hz), since 1.1
+        //
         speed:                  0,
 
-        // #### `delay` ####
-        // Number (seconds), since 1.1
+        // #### `delay` Option ####
+        // `Number` (seconds), since 1.1
+        //
         delay:                  0,
 
-        // #### `timeout` ####
-        // Number (seconds), since 1.1
+        // #### `timeout` Option ####
+        // `Number` (seconds), since 1.1
+        //
         timeout:                2,
 
-        // #### `rebound` ####
-        // Number (seconds), since 1.1
+        // #### `rebound` Option ####
+        // `Number` (seconds), since 1.1
+        //
         rebound:              0.5,
 
 
@@ -426,13 +472,16 @@ jQuery.reel || (function($, window, document, undefined){
         //     t
         //     |--------›|-------›|-----------›
         //       Opening   Delay    Animation
+        //
 
-        // #### `entry` ####
-        // Number (Hz), since 1.1
+        // #### `entry` Option ####
+        // `Number` (Hz), since 1.1
+        //
         entry:          undefined,
 
-        // #### `opening` ####
-        // Number (seconds), since 1.1
+        // #### `opening` Option ####
+        // `Number` (seconds), since 1.1
+        //
         opening:                0,
 
 
@@ -445,13 +494,16 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // One can utilize this momentum for a different kind of an opening animation. By setting initial
         // `velocity`, the instance gets artificial momentum and spins to slow down to stop.
+        //
 
-        // #### `brake` ####
-        // Number, since 1.1, where it also has a different default `0.5`
+        // #### `brake` Option ####
+        // `Number`, since 1.1, where it also has a different default `0.5`
+        //
         brake:               0.23,
 
-        // #### `velocity` ####
-        // Number, [NEW] in 1.2
+        // #### `velocity` Option ####
+        // [NEW] `Number`, since 1.2
+        //
         velocity:               0,
 
 
@@ -466,9 +518,11 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // Please note, that ticker is synchronized with a _leader_, the oldest living instance on page,
         // and adjusts to his tempo.
+        //
 
-        // #### `tempo` ####
-        // Number (Hz, ticks per second), since 1.1
+        // #### `tempo` Option ####
+        // `Number` (Hz, ticks per second), since 1.1
+        //
         tempo:                 36,
 
         // ~~~
@@ -494,25 +548,26 @@ jQuery.reel || (function($, window, document, undefined){
         // of Reel's position within the range. You can also set custom `hint` for the tooltip, which appears
         // when you mouse over the image area. Last but not least you can also add custom class name `klass`
         // to the instance.
+        //
 
-        // #### `cursor` ####
-        // String, [NEW] in 1.2
+        // #### `cursor` Option ####
+        // [NEW] `String`, since 1.2
         cursor:         undefined,
 
-        // #### `hint` ####
-        // String, since 1.0
+        // #### `hint` Option ####
+        // `String`, since 1.0
         hint:                  '',
 
-        // #### `indicator` ####
-        // Number (pixels), since 1.0
+        // #### `indicator` Option ####
+        // `Number` (pixels), since 1.0
         indicator:              0,
 
-        // #### `klass` ####
-        // String, since 1.0
+        // #### `klass` Option ####
+        // `String`, since 1.0
         klass:                 '',
 
-        // #### `preloader` ####
-        // Number (pixels), since 1.1
+        // #### `preloader` Option ####
+        // `Number` (pixels), since 1.1
         preloader:              2,
 
         // ~~~
@@ -520,13 +575,14 @@ jQuery.reel || (function($, window, document, undefined){
         // You can use custom attributes (`attr`) on the node - it accepts the same name-value pairs object
         // jQuery `.attr()` does. In case you want to delegate full interaction control over the instance
         // to some other DOM element(s) on page, you can with `area`.
+        //
 
-        // #### `area` ####
-        // jQuery, since 1.
+        // #### `area` Option ####
+        // `jQuery`, since 1.1
         area:           undefined,
 
-        // #### `attr` ####
-        // Object, [NEW] in 1.2
+        // #### `attr` Option ####
+        // [NEW] `Object`, since 1.2
         attr:                  {},
 
 
@@ -537,9 +593,10 @@ jQuery.reel || (function($, window, document, undefined){
         // by defining an `annotations` object. Learn more about [Annotations][1] in a dedicated article.
         //
         // [1]:https://github.com/pisi/Reel/wiki/Annotations
+        //
 
-        // #### `annotations` ####
-        // Object, [NEW] in 1.2
+        // #### `annotations` Option ####
+        // [NEW] `Object`, since 1.2
         annotations:    undefined,
 
 
@@ -555,21 +612,22 @@ jQuery.reel || (function($, window, document, undefined){
         //     function( x, start, revolution, lo, hi, cwness, y ){
         //       return fraction  // 0.0 - 1.0
         //     }
+        //
 
-        // #### `graph` ####
-        // Function, since 1.1
+        // #### `graph` Option ####
+        // `Function`, since 1.1
         graph:          undefined,
 
 
         // ---
-        // ### Developer Tools ######
+        // ### Monitor ######
         //
-        // In fact, there's just one tool so far and that is the data `monitor`. Specify a string data key
-        // and you will see its real-time value dumped in the upper-left corner of the viewport. Its visual
-        // can be customized by CSS using `.jquery-reel-monitor` selector.
+        // Specify a string data key and you will see its real-time value dumped in the upper-left corner
+        // of the viewport. Its visual can be customized by CSS using `.jquery-reel-monitor` selector.
+        //
 
-        // #### `monitor` ####
-        // String (data key), since 1.1
+        // #### `monitor` Option ####
+        // `String` (data key), since 1.1
         monitor:        undefined,
 
 
@@ -579,13 +637,14 @@ jQuery.reel || (function($, window, document, undefined){
         // Two options are currently deprecated in version 1.2. Learn more about [Deprecations][1]
         //
         // [1]:https://github.com/pisi/Reel/wiki/Deprecations
+        //
 
-        // #### `step` ####
-        // Number, since 1.1
+        // #### `step` Option ####
+        // `Number`, since 1.1
         step:           undefined, // use `frame` instead
 
-        // #### `steps` ####
-        // Number, since 1.1
+        // #### `steps` Option ####
+        // `Number`, since 1.1
         steps:          undefined // use `frames` instead
 
       },
