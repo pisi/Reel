@@ -1949,10 +1949,6 @@ jQuery.reel || (function($, window, document, undefined){
           counter+= increment;
         }
         return images;
-        function pad(string, len, fill){
-          while (string.length < len) string= fill + string;
-          return string;
-        }
       },
 
       instances: $(),
@@ -2049,5 +2045,6 @@ jQuery.reel || (function($, window, document, undefined){
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
   function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + 'px' }
   function hash(value){ return '#' + value }
+  function pad(string, len, fill){ while (string.length < len) string= fill + string; return string }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);
