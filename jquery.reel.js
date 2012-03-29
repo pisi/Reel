@@ -584,20 +584,8 @@ jQuery.reel || (function($, window, document, undefined){
             data= t.data(),
             name= args[0],
             value= args[1]
-          if (args.length == 2){
-            if (value !== undefined){
-              try{ value= reel.normal[name](value, data) }catch(e){ }
-              if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
-            }
-            return t.trigger('store', [name, value]);
 
-          }else if (typeof name == 'string'){
-            var
-              value= data[name]
-            t.trigger('recall', [name, value]);
-            return value;
-
-          }else{
+          if (typeof name == 'object'){
           var
             opt= $.extend({}, reel.def, name),
             applicable= (function(tags){
@@ -1609,6 +1597,94 @@ jQuery.reel || (function($, window, document, undefined){
           })();
 
           return $(instances);
+          }else{
+
+            // ----
+            // Data
+            // ----
+            //
+            // Reel stores all its inner state values with the standard DOM [data interface][1] interface
+            // while adding an additional change-detecting event layer, which makes Reel entirely data-driven.
+            //
+            // [1]:http://api.jquery.com/data
+            //
+            // _For example let's find out on what frame a Reel instance currently is:_
+            //
+            //     .reel('frame') // Returns the frame number
+            //
+            // Think of `.reel()` as a synonym for `.data()`. Note, that you can therefore easily inspect
+            // the entire datastore with `.data()` (without arguments). Use it for debugging only.
+            // For real-time data watch use [`monitor`](#Monitor) option instead of manually hooking into
+            // the data.
+            //
+
+            // #### `.reel( name )` ######
+            // can return anything, since 1.2
+            //
+            if (typeof name == 'string'){
+              if (args.length == 1){
+                var
+                  value= data[name]
+                t.trigger('recall', [name, value]);
+                return value;
+              }
+
+              // ---
+              // ### Write Access ###
+              //
+              // You can store any value the very same way by passing the value as the second function
+              // argument. _For example let's say you want to jump to frame 12:_
+              //
+              //     .reel('frame', 12)
+              //
+              // Only a handful of data keys is suitable for external manipulation. These include `area`,
+              // `backwards`, `brake`, __`fraction`__, __`frame`__, `playing`, `reeling`, __`row`__, `speed`,
+              // `stopped`, `velocity` and `vertical`. Use the rest of the keys for reading only, you can
+              // mess up easily changing them.
+              //
+
+              // #### `.reel( name, value )` ######
+              // returns `jQuery`, since 1.2
+              //
+              else{
+                if (value !== undefined){
+                  try{ value= reel.normal[name](value, data) }catch(e){ }
+
+                  // ---
+                  // ### Changes ######
+                  //
+                  // Any value that does not equal (`===`) the old value is considered _new value_ and
+                  // in such a case Reel will trigger a _change event_ to announce the change. The event
+                  // type takes form of _`key`_`Change`, where _`key`_ will be the data key/name you've
+                  // just assigned.
+                  // _For example, setting `"frame"` to `12` in the above example will trigger
+                  // `"frameChange"`._
+                  //
+                  // Some of these _change events_ (like `frame` or `fraction`) have a
+                  // default handler attached.
+                  //
+                  // You can easily bind to any of the data key change with standard event
+                  // binding methods. _For example, let's say you want to react on instance
+                  // being manipulated by the user - whether it is __reeling__:_
+                  //
+                  //     .bind('reelingChange', function(evnt, nothing, reeling){
+                  //       if (reeling) console.log('Rock & reel!')
+                  //       else console.log('Not reeling...')
+                  //     })
+                  //
+
+                  // The handler function will be executed every time the value changes and
+                  // it will be supplied with three arguments. First one is the event object
+                  // as usual, second is `undefined` and the third will be the actual value.
+                  // In this case it was a boolean type value.
+                  // If the second argument is not `undefined` it is the backward compatible
+                  // "before" event triggered from outside Reel.
+                  //
+                  if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
+                }
+                return t.trigger('store', [name, value]);
+              }
+            }
           }
         },
 
