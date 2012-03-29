@@ -576,8 +576,31 @@ jQuery.reel || (function($, window, document, undefined){
 
       },
 
+      // -------
+      // Methods
+      // -------
+      //
+      // Reel's methods extend jQuery core functions with members of its `$.reel.fn` object. Despite Reel
+      // being a typical one-method plug-in with its `.reel()` function, for convenience it also offers
+      // its dipolar twin `.unreel()`.
+      //
+
+      // ### `$.reel.fn` ######
+      // returns `Object`, since 1.1
       fn: {
-        reel: function(/* options | name, [value] */){
+        // ------------
+        // Construction
+        // ------------
+        //
+        // `.reel()` method is the core of Reel and similar to some jQuery functions, this one is three-fold.
+        // It either performs the following builder's duty or the [data duty](#Data).
+        //
+
+        // ### `.reel()` Method ######
+        // returns `jQuery`, since 1.0
+        //
+        reel: function(){
+          // The decision on what to actually do is made upon given arguments.
           var
             args= arguments,
             t= $(this),
@@ -587,12 +610,17 @@ jQuery.reel || (function($, window, document, undefined){
 
           if (typeof name == 'object'){
           var
+            // Establish local `opt` object made by extending the defaults.
             opt= $.extend({}, reel.def, name),
+            // Limit the given jQuery collection to `<img>` tags.
             applicable= (function(tags){
-              // Only IMG tags with non-empty SRC and non-zero WIDTH and HEIGHT will pass
               var
                 pass= []
               tags.filter(_img_).each(function(ix){
+                // Verify they have a workable set of properties. They need to have at least:
+                //
+                // - non-empty `src` attribute defined
+                // - non-zero `width` and `height` attributes defined
                 var
                   $this= $(this),
                   src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr('src'),
@@ -600,6 +628,7 @@ jQuery.reel || (function($, window, document, undefined){
                   height= number(opt.attr.height || $this.css(_height_))
                 if (src && src != __ && width && height) pass.push($this);
               });
+              // If a Reel instance already, tear it down first.
               tags.filter(dot(klass)).each(function(ix){
                 pass.push($(this).unreel());
               });
@@ -619,7 +648,6 @@ jQuery.reel || (function($, window, document, undefined){
               set= function(name, value){ return t.reel(name, value) && value },
               get= function(name){ return t.reel(name) },
 
-              // Events & handlers
               on= {
 
                 // --------------
@@ -1688,6 +1716,16 @@ jQuery.reel || (function($, window, document, undefined){
           }
         },
 
+        // -----------
+        // Destruction
+        // -----------
+        //
+        // The evil-twin of `.reel()`. Tears down and wipes off entire instance.
+        //
+
+        // ### `.unreel()` Method ######
+        // returns `jQuery`, since 1.2
+        //
         unreel: function(){
           return this.trigger('teardown');
         }
