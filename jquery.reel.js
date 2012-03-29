@@ -1115,7 +1115,7 @@ jQuery.reel || (function($, window, document, undefined){
                     unidle();
                     no_bias();
                     $(_html_, pools).removeClass(panning_klass);
-                    pools.unbind(pns);
+                    (opt.clickfree ? get(_area_) : pools).unbind(pns);
                   },
 
                   // ### `pan` Event ######
