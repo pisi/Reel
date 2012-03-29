@@ -60,7 +60,7 @@ jQuery.reel || (function($, window, document, undefined){
 
       // ### `$.reel.version`
       //
-      // `String`, current Reel code version
+      // `String` (major.minor.patch), since 1.1
       version: '1.1.4-devel',
 
       // Options
@@ -76,7 +76,7 @@ jQuery.reel || (function($, window, document, undefined){
       //       looping: false
       //     })
       //
-
+      //
       // All options are optional and if omitted, default value is used instead.
       // Defaults are being housed as members of `$.reel.def` hash.
       // If you customize any default value therein, all subsequent `.reel()` calls
@@ -85,6 +85,10 @@ jQuery.reel || (function($, window, document, undefined){
       // ___Example:__ Change default initial frame to 5th:_
       //
       //     $.reel.def.frame = 5
+      //
+
+      // ### `$.reel.def` ######
+      // `Object`, since 1.1
       //
       def: {
         // ---
@@ -1854,27 +1858,72 @@ jQuery.reel || (function($, window, document, undefined){
       //
       cdn: 'http://code.vostrel.cz/',
 
-      // Mathematics core
+      // -----------
+      // Math Behind
+      // -----------
+      //
+      // Surprisingly there's very little math behind Reel, just two equations (graph functions). These two
+      // functions receive the same set of options.
+
+      // ### `$.reel.math` ######
+      // `Object`, since 1.1
+      //
       math: {
+
+        //     1 |  ********
+        //       |          **
+        //       |            **
+        //       |              **
+        //       |                **
+        //       |                  ********
+        //     0  ----------------------------›
+        //
         envelope: function(x, start, revolution, lo, hi, cwness, y){
           return start + min_max(lo, hi, - x * cwness) / revolution
         },
+
+        //     1 |        **          **
+        //       |          **          **
+        //       |            **          **
+        //       |  **          **
+        //       |    **          **
+        //       |      **          **
+        //     0  ----------------------------›
+        //
         hatch: function(x, start, revolution, lo, hi, cwness, y){
           var
             x= (x < lo ? hi : 0) + x % hi, // Looping
             fraction= start + (- x * cwness) / revolution
           return fraction - floor(fraction)
         },
+
+        // And an equation for interpolating `fraction` (and `tier`) value into `frame` and `row`.
+        //
         interpolate: function(fraction, lo, hi){
           return lo + fraction * (hi - lo)
         }
       },
 
-      // Preload sequences
+      // ----------------
+      // Preloading Modes
+      // ----------------
+      //
+      // Reel doesn't load frames in a linear manner from first to last (alhough it can if configured
+      // that way with the [`preload`](#preload-Option) option). Reel will take the linear configured
+      // sequence and hand it over to one of `$.reel.preload` functions, along with reference to options
+      // and the RO data intearface, and it expects the function to reorder the incoming Array and return
+      // it back.
+
+      // ### `$.reel.preload` ######
+      // `Object`, since 1.2
+      //
       preload: {
-        linear: function(sequence, opt, get){
-          return sequence
-        },
+
+        // The best (and default) option is the `fidelity` processor, which is designed for a faster and
+        // better perceived loading.
+        //
+        // ![Example](https://camo.githubapp.com/74b73060a50f3cbaf522ec31530d34e3fa5cbcb9/687474703a2f2f6a71756572792e766f737472656c2e637a2f7265656c2f7363617474657265642e6c6f6164696e672e676966)
+        //
         fidelity: function(sequence, opt, get){
           var
             rows= opt.orbital ? 2 : opt.rows || 1,
@@ -1909,10 +1958,32 @@ jQuery.reel || (function($, window, document, undefined){
               return present[offset + frame] || (present[offset + frame]= !!order.push(frame))
             }
           }
+        },
+
+        // ~~~
+        //
+        // You can opt for a `linear` loading order too, but that has a drawback of leaving large gap
+        // of unloaded frames.
+        //
+        linear: function(sequence, opt, get){
+          return sequence
         }
       },
 
-      // Normalizations
+      // ------------------------
+      // Data Value Normalization
+      // ------------------------
+      //
+      // On all data values being stored with `.reel()` an attempt is made to normalize the value. Like
+      // for example normalization of frame `55` when there's just `45` frames total. These are the built-in
+      // normalizations. Normalization function has the same name as the data key it is assigned to
+      // and is given the raw value in arguments, along with reference to the instances data object,
+      // and it has to return the normalized value.
+      //
+
+      // ### `$.reel.normal` ######
+      // `Object`, since 1.2
+      //
       normal: {
         fraction: function(fraction, data){
           return data[_options_].loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
@@ -1932,6 +2003,17 @@ jQuery.reel || (function($, window, document, undefined){
         }
       },
 
+      // -----------------
+      // Sequence Build-up
+      // -----------------
+      //
+      // When configured with a String value for [`images`](#images-Option) like `image##.jpg`, it first has
+      // to be converted into an actual Array by engaging the counter placeholder.
+      //
+
+      // ### `$.reel.sequence()` ######
+      // `Function`, since 1.2
+      //
       sequence: function(sequence, opt){
         if (sequence.length <= 1) return opt.images;
         var
@@ -1952,13 +2034,40 @@ jQuery.reel || (function($, window, document, undefined){
         return images;
       },
 
+      // --------------
+      // Reel Instances
+      // --------------
+      //
+      // `$.reel.instances` holds an inventory of all running instances in the DOM document.
+
+      // ### `$.reel.instances` ######
+      // `jQuery`, since 1.1
+      //
       instances: $(),
+
+      // For ticker-synchronization-related purposes Reel maintains a reference to the leaders data object
+      // all the time.
+      //
+
+      // ### `$.reel.leader` ######
+      // `Object` (DOM data), since 1.1
+      //
       leader: leader,
+
+      //
+      // `$.reel.cost` holds document-wide costs in miliseconds of running all Reel instances. It is used
+      // to adjust actual timeout of the ticker.
+
+      // ### `$.reel.cost` ######
+      // `Number`, since 1.1
+      //
       cost: 0
     },
 
-    // PRIVATE
-
+    // ------------------------
+    // Private-scoped Variables
+    // ------------------------
+    //
     pool= $(document),
     browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
     ie= $.browser.msie,
@@ -1966,8 +2075,18 @@ jQuery.reel || (function($, window, document, undefined){
     client= navigator.userAgent,
     ticker,
 
-    // HTML classes
+    // ---------------
+    // CSS Class Names
+    // ---------------
+
+    // These are all the class names assigned by Reel to various DOM elements during initialization of the UI
+    // and they all share same base `"reel"`, which in isolation also is the class of the `<img>` node you
+    // converted into Reel.
     klass= 'reel',
+
+    // Rest of the class names only extend this base class forming for example `.reel-overlay`, a class
+    // assigned to the outter instance wrapper (`<img>`'s injected parent).
+    //
     overlay_klass= klass + '-overlay',
     indicator_klass= klass + '-indicator',
     preloader_klass= klass + '-preloader',
@@ -1976,16 +2095,27 @@ jQuery.reel || (function($, window, document, undefined){
     annotation_klass= klass + '-annotation',
     panning_klass= klass + '-panning',
     loading_klass= klass + '-loading',
+
+    // The instance wrapper is flagged with actual frame number using a this class. _For example Reel
+    // on frame 10 will bear a class name `.frame-10`.
+    //
     frame_klass= 'frame-',
 
-    // Shortcuts
+    // --------------------------------
+    // Shortcuts And Minification Cache
+    // --------------------------------
+
+    // Several math functions are referenced inside the private scope to yield smaller filesize
+    // when the code is minified.
+    //
     math= Math,
     round= math.round, floor= math.floor, ceil= math.ceil,
     min= math.min, max= math.max, abs= math.abs,
     number= parseInt,
     interpolate= reel.math.interpolate,
 
-    // Storage keys
+    // For the very same reason all storage key Strings are cached into local vars.
+    //
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
@@ -1996,7 +2126,8 @@ jQuery.reel || (function($, window, document, undefined){
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
     _velocity_= 'velocity', _vertical_= 'vertical',
 
-    // Events
+    // And the same goes for browser events too.
+    //
     ns= dot(klass),
     pns= '.pan' + ns,
     _touch_= 'touch', _mouse_= 'mouse',
@@ -2005,31 +2136,50 @@ jQuery.reel || (function($, window, document, undefined){
     _mousewheel_= _mouse_+'wheel'+ns, _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns,
     _touchend_= _touch_+'end'+pns, _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
 
-    // Various string primitives
+    // And some other frequently used Strings.
+    //
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _div_= 'div',
     _hand_= 'hand', _head_= 'head', _height_= 'height', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
     _preload_= 'preload', _string_= 'string',
     _width_= 'width',
 
-    // Image resources
+    // ---------------
+    // Image Resources
+    // ---------------
+
+    // Alhough we do what we can to hide the fact, Reel actually needs a few image resources to support
+    // some of its actions. First, we may need a transparent image for the original `<img>` to uncover
+    // the sprite applied to its background. This one is embedded in the code as it is very small.
+    //
     transparent= knows_data_urls ? embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') : cdn('blank.gif'),
+
+    // Proper cross-browser cursors however need to come in an odd format, which essentially is not
+    // compressed at all and this means bigger filesize. While it is no more than ~15k, it is unfit
+    // for embedding directly here, so a [`CDN`](#Content-Delivery-Network) is employed to retrieve
+    // the images from in an effective gzipped and cachable manner.
+    //
     reel_cursor= url(cdn(_jquery_reel_+'.cur'))+____+_move_,
     drag_cursor= url(cdn(_jquery_reel_+'-drag.cur'))+____+_move_,
     drag_cursor_down= url(cdn(_jquery_reel_+'-drag-down.cur'))+____+_move_,
 
+    // ~~~
+    //
+    // We then only identify the user's browser's capabilities and route around a MSIE's left button
+    // identification quirk (IE 8- reports left as right).
     touchy= reel.touchy= (reel.re.touchy_agent).test(client),
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
     DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
 
-  // Double for missing plugin functions
+  // If the optional disableTextSelect plugin is not used, this will fill in the holes, where Reel expects
+  // ground.
   double_for('disableTextSelect enableTextSelect'.split(/ /));
 
   // Expose plugin functions as jQuery methods
   $.extend($.fn, reel.fn);
 
-  // Helpers
+  // Very useful helpers
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
   function leader(key){ return reel.instances.length ? reel.instances.first().data(key) : null }

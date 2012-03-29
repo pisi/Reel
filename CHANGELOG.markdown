@@ -4,6 +4,7 @@ Changelog
 Version 1.2 Beta
 ----------------
 
+* The long-missing comprehensive documentation added to the `docs/` directory.
 * Non-`wheelable` Reels now allow scrolling of the page when wheeling
   above the Reel instance.
 * New option `attr` allows to set custom attributes of the IMG tag
