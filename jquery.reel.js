@@ -1012,7 +1012,7 @@ jQuery.reel || (function($, window, document, undefined){
                       opening= set(_opening_, false),
                       evnt= _tick_+dot(_opening_)
                     pool.unbind(evnt, on.pool[evnt]);
-                    if (opt.delay > 0) delay= setTimeout(function play(){ t.trigger('play') }, opt.delay * 1000)
+                    if (opt.delay > 0) delay= setTimeout(function(){ t.trigger('play') }, opt.delay * 1000)
                     else t.trigger('play');
                   },
 

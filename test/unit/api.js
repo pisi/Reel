@@ -52,7 +52,7 @@
     equal( $.reel.def.brake,                   0.23, 'brake force of the inertial rotation' );
     equal( $.reel.def.clickfree,              false, 'binds to mouse leave/enter events instead of down/up' );
     equal( $.reel.def.cw,                     false, 'true for clockwise organization of sprite' );
-    equal( $.reel.def.delay,                     -1, 'delay before autoplay in seconds (no autoplay by default)' );
+    equal( $.reel.def.delay,                      0, 'delay before autoplay in seconds (no autoplay by default)' );
     equal( $.reel.def.directional,            false, 'two sets of frames (for forward and backward motion) are used when true' );
     equal( $.reel.def.draggable,               true, 'mouse or finger drag interaction (allowed by default)' );
     equal( $.reel.def.entry,              undefined, 'speed of the opening animation (Hz, defaults to value of `speed`)' );
