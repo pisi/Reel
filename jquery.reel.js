@@ -1114,7 +1114,6 @@ jQuery.reel || (function($, window, document, undefined){
                       brakes= braking= velocity ? 1 : 0
                     unidle();
                     no_bias();
-                    get(_stopped_) || t.trigger('play');
                     $(_html_, pools).removeClass(panning_klass);
                     pools.unbind(pns);
                   },
