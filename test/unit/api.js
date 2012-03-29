@@ -27,7 +27,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 7);
 
-    equal( count, 49, 'Total number of options');
+    equal( count, 48, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -58,7 +58,7 @@
     equal( $.reel.def.entry,              undefined, 'speed of the opening animation (Hz, defaults to value of `speed`)' );
     equal( $.reel.def.graph,              undefined, 'custom graph function' );
     equal( $.reel.def.image,              undefined, 'image sprite to be used' );
-    ok( typeof $.reel.def.images === 'object',       'sequence array of individual images to be used instead of sprite' );
+    equal( $.reel.def.images,                    '', 'sequence of individual images to be used instead of sprite' );
     ok( $.reel.def.images.length === 0,              'the sequence is empty by default' );
     equal( $.reel.def.inversed,               false, 'flags inversed organization of frames in orbital object movie' );
     equal( $.reel.def.laziness,                   6, 'on "lazy" devices tempo is divided by this divisor for better performace' );
@@ -86,7 +86,6 @@
     equal( $.reel.def.cursor,             undefined, 'mouse cursor overriding the default one' );
     equal( $.reel.def.preload,           'fidelity', 'preloading order - either "linear" or "fidelity" (default)' );
     equal( $.reel.def.scrollable,              true, 'allow page scroll (allowed by default; applies only to touch devices)' );
-    equal( $.reel.def.sequence,                  '', 'URL of sequence images containing the hash placeholder' );
     equal( $.reel.def.steppable,               true, 'allows to step the view (horizontally) by clicking on image' );
     equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
   });

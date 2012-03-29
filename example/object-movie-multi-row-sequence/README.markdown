@@ -19,7 +19,7 @@ Options Employed In This Example
 - [frames](http://jquery.vostrel.cz/reel#frames)
 - [row](http://jquery.vostrel.cz/reel#row)
 - [rows](http://jquery.vostrel.cz/reel#rows)
-- [sequence](http://jquery.vostrel.cz/reel#sequence)
+- [images](http://jquery.vostrel.cz/reel#images)
 - [speed](http://jquery.vostrel.cz/reel#speed)
 
 See the complete source of [index.html](index.html) for full

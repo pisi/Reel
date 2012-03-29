@@ -304,7 +304,7 @@
       $reel= $('#image').reel({
         frames: frames,
         preload: 'linear', // Using linear for simplicity of testing the last frame
-        sequence: '###.jpg'
+        images: '###.jpg'
       })
 
     $(document).bind('loaded.test', function(){

@@ -31,8 +31,7 @@ Version 1.2 Beta
 * Control event `play` now accepts optional `speed` parameter.
 * Mouse cursor is now customizable with the new `cursor` option. The new
   failsafe cursor is now `"move"`.
-* New `sequence` option for easy definition of sequence frames by one
-  path with a counter placeholder.
+* `images` option now supports easy definition of sequence frames by one path string with a counter placeholder.
 * Default height of the preloader progress bar reduced to 2 pixels.
 * Completely reworked, centralized and enhanced naked examples with descriptions.
 * The minimal required version of jQuery has been increased to 1.5.

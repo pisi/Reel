@@ -20,9 +20,9 @@ Options Employed In This Example
 - [annotations](http://jquery.vostrel.cz/reel#annotations)
 - [cw](http://jquery.vostrel.cz/reel#cw)
 - [footage](http://jquery.vostrel.cz/reel#footage)
+- [images](http://jquery.vostrel.cz/reel#images)
 - [inversed](http://jquery.vostrel.cz/reel#inversed)
 - [orbital](http://jquery.vostrel.cz/reel#orbital)
-- [sequence](http://jquery.vostrel.cz/reel#sequence)
 - [speed](http://jquery.vostrel.cz/reel#speed)
 
 See the complete source of [index.html](index.html) for full

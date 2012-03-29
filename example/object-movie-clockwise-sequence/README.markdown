@@ -14,7 +14,7 @@ Options Employed In This Example
 - [brake](http://jquery.vostrel.cz/reel#brake)
 - [cw](http://jquery.vostrel.cz/reel#cw)
 - [frame](http://jquery.vostrel.cz/reel#frame)
-- [sequence](http://jquery.vostrel.cz/reel#sequence)
+- [images](http://jquery.vostrel.cz/reel#images)
 - [speed](http://jquery.vostrel.cz/reel#speed)
 - [velocity](http://jquery.vostrel.cz/reel#velocity)
 
