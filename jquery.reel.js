@@ -24,12 +24,13 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.1.4-devel
+ * Version: 1.2rc
  * Updated: 2012-03-29
  *
  * Requires jQuery 1.5 or higher
- *
+ */
 
+/*
  * CDN
  * ---
  * - http://code.vostrel.cz/jquery.reel-bundle.js (recommended)
@@ -61,7 +62,7 @@ jQuery.reel || (function($, window, document, undefined){
       // ### `$.reel.version`
       //
       // `String` (major.minor.patch), since 1.1
-      version: '1.1.4-devel',
+      version: '1.2rc',
 
       // Options
       // -------

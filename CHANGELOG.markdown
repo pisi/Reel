@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Version 1.1.4 Development
--------------------------
+Version 1.2 RC
+--------------
 
 * The long-missing comprehensive documentation added to the `docs/` directory.
 * Non-`wheelable` Reels now allow scrolling of the page when wheeling

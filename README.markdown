@@ -1,6 +1,6 @@
 
-jQuery Reel 1.1.4 Development Preview
-=====================================
+jQuery Reel 1.2 RC
+==================
 
 **Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `img` HTML tag used on 100+ websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
 
@@ -46,16 +46,16 @@ License
 
 <a href='http://www.pledgie.com/campaigns/9596'><img alt='Click here to lend your support to: Reel and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/9596.png?skin_name=chrome' border='0' /></a>
 
-Download version 1.2 Beta
--------------------------
-* **[Open source][source] (~ 52,6 kB)**
-* or [minified version][min] (~ 16,2 kB)
+Download version 1.2 RC
+-----------------------
+* **[Open source][source] (~ 98,7 kB, half of it documentation)**
+* or [minified version][min] (~ 16,3 kB)
 
-Use [Reel's cloud CDN][cdn] (1.2-beta)
+Use [Reel's cloud CDN][cdn] (1.2rc)
 -----------------------------------
 * **[Bundled with plugins & minified][cdn-bundle] (~ 8,3 kB; gzipped)**
 * or [just minified][cdn-min] (~ 7,5 kB; gzipped)
-* or [open source for development][cdn-devel] (~ 13,7 kB; gzipped)
+* or [open source for development][cdn-devel] (~ 26,7 kB; gzipped)
 
 [CHANGELOG][changelog]
 
