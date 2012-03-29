@@ -471,6 +471,20 @@ jQuery.reel || (function($, window, document, undefined){
         // Number (Hz, ticks per second), since 1.1
         tempo:                 36,
 
+        // ~~~
+        //
+        // Since many mobile devices are sometimes considerably underpowered in comparison with desktops,
+        // they often can keep up with the 36 Hz rhythm. In Reel these are called __lazy devices__
+        // and everything mobile qualifies as lazy for the sake of the battery and interaction fluency.
+        // The ticker is under-clocked for them by a `laziness` factor, which is used to divide the `tempo`.
+        // Default `laziness` of `6` will effectively use 6 Hz instead (6 = 36 / 6) on lazy devices.
+        //
+
+        // #### `laziness` Option ####
+        // `Number`, since 1.1
+        //
+        laziness:               6,
+
 
         // ---
         // ### Customization ######
