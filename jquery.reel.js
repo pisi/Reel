@@ -687,7 +687,7 @@ jQuery.reel || (function($, window, document, undefined){
             args= arguments,
             t= $(this),
             data= t.data(),
-            name= args[0],
+            name= args[0] || {},
             value= args[1]
 
           if (typeof name == 'object'){
