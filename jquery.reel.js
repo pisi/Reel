@@ -46,11 +46,19 @@
 
 jQuery.reel || (function($, window, document, undefined){
 
+  // One vital requirement is the correct jQuery. Reel requires at least version 1.5
+  // and a make sure check is made at the very beginning.
   if (+$().jquery.replace(dot(), '').substr(0, 2) < 15)
     throw 'VersionError: far too old jQuery for running Reel'
 
+  // `$.reel` (or `jQuery.reel`) namespace is provided for storage of all Reel belongings.
+  // It is locally referenced as just `reel` for speedier access.
   var
     reel= $.reel= {
+
+      // ### `$.reel.version`
+      //
+      // `String`, current Reel code version
       version: '1.1.4-devel',
 
       // Options
@@ -65,6 +73,7 @@ jQuery.reel || (function($, window, document, undefined){
       //       frames: 12,
       //       looping: false
       //     })
+      //
 
       // All options are optional and if omitted, default value is used instead.
       // Defaults are being housed as members of `$.reel.def` hash.
@@ -1804,14 +1813,44 @@ jQuery.reel || (function($, window, document, undefined){
         }
       },
 
+      // -------------------
+      // Regular Expressions
+      // -------------------
+      //
+      // Few regular expressions is used here and there mostly for options validation and verification
+      // levels of user agent's capabilities.
+      //
+
+      // ### `$.reel.re` ######
+      // `RegExp`, since 1.1
+      //
       re: {
+        /* Valid image file format */
         image:         /^(.*)\.(jpg|jpeg|png|gif)\??.*$/,
+        /* Multi touch devices */
         touchy_agent:  /iphone|ipod|ipad|android|fennec|rim tablet/i,
+        /* Lazy (low-CPU mobile devices) */
         lazy_agent:    /\(iphone|ipod|android|fennec|blackberry/i,
+        /* Format of frame class flag on the instance */
         frame_klass:   /frame-\d+/,
+        /* [Sequence](#Sequence) string format */
         sequence:      /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/
       },
 
+      // ------------------------
+      // Content Delivery Network
+      // ------------------------
+      //
+      // [CDN][1] is used for distributing mouse cursors to all instances running world-wide. It runs
+      // on Google cloud infrastructure. If you want to ease up on the servers, please consider setting up
+      // your own location with the cursors.
+      //
+      // [1]:https://github.com/pisi/Reel/wiki/CDN
+      //
+
+      // ### `$.reel.cdn` ######
+      // `String` (URL path), since 1.1
+      //
       cdn: 'http://code.vostrel.cz/',
 
       // Mathematics core
