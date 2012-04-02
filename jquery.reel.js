@@ -946,7 +946,7 @@ jQuery.reel || (function($, window, document, undefined){
                     }
                     set(_cached_, uris);
                     function load(uri, $img){ setTimeout(function(){
-                      $img.parent().length && $img.attr({ src: uri });
+                      $img.parent().length && $img.attr({ src: reen(uri) });
                     }, (to_load - preload.length) * 2) }
                   },
 
@@ -1324,7 +1324,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (!is_sprite){
                       var
                         frameshot= images[frame - 1]
-                      ready && t.attr({ src: opt.path + frameshot })
+                      ready && t.attr({ src: reen(opt.path + frameshot) })
                     }else{
                       if (!opt.stitched) var
                         minor= (frame % footage) - 1,
@@ -2188,7 +2188,7 @@ jQuery.reel || (function($, window, document, undefined){
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + (string || '') }
   function cdn(path){ return reel.cdn + path }
-  function url(location){ return 'url(' + location + ')' }
+  function url(location){ return 'url(' + reen(location) + ')' }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
@@ -2198,5 +2198,6 @@ jQuery.reel || (function($, window, document, undefined){
   function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + 'px' }
   function hash(value){ return '#' + value }
   function pad(string, len, fill){ while (string.length < len) string= fill + string; return string }
+  function reen(uri){ return encodeURI(decodeURI(uri)) }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);
