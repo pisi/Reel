@@ -310,4 +310,44 @@
     })
   });
 
+  asyncTest( 'GH-113 Unescaped sprite URIs cause nothing to be displayed', function(){
+    /*
+     * When image URL contains an unescaped space, this is not further handled by Reel
+     * resulting in a non-working URL used and nothing displayed.
+     */
+    expect( 2 );
+    var
+      raw = 're sources/object-reel.jpg',
+      escaped = 're%20sources/object-reel.jpg',
+      $reel = $('#image_with_unescaped_url').reel()
+
+    $reel.parent().bind('loaded.test', function(){
+      equal( $reel.data('image'), raw, 'Given raw image URL (escaped or unescaped)');
+      equal( $reel.css('backgroundImage').substr(-escaped.length - 1, escaped.length), escaped, 'Actual escaped URL used');
+      start();
+    })
+  });
+
+  asyncTest( 'GH-113 Unescaped sequence URIs cause nothing to be displayed', function(){
+    /*
+     * When image or sprite URL contains an unescaped space, this is not further handled by Reel
+     * resulting in a non-working URL used and nothing displayed.
+     */
+    expect( 2 );
+    var
+      sequence= 're sources/phone/##.jpg'
+      raw=      're sources/phone/01.jpg',
+      escaped=  're%20sources/phone/01.jpg',
+      $reel = $('#image_with_unescaped_url').reel({
+        frames: 2,
+        images: sequence
+      })
+
+    $reel.parent().bind('loaded.test', function(){
+      equal( $reel.data('images')[0], raw, 'Given raw sequence frame URL (escaped or unescaped)');
+      equal( $reel.attr('src'), escaped, 'Actual escaped URL used');
+      start();
+    })
+  });
+
 })(jQuery);
