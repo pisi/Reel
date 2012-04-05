@@ -350,4 +350,71 @@
     })
   });
 
+  asyncTest( 'GH-117 Ticker does not restart after instance gets lost from the DOM', function(){
+    /*
+     * When an instance is removed from the DOM indirectly by removing some of its ancestors
+     * and another instances is created, the new one doesn't animate and can not be dragged
+     * [demo](http://jsfiddle.net/FeeDy/2/)
+     */
+    expect( 5 );
+    var
+      $container = $('#non_image'),
+      $image = $('<img>', {
+        id: 'injected_image',
+        src: 'resources/object.jpg',
+        width: 276,
+        height: 126
+      }).appendTo($container),
+      $reel = $('#injected_image').reel({
+        frames: 35,
+        speed: 0.2
+      })
+
+    $reel.one('loaded.test', function(){
+      $container.empty();
+      ok( !$('#injected_image').length, '`#injected_image` no longer present in the DOM' )
+      equal( $.reel.leader('tempo'), null, 'No leader tempo, ticker stopped' );
+
+      var
+        ticked= false
+
+      $(document).bind('tick.reel.test', function(){
+        ticked= true;
+      });
+      setTimeout(function(){
+        ok( !ticked, 'Ticker positively not ticking');
+        var
+          new_tempo = 15,
+          $container = $('#non_image'),
+          $image = $('<img>', {
+            id: 'injected_image',
+            src: 'resources/object.jpg',
+            width: 276,
+            height: 126
+          }).appendTo($container),
+          $reel = $('#injected_image').reel({
+            frames: 35,
+            tempo: new_tempo,
+            speed: 0.2
+          })
+
+        $reel.bind('loaded.test', function(){
+          var
+            ticked= false
+
+          $(document).bind('tick.reel.test', function(){
+            ticked= true;
+          });
+          equal( $.reel.leader('tempo'), new_tempo, 'Leader tempo reported again' );
+          setTimeout(function(){
+            ok( ticked, 'Newly created instance restarts the ticker')
+            $reel.unreel();
+            $container.empty();
+            start();
+          }, 200);
+        });
+      }, 200);
+    })
+  });
+
 })(jQuery);
