@@ -1500,6 +1500,7 @@ jQuery.reel || (function($, window, document, undefined){
                       frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
                     t.trigger('preload')
                   },
+                  'clean.fu': function(){ t.trigger('teardown') },
                   'loaded.fu': function(){ t.trigger('opening') }
                 },
 
