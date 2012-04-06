@@ -2196,7 +2196,7 @@ jQuery.reel || (function($, window, document, undefined){
   // Very useful helpers
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
-  function leader(key){ return reel.instances.length ? reel.instances.first().data(key) : null }
+  function leader(key){ return reel.instances.first().data(key) }
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + (string || '') }
