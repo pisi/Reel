@@ -2171,7 +2171,19 @@ jQuery.reel || (function($, window, document, undefined){
     touchy= reel.touchy= (reel.re.touchy_agent).test(client),
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
-    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0
+    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0,
+
+    // ~~~
+    //
+    // So far jQuery doesn't have a proper built-in mechanism to detect/report DOM node removal.
+    // But internally, jQuery calls `$.cleanData()` to flush the DOM data and minimize memory leaks.
+    // Reel wraps this function and as a result `clean` event handler is triggered for every element.
+    // Note, that the `clean` event does not bubble.
+    //
+    cleanData= $.cleanData,
+    cleanDataEvent= $.cleanData= function(elements){
+      cleanData($(elements).each(function(){ $(this).triggerHandler('clean'); }));
+    }
 
   // If the optional disableTextSelect plugin is not used, this will fill in the holes, where Reel expects
   // ground.

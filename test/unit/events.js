@@ -187,4 +187,29 @@
     $reel.trigger('mousewheel');
   });
 
+  test( 'As a result of `jQuery.cleanData()` wrapper, `clean` event is triggered on the removed node', function(){
+    expect(3);
+    var
+      $container= $('#non_image'),
+      $outer= $('<div>', { 'class': 'outer' }).appendTo($container),
+      $inner= $('<div>', { 'class': 'inner' }).appendTo($outer),
+      $innermost= $('<div>', { 'class': 'innermost' }).appendTo($inner)
+
+    $container.bind('clean', function(){
+      ok( false, 'The `clean` event doesn\'t bubble up the DOM ever');
+    });
+    $outer.bind('clean', function(){
+      ok( true, '`clean` handler triggered on the outer node after emptying container (indirect removal)' );
+    });
+    $inner.bind('clean', function(){
+      ok( true, '`clean` handler triggered on the inner node after emptying container (indirect removal)' );
+    });
+    $innermost.bind('clean', function(){
+      ok( true, '`clean` handler triggered on the innermost node after its direct removal' );
+    });
+
+    $innermost.remove();
+    $container.empty();
+  });
+
 })(jQuery);
