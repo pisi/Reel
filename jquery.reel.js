@@ -190,9 +190,12 @@ jQuery.reel || (function($, window, document, undefined){
         // is calculated based on the setup you have - it is either twice the width of the image
         // or half the width of stitched panorama. You may also set your own.
         //
+        // Optionally `revolution` can be set as an Object with `x` member for horizontal revolution
+        // and/or `y` member for vertical revolution in multi-row movies.
+        //
 
         // #### `revolution` Option ####
-        // `Number` (pixels), since 1.1
+        // `Number` (pixels) or `Object`, since 1.1, `Object` support since 1.2
         //
         revolution:     undefined,
 
@@ -763,6 +766,8 @@ jQuery.reel || (function($, window, document, undefined){
                     loops= opt.loops,
                     size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
                     frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
+                    revolution= opt.revolution,
+                    revolution_x= set(_revolution_, (revolution ? revolution.x : revolution) || stitched / 2 || size.x * 2),
                     rows= stitched ? 1 : ceil(frames / opt.footage),
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
@@ -775,7 +780,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_spacing_, opt.spacing);
                   set(_rows_, rows);
                   set(_dimensions_, size);
-                  set(_revolution_, opt.revolution || stitched / 2 || size.x * 2);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
                   set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
