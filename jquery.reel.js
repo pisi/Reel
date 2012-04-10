@@ -766,8 +766,10 @@ jQuery.reel || (function($, window, document, undefined){
                     loops= opt.loops,
                     size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
                     frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
+                    multirow= opt.rows > 1 || opt.orbital,
                     revolution= opt.revolution,
                     revolution_x= set(_revolution_, (revolution ? revolution.x : revolution) || stitched / 2 || size.x * 2),
+                    revolution_y= set(_revolution_y_, !multirow ? 0 : (!revolution ? 0 : revolution.y) || (opt.rows > 3 ? size.y : size.y / (5 - opt.rows))),
                     rows= stitched ? 1 : ceil(frames / opt.footage),
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
@@ -1173,7 +1175,7 @@ jQuery.reel || (function($, window, document, undefined){
                           origin= recenter_mouse(revolution, x, y)
                         if (opt.rows > 1) var
                           space_y= get(_dimensions_).y,
-                          revolution_y= opt.rows > 3 ? space_y : space_y / (5 - opt.rows),
+                          revolution_y= get(_revolution_y_),
                           start= get(_clicked_tier_),
                           lo= - start * revolution_y,
                           tier= set(_tier_, reel.math.envelope(y - origin.y, start, revolution_y, lo, lo + revolution_y, -1))
@@ -2124,8 +2126,8 @@ jQuery.reel || (function($, window, document, undefined){
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
-    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution', _row_= 'row',
-    _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
+    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution',
+    _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
     _velocity_= 'velocity', _vertical_= 'vertical',
 

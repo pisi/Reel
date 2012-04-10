@@ -38,6 +38,7 @@
         preloaded: 'Number',
         reeling: 'Boolean',
         revolution: 'Number',
+        revolution_y: 'Number',
         row: 'Number',
         rows: 'Number',
         spacing: 'Number',
