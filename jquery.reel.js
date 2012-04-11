@@ -768,8 +768,8 @@ jQuery.reel || (function($, window, document, undefined){
                     frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
                     multirow= opt.rows > 1 || opt.orbital,
                     revolution= opt.revolution,
-                    revolution_x= set(_revolution_, (revolution ? revolution.x : revolution) || stitched / 2 || size.x * 2),
-                    revolution_y= set(_revolution_y_, !multirow ? 0 : (!revolution ? 0 : revolution.y) || (opt.rows > 3 ? size.y : size.y / (5 - opt.rows))),
+                    revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || size.x * 2),
+                    revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (opt.rows > 3 ? size.y : size.y / (5 - opt.rows)))),
                     rows= stitched ? 1 : ceil(frames / opt.footage),
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
@@ -2205,6 +2205,7 @@ jQuery.reel || (function($, window, document, undefined){
   function dot(string){ return '.' + (string || '') }
   function cdn(path){ return reel.cdn + path }
   function url(location){ return 'url(' + reen(location) + ')' }
+  function axis(key, value){ return typeof value == _object_ ? value[key] : value }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);
     function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
