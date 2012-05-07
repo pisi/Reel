@@ -1349,40 +1349,6 @@ jQuery.reel || (function($, window, document, undefined){
                     }
                   },
 
-                  // ---------------------------
-                  // [NEW] Click Stepping Events
-                  // ---------------------------
-                  //
-                  // For devices without drag support or for developers, who want to use some sort
-                  // of left & right buttons on their site to control your instance from outside, Reel
-                  // supports ordinary click with added detection of left half or right half and resulting
-                  // triggering of `stepLeft` and `stepRight` events respectively.
-                  //
-
-                  // This behavior can be disabled by the [`steppable`](#steppable-Option) option.
-                  //
-                  'click.steppable': function(e){
-                    if (panned) return mute(e, false);
-                    t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
-                  },
-                  'stepLeft stepRight': function(e){
-                    unidle();
-                  },
-
-                  // ### `stepLeft` Event ######
-                  // `Event`, since 1.2
-                  stepLeft: function(e){
-                    set(_backwards_, false);
-                    set(_fraction_, get(_fraction_) - get(_bit_) * get(_cwish_));
-                  },
-
-                  // ### `stepRight` Event ######
-                  // `Event`, since 1.2
-                  stepRight: function(e){
-                    set(_backwards_, true);
-                    set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
-                  },
-
                   // ---------
                   // Indicator
                   // ---------
@@ -1490,6 +1456,40 @@ jQuery.reel || (function($, window, document, undefined){
                         style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
                     });
+                  },
+
+                  // ---------------------------
+                  // [NEW] Click Stepping Events
+                  // ---------------------------
+                  //
+                  // For devices without drag support or for developers, who want to use some sort
+                  // of left & right buttons on their site to control your instance from outside, Reel
+                  // supports ordinary click with added detection of left half or right half and resulting
+                  // triggering of `stepLeft` and `stepRight` events respectively.
+                  //
+
+                  // This behavior can be disabled by the [`steppable`](#steppable-Option) option.
+                  //
+                  'click.steppable': function(e){
+                    if (panned) return mute(e, false);
+                    t.trigger(e.clientX - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
+                  },
+                  'stepLeft stepRight': function(e){
+                    unidle();
+                  },
+
+                  // ### `stepLeft` Event ######
+                  // `Event`, since 1.2
+                  stepLeft: function(e){
+                    set(_backwards_, false);
+                    set(_fraction_, get(_fraction_) - get(_bit_) * get(_cwish_));
+                  },
+
+                  // ### `stepRight` Event ######
+                  // `Event`, since 1.2
+                  stepRight: function(e){
+                    set(_backwards_, true);
+                    set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
                   },
 
                   // ----------------
