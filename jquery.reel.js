@@ -1105,7 +1105,7 @@ jQuery.reel || (function($, window, document, undefined){
                       }
                     }
                     function drag(r){ return function(e){ e.preventDefault(); t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]); return r }}
-                    function lift(r){ return function(e){ e.preventDefault(); t.trigger('up'); return r }}
+                    function lift(r){ return function(e){ e.preventDefault(); t.trigger('up', [e]); return r }}
                   },
 
                   // ### `up` Event ######
@@ -1118,7 +1118,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // - removes the `.reel-panning` class from `<body>`,
                   // - and unbinds dragging events from the pool.
                   //
-                  up: function(e){
+                  up: function(e, ev){
                     if (!opt.draggable) return;
                     var
                       clicked= set(_clicked_, false),
@@ -1452,8 +1452,11 @@ jQuery.reel || (function($, window, document, undefined){
                       $note.css(style);
                     });
                   },
-                  'up.annotations': function(e){
+                  'up.annotations': function(e, ev){
                     if (panned) return;
+                    var
+                      href= ev && $(ev.target).attr('href'),
+                      loc= href && (panned= !!(window.location.href= href))
                   },
 
                   // ---------------------------
