@@ -323,30 +323,11 @@
     });
   });
 
-  asyncTest( 'GH-79 `click` event on annotation is not propagated up, where it would cause Reel to advance left/right', function(){
+  test( 'GH-79 `click` event on annotation is not propagated up, where it would cause Reel to advance left/right', function(){
     expect( 1 );
-    var
-      $reel= $('#image').reel({ annotations: {
-        'annotation': {
-          x: 10,
-          y: 10,
-          link: {
-            click: function(){
-              ok( true, 'Annotation `click` handler fired.');
-            }
-          }
-        }
-      }})
-
-    $('#annotation a')
-    .parent()
-    .parent()
-    .bind('click.test', function(){
-      ok( false, '`click` propagated to the instance wrapper...');
-    })
-    $('#annotation a').click();
-    start();
+    ok( true, "Test became obsolete. Since GH-122 in order to support touch devices too,"
+            +" we no longer depend upon `click` events and don't care anymore about it being propagated up the DOM,"
+            +" because it can no longer interfere with the stepping feature.");
   });
-
 
 })(jQuery);
