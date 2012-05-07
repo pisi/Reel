@@ -1427,11 +1427,6 @@ jQuery.reel || (function($, window, document, undefined){
                         $image= note.image ? $(tag(_img_), note.image) : $(),
                         $link= note.link ? $(tag('a'), note.link) : $()
                       css(hash(ida), { display: _none_, position: _absolute_ }, true);
-                      $note.bind({
-                        'click.annotations': function(e){
-                          e.stopPropagation();
-                        }
-                      })
                       note.image || note.link && $note.append($link);
                       note.link || note.image && $note.append($image);
                       note.link && note.image && $note.append($link.append($image));
@@ -1456,6 +1451,9 @@ jQuery.reel || (function($, window, document, undefined){
                         style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
                     });
+                  },
+                  'up.annotations': function(e){
+                    if (panned) return;
                   },
 
                   // ---------------------------
