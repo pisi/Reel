@@ -2144,7 +2144,7 @@ jQuery.reel || (function($, window, document, undefined){
 
     // And some other frequently used Strings.
     //
-    __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _div_= 'div',
+    __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _cdn_= '@CDN@', _div_= 'div',
     _hand_= 'hand', _head_= 'head', _height_= 'height', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
     _preload_= 'preload', _string_= 'string',
@@ -2158,16 +2158,16 @@ jQuery.reel || (function($, window, document, undefined){
     // some of its actions. First, we may need a transparent image for the original `<img>` to uncover
     // the sprite applied to its background. This one is embedded in the code as it is very small.
     //
-    transparent= knows_data_urls ? embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') : cdn('blank.gif'),
+    transparent= knows_data_urls ? embedded('CAAIAIAAAAAAAAAAACH5BAEAAAAALAAAAAAIAAgAAAIHhI+py+1dAAA7') : _cdn_+'blank.gif',
 
     // Proper cross-browser cursors however need to come in an odd format, which essentially is not
     // compressed at all and this means bigger filesize. While it is no more than ~15k, it is unfit
     // for embedding directly here, so a [`CDN`](#Content-Delivery-Network) is employed to retrieve
     // the images from in an effective gzipped and cachable manner.
     //
-    reel_cursor= url(cdn(_jquery_reel_+'.cur'))+____+_move_,
-    drag_cursor= url(cdn(_jquery_reel_+'-drag.cur'))+____+_move_,
-    drag_cursor_down= url(cdn(_jquery_reel_+'-drag-down.cur'))+____+_move_,
+    reel_cursor= url(_cdn_+_jquery_reel_+'.cur')+____+_move_,
+    drag_cursor= url(_cdn_+_jquery_reel_+'-drag.cur')+____+_move_,
+    drag_cursor_down= url(_cdn_+_jquery_reel_+'-drag-down.cur')+____+_move_,
 
     // ~~~
     //
