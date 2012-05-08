@@ -893,9 +893,9 @@ jQuery.reel || (function($, window, document, undefined){
                       var
                         cursor= opt.cursor == _hand_ ? drag_cursor : opt.cursor || reel_cursor,
                         cursor_down= opt.cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
-                      css(__, { cursor: cursor });
+                      css(__, { cursor: cdn(cursor) });
                       css(dot(loading_klass), { cursor: 'wait' });
-                      css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cursor_down || cursor }, true);
+                      css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor) }, true);
                       area
                         .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return e.preventDefault() || !delta || t.trigger('wheel', [delta]) && false })
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
@@ -982,7 +982,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // or animation.
                   //
                   loaded: function(e){
-                    get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: transparent });
+                    get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
                   },
 
                   // ----------------
@@ -2204,7 +2204,7 @@ jQuery.reel || (function($, window, document, undefined){
   function embedded(image){ return 'data:image/gif;base64,R0lGODlh' + image }
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + (string || '') }
-  function cdn(path){ return reel.cdn + path }
+  function cdn(path){ return path.replace(_cdn_, reel.cdn) }
   function url(location){ return 'url(' + reen(location) + ')' }
   function axis(key, value){ return typeof value == _object_ ? value[key] : value }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
