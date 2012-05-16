@@ -6,11 +6,11 @@
  jQuery Reel
  http://jquery.vostrel.cz/reel
  Version: 1.1.4-devel
- Updated: 2012-05-08
+ Updated: 2012-05-16
 
  Requires jQuery 1.5 or higher
 */
-jQuery.reel||function(k,sb,Ba,p){function Ub(g){return r.instances.push(g[0])&&g}function Vb(g){return(r.instances=r.instances.not(Ca(g.attr(ea))))&&g}function Y(g){return r.instances.first().data(g)}function Wb(g){return"data:image/gif;base64,R0lGODlh"+g}function T(g){return"<"+g+"/>"}function t(g){return"."+(g||"")}function Xa(g){return g.replace(ma,r.cdn)}function Da(g){return"url("+Ya(g)+")"}function tb(g,j){return typeof j==Za?j[g]:j}function na(g,j,q){return ub(g,$a(j,q))}function Xb(g){function j(){k.fn[this]||
+jQuery.reel||function(k,sb,Ba,p){function Ub(g){return r.instances.push(g[0])&&g}function Vb(g){return(r.instances=r.instances.not(Ca(g.attr(ea))))&&g}function Y(g){return r.instances.first().data(g)}function Wb(g){return"data:image/gif;base64,R0lGODlh"+g}function T(g){return"<"+g+"/>"}function t(g){return"."+(g||"")}function Xa(g){return g.replace(ma,r.cdn)}function Da(g){return"url('"+Ya(g)+"')"}function tb(g,j){return typeof j==Za?j[g]:j}function na(g,j,q){return ub(g,$a(j,q))}function Xb(g){function j(){k.fn[this]||
 (k.fn[this]=function(){return this})}k.each(g,j)}function ab(g,j){return O(g)*(j?-1:1)}function Ea(g){return Fa?g.touch||g.originalEvent.touches[0]:g}function z(g){return g===p?0:typeof g==vb?g:g+"px"}function Ca(g){return"#"+g}function Yb(g,j,q){for(;g.length<j;)g=q+g;return g}function Ya(g){return encodeURI(decodeURI(g))}function wb(g){try{console.warn("Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations")}catch(j){}return g}if(+k().jquery.replace(t(),"").substr(0,2)<15)throw"VersionError: far too old jQuery for running Reel";
 var r=k.reel={version:"1.1.4-devel",def:{frame:1,frames:36,loops:true,clickfree:false,draggable:true,scrollable:true,steppable:true,throwable:true,wheelable:true,cw:false,revolution:p,stitched:0,directional:false,row:1,rows:0,orbital:0,vertical:false,inversed:false,footage:6,spacing:0,horizontal:true,suffix:"-reel",image:p,images:"",path:"",preload:"fidelity",speed:0,delay:0,timeout:2,rebound:0.5,entry:p,opening:0,brake:0.23,velocity:0,tempo:36,laziness:6,cursor:p,hint:"",indicator:0,klass:"",preloader:2,
 area:p,attr:{},annotations:p,graph:p,monitor:p,step:p,steps:p},fn:{reel:function(){var g=arguments,j=k(this),q=j.data(),v=g[0]||{},u=g[1];if(typeof v=="object"){var a=k.extend({},r.def,v);g=function(l){var e=[];l.filter(bb).each(function(){var c=k(this),x=a.images.length&&a.images||a.sequence||a.image||a.attr.src||c.attr("src"),E=oa(a.attr.width||c.css(cb)),A=oa(a.attr.height||c.css(xb));x&&x!=J&&E&&A&&e.push(c)});l.filter(t(y)).each(function(){e.push(k(this).unreel())});return k(e)}(this);var P=
