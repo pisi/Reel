@@ -417,4 +417,28 @@
     })
   });
 
+  asyncTest( 'GH-125 URLs containing parentheses fail when used in `background` CSS declaration', function(){
+    /*
+     * When image or sprite URL contains an unescaped space, this is not further handled by Reel
+     * resulting in a non-working URL used and nothing displayed.
+     */
+    expect( 1 );
+    var
+      url=      'resources/object(2).jpg',
+      sprite=   'resources/object(2)-reel.jpg',
+      $reel = $('#image').reel({
+        attr: {
+          src: url,
+        }
+      })
+
+    $reel.parent().bind('loaded.test', function(){
+      var
+        len= sprite.length,
+        is= $reel.css('backgroundImage').substr(-len - 2, len) // -2 is for the trailing `')` 2-character combo
+      equal( is, sprite );
+      start();
+    })
+  });
+
 })(jQuery);
