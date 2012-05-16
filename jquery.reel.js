@@ -1204,6 +1204,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //
                   wheel: function(e, distance){
                     if (!distance) return;
+                    wheeled= true;
                     var
                       delta= ceil(math.sqrt(abs(distance)) / 2),
                       delta= negative_when(delta, distance > 0),
@@ -1453,7 +1454,7 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'up.annotations': function(e, ev){
-                    if (panned) return;
+                    if (panned || wheeled) return;
                     var
                       href= ev && $(ev.target).attr('href'),
                       loc= href && (panned= !!(window.location.href= href))
@@ -1472,7 +1473,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // This behavior can be disabled by the [`steppable`](#steppable-Option) option.
                   //
                   'up.steppable': function(e, ev){
-                    if (panned) return mute(e, false);
+                    if (panned || wheeled) return mute(e, false);
                     t.trigger(get(_clicked_location_).x - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
                   },
                   'stepLeft stepRight': function(e){
@@ -1507,6 +1508,7 @@ jQuery.reel || (function($, window, document, undefined){
                       frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
                     t.trigger('preload')
                   },
+                  'wheel.fu': function(){ wheeled= false },
                   'clean.fu': function(){ t.trigger('teardown') },
                   'loaded.fu': function(){ t.trigger('opening') }
                 },
@@ -1610,6 +1612,7 @@ jQuery.reel || (function($, window, document, undefined){
                 return operated= -opt.timeout * leader(_tempo_)
               },
               panned= false,
+              wheeled= false,
               delay, // openingDone's delayed play pointer
 
               // - Constructors of UI elements
