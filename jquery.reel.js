@@ -2205,7 +2205,7 @@ jQuery.reel || (function($, window, document, undefined){
   function tag(string){ return '<' + string + '/>' }
   function dot(string){ return '.' + (string || '') }
   function cdn(path){ return path.replace(_cdn_, reel.cdn) }
-  function url(location){ return 'url(' + reen(location) + ')' }
+  function url(location){ return 'url(\'' + reen(location) + '\')' }
   function axis(key, value){ return typeof value == _object_ ? value[key] : value }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function double_for(methods){ $.each(methods, pretend);
