@@ -1473,7 +1473,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // This behavior can be disabled by the [`steppable`](#steppable-Option) option.
                   //
                   'up.steppable': function(e, ev){
-                    if (panned || wheeled) return mute(e, false);
+                    if (panned || wheeled) return;
                     t.trigger(get(_clicked_location_).x - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
                   },
                   'stepLeft stepRight': function(e){
