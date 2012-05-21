@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Version 1.1.4-devel
--------------------
+Version 1.2rc2
+--------------
 
 * The long-missing comprehensive documentation added to the `docs/` directory.
 * Non-`wheelable` Reels now allow scrolling of the page when wheeling
@@ -41,6 +41,7 @@ Version 1.1.4-devel
   [Data](/pisi/Reel/wiki/Data) for more.
 * The `step` and `steps` options deprecated in favor to `frame` and `frames`.
 * The `revolution` option now support optional object notation with `x` and/or `y` keys.
+* `$.reel.cdn` setting customization now working correctly (GH-124).
 
 
 Version 1.1.3
