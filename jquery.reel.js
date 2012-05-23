@@ -1456,7 +1456,9 @@ jQuery.reel || (function($, window, document, undefined){
                   'up.annotations': function(e, ev){
                     if (panned || wheeled) return;
                     var
-                      href= ev && $(ev.target).attr('href'),
+                      $target= $(ev.target),
+                      $link= $target.is('a') ? $target : $target.parents('a'),
+                      href= $link.attr('href'),
                       loc= href && (panned= !!(window.location.href= href))
                   },
 
