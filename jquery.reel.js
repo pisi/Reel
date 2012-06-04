@@ -24,8 +24,8 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.2rc2
- * Updated: 2012-05-23
+ * Version: 1.1.4-devel
+ * Updated: 2012-06-04
  *
  * Requires jQuery 1.5 or higher
  */
@@ -62,7 +62,7 @@ jQuery.reel || (function($, window, document, undefined){
       // ### `$.reel.version`
       //
       // `String` (major.minor.patch), since 1.1
-      version: '1.2rc2',
+      version: '1.1.4-devel',
 
       // Options
       // -------
@@ -854,7 +854,7 @@ jQuery.reel || (function($, window, document, undefined){
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
-                    get(_area_).enableTextSelect();
+                    get(_area_).unbind(ns).enableTextSelect();
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
                       src: backup.src,

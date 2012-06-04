@@ -24,8 +24,8 @@
 <span class="cm"> *</span>
 <span class="cm"> * jQuery Reel</span>
 <span class="cm"> * http://jquery.vostrel.cz/reel</span>
-<span class="cm"> * Version: 1.2rc2</span>
-<span class="cm"> * Updated: 2012-05-23</span>
+<span class="cm"> * Version: 1.1.4-devel</span>
+<span class="cm"> * Updated: 2012-06-04</span>
 <span class="cm"> *</span>
 <span class="cm"> * Requires jQuery 1.5 or higher</span>
 <span class="cm"> */</span>
@@ -53,7 +53,7 @@ and a make sure check is made at the very beginning.</p>             </td>      
 It is locally referenced as just <code>reel</code> for speedier access.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span>
     <span class="nx">reel</span><span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">reel</span><span class="o">=</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id='reel-version'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#reel-version">&#182;</a>                </div>                       <h3><code>$.reel.version</code></h3>
 
-<p><code>String</code> (major.minor.patch), since 1.1</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">version</span><span class="o">:</span> <span class="s1">&#39;1.2rc2&#39;</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id='Options'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#Options">&#182;</a>                </div>                       <h2>Options</h2>
+<p><code>String</code> (major.minor.patch), since 1.1</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">version</span><span class="o">:</span> <span class="s1">&#39;1.1.4-devel&#39;</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id='Options'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#Options">&#182;</a>                </div>                       <h2>Options</h2>
 
 <p>When calling <code>.reel()</code> method you have plenty of options (far too many) available.
 You collect them into one hash and supply them with your call.</p>
@@ -579,7 +579,7 @@ It either performs the following builder's duty or the <a href="#Data">data duty
                     <span class="nx">style</span><span class="o">:</span> <span class="nx">styles</span> <span class="o">||</span> <span class="nx">__</span><span class="p">,</span>
                     <span class="nx">data</span><span class="o">:</span> <span class="nx">data</span>
                   <span class="p">});</span>
-                  <span class="nx">opt</span><span class="p">.</span><span class="nx">steppable</span> <span class="o">||</span> <span class="nx">$overlay</span><span class="p">.</span><span class="nx">unbind</span><span class="p">(</span><span class="s1">&#39;click.steppable&#39;</span><span class="p">);</span>
+                  <span class="nx">opt</span><span class="p">.</span><span class="nx">steppable</span> <span class="o">||</span> <span class="nx">$overlay</span><span class="p">.</span><span class="nx">unbind</span><span class="p">(</span><span class="s1">&#39;up.steppable&#39;</span><span class="p">);</span>
                   <span class="nx">opt</span><span class="p">.</span><span class="nx">indicator</span> <span class="o">||</span> <span class="nx">$overlay</span><span class="p">.</span><span class="nx">unbind</span><span class="p">(</span><span class="s1">&#39;.indicator&#39;</span><span class="p">);</span>
                   <span class="nx">css</span><span class="p">(</span><span class="nx">__</span><span class="p">,</span> <span class="p">{</span> <span class="nx">width</span><span class="o">:</span> <span class="nx">size</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="nx">size</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">overflow</span><span class="o">:</span> <span class="nx">_hidden_</span><span class="p">,</span> <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;relative&#39;</span> <span class="p">});</span>
                   <span class="nx">css</span><span class="p">(</span><span class="nx">____</span><span class="o">+</span><span class="nx">___</span><span class="o">+</span><span class="nx">dot</span><span class="p">(</span><span class="nx">klass</span><span class="p">),</span> <span class="p">{</span> <span class="nx">display</span><span class="o">:</span> <span class="nx">_block_</span> <span class="p">});</span>
@@ -617,7 +617,7 @@ belongings leaving no trace.</p>
                       <span class="nx">backup</span><span class="o">=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">_backup_</span><span class="p">)</span>
                     <span class="nx">t</span><span class="p">.</span><span class="nx">parent</span><span class="p">().</span><span class="nx">unbind</span><span class="p">(</span><span class="nx">on</span><span class="p">.</span><span class="nx">instance</span><span class="p">);</span>
                     <span class="nx">get</span><span class="p">(</span><span class="nx">_style_</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
-                    <span class="nx">get</span><span class="p">(</span><span class="nx">_area_</span><span class="p">).</span><span class="nx">enableTextSelect</span><span class="p">();</span>
+                    <span class="nx">get</span><span class="p">(</span><span class="nx">_area_</span><span class="p">).</span><span class="nx">unbind</span><span class="p">(</span><span class="nx">ns</span><span class="p">).</span><span class="nx">enableTextSelect</span><span class="p">();</span>
                     <span class="nx">remove_instance</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">unbind</span><span class="p">(</span><span class="nx">ns</span><span class="p">).</span><span class="nx">removeData</span><span class="p">().</span><span class="nx">siblings</span><span class="p">().</span><span class="nx">unbind</span><span class="p">(</span><span class="nx">ns</span><span class="p">).</span><span class="nx">remove</span><span class="p">().</span><span class="nx">end</span><span class="p">().</span><span class="nx">attr</span><span class="p">({</span>
                      <span class="s1">&#39;class&#39;</span><span class="o">:</span> <span class="nx">backup</span><span class="p">.</span><span class="nx">classes</span><span class="p">,</span>
                       <span class="nx">src</span><span class="o">:</span> <span class="nx">backup</span><span class="p">.</span><span class="nx">src</span><span class="p">,</span>
