@@ -809,7 +809,7 @@ jQuery.reel || (function($, window, document, undefined){
                     style: styles || __,
                     data: data
                   });
-                  opt.steppable || $overlay.unbind('click.steppable');
+                  opt.steppable || $overlay.unbind('up.steppable');
                   opt.indicator || $overlay.unbind('.indicator');
                   css(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
                   css(____+___+dot(klass), { display: _block_ });
