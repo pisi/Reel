@@ -441,4 +441,37 @@
     })
   });
 
+  $.each({
+    'non-steppable': {
+      steppable: false,
+      label: 'Only the plain `up` event handler is bound',
+      expect: 1
+    },
+    'steppable': {
+      steppable: true,
+      label: 'One plain `up` and one `up.steppable` event handlers are bound',
+      expect: 2
+    }
+  }, function(name, def){
+    asyncTest( 'GH-126 Disabling stepping with `steppable` option ('+name+' case)', function(){
+      /*
+       * The stepping click handler of the `up.steppable` event hasn't been properly unbinded
+       * when `steppable` option is set to `false`.
+       */
+      expect( 1 );
+      var
+        $reel = $('#image').reel({
+          steppable: def.steppable
+        })
+
+      $reel.parent().bind('loaded.test', function(){
+        var
+          $area= $reel.reel('area')
+
+        equal( $area.data('events')['up'].length, def.expect, def.label);
+        start();
+      })
+    });
+  });
+
 })(jQuery);
