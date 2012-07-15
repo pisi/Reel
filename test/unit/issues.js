@@ -322,8 +322,12 @@
       $reel = $('#image_with_unescaped_url').reel()
 
     $reel.parent().bind('loaded.test', function(){
+      var
+        // Isolate the actual filename used
+        actual = $reel.css('backgroundImage').replace(/['"]?\)$/, '').substr(-escaped.length, escaped.length)
+
       equal( $reel.data('image'), raw, 'Given raw image URL (escaped or unescaped)');
-      equal( $reel.css('backgroundImage').substr(-escaped.length - 1, escaped.length), escaped, 'Actual escaped URL used');
+      equal( actual, escaped, 'Actual escaped URL used');
       start();
     })
   });
