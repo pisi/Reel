@@ -330,4 +330,36 @@
             +" because it can no longer interfere with the stepping feature.");
   });
 
+  asyncTest( 'Rendering of early annotation on late frame in looped panoramas', function(){
+    expect( 1 );
+    var
+      $reel= $('#image').reel({ frames: 20, frame: 20, stitched: 2000, annotations: {
+        'test-annotation': {
+          x: 20,
+          y: 0
+        }
+      }})
+
+    $(document).bind('frameChange.test', function(){
+      equiv( $('#test-annotation').css('left'), 125, 'position of the annotation');
+      start();
+    });
+  });
+
+  asyncTest( 'Rendering of late over-the-edge annotation on early frame in looped panoramas', function(){
+    expect( 1 );
+    var
+      $reel= $('#image').reel({ frames: 20, frame: 1, stitched: 2000, annotations: {
+        'test-annotation': {
+          x: 1990,
+          y: 0
+        }
+      }})
+
+    $(document).bind('frameChange.test', function(){
+      equiv( $('#test-annotation').css('left'), -10, 'position of the annotation');
+      start();
+    });
+  });
+
 })(jQuery);
