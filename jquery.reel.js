@@ -1435,6 +1435,10 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'frameChange.annotations': function(e, deprecation, frame){
+                    var
+                      space= get(_dimensions_),
+                      stitched= opt.stitched,
+                      ss= get(_stitched_shift_)
                     if (!get(_preloaded_)) return;
                     if (deprecation === undefined) $.each(get(_annotations_), function(ida, note){
                       var
@@ -1447,8 +1451,14 @@ jQuery.reel || (function($, window, document, undefined){
                         x= typeof note.x!=_object_ ? note.x : note.x[offset],
                         y= typeof note.y!=_object_ ? note.y : note.y[offset],
                         placed= x !== undefined && y !== undefined,
-                        visible= placed && (note.at ? at : (offset >= 0 && (!end || offset <= end - start))),
-                        x= !opt.stitched ? x : x - get(_stitched_shift_),
+                        visible= placed && (note.at ? at : (offset >= 0 && (!end || offset <= end - start)))
+                      if (stitched) var
+                        on_edge= x < space.x && ss > stitched - space.x,
+                        after_edge= x > stitched - space.x && ss >= 0 && ss < space.x,
+                        x= !on_edge ? x : x + stitched,
+                        x= !after_edge ? x : x - stitched,
+                        x= x - ss
+                      var
                         style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
                     });
