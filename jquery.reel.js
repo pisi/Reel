@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.1.4-devel
- * Updated: 2012-06-04
+ * Updated: 2012-07-15
  *
  * Requires jQuery 1.5 or higher
  */
@@ -1426,7 +1426,7 @@ jQuery.reel || (function($, window, document, undefined){
                         $note= $note.jquery ? $note : $(tag(_div_), $note),
                         $note= $note.attr({ id: ida }).addClass(annotation_klass),
                         $image= note.image ? $(tag(_img_), note.image) : $(),
-                        $link= note.link ? $(tag('a'), note.link) : $()
+                        $link= note.link ? $(tag('a'), note.link).click(function(){ return false }) : $()
                       css(hash(ida), { display: _none_, position: _absolute_ }, true);
                       note.image || note.link && $note.append($link);
                       note.link || note.image && $note.append($image);
@@ -1457,8 +1457,12 @@ jQuery.reel || (function($, window, document, undefined){
                     if (panned || wheeled) return;
                     var
                       $target= $(ev.target),
-                      href= ($target.is('a') ? $target : $target.parents('a')).attr('href')
-                    href && (panned= !!(window.location.href= href))
+                      $link= ($target.is('a') ? $target : $target.parents('a')),
+                      href= $link.attr('href'),
+                      target= $link.attr('target') || 'self'
+                    if (!href) return;
+                    if (target == '_blank') panned= !!window.open(href)
+                    else panned= !!(window[target].location.href= href)
                   },
 
                   // ---------------------------
