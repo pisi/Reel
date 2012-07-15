@@ -378,7 +378,7 @@
         '-13': 1,
         '-62': 1
       }
-    },
+    }
   }, function(testcase, def){
     test( 'Normalization of '+testcase+' `"frame"`', function(){
       expect(5);

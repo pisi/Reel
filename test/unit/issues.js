@@ -182,7 +182,7 @@
     setTimeout( function(){
       $reel.unreel().reel();
       ok( $reel.is('.reel'), 'IMG tag is flagged as a Reel instance');
-      ok( $reel.parent().is('.reel-overlay[id=image-reel]'), 'and wrapped in overlay DIV');
+      ok( $reel.parent().is('.reel-overlay'), 'and wrapped in overlay DIV');
       $reel.click();
       start();
     }, 500 );
@@ -324,7 +324,8 @@
     $reel.parent().bind('loaded.test', function(){
       var
         // Isolate the actual filename used
-        actual = $reel.css('backgroundImage').replace(/['"]?\)$/, '').substr(-escaped.length, escaped.length)
+        image = $reel.css('backgroundImage').replace(/['"]?\)$/, '')
+        actual = image.substr(image.length - escaped.length)
 
       equal( $reel.data('image'), raw, 'Given raw image URL (escaped or unescaped)');
       equal( actual, escaped, 'Actual escaped URL used');
@@ -432,14 +433,14 @@
       sprite=   'resources/object(2)-reel.jpg',
       $reel = $('#image').reel({
         attr: {
-          src: url,
+          src: url
         }
       })
 
     $reel.parent().bind('loaded.test', function(){
       var
-        len= sprite.length,
-        is= $reel.css('backgroundImage').substr(-len - 2, len) // -2 is for the trailing `')` 2-character combo
+        image= $reel.css('backgroundImage').replace(/['"]?\)$/, ''),
+        is= image.substr(image.length - sprite.length)
       equal( is, sprite );
       start();
     })

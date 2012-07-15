@@ -212,7 +212,7 @@
     '_.png?':         true,
     '1.jpg?nocache':  true,
     'image.php':      false,
-    'image':          false,
+    'image':          false
   },
   function(filename, pass){
     test( '`$.reel.re.image` Image `src` "'+filename+'" '+(pass? 'qualifies':'does NOT qualify')+' as an image', function(){
@@ -227,7 +227,7 @@
     user_agent= {
       'iPhone': [
         'Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3',
-        'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3',
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3'
       ],
       'iPod': [
         'Mozilla/5.0 (iPod; U; CPU like Mac OS X; en) AppleWebKit/420.1 (KHTML, like Gecko) Version/3.0 Mobile/3A101a Safari/419.3',
@@ -252,7 +252,7 @@
       ],
       // Any Android Webkit browser will match here, we'll test only the supported versions 2.3+
       'Generic Android': [
-        'Mozilla/5.0 (Linux; U; Android 2.3; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9',
+        'Mozilla/5.0 (Linux; U; Android 2.3; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9'
       ],
       'LG': [
         'Mozilla/5.0 (Linux; U; Android 2.3.3; ko-kr; LG-LU3000 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
@@ -288,7 +288,7 @@
         'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)',
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.6+ (KHTML, like Gecko) Version/5.1 Safari/534.50',
         'Opera/9.80 (Macintosh; Intel Mac OS X; U; en) Presto/2.2.15 Version/10.10',
-        'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; rv:1.9.0.19) Gecko/2010111021 Camino/2.0.6',
+        'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; rv:1.9.0.19) Gecko/2010111021 Camino/2.0.6'
       ],
       // Third-party browsers
       'Fennec': [
