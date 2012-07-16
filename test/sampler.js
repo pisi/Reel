@@ -1,81 +1,93 @@
-$(function ready(){
 
   /*
-  Code used in the #drone example; based on one by Mark Leidman
+  ** YOU DON'T WANT TO USE THE CODE BELOW FOR YOUR PROJECT.
+  ** TRUST ME.
+  **
+  ** Any hidden code (other than the one made visible
+  ** on the sample pages) isn't needed for Reel.
+  ** Everything is explained within the individual samples.
   */
-  function drone_frames(frames){
-    var frames= 179, every= 5, stack= []
-    for(var i= 1; i <= frames; i+= every){
-      var name= [i, '.png'].join('')
-      while (name.length < 9) name= '0'+name
-      stack.push(name)
-    }
-    return stack
-  }
 
-  function mini_frames(frames){
-    var frames= 120, every= 1, stack= []
-    for(var i= 1; i <= frames; i+= every){
-      var name= [i, '.jpg'].join('')
-      while (name.length < 7) name= '0'+name
-      stack.push(name)
-    }
-    return stack
-  }
+(function run(){
 
-  function phone_frames(frames){
-    var every= 1, stack= []
-    for(var i= 1; i <= frames; i+= every){
-      var name= [i, '.png'].join('')
-      while (name.length < 6) name= '0'+name
-      stack.push(name)
-    }
-    return stack
-  }
+  yepnope( {
+    load: [
+      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7')+'.min.js',
+      'lib/vendor/jquery.cookie-min.js'
+    ],
+    complete: function(){
 
+      $('#control_events button').click(function(){
+        var
+          command= $(this).text()
 
-  /*
-  This method is NOT needed to initiate the Reel. It is here for switching Reels on and off.
-  It essentially is a shortcut for `$(target).reel(options)`
-  You don't need to use it
-  */
-  prepare_reel_sample= function(target){
-    var
-      $sample= $(target).parent('.sample'),
-      opts= $('pre', $sample).text(),
-      options= eval('('+opts+')')
+        with(frames.test_stage){
+          $('#image').trigger( command );
+        }
+      });
 
-    $sample.click(function(e){
-      if (!$(this).is('.on')){
-        click_it(e);
+      $('.samples li a').click(function(e){
+        if (e.button || e.metaKey || e.shiftKey || e.ctrlKey) return;
+        var
+          url= $(this).attr('href'),
+          id= $(this).parent().attr('id'),
+          hijacked= false,
+          call
+
+        $('#test_stage').attr({
+          src: url
+        }).one('load', function(){
+          // Once the test stage is loaded,
+          // we want to hijack the Reel from example
+          // and take over with the local version for testing
+          with(frames.test_stage){
+            $(function(){
+              $('#image').trigger('teardown');
+              delete jQuery.reel;
+              var script= document.createElement('script');
+              script.type= "text/javascript";
+              script.src= "../../jquery.reel.js";
+              script.onload= wait_for_source;
+              document.getElementsByTagName('head')[0].appendChild(script);
+              // We wait for source via XHR to execute it again
+              function wait_for_source(){
+                var
+                  wait= setInterval(function(){
+                    if (call){
+                      clearInterval(wait);
+                      eval(call);
+                    }
+                }, 300);
+              }
+            })
+          }
+          $.ajax(url, {
+            success: function(a,b,xhr){
+              var
+                iframe_pool= $('#test_stage').contents()
+
+              iframe_pool.ready(function(){
+                var
+                  iframe_pool= $('#test_stage').contents(),
+                  source= xhr.responseText
+
+                call= /<script>\n((.|\n)+)<\/script>/.exec(source)[1]
+              })
+            }
+          });
+        });
+
+        $.cookie('reel.test.sample', id);
         return false;
-      }
-    });
-    $('h3', $sample).click(click_it);
+      });
 
-    options.speed && $('<div/>', { className: 'control_events' })
-    .append($('<button/>', { text: '▶ play' }).click(function(){ $(target).trigger('play') }))
-    .append($('<button/>', { text: '❙❙ pause' }).click(function(){ $(target).trigger('pause') }))
-    .append($('<button/>', { text: '◼ stop' }).click(function(){ $(target).trigger('stop') }))
-    .insertAfter(target);
+      /*
+      Cookie persistence of last selected sample.
+      */
+      var $recovered= $('#'+$.cookie('reel.test.sample')+' a');
+      ( !!$recovered.length && $recovered || $('.groups li:first .samples li:first a') ).click();
 
-    $('<div/>', { className: 'hint', text: 'Click to activate this sample'}).appendTo($sample);
-
-    function click_it(e){
-      var
-        onoff= !$sample.hasClass('on'),
-        $others= $('.sample').not($sample)
-      if (!e.altKey){
-        $others.removeClass('on');
-        $('.jquery-reel', $others).trigger('teardown');
-      }
-
-      $sample[onoff ? 'addClass' : 'removeClass']('on');
-      onoff && $(target).reel(options) || $(target).trigger('teardown');
-      $.cookie('reel.test.sample', onoff ? $(target).selector : null);
-      // $.cookie(onoff ? '')
-      return false;
     }
-  }
+  } );
 
-});
+})();

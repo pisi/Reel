@@ -1,77 +1,92 @@
 
-jQuery Reel 1.1.4
-=================
+jQuery Reel 1.2
+===============
 
-**Reel** is a jQuery plugin which takes an image tag and makes it a live "projection" of pre-built animation frames sequence. Its aim is to provide a 360° view of something or someplace. Great alternative to widely used Flash and Java techniques.
+**Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `img` HTML tag used on 100+ websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
 
 <http://plugins.jquery.com/project/reel>
 
-* Intuitive operation. Supports mouse wheel and touch (iPads and such).
-* **NEW** Animated rotation and inertial motion.
-* **NEW** Modes covering beyond usual 360° span.
-* **NEW** Very iPhoneOS-friendly. Excellent on iPad!
-* Plays fair with your existing CSS.
+* Modes covering beyond usual 360° span.
+* Animated rotation and inertial motion.
+* **NEW** In-scene annotations in sync with frames.
+* Intuitive operation. Supports mouse wheel and touch.
+* Apple, Blackberry and now **NEW** Android mobile devices supported.
+* **NEW** Fully customizable with 50+ options to choose from.
 * Browser and operating system agnostic. It's your choice.
 * No browser extensions needed. No Flash, nothing. It's just an image...
-* **NEW** Even more transparent, eventful & well-tested tiny code base.
-* Emerging tools for Drupal, Dreamweaver, Poser or Python by the community!
+* Plays fair with your existing CSS.
+* Transparent, eventful & well-tested tiny code base.
+* Tools for Drupal, **NEW** Joomla, Dreamweaver, Poser or Python by the community!
 
 Demo
 ----
-View a [demonstration][demo] on plugin home page.
+View a [demonstration][demo] on plugin home page or our [many examples][examples].
 
 Syntax
 ------
-The syntax is pretty straightforward. The plugin exposes just one method:
+It is actually pretty straightforward:
 
-    .reel([options])
+    .reel( [options] )
 
-and one set of default values for all the options:
+For the many `options` head to plugin [on-line reference][options] page or view the [entire open-source code explained][docs], where also the other method `.unreel()` along with events and data keys are explained in detail. The annotations are embedded into the source code and you also find a copy in the `docs/` folder.
 
-    $.reel.def
+Example
+-------
 
-For list of options head to plugin [on-line reference][options] page.
+Say you have an image in your page:
 
-Requirements
-------------
-* **[jQuery 1.4.2 or higher][jquery]**
-* Optionaly you can also include these handy jQuery plugins (recommended)
-    * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
-    * or [jQuery.event.special.wheel][wheel] is a nice alternative
-    * [jQuery.disableTextSelect][disabletextselect] will retain mouse dragging 
-interaction when saving the image is enabled
+```html
+    <img src="my_server/image.jpg" width="200" height="100" id="my_image">
+```
+
+and calling:
+
+```js
+    $('#my_image').reel()
+```
+
+will turn your image into default Reel with 36 frames in sprite. Use [options][options] to customize.
 
 License
 -------
-* Available for use in all personal or commercial projects under both 
-[MIT][license-mit] and [GPL][license-gpl] licenses.
+* Available for free to use in all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses.
 
-Download version 1.1.4
-----------------------
-* **[Open source][source] (~ 34,7 kB)**
-* or [minified version][min] (~ 11,7 kB)
+<a href='http://www.pledgie.com/campaigns/9596'><img alt='Click here to lend your support to: Reel and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/9596.png?skin_name=chrome' border='0' /></a>
 
-Use [Reel's cloud CDN][cdn] (1.1.4)
------------------------------------
-* **[Bundled with plugins & minified][cdn-bundle] (~ 5,9 kB; gzipped)**
-* or [just minified][cdn-min] (~ 5,2 kB; gzipped)
-* or [open source for development][cdn-devel] (~ 9,9 kB; gzipped)
+Requirements
+------------
+* **[jQuery 1.5 or higher][jquery]**
+* Optionaly you can also include these handy jQuery plugins (recommended)
+    * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
+    * or [jQuery.event.special.wheel][wheel] is a nice alternative
+    * [jQuery.disableTextSelect][disabletextselect] will retain mouse dragging interaction when saving the image is enabled
+
+Download version 1.2
+--------------------
+* **[Open source][source] (~ 100,2 kB annotated)**
+* or [minified version][min] (~ 16,8 kB)
+* or [entire package][zip] (~ 3 MB)
+
+Link the [CDN][cdn]
+----------------------------
+* **[http://code.vostrel.cz/jquery.reel-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
 
 [CHANGELOG][changelog]
 
 [demo]: http://jquery.vostrel.cz/reel#demo
+[docs]: http://test.vostrel.cz/jquery.reel/docs/jquery.reel.html
+[examples]: http://test.vostrel.cz/jquery.reel/example
 [options]: http://jquery.vostrel.cz/reel#options
-[changelog]: http://github.com/pisi/Reel/blob/v1.1.4/CHANGELOG.markdown
-[license-mit]: http://github.com/pisi/Reel/blob/v1.1.4/MIT-LICENSE.txt
-[license-gpl]: http://github.com/pisi/Reel/blob/v1.1.4/GPL-LICENSE.txt
+[changelog]: http://github.com/pisi/Reel/blob/master/CHANGELOG.markdown
+[license-mit]: http://github.com/pisi/Reel/blob/master/MIT-LICENSE.txt
+[license-gpl]: http://github.com/pisi/Reel/blob/master/GPL-LICENSE.txt
 [jquery]: http://www.jquery.com/
 [disabletextselect]: http://www.jdempster.com/category/jquery/disabletextselect/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
-[source]: http://github.com/pisi/Reel/raw/v1.1.4/jquery.reel.js
-[min]: http://github.com/pisi/Reel/raw/v1.1.4/jquery.reel-min.js
+[source]: http://github.com/pisi/Reel/raw/v1.2/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/v1.2/jquery.reel-min.js
+[zip]: http://github.com/pisi/Reel/zipball/v1.2
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [cdn]: http://wiki.github.com/pisi/Reel/cdn
-[cdn-min]: http://code.vostrel.cz/jquery.reel.js
 [cdn-bundle]: http://code.vostrel.cz/jquery.reel-bundle.js
-[cdn-devel]: http://code.vostrel.cz/jquery.reel-devel.js

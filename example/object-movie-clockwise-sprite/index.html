@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="sprite-clockwise">
+  <head>
+    <title>jQuery Reel Clockwise Sprite Object Movie Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.7.min.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-1.2-bundle.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Clockwise Sprite</h1>
+
+    <img id="image" src='f1.jpg' width="276" height="126" />
+    <script>
+      $(function(){ // when DOM ready
+
+        $('#image').reel({
+          indicator:   5, // For no indicator just remove this line
+          speed:       -0.3,
+          frames:      35,
+          cw:          true,
+          annotations: {
+            "the_man": {
+              node: { text: 'Mr. Kluka himself', css: { width: '95%', textAlign: 'right', fontSize: '12px' } },
+              start: 11,
+              end: 28,
+              x: 0,
+              y: 5
+            }
+          }
+        });
+
+      });
+    </script>
+
+    <p class="credits photo"><a href="mailto:syerik@seznam.cz">Erik Kluka</a></p>
+  </body>
+</html>
+

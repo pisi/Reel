@@ -3,12 +3,11 @@
  */
 (function($){
 
-  module('Sprite', { teardown: function teardown(){
-    $('.jquery-reel').unbind('loaded').trigger('teardown');
-  }});
+  module('Sprite', reel_test_module_routine);
 
-  asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
-    expect($.browser.msie ? 16 : 12);
+  test( 'Multi-row: Frame shifting (4 rows)', function(){
+
+    expect($.browser.msie ? 21 : 17);
     var
       selector= '#image',
       $reel= $(selector).reel({
@@ -38,9 +37,13 @@
         '3': [    0.6667,          14,      '-276px',     '-504px' ],
         '4': [         1,          20,      '-276px',     '-756px' ]
       }
-    $.each(entries, function(ix,it){
+
+    equal( $reel.reel('frame'), 2, 'Initial frame');
+
+    $.each(entries, function(ix, it){
       $reel.trigger('rowChange', Number(ix));
-      equal( $reel.data('row'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier').toFixed(4), it[0], 'Row '+ix+': Tier');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
       if ($.browser.msie){
         // MSIE returns undefined backgroundPosition, so we need to check individual ones
@@ -50,11 +53,10 @@
         equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
       }
     });
-    start();
   });
 
-  asyncTest( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
-    expect($.browser.msie ? 12 : 9);
+  test( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
+    expect($.browser.msie ? 15 : 12);
     var
       selector= '#image',
       $reel= $(selector).reel({
@@ -82,7 +84,8 @@
       }
     $.each(entries, function(ix,it){
       $reel.trigger('rowChange', Number(ix));
-      equal( $reel.data('row'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
       if ($.browser.msie){
         // MSIE returns undefined backgroundPosition, so we need to check individual ones
@@ -92,7 +95,6 @@
         equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
       }
     });
-    start();
   });
 
   asyncTest( 'Multi-row: Immune to `backwards` value', function(){
@@ -107,13 +109,13 @@
         row: 3
       })
 
-    $reel.bind('loaded', function(){
-      equal( $reel.data('row'), 1);
+    $(document).bind('loaded.test', function(){
+      equal( $reel.data('row'), 3);
       equal( $reel.data('frame'), 17);
       equal( $reel.data('backwards'), false);
 
       $reel.data('backwards', true);
-      equal( $reel.data('row'), 1);
+      equal( $reel.data('row'), 3);
       equal( $reel.data('frame'), 17);
       equal( $reel.data('backwards'), true);
       start();

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="sequence-multi-row">
+  <head>
+    <title>jQuery Reel Multi-Row Sequence Object Movie Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.7.min.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-1.2-bundle.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Multi-Row Sequence</h1>
+
+    <img id="image" src='mini.jpg' width="200" height="200" />
+    <script>
+      $(function(){ // when DOM ready
+
+        $('#image').reel({
+          indicator:   5, // For no indicator just remove this line
+          frames:      20,
+          frame:       14,
+          rows:        6,
+          row:         3,
+          speed:       0.3,
+          images:      'mini/###.jpg',
+          annotations: {
+            "first_row": {
+              node: { text: 'First Row', css: { width: 100 } },
+              start: 1,
+              end: 20,
+              x: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105],
+              y: 10
+            },
+            "last_row": {
+              node: { text: 'Last Row', css: { width: 100 } },
+              start: 101,
+              end: 120,
+              x: [105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10],
+              y: 175
+            }
+          }
+        });
+
+      });
+    </script>
+
+    <p class="credits photo"><a href="mailto:masmith@photospherix.com">Matt Smith</a></p>
+  </body>
+</html>
+

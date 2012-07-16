@@ -3,20 +3,11 @@
   <head>
     <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
     <title>jQuery Reel Test Sampler</title>
-    <script src='http://code.jquery.com/jquery-1.7.1.min.js' type='text/javascript'></script>
-    <script src='../jquery.reel-min.js' type='text/javascript'></script>
-    <script src='../example/inc/jquery.disabletextselect-min.js' type='text/javascript'></script>
-    <script src='../example/inc/jquery.mousewheel-min.js' type='text/javascript'></script>
-    <script src='../example/inc/jquery.cookie-min.js' type='text/javascript'></script>
+    <script src='lib/params.js' type='text/javascript'></script>
+    <script src='lib/vendor/yepnope.js' type='text/javascript'></script>
     <script src='sampler.js' type='text/javascript'></script>
     <link href='sampler.css' language='text/css' rel='stylesheet' />
     <meta name='viewport' content='width=680' />
-    <style type="text/css">
-      /*
-      Piece of CSS style used by #multirow sample to test classes persistence
-      */
-      .bordered{ border: 2px dashed black; }
-    </style>
   </head>
   <body>
     <h1>
@@ -25,236 +16,74 @@
       <strong>Sampler</strong>
     </h1>
 
-    <h2>Object Movie</h2>
-    <div class="sample">
-      <img id='logo' src='samples/logo.png' width='130' height='60' />
-      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Directional Sprite</h3>
-<pre>
-{ speed:        1,
-  opening:      1,
-  frame:        3,
-  delay:        3,
-  directional:  true }
+<ul class="groups">
+  <li>
+    <h2>Object Movie Sprites</h2>
 
-/*
-  `speed` 1 is one revolution
-  per second (1 Hz). It is animated
-  after 1 second long `opening` spin
-  and a 3 second `delay`.
-*/
-</pre>
-    </div>
-    <div class="sample">
-      <img id='f1' src='samples/f1.jpg' width='276' height='126' />
-      <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-      <h3>Clockwise Sprite</h3>
-<pre>
-{ speed:   -0.3,
-  frames:  35,
-  cw:      true }
+    <ul class="samples">
+      <li id="object-movie-animation-sprite">
+        <a href="../example/object-movie-animation-sprite/index.html">Animation</a>
+      </li>
+      <li id="object-movie-directional-sprite">
+        <a href="../example/object-movie-directional-sprite/index.html">Directional</a>
+      </li>
+      <li id="object-movie-clockwise-sprite">
+        <a href="../example/object-movie-clockwise-sprite/index.html">Clockwise</a>
+      </li>
+      <li id="object-movie-non-animated-sprite">
+        <a href="../example/object-movie-non-animated-sprite/index.html">Non-Animated</a>
+      </li>
+      <li id="object-movie-multi-row-sprite">
+        <a href="../example/object-movie-multi-row-sprite/index.html">Multi-Row</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h2>Object Movie Sequences</h2>
+    <ul class="samples">
+      <li id="object-movie-multi-row-sequence">
+        <a href="../example/object-movie-multi-row-sequence/index.html">Multi-Row</a>
+      </li>
+      <li id="object-movie-dual-orbit-sequence">
+        <a href="../example/object-movie-dual-orbit-sequence/index.html">Dual-Orbit</a>
+      </li>
+      <li id="object-movie-clockwise-sequence">
+        <a href="../example/object-movie-clockwise-sequence/index.html">Clockwise</a>
+      </li>
+      <li id="object-movie-direct-sequence">
+        <a href="../example/object-movie-direct-sequence/index.html">Direct</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h2>Panoramas</h2>
+    <ul class="samples">
+      <li id="panorama-sprite">
+        <a href="../example/panorama-sprite/index.html">Sprite</a>
+      </li>
+      <li id="panorama-click-free-stitched">
+        <a href="../example/panorama-click-free-stitched/index.html">Click-Free Stitched</a>
+      </li>
+      <li id="panorama-non-looping-stitched">
+        <a href="../example/panorama-non-looping-stitched/index.html">Non-Looping Stitched</a>
+      </li>
+    </ul>
+  </li>
+</ul>
 
-/*
-  Unlike the other formula car sample
-  this one's sprite is clockwise-
-  -organized.
-*/
-</pre>
-    </div>
-    <div class="sample">
-      <img id='f1ccw' src='samples/f1-ccw.jpg' width='276' height='126' />
-      <div class="credits">photo &copy; <a href="mailto:syerik@seznam.cz">Erik Kluka</a></div>
-      <h3>Non-Animated Sprite</h3>
-<pre>
-{ frames:  35,
-  opening: 2,
-  entry: 1 }
+    <iframe src="" name="test_stage" id="test_stage"></iframe>
 
-/*
-  This one isn't fully animated,
-  but has a 2 seconds long `opening`
-  with `entry` speed of 1 Hz.
-*/
-</pre>
-    </div>
-    <div class="sample">
-      <img id='multirow' src='samples/multi-row.png' width='100' height='100' class="bordered highlighted" />
-      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Multi-Row Sprite</h3>
-<pre>
-{ speed:    0.3,
-  frames:   6,
-  footage:  3,
-  rows:     3,
-  row:      2 }
-
-/*
-  Additionally custom class "bordered"
-  (the dashed border) is applied
-  on the IMG and is being preserved.
-*/
-</pre>
-    </div>
-    <div class="sample">
-      <img id='mini' src='samples/mini.jpg' width='200' height='200' />
-      <div class="credits">photo &copy; <a href="mailto:masmith@photospherix.com">Matt Smith</a></div>
-      <h3>Multi-Row Sequence</h3>
-<pre>
-{ frames:  20,
-  frame:   14,
-  rows:    6,
-  row:     3,
-  speed:   0.3,
-  path:    'samples/mini/',
-  images:  mini_frames() }
-
-/*
-  Helper function `mini_frames` returns
-  simply an array of filenames
-  [ '001.jpg',
-    '002.jpg',
-    ..
-    '120.jpg' ]
-*/
-</pre>
-    </div>
-    <div class="sample">
-      <img id='phone' src='samples/phone.png' width='200' height='200' />
-      <h3>Dual-Orbit Sequence</h3>
-<pre>
-{ footage:  10,
-  cw:       true,
-  orbital:  3,
-  inversed: true,
-  speed:    0.7,
-  path:     'samples/phone/',
-  images:   phone_frames(20) }
-
-/*
-  Helper function `phone_frames` returns
-  simply an array of filenames
-  [ '01.png',
-    '02.png',
-    ..
-    '19.png' ]
-*/
-</pre>
-    </div>
-    <div class="sample">
-      <img id='badge' src='http://code.vostrel.cz/jquery.reel-1.gif' width='120' height='30' />
-      <div class="credits">image &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Sequence</h3>
-<pre>
-{ speed:   2,
-  delay:   1,
-  path:    'samples/',
-  images:  [ 'badge-1.gif',
-             'badge-2.gif',
-             'badge-3.gif',
-             'badge-4.gif' ] }
-
-/*
-  `delay` tells it to wait 1 second
-  before starting to play
-*/
-</pre>
-    </div>
-    <div class="sample">
-      <img id='drone' src='samples/drone.png' width='300' height='200' />
-      <div class="credits">image &copy; <a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></div>
-      <h3>Sequence</h3>
-<pre>
-{ cw:      true,
-  frame:   32,
-  speed:   -0.2,
-  path:    'samples/drone/',
-  images:  drone_frames() }
-
-/*
-  Helper function `drone_frames` returns
-  simply an array of filenames
-  [ '00001.png',
-    '00006.png',
-    '00011.png',
-    ..
-    '00179.png' ]
-*/
-</pre>
-    </div>
-
-    <h2>Panorama Movie</h2>
-    <div class="sample">
-      <img id='green' src='samples/green.jpg' width='200' height='150' />
-      <div class="credits">photo &copy; <a href="mailto:petr@vostrel.cz">Petr Vostřel</a></div>
-      <h3>Stitched</h3>
-<pre>
-{ frames:   32,
-  footage:  4,
-  speed:    0.1 }
-</pre>
-    </div>
-
-    <h2>Rectilinear Panorama</h2>
-    <div class="sample">
-      <img id='stitched' src='samples/stitched.jpg' width='297' height='167' />
-      <div class="credits">photo &copy; <a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></div>
-      <h3>Click-Free Stitched</h3>
-<pre>
-{ stitched:   1821,
-  frames:     60,
-  frame:      23,
-  speed:      -0.05,
-  clickfree:  true }
-</pre>
-    </div>
-    <div class="sample">
-      <img id='chicago' src='samples/chicago.jpg' width='270' height='150' />
-      <div class="credits">photo &copy; <a href="mailto:g@miernicki.com">Greg Miernicki</a></div>
-      <h3>Non-Looping Stitched</h3>
-<pre>
-{ stitched:  1072,
-  loops:     false,
-  steps:     30,
-  step:      15,
-  speed:     -0.1,
-  timeout:   1 }
-</pre>
+    <div id="control_events">
+      Animated Reels can also be controlled using events
+      <button title="will result in Reel playing after a `delay`">pause</button>
+      <button title="will result in stopped Reel">stop</button>
+      or
+      <button title="will result in Reel playing">play</button>
     </div>
 
     <div class="footer">
-      &copy; 2009-2011 Petr Vostřel, part of <strong>jQuery Reel project - <a href="http://jquery.vostrel.cz/reel">http://jquery.vostrel.cz/reel</a></strong>
+      &copy; 2009-2012 Petr Vostřel, part of <strong>jQuery Reel project - <a href="http://jquery.vostrel.cz/reel">http://jquery.vostrel.cz/reel</a></strong>
     </div>
 
-    <script type='text/javascript'>
-$(function ready(){
-
-  /*
-  Preset common indicator size
-  */
-  $.reel.def.indicator= 5;
-
-  $('.sample img[id]').each(function(){
-
-    prepare_reel_sample('#' + $(this).attr('id'));
-    /*
-    This `prepare_reel_sample` essentialy uses each sample's options
-    and passes them to `.reel` call as a parameter when clicked.
-    It also adds some UI interactions like toggling samples, cookie persistence and such.
-    Definitely not needed for running Reel itself. You DON'T want to use it.
-
-    You simply do:
-      $('#my_image').reel({ ..your options.. });
-
-    Just like that.
-    */
-  });
-
-  /*
-  Cookie persistence of last selected sample. You DON'T want to use this either.
-  */
-  $($.cookie('reel.test.sample') || '.sample:first').click();
-
-});
-    </script>
   </body>
 </html>

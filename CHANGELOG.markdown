@@ -1,6 +1,49 @@
 Changelog
 =========
 
+Version 1.2
+-----------
+
+* The long-missing comprehensive documentation added to the `docs/` directory.
+* Non-`wheelable` Reels now allow scrolling of the page when wheeling
+  above the Reel instance.
+* New option `attr` allows to set custom attributes of the IMG tag
+  (useful for re-using DOM nodes).
+* Instances being re-instantiated now perform automatic teardown
+  (GH-62).
+* Proper image preload events unbinding on teardown (GH-64).
+* Option `scrollable` can disable page scrolling (if needed) on touch devices.
+* New event `"openingDone"` now announces the end of opening animation
+  (GH-65).
+* Internal event `slide` renamed to `pan` (GH-51).
+* Actual frame number is manifested with a wrapper class name, e.g. `frame-8` (GH-69).
+* Improved order of preloaded images gradually increasing fidelity of
+  the image, thus the name `"fidelity"` and this mode is now default.
+  The former order is designated `"linear". Preloading mode is chosen by
+  new `preload` option accepting a mode name. (GH-10).
+* Deprecated options `hotspot`, `tooltip` and `reversed` have been
+  removed.
+* Bare click on left/right half of the image steps the Reel one frame
+  forward/back. Set `steppable` to false to disable. Comes with `"stepLeft"` and `"stepRight"` events (GH-20).
+* Custom text/graphics can augment the frames using the brand new
+  `annotations` feature (GH-36).
+* New complementary `.unreel()` function to revert effects of `.reel()`
+  on the DOM.
+* Control event `play` now accepts optional `speed` parameter.
+* Mouse cursor is now customizable with the new `cursor` option. The new
+  failsafe cursor is now `"move"`.
+* `images` option now supports easy definition of sequence frames by one path string with a counter placeholder.
+* Default height of the preloader progress bar reduced to 2 pixels.
+* Completely reworked, centralized and enhanced naked examples with descriptions.
+* The minimal required version of jQuery has been increased to 1.5.
+* A brand new data interface with automatic change events is in place
+  for easy external control of the instance. See
+  [Data](/pisi/Reel/wiki/Data) for more.
+* The `step` and `steps` options deprecated in favor to `frame` and `frames`.
+* The `revolution` option now support optional object notation with `x` and/or `y` keys.
+* `$.reel.cdn` setting customization now working correctly (GH-124).
+
+
 Version 1.1.4
 -------------
 
