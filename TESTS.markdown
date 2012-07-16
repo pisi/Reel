@@ -4,18 +4,18 @@ Tests in Browsers
 Results of `test/index.html` runs in various browsers and environments. Grouped by browser. Including shortened browser signatures.
 
 
-Summary - 8 out of 9
---------------------
+Summary - 10 out of 12
+----------------------
 
 Both manual and automated tests indicate, that Reel is easily compatible with everything - nearly.
-From an array of 9 browsers Reel fails in just one case, in mobile Opera Mini. See [FAQ][FAQ] for explanation.
-I could as well leave out this JavaScript-disabled browser completely to have it look like Reel is 100% compatible, but let's leave it here to be fair.
+From an array of 12 browsers Reel fails in just two cases, in mobile Opera Mini (see [FAQ][FAQ] for explanation) and on Windows Phones.
+I could as well leave out these browsers completely to have it look like Reel is 100% compatible, but let's leave it here to be fair.
 
 
 Statistics
 ----------
 
-Between releases (1.1.4 and 1.2), the unit test coverage has been **increased by 470%** with 99% of code being covered. We now have **1159 tests in 301 tasks and 10 modules**.
+Between releases (1.1.4 and 1.2), the unit test coverage has been **increased by 470%** with 99% of code being covered. We now have **1192 tests in 317 tasks and 10 modules**.
 
 
 Desktop-class
@@ -41,7 +41,7 @@ Desktop-class
   * **OK** -- Interaction
 
 
-### Interner Explorer
+### Internet Explorer
 
 * `Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; SLCC2; Media Center PC 6.0)`
   * **OK** -- Unit
@@ -83,9 +83,6 @@ Desktop-class
 Mobile-class
 ------------
 
-Unles noted otherwise mobile browsers are tested using their respective emulator software running on MacOSX 10.5.8.
-
-
 ### iOS Safari
 
 * `Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X) AppleWebKit/533.17.9 Version/5.0.2 Mobile/8C148 Safari/6533.18.5`
@@ -122,6 +119,13 @@ Unles noted otherwise mobile browsers are tested using their respective emulator
 
 * `Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; rv:1.9.1b2pre) Gecko/20081015 Fennec/1.0a1`
   * **OK** -- Unit
+  * **FAIL** -- Interaction
+
+
+### Windows Mobile
+
+* `Mozilla/5.0 (???)`
+  * **?** -- Unit
   * **FAIL** -- Interaction
 
 

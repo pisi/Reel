@@ -62,7 +62,7 @@ jQuery.reel || (function($, window, document, undefined){
       // ### `$.reel.version`
       //
       // `String` (major.minor.patch), since 1.1
-      version: '1.1.4-devel',
+      version: '1.2',
 
       // Options
       // -------
