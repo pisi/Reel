@@ -51,8 +51,8 @@ jQuery.reel || (function($, window, document, undefined){
 
   // One vital requirement is the correct jQuery. Reel requires at least version 1.5
   // and a make sure check is made at the very beginning.
-  if (+$().jquery.replace(dot(), '').substr(0, 2) < 15)
-    throw 'VersionError: far too old jQuery for running Reel'
+  if (+$().jquery.replace(dot(), __).substr(0, 2) < 15)
+    throw 'Too old jQuery for Reel.'
 
   // `$.reel` (or `jQuery.reel`) namespace is provided for storage of all Reel belongings.
   // It is locally referenced as just `reel` for speedier access.
@@ -2153,7 +2153,7 @@ jQuery.reel || (function($, window, document, undefined){
     // And the same goes for browser events too.
     //
     ns= dot(klass),
-    pns= '.pan' + ns,
+    pns= dot('pan') + ns,
     _touch_= 'touch', _mouse_= 'mouse',
     _mousedown_= _mouse_+'down'+ns, _mouseenter_= _mouse_+'enter'+ns,
     _mouseleave_= _mouse_+'leave'+pns, _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns,
