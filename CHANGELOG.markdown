@@ -4,44 +4,49 @@ Changelog
 Version 1.2
 -----------
 
-* Infrastructure
-    * The long-missing comprehensive documentation added to the `docs/` directory.
-    * Improved order of preloaded images gradually increasing fidelity of the image,
-      thus the name "fidelity" and this mode is now default. The former order is designated
-      "linear". Preloading mode is chosen by new `preload` option accepting a mode name (GH-10).
-    * Completely reworked, centralized and enhanced naked examples with descriptions.
-    * The minimal required version of jQuery has been increased to 1.5.
-    * A brand new data interface with automatic change events is in place for easy
-      external control of the instance.
-    * `$.reel.cdn` setting customization now working correctly (GH-124).
-* Interaction
-    * Non-`wheelable` Reels now allow scrolling of the page when wheeling above the Reel instance.
-    * New option `scrollable` can disable page scrolling (if needed) on touch devices.
-    * Bare click on left/right half of the image steps the Reel one frame forward/back.
-      Set `steppable` to `false` to disable (GH-20).
-* DOM
-    * Custom text/graphics can augment the frames using the brand new `annotations` feature (GH-36).
-    * New option `attr` allows to set custom attributes of the IMG tag
-      (useful for re-using DOM nodes).
-    * Instances being re-instantiated now perform automatic teardown (GH-62).
-    * Proper image preload events unbinding on teardown (GH-64).
-    * Actual frame number is manifested with a wrapper class name, e.g. `frame-8` (GH-69)
-* Looks
-    * Mouse cursor is now customizable with the new `cursor` option.
-      New failsafe cursor is now `move`.
-    * Default height of the preloader progress bar reduced to 2 pixels.
-* Other API Changes
-    * Deprecated options `hotspot`, `tooltip` and `reversed` have been removed.
-    * New complementary `.unreel()` function to revert effects of `.reel()` on the DOM.
-    * The `step` and `steps` options deprecated in favor of `frame` and `frames`.
-    * The `revolution` option now support optional object notation with `x` and/or `y` keys.
-    * The `images` option now supports easy definition of sequence frames by one path string
-      with a counter placeholder.
-* Events
-    * New event `openingDone` now announces the end of opening animation (GH-65).
-    * Internal event `slide` renamed to `pan` (GH-51).
-    * Control event `play` now accepts optional `speed` parameter.
-    * New events `stepLeft` and `stepRight` for doing just that (GH-20).
+### Infrastructure
+* The long-missing comprehensive documentation added to the `docs/` directory.
+* Improved order of preloaded images gradually increasing fidelity of the image,
+  thus the name "fidelity" and this mode is now default. The former order is designated
+  "linear". Preloading mode is chosen by new `preload` option accepting a mode name (GH-10).
+* Completely reworked, centralized and enhanced naked examples with descriptions.
+* The minimal required version of jQuery has been increased to 1.5.
+* A brand new data interface with automatic change events is in place for easy
+  external control of the instance.
+* `$.reel.cdn` setting customization now working correctly (GH-124).
+
+### Interaction
+* Non-`wheelable` Reels now allow scrolling of the page when wheeling above the Reel instance.
+* New option `scrollable` can disable page scrolling (if needed) on touch devices.
+* Bare click on left/right half of the image steps the Reel one frame forward/back.
+  Set `steppable` to `false` to disable (GH-20).
+
+### DOM
+* Custom text/graphics can augment the frames using the brand new `annotations` feature (GH-36).
+* New option `attr` allows to set custom attributes of the IMG tag
+  (useful for re-using DOM nodes).
+* Instances being re-instantiated now perform automatic teardown (GH-62).
+* Proper image preload events unbinding on teardown (GH-64).
+* Actual frame number is manifested with a wrapper class name, e.g. `frame-8` (GH-69)
+
+### Looks
+* Mouse cursor is now customizable with the new `cursor` option.
+  New failsafe cursor is now `move`.
+* Default height of the preloader progress bar reduced to 2 pixels.
+
+### Other API Changes
+* Deprecated options `hotspot`, `tooltip` and `reversed` have been removed.
+* New complementary `.unreel()` function to revert effects of `.reel()` on the DOM.
+* The `step` and `steps` options deprecated in favor of `frame` and `frames`.
+* The `revolution` option now support optional object notation with `x` and/or `y` keys.
+* The `images` option now supports easy definition of sequence frames by one path string
+  with a counter placeholder.
+
+### Events
+* New event `openingDone` now announces the end of opening animation (GH-65).
+* Internal event `slide` renamed to `pan` (GH-51).
+* Control event `play` now accepts optional `speed` parameter.
+* New events `stepLeft` and `stepRight` for doing just that (GH-20).
 
 
 Version 1.1.4
