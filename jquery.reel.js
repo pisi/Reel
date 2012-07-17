@@ -755,6 +755,7 @@ jQuery.reel || (function($, window, document, undefined){
                 setup: function(e){
                   if (t.hasClass(klass)) return;
                   set(_options_, opt);
+                  set(_zoomState_, false);
                   var
                     src= t.attr(opt.attr).attr('src'),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
@@ -813,6 +814,46 @@ jQuery.reel || (function($, window, document, undefined){
                   opt.indicator || $overlay.unbind('.indicator');
                   css(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
                   css(____+___+dot(klass), { display: _block_ });
+
+                  var par = $instance.parent();
+                  par.append('<span class="reel-zoom"><a class="zoom-out">-</a> <a class="zoom-in">+</a></span>');
+                  var zoom = par.find(".reel-zoom");
+                  var vanillaImg = new Image();
+                  vanillaImg.src = t.attr("src");
+                  $(zoom).css({
+                    "position":"relative",
+                    "margin-top":"-80px",
+                    "font-size":"300%",
+                    "float":"right"
+                    });
+                  $(zoom).find("a").css({
+                    "padding": "20px",
+                    "color":"gray",
+                    "font-family": "Helvetica Neue, Helvetica, Sans-Serif, Sans",
+                    "font-weight": "bold",
+                    }).hover(function() {
+                        $(this).css({"color":"black","cursor":"pointer"});
+                    },function() {
+                        $(this).css({"color":"gray","cursor":"pointer"});
+                    });
+
+                  $(zoom).find(".zoom-in").click(function(e) {
+                    set(_zoomState_,true); 
+                    e.preventDefault();
+                    t.width(t.width()*2);
+                    t.height(t.height()*2);
+                    console.log(vanillaImg.width);
+                    // t.css({"background-position":(vanillaImg.width/(-4))+"px 0px"})
+                    t.css({"margin-left":t.width()/(-4)+"px"})
+                    t.css({"margin-top":t.height()/(-4)+"px"})
+                    console.log("enhance");
+                    });
+
+                  $(zoom).find(".zoom-out").click(function(e) {
+                    e.preventDefault();
+                    console.log("de-enhance");
+                    });
+
                   pool.bind(on.pool);
                   t.trigger('setup');
                 },
@@ -1304,6 +1345,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // - for sprites it recalculates sprite's 'background position shift and applies it.
                   //
                   frameChange: function(e, set_frame, frame){
+                    if(get(_zoomState_)) return;
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
@@ -2151,7 +2193,7 @@ jQuery.reel || (function($, window, document, undefined){
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
-    _velocity_= 'velocity', _vertical_= 'vertical',
+    _velocity_= 'velocity', _vertical_= 'vertical',_zoomState_ = "zoomState",
 
     // And the same goes for browser events too.
     //
