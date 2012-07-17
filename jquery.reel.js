@@ -1348,7 +1348,7 @@ jQuery.reel || (function($, window, document, undefined){
                         shift= [px(-x), px(y)]
                       t.css({ backgroundPosition: shift.join(___) })
                     }
-                    // Fix img width and height if it is different from the actual picture
+                    // Fix img width and height if it is different from the actual picture dimensions
                     t.css({width:t.parent().css("width")});
                     t.css({height:t.parent().css("height")});
                   },
