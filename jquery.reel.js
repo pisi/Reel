@@ -1390,9 +1390,6 @@ jQuery.reel || (function($, window, document, undefined){
                         shift= [px(-x), px(y)]
                       t.css({ backgroundPosition: shift.join(___) })
                     }
-                    // Fix img width and height if it is different from the actual picture dimensions
-                    t.css({width:t.parent().css("width")});
-                    t.css({height:t.parent().css("height")});
                   },
 
                   // ---------
@@ -1624,6 +1621,15 @@ jQuery.reel || (function($, window, document, undefined){
                     operated && operated++;
                     to_bias(0);
                     slidable= true;
+                    var owidth = t.parent().width(),
+                        oheight = t.parent().height();
+                    if (t.width() != owidth || t.height() != oheight){
+                        // Fix img width and height + revolutions if it is different from the actual picture dimensions
+                        set(_revolution_, get(_revolution_)*(owidth/t.width()));
+                        set(_revolution_y_, get(_revolution_y_)*(oheight/t.height()));
+                        t.width(owidth);
+                        t.height(oheight);
+                    }
                     if (operated && !velocity) return mute(e);
                     if (get(_clicked_)) return mute(e, unidle());
                     if (get(_opening_ticks_) > 0) return;
