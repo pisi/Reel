@@ -473,7 +473,7 @@
         var
           $area= $reel.reel('area')
 
-        equal( $area.data('events')['up'].length, def.expect, def.label);
+        equal( $._data($area[0], 'events')['up'].length, def.expect, def.label);
         start();
       })
     });
