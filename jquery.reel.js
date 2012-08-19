@@ -1699,9 +1699,9 @@ jQuery.reel || (function($, window, document, undefined){
               // we need to bind to the parent document too to maintain the dragging even outside the area
               // of the `<iframe>`.
               //
-              pools
-            try{ pools= $.unique(pool.add(window.top.document)) }
-            catch(e){ pools= pool }
+              pools= pool
+            try{ if (pool[0] != top.document) pools= pool.add(top.document) }
+            catch(e){}
 
             // A private flag `$iframe` is established to indicate Reel being viewed inside `<iframe>`.
             //
