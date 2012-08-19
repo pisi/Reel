@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Development
+-----------
+
+* For smooth `velocity` kick it now follows `loaded` event (instead of `setup`) (GH-142).
+
+
 Version 1.2
 -----------
 
