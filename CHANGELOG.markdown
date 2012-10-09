@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Development
+-----------
+
+* Compatibility with jQuery 1.8 (GH-140)
+
+
 Version 1.2
 -----------
 

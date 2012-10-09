@@ -32,6 +32,7 @@
           url= $(this).attr('href'),
           id= $(this).parent().attr('id'),
           hijacked= false,
+          scripts_loaded= 0,
           call
 
         $('#test_stage').attr({
@@ -43,14 +44,20 @@
           with(frames.test_stage){
             $(function(){
               $('#image').trigger('teardown');
-              delete jQuery.reel;
-              var script= document.createElement('script');
-              script.type= "text/javascript";
-              script.src= "../../jquery.reel.js";
-              script.onload= wait_for_source;
-              document.getElementsByTagName('head')[0].appendChild(script);
-              // We wait for source via XHR to execute it again
+              delete jQuery;
+              inject_script('http://code.jquery.com/jquery-'+(parent.location.params.jq || '1.7')+'.min.js');
+              inject_script("../../jquery.reel-min.js");
+
+              function inject_script(url){
+                var script= document.createElement('script');
+                script.type= "text/javascript";
+                script.src= url;
+                script.onload= wait_for_source;
+                document.getElementsByTagName('head')[0].appendChild(script);
+              }
               function wait_for_source(){
+                // We wait for both sources to fully arrive via XHR
+                if(++scripts_loaded != 2) return;
                 var
                   wait= setInterval(function(){
                     if (call){
