@@ -4,7 +4,8 @@ Changelog
 Development
 -----------
 
-* Compatibility with jQuery 1.8 (GH-140)
+* Compatibility with jQuery 1.8 (GH-140).
+* For smooth `velocity` kick it now follows `loaded` event (instead of `setup`) (GH-142).
 
 
 Version 1.2

@@ -788,7 +788,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_stitched_shift_, 0);
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
-                  set(_velocity_, opt.velocity || 0);
+                  set(_velocity_, 0);
                   set(_vertical_, opt.vertical);
                   set(_preloaded_, 0);
                   set(_cwish_, negative_when(1, !opt.cw && !stitched));
@@ -797,6 +797,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_clicked_on_, set(_clicked_tier_, 0));
                   set(_lo_, set(_hi_, 0));
                   set(_reeling_, false);
+                  set(_reeled_, false);
                   set(_opening_, false);
                   set(_brake_, opt.brake);
                   set(_center_, !!opt.orbital);
@@ -983,6 +984,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
+                    get(_reeled_) || set(_velocity_, opt.velocity || 0);
                   },
 
                   // ----------------
@@ -1624,6 +1626,7 @@ jQuery.reel || (function($, window, document, undefined){
                 clearTimeout(delay);
                 pool.unbind(_tick_+dot(_opening_), on.pool[_tick_+dot(_opening_)]);
                 set(_opening_ticks_, 0);
+                set(_reeled_, true);
                 return operated= -opt.timeout * leader(_tempo_)
               },
               panned= false,
@@ -2145,7 +2148,7 @@ jQuery.reel || (function($, window, document, undefined){
     _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
-    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _revolution_= 'revolution',
+    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
     _velocity_= 'velocity', _vertical_= 'vertical',

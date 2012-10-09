@@ -36,6 +36,7 @@
         options: 'Object',
         playing: 'Boolean',
         preloaded: 'Number',
+        reeled: 'Boolean',
         reeling: 'Boolean',
         revolution: 'Number',
         revolution_y: 'Number',
