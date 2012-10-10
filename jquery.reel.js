@@ -889,7 +889,7 @@ jQuery.reel || (function($, window, document, undefined){
                         || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                       });
                       area
-                        .bind(_touchstart_, press())
+                        .bind(_touchstart_, press)
                     }else{
                       var
                         cursor= opt.cursor == _hand_ ? drag_cursor : opt.cursor || reel_cursor,
@@ -899,10 +899,10 @@ jQuery.reel || (function($, window, document, undefined){
                       css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor) }, true);
                       area
                         .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return e.preventDefault() || !delta || t.trigger('wheel', [delta]) && false })
-                        .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
+                        .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                         .bind('dragstart', function(){ return false })
                     }
-                    function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && r }}
+                    function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     opt.hint && area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
                     opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
@@ -1083,13 +1083,15 @@ jQuery.reel || (function($, window, document, undefined){
                   // are usually bound to the pool (document itself) to get a consistent treating regardless
                   // the event target element. However in click-free mode, it binds directly to the instance.
                   //
-                  down: function(e, x, y){
+                  down: function(e, x, y, ev){
+                    if (ev.button != DRAG_BUTTON) return;
                     if (opt.draggable){
                       var
                         clicked= set(_clicked_, get(_frame_)),
                         velocity= set(_velocity_, 0),
                         scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
                         origin= last= recenter_mouse(get(_revolution_), x, y)
+                      touchy || ev.preventDefault();
                       unidle();
                       no_bias();
                       panned= false;
