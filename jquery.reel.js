@@ -40,7 +40,6 @@
  *
  * Optional Plugins
  * ----------------
- * - jQuery.disableTextSelect [B] (James Dempster, http://www.jdempster.com/category/jquery/disabletextselect/)
  * - jQuery.mouseWheel [B] (Brandon Aaron, http://plugins.jquery.com/project/mousewheel)
  * - or jQuery.event.special.wheel (Three Dub Media, http://blog.threedubmedia.com/2008/08/eventspecialwheel.html)
  *
@@ -855,7 +854,7 @@ jQuery.reel || (function($, window, document, undefined){
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
-                    get(_area_).unbind(ns).enableTextSelect();
+                    get(_area_).unbind(ns);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
                       src: backup.src,
@@ -882,9 +881,10 @@ jQuery.reel || (function($, window, document, undefined){
                       id= t.attr(_id_),
                       $overlay= t.parent()
                       area= set(_area_, $(opt.area || $overlay ))
+                    css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-                      css(___+dot(klass), { WebkitUserSelect: _none_, WebkitBackgroundSize: get(_images_).length
+                      css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
                         ? undefined : get(_stitched_) && px(get(_stitched_))+___+px(space.y)
                         || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                       });
@@ -900,7 +900,7 @@ jQuery.reel || (function($, window, document, undefined){
                       area
                         .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return e.preventDefault() || !delta || t.trigger('wheel', [delta]) && false })
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press())
-                        .disableTextSelect();
+                        .bind('dragstart', function(){ return false })
                     }
                     function press(r){ return function(e){ if (e.button == DRAG_BUTTON) return e.preventDefault() || t.trigger('down', [finger(e).clientX, finger(e).clientY]) && r }}
                     opt.hint && area.attr('title', opt.hint);
@@ -2211,10 +2211,6 @@ jQuery.reel || (function($, window, document, undefined){
       cleanData($(elements).each(function(){ $(this).triggerHandler('clean'); }));
     }
 
-  // If the optional disableTextSelect plugin is not used, this will fill in the holes, where Reel expects
-  // ground.
-  double_for('disableTextSelect enableTextSelect'.split(/ /));
-
   // Expose plugin functions as jQuery methods
   $.extend($.fn, reel.fn);
 
@@ -2229,9 +2225,6 @@ jQuery.reel || (function($, window, document, undefined){
   function url(location){ return 'url(\'' + reen(location) + '\')' }
   function axis(key, value){ return typeof value == _object_ ? value[key] : value }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
-  function double_for(methods){ $.each(methods, pretend);
-    function pretend(){ if (!$.fn[this]) $.fn[this]= function(){ return this }}
-  }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
   function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
   function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + 'px' }

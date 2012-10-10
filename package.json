@@ -44,8 +44,7 @@
   "homepage": "http://jquery.vostrel.cz/reel",
   "dependencies": {
     "jquery": ">=1.5",
-    "mousewheel": ">=3.0.5",
-    "disableTextSelect": "*"
+    "mousewheel": ">=3.0.5"
   },
   "files": [
     "jquery.reel.js"

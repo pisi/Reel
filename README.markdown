@@ -59,7 +59,7 @@ Requirements
 * Optionaly you can also include these handy jQuery plugins (recommended)
     * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
     * or [jQuery.event.special.wheel][wheel] is a nice alternative
-    * [jQuery.disableTextSelect][disabletextselect] will retain mouse dragging interaction when saving the image is enabled
+the image is enabled
 
 Download version 1.2
 --------------------
@@ -81,7 +81,6 @@ Link the [CDN][cdn]
 [license-mit]: http://github.com/pisi/Reel/blob/master/MIT-LICENSE.txt
 [license-gpl]: http://github.com/pisi/Reel/blob/master/GPL-LICENSE.txt
 [jquery]: http://www.jquery.com/
-[disabletextselect]: http://www.jdempster.com/category/jquery/disabletextselect/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
 [source]: http://github.com/pisi/Reel/raw/v1.2/jquery.reel.js
