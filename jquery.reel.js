@@ -1100,16 +1100,16 @@ jQuery.reel || (function($, window, document, undefined){
                       // forwarded to the same `"pan"` or `"up` Events.
                       if (touchy){
                         pools
-                        .bind(_touchend_+___+_touchcancel_, lift())
                         .bind(_touchmove_, drag)
+                        .bind(_touchend_+___+_touchcancel_, lift)
                       }else{
                         (opt.clickfree ? get(_area_) : pools)
-                        .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift())
                         .bind(_mousemove_, drag)
+                        .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift)
                       }
                     }
-                    function lift(r){ return function(e){ e.preventDefault(); t.trigger('up', [e]); return r }}
                     function drag(e){ return t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]) && e.give }
+                    function lift(e){ return t.trigger('up', [e]) && e.give }
                   },
 
                   // ### `up` Event ######
@@ -1123,7 +1123,6 @@ jQuery.reel || (function($, window, document, undefined){
                   // - and unbinds dragging events from the pool.
                   //
                   up: function(e, ev){
-                    if (!opt.draggable) return;
                     var
                       clicked= set(_clicked_, false),
                       reeling= set(_reeling_, false),
