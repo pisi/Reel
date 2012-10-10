@@ -1090,7 +1090,6 @@ jQuery.reel || (function($, window, document, undefined){
                       var
                         clicked= set(_clicked_, get(_frame_)),
                         velocity= set(_velocity_, 0),
-                        scrollable= !get(_reeling_) || opt.rows <= 1 || !opt.orbital || opt.scrollable,
                         origin= last= recenter_mouse(get(_revolution_), x, y)
                       touchy || ev.preventDefault();
                       unidle();
@@ -1101,16 +1100,16 @@ jQuery.reel || (function($, window, document, undefined){
                       // forwarded to the same `"pan"` or `"up` Events.
                       if (touchy){
                         pools
-                        .bind(_touchmove_, drag(!scrollable))
                         .bind(_touchend_+___+_touchcancel_, lift())
+                        .bind(_touchmove_, drag)
                       }else{
                         (opt.clickfree ? get(_area_) : pools)
-                        .bind(_mousemove_, drag())
                         .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift())
+                        .bind(_mousemove_, drag)
                       }
                     }
-                    function drag(r){ return function(e){ e.preventDefault(); t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]); return r }}
                     function lift(r){ return function(e){ e.preventDefault(); t.trigger('up', [e]); return r }}
+                    function drag(e){ return t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                   },
 
                   // ### `up` Event ######
@@ -1160,11 +1159,14 @@ jQuery.reel || (function($, window, document, undefined){
                       slidable= false;
                       unidle();
                       var
+                        scrollable= touchy && !get(_reeling_) && opt.rows <= 1 && !opt.orbital && opt.scrollable,
                         host_offset= ev && !$(ev.currentTarget).is(pool) && $iframe.offset() || { left: 0, top: 0 },
                         x= x - host_offset.left,
                         y= y - host_offset.top,
                         delta= { x: x - last.x, y: y - last.y }
+                      if (scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
                       if (abs(delta.x) > 0 || abs(delta.y) > 0){
+                        ev.give = false;
                         panned= true;
                         last= { x: x, y: y };
                         var
