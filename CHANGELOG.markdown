@@ -7,6 +7,7 @@ Development
 * Compatibility with jQuery 1.8 (GH-140).
 * For smooth `velocity` kick it now follows `loaded` event (instead of `setup`) (GH-142).
 * Goodbye disableTextSelect dependency. You served well, but one less to worry about without you!
+* Vertical page scrolling on touch devices fixed (GH-146).
 
 
 Version 1.2

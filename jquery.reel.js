@@ -1085,13 +1085,13 @@ jQuery.reel || (function($, window, document, undefined){
                   // the event target element. However in click-free mode, it binds directly to the instance.
                   //
                   down: function(e, x, y, ev){
-                    if (ev.button != DRAG_BUTTON) return;
+                    if (ev && ev.button != DRAG_BUTTON) return;
                     if (opt.draggable){
                       var
                         clicked= set(_clicked_, get(_frame_)),
                         velocity= set(_velocity_, 0),
                         origin= last= recenter_mouse(get(_revolution_), x, y)
-                      touchy || ev.preventDefault();
+                      touchy || ev && ev.preventDefault();
                       unidle();
                       no_bias();
                       panned= false;
@@ -1163,9 +1163,9 @@ jQuery.reel || (function($, window, document, undefined){
                         x= x - host_offset.left,
                         y= y - host_offset.top,
                         delta= { x: x - last.x, y: y - last.y }
-                      if (scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
+                      if (ev && scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
                       if (abs(delta.x) > 0 || abs(delta.y) > 0){
-                        ev.give = false;
+                        ev && (ev.give = false);
                         panned= true;
                         last= { x: x, y: y };
                         var
@@ -1219,8 +1219,8 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= delta && set(_backwards_, delta < 0),
                       velocity= set(_velocity_, 0),
                       fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
-                    ev.preventDefault();
-                    ev.give = false;
+                    ev && ev.preventDefault();
+                    ev && (ev.give = false);
                     unidle();
                     t.trigger('up', [ev]);
                   },
