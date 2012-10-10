@@ -898,11 +898,12 @@ jQuery.reel || (function($, window, document, undefined){
                       css(dot(loading_klass), { cursor: 'wait' });
                       css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor) }, true);
                       area
-                        .bind(opt.wheelable ? _mousewheel_ : __, function(e, delta){ return e.preventDefault() || !delta || t.trigger('wheel', [delta]) && false })
+                        .bind(opt.wheelable ? _mousewheel_ : __, wheel)
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                         .bind('dragstart', function(){ return false })
                     }
                     function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
+                    function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
                     opt.hint && area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
                     opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
@@ -1206,7 +1207,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // [1]:https://github.com/brandonaaron/jquery-mousewheel
                   // [2]:http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
                   //
-                  wheel: function(e, distance){
+                  wheel: function(e, distance, ev){
                     if (!distance) return;
                     wheeled= true;
                     var
@@ -1217,9 +1218,10 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= delta && set(_backwards_, delta < 0),
                       velocity= set(_velocity_, 0),
                       fraction= set(_fraction_, graph(delta, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_)))
+                    ev.preventDefault();
+                    ev.give = false;
                     unidle();
-                    t.trigger('up')
-                    return false;
+                    t.trigger('up', [ev]);
                   },
 
                   // ------------------
