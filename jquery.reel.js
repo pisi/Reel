@@ -1085,7 +1085,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // the event target element. However in click-free mode, it binds directly to the instance.
                   //
                   down: function(e, x, y, ev){
-                    if (ev && ev.button != DRAG_BUTTON) return;
+                    if (ev && ev.button != DRAG_BUTTON && !opt.clickfree) return;
                     if (opt.draggable){
                       var
                         clicked= set(_clicked_, get(_frame_)),
