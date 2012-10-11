@@ -10,9 +10,12 @@
 
 (function run(){
 
+  var
+    default_jquery = '1.8.2'
+
   yepnope( {
     load: [
-      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7')+'.min.js',
+      'http://code.jquery.com/jquery-'+(location.params.jq || default_jquery)+'.min.js',
       'lib/vendor/jquery.cookie-min.js'
     ],
     complete: function(){
@@ -45,7 +48,7 @@
             $(function(){
               $('#image').trigger('teardown');
               delete jQuery;
-              inject_script('http://code.jquery.com/jquery-'+(parent.location.params.jq || '1.7')+'.min.js');
+              inject_script('http://code.jquery.com/jquery-'+(parent.location.params.jq || default_jquery)+'.min.js');
               inject_script("../../jquery.reel-min.js");
 
               function inject_script(url){

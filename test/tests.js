@@ -2,11 +2,14 @@
  * .reel Unit Test
  */
 ( function run(){
+  
+  var
+    default_jquery = '1.8.2'
 
   yepnope( {
     load: [
-      'http://code.jquery.com/jquery-'+(location.params.jq || '1.7')+'.min.js',
-      '../jquery.reel-min.js',
+      'http://code.jquery.com/jquery-'+(location.params.jq || default_jquery)+'.min.js',
+      '../jquery.reel.js',
       'lib/vendor/jquery.mousewheel-min.js',
 
       'lib/vendor/qunit.js',
@@ -123,7 +126,7 @@
       }
 
       $('#against-jquery-versions')
-      .val( location.params.jq || '1.7' )
+      .val( location.params.jq || default_jquery )
       .change( function(){
         var url= ''
         if( location.params.jq === undefined ){
