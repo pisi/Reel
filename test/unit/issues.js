@@ -9,23 +9,23 @@
     /* Github issue 4 bugfix
      * http://github.com/pisi/Reel/issues/#issue/4
      */
-    expect($.browser.msie ? 4 : 2);
     var
+      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
       stitched= 1652,
       $pano= $('#stitched_nonlooping').reel({ stitched: stitched, loops: false }),
       travel= stitched - parseInt($pano.css('width'))
 
+    expect(iesaurus ? 4 : 2);
+
     $pano.trigger('frameChange', 1);
-    if ($.browser.msie){
-      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+    if (iesaurus){
       equiv($pano.css('backgroundPositionX'), '0px', 'Frame 1 (min, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Frame 1 (min, Y)');
     }else{
       equiv($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
     }
     $pano.trigger('frameChange', 36);
-    if ($.browser.msie){
-      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+    if (iesaurus){
       equiv($pano.css('backgroundPositionX'), -travel+'px', 'Frame 36 (max, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Frame 36 (max, Y)');
     }else{
@@ -37,23 +37,23 @@
     /* Github issue 6 bugfix
      * http://github.com/pisi/Reel/issues/#issue/6
      */
-    expect($.browser.msie ? 4 : 2);
     var
+      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
       stitched= 1652,
       $pano= $('#stitched_looping').reel({ stitched: stitched, loops: true }),
       travel= stitched
 
+    expect(iesaurus ? 4 : 2);
+
     $pano.trigger('frameChange', 1);
-    if ($.browser.msie){
-      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+    if (iesaurus){
       equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 1 (min, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 1 (min, Y)');
     }else{
       equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
     }
     $pano.trigger('frameChange', 36);
-    if ($.browser.msie){
-      // MSIE returns undefined backgroundPosition, so we need to check individual ones
+    if (iesaurus){
       equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 36 (max, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');
     }else{

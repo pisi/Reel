@@ -7,8 +7,8 @@
 
   test( 'Multi-row: Frame shifting (4 rows)', function(){
 
-    expect($.browser.msie ? 21 : 17);
     var
+      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
       selector= '#image',
       $reel= $(selector).reel({
         frames: 6,
@@ -38,6 +38,8 @@
         '4': [         1,          20,      '-276px',     '-756px' ]
       }
 
+    expect(iesaurus ? 21 : 17);
+
     equal( $reel.reel('frame'), 2, 'Initial frame');
 
     $.each(entries, function(ix, it){
@@ -45,8 +47,7 @@
       equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
       equal( $reel.data('tier').toFixed(4), it[0], 'Row '+ix+': Tier');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
-      if ($.browser.msie){
-        // MSIE returns undefined backgroundPosition, so we need to check individual ones
+      if (iesaurus){
         equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
         equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
       }else{
@@ -56,8 +57,8 @@
   });
 
   test( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
-    expect($.browser.msie ? 15 : 12);
     var
+      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
       selector= '#image',
       $reel= $(selector).reel({
         frames: 6,
@@ -82,13 +83,15 @@
         '2': [       0.5,          11,      '-552px',     '-252px' ],
         '1': [         0,           5,         '0px',     '-126px' ]
       }
+
+    expect(iesaurus ? 15 : 12);
+
     $.each(entries, function(ix,it){
       $reel.trigger('rowChange', Number(ix));
       equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
       equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
-      if ($.browser.msie){
-        // MSIE returns undefined backgroundPosition, so we need to check individual ones
+      if (iesaurus){
         equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
         equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
       }else{
