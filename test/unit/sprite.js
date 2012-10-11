@@ -32,6 +32,7 @@
       (letter ~ row; number ~ frame)
       */
       entries= {
+             //     tier        frame              X             Y
         '1': [         0,           2,      '-276px',        '0px' ],
         '2': [    0.3333,           8,      '-276px',     '-252px' ],
         '3': [    0.6667,          14,      '-276px',     '-504px' ],
@@ -79,6 +80,7 @@
       (letter ~ row; number ~ frame)
       */
       entries= {
+             //     tier        frame              X             Y
         '3': [         1,          17,         '0px',     '-504px' ],
         '2': [       0.5,          11,      '-552px',     '-252px' ],
         '1': [         0,           5,         '0px',     '-126px' ]
@@ -138,6 +140,94 @@
     $(document).bind('loaded.test', function(){
       ok( $reel.attr('src').search(/CAAIAIAAAAAAAAA|blank\.gif/) >= 0 );
       start();
+    });
+  });
+
+  test( 'Multi-row: Non-looping stitched panorama shifting (3 rows)', function(){
+    var
+      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 500 + 276, // 276px is width of the stage
+        frame:    2,
+        frames:   5,
+        rows:     3,
+        row:      2,
+        loops:    false
+      }),
+      /*
+      Sprite layout:
+
+      A1                    1  2  3  4  5
+      B2  in real frames »  6  7  8  9 10
+      C3                   11 12 13 14 15
+
+      (letter ~ row; number ~ frame)
+      */
+      entries= {
+             //     tier        frame              X             Y
+        '3': [         1,          12,      '-125px',     '0'      ],
+        '2': [       0.5,           7,      '-125px',     '-126px' ],
+        '1': [         0,           2,      '-125px',     '-252px' ]
+      }
+
+    expect(iesaurus ? 15 : 12);
+
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      if (iesaurus){
+        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+      }else{
+        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+      }
+    });
+  });
+
+
+  test( 'Multi-row: Looping stitched panorama shifting (3 rows)', function(){
+    var
+      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 500 + 276, // 276px is width of the stage
+        frame:    4,
+        frames:   5,
+        rows:     3,
+        row:      2
+      }),
+      /*
+      Sprite layout:
+
+      A1                    1  2  3  4  5
+      B2  in real frames »  6  7  8  9 10
+      C3                   11 12 13 14 15
+
+      (letter ~ row; number ~ frame)
+      */
+      entries= {
+             //     tier        frame              X             Y
+        '3': [         1,          14,      '-582px',     '0'      ],
+        '2': [       0.5,           9,      '-582px',     '-126px' ],
+        '1': [         0,           4,      '-582px',     '-252px' ]
+      }
+
+    expect(iesaurus ? 15 : 12);
+
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      if (iesaurus){
+        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+      }else{
+        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+      }
     });
   });
 

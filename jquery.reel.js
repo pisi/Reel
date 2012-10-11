@@ -1353,7 +1353,7 @@ jQuery.reel || (function($, window, document, undefined){
                       else{
                         var
                           x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % opt.stitched),
-                          y= 0,
+                          y= (get(_dimensions_).y + get(_spacing_)) * (opt.rows - get(_row_)),
                           shift= [px(-x), px(-y)]
                       }
                       t.css({ backgroundPosition: shift.join(___) })
