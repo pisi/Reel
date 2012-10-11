@@ -1350,10 +1350,12 @@ jQuery.reel || (function($, window, document, undefined){
                         a= major * ((horizontal ? space.y : space.x) + spacing),
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
-                      else var
-                        x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % opt.stitched),
-                        y= 0,
-                        shift= [px(-x), px(y)]
+                      else{
+                        var
+                          x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % opt.stitched),
+                          y= 0,
+                          shift= [px(-x), px(-y)]
+                      }
                       t.css({ backgroundPosition: shift.join(___) })
                     }
                   },
