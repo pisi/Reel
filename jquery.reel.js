@@ -880,7 +880,7 @@ jQuery.reel || (function($, window, document, undefined){
                       frames= get(_frames_),
                       id= t.attr(_id_),
                       $overlay= t.parent()
-                      area= set(_area_, $(opt.area || $overlay ))
+                      $area= set(_area_, $(opt.area || $overlay ))
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
@@ -888,7 +888,7 @@ jQuery.reel || (function($, window, document, undefined){
                         ? undefined : get(_stitched_) && px(get(_stitched_))+___+px(space.y)
                         || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                       });
-                      area
+                      $area
                         .bind(_touchstart_, press)
                     }else{
                       var
@@ -897,14 +897,14 @@ jQuery.reel || (function($, window, document, undefined){
                       css(__, { cursor: cdn(cursor) });
                       css(dot(loading_klass), { cursor: 'wait' });
                       css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor) }, true);
-                      area
+                      $area
                         .bind(opt.wheelable ? _mousewheel_ : __, wheel)
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                         .bind('dragstart', function(){ return false })
                     }
                     function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
-                    opt.hint && area.attr('title', opt.hint);
+                    opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
                     opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
