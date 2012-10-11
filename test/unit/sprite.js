@@ -125,4 +125,20 @@
     });
   });
 
+  asyncTest( 'Multi-row: Stitched should always receive transparent image even for multiple images', function(){
+    expect(1);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 600,
+        images: 'stitched-row-##.png',
+        rows: 5
+      })
+
+    $(document).bind('loaded.test', function(){
+      ok( $reel.attr('src').search(/CAAIAIAAAAAAAAA|blank\.gif/) >= 0 );
+      start();
+    });
+  });
+
 })(jQuery);

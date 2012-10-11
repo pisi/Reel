@@ -985,6 +985,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
+                    opt.stitched && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
                   },
 
@@ -1333,7 +1334,7 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       horizontal= opt.horizontal,
                       images= get(_images_),
-                      is_sprite= !images.length,
+                      is_sprite= !images.length || opt.stitched,
                       space= get(_dimensions_)
                     if (!is_sprite){
                       var
