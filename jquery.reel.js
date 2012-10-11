@@ -1795,7 +1795,7 @@ jQuery.reel || (function($, window, document, undefined){
               //
               else{
                 if (value !== undefined){
-                  try{ value= reel.normal[name](value, data) }catch(e){ }
+                  reel.normal[name] && (value= reel.normal[name](value, data));
 
                   // ---
                   // ### Changes ######
