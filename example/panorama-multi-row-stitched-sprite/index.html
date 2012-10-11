@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html data-type="example" data-id="panorama-click-free">
   <head>
-    <title>jQuery Reel Multi-Row Stitched Panorama Example</title>
+    <title>jQuery Reel Multi-Row Stitched Sprite Panorama Example</title>
     <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
 
     <script src='http://code.jquery.com/jquery-1.7.min.js' type='text/javascript'></script>
-    <script src='http://code.vostrel.cz/jquery.reel-bundle.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-edge-bundle.js' type='text/javascript'></script>
 
     <!-- Common examples style (gray background, thin fonts etc.) -->
     <link href="../style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Multi-Row Stitched Panorama</h1>
+    <h1>Multi-Row Stitched Sprite Panorama</h1>
 
     <img id="image" src='stitched.jpg' width="250" height="149" />
     <script>
@@ -21,11 +21,11 @@
           indicator:   5, // For no indicator just remove this line
           loops:       false,
           stitched:    496,
+          spacing:     5,
           frames:      30,
           frame:       15,
           rows:        3,
-          row:         2,
-          images:      'stitched-reel-##.jpg'
+          row:         2
         });
 
       });

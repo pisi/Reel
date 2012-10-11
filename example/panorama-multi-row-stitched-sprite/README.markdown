@@ -1,5 +1,5 @@
-jQuery Reel Multi-Row Stitched Panorama Example
-===============================================
+jQuery Reel Multi-Row Stitched Sprite Panorama Example
+======================================================
 
 TBA
 
@@ -9,10 +9,10 @@ Options Employed In This Example
 
 - [frame](http://jquery.vostrel.cz/reel#frame)
 - [frames](http://jquery.vostrel.cz/reel#frames)
-- [images](http://jquery.vostrel.cz/reel#images)
 - [loops](http://jquery.vostrel.cz/reel#loops)
 - [row](http://jquery.vostrel.cz/reel#row)
 - [rows](http://jquery.vostrel.cz/reel#rows)
+- [spacing](http://jquery.vostrel.cz/reel#spacing)
 - [stitched](http://jquery.vostrel.cz/reel#stitched)
 
 See the complete source of [index.html](index.html) for full
