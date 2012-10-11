@@ -2057,7 +2057,7 @@ jQuery.reel || (function($, window, document, undefined){
           placeholder= sequence[2],
           start= +sequence[4] || 1,
           rows= opt.orbital ? 2 : opt.rows || 1,
-          frames= opt.orbital ? opt.footage : opt.frames,
+          frames= opt.orbital ? opt.footage : opt.stitched ? 1 : opt.frames,
           end= +(sequence[5] || rows * frames),
           total= end - start,
           increment= +sequence[7] || 1,

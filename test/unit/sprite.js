@@ -187,7 +187,6 @@
     });
   });
 
-
   test( 'Multi-row: Looping stitched panorama shifting (3 rows)', function(){
     var
       iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
@@ -229,6 +228,24 @@
         equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
       }
     });
+  });
+
+  test( 'Multi-row: `$.reel.sequence()` ignores number of stitched frames and loads one file per row', function()
+  {
+    expect(1);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 300,
+        images: 'stitched-row-##.png',
+        rows: 3
+      })
+
+    deepEqual( $reel.reel('cached'), [
+      'stitched-row-01.png',
+      'stitched-row-02.png',
+      'stitched-row-03.png'
+    ]);
   });
 
 })(jQuery);
