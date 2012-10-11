@@ -879,7 +879,7 @@ jQuery.reel || (function($, window, document, undefined){
                       space= get(_dimensions_),
                       frames= get(_frames_),
                       id= t.attr(_id_),
-                      $overlay= t.parent()
+                      $overlay= t.parent(),
                       $area= set(_area_, $(opt.area || $overlay ))
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
                     if (touchy){
