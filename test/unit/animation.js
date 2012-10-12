@@ -239,4 +239,33 @@
 
   });
 
+  asyncTest( 'Duration: Ticks count down to zero', function()
+  {
+    var
+      ticks_start,
+      expected,
+      samples= 5,
+      $reel= $('#image').reel({
+        speed: 1,
+        duration: 2
+      })
+
+    expect(samples);
+
+    $(document).bind('tick.reel.test', function(){
+      var
+        ticks= $reel.reel('ticks')
+
+      if (ticks != -1){
+        if (!ticks_start){
+          ticks_start= expected= ticks;
+        }else{
+          equal( ticks, --expected, ticks);
+          if (ticks <= ticks_start - samples) start();
+        }
+      }
+    })
+
+  });
+
 })(jQuery);

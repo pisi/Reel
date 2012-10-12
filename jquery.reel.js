@@ -1603,7 +1603,9 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       direction= get(_cwish_) * negative_when(1, get(_backwards_)),
                       step= (!get(_playing_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
-                      fraction= set(_fraction_, get(_fraction_) - step * direction)
+                      ticks= get(_ticks_),
+                      fraction= set(_fraction_, get(_fraction_) - step * direction),
+                      ticks= opt.duration && ticks > 0 && set(_ticks_, ticks - 1)
                   },
 
                   // This handler performs the opening animation duty when during it the normal animation
