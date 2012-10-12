@@ -807,6 +807,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_center_, !!opt.orbital);
                   set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
                   set(_opening_ticks_, -1);
+                  set(_ticks_, -1);
                   set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
                   set(_backup_, {
                     src: src,
@@ -2160,8 +2161,8 @@ jQuery.reel || (function($, window, document, undefined){
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
-    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
-    _velocity_= 'velocity', _vertical_= 'vertical',
+    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
+    _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
 
     // And the same goes for browser events too.
     //

@@ -51,6 +51,7 @@
         stopped: 'Boolean',
         style: 'Object', // (jQuery)
         tempo: 'Number',
+        ticks: 'Number',
         tier: 'Number',
         velocity: 'Number',
         vertical: 'Boolean'
