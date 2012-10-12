@@ -13,10 +13,16 @@
   <body>
     <h1>Multi-Row Stitched Panorama</h1>
 
+    Using sequence:
     <img id="image" src='stitched.jpg' width="250" height="149" />
+
+    Using sprite:
+    <img id="image2" src='stitched.jpg' width="250" height="149" />
+
     <script>
       $(function(){ // when DOM ready
 
+        // Sequence
         $('#image').reel({
           indicator:   5, // For no indicator just remove this line
           loops:       false,
@@ -26,6 +32,18 @@
           rows:        3,
           row:         2,
           images:      'stitched-reel-##.jpg'
+        });
+
+        // Sprite
+        $('#image2').reel({
+          indicator:   5, // For no indicator just remove this line
+          loops:       false,
+          stitched:    496,
+          spacing:     5,
+          frames:      30,
+          frame:       15,
+          rows:        3,
+          row:         2
         });
 
       });

@@ -1,7 +1,12 @@
 jQuery Reel Multi-Row Stitched Panorama Example
 ===============================================
 
-TBA
+This example demonstrates a stitched panorama, where in addition
+to the usual horizontal arrangement user can look up and down too.
+Such panorama consists of multiple stitched images called "rows".
+
+Stitched rows can either be combined in sprite or defined
+as an image sequence.
 
 
 Options Employed In This Example
@@ -13,6 +18,7 @@ Options Employed In This Example
 - [loops](http://jquery.vostrel.cz/reel#loops)
 - [row](http://jquery.vostrel.cz/reel#row)
 - [rows](http://jquery.vostrel.cz/reel#rows)
+- [spacing](http://jquery.vostrel.cz/reel#spacing)
 - [stitched](http://jquery.vostrel.cz/reel#stitched)
 
 See the complete source of [index.html](index.html) for full
