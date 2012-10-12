@@ -159,8 +159,8 @@
       Sprite layout:
 
       A1                    1  2  3  4  5
-      B2  in real frames »  6  7  8  9 10
-      C3                   11 12 13 14 15
+      B1  in real frames »  6  7  8  9 10
+      C1                   11 12 13 14 15
 
       (letter ~ row; number ~ frame)
       */
@@ -202,8 +202,8 @@
       Sprite layout:
 
       A1                    1  2  3  4  5
-      B2  in real frames »  6  7  8  9 10
-      C3                   11 12 13 14 15
+      B1  in real frames »  6  7  8  9 10
+      C1                   11 12 13 14 15
 
       (letter ~ row; number ~ frame)
       */
@@ -246,6 +246,36 @@
       'stitched-row-02.png',
       'stitched-row-03.png'
     ]);
+  });
+
+  test( 'Multi-row: Stitched panorama shifting of individual images (5 rows)', function()
+  {
+    expect(12);
+    var
+      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 300,
+        frame:    3,
+        frames:   5,
+        rows:     5,
+        row:      3,
+        images:   'stitched-row-##.png'
+      }),
+      entries= {
+             //     tier        frame                       file
+        '5': [         1,          23,      'stitched-row-05.png' ],
+        '3': [       0.5,          13,      'stitched-row-03.png' ],
+        '1': [         0,           3,      'stitched-row-01.png' ]
+      }
+
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      ok( $reel.css('backgroundImage').search(it[2]) >= 0, 'Row '+ix+': CSS background image file');
+    });
   });
 
 })(jQuery);
