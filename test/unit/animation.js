@@ -198,4 +198,45 @@
 
   });
 
+  asyncTest( 'Duration: Animation duration expressed in ticks is reset on `play`', function()
+  {
+    expect(2);
+    var
+      ticks,
+      $reel= $('#image').reel({
+        speed: 1,
+        duration: 3
+      })
+
+    $reel.bind('loaded.test', function(){
+      $reel.trigger('play');
+      ticks= $reel.reel('ticks');
+      ok( ticks > 0, 'Positive `ticks`');
+    });
+    
+    setTimeout(function(){
+      $reel.trigger('play');
+      equal( $reel.reel('ticks'), ticks, 'Positive `ticks` reset to same value on second `play`');
+      start();
+    }, 500);
+
+  });
+
+  asyncTest( 'Duration: Ticks not set when no `duration` given', function()
+  {
+    expect(1);
+    var
+      ticks,
+      $reel= $('#image').reel({
+        speed: 1
+      })
+
+    $reel.bind('loaded.test', function(){
+      $reel.trigger('play');
+      equal( $reel.reel('ticks'), -1, 'Default value signalizing no duration');
+      start();
+    });
+
+  });
+
 })(jQuery);
