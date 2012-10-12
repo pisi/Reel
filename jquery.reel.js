@@ -1356,7 +1356,7 @@ jQuery.reel || (function($, window, document, undefined){
                       else{
                         var
                           x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % opt.stitched),
-                          y= (get(_dimensions_).y + get(_spacing_)) * (opt.rows - get(_row_)),
+                          y= opt.rows <= 1 ? 0 : (get(_dimensions_).y + get(_spacing_)) * (opt.rows - get(_row_)),
                           shift= [px(-x), px(-y)],
                           image= get(_images_).length > 1 && get(_images_)[get(_row_) - 1]
                         image && t.css('backgroundImage').search(opt.path+image) < 0 && t.css({ backgroundImage: url(opt.path+image) })
