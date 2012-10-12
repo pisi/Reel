@@ -268,4 +268,24 @@
 
   });
 
+  asyncTest( 'Duration: Stop the animation after the given duration', function()
+  {
+    expect(2);
+    var
+      ticks,
+      $reel= $('#image').reel({
+        speed: 1,
+        duration: 0.5
+      })
+
+    $reel.bind('play.test', function(){
+      setTimeout(function(){
+        equal( $reel.reel('playing'), false, 'Not playing after the half second passed');
+        equal( $reel.reel('stopped'), true, 'Is stopped');
+        start();
+      }, 600);
+    });
+
+  });
+
 })(jQuery);

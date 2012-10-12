@@ -1602,10 +1602,11 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= bounce && set(_backwards_, !get(_backwards_))
                     var
                       direction= get(_cwish_) * negative_when(1, get(_backwards_)),
-                      step= (!get(_playing_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                       ticks= get(_ticks_),
+                      step= (!get(_playing_) || !ticks ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                       fraction= set(_fraction_, get(_fraction_) - step * direction),
                       ticks= opt.duration && ticks > 0 && set(_ticks_, ticks - 1)
+                    !ticks && get(_playing_) && t.trigger('stop');
                   },
 
                   // This handler performs the opening animation duty when during it the normal animation
