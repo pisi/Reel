@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.2-devel
- * Updated: 2012-10-11
+ * Updated: 2012-10-12
  *
  * Requires jQuery 1.5 or higher
  */
