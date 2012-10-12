@@ -1605,7 +1605,7 @@ jQuery.reel || (function($, window, document, undefined){
                       ticks= get(_ticks_),
                       step= (!get(_playing_) || !ticks ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
                       fraction= set(_fraction_, get(_fraction_) - step * direction),
-                      ticks= opt.duration && ticks > 0 && set(_ticks_, ticks - 1)
+                      ticks= !opt.duration ? ticks : ticks > 0 && set(_ticks_, ticks - 1)
                     !ticks && get(_playing_) && t.trigger('stop');
                   },
 
