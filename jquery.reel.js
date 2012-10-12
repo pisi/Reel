@@ -880,13 +880,16 @@ jQuery.reel || (function($, window, document, undefined){
                       frames= get(_frames_),
                       id= t.attr(_id_),
                       $overlay= t.parent(),
-                      $area= set(_area_, $(opt.area || $overlay ))
+                      $area= set(_area_, $(opt.area || $overlay )),
+                      rows= opt.rows || 1,
+                      stitched = get(_stitched_)
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? undefined : get(_stitched_) && px(get(_stitched_))+___+px(space.y)
-                        || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
+                        ? !stitched ? undefined : px(stitched)+___+px(space.y)
+                        : stitched && px(stitched)+___+px((space.y + opt.spacing) * rows - opt.spacing)
+                        || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * rows * (opt.directional? 2:1))
                       });
                       $area
                         .bind(_touchstart_, press)
@@ -906,7 +909,7 @@ jQuery.reel || (function($, window, document, undefined){
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
                     opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
-                    opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
+                    rows > 1 && opt.indicator && $overlay.append(indicator('y'));
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
