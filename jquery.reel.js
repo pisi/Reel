@@ -472,6 +472,11 @@ jQuery.reel || (function($, window, document, undefined){
         //
         timeout:                2,
 
+        // #### `duration` Option ####
+        // `Number` (seconds), IN DEVELOPMENT
+        //
+        duration:       undefined,
+
         // #### `rebound` Option ####
         // `Number` (seconds), since 1.1
         //
