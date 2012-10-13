@@ -165,6 +165,11 @@ jQuery.reel || (function($, window, document, undefined){
         //
         wheelable:           true,
 
+        // #### `orientable` Option ####
+        // `Boolean`, IN DEVELOPMENT
+        //
+        orientable:         false,
+
 
         // ---
         // ### Order of Images ######

@@ -27,7 +27,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 7);
 
-    equal( count, 49, 'Total number of options');
+    equal( count, 50, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -91,6 +91,7 @@
 
     // Options in development
     equal( $.reel.def.duration,           undefined, 'duration of animation (in seconds)' );
+    equal( $.reel.def.orientable,             false, 'device orientation interaction (disabled by default)' );
   });
 
   test( 'jQuery of currently living instances is referenced as `$.reel.instances`', function()
