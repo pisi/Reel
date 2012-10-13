@@ -711,7 +711,7 @@ jQuery.reel || (function($, window, document, undefined){
             applicable= (function(tags){
               var
                 pass= []
-              tags.filter(_img_).each(function(ix){
+              tags.filter(_img_).unreel().each(function(ix){
                 // Verify they have a workable set of properties. They need to have at least:
                 //
                 // - non-empty `src` attribute defined
@@ -722,10 +722,6 @@ jQuery.reel || (function($, window, document, undefined){
                   width= number(opt.attr.width || $this.css(_width_)),
                   height= number(opt.attr.height || $this.css(_height_))
                 if (src && src != __ && width && height) pass.push($this);
-              });
-              // If a Reel instance already, tear it down first.
-              tags.filter(dot(klass)).each(function(ix){
-                pass.push($(this).unreel());
               });
               return $(pass);
             })(this),
