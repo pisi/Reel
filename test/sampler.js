@@ -33,56 +33,37 @@
         if (e.button || e.metaKey || e.shiftKey || e.ctrlKey) return;
         var
           url= $(this).attr('href'),
-          id= $(this).parent().attr('id'),
-          hijacked= false,
-          scripts_loaded= 0,
-          call
+          id= $(this).parent().attr('id')
 
         $('#test_stage').attr({
           src: url
         }).one('load', function(){
-          // Once the test stage is loaded,
-          // we want to hijack the Reel from example
-          // and take over with the local version for testing
-          with(frames.test_stage){
-            $(function(){
-              $('#image').trigger('teardown');
-              delete jQuery;
-              inject_script('http://code.jquery.com/jquery-'+(parent.location.params.jq || default_jquery)+'.min.js');
-              inject_script("../../jquery.reel-min.js");
-
-              function inject_script(url){
-                var script= document.createElement('script');
-                script.type= "text/javascript";
-                script.src= url;
-                script.onload= wait_for_source;
-                document.getElementsByTagName('head')[0].appendChild(script);
-              }
-              function wait_for_source(){
-                // We wait for both sources to fully arrive via XHR
-                if(++scripts_loaded != 2) return;
-                var
-                  wait= setInterval(function(){
-                    if (call){
-                      clearInterval(wait);
-                      eval(call);
-                    }
-                }, 300);
-              }
-            })
-          }
           $.ajax(url, {
             success: function(a,b,xhr){
               var
                 iframe_pool= $('#test_stage').contents()
 
+              // Once the test stage is loaded,
+              // we want to hijack the Reel from example
+              // and take over with the local version for testing
               iframe_pool.ready(function(){
                 var
                   iframe_pool= $('#test_stage').contents(),
-                  source= xhr.responseText
+                  source= xhr.responseText,
+                  call= /<script>\n +\$\(function\(\)\{((.|\n)+)\}\);\n +<\/script>/.exec(source)[1],
+                  wait
 
-                call= /<script>\n((.|\n)+)<\/script>/.exec(source)[1]
-              })
+                with(frames.test_stage){
+                  $.getScript('http://code.jquery.com/jquery-'+(parent.location.params.jq || default_jquery)+'.min.js', function(){
+                    $.getScript('../../jquery.reel.js', function(){
+                      setTimeout(function(){
+                        eval(call)
+                      }, 0);
+                    });
+                  });
+                }
+
+              });
             }
           });
         });
