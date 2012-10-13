@@ -1155,9 +1155,6 @@ jQuery.reel || (function($, window, document, undefined){
                       unidle();
                       var
                         scrollable= touchy && !get(_reeling_) && opt.rows <= 1 && !opt.orbital && opt.scrollable,
-                        host_offset= ev && ev.currentTarget[0] != pool[0] && $iframe.offset() || { left: 0, top: 0 },
-                        x= x - host_offset.left,
-                        y= y - host_offset.top,
                         delta= { x: x - last.x, y: y - last.y }
                       if (ev && scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
                       if (abs(delta.x) > 0 || abs(delta.y) > 0){
