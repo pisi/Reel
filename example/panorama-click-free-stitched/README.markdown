@@ -4,8 +4,7 @@ jQuery Reel Click-Free Stitched Panorama Example
 This one demonstrates the option to have the interactivity set up
 so that it can be manipulated only by moving mouse over it without any
 clicking or dragging. It also is insensitive to the mouse wheel
-interaction and on properly equipped devices also to device orientation.
-It is a stitched rectilinear panorama image virtually
+interaction. It is a stitched rectilinear panorama image virtually
 divided into 60 frames, starting on 23rd frame and animating itself
 clockwise and very slowly with one full rotation per 20 seconds.
 
@@ -16,7 +15,6 @@ Options Employed In This Example
 - [clickfree](http://jquery.vostrel.cz/reel#clickfree)
 - [frame](http://jquery.vostrel.cz/reel#frame)
 - [frames](http://jquery.vostrel.cz/reel#frames)
-- [orientable](http://jquery.vostrel.cz/reel#orientable)
 - [speed](http://jquery.vostrel.cz/reel#speed)
 - [stitched](http://jquery.vostrel.cz/reel#stitched)
 - [wheelable](http://jquery.vostrel.cz/reel#wheelable)

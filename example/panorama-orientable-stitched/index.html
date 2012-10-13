@@ -1,36 +1,56 @@
 <!DOCTYPE html>
 <html data-type="example" data-id="panorama-click-free">
   <head>
-    <title>jQuery Reel Click-Free Stitched Panorama Example</title>
+    <title>jQuery Reel Orientable Stitched Panorama Example</title>
     <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
 
-    <script src='http://code.jquery.com/jquery-1.9.1.min.js' type='text/javascript'></script>
-    <script src='http://code.vostrel.cz/jquery.reel-1.2-bundle.js' type='text/javascript'></script>
+    <script src='http://code.jquery.com/jquery-1.7.min.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-edge-bundle.js' type='text/javascript'></script>
 
     <!-- Common examples style (gray background, thin fonts etc.) -->
     <link href="../style.css" rel="stylesheet" type="text/css" />
+    <style>
+    #image-reel{ font-size: 85%; }
+    #image-reel .reel-annotation { color: #6a7587; white-space: nowrap; font-weight: bold; font-size: 108%; color: #6a7587; cursor: help; }
+    #image-reel .reel-annotation a { color: #6a7587; text-decoration: none; }
+    #image-reel .reel-annotation .far { font-size: 85%; color: #a3b4bc; }
+    #image-reel .reel-annotation .far a { color: #a3b4bc; }
+    #image-reel .reel-annotation .near { font-size: 163%; color: #fff5de; }
+    #image-reel .reel-annotation .near a { color: #fff5de; }
+    #image-reel .reel-annotation .title { font-size: 85%; color: white; }
+    #image-reel .reel-annotation .title a { color: white; }
+    #image-reel .reel-annotation.headline { font-size: 280%; opacity: 0.5; color: white; cursor: inherit; }
+    #image-reel .reel-annotation.headline a { color: white; }
+    </style>
   </head>
   <body>
-    <h1>Click-Free Stitched Panorama</h1>
+    <h1>Orientable Stitched Panorama</h1>
+    <p>Works fully only on devices equipped with gyroscope.</p>
 
-    <img id="image" src='stitched.jpg' width="297" height="167" />
+    <img id="image" src='outlook.jpg' width="590" height="150" />
     <script>
       $(function(){ // when DOM ready
 
         $('#image').reel({
           indicator:   5, // For no indicator just remove this line
-          stitched:    1821,
-          frames:      60,
-          frame:       23,
-          speed:       -0.05,
-          clickfree:   true,
-          wheelable:   false
+          stitched:    1652,
+          orientable:  true,
+          annotations: {
+        	  headline: { x: 160, y: 50, node: { 'class': 'headline', text: 'Moro Rock Lookout' } },
+        	  title: { x: 160, y: 86, link: { 'class': 'external title', text: '1 Way Rd, Giant Sequoia National Park, CA', href: 'https://maps.google.com/maps?ll=36.543225,-118.764481&spn=0.01,0.01&t=p&q=36.543225,-118.764481' } },
+        	  panther_peak: { x: 260, y: 3, link: { 'class': 'external', text: 'Panther Peak', href: 'http://www.mapquest.com/maps?name=Panther%20Peak&city=Sequoia%20National%20Park&state=CA' } },
+        	  mount_silliman: { x: 400, y: 2, link: { 'class': 'far', text: 'Mount Silliman', href: 'http://www.panoramio.com/photo/52847295' } },
+        	  castle_rocks: { x: 700, y: 9, node: { text: 'Castle Rocks' } },
+        	  moro_rock: { x: 795, y: 60, link: { 'class': 'external near', text: 'Moro Rock', href: 'http://commons.wikimedia.org/wiki/File:Panorama_360_view_from_Moro_Rock_-_Giant_Sequoia_National_Park_-_California_USA_(2002).jpg' } },
+        	  ash_peaks_ridge: { x: 1250, y: 40, node: { text: 'Ash Peaks Ridge' } },
+        	  milk_ranch_peak: { x: 970, y: 30, link: { 'class': 'external', text: 'Milk Ranch Peak', href: 'http://travelingluck.com/North%20America/United%20States/California/_5372983_Milk%20Ranch%20Peak.html' } }
+        	}
         });
 
       });
     </script>
 
-    <p class="credits photo"><a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></p>
+    <p class="credits photo"><a href="http://www.flickr.com/people/59683764@N00">Henning Leweke</a> (cc)</p>
     
     <div class="ballast">
       <p>Lots of dummy text ballast to stretch the page a little and allow testing how each Reel mode behaves in relation to page scrolling.</p>
