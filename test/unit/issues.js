@@ -291,7 +291,7 @@
     var
       images = (function(){
         var images= []
-        for (var i= 0; i < 15; i++) images.push('samples/phone/01.png?' + (i+1))
+        for (var i= 0; i < 15; i++) images.push('resources/phone/01.png?' + (i+1))
         return images
       })(),
       $reel = $('#image').reel({
