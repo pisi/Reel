@@ -50,8 +50,7 @@ jQuery.reel || (function($, window, document, undefined){
 
   // One vital requirement is the correct jQuery. Reel requires at least version 1.5
   // and a make sure check is made at the very beginning.
-  if (+$().jquery.replace(dot(), __).substr(0, 2) < 15)
-    throw 'Too old jQuery for Reel.'
+  if (!$ || +$().jquery.replace(dot(), __).substr(0, 2) < 15) return;
 
   // `$.reel` (or `jQuery.reel`) namespace is provided for storage of all Reel belongings.
   // It is locally referenced as just `reel` for speedier access.
