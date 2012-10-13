@@ -47,20 +47,19 @@
               // we want to hijack the Reel from example
               // and take over with the local version for testing
               iframe_pool.ready(function(){
-                var
-                  iframe_pool= $('#test_stage').contents(),
-                  source= xhr.responseText,
-                  call= /<script>\n +\$\(function\(\)\{((.|\n)+)\}\);\n +<\/script>/.exec(source)[1],
-                  wait
-
                 with(frames.test_stage){
-                  $.getScript('http://code.jquery.com/jquery-'+(parent.location.params.jq || default_jquery)+'.min.js', function(){
+                  var
+                    source= xhr.responseText,
+                    script= /<script>((.|\n)+)<\/script>/.exec(source)[1]
+
+//                  $.getScript('http://code.jquery.com/jquery-'+(parent.location.params.jq || default_jquery)+'.min.js', function(){
+                    $.reel= undefined;
                     $.getScript('../../jquery.reel.js', function(){
                       setTimeout(function(){
-                        eval(call)
+                        eval(script);
                       }, 0);
                     });
-                  });
+//                  });
                 }
 
               });
