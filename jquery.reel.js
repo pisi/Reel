@@ -1253,6 +1253,9 @@ jQuery.reel || (function($, window, document, undefined){
                   orient: function(e, alpha, beta, gamma, ev){
                     if (!slidable || operated) return;
                     oriented= true;
+                    var
+                      alpha_fraction= alpha / 360
+                      fraction= set(_fraction_, +((opt.stitched || opt.cw ? 1 - alpha_fraction : alpha_fraction)).toFixed(2))
                     slidable = false;
                   },
 
