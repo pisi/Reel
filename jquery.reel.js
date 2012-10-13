@@ -707,24 +707,18 @@ jQuery.reel || (function($, window, document, undefined){
           var
             // Establish local `opt` object made by extending the defaults.
             opt= $.extend({}, reel.def, name),
-            // Limit the given jQuery collection to `<img>` tags.
-            applicable= (function(tags){
+            // Limit the given jQuery collection to proper `<img>` tags.
+            applicable= t.filter(_img_).unreel().filter(function(){
+              // Filter out images with:
+              // - no or empty `src` attribute defined
+              // - no `width` and `height` attributes defined
               var
-                pass= []
-              tags.filter(_img_).unreel().each(function(ix){
-                // Verify they have a workable set of properties. They need to have at least:
-                //
-                // - non-empty `src` attribute defined
-                // - non-zero `width` and `height` attributes defined
-                var
-                  $this= $(this),
-                  src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr('src'),
-                  width= number(opt.attr.width || $this.css(_width_)),
-                  height= number(opt.attr.height || $this.css(_height_))
-                if (src && src != __ && width && height) pass.push($this);
-              });
-              return $(pass);
-            })(this),
+                $this= $(this),
+                src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr('src'),
+                width= number(opt.attr.width || $this.css(_width_)),
+                height= number(opt.attr.height || $this.css(_height_))
+              if (src && src != __ && width && height) return true;
+            }),
             instances= []
 
           // Backward-compatibility of [deprecated] legacy options
