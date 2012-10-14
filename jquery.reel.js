@@ -50,7 +50,7 @@ jQuery.reel || (function($, window, document, undefined){
 
   // One vital requirement is the correct jQuery. Reel requires at least version 1.5
   // and a make sure check is made at the very beginning.
-  if (!$ || +$().jquery.replace(dot(), __).substr(0, 2) < 15) return;
+  if (!$ || +$().jquery.replace('.', __).substr(0, 2) < 15) return;
 
   // `$.reel` (or `jQuery.reel`) namespace is provided for storage of all Reel belongings.
   // It is locally referenced as just `reel` for speedier access.
@@ -2094,7 +2094,7 @@ jQuery.reel || (function($, window, document, undefined){
     // ------------------------
     //
     pool= $(document),
-    browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
+    browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
     knows_data_urls= !ie || (ie && browser_version > 7),
     client= navigator.userAgent,
