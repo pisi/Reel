@@ -707,17 +707,15 @@ jQuery.reel || (function($, window, document, undefined){
           var
             // Establish local `opt` object made by extending the defaults.
             opt= $.extend({}, reel.def, name),
-            // Limit the given jQuery collection to proper `<img>` tags.
+            // Limit the given jQuery collection to just `<img>` tags with `src` attribute
+            // and dimensions defined.
             applicable= t.filter(_img_).unreel().filter(function(){
-              // Filter out images with:
-              // - no or empty `src` attribute defined
-              // - no `width` and `height` attributes defined
               var
                 $this= $(this),
-                src= opt.images.length && opt.images || opt.sequence || opt.image || opt.attr.src || $this.attr('src'),
-                width= number(opt.attr.width || $this.css(_width_)),
-                height= number(opt.attr.height || $this.css(_height_))
-              if (src && src != __ && width && height) return true;
+                src= opt.attr.src || $this.attr('src'),
+                width= opt.attr.width || $this.width(),
+                height= opt.attr.height || $this.height()
+              if (src && width && height) return true;
             }),
             instances= []
 
@@ -757,7 +755,7 @@ jQuery.reel || (function($, window, document, undefined){
                     images= set(_images_, sequence ? reel.sequence(sequence, opt, get) : opt.images || []),
                     stitched= opt.stitched,
                     loops= opt.loops,
-                    size= { x: number(t.css(_width_) || opt.attr.width), y: number(t.css(_height_) || opt.attr.height) },
+                    size= { x: t.width(), y: t.height() },
                     frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
                     multirow= opt.rows > 1 || opt.orbital,
                     revolution= opt.revolution,
