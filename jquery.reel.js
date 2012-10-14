@@ -2096,7 +2096,7 @@ jQuery.reel || (function($, window, document, undefined){
     pool= $(document),
     browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
     ie= $.browser.msie,
-    knows_data_urls= !ie || (ie && browser_version > 6),
+    knows_data_urls= !ie || (ie && browser_version > 7),
     client= navigator.userAgent,
     ticker,
 
