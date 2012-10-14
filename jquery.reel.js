@@ -774,7 +774,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_rows_, rows);
                   set(_dimensions_, size);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
-                  set(_stitched_, stitched);
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
                   set(_stitched_shift_, 0);
                   set(_stage_, stage_id);
@@ -878,7 +877,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? undefined : get(_stitched_) && px(get(_stitched_))+___+px(space.y)
+                        ? undefined : opt.stitched && px(opt.stitched)+___+px(space.y)
                         || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
                       });
                       $area
@@ -2148,7 +2147,7 @@ jQuery.reel || (function($, window, document, undefined){
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
-    _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage', _stitched_= 'stitched',
+    _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
     _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
 
