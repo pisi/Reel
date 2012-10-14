@@ -2118,7 +2118,7 @@ jQuery.reel || (function($, window, document, undefined){
     pool= $(document),
     browser_version= +$.browser.version.split('.').slice(0,2).join('.'),
     ie= $.browser.msie,
-    knows_data_urls= !ie || (ie && browser_version > 7),
+    knows_data_urls= !(ie && browser_version < 8),
     client= navigator.userAgent,
     ticker,
 
@@ -2217,7 +2217,7 @@ jQuery.reel || (function($, window, document, undefined){
     touchy= reel.touchy= (reel.re.touchy_agent).test(client),
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
-    DRAG_BUTTON= touchy ? undefined : (ie && browser_version <= 8) ? 1 : 0,
+    DRAG_BUTTON= touchy ? undefined : (ie && browser_version < 9) ? 1 : 0,
 
     // ~~~
     //
