@@ -712,9 +712,10 @@ jQuery.reel || (function($, window, document, undefined){
             applicable= t.filter(_img_).unreel().filter(function(){
               var
                 $this= $(this),
-                src= opt.attr.src || $this.attr('src'),
-                width= opt.attr.width || $this.width(),
-                height= opt.attr.height || $this.height()
+                attr= opt.attr,
+                src= attr.src || $this.attr('src'),
+                width= attr.width || $this.width(),
+                height= attr.height || $this.height()
               if (src && width && height) return true;
             }),
             instances= []
@@ -751,17 +752,21 @@ jQuery.reel || (function($, window, document, undefined){
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
-                    sequence= reel.re.sequence.exec(opt.images),
-                    images= set(_images_, sequence ? reel.sequence(sequence, opt, get) : opt.images || []),
+                    images= opt.images,
                     stitched= opt.stitched,
                     loops= opt.loops,
-                    size= { x: t.width(), y: t.height() },
-                    frames= set(_frames_, opt.orbital && opt.footage || opt.rows <= 1 && images.length || opt.frames),
-                    multirow= opt.rows > 1 || opt.orbital,
+                    orbital= opt.orbital,
                     revolution= opt.revolution,
+                    rows= opt.rows,
+                    footage= opt.footage,
+                    sequence= reel.re.sequence.exec(images),
+                    images= set(_images_, sequence ? reel.sequence(sequence, opt, get) : images || []),
+                    size= { x: t.width(), y: t.height() },
+                    frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
+                    multirow= rows > 1 || orbital,
                     revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || size.x * 2),
-                    revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (opt.rows > 3 ? size.y : size.y / (5 - opt.rows)))),
-                    rows= stitched ? 1 : ceil(frames / opt.footage),
+                    revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (rows > 3 ? size.y : size.y / (5 - rows)))),
+                    rows= stitched ? 1 : ceil(frames / footage),
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
                     $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+'0' }),
@@ -790,7 +795,7 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_reeled_, false);
                   set(_opening_, false);
                   set(_brake_, opt.brake);
-                  set(_center_, !!opt.orbital);
+                  set(_center_, !!orbital);
                   set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
                   set(_opening_ticks_, -1);
                   set(_ticks_, -1);
@@ -871,24 +876,27 @@ jQuery.reel || (function($, window, document, undefined){
                       space= get(_dimensions_),
                       frames= get(_frames_),
                       id= t.attr(_id_),
+                      rows= opt.rows,
+                      stitched= opt.stitched,
                       $overlay= t.parent(),
                       $area= set(_area_, $(opt.area || $overlay ))
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? undefined : opt.stitched && px(opt.stitched)+___+px(space.y)
-                        || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (opt.rows || 1) * (opt.directional? 2:1))
+                        ? undefined : stitched && px(stitched)+___+px(space.y)
+                        || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (rows || 1) * (opt.directional? 2:1))
                       });
                       $area
                         .bind(_touchstart_, press)
                     }else{
                       var
-                        cursor= opt.cursor == _hand_ ? drag_cursor : opt.cursor || reel_cursor,
-                        cursor_down= opt.cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
-                      css(__, { cursor: cdn(cursor) });
+                        cursor= opt.cursor,
+                        cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
+                        cursor_down= cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
+                      css(__, { cursor: cdn(cursor_up) });
                       css(dot(loading_klass), { cursor: 'wait' });
-                      css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor) }, true);
+                      css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor_up) }, true);
                       $area
                         .bind(opt.wheelable ? _mousewheel_ : __, wheel)
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
@@ -898,7 +906,7 @@ jQuery.reel || (function($, window, document, undefined){
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
                     opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
-                    opt.rows > 1 && opt.indicator && $overlay.append(indicator('y'));
+                    rows > 1 && opt.indicator && $overlay.append(indicator('y'));
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                     css(___+dot(cached_klass), { display: _none_ });
@@ -922,6 +930,7 @@ jQuery.reel || (function($, window, document, undefined){
                       images= get(_images_),
                       is_sprite= !images.length,
                       frames= get(_frames_),
+                      footage= opt.footage,
                       order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
@@ -934,8 +943,8 @@ jQuery.reel || (function($, window, document, undefined){
                     while(preload.length){
                       var
                         uri= opt.path+preload.shift(),
-                        width= space.x * (!is_sprite ? 1 : opt.footage),
-                        height= space.y * (!is_sprite ? 1 : frames / opt.footage) * (!opt.directional ? 1 : 2),
+                        width= space.x * (!is_sprite ? 1 : footage),
+                        height= space.y * (!is_sprite ? 1 : frames / footage) * (!opt.directional ? 1 : 2),
                         $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
                       // Each image, which finishes the load triggers `"preloaded` Event.
                       $img.bind('load error abort', function(){
@@ -1003,7 +1012,7 @@ jQuery.reel || (function($, window, document, undefined){
                       speed= opt.entry || opt.speed,
                       end= get(_fraction_),
                       duration= opt.opening,
-                      start= set(_fraction_, end - speed * opt.opening),
+                      start= set(_fraction_, end - speed * duration),
                       ticks= set(_opening_ticks_, ceil(duration * leader(_tempo_)))
                   },
 
@@ -1037,7 +1046,8 @@ jQuery.reel || (function($, window, document, undefined){
                   play: function(e, speed){
                     var
                       speed= set(_speed_, speed || get(_speed_)),
-                      ticks= opt.duration && set(_ticks_, ceil(opt.duration * leader(_tempo_))),
+                      duration= opt.duration,
+                      ticks= duration && set(_ticks_, ceil(duration * leader(_tempo_))),
                       backwards= set(_backwards_, speed < 0),
                       playing= set(_playing_, !!speed),
                       stopped= set(_stopped_, !playing)
@@ -1082,6 +1092,7 @@ jQuery.reel || (function($, window, document, undefined){
                     if (opt.draggable){
                       var
                         clicked= set(_clicked_, get(_frame_)),
+                        clickfree= opt.clickfree,
                         velocity= set(_velocity_, 0),
                         origin= last= recenter_mouse(get(_revolution_), x, y)
                       touchy || ev && ev.preventDefault();
@@ -1096,9 +1107,9 @@ jQuery.reel || (function($, window, document, undefined){
                         .bind(_touchmove_, drag)
                         .bind(_touchend_+___+_touchcancel_, lift)
                       }else{
-                        (opt.clickfree ? get(_area_) : pools)
+                        (clickfree ? get(_area_) : pools)
                         .bind(_mousemove_, drag)
-                        .bind(opt.clickfree ? _mouseleave_ : _mouseup_, lift)
+                        .bind(clickfree ? _mouseleave_ : _mouseup_, lift)
                       }
                     }
                     function drag(e){ return t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]) && e.give }
@@ -1151,7 +1162,9 @@ jQuery.reel || (function($, window, document, undefined){
                       slidable= false;
                       unidle();
                       var
-                        scrollable= touchy && !get(_reeling_) && opt.rows <= 1 && !opt.orbital && opt.scrollable,
+                        rows= opt.rows,
+                        orbital= opt.orbital,
+                        scrollable= touchy && !get(_reeling_) && rows <= 1 && !orbital && opt.scrollable,
                         delta= { x: x - last.x, y: y - last.y }
                       if (ev && scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
                       if (abs(delta.x) > 0 || abs(delta.y) > 0){
@@ -1166,10 +1179,10 @@ jQuery.reel || (function($, window, document, undefined){
                           reeling= set(_reeling_, get(_reeling_) || get(_frame_) != get(_clicked_)),
                           motion= to_bias(vertical ? delta.y : delta.x || 0),
                           backwards= motion && set(_backwards_, motion < 0)
-                        if (opt.orbital && get(_center_)) var
+                        if (orbital && get(_center_)) var
                           vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
                           origin= recenter_mouse(revolution, x, y)
-                        if (opt.rows > 1) var
+                        if (rows > 1) var
                           space_y= get(_dimensions_).y,
                           revolution_y= get(_revolution_y_),
                           start= get(_clicked_tier_),
@@ -1305,11 +1318,12 @@ jQuery.reel || (function($, window, document, undefined){
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
                       frames= get(_frames_),
+                      rows= opt.rows,
                       base= frame % frames || frames,
                       ready= !!get(_preloaded_),
                       frame_row= (frame - base) / frames + 1,
-                      frame_tier= (frame_row - 1) / (opt.rows - 1),
-                      tier_row= round(interpolate(frame_tier, 1, opt.rows)),
+                      frame_tier= (frame_row - 1) / (rows - 1),
+                      tier_row= round(interpolate(frame_tier, 1, rows)),
                       tier= ready && tier_row === get(_row_) ? get(_tier_) : set(_tier_, frame_tier),
                       frame_fraction= min((base - 1) / (frames - 1), 0.9999),
                       row_shift= get(_row_) * frames - frames,
@@ -1322,6 +1336,7 @@ jQuery.reel || (function($, window, document, undefined){
                       frame= frame + footage
                     var
                       horizontal= opt.horizontal,
+                      stitched= opt.stitched,
                       images= get(_images_),
                       is_sprite= !images.length,
                       space= get(_dimensions_)
@@ -1330,17 +1345,17 @@ jQuery.reel || (function($, window, document, undefined){
                         frameshot= images[frame - 1]
                       ready && t.attr({ src: reen(opt.path + frameshot) })
                     }else{
-                      if (!opt.stitched) var
+                      if (!stitched) var
                         minor= (frame % footage) - 1,
                         minor= minor < 0 ? footage - 1 : minor,
                         major= floor((frame - 0.1) / footage),
-                        major= major + (opt.rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
+                        major= major + (rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
                         spacing= get(_spacing_),
                         a= major * ((horizontal ? space.y : space.x) + spacing),
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
                       else var
-                        x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % opt.stitched),
+                        x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % stitched),
                         y= 0,
                         shift= [px(-x), px(y)]
                       t.css({ backgroundPosition: shift.join(___) })
@@ -1362,9 +1377,10 @@ jQuery.reel || (function($, window, document, undefined){
                   'fractionChange.indicator': function(e, deprecated_set, fraction){
                     if (deprecated_set === undefined && opt.indicator) var
                       space= get(_dimensions_),
-                      travel= opt.orbital && get(_vertical_) ? space.y : space.x,
-                      slots= opt.orbital ? opt.footage : opt.images.length || get(_frames_),
                       size= opt.indicator,
+                      orbital= opt.orbital,
+                      travel= orbital && get(_vertical_) ? space.y : space.x,
+                      slots= orbital ? opt.footage : opt.images.length || get(_frames_),
                       weight= ceil(travel / slots),
                       travel= travel - weight,
                       indicate= round(interpolate(fraction, 0, travel)),
@@ -1387,7 +1403,7 @@ jQuery.reel || (function($, window, document, undefined){
                       travel= space.y,
                       slots= opt.rows,
                       size= opt.indicator,
-                      weight= ceil(travel / opt.rows),
+                      weight= ceil(travel / slots),
                       travel= travel - weight,
                       indicate= round(tier * travel),
                       $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
@@ -1567,11 +1583,12 @@ jQuery.reel || (function($, window, document, undefined){
                   'tick.reel': function(e){
                     var
                       velocity= get(_velocity_),
-                      leader_tempo= leader(_tempo_)
+                      leader_tempo= leader(_tempo_),
+                      monitor= opt.monitor
                     if (braking) var
                       braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
-                    opt.monitor && $monitor.text(get(opt.monitor));
+                    monitor && $monitor.text(get(monitor));
                     velocity && braking++;
                     operated && operated++;
                     to_bias(0);
@@ -1635,10 +1652,12 @@ jQuery.reel || (function($, window, document, undefined){
               //
               $monitor= $(),
               preloader= function(){
+                var
+                  size= opt.preloader
                 css(___+dot(preloader_klass), {
                   position: _absolute_,
-                  left: 0, top: get(_dimensions_).y - opt.preloader,
-                  height: opt.preloader,
+                  left: 0, top: get(_dimensions_).y - size,
+                  height: size,
                   overflow: _hidden_,
                   backgroundColor: '#000'
                 });
@@ -1687,9 +1706,10 @@ jQuery.reel || (function($, window, document, undefined){
               recenter_mouse= function(revolution, x, y){
                 var
                   fraction= set(_clicked_on_, get(_fraction_)),
-                  tier= set(_clicked_tier_, get(_tier_))
-                set(_lo_, opt.loops ? 0 : - fraction * revolution);
-                set(_hi_, opt.loops ? revolution : revolution - fraction * revolution);
+                  tier= set(_clicked_tier_, get(_tier_)),
+                  loops= opt.loops
+                set(_lo_, loops ? 0 : - fraction * revolution);
+                set(_hi_, loops ? revolution : revolution - fraction * revolution);
                 return x && set(_clicked_location_, { x: x, y: y }) || undefined
               },
               slidable= true,
@@ -1951,8 +1971,9 @@ jQuery.reel || (function($, window, document, undefined){
         //
         fidelity: function(sequence, opt, get){
           var
-            rows= opt.orbital ? 2 : opt.rows || 1,
-            frames= opt.orbital ? opt.footage : get(_frames_),
+            orbital= opt.orbital,
+            rows= orbital ? 2 : opt.rows || 1,
+            frames= orbital ? opt.footage : get(_frames_),
             start= (opt.row-1) * frames,
             values= new Array().concat(sequence),
             present= new Array(sequence.length + 1),
@@ -2043,11 +2064,12 @@ jQuery.reel || (function($, window, document, undefined){
         if (sequence.length <= 1) return opt.images;
         var
           images= [],
+          orbital= opt.orbital,
           url= sequence[1],
           placeholder= sequence[2],
           start= +sequence[4] || 1,
-          rows= opt.orbital ? 2 : opt.rows || 1,
-          frames= opt.orbital ? opt.footage : opt.frames,
+          rows= orbital ? 2 : opt.rows || 1,
+          frames= orbital ? opt.footage : opt.frames,
           end= +(sequence[5] || rows * frames),
           total= end - start,
           increment= +sequence[7] || 1,
