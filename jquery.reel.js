@@ -2103,10 +2103,11 @@ jQuery.reel || (function($, window, document, undefined){
     // ------------------------
     //
     pool= $(document),
-    browser_version= +$.browser.version.split(dot()).slice(0,2).join(dot()),
-    ie= $.browser.msie,
-    knows_data_urls= !ie || (ie && browser_version > 6),
     client= navigator.userAgent,
+    browser= reel.re.ua[0].exec(client) || reel.re.ua[1].exec(client) || reel.re.ua[2].exec(client),
+    browser_version= +browser[2].split('.').slice(0,2).join('.'),
+    ie= browser[1] == 'MSIE',
+    knows_data_urls= !ie || (ie && browser_version > 6),
     ticker,
 
     // ---------------
