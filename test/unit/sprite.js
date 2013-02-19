@@ -3,12 +3,35 @@
  */
 (function($){
 
+  var
+    browser = (function( ua ) {
+      // Adapted from jQuery Migrate
+      // https://github.com/jquery/jquery-migrate/blob/master/src/core.js
+      var
+        match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+                /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+                /(msie) ([\w.]+)/.exec( ua ) ||
+                ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+                [],
+        browser = {
+          browser: match[ 1 ] || "",
+          version: match[ 2 ] || "0"
+        }
+
+      if (browser.browser){
+        browser[browser.browser] = true;
+      }
+      return browser;
+
+    })(navigator.userAgent.toLowerCase())
+
   module('Sprite', reel_test_module_routine);
 
   test( 'Multi-row: Frame shifting (4 rows)', function(){
 
     var
-      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
+      iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
       selector= '#image',
       $reel= $(selector).reel({
         frames: 6,
@@ -58,7 +81,7 @@
 
   test( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
     var
-      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
+      iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
       selector= '#image',
       $reel= $(selector).reel({
         frames: 6,

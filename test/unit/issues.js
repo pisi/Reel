@@ -3,6 +3,29 @@
  */
 (function($){
 
+  var
+    browser = (function( ua ) {
+      // Adapted from jQuery Migrate
+      // https://github.com/jquery/jquery-migrate/blob/master/src/core.js
+      var
+        match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+                /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+                /(msie) ([\w.]+)/.exec( ua ) ||
+                ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+                [],
+        browser = {
+          browser: match[ 1 ] || "",
+          version: match[ 2 ] || "0"
+        }
+
+      if (browser.browser){
+        browser[browser.browser] = true;
+      }
+      return browser;
+
+    })(navigator.userAgent.toLowerCase())
+
   module('Issues', reel_test_module_routine);
 
   test( 'GH-4 Proper background positioning range for stitched non-looping panoramas', function(){
@@ -10,7 +33,7 @@
      * http://github.com/pisi/Reel/issues/#issue/4
      */
     var
-      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
+      iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
       stitched= 1652,
       $pano= $('#stitched_nonlooping').reel({ stitched: stitched, loops: false }),
       travel= stitched - parseInt($pano.css('width'))
@@ -38,7 +61,7 @@
      * http://github.com/pisi/Reel/issues/#issue/6
      */
     var
-      iesaurus = $.browser.msie && +$.browser.version < 9, // Flag for IE 8- quirks
+      iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
       stitched= 1652,
       $pano= $('#stitched_looping').reel({ stitched: stitched, loops: true }),
       travel= stitched
@@ -123,8 +146,8 @@
         var
           protocol= $('#image').attr('src').split(':')[0],
           dot= '.',
-          browser_version= +$.browser.version.split(dot).slice(0,2).join(dot),
-          ie= $.browser.msie
+          browser_version= +browser.version.split(dot).slice(0,2).join(dot),
+          ie= browser.msie
 
         if (!ie || (ie && browser_version > 6)){
           equal(protocol, 'data', 'Embedded transparent image.');
