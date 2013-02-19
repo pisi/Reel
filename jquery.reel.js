@@ -1860,6 +1860,12 @@ jQuery.reel || (function($, window, document, undefined){
       re: {
         /* Valid image file format */
         image:         /^(.*)\.(jpg|jpeg|png|gif)\??.*$/,
+        /* User agent failsafe stack */
+        ua: [
+                       /(msie|opera|firefox|chrome|safari)[ \/:]([\d.]+)/i,
+                       /(webkit)\/([\d.]+)/i,
+                       /(mozilla)\/([\d.]+)/i
+        ],
         /* Multi touch devices */
         touchy_agent:  /iphone|ipod|ipad|android|fennec|rim tablet/i,
         /* Lazy (low-CPU mobile devices) */
