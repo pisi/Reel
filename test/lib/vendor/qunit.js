@@ -29,6 +29,9 @@ var QUnit = {
 			banner = id("qunit-banner"),
 			result = id("qunit-testresult");
 
+		var jq = location.params.jq ? '&jq=' + location.params.jq : '';
+		$('<li/>', { 'class': 'all' }).append($('<a/>', { href: '?' + jq, text: 'All' })).prependTo($('#qunit-modules'));
+
 		if ( tests ) {
 			tests.innerHTML = "";
 		}
