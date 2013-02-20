@@ -149,7 +149,7 @@
           browser_version= +browser.version.split(dot).slice(0,2).join(dot),
           ie= browser.msie
 
-        if (!ie || (ie && browser_version > 6)){
+        if (!ie || (ie && browser_version > 7)){
           equal(protocol, 'data', 'Embedded transparent image.');
         }else{
           equal(protocol, 'http', 'Transparent image from CDN.');
