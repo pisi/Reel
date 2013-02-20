@@ -216,17 +216,18 @@
       // Touch clients and Opera don't support custom cursors
       opera= (/opera/i).test(navigator.userAgent),
       touchy= $.reel.touchy,
+      unsupported = touchy ? 'auto' : opera ? 'move' : false,
       $reel= $('#image').reel({
       })
 
     $(document).bind('loaded.test', function(){
-      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
+      equiv( $reel.css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
-      equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', '`html`');
-      equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel.cur)', '`html *`');
+      equiv( $reel.css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel.cur)', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel.cur)', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel.cur)', '`html *`');
       $('html').removeClass('reel-panning');
       start();
     });
@@ -238,18 +239,19 @@
       // Touch clients and Opera don't support custom cursors
       opera= (/opera/i).test(navigator.userAgent),
       touchy= $.reel.touchy,
+      unsupported = touchy ? 'auto' : opera ? 'move' : false,
       $reel= $('#image').reel({
         cursor: 'hand'
       })
 
     $(document).bind('loaded.test', function(){
-      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag.cur)');
+      equiv( $reel.css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel-drag.cur)');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $reel.css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', 'instance');
-      equiv( $('html').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html`');
-      equiv( $('body').css('cursor').split(/, ?/)[0], touchy || opera ? 'auto' : 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html *`');
+      equiv( $reel.css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], unsupported || 'url('+$.reel.cdn+'jquery.reel-drag-down.cur)', '`html *`');
       $('html').removeClass('reel-panning');
 
       start();
