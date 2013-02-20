@@ -1,8 +1,8 @@
 jQuery Reel Test Suite
 ======================
 
-Reel is very well tested. To date we have **1192 tests in 317 tasks and 10 modules**.
-Between releases (1.1.4 and 1.2), the unit test coverage has been **increased by 470%**
+Reel is very well tested. To date we have **1702 tests in 328 tasks and 10 modules**.
+Between releases (1.2 and 1.2.1), the unit test coverage has been **increased by 42%**
 with 99% of code being covered now. The suite will keep on growing as enhancements are made
 or new bugs discovered. The test suite grows independent on regular version releases.
 
