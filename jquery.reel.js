@@ -156,7 +156,7 @@ jQuery.reel || (function($, window, document, undefined){
         steppable:           true,
 
         // #### `throwable` Option ####
-        // `Boolean`, since 1.1
+        // `Boolean`, since 1.1; or `Number`, IN DEVELOPMENT
         //
         throwable:           true,
 
@@ -1133,7 +1133,9 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       clicked= set(_clicked_, false),
                       reeling= set(_reeling_, false),
-                      velocity= set(_velocity_, !opt.throwable ? 0 : abs(bias[0] + bias[1]) / 60),
+                      throwable = opt.throwable,
+                      biases= abs(bias[0] + bias[1]) / 60,
+                      velocity= set(_velocity_, !throwable ? 0 : throwable === true ? biases : min(throwable, biases)),
                       brakes= braking= velocity ? 1 : 0
                     unidle();
                     no_bias();

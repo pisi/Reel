@@ -12,6 +12,7 @@ Development
 * New `duration` option for the animation (GH-90).
 * Case in-sensitivity for image extension in `src` attribute of the `<img>`.
 * Exciting new multi-row panoramas via combination of `multirow` and `stitched` options (GH-129).
+* The `throwable` option can now accept maximum velocity instead of simple boolean (GH-172).
 
 
 Version 1.2
