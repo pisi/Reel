@@ -11,6 +11,7 @@ Development
 * Release package now contains image assets otherwise served by CND (GH-144).
 * New `duration` option for the animation (GH-90).
 * Case in-sensitivity for image extension in `src` attribute of the `<img>`.
+* Exciting new multi-row panoramas via combination of `multirow` and `stitched` options (GH-129).
 
 
 Version 1.2

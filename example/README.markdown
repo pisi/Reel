@@ -6,10 +6,10 @@ folder as of version 1.2. This means you will not find any examples in the
 `test/` folder anymore. Everything moved here.
 
 - Each subfolder represents a completely self-contained example, which can
-eventually be taken out and re-used easiy with little or no modification.
+eventually be taken out and re-used easily with little or no modification.
 Each example has all it needs inside that folder.
-- For simplicity examples are nearly completely naked without any balast
-other than stylesheet, example title and image credits.
+- For simplicity examples are nearly completely naked without any ballast
+other than stylesheet, example texts and image credits.
 - All examples link for jQuery 1.7 and latest Reel from respective CDNs.
 
 
@@ -24,9 +24,11 @@ Examples
 - [object-movie-multi-row-sequence/](object-movie-multi-row-sequence/index.html)
 - [object-movie-multi-row-sprite/](object-movie-multi-row-sprite/index.html)
 - [object-movie-non-animated-sprite/](object-movie-non-animated-sprite/index.html)
-- [panorama-sprite/](panorama-sprite/index.html)
+- [panorama-multi-row-stitched/](panorama-multi-row-stitched/index.html)
 - [panorama-non-looping-stitched/](panorama-non-looping-stitched/index.html)
 - [panorama-click-free-stitched/](panorama-click-free-stitched/index.html)
+- [panorama-sprite/](panorama-sprite/index.html)
+- [panorama-sprite-local-assets/](panorama-sprite-local-assets/index.html)
 
 
 Indicator

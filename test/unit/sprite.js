@@ -55,6 +55,7 @@
       (letter ~ row; number ~ frame)
       */
       entries= {
+             //     tier        frame              X             Y
         '1': [         0,           2,      '-276px',        '0px' ],
         '2': [    0.3333,           8,      '-276px',     '-252px' ],
         '3': [    0.6667,          14,      '-276px',     '-504px' ],
@@ -102,6 +103,7 @@
       (letter ~ row; number ~ frame)
       */
       entries= {
+             //     tier        frame              X             Y
         '3': [         1,          17,         '0px',     '-504px' ],
         '2': [       0.5,          11,      '-552px',     '-252px' ],
         '1': [         0,           5,         '0px',     '-126px' ]
@@ -145,6 +147,157 @@
       equal( $reel.data('frame'), 17);
       equal( $reel.data('backwards'), true);
       start();
+    });
+  });
+
+  asyncTest( 'Multi-row: Stitched should always receive transparent image even for multiple images', function(){
+    expect(1);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 600,
+        images: 'stitched-row-##.png',
+        rows: 5
+      })
+
+    $(document).bind('loaded.test', function(){
+      ok( $reel.attr('src').search(/CAAIAIAAAAAAAAA|blank\.gif/) >= 0 );
+      start();
+    });
+  });
+
+  test( 'Multi-row: Non-looping stitched panorama shifting (3 rows)', function(){
+    var
+      iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 500 + 276, // 276px is width of the stage
+        frame:    2,
+        frames:   5,
+        rows:     3,
+        row:      2,
+        loops:    false
+      }),
+      /*
+      Sprite layout:
+
+      A1                    1  2  3  4  5
+      B1  in real frames »  6  7  8  9 10
+      C1                   11 12 13 14 15
+
+      (letter ~ row; number ~ frame)
+      */
+      entries= {
+             //     tier        frame              X             Y
+        '3': [         1,          12,      '-125px',     '0'      ],
+        '2': [       0.5,           7,      '-125px',     '-126px' ],
+        '1': [         0,           2,      '-125px',     '-252px' ]
+      }
+
+    expect(iesaurus ? 15 : 12);
+
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      if (iesaurus){
+        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+      }else{
+        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+      }
+    });
+  });
+
+  test( 'Multi-row: Looping stitched panorama shifting (3 rows)', function(){
+    var
+      iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 500 + 276, // 276px is width of the stage
+        frame:    4,
+        frames:   5,
+        rows:     3,
+        row:      2
+      }),
+      /*
+      Sprite layout:
+
+      A1                    1  2  3  4  5
+      B1  in real frames »  6  7  8  9 10
+      C1                   11 12 13 14 15
+
+      (letter ~ row; number ~ frame)
+      */
+      entries= {
+             //     tier        frame              X             Y
+        '3': [         1,          14,      '-582px',     '0'      ],
+        '2': [       0.5,           9,      '-582px',     '-126px' ],
+        '1': [         0,           4,      '-582px',     '-252px' ]
+      }
+
+    expect(iesaurus ? 15 : 12);
+
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      if (iesaurus){
+        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+      }else{
+        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+      }
+    });
+  });
+
+  test( 'Multi-row: `$.reel.sequence()` ignores number of stitched frames and loads one file per row', function()
+  {
+    expect(1);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 300,
+        images: 'stitched-row-##.png',
+        rows: 3
+      })
+
+    deepEqual( $reel.reel('cached'), [
+      'stitched-row-01.png',
+      'stitched-row-02.png',
+      'stitched-row-03.png'
+    ]);
+  });
+
+  test( 'Multi-row: Stitched panorama shifting of individual images (5 rows)', function()
+  {
+    expect(12);
+    var
+      iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
+      selector= '#image',
+      $reel= $(selector).reel({
+        stitched: 300,
+        frame:    3,
+        frames:   5,
+        rows:     5,
+        row:      3,
+        images:   'stitched-row-##.png'
+      }),
+      entries= {
+             //     tier        frame                       file
+        '5': [         1,          23,      'stitched-row-05.png' ],
+        '3': [       0.5,          13,      'stitched-row-03.png' ],
+        '1': [         0,           3,      'stitched-row-01.png' ]
+      }
+
+    $.each(entries, function(ix,it){
+      $reel.trigger('rowChange', Number(ix));
+      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+      ok( $reel.css('backgroundImage').search(it[2]) >= 0, 'Row '+ix+': CSS background image file');
     });
   });
 

@@ -879,13 +879,15 @@ jQuery.reel || (function($, window, document, undefined){
                       rows= opt.rows,
                       stitched= opt.stitched,
                       $overlay= t.parent(),
-                      $area= set(_area_, $(opt.area || $overlay ))
+                      $area= set(_area_, $(opt.area || $overlay )),
+                      rows= opt.rows || 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? undefined : stitched && px(stitched)+___+px(space.y)
-                        || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * (rows || 1) * (opt.directional? 2:1))
+                        ? !stitched ? undefined : px(stitched)+___+px(space.y)
+                        : stitched && px(stitched)+___+px((space.y + opt.spacing) * rows - opt.spacing)
+                        || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * rows * (opt.directional? 2:1))
                       });
                       $area
                         .bind(_touchstart_, press)
@@ -986,6 +988,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
+                    opt.stitched && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
                   },
 
@@ -1319,14 +1322,16 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       frames= get(_frames_),
                       rows= opt.rows,
+                      path= opt.path,
                       base= frame % frames || frames,
                       ready= !!get(_preloaded_),
                       frame_row= (frame - base) / frames + 1,
                       frame_tier= (frame_row - 1) / (rows - 1),
                       tier_row= round(interpolate(frame_tier, 1, rows)),
-                      tier= ready && tier_row === get(_row_) ? get(_tier_) : set(_tier_, frame_tier),
+                      row= get(_row_),
+                      tier= ready && tier_row === row ? get(_tier_) : set(_tier_, frame_tier),
                       frame_fraction= min((base - 1) / (frames - 1), 0.9999),
-                      row_shift= get(_row_) * frames - frames,
+                      row_shift= row * frames - frames,
                       fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
                       same_spot= abs((get(_fraction_) || 0) - frame_fraction) < 1 / (get(_frames_) - 1),
                       fraction= ready && (fraction_frame === frame && same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
@@ -1338,26 +1343,30 @@ jQuery.reel || (function($, window, document, undefined){
                       horizontal= opt.horizontal,
                       stitched= opt.stitched,
                       images= get(_images_),
-                      is_sprite= !images.length,
+                      is_sprite= !images.length || opt.stitched,
+                      spacing= get(_spacing_),
                       space= get(_dimensions_)
                     if (!is_sprite){
                       var
                         frameshot= images[frame - 1]
-                      ready && t.attr({ src: reen(opt.path + frameshot) })
+                      ready && t.attr({ src: reen(path + frameshot) })
                     }else{
                       if (!stitched) var
                         minor= (frame % footage) - 1,
                         minor= minor < 0 ? footage - 1 : minor,
                         major= floor((frame - 0.1) / footage),
                         major= major + (rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
-                        spacing= get(_spacing_),
                         a= major * ((horizontal ? space.y : space.x) + spacing),
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
-                      else var
-                        x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % stitched),
-                        y= 0,
-                        shift= [px(-x), px(y)]
+                      else{
+                        var
+                          x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % stitched),
+                          y= rows <= 1 ? 0 : (space.y + spacing) * (rows - row),
+                          shift= [px(-x), px(-y)],
+                          image= images.length > 1 && images[row - 1]
+                        image && t.css('backgroundImage').search(path+image) < 0 && t.css({ backgroundImage: url(path+image) })
+                      }
                       t.css({ backgroundPosition: shift.join(___) })
                     }
                   },
@@ -2075,7 +2084,7 @@ jQuery.reel || (function($, window, document, undefined){
           placeholder= sequence[2],
           start= +sequence[4] || 1,
           rows= orbital ? 2 : opt.rows || 1,
-          frames= orbital ? opt.footage : opt.frames,
+          frames= orbital ? opt.footage : opt.stitched ? 1 : opt.frames,
           end= +(sequence[5] || rows * frames),
           total= end - start,
           increment= +sequence[7] || 1,
