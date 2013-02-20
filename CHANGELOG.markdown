@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Development
------------
+Version 1.2.1
+-------------
 
 * Resolved compatibility issues with jQuery 1.8 (GH-140) and 1.9 (GH-174).
 * For smooth `velocity` kick it now follows `loaded` event (instead of `setup`) (GH-142).

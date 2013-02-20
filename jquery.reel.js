@@ -24,7 +24,7 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.2-devel
+ * Version: 1.2.1
  * Updated: 2013-02-21
  *
  * Requires jQuery 1.5 or higher
@@ -156,7 +156,7 @@ jQuery.reel || (function($, window, document, undefined){
         steppable:           true,
 
         // #### `throwable` Option ####
-        // `Boolean`, since 1.1; or `Number`, IN DEVELOPMENT
+        // `Boolean`, since 1.1; or `Number`, since 1.2.1
         //
         throwable:           true,
 
