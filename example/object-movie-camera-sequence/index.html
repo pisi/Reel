@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="sequence-camera">
+  <head>
+    <title>jQuery Reel Bare Camera Sequence Object Movie Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.9.1.min.js' type='text/javascript'></script>
+    <script src='http://code.vostrel.cz/jquery.reel-1.2.1-bundle.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Bare Camera Sequence</h1>
+
+    <img id="image" src='fish/DSCN0691.JPG' width="210" height="186" />
+    <script>
+      $(function(){ // when DOM ready
+
+        $('#image').reel({
+          indicator:   5, // For no indicator just remove this line
+          images:      'fish/DSCN####.JPG|691..702'
+        });
+
+      });
+    </script>
+
+    <p class="credits photo"><a href="http://honza.vostrel.cz">Honza Vostřel</a></p>
+    
+    <div class="ballast">
+      <p>Lots of dummy text ballast to stretch the page and allow testing how each Reel mode behaves in relation to page scrolling.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum semper imperdiet. Integer non auctor orci. Nullam dictum pretium metus, interdum congue sapien lobortis in. Donec sed massa a tellus dapibus auctor et in mauris. Curabitur adipiscing fermentum felis vel molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut semper sem ut nulla fringilla luctus. Curabitur dignissim quam ac libero consequat tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In hac habitasse platea dictumst. Nunc sed lectus eget magna suscipit tempor eget id nibh.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget lorem est, quis rhoncus augue. Proin mollis elit in lorem dignissim in pulvinar quam egestas. Praesent auctor tempus vestibulum. Praesent purus nisl, porta vel rhoncus mollis, suscipit a sapien. Suspendisse potenti. Nunc leo elit, auctor sed malesuada vel, accumsan in arcu. Quisque a turpis arcu. Fusce a dolor ut risus condimentum feugiat. Aliquam eget turpis ipsum. Fusce est metus, vulputate a mollis non, pretium sit amet mauris. Ut aliquam placerat risus ac volutpat. Phasellus dictum turpis ac nisi egestas faucibus. Nulla pretium molestie venenatis. Integer tincidunt imperdiet turpis, at pretium neque consequat at. Aenean id augue in odio elementum malesuada in in purus.</p>
+      <p>Donec in tincidunt tortor. Donec laoreet adipiscing orci ut gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla eget luctus neque. Aenean metus massa, sodales non pulvinar vitae, dignissim ut ipsum. Pellentesque eget arcu ultrices nisl blandit egestas id quis augue. Integer volutpat, ligula sit amet convallis consequat, nulla nisl suscipit felis, in aliquam tellus sapien ut lorem. Fusce eget lorem diam. Sed sit amet consectetur mi. Nullam nibh dui, auctor at ullamcorper a, vulputate quis mauris. Morbi feugiat lorem et libero dapibus bibendum vel non augue. Fusce luctus enim ac velit semper pharetra. Curabitur turpis nibh, tempor eget rhoncus ut, vulputate et metus. Sed rutrum eros id nisl pharetra mollis. In hac habitasse platea dictumst.</p>
+      <p>Duis fringilla urna vel leo molestie eu pellentesque turpis consequat. Aliquam ante magna, pretium a facilisis vitae, viverra eu dui. Curabitur augue ligula, scelerisque et dapibus non, pharetra eu arcu. Aliquam lobortis augue et elit accumsan porttitor. Donec gravida dignissim lorem, porta vulputate augue tincidunt at. Vivamus tincidunt, tellus et volutpat fermentum, enim metus bibendum ante, euismod feugiat velit nisi nec tellus. Pellentesque egestas, sapien convallis tempor vestibulum, mauris nisl lobortis metus, sagittis vulputate lacus ante ut dolor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tristique velit ac tellus ullamcorper quis pellentesque ipsum cursus. Praesent luctus fringilla velit, eu placerat tellus luctus ac. Nulla nec massa quam.</p>
+      <p>Praesent rutrum dui congue massa dictum tincidunt. Pellentesque ac volutpat augue. Fusce vel dui ac enim viverra sodales. Etiam massa sapien, fermentum et ultricies at, placerat vitae eros. Sed convallis vehicula commodo. Mauris sit amet augue id turpis dapibus rhoncus et vel turpis. Nullam vitae massa sed nunc sagittis varius ac id sapien. Morbi ligula tellus, consequat ut pellentesque id, condimentum nec est. Donec id elit mollis diam dignissim iaculis sed nec lorem. Vivamus sed tellus venenatis sem viverra aliquet gravida nec neque. Donec facilisis odio ac nisl iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer in augue nec leo interdum adipiscing ut a quam. Aenean sit amet mauris vitae lacus interdum aliquam vel a erat.</p>
+    </div>
+  </body>
+</html>
+
