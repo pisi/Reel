@@ -478,6 +478,18 @@
       'prefix5.jpg',
       'prefix9.jpg',
       'prefix13.jpg'
+    ],
+    'PIC#####.jpg|320..323': [
+      'PIC00320.jpg',
+      'PIC00321.jpg',
+      'PIC00322.jpg',
+      'PIC00323.jpg'
+    ],
+    'DSCN####.JPG|255..270|5': [
+      'DSCN0255.JPG',
+      'DSCN0260.JPG',
+      'DSCN0265.JPG',
+      'DSCN0270.JPG'
     ]
   },
   function(sample, images){

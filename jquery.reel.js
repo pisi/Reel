@@ -2091,7 +2091,7 @@ jQuery.reel || (function($, window, document, undefined){
           total= end - start,
           increment= +sequence[7] || 1,
           counter= 0
-        while(counter < end){
+        while(counter <= total){
           images.push(url.replace(placeholder, pad((start + counter + __), placeholder.length, '0')));
           counter+= increment;
         }
