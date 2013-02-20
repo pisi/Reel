@@ -471,11 +471,6 @@ jQuery.reel || (function($, window, document, undefined){
         //
         timeout:                2,
 
-        // #### `duration` Option ####
-        // `Number` (seconds), IN DEVELOPMENT
-        //
-        duration:       undefined,
-
         // #### `rebound` Option ####
         // `Number` (seconds), since 1.1
         //
@@ -798,7 +793,6 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_center_, !!orbital);
                   set(_tempo_, opt.tempo / (reel.lazy? opt.laziness : 1));
                   set(_opening_ticks_, -1);
-                  set(_ticks_, -1);
                   set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
                   set(_backup_, {
                     src: src,
@@ -1050,7 +1044,6 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       speed= set(_speed_, speed || get(_speed_)),
                       duration= opt.duration,
-                      ticks= duration && set(_ticks_, ceil(duration * leader(_tempo_))),
                       backwards= set(_backwards_, speed < 0),
                       playing= set(_playing_, !!speed),
                       stopped= set(_stopped_, !playing)
@@ -1613,11 +1606,8 @@ jQuery.reel || (function($, window, document, undefined){
                       backwards= bounce && set(_backwards_, !get(_backwards_))
                     var
                       direction= get(_cwish_) * negative_when(1, get(_backwards_)),
-                      ticks= get(_ticks_),
-                      step= (!get(_playing_) || !ticks ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
-                      fraction= set(_fraction_, get(_fraction_) - step * direction),
-                      ticks= !opt.duration ? ticks : ticks > 0 && set(_ticks_, ticks - 1)
-                    !ticks && get(_playing_) && t.trigger('stop');
+                      step= (!get(_playing_) ? velocity : abs(get(_speed_)) + velocity) / leader(_tempo_),
+                      fraction= set(_fraction_, get(_fraction_) - step * direction)
                   },
 
                   // This handler performs the opening animation duty when during it the normal animation
@@ -2188,8 +2178,8 @@ jQuery.reel || (function($, window, document, undefined){
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
-    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
+    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _tier_= 'tier',
+    _velocity_= 'velocity', _vertical_= 'vertical',
 
     // And the same goes for browser events too.
     //

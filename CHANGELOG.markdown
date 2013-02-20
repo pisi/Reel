@@ -9,7 +9,6 @@ Development
 * Goodbye disableTextSelect dependency. You served well, but one less to worry about without you!
 * Vertical page scrolling on touch devices fixed (GH-146).
 * Release package now contains image assets otherwise served by CND (GH-144).
-* New `duration` option for the animation (GH-90).
 * Case in-sensitivity for image extension in `src` attribute of the `<img>`.
 * Exciting new multi-row panoramas via combination of `multirow` and `stitched` options (GH-129).
 * The `throwable` option can now accept maximum velocity instead of simple boolean (GH-172).
