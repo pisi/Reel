@@ -10,6 +10,7 @@ Development
 * Vertical page scrolling on touch devices fixed (GH-146).
 * Release package now contains image assets otherwise served by CND (GH-144).
 * New `duration` option for the animation (GH-90).
+* Case in-sensitivity for image extension in `src` attribute of the `<img>`.
 
 
 Version 1.2

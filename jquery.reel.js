@@ -1859,7 +1859,7 @@ jQuery.reel || (function($, window, document, undefined){
       //
       re: {
         /* Valid image file format */
-        image:         /^(.*)\.(jpg|jpeg|png|gif)\??.*$/,
+        image:         /^(.*)\.(jpg|jpeg|png|gif)\??.*$/i,
         /* User agent failsafe stack */
         ua: [
                        /(msie|opera|firefox|chrome|safari)[ \/:]([\d.]+)/i,
