@@ -4,7 +4,7 @@
 ( function run(){
   
   var
-    default_jquery = '1.8.2'
+    default_jquery = '1.9.1'
 
   yepnope( {
     load: [
