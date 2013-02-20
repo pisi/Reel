@@ -280,10 +280,10 @@
 
     $reel.bind('play.test', function(){
       setTimeout(function(){
-        equal( $reel.reel('playing'), false, 'Not playing after the half second passed');
+        equal( $reel.reel('playing'), false, 'Not playing after');
         equal( $reel.reel('stopped'), true, 'Is stopped');
         start();
-      }, 600);
+      }, 1000);
     });
 
   });
