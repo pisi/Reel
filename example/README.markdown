@@ -39,7 +39,7 @@ visible for your reference. To hide it simply remove this option.
 
 
 ---
-&copy; 2009-2012 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
 
 
 
