@@ -1060,8 +1060,6 @@ jQuery.reel || (function($, window, document, undefined){
                   // ### `pause` Event ######
                   // `Event`, since 1.1
                   pause: function(e){
-                    var
-                      playing= set(_playing_, false)
                     unidle();
                   },
 
