@@ -1043,7 +1043,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // ### `play` Event ######
                   // `Event`, since 1.1
                   //
-                  // `"play` Event can optionally accept a `speed` parameter (in Hz) to change the animation
+                  // `"play"` event can optionally accept a `speed` parameter (in Hz) to change the animation
                   // speed on the fly.
                   //
                   play: function(e, speed){
@@ -1059,12 +1059,19 @@ jQuery.reel || (function($, window, document, undefined){
 
                   // ### `pause` Event ######
                   // `Event`, since 1.1
+                  //
+                  // Triggering `"pause"` event will halt the playback for a time period designated
+                  // by the `timeout` option. After this timenout, the playback is resumed again.
+                  //
                   pause: function(e){
                     unidle();
                   },
 
                   // ### `stop` Event ######
                   // `Event`, since 1.1
+                  //
+                  // After `"stop"` event is triggered, the playback stops and stays still until `"play"`ed again.
+                  //
                   stop: function(e){
                     var
                       stopped= set(_stopped_, true),
