@@ -1600,7 +1600,14 @@ jQuery.reel || (function($, window, document, undefined){
                     var
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_),
+                      space= get(_dimensions_),
+                      rect= t[0].getBoundingClientRect(),
+                      visible= rect.bottom <= window.innerHeight + space.y &&
+                               rect.right <= window.innerWidth + space.x &&
+                               rect.left >= -space.x &&
+                               rect.top >= -space.y,
                       monitor= opt.monitor
+                    if (!visible) return mute(e);
                     if (braking) var
                       braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
