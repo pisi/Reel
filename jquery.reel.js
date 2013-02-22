@@ -902,7 +902,7 @@ jQuery.reel || (function($, window, document, undefined){
                       $area
                         .bind(opt.wheelable ? _mousewheel_ : __, wheel)
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
-                        .bind('dragstart', function(){ return false })
+                        .bind(_dragstart_, function(){ return false })
                     }
                     function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
@@ -2200,7 +2200,7 @@ jQuery.reel || (function($, window, document, undefined){
     //
     ns= dot(klass),
     pns= dot('pan') + ns,
-    _touch_= 'touch', _mouse_= 'mouse',
+    _touch_= 'touch', _mouse_= 'mouse', _dragstart_= 'dragstart'+ns,
     _mousedown_= _mouse_+'down'+ns, _mouseenter_= _mouse_+'enter'+ns,
     _mouseleave_= _mouse_+'leave'+pns, _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns,
     _mousewheel_= _mouse_+'wheel'+ns, _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns,
