@@ -900,7 +900,7 @@ jQuery.reel || (function($, window, document, undefined){
                       css(dot(loading_klass), { cursor: 'wait' });
                       css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor_up) }, true);
                       $area
-                        .bind(opt.wheelable ? _mousewheel_ : __, wheel)
+                        .bind(opt.wheelable ? _mousewheel_ : null, wheel)
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                         .bind('dragstart', function(){ return false })
                     }
