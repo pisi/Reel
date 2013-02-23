@@ -25,7 +25,7 @@
 <span class="cm"> * jQuery Reel</span>
 <span class="cm"> * http://jquery.vostrel.cz/reel</span>
 <span class="cm"> * Version: 1.2.1</span>
-<span class="cm"> * Updated: 2013-02-21</span>
+<span class="cm"> * Updated: 2013-02-22</span>
 <span class="cm"> *</span>
 <span class="cm"> * Requires jQuery 1.5 or higher</span>
 <span class="cm"> */</span>
@@ -656,7 +656,7 @@ handler.</p>
                       <span class="nx">css</span><span class="p">(</span><span class="nx">dot</span><span class="p">(</span><span class="nx">loading_klass</span><span class="p">),</span> <span class="p">{</span> <span class="nx">cursor</span><span class="o">:</span> <span class="s1">&#39;wait&#39;</span> <span class="p">});</span>
                       <span class="nx">css</span><span class="p">(</span><span class="nx">dot</span><span class="p">(</span><span class="nx">panning_klass</span><span class="p">)</span><span class="o">+</span><span class="nx">____</span><span class="o">+</span><span class="nx">dot</span><span class="p">(</span><span class="nx">panning_klass</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; *&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">cursor</span><span class="o">:</span> <span class="nx">cdn</span><span class="p">(</span><span class="nx">cursor_down</span> <span class="o">||</span> <span class="nx">cursor_up</span><span class="p">)</span> <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
                       <span class="nx">$area</span>
-                        <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">opt</span><span class="p">.</span><span class="nx">wheelable</span> <span class="o">?</span> <span class="nx">_mousewheel_</span> <span class="o">:</span> <span class="nx">__</span><span class="p">,</span> <span class="nx">wheel</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">opt</span><span class="p">.</span><span class="nx">wheelable</span> <span class="o">?</span> <span class="nx">_mousewheel_</span> <span class="o">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">wheel</span><span class="p">)</span>
                         <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">opt</span><span class="p">.</span><span class="nx">clickfree</span> <span class="o">?</span> <span class="nx">_mouseenter_</span> <span class="o">:</span> <span class="nx">_mousedown_</span><span class="p">,</span> <span class="nx">press</span><span class="p">)</span>
                         <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;dragstart&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span> <span class="k">return</span> <span class="kc">false</span> <span class="p">})</span>
                     <span class="p">}</span>
@@ -775,7 +775,7 @@ the tick handler</p>             </td>             <td class="code">            
 
 <p><code>Event</code>, since 1.1</p>
 
-<p><code>"play</code> Event can optionally accept a <code>speed</code> parameter (in Hz) to change the animation
+<p><code>"play"</code> event can optionally accept a <code>speed</code> parameter (in Hz) to change the animation
 speed on the fly.</p>             </td>             <td class="code">               <div class="highlight"><pre>                  <span class="nx">play</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">speed</span><span class="p">){</span>
                     <span class="kd">var</span>
                       <span class="nx">speed</span><span class="o">=</span> <span class="nx">set</span><span class="p">(</span><span class="nx">_speed_</span><span class="p">,</span> <span class="nx">speed</span> <span class="o">||</span> <span class="nx">get</span><span class="p">(</span><span class="nx">_speed_</span><span class="p">)),</span>
@@ -786,13 +786,16 @@ speed on the fly.</p>             </td>             <td class="code">           
                     <span class="nx">idle</span><span class="p">();</span>
                   <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id='pause-Event'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#pause-Event">&#182;</a>                </div>                       <h3><code>pause</code> Event</h3>
 
-<p><code>Event</code>, since 1.1</p>             </td>             <td class="code">               <div class="highlight"><pre>                  <span class="nx">pause</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-                    <span class="kd">var</span>
-                      <span class="nx">playing</span><span class="o">=</span> <span class="nx">set</span><span class="p">(</span><span class="nx">_playing_</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<p><code>Event</code>, since 1.1</p>
+
+<p>Triggering <code>"pause"</code> event will halt the playback for a time period designated
+by the <code>timeout</code> option. After this timenout, the playback is resumed again.</p>             </td>             <td class="code">               <div class="highlight"><pre>                  <span class="nx">pause</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
                     <span class="nx">unidle</span><span class="p">();</span>
                   <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id='stop-Event'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#stop-Event">&#182;</a>                </div>                       <h3><code>stop</code> Event</h3>
 
-<p><code>Event</code>, since 1.1</p>             </td>             <td class="code">               <div class="highlight"><pre>                  <span class="nx">stop</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+<p><code>Event</code>, since 1.1</p>
+
+<p>After <code>"stop"</code> event is triggered, the playback stops and stays still until <code>"play"</code>ed again.</p>             </td>             <td class="code">               <div class="highlight"><pre>                  <span class="nx">stop</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
                     <span class="kd">var</span>
                       <span class="nx">stopped</span><span class="o">=</span> <span class="nx">set</span><span class="p">(</span><span class="nx">_stopped_</span><span class="p">,</span> <span class="kc">true</span><span class="p">),</span>
                       <span class="nx">playing</span><span class="o">=</span> <span class="nx">set</span><span class="p">(</span><span class="nx">_playing_</span><span class="p">,</span> <span class="o">!</span><span class="nx">stopped</span><span class="p">)</span>
