@@ -45,7 +45,7 @@ and calling:
     $('#my_image').reel()
 ```
 
-will turn your image into default Reel with 36 frames in sprite. Use [options][options] to customize.
+will turn your image into Reel with 36 frames in sprite by default. Use [options][options] to customize.
 
 License
 -------
@@ -63,13 +63,13 @@ the image is enabled
 
 Download version 1.2.1
 ----------------------
-* **[Open source][source] (~ 101,8 kB annotated)**
+* **[Open source][source] (~ 102,1 kB annotated)**
 * or [minified version][min] (~ 16,8 kB)
-* or [entire package][zip] (~ 3,5 MB)
+* or [entire package][zip] (~ 7,8 MB)
 
 Link the [CDN][cdn]
 ----------------------------
-* **[http://code.vostrel.cz/jquery.reel-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
+* **[http://code.vostrel.cz/jquery.reel-bundle.js][cdn-bundle] (~ 8,4 kB; gzipped)**
 
 [CHANGELOG][changelog]
 
