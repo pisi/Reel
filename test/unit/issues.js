@@ -502,4 +502,70 @@
     });
   });
 
+
+  $.each([
+    'image.png?54351531676',
+    'test.png?thumbnail',
+    'images/test.png?width=200&height=2000&quality=high',
+    'http://example.com/images/test.png?width=2000&height=200',
+  ], function(name, url){
+    asyncTest( 'GH-187 Query vars preserve in URLs like "'+url+'" (via `image` option)', function(){
+      expect( 1 );
+      var
+        $reel = $('#image2').reel({
+          image: url,
+          frames: 2
+        })
+
+      $reel.parent().bind('loaded.test', function(){
+        ok( matchingURL($reel.css('backgroundImage'), url), url );
+        start();
+      })
+    });
+  });
+
+  $.each({
+    'image###.png?54351531676':                             'image001.png?54351531676',
+    'test#.png?thumbnail':                                  'test1.png?thumbnail',
+    'test.png?number=#':                                    'test.png?number=1',
+    'images/test##.png?width=200&height=2000&quality=high': 'images/test01.png?width=200&height=2000&quality=high',
+    'http://example.com/images/test-####.png?w=2000&h=200': 'http://example.com/images/test-0001.png?w=2000&h=200'
+  }, function(use, should){
+    asyncTest( 'GH-187 Query vars preserve in URLs like "'+use+'" (via `images` option)', function(){
+      expect( 1 );
+      var
+        $reel = $('#image2').reel({
+          images: use,
+          frames: 2
+        })
+
+      $reel.parent().bind('loaded.test', function(){
+        equal( $reel.attr('src'), should );
+        start();
+      });
+    });
+  });
+
+  $.each({
+    'resources/object.jpg?width=2000&height=200': 'resources/object-reel.jpg'
+  }, function(src, url){
+    asyncTest( 'GH-187 Query vars NOT carried over from URL in image tag\'s `src` like "'+src+'"', function(){
+      expect( 1 );
+      var
+        $reel = $('#image2').reel({
+          frames: 2
+        })
+
+      $reel.parent().bind('loaded.test', function(){
+        ok( matchingURL($reel.css('backgroundImage'), url), url );
+        start();
+      })
+    });
+  });
+  function matchingURL(css, url){
+    var
+      match= css.match(/^url\(['"]?(.+)['"]?\)$/)
+    return match && url == match[1].substr(match[1].length - url.length);
+  }
+
 })(jQuery);
