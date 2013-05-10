@@ -433,4 +433,37 @@
     });
   });
 
+  asyncTest( 'New `image` value will load the new image while maintaining current geometry and status', function(){
+    expect(5);
+    var
+      old_image = 'http://somewhere/something.jpg',
+      new_image = 'http://somewhere/something/else.jpg',
+      frame = 5,
+      pass = 0,
+      $reel = $('#image').reel({
+        image: old_image,
+        frame: frame
+      })
+
+    $reel.bind('opening.test', function(){
+      switch (++pass){
+        case 1:
+          equiv( $reel.css('backgroundImage'), 'url('+old_image+')', 'Old image at first' );
+          $reel.reel('image', new_image);
+          break;
+
+        case 2:
+          equiv( $reel.css('backgroundImage'), 'url('+new_image+')', 'Image changed on the fly' );
+          equal( $reel.reel('frame'), frame, 'Reel frame hasn\'t changed' );
+          equal( $reel.siblings('img').length, 1, 'Still just one image in the cache' );
+          // Wait a sec for preloader transition to finish
+          setTimeout(function(){
+            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            start();
+          }, 1000);
+          break;
+      }
+    });
+  });
+
 })(jQuery);
