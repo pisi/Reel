@@ -1856,7 +1856,8 @@ jQuery.reel || (function($, window, document, undefined){
                   // If the second argument is not `undefined` it is the backward compatible
                   // "before" event triggered from outside Reel.
                   //
-                  if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
+                  if (data[name] === undefined) data[name]= value
+                  else if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
                 }
                 return t.trigger('store', [name, value]);
               }

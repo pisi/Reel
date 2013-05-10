@@ -120,6 +120,8 @@
       ok( typeof nothing === 'undefined', 'always `undefined` as the second argument,');
       equal( something, value, 'and finally the actual value as the third/last argument');
     })
+    $reel.reel('something', null); // Change from undefined to anything else is no longer considered as change
+                                   // so in order to test this, we need a non-undefined initial value
     $reel.reel('something', value);
 
   });
