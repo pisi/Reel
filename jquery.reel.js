@@ -1382,6 +1382,14 @@ jQuery.reel || (function($, window, document, undefined){
                     }
                   },
 
+                  // ### `imageChange` Event ######
+                  // `Event`, EXPERIMENTAL
+                  //
+                  imageChange: function(e, nil, image){
+                    preloader.$.remove();
+                    t.siblings(dot(cached_klass)).remove();
+                  },
+
                   // ---------
                   // Indicator
                   // ---------
