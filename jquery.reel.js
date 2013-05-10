@@ -776,6 +776,10 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
+                  set(_frame_, null);
+                  set(_fraction_, null);
+                  set(_row_, null);
+                  set(_tier_, null);
                   set(_rows_, rows);
                   set(_dimensions_, size);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
@@ -2055,15 +2059,19 @@ jQuery.reel || (function($, window, document, undefined){
       //
       normal: {
         fraction: function(fraction, data){
+          if (fraction === null) return fraction;
           return data[_options_].loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
         },
         tier: function(tier, data){
+          if (tier === null) return tier;
           return min_max(0, 1, tier)
         },
         row: function(row, data){
+          if (row === null) return row;
           return round(min_max(1, data[_options_].rows, row))
         },
         frame: function(frame, data){
+          if (frame === null) return frame;
           var
             opt= data[_options_],
             frames= data[_frames_] * (opt.orbital ? 2 : opt.rows || 1),
