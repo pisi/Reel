@@ -1388,6 +1388,9 @@ jQuery.reel || (function($, window, document, undefined){
                   imageChange: function(e, nil, image){
                     preloader.$.remove();
                     t.siblings(dot(cached_klass)).remove();
+                    t.parent().bind(_preloaded_, on.instance.preloaded);
+                    pool.bind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
+                    t.trigger('preload');
                   },
 
                   // ---------
