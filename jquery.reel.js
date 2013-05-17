@@ -1107,7 +1107,7 @@ jQuery.reel || (function($, window, document, undefined){
                       touchy || ev && ev.preventDefault();
                       unidle();
                       no_bias();
-                      panned= false;
+                      panned= 0;
                       $(_html_, pools).addClass(panning_klass);
                       // Browser events differ for touch and mouse, but both of them are treated equally and
                       // forwarded to the same `"pan"` or `"up` Events.
@@ -1180,7 +1180,7 @@ jQuery.reel || (function($, window, document, undefined){
                       if (ev && scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
                       if (abs(delta.x) > 0 || abs(delta.y) > 0){
                         ev && (ev.give = false);
-                        panned= true;
+                        panned= max(delta.x, delta.y);
                         last= { x: x, y: y };
                         var
                           revolution= get(_revolution_),
@@ -1494,7 +1494,7 @@ jQuery.reel || (function($, window, document, undefined){
                     });
                   },
                   'up.annotations': function(e, ev){
-                    if (panned || wheeled) return;
+                    if (panned > 10 || wheeled) return;
                     var
                       $target= $(ev.target),
                       $link= ($target.is('a') ? $target : $target.parents('a')),
@@ -1661,7 +1661,7 @@ jQuery.reel || (function($, window, document, undefined){
                 set(_reeled_, true);
                 return operated= -opt.timeout * leader(_tempo_)
               },
-              panned= false,
+              panned= 0,
               wheeled= false,
               delay, // openingDone's delayed play pointer
 
