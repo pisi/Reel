@@ -41,6 +41,7 @@
         revolution: 'Number',
         revolution_y: 'Number',
         row: 'Number',
+        rowlock: 'Boolean',
         rows: 'Number',
         spacing: 'Number',
         speed: 'Number',

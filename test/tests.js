@@ -26,6 +26,7 @@
       'unit/sprite.js',
       'unit/events.js',
       'unit/options.js',
+      'unit/interaction.js',
       'unit/animation.js'
     ],
     complete: function(){
