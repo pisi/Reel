@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.2-devel
- * Updated: 2013-02-22
+ * Updated: 2013-05-17
  *
  * Requires jQuery 1.5 or higher
  */
@@ -1726,7 +1726,7 @@ jQuery.reel || (function($, window, document, undefined){
                   loops= opt.loops
                 set(_lo_, loops ? 0 : - fraction * revolution);
                 set(_hi_, loops ? revolution : revolution - fraction * revolution);
-                return x && set(_clicked_location_, { x: x, y: y }) || undefined
+                return x !== undefined && set(_clicked_location_, { x: x, y: y }) || undefined
               },
               slidable= true,
 
