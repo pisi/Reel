@@ -752,15 +752,13 @@ jQuery.reel || (function($, window, document, undefined){
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
-                    images= opt.images,
+                    images= set(_images_, opt.images || []),
                     stitched= opt.stitched,
                     loops= opt.loops,
                     orbital= opt.orbital,
                     revolution= opt.revolution,
                     rows= opt.rows,
                     footage= opt.footage,
-                    sequence= reel.re.sequence.exec(images),
-                    images= set(_images_, sequence ? reel.sequence(sequence, opt, get) : images || []),
                     size= { x: t.width(), y: t.height() },
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
                     multirow= rows > 1 || orbital,
@@ -2091,6 +2089,12 @@ jQuery.reel || (function($, window, document, undefined){
             frames= data[_frames_] * (opt.orbital ? 2 : opt.rows || 1),
             result= round(opt.loops ? frame % frames || frames : min_max(1, frames, frame))
           return result < 0 ? result + frames : result
+        },
+        images: function(images, data){
+          var
+            sequence= reel.re.sequence.exec(images),
+            result= !sequence ? images : reel.sequence(sequence, data[_options_])
+          return result;
         }
       },
 

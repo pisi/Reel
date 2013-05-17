@@ -196,6 +196,29 @@
     });
   });
 
+  asyncTest( '`.reel("images")` accepts and normalizes sequence string into an array', function(){
+    expect(1);
+    var
+      selector= '#image',
+      $reel= $(selector).reel({ frames: 5 }),
+      entries= {
+        'img#.jpg': [
+          'img1.jpg',
+          'img2.jpg',
+          'img3.jpg',
+          'img4.jpg',
+          'img5.jpg'
+        ]
+      }
+    $(document).bind('loaded.test', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('images', ix);
+        deepEqual( $reel.reel('images'), it, 'Frame '+ix);
+      });
+      start();
+    });
+  });
+
   asyncTest( 'Positive direction/speed is not detected as reversed', function(){
     expect(1);
     var
