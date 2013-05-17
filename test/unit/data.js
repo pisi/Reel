@@ -472,4 +472,52 @@
     });
   });
 
+  asyncTest( 'New `images` value will load new images while maintaining current geometry and status', function(){
+
+    expect(6);
+
+    var
+      old_images = [
+        'http://somewhere/something.jpg',
+        'http://somewhere/something2.jpg',
+        'http://somewhere/something3.jpg'
+      ],
+      new_images = [
+        'http://somewhere/something/else.jpg',
+        'http://somewhere/something/else2.jpg',
+        'http://somewhere/something/else3.jpg'
+      ],
+      frame = 2,
+      pass = 0,
+      $reel = $('#image').reel({
+        images: old_images,
+        frame: frame
+      })
+
+    $reel.bind('opening.test', function(){
+
+      switch (++pass){
+
+        case 1:
+          equal( $reel.attr('src'), old_images[frame - 1], 'Old image at first' );
+          $reel.reel('images', new_images);
+          break;
+
+        case 2:
+          deepEqual( $reel.reel('images'), new_images, 'New images in' );
+          equal( $reel.attr('src'), new_images[frame - 1], 'Image changed on the fly' );
+          equal( $reel.reel('frame'), frame, 'Reel frame hasn\'t changed' );
+          equal( $reel.siblings('img').length, new_images.length, 'Cache population in check' );
+
+          // Wait a sec for preloader transition to finish
+          setTimeout(function(){
+            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            start();
+          }, 1000);
+          break;
+
+      }
+    });
+  });
+
 })(jQuery);

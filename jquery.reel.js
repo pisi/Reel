@@ -1385,7 +1385,10 @@ jQuery.reel || (function($, window, document, undefined){
                   // ### `imageChange` Event ######
                   // `Event`, EXPERIMENTAL
                   //
-                  imageChange: function(e, nil, image){
+                  // When `image` or `images` is changed on the fly, this handler resets the loading cache and triggers
+                  // new preload sequence. Images are actually switched only after the new image is fully loaded.
+                  //
+                  'imageChange imagesChange': function(e, nil, image){
                     preloader.$.remove();
                     t.siblings(dot(cached_klass)).remove();
                     t.parent().bind(_preloaded_, on.instance.preloaded);
