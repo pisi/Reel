@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.2-devel
- * Updated: 2013-05-17
+ * Updated: 2013-05-18
  *
  * Requires jQuery 1.5 or higher
  */
@@ -887,7 +887,7 @@ jQuery.reel || (function($, window, document, undefined){
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
                         ? !stitched ? undefined : px(stitched)+___+px(space.y)
                         : stitched && px(stitched)+___+px((space.y + opt.spacing) * rows - opt.spacing)
-                        || px(space.x * opt.footage)+___+px(space.y * get(_rows_) * rows * (opt.directional? 2:1))
+                        || px((space.x + opt.spacing) * opt.footage - opt.spacing)+___+px((space.y + opt.spacing) * get(_rows_) * rows * (opt.directional? 2:1) - opt.spacing)
                       });
                       $area
                         .bind(_touchstart_, press)
