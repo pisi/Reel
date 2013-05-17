@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.2-devel
- * Updated: 2013-02-22
+ * Updated: 2013-05-17
  *
  * Requires jQuery 1.5 or higher
  */
@@ -949,7 +949,8 @@ jQuery.reel || (function($, window, document, undefined){
                         height= space.y * (!is_sprite ? 1 : frames / footage) * (!opt.directional ? 1 : 2),
                         $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
                       // Each image, which finishes the load triggers `"preloaded` Event.
-                      $img.bind('load error abort', function(){
+                      $img.bind('load error abort', function(e){
+                        e.type != 'load' && t.trigger(e.type);
                         return !!$(this).parent().length && t.trigger('preloaded') && false;
                       });
                       load(uri, $img);

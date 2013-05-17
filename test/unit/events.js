@@ -212,4 +212,17 @@
     $container.empty();
   });
 
+  asyncTest( 'Image loading error events encountered by the preloader (`error` and `abort`) are forwarded and bubble up the DOM', function(){
+    expect(1);
+    var
+      $reel= $('#image').reel({
+        image: 'some/non-existing/image.png'
+      })
+
+    $(document).bind('error', function(){
+      ok( true, '`"error"` event bubbled up from the instance (`"abort"` would have too)');
+      start();
+    })
+  });
+
 })(jQuery);
