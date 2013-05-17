@@ -320,4 +320,32 @@
     });
   });
 
+  asyncTest( 'Instance creates a stylesheet just once per its existence', function(){
+    expect(3);
+    var
+      before= 'image/to/start/with.jpg',
+      after= 'different/image.jpg',
+      pass= 0,
+      styles= $('style').length,
+      $reel= $('#image').reel({
+        image: before
+      })
+
+    equal( styles, 1, 'One test framework stylesheet');
+
+    $(document).bind('loaded.test', function(){
+      switch(++pass){
+        case 1:
+          equal( styles + 1, $('style').length, 'Plus one for Reel instance');
+          styles= $('style').length;
+          $reel.reel('image', after);
+          break;
+        case 2:
+          equal( $('style').length, styles, 'No zombie stylesheets after reload');
+          start();
+          break;
+      }
+    });
+  });
+
 })(jQuery);

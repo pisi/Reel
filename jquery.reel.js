@@ -942,7 +942,7 @@ jQuery.reel || (function($, window, document, undefined){
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());
                     // It also finalizes the instance stylesheet and prepends it to the head.
-                    set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
+                    set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     t.trigger('stop');
                     while(preload.length){
                       var
