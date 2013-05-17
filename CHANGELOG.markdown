@@ -14,6 +14,7 @@ Development
 * Exciting new multi-row panoramas via combination of `multirow` and `stitched` options (GH-129).
 * The `throwable` option can now accept maximum velocity instead of simple boolean (GH-172).
 * Fixed `images` sequence starting point now allows direct use of file names from camera.
+* New `rowlock` and `framelock` options allow mouse interaction lock of axis in multirow setups (GH-191).
 
 
 Version 1.2

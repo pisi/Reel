@@ -280,6 +280,10 @@ jQuery.reel || (function($, window, document, undefined){
         //
         rows:                   0,
 
+        //
+        // Optionally you can apply a lock on either of the two axes with `rowlock` and/or `framelock`.
+        // That will disable direct mouse interaction and will leave using of `.reel()` the only way
+        // of changing position on the locked axis.
 
         // #### `rowlock` Option ####
         // `Boolean`, EXPERIMENTAL
