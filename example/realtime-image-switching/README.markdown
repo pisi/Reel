@@ -17,6 +17,7 @@ Options Employed In This Example
 - [image](http://jquery.vostrel.cz/reel#image)
 - [loops](http://jquery.vostrel.cz/reel#loops)
 - [revolution](http://jquery.vostrel.cz/reel#revolution)
+- [speed](http://jquery.vostrel.cz/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
