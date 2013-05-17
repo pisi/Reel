@@ -14,6 +14,8 @@ Development
 * Exciting new multi-row panoramas via combination of `multirow` and `stitched` options (GH-129).
 * The `throwable` option can now accept maximum velocity instead of simple boolean (GH-172).
 * Fixed `images` sequence starting point now allows direct use of file names from camera.
+* Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-189).
+* Annotation links received a click aim allowance to improve their clickability (GH-186).
 
 
 Version 1.2
