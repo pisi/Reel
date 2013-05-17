@@ -219,7 +219,7 @@
         image: 'some/non-existing/image.png'
       })
 
-    $(document).bind('error', function(){
+    $(document).bind('error.test', function(){
       ok( true, '`"error"` event bubbled up from the instance (`"abort"` would have too)');
       start();
     })
