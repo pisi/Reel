@@ -25,6 +25,7 @@
         dimensions: 'Object',
         fraction: 'Number',
         frame: 'Number',
+        framelock: 'Boolean',
         frames: 'Number',
         hi: 'Number',
         id: 'String',
