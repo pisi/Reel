@@ -54,7 +54,7 @@ var QUnit = {
       module_cookie = $.cookie(cookie_id(name)),
       module_class= module_cookie === null ? 'void' : module_cookie == 'true' ? 'ok' : 'failure';
 
-		$('<li/>', { 'class': module_class }).append($('<a/>', { href: '?' + name + jq, text: name })).appendTo($('#qunit-modules'));
+		$('<li/>', { 'class': module_class }).append($('<a/>', { href: '?' + name + ' module' + jq, text: name })).appendTo($('#qunit-modules'));
 
     QUnit.moduleDone = function(name, failures, total) {
       if ( total > 1 ) {
