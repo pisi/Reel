@@ -1052,7 +1052,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //
                   play: function(e, speed){
                     var
-                      speed= set(_speed_, speed || get(_speed_)),
+                      speed= speed ? set(_speed_, speed) : (get(_speed_) * negative_when(1, get(_backwards_))),
                       duration= opt.duration,
                       ticks= duration && set(_ticks_, ceil(duration * leader(_tempo_))),
                       backwards= set(_backwards_, speed < 0),
