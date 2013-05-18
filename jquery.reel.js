@@ -1363,7 +1363,7 @@ jQuery.reel || (function($, window, document, undefined){
                         minor= (frame % footage) - 1,
                         minor= minor < 0 ? footage - 1 : minor,
                         major= floor((frame - 0.1) / footage),
-                        major= major + (rows > 1 ? 0 : (get(_backwards_) ? 0 : get(_rows_))),
+                        major= major + (rows > 1 ? 0 : (get(_backwards_) ? 0 : !opt.directional ? 0 : get(_rows_))),
                         a= major * ((horizontal ? space.y : space.x) + spacing),
                         b= minor * ((horizontal ? space.x : space.y) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
