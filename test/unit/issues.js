@@ -502,4 +502,26 @@
     });
   });
 
+  asyncTest( 'GH-188 Sprite acts like directional when it is not', function(){
+    /*
+     * Sprites had been treated as directional ones even when directional mode was not eanbled
+     * causing unwanted shifts of sprites in backwards motion.
+     */
+    expect( 2 );
+    var
+      $reel = $('#image').reel({
+        directional: false
+      })
+
+    $(document).bind('loaded.test', function(){
+      equiv( 0, $reel.css('backgroundPosition').split(' ')[1], 'Non-directional sprite stays at 0px vertically');
+
+      $reel.reel('backwards', true);
+      $reel.reel('frame', 3);
+
+      equiv( 0, $reel.css('backgroundPosition').split(' ')[1], 'Even when in backwards motion');
+      start();
+    })
+  });
+
 })(jQuery);
