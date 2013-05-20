@@ -1889,6 +1889,16 @@ jQuery.reel || (function($, window, document, undefined){
             images= options.images,
             array= reel.re.array.exec(images),
             images= options.images= array ? images.split(reel.re.array) : images
+            annotations= {}
+          $(dot(annotation_klass)+'[data-for='+$image.attr(_id_)+']').each(function(ix, annotation){
+            var
+              $annotation= $(annotation),
+              def= $annotation.data(),
+              id= $annotation.attr(_id_),
+              node= def.node= $annotation.removeData()
+            annotations[id] = def;
+          });
+          options.annotations = annotations;
           $image.removeData().reel(options);
         });
       },

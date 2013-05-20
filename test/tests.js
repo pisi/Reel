@@ -154,6 +154,7 @@
     teardown: function(){
       $('#Body *').add(document).unbind('.test');
       $('.reel').unreel();
+      $('#my_data_configured_image').remove();
     }
   }
 

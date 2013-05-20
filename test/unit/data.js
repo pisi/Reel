@@ -459,4 +459,44 @@
       });
   });
 
+  asyncTest( 'Data-configured annotation are used into Reel instances', function(){
+    expect(4);
+    var
+      options= {
+        x: 100,
+        y: 50
+      },
+      $img= $('<img>').attr({
+        src: 'image.jpg',
+        width: 300,
+        height: 200,
+        id: 'my_data_configured_image',
+        'class': 'reel'
+      }).appendTo('#Body'),
+      $annotation= $('<div>', {
+        text: 'Some annotation text'
+      }).attr({
+        id: 'my_own_annotation',
+        'class': 'reel-annotation',
+        'data-for': 'my_data_configured_image',
+        'data-x': options.x,
+        'data-y': options.y
+      }).appendTo('#Body')
+
+      ok( $annotation.parent().is('#Body'), 'Annotation node was originally nested inside `#Body`' );
+
+      $.reel.scan();
+
+      $(document).bind('loaded.test', function(){
+        ok( $annotation.parent().is('.reel-overlay'), 'After scan, it nests within the Reel instance');
+        
+        setTimeout(function(){
+          equiv( $annotation.css('left'), options.x, 'Correct horizontal position');
+          equiv( $annotation.css('top'), options.y, 'Correct vertical position');
+          start();
+        }, 0);
+      });
+
+  });
+
 })(jQuery);
