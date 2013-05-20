@@ -1894,6 +1894,14 @@ jQuery.reel || (function($, window, document, undefined){
             var
               $annotation= $(annotation),
               def= $annotation.data(),
+              x= def.x,
+              x_array= reel.re.array.exec(x),
+              xs= def.x= !x_array ? x : x.split(reel.re.array),
+              xs= $.each(def.x, function(ix, it){ def.x[ix]= it ? +it : undefined }),
+              y= def.y,
+              y_array= reel.re.array.exec(y),
+              ys= def.y= !y_array ? y : y.split(reel.re.array),
+              ys= $.each(def.y, function(ix, it){ def.y[ix]= it ? +it : undefined }),
               id= $annotation.attr(_id_),
               node= def.node= $annotation.removeData()
             annotations[id] = def;
