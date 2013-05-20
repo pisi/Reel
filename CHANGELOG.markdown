@@ -16,6 +16,7 @@ Development
 * Fixed `images` sequence starting point now allows direct use of file names from camera.
 * Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-189).
 * Annotation links received a click aim allowance to improve their clickability (GH-186).
+* Values of `image` and `images` data can now be changed on the fly (GH-190).
 
 
 Version 1.2
