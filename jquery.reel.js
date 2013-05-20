@@ -1881,8 +1881,7 @@ jQuery.reel || (function($, window, document, undefined){
       },
 
       scan: function(){
-        $(dot(klass)).each(function(ix, image){
-          if ($(image).parent().hasClass(overlay_klass)) return;
+        return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
           var
             $image= $(image),
             options= $image.data(),
