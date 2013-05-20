@@ -14,25 +14,29 @@
     <h1>Directional Sprite</h1>
     <p class="credits graphic"><a href="mailto:petr@vostrel.cz">Petr Vostřel</a></p>
 
-    <img id="image" src='logo.png' width="130" height="60" />
+    <img src="logo.png" width="130" height="60"
+      class="reel"
+      id="image"
+      data-directional="true"
+      data-frame="3"
+      data-opening="1"
+      data-delay="3"
+      data-speed="1">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="logo.png" width="130" height="60" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          speed:       1,
-          opening:     1,
-          frame:       3,
-          delay:       3,
-          directional: true
-        });
-
-/*
-    `speed` 1 is one revolution per second (1 Hz).
-    It is animated after 1 second long `opening` spin
-    and a 3 second `delay`.
-*/
+      $('#image').reel({
+        speed:       1,
+        opening:     1,
+        frame:       3,
+        delay:       3,
+        directional: true
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

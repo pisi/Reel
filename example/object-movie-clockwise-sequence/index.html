@@ -14,37 +14,49 @@
     <h1>Clockwise Sequence</h1>
     <p class="credits graphic"><a href="mailto:m.leidman@acegroup.lv">Mark Leidman</a></p>
 
-    <img id="image" src='drone.png' width="300" height="200" />
+    <img src="drone.png" width="300" height="200"
+      class="reel"
+      id="image"
+      data-images="drone/#####.png|1..179|5"
+      data-cw="true"
+      data-frame="32"
+      data-speed="-0.2"
+      data-duration="6"
+      data-velocity="3"
+      data-brake="0.2">
+
+    <div id="link_to_producer" class="reel-annotation" data-for="image" data-x="50,,,,,,,,50,50,100,,,,,,3" data-y="170">
+      <strong>Penguin B</strong> by <a href="http://bit.ly/tnXfDZ">UAV Factory</a>
+    </div>
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="drone.png" width="300" height="200" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          cw:          true,
-          frame:       32,
-          speed:       -0.2,
-          velocity:    3,
-          duration:    6,
-          brake:       0.2,
-          images:      'drone/#####.png|1..179|5',
-          annotations: {
-            'link_to_producer': {
-              node: {
-                html: '<strong>Penguin B</strong> by '
-              },
-              link: {
-                href: 'http://bit.ly/tnXfDZ',
-                text: 'UAV Factory'
-              },
-              start: 24,
-              end: 33,
-              at: '+-++-++-+-+-+----+-+-+-+-+-+-+--+-+-+-+--+--+--',
-              x: [50,,,,,,,,50,50,100,,,,,,3], y: 170
-            }
+      $('#image').reel({
+        images:      'drone/#####.png|1..179|5',
+        cw:          true,
+        frame:       32,
+        speed:       -0.2,
+        velocity:    3,
+        duration:    6,
+        brake:       0.2,
+        annotations: {
+          'link_to_producer': {
+            node: {
+              html: '<strong>Penguin B</strong> by '
+            },
+            link: {
+              href: 'http://bit.ly/tnXfDZ',
+              text: 'UAV Factory'
+            },
+            x: [50,,,,,,,,50,50,100,,,,,,3], y: 170
           }
-        });
-
+        }
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

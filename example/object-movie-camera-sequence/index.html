@@ -14,16 +14,21 @@
     <h1>Bare Camera Sequence</h1>
     <p class="credits photo"><a href="http://honza.vostrel.cz">Honza Vostřel</a></p>
 
-    <img id="image" src='fish/DSCN0691.JPG' width="210" height="186" />
+    <img src="fish/DSCN0691.JPG" width="210" height="186"
+      class="reel"
+      id="image"
+      data-images="fish/DSCN####.JPG|691..702">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="fish/DSCN0691.JPG" width="210" height="186" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          images:      'fish/DSCN####.JPG|691..702'
-        });
-
+      $('#image').reel({
+        images:      'fish/DSCN####.JPG|691..702'
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

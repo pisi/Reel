@@ -26,43 +26,69 @@
     <h1>Non-Looping Stitched Panorama</h1>
     <p class="credits photo"><a href="mailto:g@miernicki.com">Greg Miernicki</a></p>
 
-    <img id="image" src='chicago.jpg' width="270" height="150" />
+    <img src="chicago.jpg" width="270" height="150"
+      class="reel"
+      id="image"
+      data-stitched="1072"
+      data-steps="30"
+      data-step="13"
+      data-loops="false"
+      data-speed="-0.1"
+      data-timeout="1">
+
+    <div id="waterfront" class="reel-annotation" data-for="image" data-x="430" data-y="120">
+      Chicago Waterfront
+    </div>
+
+    <div id="foster_beach" class="reel-annotation" data-for="image" data-x="700" data-y="80">
+      Foster Beach
+    </div>
+
+    <div id="montrose_beach" class="reel-annotation" data-for="image" data-x="90" data-y="70">
+      Montrose Beach
+    </div>
+
+    <div id="lakefront_trail" class="reel-annotation" data-for="image" data-x="850" data-y="75">
+      Lakefront Trail
+    </div>
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="chicago.jpg" width="270" height="150" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          stitched:    1072,
-          loops:       false,
-          steps:       30,
-          step:        13,
-          speed:       -0.1,
-          timeout:     1,
-          annotations: {
-            "waterfront": {
-              node: { text: "Chicago Waterfront" },
-              x: 430,
-              y: 120,
-            },
-            "foster_beach": {
-              node: { text: "Foster Beach" },
-              x: 700,
-              y: 80
-            },
-            "montrose_beach": {
-              node: { text: "Montrose Beach" },
-              x: 90,
-              y: 70
-            },
-            "lakefront_trail": {
-              node: { text: "Lakefront Trail" },
-              x: 850,
-              y: 75
-            }
+      $('#image').reel({
+        stitched:    1072,
+        loops:       false,
+        steps:       30,
+        step:        13,
+        speed:       -0.1,
+        timeout:     1,
+        annotations: {
+          "waterfront": {
+            node: { text: "Chicago Waterfront" },
+            x: 430,
+            y: 120,
+          },
+          "foster_beach": {
+            node: { text: "Foster Beach" },
+            x: 700,
+            y: 80
+          },
+          "montrose_beach": {
+            node: { text: "Montrose Beach" },
+            x: 90,
+            y: 70
+          },
+          "lakefront_trail": {
+            node: { text: "Lakefront Trail" },
+            x: 850,
+            y: 75
           }
-        });
-
+        }
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

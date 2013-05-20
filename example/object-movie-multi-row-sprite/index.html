@@ -14,20 +14,29 @@
     <h1>Multi-Row Sprite</h1>
     <p class="credits graphic"><a href="mailto:petr@vostrel.cz">Petr Vostřel</a></p>
 
-    <img id="image" src='multi-row.png' width="100" height="100" />
+    <img src="multi-row.png" width="100" height="100"
+      class="reel"
+      id="image"
+      data-frames="6"
+      data-footage="3"
+      data-rows="3"
+      data-row="2"
+      data-speed="0.3">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="multi-row.png" width="100" height="100" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          speed:       0.3,
-          frames:      6,
-          footage:     3,
-          rows:        3,
-          row:         2
-        });
-
+      $('#image').reel({
+        speed:       0.3,
+        frames:      6,
+        footage:     3,
+        rows:        3,
+        row:         2
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

@@ -14,22 +14,25 @@
     <h1>Non-Animated Sprite</h1>
     <p class="credits photo"><a href="mailto:syerik@seznam.cz">Erik Kluka</a></p>
 
-    <img id="image" src='f1-ccw.jpg' width="276" height="126" />
+    <img src="f1-ccw.jpg" width="276" height="126"
+      class="reel"
+      id="image"
+      data-frames="35"
+      data-opening="2"
+      data-entry="1">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="f1-ccw.jpg" width="276" height="126" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          frames:      35,
-          opening:     2,
-          entry:       1
-        });
-
+      $('#image').reel({
+        frames:      35,
+        opening:     2,
+        entry:       1
       });
-/*
-    This one isn't fully animated,
-    but has a 2 seconds long `opening` with `entry` speed of 1 Hz.
-*/
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

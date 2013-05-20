@@ -14,25 +14,28 @@
     <h1>Direct Sequence</h1>
     <p class="credits graphic"><a href="mailto:petr@vostrel.cz">Petr Vostřel</a></p>
 
-    <img id="image" src='badge-1.gif' width="120" height="30" />
+    <img src="badge-1.gif" width="120" height="30"
+      class="reel"
+      id="image"
+      data-images="badge-1.gif, badge-2.gif, badge-3.gif, badge-4.gif"
+      data-speed="2"
+      data-delay="1">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="badge-1.gif" width="120" height="30" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          speed:       2,
-          delay:       1,
-          images:      [ 'badge-1.gif',
-                         'badge-2.gif',
-                         'badge-3.gif',
-                         'badge-4.gif' ]
-        });
-
+      $('#image').reel({
+        speed:       2,
+        delay:       1,
+        images:      [ 'badge-1.gif',
+                       'badge-2.gif',
+                       'badge-3.gif',
+                       'badge-4.gif' ]
       });
-/*
-  The very same could be achieved by using`sequence: "badge-#.gif"`
-  instead of `images`
-*/
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

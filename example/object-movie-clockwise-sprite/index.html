@@ -14,28 +14,42 @@
     <h1>Clockwise Sprite</h1>
     <p class="credits photo"><a href="mailto:syerik@seznam.cz">Erik Kluka</a></p>
 
-    <img id="image" src='f1.jpg' width="276" height="126" />
+    <img src="f1.jpg" width="276" height="126"
+      class="reel"
+      id="image"
+      data-cw="true"
+      data-frames="35"
+      data-cw="true"
+      data-speed="-0.3"
+      data-throwable="1.2"
+      data-brake="0.2">
+
+    <div id="the_man" class="reel-annotation" data-for="image" data-start="11" data-end="28" data-x="0" data-y="5" style="width: 95%; text-align: right; font-size: 12px;">
+      Mr.Kluka himself
+    </div>
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="f1.jpg" width="276" height="126" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          speed:       -0.3,
-          frames:      35,
-          cw:          true,
-          throwable:   1.2,
-          annotations: {
-            "the_man": {
-              node: { text: 'Mr. Kluka himself', css: { width: '95%', textAlign: 'right', fontSize: '12px' } },
-              start: 11,
-              end: 28,
-              x: 0,
-              y: 5
-            }
+      $('#image').reel({
+        speed:       -0.3,
+        frames:      35,
+        cw:          true,
+        throwable:   1.2,
+        annotations: {
+          "the_man": {
+            node: { text: 'Mr. Kluka himself', css: { width: '95%', textAlign: 'right', fontSize: '12px' } },
+            start: 11,
+            end: 28,
+            x: 0,
+            y: 5
           }
-        });
-
+        }
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

@@ -14,21 +14,31 @@
     <h1>Click-Free Stitched Panorama</h1>
     <p class="credits photo"><a href="mailto:mr.thangnguyen@gmail.com">Tom Nguyen</a></p>
 
-    <img id="image" src='stitched.jpg' width="297" height="167" />
+    <img src="stitched.jpg" width="297" height="167"
+      class="reel"
+      id="image"
+      data-stitched="1821"
+      data-frames="60"
+      data-frame="23"
+      data-speed="-0.05"
+      data-clickfree="true"
+      data-wheelable="false">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="stitched.jpg" width="297" height="167" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          stitched:    1821,
-          frames:      60,
-          frame:       23,
-          speed:       -0.05,
-          clickfree:   true,
-          wheelable:   false
-        });
-
+      $('#image').reel({
+        stitched:    1821,
+        frames:      60,
+        frame:       23,
+        speed:       -0.05,
+        clickfree:   true,
+        wheelable:   false
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

@@ -22,28 +22,40 @@
     <h1>Dual-Orbit Sequence</h1>
     <p class="credits photo"><a href="mailto:tomas.krivda@gmail.com">Tomáš Krivda</a></p>
 
-    <img id="image" src='phone.png' width="200" height="200" />
+    <img src="phone.png" width="200" height="200"
+      class="reel"
+      id="image"
+      data-images="phone/##.png"
+      data-footage="10"
+      data-cw="true"
+      data-orbital="3"
+      data-inversed="true"
+      data-speed="0.7">
+
+    <div id="green_marker" class="reel-annotation" id="green_marker" data-for="image" data-x="180" data-y="0" data-at="+++-----++"></div>
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="phone.png" width="200" height="200" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          footage:     10,
-          cw:          true,
-          orbital:     3,
-          inversed:    true,
-          speed:       0.7,
-          images:      'phone/##.png',
-          annotations: {
-            "green_marker": {
-              node: $('<div/>'),
-              x: 180, y: 0,
-              at: '+++-----++'
-            }
+      $('#image').reel({
+        footage:     10,
+        cw:          true,
+        orbital:     3,
+        inversed:    true,
+        speed:       0.7,
+        images:      'phone/##.png',
+        annotations: {
+          "green_marker": {
+            node: $('<div/>'),
+            x: 180, y: 0,
+            at: '+++-----++'
           }
-        });
-
+        }
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

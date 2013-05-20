@@ -14,20 +14,27 @@
     <h1>Animation Sprite</h1>
     <p class="credits photo"><a href="http://bpl.org">Boston Public Library</a></p>
 
-    <img id="image" src='animal.jpg' width="165" height="109" />
+    <img src="animal.jpg" width="165" height="109"
+      class="reel"
+      id="image"
+      data-frames="19"
+      data-frame="8"
+      data-footage="5"
+      data-speed="0.4">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="animal.jpg" width="165" height="109" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          frames:      19,
-          frame:       8,
-          footage:     5,
-          suffix:      '-locomotion',
-          speed:       0.4
-        });
-
+      $('#image').reel({
+        frames:      19,
+        frame:       8,
+        footage:     5,
+        speed:       0.4
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.

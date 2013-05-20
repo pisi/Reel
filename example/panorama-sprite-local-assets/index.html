@@ -14,27 +14,35 @@
     <h1>Sprite Panorama with Local Assets</h1>
     <p class="credits photo"><a href="mailto:petr@vostrel.cz">Petr Vostřel</a></p>
 
-    <img id="image" src='green.jpg' width="200" height="150" />
     <script>
-      $(function(){ // when DOM ready
+      $.reel.cdn = '../../assets/';
+      // This example is exactly the same as `panorama-sprite` the only difference being
+      // the above custom `$.reel.cdn` path pointing to a folder on your local server,
+      // from where image resources will be loaded instead of the predefined CD.
+      //
+      // Contents of this folder is prepared in the `assets/` folder
+      // within the release package.
+    </script>
 
-        $.reel.cdn = '../../assets/';
-        // This example is exactly the same as `panorama-sprite` the only difference being
-        // the above custom `$.reel.cdn` path pointing to a folder on your local server,
-        // from where image resources will be loaded instead of the predefined CD.
-        //
-        // Contents of this folder is prepared in the `assets/` folder
-        // within the release package.
+    <img src="green.jpg" width="200" height="150"
+      class="reel"
+      id="image"
+      data-frames="32"
+      data-footage="4"
+      data-speed="0.1">
 
-        $('#image').reel({
-          frames:      32,
-          footage:     4,
-          speed:       0.1
-        });
+    <!-- Or Javascript alternative:
 
+    <img id="image" src="green.jpg" width="200" height="150" />
+    <script>
+      $('#image').reel({
+        frames:      32,
+        footage:     4,
+        speed:       0.1
       });
     </script>
 
+    -->
     
 <!--
      Everything you might need to make Reel is above this line.

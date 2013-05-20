@@ -14,37 +14,54 @@
     <h1>Multi-Row Sequence</h1>
     <p class="credits photo"><a href="mailto:masmith@photospherix.com">Matt Smith</a></p>
 
-    <img id="image" src='mini.jpg' width="200" height="200" />
+    <img src="mini.jpg" width="200" height="200"
+      class="reel"
+      id="image"
+      data-images="mini/###.jpg"
+      data-frames="20"
+      data-frame="14"
+      data-rows="6"
+      data-row="3"
+      data-speed="0.3">
+
+    <div id="first_row" class="reel-annotation" data-for="image" data-start="1" data-end="20" data-x="10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105" data-y="10" style="width: 100px;">
+      First Row
+    </div>
+    <div id="last_row" class="reel-annotation" data-for="image" data-start="101" data-end="120" data-x="105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10" data-y="175" style="width: 100px;">
+      Last Row
+    </div>
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="mini.jpg" width="200" height="200" />
     <script>
-      $(function(){ // when DOM ready
-
-        $('#image').reel({
-          frames:      20,
-          frame:       14,
-          rows:        6,
-          row:         3,
-          speed:       0.3,
-          images:      'mini/###.jpg',
-          annotations: {
-            "first_row": {
-              node: { text: 'First Row', css: { width: 100 } },
-              start: 1,
-              end: 20,
-              x: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105],
-              y: 10
-            },
-            "last_row": {
-              node: { text: 'Last Row', css: { width: 100 } },
-              start: 101,
-              end: 120,
-              x: [105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10],
-              y: 175
-            }
+      $('#image').reel({
+        images:      'mini/###.jpg',
+        frames:      20,
+        frame:       14,
+        rows:        6,
+        row:         3,
+        speed:       0.3,
+        annotations: {
+          "first_row": {
+            node: { text: 'First Row', css: { width: 100 } },
+            start: 1,
+            end: 20,
+            x: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105],
+            y: 10
+          },
+          "last_row": {
+            node: { text: 'Last Row', css: { width: 100 } },
+            start: 101,
+            end: 120,
+            x: [105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10],
+            y: 175
           }
-        });
-
+        }
       });
     </script>
+
+    -->
 
 <!--
      Everything you might need to make Reel is above this line.
