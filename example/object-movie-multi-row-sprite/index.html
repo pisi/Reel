@@ -19,7 +19,6 @@
       $(function(){ // when DOM ready
 
         $('#image').reel({
-          indicator:   5, // For no indicator just remove this line
           speed:       0.3,
           frames:      6,
           footage:     3,
@@ -29,6 +28,16 @@
 
       });
     </script>
+
+<!--
+     Everything you might need to make Reel is above this line.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     Everything below this line is only here to make the example display illustratively
+     with pretty source code, indicators, ... So you do NOT need any of it.
+-->
+
+    <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
+    <script> $.reel.def.indicator = 5; </script>
 
     <div class="ballast">
       <p>Some text ballast to make the page positively scroll-worthy for testing purposes.</p>
