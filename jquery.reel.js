@@ -671,6 +671,52 @@ jQuery.reel || (function($, window, document, undefined){
 
       },
 
+      // -----------
+      // Quick Start
+      // -----------
+      //
+      // For basic Reel initialization, you don't even need to write any Javascript!
+      // All it takes is to add __class name__ `"reel"` to your `<img>` HTML tag,
+      // assign an unique __`id` attribute__ and decorate the tag with configuration __data attributes__.
+      // Result of which will be interactive Reel projection.
+      //
+      //     <img src="some/image.jpg" width="300" height="200"
+      //       id="my_image"
+      //       class="reel"
+      //       data-images="some/images/01.jpg, some/images/02.jpg"
+      //       data-speed="0.5">
+      //
+      // All otherwise Javascript [options](#Options) are made available as HTML `data-*` attributes.
+      //
+      // Only the `annotations` option doesn't work this way. To quickly create annotations,
+      // simply have any HTML node (`<div>` prefferably) anywhere in the DOM,
+      // assign it __class name__ `"reel-annotation"`, an unique __`id` attribute__
+      // and add configuration __data attributes__.
+      //
+      //     <div id="my_annotation"
+      //       class="reel-annotation"
+      //       data-for="my_image"
+      //       data-x="120"
+      //       data-y="60">
+      //       Whatever HTML I'd like to have in the annotation
+      //     </div>
+      //
+      // Most important is the `data-for` attribute, which references target Reel instance by `id`.
+      //
+
+      // ---
+      //
+      // Responsible for discovery and subsequent conversion of data-configured Reel images is
+      // `$.reel.scan()` method, which is being called automagically when the DOM becomes ready.
+      // Under normal circumstances you don't need to scan by yourself.
+      //
+      // It however comes in handy to re-scan when you happen to inject a data-configured Reel `<img>`
+      // into already ready DOM.
+      //
+
+      // ### `$.reel.scan()` Method ######
+      // returns `jQuery`, EXPERIMENTAL
+      //
       scan: function(){
         return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
           var
