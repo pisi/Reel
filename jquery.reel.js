@@ -671,6 +671,28 @@ jQuery.reel || (function($, window, document, undefined){
 
       },
 
+      scan: function(){
+        return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
+          var
+            $image= $(image),
+            options= $image.data(),
+            images= options.images= soft_array(options.images),
+            annotations= {}
+          $(dot(annotation_klass)+'[data-for='+$image.attr(_id_)+']').each(function(ix, annotation){
+            var
+              $annotation= $(annotation),
+              def= $annotation.data(),
+              x= def.x= numerize_array(soft_array(def.x)),
+              y= def.y= numerize_array(soft_array(def.y)),
+              id= $annotation.attr(_id_),
+              node= def.node= $annotation.removeData()
+            annotations[id] = def;
+          });
+          options.annotations = annotations;
+          $image.removeData().reel(options);
+        });
+      },
+
       // -------
       // Methods
       // -------
@@ -1878,28 +1900,6 @@ jQuery.reel || (function($, window, document, undefined){
         unreel: function(){
           return this.trigger('teardown');
         }
-      },
-
-      scan: function(){
-        return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
-          var
-            $image= $(image),
-            options= $image.data(),
-            images= options.images= soft_array(options.images),
-            annotations= {}
-          $(dot(annotation_klass)+'[data-for='+$image.attr(_id_)+']').each(function(ix, annotation){
-            var
-              $annotation= $(annotation),
-              def= $annotation.data(),
-              x= def.x= numerize_array(soft_array(def.x)),
-              y= def.y= numerize_array(soft_array(def.y)),
-              id= $annotation.attr(_id_),
-              node= def.node= $annotation.removeData()
-            annotations[id] = def;
-          });
-          options.annotations = annotations;
-          $image.removeData().reel(options);
-        });
       },
 
       // -------------------
