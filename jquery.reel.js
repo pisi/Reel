@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
  * Version: 1.2-devel
- * Updated: 2013-05-18
+ * Updated: 2013-05-21
  *
  * Requires jQuery 1.5 or higher
  */
@@ -752,15 +752,13 @@ jQuery.reel || (function($, window, document, undefined){
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
-                    images= opt.images,
+                    images= set(_images_, opt.images || []),
                     stitched= opt.stitched,
                     loops= opt.loops,
                     orbital= opt.orbital,
                     revolution= opt.revolution,
                     rows= opt.rows,
                     footage= opt.footage,
-                    sequence= reel.re.sequence.exec(images),
-                    images= set(_images_, sequence ? reel.sequence(sequence, opt, get) : images || []),
                     size= { x: t.width(), y: t.height() },
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
                     multirow= rows > 1 || orbital,
@@ -776,6 +774,10 @@ jQuery.reel || (function($, window, document, undefined){
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
+                  set(_frame_, null);
+                  set(_fraction_, null);
+                  set(_row_, null);
+                  set(_tier_, null);
                   set(_rows_, rows);
                   set(_dimensions_, size);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
@@ -940,7 +942,7 @@ jQuery.reel || (function($, window, document, undefined){
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());
                     // It also finalizes the instance stylesheet and prepends it to the head.
-                    set(_style_, $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
+                    set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     t.trigger('stop');
                     while(preload.length){
                       var
@@ -1049,7 +1051,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //
                   play: function(e, speed){
                     var
-                      speed= set(_speed_, speed || get(_speed_)),
+                      speed= speed ? set(_speed_, speed) : (get(_speed_) * negative_when(1, get(_backwards_))),
                       duration= opt.duration,
                       ticks= duration && set(_ticks_, ceil(duration * leader(_tempo_))),
                       backwards= set(_backwards_, speed < 0),
@@ -1377,6 +1379,20 @@ jQuery.reel || (function($, window, document, undefined){
                       }
                       t.css({ backgroundPosition: shift.join(___) })
                     }
+                  },
+
+                  // ### `imageChange` Event ######
+                  // `Event`, EXPERIMENTAL
+                  //
+                  // When `image` or `images` is changed on the fly, this handler resets the loading cache and triggers
+                  // new preload sequence. Images are actually switched only after the new image is fully loaded.
+                  //
+                  'imageChange imagesChange': function(e, nil, image){
+                    preloader.$.remove();
+                    t.siblings(dot(cached_klass)).remove();
+                    t.parent().bind(_preloaded_, on.instance.preloaded);
+                    pool.bind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
+                    t.trigger('preload');
                   },
 
                   // ---------
@@ -1857,7 +1873,8 @@ jQuery.reel || (function($, window, document, undefined){
                   // If the second argument is not `undefined` it is the backward compatible
                   // "before" event triggered from outside Reel.
                   //
-                  if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
+                  if (data[name] === undefined) data[name]= value
+                  else if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
                 }
                 return t.trigger('store', [name, value]);
               }
@@ -2055,20 +2072,30 @@ jQuery.reel || (function($, window, document, undefined){
       //
       normal: {
         fraction: function(fraction, data){
+          if (fraction === null) return fraction;
           return data[_options_].loops ? fraction - floor(fraction) : min_max(0, 1, fraction)
         },
         tier: function(tier, data){
+          if (tier === null) return tier;
           return min_max(0, 1, tier)
         },
         row: function(row, data){
+          if (row === null) return row;
           return round(min_max(1, data[_options_].rows, row))
         },
         frame: function(frame, data){
+          if (frame === null) return frame;
           var
             opt= data[_options_],
             frames= data[_frames_] * (opt.orbital ? 2 : opt.rows || 1),
             result= round(opt.loops ? frame % frames || frames : min_max(1, frames, frame))
           return result < 0 ? result + frames : result
+        },
+        images: function(images, data){
+          var
+            sequence= reel.re.sequence.exec(images),
+            result= !sequence ? images : reel.sequence(sequence, data[_options_])
+          return result;
         }
       },
 

@@ -120,6 +120,8 @@
       ok( typeof nothing === 'undefined', 'always `undefined` as the second argument,');
       equal( something, value, 'and finally the actual value as the third/last argument');
     })
+    $reel.reel('something', null); // Change from undefined to anything else is no longer considered as change
+                                   // so in order to test this, we need a non-undefined initial value
     $reel.reel('something', value);
 
   });
@@ -428,6 +430,93 @@
 
     $.each(probes, function(ix, it){
       equal( $.reel.normal.row(Number(ix), data), it, 'Row '+ix+' became '+it);
+    });
+  });
+
+  asyncTest( 'New `image` value will load the new image while maintaining current geometry and status', function(){
+
+    expect(5);
+
+    var
+      old_image = 'http://somewhere/something.jpg',
+      new_image = 'http://somewhere/something/else.jpg',
+      frame = 5,
+      pass = 0,
+      $reel = $('#image').reel({
+        image: old_image,
+        frame: frame
+      })
+
+    $reel.bind('opening.test', function(){
+
+      switch (++pass){
+
+        case 1:
+          equiv( $reel.css('backgroundImage'), 'url('+old_image+')', 'Old image at first' );
+          $reel.reel('image', new_image);
+          break;
+
+        case 2:
+          equiv( $reel.css('backgroundImage'), 'url('+new_image+')', 'Image changed on the fly' );
+          equal( $reel.reel('frame'), frame, 'Reel frame hasn\'t changed' );
+          equal( $reel.siblings('img').length, 1, 'Still just one image in the cache' );
+
+          // Wait a sec for preloader transition to finish
+          setTimeout(function(){
+            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            start();
+          }, 1000);
+          break;
+
+      }
+    });
+  });
+
+  asyncTest( 'New `images` value will load new images while maintaining current geometry and status', function(){
+
+    expect(6);
+
+    var
+      old_images = [
+        'http://somewhere/something.jpg',
+        'http://somewhere/something2.jpg',
+        'http://somewhere/something3.jpg'
+      ],
+      new_images = [
+        'http://somewhere/something/else.jpg',
+        'http://somewhere/something/else2.jpg',
+        'http://somewhere/something/else3.jpg'
+      ],
+      frame = 2,
+      pass = 0,
+      $reel = $('#image').reel({
+        images: old_images,
+        frame: frame
+      })
+
+    $reel.bind('opening.test', function(){
+
+      switch (++pass){
+
+        case 1:
+          equal( $reel.attr('src'), old_images[frame - 1], 'Old image at first' );
+          $reel.reel('images', new_images);
+          break;
+
+        case 2:
+          deepEqual( $reel.reel('images'), new_images, 'New images in' );
+          equal( $reel.attr('src'), new_images[frame - 1], 'Image changed on the fly' );
+          equal( $reel.reel('frame'), frame, 'Reel frame hasn\'t changed' );
+          equal( $reel.siblings('img').length, new_images.length, 'Cache population in check' );
+
+          // Wait a sec for preloader transition to finish
+          setTimeout(function(){
+            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            start();
+          }, 1000);
+          break;
+
+      }
     });
   });
 
