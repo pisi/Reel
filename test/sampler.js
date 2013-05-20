@@ -37,34 +37,6 @@
 
         $('#test_stage').attr({
           src: url
-        }).one('load', function(){
-          $.ajax(url, {
-            success: function(a,b,xhr){
-              var
-                iframe_pool= $('#test_stage').contents()
-
-              // Once the test stage is loaded,
-              // we want to hijack the Reel from example
-              // and take over with the local version for testing
-              iframe_pool.ready(function(){
-                with(frames.test_stage){
-                  var
-                    source= xhr.responseText,
-                    script= /<script>((.|\n)+)<\/script>/.exec(source)[1]
-
-//                  $.getScript('http://code.jquery.com/jquery-'+(parent.location.params.jq || default_jquery)+'.min.js', function(){
-                    $.reel= undefined;
-                    $.getScript('../../jquery.reel.js', function(){
-                      setTimeout(function(){
-                        eval(script);
-                      }, 0);
-                    });
-//                  });
-                }
-
-              });
-            }
-          });
         });
 
         $.cookie('reel.test.sample', id);
