@@ -151,6 +151,12 @@
     equal( $.reel.cdn, 'http://code.vostrel.cz/', 'URL');
   });
 
+  test( '`$.reel.scan` for creation of Reels from data-configured `<img>` tag directly', function(){
+    expect(1);
+
+    equal( typeof $.reel.scan, 'function', 'exposed as `$.reel.scan()`');
+  });
+
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
     expect(29);
 

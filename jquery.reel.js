@@ -1880,6 +1880,12 @@ jQuery.reel || (function($, window, document, undefined){
         }
       },
 
+      scan: function(){
+        $(dot(klass)).each(function(ix, image){
+          if ($(image).parent().is(dot(overlay_klass))) return;
+        });
+      },
+
       // -------------------
       // Regular Expressions
       // -------------------
@@ -2257,6 +2263,9 @@ jQuery.reel || (function($, window, document, undefined){
 
   // Expose plugin functions as jQuery methods
   $.extend($.fn, reel.fn);
+
+  // Do the initial global scan for data-configured `<img`> tags to become enhanced
+  $(reel.scan);
 
   // Very useful helpers
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
