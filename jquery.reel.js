@@ -1886,22 +1886,14 @@ jQuery.reel || (function($, window, document, undefined){
           var
             $image= $(image),
             options= $image.data(),
-            images= options.images,
-            array= reel.re.array.exec(images),
-            images= options.images= array ? images.split(reel.re.array) : images
+            images= options.images= soft_array(options.images),
             annotations= {}
           $(dot(annotation_klass)+'[data-for='+$image.attr(_id_)+']').each(function(ix, annotation){
             var
               $annotation= $(annotation),
               def= $annotation.data(),
-              x= def.x,
-              x_array= reel.re.array.exec(x),
-              xs= def.x= !x_array ? x : x.split(reel.re.array),
-              xs= $.each(def.x, function(ix, it){ def.x[ix]= it ? +it : undefined }),
-              y= def.y,
-              y_array= reel.re.array.exec(y),
-              ys= def.y= !y_array ? y : y.split(reel.re.array),
-              ys= $.each(def.y, function(ix, it){ def.y[ix]= it ? +it : undefined }),
+              x= def.x= numerize_array(soft_array(def.x)),
+              y= def.y= numerize_array(soft_array(def.y)),
               id= $annotation.attr(_id_),
               node= def.node= $annotation.removeData()
             annotations[id] = def;
@@ -2311,5 +2303,7 @@ jQuery.reel || (function($, window, document, undefined){
   function hash(value){ return '#' + value }
   function pad(string, len, fill){ while (string.length < len) string= fill + string; return string }
   function reen(uri){ return encodeURI(decodeURI(uri)) }
+  function soft_array(string){ return reel.re.array.exec(string) ? string.split(reel.re.array) : string }
+  function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);
