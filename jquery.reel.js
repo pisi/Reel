@@ -745,7 +745,7 @@ jQuery.reel || (function($, window, document, undefined){
                 // - triggers `"setup` Event when finished
                 //
                 setup: function(e){
-                  if (t.hasClass(klass)) return;
+                  if (t.hasClass(klass) && t.parent().hasClass(overlay_klass)) return;
                   set(_options_, opt);
                   var
                     src= t.attr(opt.attr).attr('src'),
