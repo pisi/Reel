@@ -431,4 +431,32 @@
     });
   });
 
+  test( 'Data-configured `&lt;img&gt;` tags are turned into Reel instances upon scan', function(){
+    expect(7);
+    var
+      options= {
+        image: 'image2.jpg',
+        frames: 15,
+        frame: 5
+      },
+      $img= $('<img>').attr({
+        src: 'image.jpg',
+        width: 300,
+        height: 200,
+        id: 'my_data_configured_image',
+        'class': 'reel',
+        'data-image': options.image,
+        'data-frames': options.frames,
+        'data-frame': options.frame
+      }).appendTo('#Body');
+
+      $.reel.scan();
+
+      ok( $img.parent().is('.reel-overlay'), 'Image is nested inside the Reel overlay (`.reel-overlay`)' );
+      $.each(options, function(option, value){
+        equal( $img.reel('options')[option], value, 'Tested `'+option+'` value picked up.');
+        equal( $img.reel(option), value, 'Tested `'+option+'` actually used.');
+      });
+  });
+
 })(jQuery);

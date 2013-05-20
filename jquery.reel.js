@@ -1882,7 +1882,11 @@ jQuery.reel || (function($, window, document, undefined){
 
       scan: function(){
         $(dot(klass)).each(function(ix, image){
-          if ($(image).parent().is(dot(overlay_klass))) return;
+          if ($(image).parent().hasClass(overlay_klass)) return;
+          var
+            $image= $(image),
+            options= $image.data()
+          $image.removeData().reel(options);
         });
       },
 
