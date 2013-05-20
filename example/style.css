@@ -8,5 +8,6 @@ h1{ color: black; font-size: 3em; margin: 0; font-weight: normal; }
 .credits.photo:before{ content: 'Photo '; }
 .credits.graphic:before{ content: 'Graphic '; }
 .credits.render:before{ content: 'Render'; }
-.ballast{ margin-top: 100px; color: #999; }
-
+.ballast{ margin-top: 500px; color: #999; line-height: 20px; }
+.ballast a{ color: #999; text-decoration: none; }
+.ballast a:hover{ text-decoration: underline; }
