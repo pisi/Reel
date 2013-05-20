@@ -1885,7 +1885,10 @@ jQuery.reel || (function($, window, document, undefined){
           if ($(image).parent().hasClass(overlay_klass)) return;
           var
             $image= $(image),
-            options= $image.data()
+            options= $image.data(),
+            images= options.images,
+            array= reel.re.array.exec(images),
+            images= options.images= array ? images.split(reel.re.array) : images
           $image.removeData().reel(options);
         });
       },
@@ -1910,6 +1913,8 @@ jQuery.reel || (function($, window, document, undefined){
                        /(webkit)\/([\d.]+)/i,
                        /(mozilla)\/([\d.]+)/i
         ],
+        /* Array in a string (comma-separated values) */
+        array:         / *, */,
         /* Multi touch devices */
         touchy_agent:  /iphone|ipod|ipad|android|fennec|rim tablet/i,
         /* Lazy (low-CPU mobile devices) */
