@@ -797,7 +797,7 @@ jQuery.reel || (function($, window, document, undefined){
               t= $(this),
 
               // Quick data interface
-              set= function(name, value){ return t.reel(name, value) && value },
+              set= function(name, value){ return t.reel(name, value) && t.data(name) },
               get= function(name){ return t.reel(name) },
 
               on= {
