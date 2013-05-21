@@ -1,6 +1,6 @@
 
-jQuery Reel 1.2
-===============
+jQuery Reel 1.2.1
+=================
 
 **Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `img` HTML tag used on 100+ websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
 
@@ -61,11 +61,11 @@ Requirements
     * or [jQuery.event.special.wheel][wheel] is a nice alternative
 the image is enabled
 
-Download version 1.2
---------------------
-* **[Open source][source] (~ 100,2 kB annotated)**
+Download version 1.2.1
+----------------------
+* **[Open source][source] (~ 102,1 kB annotated)**
 * or [minified version][min] (~ 16,8 kB)
-* or [entire package][zip] (~ 3 MB)
+* or [entire package][zip] (~ 7,8 MB)
 
 Link the [CDN][cdn]
 ----------------------------
@@ -83,9 +83,9 @@ Link the [CDN][cdn]
 [jquery]: http://www.jquery.com/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
-[source]: http://github.com/pisi/Reel/raw/v1.2/jquery.reel.js
-[min]: http://github.com/pisi/Reel/raw/v1.2/jquery.reel-min.js
-[zip]: http://github.com/pisi/Reel/zipball/v1.2
+[source]: http://github.com/pisi/Reel/raw/v1.2.1/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/v1.2.1/jquery.reel-min.js
+[zip]: http://github.com/pisi/Reel/zipball/v1.2.1
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [cdn]: http://wiki.github.com/pisi/Reel/cdn
 [cdn-bundle]: http://code.vostrel.cz/jquery.reel-bundle.js

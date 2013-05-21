@@ -156,7 +156,7 @@ jQuery.reel || (function($, window, document, undefined){
         steppable:           true,
 
         // #### `throwable` Option ####
-        // `Boolean`, since 1.1; or `Number`, IN DEVELOPMENT
+        // `Boolean`, since 1.1; or `Number`, since 1.2.1
         //
         throwable:           true,
 

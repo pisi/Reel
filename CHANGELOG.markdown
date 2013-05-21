@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Development
------------
+Version 1.2.1
+-------------
 
 * New `duration` option for the animation (GH-90).
 * Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-179).
@@ -17,11 +17,11 @@ Development
 Version 1.2.1
 -------------
 
-* Resolved compatibility issues with jQuery 1.8 (GH-140) and 1.9 (GH-174).
+* Resolved compatibility issues with jQuery 1.8 (GH-140) and 1.9 (GH-174, GH-175).
 * For smooth `velocity` kick it now follows `loaded` event (instead of `setup`) (GH-142).
 * Goodbye disableTextSelect dependency. You served well, but one less to worry about without you!
 * Vertical page scrolling on touch devices fixed (GH-146).
-* Release package now contains image assets otherwise served by CND (GH-144).
+* Release package now contains image assets otherwise served by CDN (GH-144).
 * Case in-sensitivity for image extension in `src` attribute of the `<img>`.
 * Exciting new multi-row panoramas via combination of `multirow` and `stitched` options (GH-129).
 * The `throwable` option can now accept maximum velocity instead of simple boolean (GH-172).
