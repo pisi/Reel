@@ -14,6 +14,7 @@ jQuery Reel 1.2
 * **NEW** Fully customizable with 50+ options to choose from.
 * Browser and operating system agnostic. It's your choice.
 * No browser extensions needed. No Flash, nothing. It's just an image...
+* **NEW** Javascript-free initialization!
 * Plays fair with your existing CSS.
 * Transparent, eventful & well-tested tiny code base.
 * Tools for Drupal, **NEW** Joomla, Dreamweaver, Poser or Python by the community!
@@ -22,30 +23,18 @@ Demo
 ----
 View a [demonstration][demo] on plugin home page or our [many examples][examples].
 
-Syntax
-------
-It is actually pretty straightforward:
-
-    .reel( [options] )
-
-For the many `options` head to plugin [on-line reference][options] page or view the [entire open-source code explained][docs], where also the other method `.unreel()` along with events and data keys are explained in detail. The annotations are embedded into the source code and you also find a copy in the `docs/` folder.
-
-Example
+How To?
 -------
 
-Say you have an image in your page:
+As easy as adding few _special_ attributes to your HTML image tag:
 
 ```html
-    <img src="my_server/image.jpg" width="200" height="100" id="my_image">
+    <img src="my_server/image.jpg" width="200" height="100" id="my_image"
+      class="reel"
+      data-images="my_server/image-##.jpg">
 ```
 
-and calling:
-
-```js
-    $('#my_image').reel()
-```
-
-will turn your image into default Reel with 36 frames in sprite. Use [options][options] to customize.
+The above will be turned into default interactive Reel with 36 frames loaded from `my_server/image-01.jpg` through `image-36.jpg` Use [options][options] to customize.
 
 License
 -------
@@ -71,10 +60,15 @@ Link the [CDN][cdn]
 ----------------------------
 * **[http://code.vostrel.cz/jquery.reel-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
 
+Documentation
+-------------
+For options head to plugin [options on-line reference][options] or view the [entire open-source code explained][docs], where all available methods, events and data keys are explained in detail. The documentation is embedded into the source code and you also find a copy in the [`docs/`][docs-copy] folder.
+
 [CHANGELOG][changelog]
 
 [demo]: http://jquery.vostrel.cz/reel#demo
 [docs]: http://test.vostrel.cz/jquery.reel/docs/jquery.reel.html
+[docs-copy]: http://github.com/pisi/Reel/tree/master/docs
 [examples]: http://test.vostrel.cz/jquery.reel/example
 [options]: http://jquery.vostrel.cz/reel#options
 [changelog]: http://github.com/pisi/Reel/blob/master/CHANGELOG.markdown
