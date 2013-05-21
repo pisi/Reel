@@ -24,7 +24,7 @@
 <span class="cm"> *</span>
 <span class="cm"> * jQuery Reel</span>
 <span class="cm"> * http://jquery.vostrel.cz/reel</span>
-<span class="cm"> * Version: 1.2-devel</span>
+<span class="cm"> * Version: 1.2.2</span>
 <span class="cm"> * Updated: 2013-05-21</span>
 <span class="cm"> *</span>
 <span class="cm"> * Requires jQuery 1.5 or higher</span>
@@ -51,7 +51,7 @@ and a make sure check is made at the very beginning.</p>             </td>      
 It is locally referenced as just <code>reel</code> for speedier access.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span>
     <span class="nx">reel</span><span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">reel</span><span class="o">=</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id='reel-version'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#reel-version">&#182;</a>                </div>                       <h3><code>$.reel.version</code></h3>
 
-<p><code>String</code> (major.minor.patch), since 1.1</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">version</span><span class="o">:</span> <span class="s1">&#39;1.2-devel&#39;</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id='Options'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#Options">&#182;</a>                </div>                       <h2>Options</h2>
+<p><code>String</code> (major.minor.patch), since 1.1</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">version</span><span class="o">:</span> <span class="s1">&#39;1.2.2&#39;</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id='Options'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#Options">&#182;</a>                </div>                       <h2>Options</h2>
 
 <p>When calling <code>.reel()</code> method you have plenty of options (far too many) available.
 You collect them into one hash and supply them with your call.</p>
@@ -503,7 +503,7 @@ Under normal circumstances you don't need to scan by yourself.</p>
 <p>It however comes in handy to re-scan when you happen to inject a data-configured Reel <code>&lt;img&gt;</code>
 into already ready DOM.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id='reel-scan-Method'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#reel-scan-Method">&#182;</a>                </div>                       <h3><code>$.reel.scan()</code> Method</h3>
 
-<p>returns <code>jQuery</code>, EXPERIMENTAL</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">scan</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+<p>returns <code>jQuery</code>, since 1.2.2</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">scan</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
         <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="nx">dot</span><span class="p">(</span><span class="nx">klass</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;:not(&#39;</span><span class="o">+</span><span class="nx">dot</span><span class="p">(</span><span class="nx">overlay_klass</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &gt;)&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ix</span><span class="p">,</span> <span class="nx">image</span><span class="p">){</span>
           <span class="kd">var</span>
             <span class="nx">$image</span><span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">image</span><span class="p">),</span>
@@ -1145,7 +1145,7 @@ This handler converts <code>row</code> value to <code>tier</code> and sets it. T
                     <span class="p">}</span>
                   <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id='imageChange-Event'>             <td class="docs">                        <div class="pilwrap">                  <a class="pilcrow" href="#imageChange-Event">&#182;</a>                </div>                       <h3><code>imageChange</code> Event</h3>
 
-<p><code>Event</code>, EXPERIMENTAL</p>
+<p><code>Event</code>, since 1.2.2</p>
 
 <p>When <code>image</code> or <code>images</code> is changed on the fly, this handler resets the loading cache and triggers
 new preload sequence. Images are actually switched only after the new image is fully loaded.</p>             </td>             <td class="code">               <div class="highlight"><pre>                  <span class="s1">&#39;imageChange imagesChange&#39;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">nil</span><span class="p">,</span> <span class="nx">image</span><span class="p">){</span>

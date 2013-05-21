@@ -24,7 +24,7 @@
  *
  * jQuery Reel
  * http://jquery.vostrel.cz/reel
- * Version: 1.2-devel
+ * Version: 1.2.2
  * Updated: 2013-05-21
  *
  * Requires jQuery 1.5 or higher
@@ -60,7 +60,7 @@ jQuery.reel || (function($, window, document, undefined){
       // ### `$.reel.version`
       //
       // `String` (major.minor.patch), since 1.1
-      version: '1.2-devel',
+      version: '1.2.2',
 
       // Options
       // -------
@@ -715,7 +715,7 @@ jQuery.reel || (function($, window, document, undefined){
       //
 
       // ### `$.reel.scan()` Method ######
-      // returns `jQuery`, EXPERIMENTAL
+      // returns `jQuery`, since 1.2.2
       //
       scan: function(){
         return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
@@ -1450,7 +1450,7 @@ jQuery.reel || (function($, window, document, undefined){
                   },
 
                   // ### `imageChange` Event ######
-                  // `Event`, EXPERIMENTAL
+                  // `Event`, since 1.2.2
                   //
                   // When `image` or `images` is changed on the fly, this handler resets the loading cache and triggers
                   // new preload sequence. Images are actually switched only after the new image is fully loaded.

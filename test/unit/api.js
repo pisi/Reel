@@ -89,7 +89,7 @@
     equal( $.reel.def.steppable,               true, 'allows to step the view (horizontally) by clicking on image' );
     equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
 
-    // Options in development
+    // Version 1.3 options (in development)
     equal( $.reel.def.duration,           undefined, 'duration of animation (in seconds)' );
   });
 
