@@ -4,19 +4,28 @@ Changelog
 Development
 -----------
 
+* New `duration` option for the animation (GH-90).
+* Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-179).
+* Annotation links received a click aim allowance to improve their clickability (GH-186).
+* Values of `image` and `images` data can now be changed on the fly (GH-190).
+* Click on annotations threshold improved (GH-186).
+* Fixed bug in vertical `spacing` calculation on iOS (GH-188, GH-189).
+* New alternative Javascript-less initialization with HTML data attributes (GH-193).
+* Revised examples with syntax-highlighted code.
+
+
+Version 1.2.1
+-------------
+
 * Resolved compatibility issues with jQuery 1.8 (GH-140) and 1.9 (GH-174).
 * For smooth `velocity` kick it now follows `loaded` event (instead of `setup`) (GH-142).
 * Goodbye disableTextSelect dependency. You served well, but one less to worry about without you!
 * Vertical page scrolling on touch devices fixed (GH-146).
 * Release package now contains image assets otherwise served by CND (GH-144).
-* New `duration` option for the animation (GH-90).
 * Case in-sensitivity for image extension in `src` attribute of the `<img>`.
 * Exciting new multi-row panoramas via combination of `multirow` and `stitched` options (GH-129).
 * The `throwable` option can now accept maximum velocity instead of simple boolean (GH-172).
 * Fixed `images` sequence starting point now allows direct use of file names from camera.
-* Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-189).
-* Annotation links received a click aim allowance to improve their clickability (GH-186).
-* Values of `image` and `images` data can now be changed on the fly (GH-190).
 
 
 Version 1.2
