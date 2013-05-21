@@ -2,7 +2,7 @@
 jQuery Reel 1.2
 ===============
 
-**Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `img` HTML tag used on 100+ websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
+**Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `<img>` HTML tag used on hundreds of websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
 
 <http://plugins.jquery.com/project/reel>
 
@@ -38,27 +38,27 @@ The above will be turned into default interactive Reel with 36 frames loaded fro
 
 License
 -------
-* Available for free to use in all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses.
+* Available for all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses. 
+* Use for free and enjoy! Appreciations are warmly welcome:
 
 <a href='http://www.pledgie.com/campaigns/9596'><img alt='Click here to lend your support to: Reel and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/9596.png?skin_name=chrome' border='0' /></a>
 
 Requirements
 ------------
 * **[jQuery 1.5 or higher][jquery]**
-* Optionaly you can also include these handy jQuery plugins (recommended)
+* Optionaly you can also include one of these two handy jQuery plugins (recommended):
     * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
-    * or [jQuery.event.special.wheel][wheel] is a nice alternative
-the image is enabled
+    * or [jQuery.event.special.wheel][wheel] is also a nice alternative
 
-Download version 1.2
---------------------
-* **[Open source][source] (~ 100,2 kB annotated)**
+Download
+--------
+* **[Annotated open source][source] (~ 100,2 kB)**
 * or [minified version][min] (~ 16,8 kB)
 * or [entire package][zip] (~ 3 MB)
 
 Link the [CDN][cdn]
-----------------------------
 * **[http://code.vostrel.cz/jquery.reel-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
+-------------------
 
 Documentation
 -------------
