@@ -8,5 +8,10 @@ h1{ color: black; font-size: 3em; margin: 0; font-weight: normal; }
 .credits.photo:before{ content: 'Photo '; }
 .credits.graphic:before{ content: 'Graphic '; }
 .credits.render:before{ content: 'Render'; }
-.ballast{ margin-top: 100px; color: #999; }
-
+.ballast{ margin-top: 500px; color: #999; line-height: 20px; }
+.ballast a{ color: #999; text-decoration: none; }
+.ballast a:hover{ text-decoration: underline; }
+pre{ display: inline-block; background: #222; color: #e0c589; font-size: 15px; font-family: Monaco; padding: 20px 40px 20px 0; margin: 0; border-radius: 0 23px 23px; }
+pre a{ color: #89bdff; }
+pre strong{ color: #65b042; font-weight: normal; }
+pre strong a{ color: #fff; }

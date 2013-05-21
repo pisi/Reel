@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Version 1.2.1
--------------
+Development
+-----------
 
 * New `duration` option for the animation (GH-90).
 * Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-179).

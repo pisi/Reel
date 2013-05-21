@@ -12,54 +12,105 @@
   </head>
   <body>
     <h1>Multi-Row Stitched Panorama</h1>
+    <p class="credits photo"><a href="mailto:sl01303p@pace.edu">Stiliyan Lazarov</a></p>
 
-    Using sequence:
-    <img id="image" src='stitched.jpg' width="250" height="149" />
+    <h2>Using sequence:</h2>
+    <img src="stitched.jpg" width="250" height="149"
+      class="reel"
+      id="image"
+      data-images="stitched-reel-##.jpg"
+      data-stitched="496"
+      data-frames="30"
+      data-frame="15"
+      data-rows="3"
+      data-row="2"
+      data-loops="false">
 
-    Using sprite:
-    <img id="image2" src='stitched.jpg' width="250" height="149" />
+    <!-- Or Javascript alternative:
 
+    <img id="image" src="stitched.jpg" width="250" height="149" />
     <script>
-      $(function(){ // when DOM ready
-
-        $.reel.def.monitor= 'frame'
-
-        // Sequence
-        $('#image').reel({
-          indicator:   5, // For no indicator just remove this line
-          loops:       false,
-          stitched:    496,
-          frames:      30,
-          frame:       15,
-          rows:        3,
-          row:         2,
-          images:      'stitched-reel-##.jpg'
-        });
-
-        // Sprite
-        $('#image2').reel({
-          indicator:   5, // For no indicator just remove this line
-          loops:       false,
-          stitched:    496,
-          spacing:     5,
-          frames:      30,
-          frame:       15,
-          rows:        3,
-          row:         2
-        });
-
+      $('#image').reel({
+        images:      'stitched-reel-##.jpg',
+        loops:       false,
+        stitched:    496,
+        frames:      30,
+        frame:       15,
+        rows:        3,
+        row:         2
       });
     </script>
 
-    <p class="credits photo"><a href="mailto:sl01303p@pace.edu">Stiliyan Lazarov</a></p>
+    -->
+
+<!--
+     Everything you might need to make Reel is above this line.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     Everything below this line is only here to make the example display illustratively
+     with pretty source code, indicators, ... So you do NOT need any of it.
+-->
+
+    <pre>
+    &lt;img src=<strong>"<a href="stitched.jpg">stitched.jpg</a>"</strong> width=<strong>"250"</strong> height=<strong>"149"</strong>
+      <a href="http://jquery.vostrel.cz/reel#class">class</a>=<strong>"reel"</strong>
+      <a href="http://jquery.vostrel.cz/reel#id">id</a>=<strong>"image"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#images">images</a>=<strong>"<a href="stitched-reel-01.jpg" title="Expands to stitched-reel-01.jpg, stitched-reel-02.jpg, ... , stitched-reel-90.jpg">stitched-reel-##.jpg</a>"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#stitched">stitched</a>=<strong>"496"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#frames">frames</a>=<strong>"30"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#frame">frame</a>=<strong>"15"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#rows">rows</a>=<strong>"3"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#row">row</a>=<strong>"2"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#loops">loops</a>=<strong>"false"</strong>&gt;</pre>
+
+
+    <h2>Using sprite:</h2>
+    <img src="stitched.jpg" width="250" height="149"
+      class="reel"
+      id="image2"
+      data-image="stitched-reel.jpg"
+      data-stitched="496"
+      data-frames="30"
+      data-frame="15"
+      data-spacing="5"
+      data-rows="3"
+      data-row="2"
+      data-loops="false">
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="stitched.jpg" width="250" height="149" />
+    <script>
+      $('#image').reel({
+        image:      'stitched-reel.jpg',
+        loops:       false,
+        stitched:    496,
+        frames:      30,
+        frame:       15,
+        rows:        3,
+        row:         2
+      });
+    </script>
+
+    -->
+
+    <pre>
+    &lt;img src=<strong>"<a href="stitched.jpg">stitched.jpg</a>"</strong> width=<strong>"250"</strong> height=<strong>"149"</strong>
+      <a href="http://jquery.vostrel.cz/reel#class">class</a>=<strong>"reel"</strong>
+      <a href="http://jquery.vostrel.cz/reel#id">id</a>=<strong>"image"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#image">image</a>=<strong>"<a href="stitched-reel.jpg">stitched-reel.jpg</a>"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#stitched">stitched</a>=<strong>"496"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#frames">frames</a>=<strong>"30"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#frame">frame</a>=<strong>"15"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#rows">rows</a>=<strong>"3"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#row">row</a>=<strong>"2"</strong>
+      data-<a href="http://jquery.vostrel.cz/reel/#loops">loops</a>=<strong>"false"</strong>&gt;</pre>
     
+    <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
+    <script> $.reel.def.indicator = 5; </script>
+
     <div class="ballast">
-      <p>Lots of dummy text ballast to stretch the page a little and allow testing how each Reel mode behaves in relation to page scrolling.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum semper imperdiet. Integer non auctor orci. Nullam dictum pretium metus, interdum congue sapien lobortis in. Donec sed massa a tellus dapibus auctor et in mauris. Curabitur adipiscing fermentum felis vel molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut semper sem ut nulla fringilla luctus. Curabitur dignissim quam ac libero consequat tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In hac habitasse platea dictumst. Nunc sed lectus eget magna suscipit tempor eget id nibh.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget lorem est, quis rhoncus augue. Proin mollis elit in lorem dignissim in pulvinar quam egestas. Praesent auctor tempus vestibulum. Praesent purus nisl, porta vel rhoncus mollis, suscipit a sapien. Suspendisse potenti. Nunc leo elit, auctor sed malesuada vel, accumsan in arcu. Quisque a turpis arcu. Fusce a dolor ut risus condimentum feugiat. Aliquam eget turpis ipsum. Fusce est metus, vulputate a mollis non, pretium sit amet mauris. Ut aliquam placerat risus ac volutpat. Phasellus dictum turpis ac nisi egestas faucibus. Nulla pretium molestie venenatis. Integer tincidunt imperdiet turpis, at pretium neque consequat at. Aenean id augue in odio elementum malesuada in in purus.</p>
-      <p>Donec in tincidunt tortor. Donec laoreet adipiscing orci ut gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla eget luctus neque. Aenean metus massa, sodales non pulvinar vitae, dignissim ut ipsum. Pellentesque eget arcu ultrices nisl blandit egestas id quis augue. Integer volutpat, ligula sit amet convallis consequat, nulla nisl suscipit felis, in aliquam tellus sapien ut lorem. Fusce eget lorem diam. Sed sit amet consectetur mi. Nullam nibh dui, auctor at ullamcorper a, vulputate quis mauris. Morbi feugiat lorem et libero dapibus bibendum vel non augue. Fusce luctus enim ac velit semper pharetra. Curabitur turpis nibh, tempor eget rhoncus ut, vulputate et metus. Sed rutrum eros id nisl pharetra mollis. In hac habitasse platea dictumst.</p>
-      <p>Duis fringilla urna vel leo molestie eu pellentesque turpis consequat. Aliquam ante magna, pretium a facilisis vitae, viverra eu dui. Curabitur augue ligula, scelerisque et dapibus non, pharetra eu arcu. Aliquam lobortis augue et elit accumsan porttitor. Donec gravida dignissim lorem, porta vulputate augue tincidunt at. Vivamus tincidunt, tellus et volutpat fermentum, enim metus bibendum ante, euismod feugiat velit nisi nec tellus. Pellentesque egestas, sapien convallis tempor vestibulum, mauris nisl lobortis metus, sagittis vulputate lacus ante ut dolor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tristique velit ac tellus ullamcorper quis pellentesque ipsum cursus. Praesent luctus fringilla velit, eu placerat tellus luctus ac. Nulla nec massa quam.</p>
-      <p>Praesent rutrum dui congue massa dictum tincidunt. Pellentesque ac volutpat augue. Fusce vel dui ac enim viverra sodales. Etiam massa sapien, fermentum et ultricies at, placerat vitae eros. Sed convallis vehicula commodo. Mauris sit amet augue id turpis dapibus rhoncus et vel turpis. Nullam vitae massa sed nunc sagittis varius ac id sapien. Morbi ligula tellus, consequat ut pellentesque id, condimentum nec est. Donec id elit mollis diam dignissim iaculis sed nec lorem. Vivamus sed tellus venenatis sem viverra aliquet gravida nec neque. Donec facilisis odio ac nisl iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer in augue nec leo interdum adipiscing ut a quam. Aenean sit amet mauris vitae lacus interdum aliquam vel a erat.</p>
+      <p>Some text ballast to make the page positively scroll-worthy for testing purposes.</p>
+      <p><a href="http://en.wikipedia.org/wiki/Lorem_Ipsum">Lorem ipsum</a> dolor sit amet, consectetur adipiscing elit. Sed rutrum semper imperdiet. Integer non auctor orci. Nullam dictum pretium metus, interdum congue sapien lobortis in. Donec sed massa a tellus dapibus auctor et in mauris. Curabitur adipiscing fermentum felis vel molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut semper sem ut nulla fringilla luctus. Curabitur dignissim quam ac libero consequat tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In hac habitasse platea dictumst. Nunc sed lectus eget magna suscipit tempor eget id nibh.</p>
     </div>
   </body>
 </html>

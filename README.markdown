@@ -2,7 +2,7 @@
 jQuery Reel 1.2.1
 =================
 
-**Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `img` HTML tag used on 100+ websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
+**Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `<img>` HTML tag used on hundreds of websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
 
 <http://plugins.jquery.com/project/reel>
 
@@ -14,67 +14,75 @@ jQuery Reel 1.2.1
 * **NEW** Fully customizable with 50+ options to choose from.
 * Browser and operating system agnostic. It's your choice.
 * No browser extensions needed. No Flash, nothing. It's just an image...
+* **NEW** Javascript-free initialization!
 * Plays fair with your existing CSS.
 * Transparent, eventful & well-tested tiny code base.
 * Tools for Drupal, **NEW** Joomla, Dreamweaver, Poser or Python by the community!
 
 Demo
 ----
+
 View a [demonstration][demo] on plugin home page or our [many examples][examples].
 
-Syntax
-------
-It is actually pretty straightforward:
 
-    .reel( [options] )
-
-For the many `options` head to plugin [on-line reference][options] page or view the [entire open-source code explained][docs], where also the other method `.unreel()` along with events and data keys are explained in detail. The annotations are embedded into the source code and you also find a copy in the `docs/` folder.
-
-Example
+How To?
 -------
 
-Say you have an image in your page:
+As easy as adding few _special_ attributes to your HTML image tag:
 
 ```html
-    <img src="my_server/image.jpg" width="200" height="100" id="my_image">
+    <img src="my_server/image.jpg" width="200" height="100" id="my_image"
+      class="reel"
+      data-images="my_server/image-##.jpg">
 ```
 
-and calling:
+The above will be turned into default interactive Reel with 36 frames loaded from `my_server/image-01.jpg` through `image-36.jpg` Use [options][options] to customize.
 
-```js
-    $('#my_image').reel()
-```
-
-will turn your image into default Reel with 36 frames in sprite. Use [options][options] to customize.
 
 License
 -------
-* Available for free to use in all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses.
+
+* Available for all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses. 
+* Use for free and enjoy! Appreciations are warmly welcome:
 
 <a href='http://www.pledgie.com/campaigns/9596'><img alt='Click here to lend your support to: Reel and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/9596.png?skin_name=chrome' border='0' /></a>
 
+
 Requirements
 ------------
-* **[jQuery 1.5 or higher][jquery]**
-* Optionaly you can also include these handy jQuery plugins (recommended)
-    * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
-    * or [jQuery.event.special.wheel][wheel] is a nice alternative
-the image is enabled
 
-Download version 1.2.1
-----------------------
-* **[Open source][source] (~ 102,1 kB annotated)**
+* **[jQuery 1.5 or higher][jquery]**
+* Optionaly you can also include one of these two handy jQuery plugins (recommended):
+    * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
+    * or [jQuery.event.special.wheel][wheel] is also a nice alternative
+
+
+Download
+--------
+
+* **[Annotated open source][source] (~ 102,1 kB)**
 * or [minified version][min] (~ 16,8 kB)
 * or [entire package][zip] (~ 7,8 MB)
 
+
 Link the [CDN][cdn]
-----------------------------
+-------------------
+
 * **[http://code.vostrel.cz/jquery.reel-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
+
+
+Documentation
+-------------
+
+For options head to plugin [options on-line reference][options] or view the [entire open-source code explained][docs], where all available methods, events and data keys are explained in detail. The documentation is embedded into the source code and you also find a copy in the [`docs/`][docs-copy] folder.
 
 [CHANGELOG][changelog]
 
+
+
 [demo]: http://jquery.vostrel.cz/reel#demo
 [docs]: http://test.vostrel.cz/jquery.reel/docs/jquery.reel.html
+[docs-copy]: http://github.com/pisi/Reel/tree/master/docs
 [examples]: http://test.vostrel.cz/jquery.reel/example
 [options]: http://jquery.vostrel.cz/reel#options
 [changelog]: http://github.com/pisi/Reel/blob/master/CHANGELOG.markdown

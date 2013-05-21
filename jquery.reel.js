@@ -671,6 +671,74 @@ jQuery.reel || (function($, window, document, undefined){
 
       },
 
+      // -----------
+      // Quick Start
+      // -----------
+      //
+      // For basic Reel initialization, you don't even need to write any Javascript!
+      // All it takes is to add __class name__ `"reel"` to your `<img>` HTML tag,
+      // assign an unique __`id` attribute__ and decorate the tag with configuration __data attributes__.
+      // Result of which will be interactive Reel projection.
+      //
+      //     <img src="some/image.jpg" width="300" height="200"
+      //       id="my_image"
+      //       class="reel"
+      //       data-images="some/images/01.jpg, some/images/02.jpg"
+      //       data-speed="0.5">
+      //
+      // All otherwise Javascript [options](#Options) are made available as HTML `data-*` attributes.
+      //
+      // Only the `annotations` option doesn't work this way. To quickly create annotations,
+      // simply have any HTML node (`<div>` prefferably) anywhere in the DOM,
+      // assign it __class name__ `"reel-annotation"`, an unique __`id` attribute__
+      // and add configuration __data attributes__.
+      //
+      //     <div id="my_annotation"
+      //       class="reel-annotation"
+      //       data-for="my_image"
+      //       data-x="120"
+      //       data-y="60">
+      //       Whatever HTML I'd like to have in the annotation
+      //     </div>
+      //
+      // Most important is the `data-for` attribute, which references target Reel instance by `id`.
+      //
+
+      // ---
+      //
+      // Responsible for discovery and subsequent conversion of data-configured Reel images is
+      // `$.reel.scan()` method, which is being called automagically when the DOM becomes ready.
+      // Under normal circumstances you don't need to scan by yourself.
+      //
+      // It however comes in handy to re-scan when you happen to inject a data-configured Reel `<img>`
+      // into already ready DOM.
+      //
+
+      // ### `$.reel.scan()` Method ######
+      // returns `jQuery`, EXPERIMENTAL
+      //
+      scan: function(){
+        return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
+          var
+            $image= $(image),
+            options= $image.data(),
+            images= options.images= soft_array(options.images),
+            annotations= {}
+          $(dot(annotation_klass)+'[data-for='+$image.attr(_id_)+']').each(function(ix, annotation){
+            var
+              $annotation= $(annotation),
+              def= $annotation.data(),
+              x= def.x= numerize_array(soft_array(def.x)),
+              y= def.y= numerize_array(soft_array(def.y)),
+              id= $annotation.attr(_id_),
+              node= def.node= $annotation.removeData()
+            annotations[id] = def;
+          });
+          options.annotations = annotations;
+          $image.removeData().reel(options);
+        });
+      },
+
       // -------
       // Methods
       // -------
@@ -745,7 +813,7 @@ jQuery.reel || (function($, window, document, undefined){
                 // - triggers `"setup` Event when finished
                 //
                 setup: function(e){
-                  if (t.hasClass(klass)) return;
+                  if (t.hasClass(klass) && t.parent().hasClass(overlay_klass)) return;
                   set(_options_, opt);
                   var
                     src= t.attr(opt.attr).attr('src'),
@@ -1917,6 +1985,8 @@ jQuery.reel || (function($, window, document, undefined){
                        /(webkit)\/([\d.]+)/i,
                        /(mozilla)\/([\d.]+)/i
         ],
+        /* Array in a string (comma-separated values) */
+        array:         / *, */,
         /* Multi touch devices */
         touchy_agent:  /iphone|ipod|ipad|android|fennec|rim tablet/i,
         /* Lazy (low-CPU mobile devices) */
@@ -2285,6 +2355,9 @@ jQuery.reel || (function($, window, document, undefined){
   // Expose plugin functions as jQuery methods
   $.extend($.fn, reel.fn);
 
+  // Do the initial global scan for data-configured `<img`> tags to become enhanced
+  $(reel.scan);
+
   // Very useful helpers
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
@@ -2302,5 +2375,7 @@ jQuery.reel || (function($, window, document, undefined){
   function hash(value){ return '#' + value }
   function pad(string, len, fill){ while (string.length < len) string= fill + string; return string }
   function reen(uri){ return encodeURI(decodeURI(uri)) }
+  function soft_array(string){ return reel.re.array.exec(string) ? string.split(reel.re.array) : string }
+  function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);

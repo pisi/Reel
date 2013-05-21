@@ -151,8 +151,14 @@
     equal( $.reel.cdn, 'http://code.vostrel.cz/', 'URL');
   });
 
+  test( '`$.reel.scan` for creation of Reels from data-configured `<img>` tag directly', function(){
+    expect(1);
+
+    equal( typeof $.reel.scan, 'function', 'exposed as `$.reel.scan()`');
+  });
+
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
-    expect(29);
+    expect(30);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
     ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
@@ -172,6 +178,7 @@
     ok( $.reel.re.lazy_agent instanceof RegExp,           '`$.reel.re.lazy_agent`' );
     ok( $.reel.re.frame_klass instanceof RegExp,          '`$.reel.re.frame_klass`' );
     ok( $.reel.re.sequence instanceof RegExp,             '`$.reel.re.sequence`' );
+    ok( $.reel.re.array instanceof RegExp,                '`$.reel.re.array`' );
     // Functionally tested further except `sequence`, which is being throughfully tested in Computations module
 
     ok( typeof $.reel.cdn == 'string',                    '`$.reel.cdn` - URL to the CDN server used to provide resources' );
@@ -918,6 +925,24 @@
           ok( false, 'FAILED COMPLETELY on '+agent_string);
         }
       });
+    });
+  });
+
+  $.each({
+    'aa,bb,cc':           true,
+    'aa, bb, cc':         true,
+    'aa ,bb ,cc':         true,
+    'aa , bb , cc':       true,
+    'aa   ,  bb ,   cc':  true,
+    'aa bb cc':           false,
+    'aa; bb; cc':         false,
+    'aa.bb.cc':           false
+  },
+  function(string, pass){
+    test( '`$.reel.re.array` String "'+string+'" '+(pass? 'qualifies':'does NOT qualify')+' as an array', function(){
+      expect(1);
+
+      ok( $.reel.re.array.test(string) == pass );
     });
   });
 
