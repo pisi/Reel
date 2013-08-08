@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="amd-compatibility">
+  <head>
+    <title>jQuery Reel AMD Compatibility</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://requirejs.org/docs/release/2.1.8/minified/require.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>AMD Compatibility</h1>
+
+    <script>
+      requirejs.config({
+        paths: {
+          jquery: 'http://code.jquery.com/jquery'
+        }
+      });
+      requirejs(['../../jquery.reel'], function(reel){
+        // Handler gets executed only after Reel AND its jQuery dependency are loaded.
+        // You can call `.reel()` in here.
+        // The `reel` variable it receives is a reference to `$.reel` object.
+
+        // For test purposes, it yields "LOADED" into the developer's console
+        // to check availability of both jQuery and Reel.
+        console.log("LOADED", $, reel);
+      });
+    </script>
+
+<!--
+     Everything you might need to make Reel is above this line.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     Everything below this line is only here to make the example display illustratively
+     with pretty source code, indicators, ... So you do NOT need any of it.
+-->
+
+    <p>This example doesn't contain anything visual. It demonstrates loading Reel module using AMD compatible script loader (today's chice is <a href="http://requirejs.org">RequireJS</a>). Please check the source for the details.</p>
+
+    <pre>
+    &lt;script&gt;
+
+      requirejs.config({
+        paths: {
+          jquery: <strong>"http://code.jquery.com/jquery"</strong>
+        }
+      });
+
+      requirejs([<strong>"../../jquery.reel"</strong>], function(reel){
+        // You can call `.reel()` in here.
+      });
+
+    &lt;/script&gt;</pre>
+
+  </body>
+</html>
+
