@@ -66,18 +66,29 @@
 
 })(function(){ return jQuery.reel || (function($, window, document, undefined){
 
+  // ------
+  // jQuery
+  // ------
+  //
   // One vital requirement is the correct jQuery. Reel requires at least version 1.5
   // and a make sure check is made at the very beginning.
+  //
   if (!$ || +$().jquery.replace('.', __).substr(0, 2) < 15) return;
 
+  // ----------------
+  // Global Namespace
+  // ----------------
+  //
   // `$.reel` (or `jQuery.reel`) namespace is provided for storage of all Reel belongings.
   // It is locally referenced as just `reel` for speedier access.
+  //
   var
     reel= $.reel= {
 
       // ### `$.reel.version`
       //
       // `String` (major.minor.patch), since 1.1
+      //
       version: '1.2.2',
 
       // Options
@@ -930,9 +941,9 @@
                   t.trigger('setup');
                 },
 
-                // ---------------------
-                // Initialization Events
-                // ---------------------
+                // ------
+                // Events
+                // ------
                 //
                 // Reel is completely event-driven meaning there are many events, which can be called
                 // (triggered). By binding event handler to any of the events you can easily hook on to any
