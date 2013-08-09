@@ -43,7 +43,6 @@ visible for your reference. To hide it simply remove this option.
 
 
 
-[docs]:http://jquery.vostrel.cz/reel#options
 [reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT
