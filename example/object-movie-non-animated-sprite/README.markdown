@@ -5,6 +5,8 @@ This example demontrates an object movie having a 2 seconds opening
 animation (on 1 Hz entry speed) leading to a stop with no regular
 animation. It is a 35 frames sprite.
 
+Additionally it showcases usage of `"stepLeft"` and `"stepRight"` events.
+
 
 Options Employed In This Example
 --------------------------------

@@ -58,6 +58,27 @@
       data-<a href="http://jquery.vostrel.cz/reel/#row">row</a>=<strong>"2"</strong>
       data-<a href="http://jquery.vostrel.cz/reel/#speed">speed</a>=<strong>"0.3"</strong>&gt;</pre>
 
+    <p>
+      To test vertical/row stepping events:
+      <button id="up">stepUp</button>
+      <button id="down">stepDown</button>
+    </p>
+    <script>
+
+      $("#up").click(function(){
+        $("#image").trigger("stepUp");
+      });
+
+      $("#down").click(function(){
+        $("#image").trigger("stepDown");
+      });
+
+    </script>
+
+    <pre>
+    $(<strong>"#image"</strong>).trigger(<strong>"stepUp"</strong>);
+    $(<strong>"#image"</strong>).trigger(<strong>"stepDown"</strong>);</pre>
+
     <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
     <script> $.reel.def.indicator = 5; </script>
 

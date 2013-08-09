@@ -6,6 +6,8 @@ has 3 rows of 6 frames organized into a sprite with 3 frames per line.
 It starts at the first frame of 2nd row and animates making ~3
 revolutions per second.
 
+Additionally it showcases usage of `"stepUp"` and `"stepDown"` events.
+
 
 Options Employed In This Example
 --------------------------------

@@ -52,6 +52,27 @@
       data-<a href="http://jquery.vostrel.cz/reel/#opening">opening</a>=<strong>"2"</strong>
       data-<a href="http://jquery.vostrel.cz/reel/#entry">entry</a>=<strong>"1"</strong>&gt;</pre>
     
+    <p>
+      To test horizontal/frame stepping events:
+      <button id="left">stepLeft</button>
+      <button id="right">stepRight</button>
+    </p>
+    <script>
+
+      $("#left").click(function(){
+        $("#image").trigger("stepLeft");
+      });
+
+      $("#right").click(function(){
+        $("#image").trigger("stepRight");
+      });
+
+    </script>
+
+    <pre>
+    $(<strong>"#image"</strong>).trigger(<strong>"stepLeft"</strong>);
+    $(<strong>"#image"</strong>).trigger(<strong>"stepRight"</strong>);</pre>
+
     <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
     <script> $.reel.def.indicator = 5; </script>
 
