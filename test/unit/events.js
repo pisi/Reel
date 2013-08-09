@@ -225,4 +225,56 @@
     })
   });
 
+  $.each([
+    { before: 1, after: 23 },
+    { before: 15, after: 14 },
+    { before: 23, after: 22 }
+  ],
+  function(name, probe){
+    asyncTest( 'Stepping event `"stepRight"` acts as if mouse panned to the right decreased the frame by one (test at '+probe.before+')', function(){
+      expect(2);
+      var
+        $reel= $('#image').reel({
+          frames: 23,
+          frame: probe.before
+        })
+
+      equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
+
+      $reel
+        .one('frameChange.test', function(){
+          equal( $reel.reel('frame'), probe.after, 'Target frame');
+          start();
+        })
+        .trigger('stepRight')
+
+    });
+  });
+
+  $.each([
+    { before: 1, after: 2 },
+    { before: 15, after: 16 },
+    { before: 23, after: 1 }
+  ],
+  function(name, probe){
+    asyncTest( 'Stepping event `"stepLeft"` acts as if mouse panned to the left increased the frame by one (test at '+probe.before+')', function(){
+      expect(2);
+      var
+        $reel= $('#image').reel({
+          frames: 23,
+          frame: probe.before
+        })
+
+      equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
+
+      $reel
+        .one('frameChange.test', function(){
+          equal( $reel.reel('frame'), probe.after, 'Target frame');
+          start();
+        })
+        .trigger('stepLeft')
+
+    });
+  });
+
 })(jQuery);
