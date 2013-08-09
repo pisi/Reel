@@ -68,7 +68,7 @@ jQuery.reel || (function($, window, document, undefined){
       // When calling `.reel()` method you have plenty of options (far too many) available.
       // You collect them into one hash and supply them with your call.
       //
-      // ___Example:__ For a non-looping Reel with 12 frames:_
+      // _**Example:** Initiate a non-looping Reel with 12 frames:_
       //
       //     .reel({
       //       frames: 12,
@@ -81,7 +81,7 @@ jQuery.reel || (function($, window, document, undefined){
       // If you customize any default value therein, all subsequent `.reel()` calls
       // will use the new value as default.
       //
-      // ___Example:__ Change default initial frame to 5th:_
+      // _**Example:** Change default initial frame to 5th:_
       //
       //     $.reel.def.frame = 5
       //
@@ -171,7 +171,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // ### Order of Images ######
         //
-        // Reel presumes counter-clockwise order of the pictures taken. If the neerer facing
+        // Reel presumes counter-clockwise order of the pictures taken. If the nearer facing
         // side doesn't follow your cursor/finger, you did clockwise. Use the `cw` option to
         // correct this.
         //
@@ -217,7 +217,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // ### Directional Mode ######
         //
-        // As you may have noticed on Reel's homepage or in [this example][logo]
+        // As you may have noticed on Reel's homepage or in [`example/object-movie-directional-sprite`][1]
         // when you drag the arrow will point to either direction. In such `directional` mode, the sprite
         // is actually 2 in 1 - one file contains two sprites one tightly following the other, one
         // for visually going one way (`A`) and one for the other (`B`).
@@ -240,6 +240,8 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // Frame `016` represents the `B01` so it actually is first frame of the other direction.
         //
+        // [1]:../example/object-movie-directional-sprite/
+        //
         // ---
 
         // #### `directional` Option ####
@@ -250,8 +252,8 @@ jQuery.reel || (function($, window, document, undefined){
 
         // ### Multi-Row Mode ######
         //
-        // As `example/object-movie-multirow-sequence` very nicely demonstrates, in multi-row arrangement you
-        // can perform two-axis manipulation allowing you to add one or more vertical angles. Think of it as
+        // As [`example/object-movie-multirow-sequence`][1] very nicely demonstrates, in multi-row arrangement
+        // you can perform two-axis manipulation allowing you to add one or more vertical angles. Think of it as
         // a layered cake, each new elevation of the camera during shooting creates one layer of the cake -
         // - a _row_. One plain horizontal object movie full spin is one row:
         //
@@ -271,6 +273,8 @@ jQuery.reel || (function($, window, document, undefined){
         // This way you stack up any number of __`rows`__ you wish and set the initial `row` to start with.
         // Again, not limited to sprites, sequences also apply.
         //
+        // [1]:../example/object-movie-multirow-sequence/
+        //
         // ---
 
         // #### `row` Option ####
@@ -288,11 +292,11 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // Special form of multi-axis movie is the dual-axis mode. In this mode the object offers two plain
         // spins - horizontal and vertical orbits combined together crossing each other at the `frame`
-        // forming sort of a cross if envisioned. [This example][phone] demonstrate this setup. When the
-        // phone in the example is facing you (marked in the example with green square in the top right),
-        // you are at the center. That is within the distance (in frames) defined by the `orbital` option.
-        // Translation from horizontal to vertical orbit can be achieved on this sweet-spot. By default
-        // horizontal orbit is chosen first, unless `vertical` option is used against.
+        // forming sort of a cross if envisioned. [`example/object-movie-dual-orbit-sequence`][1] demonstrates
+        // this setup. When the phone in the example is facing you (marked in the example with green square
+        // in the top right), you are at the center. That is within the distance (in frames) defined
+        // by the `orbital` option. Translation from horizontal to vertical orbit can be achieved on this sweet-spot.
+        // By default horizontal orbit is chosen first, unless `vertical` option is used against.
         //
         // In case the image doesn't follow the vertical drag, you may have your vertical orbit `inversed`.
         //
@@ -303,6 +307,8 @@ jQuery.reel || (function($, window, document, undefined){
         //     A13 A14 A15 B01 B02 B03
         //     B04 B05 B06 B07 B08 B09
         //     B10 B11 B12 B13 B14 B15
+        //
+        // [1]:../example/object-movie-dual-orbit-sequence/
         //
         // ---
 
@@ -453,9 +459,9 @@ jQuery.reel || (function($, window, document, undefined){
         //     |-----------›|= == ==  = === = = |          |-----------›
         //       Animation    User interaction    Timeout    Animation
         //
-        // When a scene doesn't loop (see `loops`) and the animation reaches one end, it stays there
-        // for a while and then reversing the direction of the animation it bounces back towards the other
-        // end. The time spent on the edge can be customized with `rebound`.
+        // When a scene doesn't loop (see [`loops`](#loops-Option)) and the animation reaches one end,
+        // it stays there for a while and then reversing the direction of the animation it bounces back
+        // towards the other end. The time spent on the edge can be customized with `rebound`.
         //
         // ---
 
@@ -578,22 +584,27 @@ jQuery.reel || (function($, window, document, undefined){
 
         // #### `cursor` Option ####
         // [NEW] `String`, since 1.2
+        //
         cursor:         undefined,
 
         // #### `hint` Option ####
         // `String`, since 1.0
+        //
         hint:                  '',
 
         // #### `indicator` Option ####
         // `Number` (pixels), since 1.0
+        //
         indicator:              0,
 
         // #### `klass` Option ####
         // `String`, since 1.0
+        //
         klass:                 '',
 
         // #### `preloader` Option ####
         // `Number` (pixels), since 1.1
+        //
         preloader:              2,
 
         // ~~~
@@ -606,10 +617,12 @@ jQuery.reel || (function($, window, document, undefined){
 
         // #### `area` Option ####
         // `jQuery`, since 1.1
+        //
         area:           undefined,
 
         // #### `attr` Option ####
         // [NEW] `Object`, since 1.2
+        //
         attr:                  {},
 
 
@@ -624,6 +637,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // #### `annotations` Option ####
         // [NEW] `Object`, since 1.2
+        //
         annotations:    undefined,
 
 
@@ -643,6 +657,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // #### `graph` Option ####
         // `Function`, since 1.1
+        //
         graph:          undefined,
 
 
@@ -655,6 +670,7 @@ jQuery.reel || (function($, window, document, undefined){
 
         // #### `monitor` Option ####
         // `String` (data key), since 1.1
+        //
         monitor:        undefined,
 
 
@@ -668,10 +684,12 @@ jQuery.reel || (function($, window, document, undefined){
 
         // #### `step` Option ####
         // `Number`, since 1.1
+        //
         step:           undefined, // use `frame` instead
 
         // #### `steps` Option ####
         // `Number`, since 1.1
+        //
         steps:          undefined // use `frames` instead
 
       },
@@ -757,6 +775,7 @@ jQuery.reel || (function($, window, document, undefined){
 
       // ### `$.reel.fn` ######
       // returns `Object`, since 1.1
+      //
       fn: {
         // ------------
         // Construction
@@ -797,6 +816,7 @@ jQuery.reel || (function($, window, document, undefined){
             instances= []
 
           // Backward-compatibility of [deprecated] legacy options
+          //
           opt.step && (opt.frame= opt.step);
           opt.steps && (opt.frames= opt.steps);
 
@@ -816,9 +836,9 @@ jQuery.reel || (function($, window, document, undefined){
                 //
                 // This internally called private pseudo-handler:
                 //
-                // - initiates all data store keys
+                // - initiates all data store keys,
                 // - binds to ticker
-                // - triggers `"setup` Event when finished
+                // - and triggers `"setup"` Event when finished.
                 //
                 setup: function(e){
                   if (t.hasClass(klass) && t.parent().hasClass(overlay_klass)) return;
@@ -899,7 +919,8 @@ jQuery.reel || (function($, window, document, undefined){
                 // Reel is completely event-driven meaning there are many events, which can be called
                 // (triggered). By binding event handler to any of the events you can easily hook on to any
                 // event to inject your custom behavior where and when this event was triggered.
-                // _For example to make `#image` element reel and execute some code right after the newly
+                //
+                // _**Example:** Make `#image` element reel and execute some code right after the newly
                 // created instance is initialized and completely loaded:_
                 //
                 //     $("#image")
@@ -943,10 +964,10 @@ jQuery.reel || (function($, window, document, undefined){
                   // ### `setup` Event ######
                   // `Event`, since 1.0
                   //
-                  // `"setup` Event continues with what has been started by the private `on.setup()`
+                  // `"setup"` Event continues with what has been started by the private `on.setup()`
                   // handler.
                   //
-                  // - It prepares all additional on-stage DOM elements,
+                  // - It prepares all additional on-stage DOM elements
                   // - and cursors for the instance stylesheet.
                   //
                   setup: function(e){
@@ -1000,10 +1021,9 @@ jQuery.reel || (function($, window, document, undefined){
                   // preloaded image. It first determines the order of requesting the images and then
                   // asynchronously loads all of them.
                   //
+                  // - It preloads all frames and sprites.
+                  //
                   preload: function(e){
-                  /*
-                  - preloads all frames and sprites
-                  */
                     var
                       space= get(_dimensions_),
                       $overlay= t.parent(),
@@ -1026,7 +1046,7 @@ jQuery.reel || (function($, window, document, undefined){
                         width= space.x * (!is_sprite ? 1 : footage),
                         height= space.y * (!is_sprite ? 1 : frames / footage) * (!opt.directional ? 1 : 2),
                         $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
-                      // Each image, which finishes the load triggers `"preloaded` Event.
+                      // Each image, which finishes the load triggers `"preloaded"` Event.
                       $img.bind('load error abort', function(e){
                         e.type != 'load' && t.trigger(e.type);
                         return !!$(this).parent().length && t.trigger('preloaded') && false;
@@ -1044,7 +1064,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // `Event`, since 1.1
                   //
                   // This event is fired by every preloaded image and adjusts the preloader indicator's
-                  // target position. Once all images are preloaded, `"loaded` Event is triggered.
+                  // target position. Once all images are preloaded, `"loaded"` Event is triggered.
                   //
                   preloaded: function(e){
                     var
@@ -1061,7 +1081,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // ### `loaded` Event ######
                   // `Event`, since 1.1
                   //
-                  // `"loaded` Event is the one announcing when the instance is "locked and loaded".
+                  // `"loaded"` Event is the one announcing when the instance is "locked and loaded".
                   // At this time, all is prepared, preloaded and configured for user interaction
                   // or animation.
                   //
@@ -1074,7 +1094,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // ----------------
                   // Animation Events
                   // ----------------
-
+                  //
                   // ### `opening` Event ######
                   // `Event`, since 1.1
                   //
@@ -1118,7 +1138,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // -----------------------
                   // Playback Control Events
                   // -----------------------
-
+                  //
                   // ### `play` Event ######
                   // `Event`, since 1.1
                   //
@@ -1160,16 +1180,16 @@ jQuery.reel || (function($, window, document, undefined){
                   // ------------------------
                   // Human Interaction Events
                   // ------------------------
-
+                  //
                   // ### `down` Event ######
                   // `Event`, since 1.1
                   //
                   // Marks the very beginning of touch or mouse interaction. It receives `x` and `y`
-                  // coordinates in arguments. It:
+                  // coordinates in arguments.
                   //
-                  // - calibrates the center point (origin),
+                  // - It calibrates the center point (origin),
                   // - considers user active not idle,
-                  // - flags the `<html>` tag with `.reel-panning` class name,
+                  // - flags the `<html>` tag with `.reel-panning` class name
                   // - and binds dragging events for move and lift. These
                   // are usually bound to the pool (document itself) to get a consistent treating regardless
                   // the event target element. However in click-free mode, it binds directly to the instance.
@@ -1188,7 +1208,7 @@ jQuery.reel || (function($, window, document, undefined){
                       panned= 0;
                       $(_html_, pools).addClass(panning_klass);
                       // Browser events differ for touch and mouse, but both of them are treated equally and
-                      // forwarded to the same `"pan"` or `"up` Events.
+                      // forwarded to the same `"pan"` or `"up"` Events.
                       if (touchy){
                         pools
                         .bind(_touchmove_, drag)
@@ -1210,7 +1230,7 @@ jQuery.reel || (function($, window, document, undefined){
                   // or lift the finger of the touch screen. This event handler:
                   //
                   // - calculates the velocity of the drag at that very moment,
-                  // - removes the `.reel-panning` class from `<body>`,
+                  // - removes the `.reel-panning` class from `<body>`
                   // - and unbinds dragging events from the pool.
                   //
                   up: function(e, ev){
@@ -1231,14 +1251,14 @@ jQuery.reel || (function($, window, document, undefined){
                   // [RENAMED] `Event`, since 1.2
                   //
                   // Regardles the actual source of movement (mouse or touch), this event is always triggered
-                  // in response and similar to the `"down` Event it receives `x` and `y` coordinates
+                  // in response and similar to the `"down"` Event it receives `x` and `y` coordinates
                   // in arguments and in addition it is passed a reference to the original browser event.
                   // This handler:
                   //
                   // - syncs with timer to achieve good performance,
                   // - calculates the distance from drag center and applies graph on it to get `fraction`,
                   // - recenters the drag when dragged over limits,
-                  // - detects the direction of the motion,
+                  // - detects the direction of the motion
                   // - and builds up inertial motion bias.
                   //
                   // Historically `pan` was once called `slide` (conflicted with Mootools - [GH-51][1])
@@ -1289,12 +1309,12 @@ jQuery.reel || (function($, window, document, undefined){
                   // Maps Reel to mouse wheel position change event which is provided by a nifty plug-in
                   // written by Brandon Aaron - the [Mousewheel plug-in][1], which you will need to enable
                   // the mousewheel wheel for reeling. You can also choose to use [Wheel Special Event
-                  // plug-in][2] by Three Dub Media instead. Either way `"wheel` Event handler receives
+                  // plug-in][2] by Three Dub Media instead. Either way `"wheel"` Event handler receives
                   // the positive or negative wheeled distance in arguments. This event:
                   //
                   // - calculates wheel input delta and adjusts the `fraction` using the graph,
                   // - recenters the "drag" each and every time,
-                  // - detects motion direction,
+                  // - detects motion direction
                   // - and nullifies the velocity.
                   //
                   // [1]:https://github.com/brandonaaron/jquery-mousewheel
@@ -1328,13 +1348,14 @@ jQuery.reel || (function($, window, document, undefined){
                   // These data change bindings are for internal use only and you don't ever trigger them
                   // per se, you change data and that will trigger respective change event. If the value
                   // being stored is the same as the one already stored, nothing will be triggered.
-                  // _For example to change Reel's `frame` you don't trigger `"frameChange"` and instead
-                  // you do:
+                  //
+                  // _**Example:** Change Reel's current `frame`:_
                   //
                   //     .reel("frame", 15)
                   //
                   // Change events always receive the actual data key value in the third argument.
-                  // _For example this will log each viewed frame number into the developers console.
+                  //
+                  // _**Example:** Log each viewed frame number into the developers console:_
                   //
                   //     .bind("frameChange", function(e, d, frame){
                   //         console.log(frame)
@@ -1400,8 +1421,8 @@ jQuery.reel || (function($, window, document, undefined){
                   // - flags the instance's outter wrapper with `.frame-X` class name
                   //   (where `X` is the actual frame number),
                   // - calculates and eventually sets `fraction` (and `tier` for multi-rows) from given frame,
-                  // - for sequences, it switches the `<img>`'s `src` to the right frame,
-                  // - for sprites it recalculates sprite's 'background position shift and applies it.
+                  // - for sequences, it switches the `<img>`'s `src` to the right frame
+                  // - and for sprites it recalculates sprite's 'background position shift and applies it.
                   //
                   frameChange: function(e, set_frame, frame){
                     if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
@@ -1607,7 +1628,6 @@ jQuery.reel || (function($, window, document, undefined){
                   // supports ordinary click with added detection of left half or right half and resulting
                   // triggering of `stepLeft` and `stepRight` events respectively.
                   //
-
                   // This behavior can be disabled by the [`steppable`](#steppable-Option) option.
                   //
                   'up.steppable': function(e, ev){
@@ -1620,6 +1640,7 @@ jQuery.reel || (function($, window, document, undefined){
 
                   // ### `stepLeft` Event ######
                   // `Event`, since 1.2
+                  //
                   stepLeft: function(e){
                     set(_backwards_, false);
                     set(_fraction_, get(_fraction_) - get(_bit_) * get(_cwish_));
@@ -1627,6 +1648,7 @@ jQuery.reel || (function($, window, document, undefined){
 
                   // ### `stepRight` Event ######
                   // `Event`, since 1.2
+                  //
                   stepRight: function(e){
                     set(_backwards_, true);
                     set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
@@ -1654,7 +1676,7 @@ jQuery.reel || (function($, window, document, undefined){
                 // -------------
                 // Tick Handlers
                 // -------------
-
+                //
                 // As opposed to the events bound to the instance itself, there is a [ticker](#Ticker)
                 // in place, which emits `tick.reel` event on the document level by default every 1/36
                 // of a second and drives all the animations. Three handlers currently bind each instance
@@ -1737,7 +1759,7 @@ jQuery.reel || (function($, window, document, undefined){
               // ------------------------
               // Instance Private Helpers
               // ------------------------
-
+              //
               // - Events propagation stopper / muter
               //
               mute= function(e, result){ return e.stopImmediatePropagation() || result },
@@ -1878,7 +1900,7 @@ jQuery.reel || (function($, window, document, undefined){
             //
             // [1]:http://api.jquery.com/data
             //
-            // _For example let's find out on what frame a Reel instance currently is:_
+            // _**Example:** Find out on what frame a Reel instance currently is:_
             //
             //     .reel('frame') // Returns the frame number
             //
@@ -1903,7 +1925,9 @@ jQuery.reel || (function($, window, document, undefined){
               // ### Write Access ###
               //
               // You can store any value the very same way by passing the value as the second function
-              // argument. _For example let's say you want to jump to frame 12:_
+              // argument.
+              //
+              // _**Example:** Jump to frame 12:_
               //
               //     .reel('frame', 12)
               //
@@ -1927,15 +1951,17 @@ jQuery.reel || (function($, window, document, undefined){
                   // in such a case Reel will trigger a _change event_ to announce the change. The event
                   // type takes form of _`key`_`Change`, where _`key`_ will be the data key/name you've
                   // just assigned.
-                  // _For example, setting `"frame"` to `12` in the above example will trigger
+                  //
+                  // _**Example:** Setting `"frame"` to `12` in the above example will trigger
                   // `"frameChange"`._
                   //
                   // Some of these _change events_ (like `frame` or `fraction`) have a
                   // default handler attached.
                   //
                   // You can easily bind to any of the data key change with standard event
-                  // binding methods. _For example, let's say you want to react on instance
-                  // being manipulated by the user - whether it is __reeling__:_
+                  // binding methods.
+                  //
+                  // _**Example:** React on instance being manipulated or not:_
                   //
                   //     .bind('reelingChange', function(evnt, nothing, reeling){
                   //       if (reeling) console.log('Rock & reel!')
@@ -2267,10 +2293,11 @@ jQuery.reel || (function($, window, document, undefined){
     // ---------------
     // CSS Class Names
     // ---------------
-
+    //
     // These are all the class names assigned by Reel to various DOM elements during initialization of the UI
     // and they all share same base `"reel"`, which in isolation also is the class of the `<img>` node you
     // converted into Reel.
+    //
     klass= 'reel',
 
     // Rest of the class names only extend this base class forming for example `.reel-overlay`, a class
@@ -2285,15 +2312,16 @@ jQuery.reel || (function($, window, document, undefined){
     panning_klass= klass + '-panning',
     loading_klass= klass + '-loading',
 
-    // The instance wrapper is flagged with actual frame number using a this class. _For example Reel
-    // on frame 10 will bear a class name `.frame-10`.
+    // The instance wrapper is flagged with actual frame number using a this class.
+    //
+    // _**Example:** Reel on frame 10 will carry a class name `.frame-10`._
     //
     frame_klass= 'frame-',
 
     // --------------------------------
     // Shortcuts And Minification Cache
     // --------------------------------
-
+    //
     // Several math functions are referenced inside the private scope to yield smaller filesize
     // when the code is minified.
     //
@@ -2336,7 +2364,7 @@ jQuery.reel || (function($, window, document, undefined){
     // ---------------
     // Image Resources
     // ---------------
-
+    //
     // Alhough we do what we can to hide the fact, Reel actually needs a few image resources to support
     // some of its actions. First, we may need a transparent image for the original `<img>` to uncover
     // the sprite applied to its background. This one is embedded in the code as it is very small.
