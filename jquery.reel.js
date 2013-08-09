@@ -1672,6 +1672,20 @@
                     set(_fraction_, get(_fraction_) + get(_bit_) * get(_cwish_));
                   },
 
+                  // ### `stepUp` Event ######
+                  // `Event`, since 1.3
+                  //
+                  stepUp: function(e){
+                    set(_row_, get(_row_) - 1);
+                  },
+
+                  // ### `stepDown` Event ######
+                  // `Event`, since 1.3
+                  //
+                  stepDown: function(e){
+                    set(_row_, get(_row_) + 1);
+                  },
+
                   // ----------------
                   // Follow-up Events
                   // ----------------

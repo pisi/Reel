@@ -13,6 +13,7 @@ Version 1.2.2
 * New alternative Javascript-less initialization with HTML data attributes (GH-193).
 * Revised examples with syntax-highlighted code.
 * New AMD & CommonJS compatibility.
+* New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
 
 
 Version 1.2.1
