@@ -15,11 +15,11 @@ properties, and at the same time demonstrates inline CSS styling.
 Options Employed In This Example
 --------------------------------
 
-- [annotations](http://jquery.vostrel.cz/reel#annotations)
-- [cw](http://jquery.vostrel.cz/reel#cw)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [speed](http://jquery.vostrel.cz/reel#speed)
-- [throwable](http://jquery.vostrel.cz/reel#throwable)
+- [annotations](http://jquery.vostrel.net/reel#annotations)
+- [cw](http://jquery.vostrel.net/reel#cw)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [speed](http://jquery.vostrel.net/reel#speed)
+- [throwable](http://jquery.vostrel.net/reel#throwable)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -29,6 +29,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

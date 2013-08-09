@@ -11,13 +11,13 @@ velocity kick at the start and total duration of 6 seconds.
 Options Employed In This Example
 --------------------------------
 
-- [brake](http://jquery.vostrel.cz/reel#brake)
-- [cw](http://jquery.vostrel.cz/reel#cw)
-- [duration](http://jquery.vostrel.cz/reel#duration)
-- [frame](http://jquery.vostrel.cz/reel#frame)
-- [images](http://jquery.vostrel.cz/reel#images)
-- [speed](http://jquery.vostrel.cz/reel#speed)
-- [velocity](http://jquery.vostrel.cz/reel#velocity)
+- [brake](http://jquery.vostrel.net/reel#brake)
+- [cw](http://jquery.vostrel.net/reel#cw)
+- [duration](http://jquery.vostrel.net/reel#duration)
+- [frame](http://jquery.vostrel.net/reel#frame)
+- [images](http://jquery.vostrel.net/reel#images)
+- [speed](http://jquery.vostrel.net/reel#speed)
+- [velocity](http://jquery.vostrel.net/reel#velocity)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -27,6 +27,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

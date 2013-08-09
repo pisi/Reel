@@ -13,9 +13,9 @@ Note that the very same result could be achieved using
 Options Employed In This Example
 --------------------------------
 
-- [delay](http://jquery.vostrel.cz/reel#delay)
-- [images](http://jquery.vostrel.cz/reel#images)
-- [speed](http://jquery.vostrel.cz/reel#speed)
+- [delay](http://jquery.vostrel.net/reel#delay)
+- [images](http://jquery.vostrel.net/reel#images)
+- [speed](http://jquery.vostrel.net/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -26,6 +26,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT
