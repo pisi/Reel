@@ -2011,7 +2011,7 @@ jQuery.reel || (function($, window, document, undefined){
       // ### `$.reel.cdn` ######
       // `String` (URL path), since 1.1
       //
-      cdn: 'http://code.vostrel.cz/',
+      cdn: 'http://code.vostrel.net/',
 
       // -----------
       // Math Behind
