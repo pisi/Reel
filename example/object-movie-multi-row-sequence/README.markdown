@@ -14,13 +14,13 @@ how to configure the frame-based positioning of an annotation.
 Options Employed In This Example
 --------------------------------
 
-- [annotations](http://jquery.vostrel.cz/reel#annotations)
-- [frame](http://jquery.vostrel.cz/reel#frame)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [row](http://jquery.vostrel.cz/reel#row)
-- [rows](http://jquery.vostrel.cz/reel#rows)
-- [images](http://jquery.vostrel.cz/reel#images)
-- [speed](http://jquery.vostrel.cz/reel#speed)
+- [annotations](http://jquery.vostrel.net/reel#annotations)
+- [frame](http://jquery.vostrel.net/reel#frame)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [row](http://jquery.vostrel.net/reel#row)
+- [rows](http://jquery.vostrel.net/reel#rows)
+- [images](http://jquery.vostrel.net/reel#images)
+- [speed](http://jquery.vostrel.net/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -31,6 +31,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

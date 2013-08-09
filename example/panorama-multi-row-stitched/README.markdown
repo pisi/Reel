@@ -12,14 +12,14 @@ as an image sequence.
 Options Employed In This Example
 --------------------------------
 
-- [frame](http://jquery.vostrel.cz/reel#frame)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [images](http://jquery.vostrel.cz/reel#images)
-- [loops](http://jquery.vostrel.cz/reel#loops)
-- [row](http://jquery.vostrel.cz/reel#row)
-- [rows](http://jquery.vostrel.cz/reel#rows)
-- [spacing](http://jquery.vostrel.cz/reel#spacing)
-- [stitched](http://jquery.vostrel.cz/reel#stitched)
+- [frame](http://jquery.vostrel.net/reel#frame)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [images](http://jquery.vostrel.net/reel#images)
+- [loops](http://jquery.vostrel.net/reel#loops)
+- [row](http://jquery.vostrel.net/reel#row)
+- [rows](http://jquery.vostrel.net/reel#rows)
+- [spacing](http://jquery.vostrel.net/reel#spacing)
+- [stitched](http://jquery.vostrel.net/reel#stitched)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -29,6 +29,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

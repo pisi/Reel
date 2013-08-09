@@ -17,13 +17,13 @@ styling can be applied.
 Options Employed In This Example
 --------------------------------
 
-- [annotations](http://jquery.vostrel.cz/reel#annotations)
-- [cw](http://jquery.vostrel.cz/reel#cw)
-- [footage](http://jquery.vostrel.cz/reel#footage)
-- [images](http://jquery.vostrel.cz/reel#images)
-- [inversed](http://jquery.vostrel.cz/reel#inversed)
-- [orbital](http://jquery.vostrel.cz/reel#orbital)
-- [speed](http://jquery.vostrel.cz/reel#speed)
+- [annotations](http://jquery.vostrel.net/reel#annotations)
+- [cw](http://jquery.vostrel.net/reel#cw)
+- [footage](http://jquery.vostrel.net/reel#footage)
+- [images](http://jquery.vostrel.net/reel#images)
+- [inversed](http://jquery.vostrel.net/reel#inversed)
+- [orbital](http://jquery.vostrel.net/reel#orbital)
+- [speed](http://jquery.vostrel.net/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -33,6 +33,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

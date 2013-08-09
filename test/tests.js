@@ -75,7 +75,7 @@
          */
         var
           //server= 'http://au:4567',
-          server= 'http://jquery.vostrel.cz',
+          server= 'http://jquery.vostrel.net',
           timestamp= +new Date(),
           report= {
             timestamp:  timestamp,

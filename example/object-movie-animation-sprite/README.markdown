@@ -14,11 +14,11 @@ in 2.5 seconds).
 Options Employed In This Example
 --------------------------------
 
-- [frame](http://jquery.vostrel.cz/reel#frame)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [footage](http://jquery.vostrel.cz/reel#footage)
-- [speed](http://jquery.vostrel.cz/reel#speed)
-- [suffix](http://jquery.vostrel.cz/reel#suffix)
+- [frame](http://jquery.vostrel.net/reel#frame)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [footage](http://jquery.vostrel.net/reel#footage)
+- [speed](http://jquery.vostrel.net/reel#speed)
+- [suffix](http://jquery.vostrel.net/reel#suffix)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -29,6 +29,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

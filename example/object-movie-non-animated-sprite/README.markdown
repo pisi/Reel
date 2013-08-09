@@ -9,9 +9,9 @@ animation. It is a 35 frames sprite.
 Options Employed In This Example
 --------------------------------
 
-- [entry](http://jquery.vostrel.cz/reel#entry)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [opening](http://jquery.vostrel.cz/reel#opening)
+- [entry](http://jquery.vostrel.net/reel#entry)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [opening](http://jquery.vostrel.net/reel#opening)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -21,6 +21,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

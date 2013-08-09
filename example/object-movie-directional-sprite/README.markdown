@@ -13,12 +13,12 @@ resumes a ongoing animation of one revolution per second.
 Options Employed In This Example
 --------------------------------
 
-- [delay](http://jquery.vostrel.cz/reel#delay)
-- [directional](http://jquery.vostrel.cz/reel#directional)
-- [frame](http://jquery.vostrel.cz/reel#frame)
-- [indicator](http://jquery.vostrel.cz/reel#indicator)
-- [opening](http://jquery.vostrel.cz/reel#opening)
-- [speed](http://jquery.vostrel.cz/reel#speed)
+- [delay](http://jquery.vostrel.net/reel#delay)
+- [directional](http://jquery.vostrel.net/reel#directional)
+- [frame](http://jquery.vostrel.net/reel#frame)
+- [indicator](http://jquery.vostrel.net/reel#indicator)
+- [opening](http://jquery.vostrel.net/reel#opening)
+- [speed](http://jquery.vostrel.net/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -28,6 +28,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

@@ -9,8 +9,8 @@
     "url": "http://petr.vostrel.cz"
   },
   "licenses": [
-    { "type": "MIT", "url": "http://code.vostrel.cz/MIT-LICENSE.txt" },
-    { "type": "GPL", "url": "http://code.vostrel.cz/GPL-LICENSE.txt" }
+    { "type": "MIT", "url": "http://code.vostrel.net/MIT-LICENSE.txt" },
+    { "type": "GPL", "url": "http://code.vostrel.net/GPL-LICENSE.txt" }
   ],
   "contributors": [
     { "name": "Katrin Ackermann" },
@@ -23,7 +23,7 @@
     "panorama",
     "projection"
   ],
-  "homepage": "http://jquery.vostrel.cz/reel",
+  "homepage": "http://jquery.vostrel.net/reel",
   "dependencies": {
     "jquery": ">=1.5",
     "mousewheel": ">=3.0.5"

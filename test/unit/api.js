@@ -148,7 +148,7 @@
     expect(2);
 
     equal( typeof $.reel.cdn, 'string', 'exposed as `$.reel.cdn`');
-    equal( $.reel.cdn, 'http://code.vostrel.cz/', 'URL');
+    equal( $.reel.cdn, 'http://code.vostrel.net/', 'URL');
   });
 
   test( '`$.reel.scan` for creation of Reels from data-configured `<img>` tag directly', function(){
@@ -210,7 +210,7 @@
     expect(2);
 
     ok( $.reel.cdn.match(/^https?\:\/\/...+\...+\//), 'proper HTTP(S) URL' );
-    equal( $.reel.cdn, 'http://code.vostrel.cz/', 'default value' );
+    equal( $.reel.cdn, 'http://code.vostrel.net/', 'default value' );
     // Bunch of other [[Rendering]] tests also challenge the integrity of `$.reel.cdn` value
   });
 
