@@ -13,13 +13,13 @@ It also showcases positioning of several annotations.
 Options Employed In This Example
 --------------------------------
 
-- [annotations](http://jquery.vostrel.cz/reel#annotations)
-- [loops](http://jquery.vostrel.cz/reel#loops)
-- [speed](http://jquery.vostrel.cz/reel#speed)
-- [stop](http://jquery.vostrel.cz/reel#step)
-- [steps](http://jquery.vostrel.cz/reel#steps)
-- [stitched](http://jquery.vostrel.cz/reel#stitched)
-- [timeout](http://jquery.vostrel.cz/reel#timeout)
+- [annotations](http://jquery.vostrel.net/reel#annotations)
+- [loops](http://jquery.vostrel.net/reel#loops)
+- [speed](http://jquery.vostrel.net/reel#speed)
+- [stop](http://jquery.vostrel.net/reel#step)
+- [steps](http://jquery.vostrel.net/reel#steps)
+- [stitched](http://jquery.vostrel.net/reel#stitched)
+- [timeout](http://jquery.vostrel.net/reel#timeout)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -30,6 +30,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

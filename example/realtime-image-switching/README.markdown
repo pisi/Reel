@@ -12,12 +12,12 @@ to improve drag responsiveness.
 Options Employed In This Example
 --------------------------------
 
-- [frame](http://jquery.vostrel.cz/reel#frame)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [image](http://jquery.vostrel.cz/reel#image)
-- [loops](http://jquery.vostrel.cz/reel#loops)
-- [revolution](http://jquery.vostrel.cz/reel#revolution)
-- [speed](http://jquery.vostrel.cz/reel#speed)
+- [frame](http://jquery.vostrel.net/reel#frame)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [image](http://jquery.vostrel.net/reel#image)
+- [loops](http://jquery.vostrel.net/reel#loops)
+- [revolution](http://jquery.vostrel.net/reel#revolution)
+- [speed](http://jquery.vostrel.net/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -28,6 +28,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

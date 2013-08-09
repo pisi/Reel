@@ -12,12 +12,12 @@ clockwise and very slowly with one full rotation per 20 seconds.
 Options Employed In This Example
 --------------------------------
 
-- [clickfree](http://jquery.vostrel.cz/reel#clickfree)
-- [frame](http://jquery.vostrel.cz/reel#frame)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [speed](http://jquery.vostrel.cz/reel#speed)
-- [stitched](http://jquery.vostrel.cz/reel#stitched)
-- [wheelable](http://jquery.vostrel.cz/reel#wheelable)
+- [clickfree](http://jquery.vostrel.net/reel#clickfree)
+- [frame](http://jquery.vostrel.net/reel#frame)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [speed](http://jquery.vostrel.net/reel#speed)
+- [stitched](http://jquery.vostrel.net/reel#stitched)
+- [wheelable](http://jquery.vostrel.net/reel#wheelable)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -27,6 +27,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

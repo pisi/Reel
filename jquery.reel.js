@@ -23,7 +23,7 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  *
  * jQuery Reel
- * http://jquery.vostrel.cz/reel
+ * http://jquery.vostrel.net/reel
  * Version: 1.2.2
  * Updated: 2013-05-22
  *
@@ -33,10 +33,10 @@
 /*
  * CDN
  * ---
- * - http://code.vostrel.cz/jquery.reel-bundle.js (recommended)
- * - http://code.vostrel.cz/jquery.reel.js
- * - http://code.vostrel.cz/jquery.reel-debug.js
- * - or http://code.vostrel.cz/jquery.reel-edge.js if you feel like it ;)
+ * - http://code.vostrel.net/jquery.reel-bundle.js (recommended)
+ * - http://code.vostrel.net/jquery.reel.js
+ * - http://code.vostrel.net/jquery.reel-debug.js
+ * - or http://code.vostrel.net/jquery.reel-edge.js if you feel like it ;)
  *
  * Optional Plugins
  * ----------------

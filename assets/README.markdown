@@ -27,6 +27,6 @@ Reel requests one, two or three images from the CDN to complete its UI:
 &copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

@@ -9,7 +9,7 @@ or new bugs discovered. The test suite grows independent on regular version rele
 Usage?
 ------
 
-Launch `index.html` in your browser or visit [http://test.vostrel.cz/jquery.reel/test][test]
+Launch `index.html` in your browser or visit [http://test.vostrel.net/jquery.reel/test][test]
 
 
 Positive Results
@@ -170,7 +170,7 @@ for collection and analysis. The report contains this:
         jquery:   "1.7.1",
         reel:     "1.2"
       },
-      host:       "jquery.vostrel.cz", // This would be your domain name
+      host:       "jquery.vostrel.net", // This would be your domain name
       results:    "Tests completed in 44106 milliseconds. 655 tests of 655 passed, 0 failed.",
       agent:      "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7"
     }
@@ -180,6 +180,6 @@ for collection and analysis. The report contains this:
 
 
 
-[test]:http://test.vostrel.cz/jquery.reel/test
+[test]:http://test.vostrel.net/jquery.reel/test
 [FAQ]:http://wiki.github.com/pisi/Reel/faq
 [pisi]:mailto:petr@vostrel.cz

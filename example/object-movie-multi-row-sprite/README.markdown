@@ -10,11 +10,11 @@ revolutions per second.
 Options Employed In This Example
 --------------------------------
 
-- [footage](http://jquery.vostrel.cz/reel#footage)
-- [frames](http://jquery.vostrel.cz/reel#frames)
-- [row](http://jquery.vostrel.cz/reel#row)
-- [rows](http://jquery.vostrel.cz/reel#rows)
-- [speed](http://jquery.vostrel.cz/reel#speed)
+- [footage](http://jquery.vostrel.net/reel#footage)
+- [frames](http://jquery.vostrel.net/reel#frames)
+- [row](http://jquery.vostrel.net/reel#row)
+- [rows](http://jquery.vostrel.net/reel#rows)
+- [speed](http://jquery.vostrel.net/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -24,6 +24,6 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.cz/reel
+[reel]:http://jquery.vostrel.net/reel
 [GPL]:http://opensource.org/licenses/GPL-2.0
 [MIT]:http://opensource.org/licenses/MIT

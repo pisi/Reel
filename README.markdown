@@ -68,7 +68,7 @@ Download
 Link the [CDN][cdn]
 -------------------
 
-* **[http://code.vostrel.cz/jquery.reel-1.2-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
+* **[http://code.vostrel.net/jquery.reel-1.2-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
 
 
 Documentation
@@ -80,11 +80,11 @@ For options head to plugin [options on-line reference][options] or view the [ent
 
 
 
-[demo]: http://jquery.vostrel.cz/reel#demo
-[docs]: http://test.vostrel.cz/jquery.reel/docs/jquery.reel.html
+[demo]: http://jquery.vostrel.net/reel#demo
+[docs]: http://test.vostrel.net/jquery.reel/docs/jquery.reel.html
 [docs-copy]: http://github.com/pisi/Reel/tree/master/docs
-[examples]: http://test.vostrel.cz/jquery.reel/example
-[options]: http://jquery.vostrel.cz/reel#options
+[examples]: http://test.vostrel.net/jquery.reel/example
+[options]: http://jquery.vostrel.net/reel#options
 [changelog]: http://github.com/pisi/Reel/blob/master/CHANGELOG.markdown
 [license-mit]: http://github.com/pisi/Reel/blob/master/MIT-LICENSE.txt
 [license-gpl]: http://github.com/pisi/Reel/blob/master/GPL-LICENSE.txt
@@ -96,4 +96,4 @@ For options head to plugin [options on-line reference][options] or view the [ent
 [zip]: http://github.com/pisi/Reel/zipball/v1.2.2
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [cdn]: http://wiki.github.com/pisi/Reel/cdn
-[cdn-bundle]: http://code.vostrel.cz/jquery.reel-1.2-bundle.js
+[cdn-bundle]: http://code.vostrel.net/jquery.reel-1.2-bundle.js
