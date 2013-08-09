@@ -85,18 +85,20 @@ jQuery.reel || (function($, window, document, undefined){
       //
       //     $.reel.def.frame = 5
       //
+      // ---
 
       // ### `$.reel.def` ######
       // `Object`, since 1.1
       //
       def: {
-        // ---
+        //
         // ### Basic Definition ######
         //
         // Reel is just fine with you not setting any options, however if you don't have
         // 36 frames or beginning at frame 1, you will want to set total number
         // of `frames` and pick a different starting `frame`.
         //
+        // ---
 
         // #### `frame` Option ####
         // `Number` (frames), since 1.0
@@ -113,6 +115,7 @@ jQuery.reel || (function($, window, document, undefined){
         // Another common characteristics of any Reel is whether it `loops` and covers
         // entire 360° or not.
         //
+        // ---
 
         // #### `loops` Option ####
         // `Boolean`, since 1.0
@@ -120,7 +123,6 @@ jQuery.reel || (function($, window, document, undefined){
         loops:               true,
 
 
-        // ---
         // ### Interaction ######
         //
         // Using boolean switches many user interaction aspects can be turned on and off.
@@ -134,6 +136,7 @@ jQuery.reel || (function($, window, document, undefined){
         // which will cause Reel to bind to mouse enter/leave events instead of mouse down/up,
         // thus allowing a click-free dragging.
         //
+        // ---
 
         // #### `clickfree` Option ####
         // `Boolean`, since 1.1
@@ -166,13 +169,13 @@ jQuery.reel || (function($, window, document, undefined){
         wheelable:           true,
 
 
-        // ---
         // ### Order of Images ######
         //
         // Reel presumes counter-clockwise order of the pictures taken. If the neerer facing
         // side doesn't follow your cursor/finger, you did clockwise. Use the `cw` option to
         // correct this.
         //
+        // ---
 
         // #### `cw` Option ####
         // `Boolean`, since 1.1
@@ -180,7 +183,6 @@ jQuery.reel || (function($, window, document, undefined){
         cw:                 false,
 
 
-        // ---
         // ### Sensitivity ######
         //
         // In Reel sensitivity is set through the `revolution` parameter, which represents horizontal
@@ -191,6 +193,7 @@ jQuery.reel || (function($, window, document, undefined){
         // Optionally `revolution` can be set as an Object with `x` member for horizontal revolution
         // and/or `y` member for vertical revolution in multi-row movies.
         //
+        // ---
 
         // #### `revolution` Option ####
         // `Number` (pixels) or `Object`, since 1.1, `Object` support since 1.2
@@ -198,13 +201,13 @@ jQuery.reel || (function($, window, document, undefined){
         revolution:     undefined,
 
 
-        // ---
         // ### Rectilinear Panorama ######
         //
         // The easiest of all is the stitched panorama mode. For this mode, instead of the sprite,
         // a single seamlessly stitched stretched image is used and the view scrolls the image.
         // This mode is triggered by setting a pixel width of the `stitched` image.
         //
+        // ---
 
         // #### `stitched` Option ####
         // `Number` (pixels), since 1.0
@@ -212,7 +215,6 @@ jQuery.reel || (function($, window, document, undefined){
         stitched:               0,
 
 
-        // ---
         // ### Directional Mode ######
         //
         // As you may have noticed on Reel's homepage or in [this example][logo]
@@ -238,6 +240,7 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // Frame `016` represents the `B01` so it actually is first frame of the other direction.
         //
+        // ---
 
         // #### `directional` Option ####
         // `Boolean`, since 1.1
@@ -245,7 +248,6 @@ jQuery.reel || (function($, window, document, undefined){
         directional:        false,
 
 
-        // ---
         // ### Multi-Row Mode ######
         //
         // As `example/object-movie-multirow-sequence` very nicely demonstrates, in multi-row arrangement you
@@ -269,6 +271,7 @@ jQuery.reel || (function($, window, document, undefined){
         // This way you stack up any number of __`rows`__ you wish and set the initial `row` to start with.
         // Again, not limited to sprites, sequences also apply.
         //
+        // ---
 
         // #### `row` Option ####
         // `Number` (rows), since 1.1
@@ -281,7 +284,6 @@ jQuery.reel || (function($, window, document, undefined){
         rows:                   0,
 
 
-        // ---
         // ### Dual-Orbit Mode ######
         //
         // Special form of multi-axis movie is the dual-axis mode. In this mode the object offers two plain
@@ -302,6 +304,7 @@ jQuery.reel || (function($, window, document, undefined){
         //     B04 B05 B06 B07 B08 B09
         //     B10 B11 B12 B13 B14 B15
         //
+        // ---
 
         // #### `orbital` Option ####
         // `Number` (frames), since 1.1
@@ -319,7 +322,6 @@ jQuery.reel || (function($, window, document, undefined){
         inversed:           false,
 
 
-        // ---
         // ### Sprite Layout ######
         //
         // For both object movies and panoramas Reel presumes you use a combined _Sprite_ to hold all your
@@ -361,6 +363,7 @@ jQuery.reel || (function($, window, document, undefined){
         // by adding a `suffix` to it. By default this results in `"object-reel.jpg"` for `"object.jpg"`.
         // You can also take full control over the sprite `image` URL that will be used.
         //
+        // ---
 
         // #### `footage` Option ####
         // `Number` (frames), since 1.0
@@ -388,7 +391,6 @@ jQuery.reel || (function($, window, document, undefined){
         image:          undefined,
 
 
-        // ---
         // ### Sequence ######
         //
         // Collection of individual frame images is called _Sequence_ and it this way one HTTP request per
@@ -402,6 +404,7 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // All images are retrieved from a specified `path`.
         //
+        // ---
 
         // #### `images` Option ####
         // [IMPROVED] `String` or `Array`, since 1.1
@@ -414,7 +417,6 @@ jQuery.reel || (function($, window, document, undefined){
         path:                  '',
 
 
-        // ---
         // ### Images Preload Order ######
         //
         // Given sequence images can be additionally reordered to achieve a perceived faster preloading.
@@ -427,6 +429,7 @@ jQuery.reel || (function($, window, document, undefined){
         //   behavior.
         // - `"linear"` - linear order of preloading
         //
+        // ---
 
         // #### `preload` Option ####
         // [NEW] `String`, since 1.2
@@ -434,7 +437,6 @@ jQuery.reel || (function($, window, document, undefined){
         preload:       'fidelity',
 
 
-        // ---
         // ### Animation ######
         //
         // Your object movie or a panorama can perform an autonomous sustained motion in one direction.
@@ -455,6 +457,7 @@ jQuery.reel || (function($, window, document, undefined){
         // for a while and then reversing the direction of the animation it bounces back towards the other
         // end. The time spent on the edge can be customized with `rebound`.
         //
+        // ---
 
         // #### `speed` Option ####
         // `Number` (Hz), since 1.1
@@ -482,7 +485,6 @@ jQuery.reel || (function($, window, document, undefined){
         rebound:              0.5,
 
 
-        // ---
         // ### Opening Animation ######
         //
         // Chance is you want the object to spin a little to attract attention and then stop and wait
@@ -495,6 +497,7 @@ jQuery.reel || (function($, window, document, undefined){
         //     |--------›|-------›|-----------›
         //       Opening   Delay    Animation
         //
+        // ---
 
         // #### `entry` Option ####
         // `Number` (Hz), since 1.1
@@ -507,7 +510,6 @@ jQuery.reel || (function($, window, document, undefined){
         opening:                0,
 
 
-        // ---
         // ### Momentum ######
         //
         // Often also called inertial motion is a result of measuring a velocity of dragging. This velocity
@@ -517,6 +519,7 @@ jQuery.reel || (function($, window, document, undefined){
         // One can utilize this momentum for a different kind of an opening animation. By setting initial
         // `velocity`, the instance gets artificial momentum and spins to slow down to stop.
         //
+        // ---
 
         // #### `brake` Option ####
         // `Number`, since 1.1, where it also has a different default `0.5`
@@ -529,7 +532,6 @@ jQuery.reel || (function($, window, document, undefined){
         velocity:               0,
 
 
-        // ---
         // ### Ticker ######
         //
         // For purposes of animation, Reel starts and maintains a timer device which emits ticks timing all
@@ -541,6 +543,7 @@ jQuery.reel || (function($, window, document, undefined){
         // Please note, that ticker is synchronized with a _leader_, the oldest living instance on page,
         // and adjusts to his tempo.
         //
+        // ---
 
         // #### `tempo` Option ####
         // `Number` (Hz, ticks per second), since 1.1
@@ -555,6 +558,7 @@ jQuery.reel || (function($, window, document, undefined){
         // The ticker is under-clocked for them by a `laziness` factor, which is used to divide the `tempo`.
         // Default `laziness` of `6` will effectively use 6 Hz instead (6 = 36 / 6) on lazy devices.
         //
+        // ---
 
         // #### `laziness` Option ####
         // `Number`, since 1.1
@@ -562,7 +566,6 @@ jQuery.reel || (function($, window, document, undefined){
         laziness:               6,
 
 
-        // ---
         // ### Customization ######
         //
         // You can customize Reel on both functional and visual front. The most visible thing you can
@@ -571,6 +574,7 @@ jQuery.reel || (function($, window, document, undefined){
         // when you mouse over the image area. Last but not least you can also add custom class name `klass`
         // to the instance.
         //
+        // ---
 
         // #### `cursor` Option ####
         // [NEW] `String`, since 1.2
@@ -598,6 +602,7 @@ jQuery.reel || (function($, window, document, undefined){
         // jQuery `.attr()` does. In case you want to delegate full interaction control over the instance
         // to some other DOM element(s) on page, you can with `area`.
         //
+        // ---
 
         // #### `area` Option ####
         // `jQuery`, since 1.1
@@ -608,7 +613,6 @@ jQuery.reel || (function($, window, document, undefined){
         attr:                  {},
 
 
-        // ---
         // ### Annotations ######
         //
         // To further visually describe your scene you can place all kinds of in-picture HTML annotations
@@ -616,13 +620,13 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // [1]:https://github.com/pisi/Reel/wiki/Annotations
         //
+        // ---
 
         // #### `annotations` Option ####
         // [NEW] `Object`, since 1.2
         annotations:    undefined,
 
 
-        // ---
         // ### Mathematics ######
         //
         // When reeling, instance conforms to a graph function, which defines whether it will loop
@@ -635,31 +639,32 @@ jQuery.reel || (function($, window, document, undefined){
         //       return fraction  // 0.0 - 1.0
         //     }
         //
+        // ---
 
         // #### `graph` Option ####
         // `Function`, since 1.1
         graph:          undefined,
 
 
-        // ---
         // ### Monitor ######
         //
         // Specify a string data key and you will see its real-time value dumped in the upper-left corner
         // of the viewport. Its visual can be customized by CSS using `.jquery-reel-monitor` selector.
         //
+        // ---
 
         // #### `monitor` Option ####
         // `String` (data key), since 1.1
         monitor:        undefined,
 
 
-        // ---
         // ### Deprecated Options ######
         //
         // Two options are currently deprecated in version 1.2. Learn more about [Deprecations][1]
         //
         // [1]:https://github.com/pisi/Reel/wiki/Deprecations
         //
+        // ---
 
         // #### `step` Option ####
         // `Number`, since 1.1
@@ -703,8 +708,8 @@ jQuery.reel || (function($, window, document, undefined){
       //
       // Most important is the `data-for` attribute, which references target Reel instance by `id`.
       //
-
       // ---
+
       //
       // Responsible for discovery and subsequent conversion of data-configured Reel images is
       // `$.reel.scan()` method, which is being called automagically when the DOM becomes ready.
@@ -713,6 +718,7 @@ jQuery.reel || (function($, window, document, undefined){
       // It however comes in handy to re-scan when you happen to inject a data-configured Reel `<img>`
       // into already ready DOM.
       //
+      // ---
 
       // ### `$.reel.scan()` Method ######
       // returns `jQuery`, since 1.2.2
@@ -747,6 +753,7 @@ jQuery.reel || (function($, window, document, undefined){
       // being a typical one-method plug-in with its `.reel()` function, for convenience it also offers
       // its dipolar twin `.unreel()`.
       //
+      // ---
 
       // ### `$.reel.fn` ######
       // returns `Object`, since 1.1
@@ -758,6 +765,7 @@ jQuery.reel || (function($, window, document, undefined){
         // `.reel()` method is the core of Reel and similar to some jQuery functions, this one is three-fold.
         // It either performs the following builder's duty or the [data duty](#Data).
         //
+        // ---
 
         // ### `.reel()` Method ######
         // returns `jQuery`, since 1.0
@@ -1332,6 +1340,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //         console.log(frame)
                   //     })
                   //
+                  // ---
 
                   // ### `fractionChange` Event ######
                   // `Event`, since 1.0
@@ -1878,6 +1887,7 @@ jQuery.reel || (function($, window, document, undefined){
             // For real-time data watch use [`monitor`](#Monitor) option instead of manually hooking into
             // the data.
             //
+            // ---
 
             // #### `.reel( name )` ######
             // can return anything, since 1.2
@@ -1890,7 +1900,6 @@ jQuery.reel || (function($, window, document, undefined){
                 return value;
               }
 
-              // ---
               // ### Write Access ###
               //
               // You can store any value the very same way by passing the value as the second function
@@ -1903,6 +1912,7 @@ jQuery.reel || (function($, window, document, undefined){
               // `stopped`, `velocity` and `vertical`. Use the rest of the keys for reading only, you can
               // mess up easily changing them.
               //
+              // ---
 
               // #### `.reel( name, value )` ######
               // returns `jQuery`, since 1.2
@@ -1911,7 +1921,6 @@ jQuery.reel || (function($, window, document, undefined){
                 if (value !== undefined){
                   reel.normal[name] && (value= reel.normal[name](value, data));
 
-                  // ---
                   // ### Changes ######
                   //
                   // Any value that does not equal (`===`) the old value is considered _new value_ and
@@ -1933,6 +1942,7 @@ jQuery.reel || (function($, window, document, undefined){
                   //       else console.log('Not reeling...')
                   //     })
                   //
+                  // ---
 
                   // The handler function will be executed every time the value changes and
                   // it will be supplied with three arguments. First one is the event object
@@ -1956,6 +1966,7 @@ jQuery.reel || (function($, window, document, undefined){
         //
         // The evil-twin of `.reel()`. Tears down and wipes off entire instance.
         //
+        // ---
 
         // ### `.unreel()` Method ######
         // returns `jQuery`, since 1.2
@@ -1972,6 +1983,7 @@ jQuery.reel || (function($, window, document, undefined){
       // Few regular expressions is used here and there mostly for options validation and verification
       // levels of user agent's capabilities.
       //
+      // ---
 
       // ### `$.reel.re` ######
       // `RegExp`, since 1.1
@@ -2007,6 +2019,7 @@ jQuery.reel || (function($, window, document, undefined){
       //
       // [1]:https://github.com/pisi/Reel/wiki/CDN
       //
+      // ---
 
       // ### `$.reel.cdn` ######
       // `String` (URL path), since 1.1
@@ -2019,6 +2032,8 @@ jQuery.reel || (function($, window, document, undefined){
       //
       // Surprisingly there's very little math behind Reel, just two equations (graph functions). These two
       // functions receive the same set of options.
+      //
+      // ---
 
       // ### `$.reel.math` ######
       // `Object`, since 1.1
@@ -2068,6 +2083,8 @@ jQuery.reel || (function($, window, document, undefined){
       // sequence and hand it over to one of `$.reel.preload` functions, along with reference to options
       // and the RO data intearface, and it expects the function to reorder the incoming Array and return
       // it back.
+      //
+      // ---
 
       // ### `$.reel.preload` ######
       // `Object`, since 1.2
@@ -2116,8 +2133,6 @@ jQuery.reel || (function($, window, document, undefined){
           }
         },
 
-        // ~~~
-        //
         // You can opt for a `linear` loading order too, but that has a drawback of leaving large gap
         // of unloaded frames.
         //
@@ -2136,6 +2151,7 @@ jQuery.reel || (function($, window, document, undefined){
       // and is given the raw value in arguments, along with reference to the instances data object,
       // and it has to return the normalized value.
       //
+      // ---
 
       // ### `$.reel.normal` ######
       // `Object`, since 1.2
@@ -2176,6 +2192,7 @@ jQuery.reel || (function($, window, document, undefined){
       // When configured with a String value for [`images`](#images-Option) like `image##.jpg`, it first has
       // to be converted into an actual Array by engaging the counter placeholder.
       //
+      // ---
 
       // ### `$.reel.sequence()` ######
       // `Function`, since 1.2
@@ -2206,6 +2223,8 @@ jQuery.reel || (function($, window, document, undefined){
       // --------------
       //
       // `$.reel.instances` holds an inventory of all running instances in the DOM document.
+      //
+      // ---
 
       // ### `$.reel.instances` ######
       // `jQuery`, since 1.1
@@ -2215,15 +2234,17 @@ jQuery.reel || (function($, window, document, undefined){
       // For ticker-synchronization-related purposes Reel maintains a reference to the leaders data object
       // all the time.
       //
+      // ---
 
       // ### `$.reel.leader` ######
       // `Object` (DOM data), since 1.1
       //
       leader: leader,
 
-      //
       // `$.reel.cost` holds document-wide costs in miliseconds of running all Reel instances. It is used
       // to adjust actual timeout of the ticker.
+      //
+      // ---
 
       // ### `$.reel.cost` ######
       // `Number`, since 1.1
