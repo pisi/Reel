@@ -277,4 +277,70 @@
     });
   });
 
+  $.each([
+    { before: 1, after: 1 },
+    { before: 2, after: 1 },
+    { before: 3, after: 2 }
+  ],
+  function(name, probe){
+    asyncTest( 'Stepping event `"stepUp"` acts as if mouse panned upwards decreased the row by one (test at '+probe.before+')', function(){
+      expect(2);
+      var
+        $reel= $('#image').reel({
+          rows: 3,
+          row: probe.before
+        })
+
+      equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
+
+      $reel
+        .one('rowChange.test', function(){
+          equal( $reel.reel('row'), probe.after, 'Target row');
+          start();
+        })
+        .trigger('stepUp')
+
+      if (probe.after == probe.before){
+        setTimeout(function(){
+          equal( $reel.reel('row'), probe.after, 'Target row');
+          start();
+        }, 100);
+      }
+
+    });
+  });
+
+  $.each([
+    { before: 1, after: 2 },
+    { before: 2, after: 3 },
+    { before: 3, after: 3 }
+  ],
+  function(name, probe){
+    asyncTest( 'Stepping event `"stepDown"` acts as if mouse panned downwards increased the row by one (test at '+probe.before+')', function(){
+      expect(2);
+      var
+        $reel= $('#image').reel({
+          rows: 3,
+          row: probe.before
+        })
+
+      equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
+
+      $reel
+        .one('rowChange.test', function(){
+          equal( $reel.reel('row'), probe.after, 'Target row');
+          start();
+        })
+        .trigger('stepDown')
+
+      if (probe.after == probe.before){
+        setTimeout(function(){
+          equal( $reel.reel('row'), probe.after, 'Target row');
+          start();
+        }, 100);
+      }
+
+    });
+  });
+
 })(jQuery);
