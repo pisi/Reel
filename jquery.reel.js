@@ -51,6 +51,7 @@
   // -----------------------
   // [NEW] AMD Compatibility
   // -----------------------
+  //
   // Reel registers as an asynchronous module with dependency on jQuery for [AMD][1] compatible script loaders.
   // Besides that it also complies with [CommonJS][2] module definition for Node and such.
   // Of course, no fancy script loader is necessary and good old plain script tag still works too.
