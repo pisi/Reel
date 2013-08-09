@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.net/reel
  * Version: 1.2.2
- * Updated: 2013-05-22
+ * Updated: 2013-08-08
  *
  * Requires jQuery 1.5 or higher
  */
@@ -46,7 +46,24 @@
  * [B] Marked plugins are contained (with permissions) in the "bundle" version from the CDN
  */
 
-jQuery.reel || (function($, window, document, undefined){
+(function(factory){
+
+  // -----------------------
+  // [NEW] AMD Compatibility
+  // -----------------------
+  // Reel registers as an asynchronous module with dependency on jQuery for [AMD][1] compatible script loaders.
+  // Besides that it also complies with [CommonJS][2] module definition for Node and such.
+  // Of course, no fancy script loader is necessary and good old plain script tag still works too.
+  //
+  // [1]:http://en.wikipedia.org/wiki/Asynchronous_module_definition
+  // [2]:http://en.wikipedia.org/wiki/CommonJS
+  //
+  var
+    amd= typeof define == 'function' && define.amd && (define(['jquery'], factory) || true),
+    commonjs= !amd && typeof module == 'object' && typeof module.exports == 'object' && (module.exports= factory),
+    plain= !amd && !commonjs && factory()
+
+})(function(){ return jQuery.reel || (function($, window, document, undefined){
 
   // One vital requirement is the correct jQuery. Reel requires at least version 1.5
   // and a make sure check is made at the very beginning.
@@ -2407,6 +2424,8 @@ jQuery.reel || (function($, window, document, undefined){
   // Do the initial global scan for data-configured `<img`> tags to become enhanced
   $(reel.scan);
 
+  return reel;
+
   // Very useful helpers
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
@@ -2428,3 +2447,5 @@ jQuery.reel || (function($, window, document, undefined){
   function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);
+
+});
