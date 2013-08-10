@@ -11,7 +11,7 @@ Version 1.2.2
 * Click on annotations threshold improved (GH-186).
 * Fixed bug in vertical `spacing` calculation on iOS (GH-188, GH-189).
 * New alternative Javascript-less initialization with HTML data attributes (GH-193).
-* Revised examples with syntax-highlighted code.
+* Revised examples with syntax-highlighted code and improved index.
 * New AMD & CommonJS compatibility.
 * New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
 
