@@ -2357,7 +2357,7 @@
 
     // The instance wrapper is flagged with actual frame number using a this class.
     //
-    // _**Example:** Reel on frame 10 will carry a class name `.frame-10`._
+    // _**Example:** Reel on frame 10 will carry a class name `frame-10`._
     //
     frame_klass= 'frame-',
 
@@ -2427,6 +2427,7 @@
     //
     // We then only identify the user's browser's capabilities and route around a MSIE's left button
     // identification quirk (IE 8- reports left as right).
+    //
     touchy= reel.touchy= (reel.re.touchy_agent).test(client),
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
@@ -2444,15 +2445,14 @@
       cleanData($(elements).each(function(){ $(this).triggerHandler('clean'); }));
     }
 
-  // Expose plugin functions as jQuery methods
-  $.extend($.fn, reel.fn);
-
-  // Do the initial global scan for data-configured `<img`> tags to become enhanced
-  $(reel.scan);
-
+  // Expose plugin functions as jQuery methods, do the initial global scan for data-configured
+  // `<img`> tags to become enhanced and export the entire namespace module.
+  //
+  $.extend($.fn, reel.fn) && $(reel.scan);
   return reel;
 
-  // Very useful helpers
+  // Bunch of very useful helpers.
+  //
   function add_instance($instance){ return (reel.instances.push($instance[0])) && $instance }
   function remove_instance($instance){ return (reel.instances= reel.instances.not(hash($instance.attr(_id_)))) && $instance }
   function leader(key){ return reel.instances.first().data(key) }
