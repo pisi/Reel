@@ -1,12 +1,12 @@
-jQuery Reel Realtime Image Switching Example
-============================================
+jQuery Reel Non-Looping Sprite Object Movie Example
+===================================================
 
 Utilizing the `.reel()` method to change running Reel's data allows you to
 seamlessly switch sprite images without affecting the state of animation or
 rotational position of a running Reel. Feature ideal for various product
 configurator setups. This example switches is made of a footage 5 sprite
 and since this non-looping image depicts mere 80°, custom revolution is used
-to improve drag responsiveness.
+here to improve drag response.
 
 
 Options Employed In This Example
