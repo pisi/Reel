@@ -1,12 +1,12 @@
-jQuery Reel Realtime Sequence Switching Example
-===============================================
+jQuery Reel Non-Looping Sequence Object Movie Example
+=====================================================
 
 Utilizing the `.reel()` method to change running Reel's data allows you to
 seamlessly switch image seuquences without affecting the state of animation
 or rotational position of a running Reel. Feature ideal for various product
 configurator setups. This example switches is made of 6 frames long sequence
 (2 sets in fact) and since this non-looping image depicts mere 80°, custom
-revolution is used to improve drag responsiveness.
+revolution is used here to improve drag response.
 
 
 Options Employed In This Example
