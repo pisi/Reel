@@ -510,7 +510,7 @@
         timeout:                2,
 
         // #### `duration` Option ####
-        // `Number` (seconds), IN DEVELOPMENT
+        // `Number` (seconds), EXPERIMENTAL
         //
         duration:       undefined,
 
