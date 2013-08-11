@@ -151,6 +151,9 @@
   } );
 
   reel_test_module_routine= {
+    setup: function(){
+      $.reel.intense= true;
+    },
     teardown: function(){
       $('#Body *').add(document).unbind('.test');
       $('.reel').unreel();
