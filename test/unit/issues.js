@@ -585,7 +585,7 @@
   });
   function matchingURL(css, url){
     var
-      match= css.match(/^url\(['"]?(.+)['"]?\)$/)
+      match= css.match(/^url\(['"]?([^'"]+)['"]?\)$/)
     return match && url == match[1].substr(match[1].length - url.length);
   }
 
