@@ -1760,6 +1760,7 @@
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_),
                       monitor= opt.monitor
+                    if (!reel.intense && offscreen()) return mute(e);
                     if (braking) var
                       braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
@@ -1862,6 +1863,17 @@
                 }
               },
               $style,
+
+              // - Off screen detection (vertical only for performance)
+              //
+              offscreen= function(){
+                var
+                  height= get(_dimensions_).y,
+                  rect= t[0].getBoundingClientRect()
+                return rect.top < -height ||
+                       rect.bottom > height + $(window).height()
+                       
+              },
 
               // - Inertia rotation control
               //

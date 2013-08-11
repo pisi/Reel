@@ -14,6 +14,7 @@ Version 1.2.2
 * Revised examples with syntax-highlighted code and improved index.
 * New AMD & CommonJS compatibility.
 * New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
+* New CPU power conservation feature disables the instance when off screen.
 
 
 Version 1.2.1
