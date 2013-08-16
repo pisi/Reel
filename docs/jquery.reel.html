@@ -161,7 +161,7 @@
  * jQuery Reel
  * http://jquery.vostrel.net/reel
  * Version: 1.2.2
- * Updated: 2013-08-11
+ * Updated: 2013-08-16
  *
  * Requires jQuery 1.5 or higher
  */</span>
@@ -3317,7 +3317,7 @@ to in-depth explain this new exciting functionality.</p>
                         $note= $note.jquery ? $note : $(tag(_div_), $note),
                         $note= $note.attr({ id: ida }).addClass(annotation_klass),
                         $image= note.image ? $(tag(_img_), note.image) : $(),
-                        $link= note.link ? $(tag(<span class="string">'a'</span>), note.link).click(<span class="keyword">function</span>(){ <span class="keyword">return</span> <span class="literal">false</span> }) : $()
+                        $link= note.link ? $(tag(<span class="string">'a'</span>), note.link).click(<span class="keyword">function</span>(){ t.trigger(<span class="string">'up.annotations'</span>, { target: $link }); }) : $()
                       css(hash(ida), { display: _none_, position: _absolute_ }, <span class="literal">true</span>);
                       note.image || note.link &amp;&amp; $note.append($link);
                       note.link || note.image &amp;&amp; $note.append($image);
@@ -3359,11 +3359,8 @@ to in-depth explain this new exciting functionality.</p>
                     <span class="keyword">var</span>
                       $target= $(ev.target),
                       $link= ($target.is(<span class="string">'a'</span>) ? $target : $target.parents(<span class="string">'a'</span>)),
-                      href= $link.attr(<span class="string">'href'</span>),
-                      target= $link.attr(<span class="string">'target'</span>) || <span class="string">'self'</span>
-                    <span class="keyword">if</span> (!href) <span class="keyword">return</span>;
-                    <span class="keyword">if</span> (target == <span class="string">'_blank'</span>) panned= !!window.open(href)
-                    <span class="keyword">else</span> panned= !!(window[target].location.href= href)
+                      href= $link.attr(<span class="string">'href'</span>)
+                    href &amp;&amp; (panned= <span class="literal">true</span>);
                   },</pre></div></div>
             
         </li>
