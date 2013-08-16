@@ -589,4 +589,35 @@
     return match && url == match[1].substr(match[1].length - url.length);
   }
 
+
+  asyncTest( 'GH-219 Annotations\'s `click` event bubbling', function(){
+    expect( 3 );
+    var
+      $reel = $('#image').reel({
+        annotations: {
+          'link': {
+            x: 10,
+            y: 10,
+            link: {
+              href: 'Somewhere'
+            }
+          }
+        }
+      })
+
+    $(document).click(function( e ){
+      ok( true, 'Event bubbled through the DOM all the way up to the document' );
+    });
+    $reel.parent().bind('loaded.test', function(){
+      $('#link a').click(function( e ){
+        ok( true, 'Registered `click` on the link' );
+      });
+      $('#link').click(function( e ){
+        ok( true, 'Registered `click` on the annotation' );
+      });
+      $('#link a').click();
+      start();
+    })
+  });
+
 })(jQuery);

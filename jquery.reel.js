@@ -1599,7 +1599,7 @@
                         $note= $note.jquery ? $note : $(tag(_div_), $note),
                         $note= $note.attr({ id: ida }).addClass(annotation_klass),
                         $image= note.image ? $(tag(_img_), note.image) : $(),
-                        $link= note.link ? $(tag('a'), note.link).click(function(){ return false }) : $()
+                        $link= note.link ? $(tag('a'), note.link).click(function(){ t.trigger('up.annotations', { target: $link }); }) : $()
                       css(hash(ida), { display: _none_, position: _absolute_ }, true);
                       note.image || note.link && $note.append($link);
                       note.link || note.image && $note.append($image);
