@@ -26,8 +26,13 @@
       data-velocity="3"
       data-brake="0.2">
 
-    <div id="link_to_producer" class="reel-annotation" data-for="image" data-x="50,,,,,,,,50,50,100,,,,,,3" data-y="170">
-      <strong>Penguin B</strong> by <a href="http://bit.ly/tnXfDZ">UAV Factory</a>
+    <div class="reel-annotation"
+      id="link_to_producer"
+      data-x="50,,,,,,,,50,50,100,,,,,,3"
+      data-y="170"
+      data-for="image">
+      <strong>Penguin B</strong>
+      by <a href="http://bit.ly/tnXfDZ">UAV Factory</a>
     </div>
 
     <!-- Or Javascript alternative:
@@ -77,6 +82,20 @@
       data-<a href="http://jquery.vostrel.net/reel#duration">duration</a>=<strong>"6"</strong>
       data-<a href="http://jquery.vostrel.net/reel#velocity">velocity</a>=<strong>"3"</strong>
       data-<a href="http://jquery.vostrel.net/reel#brake">brake</a>=<strong>"0.2"</strong>&gt;</pre>
+    
+    <p>
+      And an erraticly positioned <a href="http://github.com/pisi/Reel/wiki/Annotations">annotation</a>:
+    </p>
+
+    <pre>
+    &lt;div <a href="http://jquery.vostrel.net/reel#annotation-class">class</a>=<strong>"reel-annotation"</strong>
+      <a href="http://jquery.vostrel.net/reel#annotation-id">id</a>=<strong>"link_to_producer"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-x">x</a>=<strong>"50,,,,,,,,50,50,100,,,,,,3"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-y">y</a>=<strong>"170"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em>&lt;strong&gt;<em>Penguin B</em>&lt;/strong&gt;
+      <em>by</em> &lt;a href="http://bit.ly/tnXfDZ"&gt;<em>UAV Factory</em>&lt;/a&gt;</em>
+    &lt;/div&gt;</pre>
     
     <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
     <script> $.reel.def.indicator = 5; </script>
