@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="panorama-non-looping-sequence">
+  <head>
+    <title>jQuery Reel Non-Looping Sequence Panorama Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.9.1.min.js' type='text/javascript'></script>
+    <script src='../../jquery.reel.js' type='text/javascript'></script>
+
+    <!-- Fancybox script & style inclusion and initialization -->
+    <script src="vendor/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+    <link href="vendor/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+    <script>
+      $(document).ready(function(){
+        $('.fancybox').fancybox();
+      });
+    </script>
+
+    <!-- Styling of the annotation -->
+    <style>
+      #trackname{
+        color: white;
+        font-size: 23px;
+      }
+    </style>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <a href="../index.html">Examples</a> ‹
+    <h1>Non-Looping Sequence Panorama</h1>
+    <p class="credits photo"><a href="mailto:petr@vostrel.cz">Petr Vostřel</a></p>
+
+    <img src="track/DSCN1347.jpg" width="267" height="200"
+      class="reel"
+      id="image"
+      data-images="track/DSCN13##.jpg|45..50"
+      data-frame="3"
+      data-revolution="300"
+      data-loops="false">
+
+    <a href="track/logo.png"
+      class="reel-annotation fancybox"
+      id="trackname"
+      data-x="20,40,60,80,100,120"
+      data-y="95"
+      data-for="image">Slovakiaring</a>
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src="chicago.jpg" width="270" height="150" />
+    <script>
+      $('#image').reel({
+        images:      'track/DSCN13##.jpg|45..50',
+        frame:       3,
+        loops:       false,
+        revolution:  300,
+        annotations: {
+          "trackname": {
+            link: { text: "Slovakiaring", href: "track/logo.png", class: "fancybox" },
+            x: [ 20,40,60,80,100,120 ],
+            y: 90,
+          }
+        }
+      });
+    </script>
+
+    -->
+
+<!--
+     Everything you might need to make Reel is above this line.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     Everything below this line is only here to make the example display illustratively
+     with pretty source code, indicators, ... So you do NOT need any of it.
+-->
+
+    <pre>
+    &lt;img src=<strong>"<a href="track/DSCN1345.jpg">track/DSCN1345.jpg</a>"</strong> width=<strong>"267"</strong> height=<strong>"200"</strong>
+      <a href="http://jquery.vostrel.net/reel#class">class</a>=<strong>"reel"</strong>
+      <a href="http://jquery.vostrel.net/reel#id">id</a>=<strong>"image"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#images">images</a>=<strong>"<a href="track/DSCN1346.jpg">track/DSCN13##.jpg|45..50</a>"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#frame">frame</a>=<strong>"3"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#loops">loops</a>=<strong>"false"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#revolution">revolution</a>=<strong>"300"</strong>&gt;</pre>
+
+    <p>
+      And the <a href="http://github.com/pisi/Reel/wiki/Annotations">annotation</a> link:
+    </p>
+
+    <pre>
+    &lt;a href=<strong>"<a href="track/logo.png">track/logo.png</a>"</strong>
+      <a href="http://jquery.vostrel.net/reel#annotation-class">class</a>=<strong>"reel-annotation fancybox"</strong>
+      <a href="http://jquery.vostrel.net/reel#annotation-id">id</a>=<strong>"trackname"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-x">x</a>=<strong>"20,40,60,80,100,120"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-y">y</a>=<strong>"90"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;<em>Slovakiaring</em>&lt;/a&gt;</pre>
+    
+    <p>
+      Opens in <a href="http://fancybox.net">Fancybox</a> (many other <a href="http://plugins.jquery.com/?s=lightbox">lightbox plugins</a> work too).
+    </p>
+
+    <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
+    <script> $.reel.def.indicator = 5; </script>
+
+    <div class="ballast">
+      <p>Some text ballast to make the page positively scroll-worthy for testing purposes.</p>
+      <p><a href="http://en.wikipedia.org/wiki/Lorem_Ipsum">Lorem ipsum</a> dolor sit amet, consectetur adipiscing elit. Sed rutrum semper imperdiet. Integer non auctor orci. Nullam dictum pretium metus, interdum congue sapien lobortis in. Donec sed massa a tellus dapibus auctor et in mauris. Curabitur adipiscing fermentum felis vel molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut semper sem ut nulla fringilla luctus. Curabitur dignissim quam ac libero consequat tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In hac habitasse platea dictumst. Nunc sed lectus eget magna suscipit tempor eget id nibh.</p>
+    </div>
+  </body>
+</html>
+
