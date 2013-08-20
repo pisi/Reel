@@ -1642,7 +1642,7 @@
                       $target= $(ev.target),
                       $link= ($target.is('a') ? $target : $target.parents('a')),
                       href= $link.attr('href')
-                    href && (panned= true);
+                    href && (panned= 10);
                   },
 
                   // ---------------------------
