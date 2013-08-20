@@ -75,7 +75,7 @@
          */
         var
           //server= 'http://au:4567',
-          server= 'http://jquery.vostrel.net',
+          server= 'http://reel360.org',
           timestamp= +new Date(),
           report= {
             timestamp:  timestamp,

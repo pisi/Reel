@@ -12,11 +12,11 @@ revolution is used here to improve drag response.
 Options Employed In This Example
 --------------------------------
 
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [images](http://jquery.vostrel.net/reel#image)
-- [loops](http://jquery.vostrel.net/reel#loops)
-- [revolution](http://jquery.vostrel.net/reel#revolution)
-- [speed](http://jquery.vostrel.net/reel#speed)
+- [frames](http://reel360.org/reel#frames)
+- [images](http://reel360.org/reel#image)
+- [loops](http://reel360.org/reel#loops)
+- [revolution](http://reel360.org/reel#revolution)
+- [speed](http://reel360.org/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -27,5 +27,5 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.net/reel
+[reel]:http://reel360.org
 [license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

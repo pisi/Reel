@@ -12,11 +12,11 @@ Additionally it showcases usage of `"stepUp"` and `"stepDown"` events.
 Options Employed In This Example
 --------------------------------
 
-- [footage](http://jquery.vostrel.net/reel#footage)
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [row](http://jquery.vostrel.net/reel#row)
-- [rows](http://jquery.vostrel.net/reel#rows)
-- [speed](http://jquery.vostrel.net/reel#speed)
+- [footage](http://reel360.org/reel#footage)
+- [frames](http://reel360.org/reel#frames)
+- [row](http://reel360.org/reel#row)
+- [rows](http://reel360.org/reel#rows)
+- [speed](http://reel360.org/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -26,5 +26,5 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.net/reel
+[reel]:http://reel360.org
 [license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

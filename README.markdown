@@ -80,11 +80,11 @@ For options head to plugin [options on-line reference][options] or view the [ent
 
 
 
-[demo]: http://jquery.vostrel.net/reel#demo
+[demo]: http://reel360.org/reel#demo
 [docs]: http://test.vostrel.net/jquery.reel/docs/jquery.reel.html
 [docs-copy]: http://github.com/pisi/Reel/tree/master/docs
 [examples]: http://test.vostrel.net/jquery.reel/example
-[options]: http://jquery.vostrel.net/reel#options
+[options]: http://reel360.org/reel#options
 [changelog]: http://github.com/pisi/Reel/blob/master/CHANGELOG.markdown
 [license]: https://raw.github.com/pisi/Reel/master/LICENSE.txt
 [jquery]: http://www.jquery.com/

@@ -11,9 +11,9 @@ sprite with 4 frames on the line. It also animates with speed of 0.1 Hz
 Options Employed In This Example
 --------------------------------
 
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [footage](http://jquery.vostrel.net/reel#footage)
-- [speed](http://jquery.vostrel.net/reel#speed)
+- [frames](http://reel360.org/reel#frames)
+- [footage](http://reel360.org/reel#footage)
+- [speed](http://reel360.org/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -24,5 +24,5 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.net/reel
+[reel]:http://reel360.org
 [license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

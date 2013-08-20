@@ -22,7 +22,7 @@
     "panorama",
     "projection"
   ],
-  "homepage": "http://jquery.vostrel.net/reel",
+  "homepage": "http://reel360.org",
   "dependencies": {
     "jquery": ">=1.5",
     "mousewheel": ">=3.0.5"

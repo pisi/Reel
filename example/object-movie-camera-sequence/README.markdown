@@ -11,7 +11,7 @@ first). Not limited to just object movies.
 Options Employed In This Example
 --------------------------------
 
-- [images](http://jquery.vostrel.net/reel#images)
+- [images](http://reel360.org/reel#images)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -21,5 +21,5 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.net/reel
+[reel]:http://reel360.org
 [license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

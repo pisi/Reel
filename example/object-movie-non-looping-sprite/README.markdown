@@ -12,12 +12,12 @@ here to improve drag response.
 Options Employed In This Example
 --------------------------------
 
-- [frame](http://jquery.vostrel.net/reel#frame)
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [image](http://jquery.vostrel.net/reel#image)
-- [loops](http://jquery.vostrel.net/reel#loops)
-- [revolution](http://jquery.vostrel.net/reel#revolution)
-- [speed](http://jquery.vostrel.net/reel#speed)
+- [frame](http://reel360.org/reel#frame)
+- [frames](http://reel360.org/reel#frames)
+- [image](http://reel360.org/reel#image)
+- [loops](http://reel360.org/reel#loops)
+- [revolution](http://reel360.org/reel#revolution)
+- [speed](http://reel360.org/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
@@ -28,5 +28,5 @@ implementation.
 
 
 
-[reel]:http://jquery.vostrel.net/reel
+[reel]:http://reel360.org
 [license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt
