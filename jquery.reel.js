@@ -1303,11 +1303,12 @@
                         rows= opt.rows,
                         orbital= opt.orbital,
                         scrollable= touchy && !get(_reeling_) && rows <= 1 && !orbital && opt.scrollable,
-                        delta= { x: x - last.x, y: y - last.y }
-                      if (ev && scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
-                      if (abs(delta.x) > 0 || abs(delta.y) > 0){
+                        delta= { x: x - last.x, y: y - last.y },
+                        abs_delta= { x: abs(delta.x), y: abs(delta.y) }
+                      if (ev && scrollable && abs_delta.x < abs_delta.y) return ev.give = true;
+                      if (abs_delta.x > 0 || abs_delta.y > 0){
                         ev && (ev.give = false);
-                        panned= max(delta.x, delta.y);
+                        panned= max(abs_delta.x, abs_delta.y);
                         last= { x: x, y: y };
                         var
                           revolution= get(_revolution_),
