@@ -15,6 +15,7 @@ Version 1.2.2
 * New AMD & CommonJS compatibility.
 * New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
 * New CPU power conservation feature disables the instance when off screen.
+* Annotations now compatible with many lightbox plugins (GH-219).
 
 
 Version 1.2.1
