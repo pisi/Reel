@@ -15,6 +15,8 @@ Version 1.2.2
 * New AMD & CommonJS compatibility.
 * New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
 * New CPU power conservation feature disables the instance when off screen.
+* Opted out of the dual license scheme and in for the MIT License only to carry on
+  sharing of licensing policies with the jQuery framework itself.
 
 
 Version 1.2.1

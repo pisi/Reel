@@ -9,8 +9,7 @@
     "url": "http://petr.vostrel.cz"
   },
   "licenses": [
-    { "type": "MIT", "url": "http://code.vostrel.net/MIT-LICENSE.txt" },
-    { "type": "GPL", "url": "http://code.vostrel.net/GPL-LICENSE.txt" }
+    { "type": "MIT", "url": "http://code.vostrel.net/LICENSE.txt" }
   ],
   "contributors": [
     { "name": "Katrin Ackermann" },

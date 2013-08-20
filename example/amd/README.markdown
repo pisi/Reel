@@ -11,12 +11,11 @@ implementation.
 
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
 [reel]:http://jquery.vostrel.cz/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt
 [AMD]:http://en.wikipedia.org/wiki/Asynchronous_module_definition
 [CommonJS]:http://en.wikipedia.org/wiki/CommonJS
