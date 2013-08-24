@@ -1874,7 +1874,6 @@
                   rect= t[0].getBoundingClientRect()
                 return rect.top < -height ||
                        rect.bottom > height + $(window).height()
-                       
               },
 
               // - Inertia rotation control
