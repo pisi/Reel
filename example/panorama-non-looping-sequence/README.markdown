@@ -12,22 +12,21 @@ plug-in, in this example [Fancybox][fancybox].
 Options Employed In This Example
 --------------------------------
 
-- [annotations](http://jquery.vostrel.net/reel#annotations)
-- [frame](http://jquery.vostrel.net/reel#frame)
-- [images](http://jquery.vostrel.net/reel#images)
-- [loops](http://jquery.vostrel.net/reel#loops)
-- [revolution](http://jquery.vostrel.net/reel#revolution)
+- [annotations](http://reel360.org/reel#annotations)
+- [frame](http://reel360.org/reel#frame)
+- [images](http://reel360.org/reel#images)
+- [loops](http://reel360.org/reel#loops)
+- [revolution](http://reel360.org/reel#revolution)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt
 [fancybox]:http://fancybox.net

@@ -14,21 +14,20 @@ in 2.5 seconds).
 Options Employed In This Example
 --------------------------------
 
-- [frame](http://jquery.vostrel.net/reel#frame)
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [footage](http://jquery.vostrel.net/reel#footage)
-- [speed](http://jquery.vostrel.net/reel#speed)
-- [suffix](http://jquery.vostrel.net/reel#suffix)
+- [frame](http://reel360.org/reel#frame)
+- [frames](http://reel360.org/reel#frames)
+- [footage](http://reel360.org/reel#footage)
+- [speed](http://reel360.org/reel#speed)
+- [suffix](http://reel360.org/reel#suffix)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/MIT-LICENSE.txt

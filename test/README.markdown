@@ -170,7 +170,7 @@ for collection and analysis. The report contains this:
         jquery:   "1.7.1",
         reel:     "1.2"
       },
-      host:       "jquery.vostrel.net", // This would be your domain name
+      host:       "reel360.org", // This would be your domain name
       results:    "Tests completed in 44106 milliseconds. 655 tests of 655 passed, 0 failed.",
       agent:      "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7"
     }

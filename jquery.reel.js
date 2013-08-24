@@ -19,11 +19,10 @@
  * The 360° plugin for jQuery
  *
  * @license Copyright (c) 2009-2013 Petr Vostrel (http://petr.vostrel.cz/)
- * Dual licensed under the MIT (MIT-LICENSE.txt)
- * and GPL (GPL-LICENSE.txt) licenses.
+ * Licensed under the MIT License (LICENSE.txt).
  *
  * jQuery Reel
- * http://jquery.vostrel.net/reel
+ * http://reel360.org
  * Version: 1.2.2
  * Updated: 2013-08-20
  *

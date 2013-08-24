@@ -14,23 +14,22 @@ how to configure the frame-based positioning of an annotation.
 Options Employed In This Example
 --------------------------------
 
-- [annotations](http://jquery.vostrel.net/reel#annotations)
-- [frame](http://jquery.vostrel.net/reel#frame)
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [row](http://jquery.vostrel.net/reel#row)
-- [rows](http://jquery.vostrel.net/reel#rows)
-- [images](http://jquery.vostrel.net/reel#images)
-- [speed](http://jquery.vostrel.net/reel#speed)
+- [annotations](http://reel360.org/reel#annotations)
+- [frame](http://reel360.org/reel#frame)
+- [frames](http://reel360.org/reel#frames)
+- [row](http://reel360.org/reel#row)
+- [rows](http://reel360.org/reel#rows)
+- [images](http://reel360.org/reel#images)
+- [speed](http://reel360.org/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

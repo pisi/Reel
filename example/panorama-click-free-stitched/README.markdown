@@ -12,21 +12,20 @@ clockwise and very slowly with one full rotation per 20 seconds.
 Options Employed In This Example
 --------------------------------
 
-- [clickfree](http://jquery.vostrel.net/reel#clickfree)
-- [frame](http://jquery.vostrel.net/reel#frame)
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [speed](http://jquery.vostrel.net/reel#speed)
-- [stitched](http://jquery.vostrel.net/reel#stitched)
-- [wheelable](http://jquery.vostrel.net/reel#wheelable)
+- [clickfree](http://reel360.org/reel#clickfree)
+- [frame](http://reel360.org/reel#frame)
+- [frames](http://reel360.org/reel#frames)
+- [speed](http://reel360.org/reel#speed)
+- [stitched](http://reel360.org/reel#stitched)
+- [wheelable](http://reel360.org/reel#wheelable)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

@@ -13,21 +13,20 @@ resumes a ongoing animation of one revolution per second.
 Options Employed In This Example
 --------------------------------
 
-- [delay](http://jquery.vostrel.net/reel#delay)
-- [directional](http://jquery.vostrel.net/reel#directional)
-- [frame](http://jquery.vostrel.net/reel#frame)
-- [indicator](http://jquery.vostrel.net/reel#indicator)
-- [opening](http://jquery.vostrel.net/reel#opening)
-- [speed](http://jquery.vostrel.net/reel#speed)
+- [delay](http://reel360.org/reel#delay)
+- [directional](http://reel360.org/reel#directional)
+- [frame](http://reel360.org/reel#frame)
+- [indicator](http://reel360.org/reel#indicator)
+- [opening](http://reel360.org/reel#opening)
+- [speed](http://reel360.org/reel#speed)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

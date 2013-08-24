@@ -13,23 +13,22 @@ It also showcases positioning of several annotations.
 Options Employed In This Example
 --------------------------------
 
-- [annotations](http://jquery.vostrel.net/reel#annotations)
-- [loops](http://jquery.vostrel.net/reel#loops)
-- [speed](http://jquery.vostrel.net/reel#speed)
-- [stop](http://jquery.vostrel.net/reel#step)
-- [steps](http://jquery.vostrel.net/reel#steps)
-- [stitched](http://jquery.vostrel.net/reel#stitched)
-- [timeout](http://jquery.vostrel.net/reel#timeout)
+- [annotations](http://reel360.org/reel#annotations)
+- [loops](http://reel360.org/reel#loops)
+- [speed](http://reel360.org/reel#speed)
+- [stop](http://reel360.org/reel#step)
+- [steps](http://reel360.org/reel#steps)
+- [stitched](http://reel360.org/reel#stitched)
+- [timeout](http://reel360.org/reel#timeout)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

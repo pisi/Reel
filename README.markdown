@@ -42,7 +42,7 @@ The above will be turned into default interactive Reel with 36 frames loaded fro
 License
 -------
 
-* Available for all personal or commercial projects under both [MIT][license-mit] and [GPL][license-gpl] licenses. 
+* Available for all personal or commercial projects for free under the [MIT License][license]. 
 * Use for free and enjoy! Appreciations are warmly welcome:
 
 <a href='http://www.pledgie.com/campaigns/9596'><img alt='Click here to lend your support to: Reel and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/9596.png?skin_name=chrome' border='0' /></a>
@@ -80,14 +80,13 @@ For options head to plugin [options on-line reference][options] or view the [ent
 
 
 
-[demo]: http://jquery.vostrel.net/reel#demo
+[demo]: http://reel360.org/reel#demo
 [docs]: http://test.vostrel.net/jquery.reel/docs/jquery.reel.html
 [docs-copy]: http://github.com/pisi/Reel/tree/master/docs
 [examples]: http://test.vostrel.net/jquery.reel/example
-[options]: http://jquery.vostrel.net/reel#options
+[options]: http://reel360.org/reel#options
 [changelog]: http://github.com/pisi/Reel/blob/master/CHANGELOG.markdown
-[license-mit]: http://github.com/pisi/Reel/blob/master/MIT-LICENSE.txt
-[license-gpl]: http://github.com/pisi/Reel/blob/master/GPL-LICENSE.txt
+[license]: https://raw.github.com/pisi/Reel/master/LICENSE.txt
 [jquery]: http://www.jquery.com/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html

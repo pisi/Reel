@@ -12,23 +12,22 @@ as an image sequence.
 Options Employed In This Example
 --------------------------------
 
-- [frame](http://jquery.vostrel.net/reel#frame)
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [images](http://jquery.vostrel.net/reel#images)
-- [loops](http://jquery.vostrel.net/reel#loops)
-- [row](http://jquery.vostrel.net/reel#row)
-- [rows](http://jquery.vostrel.net/reel#rows)
-- [spacing](http://jquery.vostrel.net/reel#spacing)
-- [stitched](http://jquery.vostrel.net/reel#stitched)
+- [frame](http://reel360.org/reel#frame)
+- [frames](http://reel360.org/reel#frames)
+- [images](http://reel360.org/reel#images)
+- [loops](http://reel360.org/reel#loops)
+- [row](http://reel360.org/reel#row)
+- [rows](http://reel360.org/reel#rows)
+- [spacing](http://reel360.org/reel#spacing)
+- [stitched](http://reel360.org/reel#stitched)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt

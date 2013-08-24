@@ -16,6 +16,8 @@ Version 1.2.2
 * New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
 * New CPU power conservation feature disables the instance when off screen.
 * Annotations now compatible with many lightbox plugins (GH-219).
+* Opted out of the dual license scheme and in for the MIT License only to carry on
+  sharing of licensing policies with the jQuery framework itself.
 
 
 Version 1.2.1

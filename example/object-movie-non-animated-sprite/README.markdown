@@ -11,18 +11,17 @@ Additionally it showcases usage of `"stepLeft"` and `"stepRight"` events.
 Options Employed In This Example
 --------------------------------
 
-- [entry](http://jquery.vostrel.net/reel#entry)
-- [frames](http://jquery.vostrel.net/reel#frames)
-- [opening](http://jquery.vostrel.net/reel#opening)
+- [entry](http://reel360.org/reel#entry)
+- [frames](http://reel360.org/reel#frames)
+- [opening](http://reel360.org/reel#opening)
 
 See the complete source of [index.html](index.html) for full
 implementation.
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, under [GPL][GPL] and [MIT][MIT] licences
+&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 
-[reel]:http://jquery.vostrel.net/reel
-[GPL]:http://opensource.org/licenses/GPL-2.0
-[MIT]:http://opensource.org/licenses/MIT
+[reel]:http://reel360.org
+[license]:https://raw.github.com/pisi/Reel/master/LICENSE.txt
