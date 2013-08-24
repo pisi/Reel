@@ -25,7 +25,7 @@
  * jQuery Reel
  * http://jquery.vostrel.net/reel
  * Version: 1.2.2
- * Updated: 2013-08-11
+ * Updated: 2013-08-20
  *
  * Requires jQuery 1.5 or higher
  */
@@ -1303,11 +1303,12 @@
                         rows= opt.rows,
                         orbital= opt.orbital,
                         scrollable= touchy && !get(_reeling_) && rows <= 1 && !orbital && opt.scrollable,
-                        delta= { x: x - last.x, y: y - last.y }
-                      if (ev && scrollable && abs(delta.x) < abs(delta.y)) return ev.give = true;
-                      if (abs(delta.x) > 0 || abs(delta.y) > 0){
+                        delta= { x: x - last.x, y: y - last.y },
+                        abs_delta= { x: abs(delta.x), y: abs(delta.y) }
+                      if (ev && scrollable && abs_delta.x < abs_delta.y) return ev.give = true;
+                      if (abs_delta.x > 0 || abs_delta.y > 0){
                         ev && (ev.give = false);
-                        panned= max(delta.x, delta.y);
+                        panned= max(abs_delta.x, abs_delta.y);
                         last= { x: x, y: y };
                         var
                           revolution= get(_revolution_),
@@ -1599,7 +1600,7 @@
                         $note= $note.jquery ? $note : $(tag(_div_), $note),
                         $note= $note.attr({ id: ida }).addClass(annotation_klass),
                         $image= note.image ? $(tag(_img_), note.image) : $(),
-                        $link= note.link ? $(tag('a'), note.link).click(function(){ return false }) : $()
+                        $link= note.link ? $(tag('a'), note.link).click(function(){ t.trigger('up.annotations', { target: $link }); }) : $()
                       css(hash(ida), { display: _none_, position: _absolute_ }, true);
                       note.image || note.link && $note.append($link);
                       note.link || note.image && $note.append($image);
@@ -1641,11 +1642,8 @@
                     var
                       $target= $(ev.target),
                       $link= ($target.is('a') ? $target : $target.parents('a')),
-                      href= $link.attr('href'),
-                      target= $link.attr('target') || 'self'
-                    if (!href) return;
-                    if (target == '_blank') panned= !!window.open(href)
-                    else panned= !!(window[target].location.href= href)
+                      href= $link.attr('href')
+                    href && (panned= 10);
                   },
 
                   // ---------------------------

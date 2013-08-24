@@ -25,10 +25,22 @@
       data-row="3"
       data-speed="0.3">
 
-    <div id="first_row" class="reel-annotation" data-for="image" data-start="1" data-end="20" data-x="10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105" data-y="10" style="width: 100px;">
+    <div class="reel-annotation"
+      id="first_row"
+      data-start="1"
+      data-end="20"
+      data-x="10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105"
+      data-y="10"
+      data-for="image">
       First Row
     </div>
-    <div id="last_row" class="reel-annotation" data-for="image" data-start="101" data-end="120" data-x="105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10" data-y="175" style="width: 100px;">
+    <div class="reel-annotation"
+      id="last_row"
+      data-start="101"
+      data-end="120"
+      data-x="105,100,95,90,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10"
+      data-y="175"
+      data-for="image">
       Last Row
     </div>
 
@@ -48,14 +60,14 @@
             node: { text: 'First Row', css: { width: 100 } },
             start: 1,
             end: 20,
-            x: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105],
+            x: [ 10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105 ],
             y: 10
           },
           "last_row": {
             node: { text: 'Last Row', css: { width: 100 } },
             start: 101,
             end: 120,
-            x: [105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10],
+            x: [ 105,100,95,90,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10 ],
             y: 175
           }
         }
@@ -81,6 +93,31 @@
       data-<a href="http://jquery.vostrel.net/reel#rows">rows</a>=<strong>"6"</strong>
       data-<a href="http://jquery.vostrel.net/reel#row">row</a>=<strong>"3"</strong>
       data-<a href="http://jquery.vostrel.net/reel#speed">speed</a>=<strong>"0.3"</strong>&gt;</pre>
+    
+    <p>
+      And the two <a href="http://github.com/pisi/Reel/wiki/Annotations">annotations</a>:
+    </p>
+
+    <pre>
+    &lt;div <a href="http://jquery.vostrel.net/reel#annotation-class">class</a>=<strong>"reel-annotation"</strong>
+      <a href="http://jquery.vostrel.net/reel#annotation-id">id</a>=<strong>"first_row"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-start">start</a>=<strong>"1"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-end">end</a>=<strong>"20"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-x">x</a>=<strong>"10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-y">y</a>=<strong>"10"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>First row</em></em>
+    &lt;/div&gt;
+    
+    &lt;div <a href="http://jquery.vostrel.net/reel#annotation-class">class</a>=<strong>"reel-annotation"</strong>
+      <a href="http://jquery.vostrel.net/reel#annotation-id">id</a>=<strong>"last_row"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-start">start</a>=<strong>"101"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-end">end</a>=<strong>"120"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-x">x</a>=<strong>"105,100,95,90,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-y">y</a>=<strong>"175"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Last row</em></em>
+    &lt;/div&gt;</pre>
     
     <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
     <script> $.reel.def.indicator = 5; </script>

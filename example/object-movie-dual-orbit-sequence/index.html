@@ -33,7 +33,13 @@
       data-inversed="true"
       data-speed="0.7">
 
-    <div id="green_marker" class="reel-annotation" id="green_marker" data-for="image" data-x="180" data-y="0" data-at="+++-----++"></div>
+    <div class="reel-annotation"
+      id="green_marker"
+      data-x="180"
+      data-y="0"
+      data-at="+++-----++"
+      data-for="image">
+    </div>
 
     <!-- Or Javascript alternative:
 
@@ -75,6 +81,19 @@
       data-<a href="http://jquery.vostrel.net/reel#orbital">orbital</a>=<strong>"3"</strong>
       data-<a href="http://jquery.vostrel.net/reel#inversed">inversed</a>=<strong>"true"</strong>
       data-<a href="http://jquery.vostrel.net/reel#speed">speed</a>=<strong>"0.7"</strong>&gt;</pre>
+
+    <p>
+      And the <a href="http://github.com/pisi/Reel/wiki/Annotations">annotation</a> marker:
+    </p>
+
+    <pre>
+    &lt;div <a href="http://jquery.vostrel.net/reel#annotation-class">class</a>=<strong>"reel-annotation"</strong>
+      <a href="http://jquery.vostrel.net/reel#annotation-id">id</a>=<strong>"first_row"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-x">x</a>=<strong>"180"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-y">y</a>=<strong>"0"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-at">at</a>=<strong>"+++-----++"</strong>
+      data-<a href="http://jquery.vostrel.net/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+    &lt;/div&gt;</pre>
     
     <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
     <script> $.reel.def.indicator = 5; </script>
