@@ -1009,7 +1009,7 @@
                       $overlay= t.parent(),
                       $area= set(_area_, $(opt.area || $overlay )),
                       rows= opt.rows || 1
-                    css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
+                    css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length

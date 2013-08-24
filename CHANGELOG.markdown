@@ -19,6 +19,7 @@ Version 1.2.2
 * Opted out of the dual license scheme and in for the MIT License only to carry on
   sharing of licensing policies with the jQuery framework itself.
 * Preloading cache moved from DOM to memory for better performance.
+* Hardware acceleration enabled in Firefox to help remedy occasional flickering therein (GH-196).
 
 
 Version 1.2.1
