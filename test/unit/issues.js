@@ -620,4 +620,35 @@
     })
   });
 
+  asyncTest( 'GH-42 Incorrect starting frame', function(){
+    /* Github issue 42 bugfix
+     * http://github.com/pisi/Reel/issues/#issue/42
+     */
+    var
+      frames = 35
+
+    expect( frames );
+
+    tryout( frames );
+
+    function tryout( frame ){
+      if ( frame > 0 ){
+        $('#image')
+          .reel({
+            frames: frames,
+            frame: frame,
+            cw: true,
+            images: 'resources/mini/###.jpg'
+          })
+          .one('loaded.test', function(){
+            $( this ).unreel;
+            equal( $( this ).reel('frame'), frame );
+            tryout( frame - 1 );
+          });
+      }else{
+        start();
+      }
+    }
+  });
+
 })(jQuery);
