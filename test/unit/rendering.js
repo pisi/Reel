@@ -9,7 +9,7 @@
     expect(3);
     var
       $reel_with_id= $('#image').reel(),
-      $reel_without_id= $('.no_id:first').reel()
+      $reel_without_id= $('.no_id:first').attr('id', null).reel()
 
     // Given ID attribute
     equal( $reel_with_id.attr('id'), 'image');
