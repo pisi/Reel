@@ -897,6 +897,7 @@
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
+                  set(_cache_, $());
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
                   set(_frame_, null);
@@ -1039,7 +1040,6 @@
                     rows > 1 && opt.indicator && $overlay.append(indicator('y'));
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
-                    css(___+dot(cached_klass), { display: _none_ });
                   },
 
                   // ### `preload` Event ######
@@ -1064,6 +1064,7 @@
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
+                      $cache= $(tag(_div_)),
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());
                     // It also finalizes the instance stylesheet and prepends it to the head.
@@ -1074,18 +1075,19 @@
                         uri= opt.path+preload.shift(),
                         width= space.x * (!is_sprite ? 1 : footage),
                         height= space.y * (!is_sprite ? 1 : frames / footage) * (!opt.directional ? 1 : 2),
-                        $img= $(tag(_img_)).attr({ 'class': cached_klass, width: width, height: height }).appendTo($overlay)
+                        $img= $(tag(_img_)).appendTo($cache)
                       // Each image, which finishes the load triggers `"preloaded"` Event.
                       $img.bind('load error abort', function(e){
                         e.type != 'load' && t.trigger(e.type);
-                        return !!$(this).parent().length && t.trigger('preloaded') && false;
+                        return !detached($overlay) && t.trigger('preloaded') && false;
                       });
                       load(uri, $img);
                       uris.push(uri);
                     }
+                    set(_cache_, $cache);
                     set(_cached_, uris);
                     function load(uri, $img){ setTimeout(function(){
-                      $img.parent().length && $img.attr({ src: reen(uri) });
+                      !detached($overlay) && $img.attr({ src: reen(uri) });
                     }, (to_load - preload.length) * 2) }
                   },
 
@@ -1516,7 +1518,7 @@
                   //
                   'imageChange imagesChange': function(e, nil, image){
                     preloader.$.remove();
-                    t.siblings(dot(cached_klass)).remove();
+                    get(_cache_).empty().remove();
                     t.parent().bind(_preloaded_, on.instance.preloaded);
                     pool.bind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     t.trigger('preload');
@@ -2361,7 +2363,6 @@
     overlay_klass= klass + '-overlay',
     indicator_klass= klass + '-indicator',
     preloader_klass= klass + '-preloader',
-    cached_klass= klass + '-cached',
     monitor_klass= klass + '-monitor',
     annotation_klass= klass + '-annotation',
     panning_klass= klass + '-panning',
@@ -2389,8 +2390,8 @@
     // For the very same reason all storage key Strings are cached into local vars.
     //
     _annotations_= 'annotations',
-    _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cached_= 'cached', _center_= 'center',
-    _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
+    _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
+    _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
@@ -2482,6 +2483,7 @@
   function pad(string, len, fill){ while (string.length < len) string= fill + string; return string }
   function reen(uri){ return encodeURI(decodeURI(uri)) }
   function soft_array(string){ return reel.re.array.exec(string) ? string.split(reel.re.array) : string }
+  function detached($node){ return !$node.parents(_html_).length }
   function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
 })(jQuery, window, document);

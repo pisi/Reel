@@ -311,7 +311,7 @@
 
     $(document).bind('loaded.test', function(){
       var
-        $images= $reel.siblings('img.reel-cached')
+        $images= $reel.reel('cache').children()
 
       equal( $images.length, frames, frames+' cached images found');
       equal( $images.first().attr('src'), '001.jpg', 'First cache image `src` is set');

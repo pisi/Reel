@@ -15,6 +15,7 @@
         backwards: 'Boolean',
         bit: 'Number',
         brake: 'Number',
+        cache: 'Object', // (jQuery)
         cached: 'Array',
         center: 'Boolean',
         clicked: 'Boolean',
@@ -459,7 +460,7 @@
         case 2:
           equiv( $reel.css('backgroundImage'), 'url('+new_image+')', 'Image changed on the fly' );
           equal( $reel.reel('frame'), frame, 'Reel frame hasn\'t changed' );
-          equal( $reel.siblings('img').length, 1, 'Still just one image in the cache' );
+          equal( $reel.reel('cache').children().length, 1, 'Still just one image in the cache' );
 
           // Wait a sec for preloader transition to finish
           setTimeout(function(){
@@ -507,7 +508,7 @@
           deepEqual( $reel.reel('images'), new_images, 'New images in' );
           equal( $reel.attr('src'), new_images[frame - 1], 'Image changed on the fly' );
           equal( $reel.reel('frame'), frame, 'Reel frame hasn\'t changed' );
-          equal( $reel.siblings('img').length, new_images.length, 'Cache population in check' );
+          equal( $reel.reel('cache').children().length, new_images.length, 'Cache population in check' );
 
           // Wait a sec for preloader transition to finish
           setTimeout(function(){
