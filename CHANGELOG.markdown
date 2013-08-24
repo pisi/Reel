@@ -18,6 +18,7 @@ Version 1.2.2
 * Annotations now compatible with many lightbox plugins (GH-219).
 * Opted out of the dual license scheme and in for the MIT License only to carry on
   sharing of licensing policies with the jQuery framework itself.
+* Preloading cache moved from DOM to memory for better performance.
 
 
 Version 1.2.1

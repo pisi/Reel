@@ -9,7 +9,7 @@
     expect(3);
     var
       $reel_with_id= $('#image').reel(),
-      $reel_without_id= $('.no_id:first').reel()
+      $reel_without_id= $('.no_id:first').attr('id', null).reel()
 
     // Given ID attribute
     equal( $reel_with_id.attr('id'), 'image');
@@ -146,45 +146,6 @@
     }
   });
 
-  asyncTest( 'Preload cache `img`s have defined dimensions of the stage #10', function(){
-    expect(3);
-    var
-      $reel= $('#image').reel({
-        images: [ 'resources/f1.jpg' ]
-      })
-
-    $(document).bind('loaded.test', function(){
-      var
-        $cached= $reel.siblings('img[width][height]').first()
-
-      equal($cached.length, 1, 'Image has dimensions');
-      equal($cached.attr('width'), $reel.data('dimensions').x, 'Width equals')
-      equal($cached.attr('height'), $reel.data('dimensions').y, 'Height equals')
-      start();
-    });
-  });
-
-  asyncTest( 'Preload cache `img`s have defined sprite dimensions in multiplies of stage #10', function(){
-    expect(3);
-    var
-      footage= 6,
-      frames= 36,
-      $reel= $('#image').reel({
-        footage: footage,
-        frames: frames
-      })
-
-    $(document).bind('loaded.test', function(){
-      var
-        $cached= $reel.siblings('img[width][height]').first()
-
-      equal($cached.length, 1, 'Image has dimensions');
-      equal($cached.attr('width'), $reel.data('dimensions').x * footage, 'Width equals')
-      equal($cached.attr('height'), $reel.data('dimensions').y * (frames / footage), 'Height equals')
-      start();
-    });
-  });
-
   test( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
     expect(4);
     var
@@ -311,7 +272,7 @@
 
     $(document).bind('loaded.test', function(){
       var
-        $images= $reel.siblings('img.reel-cached')
+        $images= $reel.reel('cache').children()
 
       equal( $images.length, frames, frames+' cached images found');
       equal( $images.first().attr('src'), '001.jpg', 'First cache image `src` is set');
