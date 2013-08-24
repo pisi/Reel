@@ -1760,7 +1760,7 @@
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_),
                       monitor= opt.monitor
-                    if (!reel.intense && offscreen()) return mute(e);
+                    if (!reel.intense && offscreen()) return;
                     if (braking) var
                       braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
