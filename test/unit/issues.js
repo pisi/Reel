@@ -638,7 +638,7 @@
             frames: frames,
             frame: frame,
             cw: true,
-            images: 'resources/mini/###.jpg'
+            images: 'resources/mini/###.gif'
           })
           .one('loaded.test', function(){
             $( this ).unreel;

@@ -1,23 +1,23 @@
+![logo](assets/logo.gif)
 
 jQuery Reel 1.2.2
 =================
 
-**Reel** is an established jQuery plugin for 360° object movies, vistas and panoramas. It is a full-featured enhancement of `<img>` HTML tag used on hundreds of websites around the globe including leading brands like Nikon, BMW, Adidas or Blackberry, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. The global community warmly welcomes Reel as an alternative to widely used Flash and Java techniques.
+**Reel** is an established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation. Reel is used on hundreds of websites around the globe by  big ones like Nikon, BMW, Adidas, Blackberry or The New York Times, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. Reel is the premier alternative to Flash, Java, Quicktime and alike.
 
-<http://plugins.jquery.com/project/reel>
+<http://reel360.org>
 
 * Modes covering beyond usual 360° span.
 * Animated rotation and inertial motion.
-* **NEW** In-scene annotations in sync with frames.
-* Intuitive operation. Supports mouse wheel and touch.
-* Apple, Blackberry and now **NEW** Android mobile devices supported.
-* **NEW** Fully customizable with 50+ options to choose from.
-* Browser and operating system agnostic. It's your choice.
-* No browser extensions needed. No Flash, nothing. It's just an image...
-* **NEW** Javascript-free initialization!
-* Plays fair with your existing CSS.
-* Transparent, eventful & well-tested tiny code base.
-* Tools for Drupal, **NEW** Joomla, Dreamweaver, Poser or Python by the community!
+* **NEW** In-scene annotations (hotspots) in sync with frames.
+* Intuitive operation. Supports both mouse and touch.
+* Apple, Blackberry and **NEW** Android mobile devices supported.
+* **NEW** 50+ options for full customization.
+* **NEW** Javascript-free initialization.
+* Browser and operating system agnostic. Flash-free. It's just an image...
+* Loves your existing CSS.
+* Transparent, **NEW** documented, eventful & well-tested tiny code base.
+* Tools for Drupal, **NEW** Joomla, Dreamweaver, Poser or Python by the loving community!
 
 Demo
 ----
