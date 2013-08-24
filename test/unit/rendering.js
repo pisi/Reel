@@ -146,45 +146,6 @@
     }
   });
 
-  asyncTest( 'Preload cache `img`s have defined dimensions of the stage #10', function(){
-    expect(3);
-    var
-      $reel= $('#image').reel({
-        images: [ 'resources/f1.jpg' ]
-      })
-
-    $(document).bind('loaded.test', function(){
-      var
-        $cached= $reel.siblings('img[width][height]').first()
-
-      equal($cached.length, 1, 'Image has dimensions');
-      equal($cached.attr('width'), $reel.data('dimensions').x, 'Width equals')
-      equal($cached.attr('height'), $reel.data('dimensions').y, 'Height equals')
-      start();
-    });
-  });
-
-  asyncTest( 'Preload cache `img`s have defined sprite dimensions in multiplies of stage #10', function(){
-    expect(3);
-    var
-      footage= 6,
-      frames= 36,
-      $reel= $('#image').reel({
-        footage: footage,
-        frames: frames
-      })
-
-    $(document).bind('loaded.test', function(){
-      var
-        $cached= $reel.siblings('img[width][height]').first()
-
-      equal($cached.length, 1, 'Image has dimensions');
-      equal($cached.attr('width'), $reel.data('dimensions').x * footage, 'Width equals')
-      equal($cached.attr('height'), $reel.data('dimensions').y * (frames / footage), 'Height equals')
-      start();
-    });
-  });
-
   test( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
     expect(4);
     var
