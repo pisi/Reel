@@ -23,6 +23,6 @@ pre strong a{ color: #fff; }
 .examples > li .icon{ display: block; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #fff no-repeat center; }
 .examples > li ul{ display: none; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; padding: 12px 36px; }
 .examples > li ul:before{ content: 'Features:'; font-weight: bold; color: #000; padding-bottom: 6px; display: block; }
-.examples > li a:hover ul{ display: block; background: rgba(255,255,255,.9); }
 s.examples > li a:hover label{ display: none; }
 
+.examples > li a:hover ul{ display: block; background: #fff; opacity: .9; }
