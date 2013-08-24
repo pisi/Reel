@@ -528,7 +528,7 @@
     'image.png?54351531676',
     'test.png?thumbnail',
     'images/test.png?width=200&height=2000&quality=high',
-    'http://example.com/images/test.png?width=2000&height=200',
+    'http://example.com/images/test.png?width=2000&height=200'
   ], function(name, url){
     asyncTest( 'GH-187 Query vars preserve in URLs like "'+url+'" (via `image` option)', function(){
       expect( 1 );
