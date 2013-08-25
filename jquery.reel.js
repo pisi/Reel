@@ -941,7 +941,8 @@
                   });
                   opt.steppable || $overlay.unbind('up.steppable');
                   opt.indicator || $overlay.unbind('.indicator');
-                  css(__, { width: width, height: height, overflow: _hidden_, position: 'relative' });
+                  css(__, { overflow: _hidden_, position: 'relative' });
+                  responsive || css(__, { width: width, height: height });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
                   t.trigger('setup');
@@ -1038,6 +1039,9 @@
                         .bind(opt.wheelable ? _mousewheel_ : null, wheel)
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                         .bind(_dragstart_, function(){ return false })
+                    }
+                    if (get(_responsive_)){
+                      css(___+dot(klass), { width: '100%', height: _auto_ });
                     }
                     function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
