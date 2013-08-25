@@ -1593,8 +1593,7 @@
                   'setup.annotations': function(e){
                     var
                       space= get(_dimensions_),
-                      $overlay= t.parent(),
-                      film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
+                      $overlay= t.parent()
                     $.each(get(_annotations_), function(ida, note){
                       var
                         $note= typeof note.node == _string_ ? $(note.node) : note.node || {},
