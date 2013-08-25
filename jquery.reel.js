@@ -1631,6 +1631,7 @@
                         $note= $(hash(ida)),
                         start= note.start || 1,
                         end= note.end,
+                        frame= frame || get(_frame_),
                         offset= frame - 1,
                         at= note.at ? (note.at[offset] == '+') : false,
                         offset= note.at ? offset : offset - start + 1,
@@ -1644,6 +1645,10 @@
                         x= !on_edge ? x : x + stitched,
                         x= !after_edge ? x : x - stitched,
                         x= x - ss
+                      if (get(_responsive_)) var
+                        ratio= get(_ratio_),
+                        x= x && x * ratio,
+                        y= y && y * ratio
                       var
                         style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
@@ -1904,6 +1909,7 @@
                   truescale= get(_truescale_),
                   ratio= set(_ratio_, t.width() / truescale.width)
                 $.each(truescale, function(key, value){ set(key, value * ratio) })
+                t.trigger('frameChange.annotations');
               },
 
               // - Interaction graph's zero point reset
