@@ -1054,7 +1054,6 @@
                   //
                   preload: function(e){
                     var
-                      space= get(_dimensions_),
                       $overlay= t.parent(),
                       images= get(_images_),
                       is_sprite= !images.length,
@@ -1073,8 +1072,6 @@
                     while(preload.length){
                       var
                         uri= opt.path+preload.shift(),
-                        width= space.x * (!is_sprite ? 1 : footage),
-                        height= space.y * (!is_sprite ? 1 : frames / footage) * (!opt.directional ? 1 : 2),
                         $img= $(tag(_img_)).appendTo($cache)
                       // Each image, which finishes the load triggers `"preloaded"` Event.
                       $img.bind('load error abort', function(e){
