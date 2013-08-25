@@ -54,6 +54,7 @@
         tempo: 'Number',
         ticks: 'Number',
         tier: 'Number',
+        truescale: 'Object',
         velocity: 'Number',
         vertical: 'Boolean',
         width: 'Number'

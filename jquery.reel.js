@@ -884,11 +884,13 @@
                     images= set(_images_, opt.images || []),
                     stitched= opt.stitched,
                     responsive= set(_responsive_, opt.responsive && !stitched && !!images.length),
+                    truescale= set(_truescale_, {}),
                     loops= opt.loops,
                     orbital= opt.orbital,
                     revolution= opt.revolution,
                     rows= opt.rows,
                     footage= opt.footage,
+                    spacing= set(_spacing_, opt.spacing),
                     width= set(_width_, t.width()),
                     height= set(_height_, t.height()),
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
@@ -896,6 +898,8 @@
                     revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || width * 2),
                     revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (rows > 3 ? height : height / (5 - rows)))),
                     rows= stitched ? 1 : ceil(frames / footage),
+                    stitched_travel= set(_stitched_travel_, stitched - (loops ? 0 : width)),
+                    stitched_shift= set(_stitched_shift_, 0),
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
                     $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+'0' }),
@@ -905,15 +909,12 @@
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cache_, $());
                   set(_cached_, []);
-                  set(_spacing_, opt.spacing);
                   set(_frame_, null);
                   set(_fraction_, null);
                   set(_row_, null);
                   set(_tier_, null);
                   set(_rows_, rows);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
-                  set(_stitched_travel_, stitched - (loops ? 0 : width));
-                  set(_stitched_shift_, 0);
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
                   set(_velocity_, 0);
@@ -943,6 +944,7 @@
                   opt.indicator || $overlay.unbind('.indicator');
                   css(__, { overflow: _hidden_, position: 'relative' });
                   responsive || css(__, { width: width, height: height });
+                  responsive && $.each(responsive_keys, function(i, key){ truescale[key]= get(key) });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
                   t.trigger('setup');
@@ -2396,9 +2398,9 @@
     _cwish_= 'cwish', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
     _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive',
     _revolution_= 'revolution', _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
+    _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
 
     // And the same goes for browser events too.
     //
@@ -2416,6 +2418,10 @@
     _hand_= 'hand', _head_= 'head', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
     _preload_= 'preload', _string_= 'string',
+
+    // Collection of data keys holding scalable pixel values responsive to the scale ratio
+    // 
+    responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_, 'stitched', _stitched_shift_, _stitched_travel_],
 
     // ---------------
     // Image Resources
