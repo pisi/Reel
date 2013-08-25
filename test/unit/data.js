@@ -37,6 +37,7 @@
         options: 'Object',
         playing: 'Boolean',
         preloaded: 'Number',
+        ratio: 'Number',
         reeled: 'Boolean',
         reeling: 'Boolean',
         responsive: 'Boolean',

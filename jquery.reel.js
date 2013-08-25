@@ -934,6 +934,7 @@
                   set(_opening_ticks_, -1);
                   set(_ticks_, -1);
                   set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
+                  set(_ratio_, 1);
                   set(_backup_, {
                     src: src,
                     classes: classes,
@@ -989,6 +990,7 @@
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
                     get(_area_).unbind(ns);
+                    $(window).unbind(_resize_, gauge);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
                       src: backup.src,
@@ -1044,6 +1046,7 @@
                     }
                     if (get(_responsive_)){
                       css(___+dot(klass), { width: '100%', height: _auto_ });
+                      $(window).bind(_resize_, gauge);
                     }
                     function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
@@ -1499,6 +1502,7 @@
                       var
                         frameshot= images[frame - 1]
                       ready && t.attr({ src: reen(path + frameshot) })
+                      get(_responsive_) && gauge();
                     }else{
                       if (!stitched) var
                         minor= (frame % footage) - 1,
@@ -1892,6 +1896,15 @@
               //
               graph= opt.graph || reel.math[opt.loops ? 'hatch' : 'envelope'],
               normal= reel.normal,
+
+              // - Response to the size changes in responsive mode
+              gauge= function(){
+                if (t.width() == get(_width_)) return;
+                var
+                  truescale= get(_truescale_),
+                  ratio= set(_ratio_, t.width() / truescale.width)
+                $.each(truescale, function(key, value){ set(key, value * ratio) })
+              },
 
               // - Interaction graph's zero point reset
               //
@@ -2396,10 +2409,10 @@
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
-    _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
-    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive',
+    _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks', _lo_= 'lo', _options_= 'options',
+    _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive',
     _revolution_= 'revolution', _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
+    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
     _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
 
     // And the same goes for browser events too.
@@ -2411,6 +2424,7 @@
     _mouseleave_= _mouse_+'leave'+pns, _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns,
     _mousewheel_= _mouse_+'wheel'+ns, _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns,
     _touchend_= _touch_+'end'+pns, _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
+    _resize_= 'resize'+ns,
 
     // And some other frequently used Strings.
     //
