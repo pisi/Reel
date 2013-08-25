@@ -2439,7 +2439,7 @@
 
     // Collection of data keys holding scalable pixel values responsive to the scale ratio
     // 
-    responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_, 'stitched', _stitched_shift_, _stitched_travel_],
+    responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_],
 
     // ---------------
     // Image Resources
