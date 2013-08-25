@@ -20,6 +20,7 @@ Version 1.2.2
   sharing of licensing policies with the jQuery framework itself.
 * Preloading cache moved from DOM to memory for better performance.
 * Hardware acceleration enabled in Firefox to help remedy occasional flickering therein (GH-196).
+* Data key `dimensions` replaced with `width` and `height` keys.
 
 
 Version 1.2.1

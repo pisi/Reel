@@ -883,11 +883,12 @@
                     revolution= opt.revolution,
                     rows= opt.rows,
                     footage= opt.footage,
-                    size= { x: t.width(), y: t.height() },
+                    width= set(_width_, t.width()),
+                    height= set(_height_, t.height()),
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
                     multirow= rows > 1 || orbital,
-                    revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || size.x * 2),
-                    revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (rows > 3 ? size.y : size.y / (5 - rows)))),
+                    revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || width * 2),
+                    revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (rows > 3 ? height : height / (5 - rows)))),
                     rows= stitched ? 1 : ceil(frames / footage),
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
@@ -904,9 +905,8 @@
                   set(_row_, null);
                   set(_tier_, null);
                   set(_rows_, rows);
-                  set(_dimensions_, size);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
-                  set(_stitched_travel_, stitched - (loops ? 0 : size.x));
+                  set(_stitched_travel_, stitched - (loops ? 0 : width));
                   set(_stitched_shift_, 0);
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
@@ -935,7 +935,7 @@
                   });
                   opt.steppable || $overlay.unbind('up.steppable');
                   opt.indicator || $overlay.unbind('.indicator');
-                  css(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
+                  css(__, { width: width, height: height, overflow: _hidden_, position: 'relative' });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
                   t.trigger('setup');
@@ -1001,7 +1001,8 @@
                   //
                   setup: function(e){
                     var
-                      space= get(_dimensions_),
+                      width= get(_width_),
+                      height= get(_height_)
                       frames= get(_frames_),
                       id= t.attr(_id_),
                       rows= opt.rows,
@@ -1013,9 +1014,9 @@
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? !stitched ? undefined : px(stitched)+___+px(space.y)
-                        : stitched && px(stitched)+___+px((space.y + opt.spacing) * rows - opt.spacing)
-                        || px((space.x + opt.spacing) * opt.footage - opt.spacing)+___+px((space.y + opt.spacing) * get(_rows_) * rows * (opt.directional? 2:1) - opt.spacing)
+                        ? !stitched ? undefined : px(stitched)+___+px(height)
+                        : stitched && px(stitched)+___+px((height + opt.spacing) * rows - opt.spacing)
+                        || px((width + opt.spacing) * opt.footage - opt.spacing)+___+px((height + opt.spacing) * get(_rows_) * rows * (opt.directional? 2:1) - opt.spacing)
                       });
                       $area
                         .bind(_touchstart_, press)
@@ -1323,7 +1324,6 @@
                           vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
                           origin= recenter_mouse(revolution, x, y)
                         if (rows > 1) var
-                          space_y= get(_dimensions_).y,
                           revolution_y= get(_revolution_y_),
                           start= get(_clicked_tier_),
                           lo= - start * revolution_y,
@@ -1484,7 +1484,8 @@
                       images= get(_images_),
                       is_sprite= !images.length || opt.stitched,
                       spacing= get(_spacing_),
-                      space= get(_dimensions_)
+                      width= get(_width_),
+                      height= get(_height_)
                     if (!is_sprite){
                       var
                         frameshot= images[frame - 1]
@@ -1495,13 +1496,13 @@
                         minor= minor < 0 ? footage - 1 : minor,
                         major= floor((frame - 0.1) / footage),
                         major= major + (rows > 1 ? 0 : (get(_backwards_) ? 0 : !opt.directional ? 0 : get(_rows_))),
-                        a= major * ((horizontal ? space.y : space.x) + spacing),
-                        b= minor * ((horizontal ? space.x : space.y) + spacing),
+                        a= major * ((horizontal ? height : width) + spacing),
+                        b= minor * ((horizontal ? width : height) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
                       else{
                         var
                           x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % stitched),
-                          y= rows <= 1 ? 0 : (space.y + spacing) * (rows - row),
+                          y= rows <= 1 ? 0 : (height + spacing) * (rows - row),
                           shift= [px(-x), px(-y)],
                           image= images.length > 1 && images[row - 1]
                         image && t.css('backgroundImage').search(path+image) < 0 && t.css({ backgroundImage: url(path+image) })
@@ -1538,10 +1539,9 @@
                   //
                   'fractionChange.indicator': function(e, deprecated_set, fraction){
                     if (deprecated_set === undefined && opt.indicator) var
-                      space= get(_dimensions_),
                       size= opt.indicator,
                       orbital= opt.orbital,
-                      travel= orbital && get(_vertical_) ? space.y : space.x,
+                      travel= orbital && get(_vertical_) ? get(_height_) : get(_width_),
                       slots= orbital ? opt.footage : opt.images.length || get(_frames_),
                       weight= ceil(travel / slots),
                       travel= travel - weight,
@@ -1561,8 +1561,7 @@
                   //
                   'tierChange.indicator': function(e, deprecated_set, tier){
                     if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
-                      space= get(_dimensions_),
-                      travel= space.y,
+                      travel= get(_height_),
                       slots= opt.rows,
                       size= opt.indicator,
                       weight= ceil(travel / slots),
@@ -1592,9 +1591,8 @@
                   //
                   'setup.annotations': function(e){
                     var
-                      space= get(_dimensions_),
                       $overlay= t.parent(),
-                      film_css= { position: _absolute_, width: space.x, height: space.y, left: 0, top: 0 }
+                      film_css= { position: _absolute_, width: get(_width_), height: get(_height_), left: 0, top: 0 }
                     $.each(get(_annotations_), function(ida, note){
                       var
                         $note= typeof note.node == _string_ ? $(note.node) : note.node || {},
@@ -1611,7 +1609,7 @@
                   },
                   'frameChange.annotations': function(e, deprecation, frame){
                     var
-                      space= get(_dimensions_),
+                      width= get(_width_),
                       stitched= opt.stitched,
                       ss= get(_stitched_shift_)
                     if (!get(_preloaded_)) return;
@@ -1628,8 +1626,8 @@
                         placed= x !== undefined && y !== undefined,
                         visible= placed && (note.at ? at : (offset >= 0 && (!end || offset <= end - start)))
                       if (stitched) var
-                        on_edge= x < space.x && ss > stitched - space.x,
-                        after_edge= x > stitched - space.x && ss >= 0 && ss < space.x,
+                        on_edge= x < width && ss > stitched - width,
+                        after_edge= x > stitched - width && ss >= 0 && ss < width,
                         x= !on_edge ? x : x + stitched,
                         x= !after_edge ? x : x - stitched,
                         x= x - ss
@@ -1660,7 +1658,7 @@
                   //
                   'up.steppable': function(e, ev){
                     if (panned || wheeled) return;
-                    t.trigger(get(_clicked_location_).x - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
+                    t.trigger(get(_clicked_location_).x - t.offset().left > 0.5 * get(_width_) ? 'stepRight' : 'stepLeft')
                   },
                   'stepLeft stepRight': function(e){
                     unidle();
@@ -1731,12 +1729,12 @@
                   //
                   'tick.reel.preload': function(e){
                     var
-                      space= get(_dimensions_),
+                      width= get(_width_),
                       current= number(preloader.$.css(_width_)),
                       images= get(_images_).length || 1,
-                      target= round(1 / images * get(_preloaded_) * space.x)
+                      target= round(1 / images * get(_preloaded_) * width)
                     preloader.$.css({ width: current + (target - current) / 3 + 1 })
-                    if (get(_preloaded_) === images && current > space.x - 1){
+                    if (get(_preloaded_) === images && current > width - 1){
                       preloader.$.fadeOut(300, function(){ preloader.$.remove() });
                       pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     }
@@ -1831,7 +1829,7 @@
                   size= opt.preloader
                 css(___+dot(preloader_klass), {
                   position: _absolute_,
-                  left: 0, top: get(_dimensions_).y - size,
+                  left: 0, top: get(_height_) - size,
                   height: size,
                   overflow: _hidden_,
                   backgroundColor: '#000'
@@ -1867,7 +1865,7 @@
               //
               offscreen= function(){
                 var
-                  height= get(_dimensions_).y,
+                  height= get(_height_),
                   rect= t[0].getBoundingClientRect()
                 return rect.top < -height ||
                        rect.bottom > height + $(window).height()
@@ -2388,12 +2386,12 @@
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
-    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
-    _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
+    _cwish_= 'cwish', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
+    _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
+    _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
 
     // And the same goes for browser events too.
     //
@@ -2408,10 +2406,9 @@
     // And some other frequently used Strings.
     //
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _cdn_= '@CDN@', _div_= 'div',
-    _hand_= 'hand', _head_= 'head', _height_= 'height', _html_= 'html', _id_= 'id',
+    _hand_= 'hand', _head_= 'head', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
     _preload_= 'preload', _string_= 'string',
-    _width_= 'width',
 
     // ---------------
     // Image Resources

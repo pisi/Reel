@@ -23,10 +23,10 @@
         clicked_on: 'Number',
         clicked_tier: 'Number',
         cwish: 'Number',
-        dimensions: 'Object',
         fraction: 'Number',
         frame: 'Number',
         frames: 'Number',
+        height: 'Number',
         hi: 'Number',
         id: 'String',
         image: 'String',
@@ -54,7 +54,8 @@
         ticks: 'Number',
         tier: 'Number',
         velocity: 'Number',
-        vertical: 'Boolean'
+        vertical: 'Boolean',
+        width: 'Number'
       }
       count= 0;
 
@@ -84,15 +85,14 @@
 
   });
 
-  test( 'Stage dimensions inside `.reel("dimensions")`', function(){
+  test( 'Stage dimensions inside `.reel("width")` and `.reel("height")', function(){
 
-    expect(3);
+    expect(2);
     var
       $reel= $('#image').reel()
 
-    ok( is('Object', $reel.reel('dimensions')), '`.reel("dimensions")` Object');
-    ok( is('Number', $reel.reel('dimensions').x), '`x` Number');
-    ok( is('Number', $reel.reel('dimensions').y), '`y` Number');
+    ok( is('Number', $reel.reel('width')), '`width` Number');
+    ok( is('Number', $reel.reel('height')), '`height` Number');
 
   });
 
@@ -144,14 +144,14 @@
     ok( $image.data(key), 'Test probe exists even in the running instance after the `.reel() call');
     equal( $image.data(key), value, 'And it still is the same probe');
     ok( is('Number', $image.data('frame')), 'Instance data are accessible (`"frame"`)');
-    ok( is('Object', $image.data('dimensions')), 'Instance data are gone (`"dimensions"`)');
+    ok( is('Number', $image.data('width')), 'Instance data are accessible (`"width"`)');
     ok( is('Array', $image.data('images')), 'Instance data are accessible (`"images"`)');
 
     $image.unreel();
     ok( $image.data(key), 'Test probe is still present even after `.unreel() call');
     equal( $image.data(key), value, 'And it is our probe');
     ok( typeof $image.data('frame') === 'undefined', 'Instance data are gone (`"frame"`)');
-    ok( typeof $image.data('dimensions') === 'undefined', 'Instance data are gone (`"dimensions"`)');
+    ok( typeof $image.data('height') === 'undefined', 'Instance data are gone (`"height"`)');
     ok( typeof $image.data('images') === 'undefined', 'Instance data are gone (`"images"`)');
 
   });
