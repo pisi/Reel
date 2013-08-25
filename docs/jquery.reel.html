@@ -160,7 +160,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.2.2
- * Updated: 2013-08-20
+ * Updated: 2013-08-25
  *
  * Requires jQuery 1.5 or higher
  */</span>
@@ -2171,6 +2171,7 @@ and dimensions defined.</p>
                     instances_count= instances.push(add_instance($instance)[<span class="number">0</span>]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, <span class="string">'$1'</span> + opt.suffix + <span class="string">'.$2'</span>));
+                  set(_cache_, $());
                   set(_cached_, []);
                   set(_spacing_, opt.spacing);
                   set(_frame_, <span class="literal">null</span>);
@@ -2334,7 +2335,7 @@ handler.</p>
                       $overlay= t.parent(),
                       $area= set(_area_, $(opt.area || $overlay )),
                       rows= opt.rows || <span class="number">1</span>
-                    css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_ });
+                    css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: <span class="string">'translateZ(0)'</span> });
                     <span class="keyword">if</span> (touchy){</pre></div></div>
             
         </li>
@@ -2374,7 +2375,6 @@ handler.</p>
                     rows &gt; <span class="number">1</span> &amp;&amp; opt.indicator &amp;&amp; $overlay.append(indicator(<span class="string">'y'</span>));
                     opt.monitor &amp;&amp; $overlay.append($monitor= $(tag(_div_), { <span class="string">'class'</span>: monitor_klass }))
                                 &amp;&amp; css(___+dot(monitor_klass), { position: _absolute_, left: <span class="number">0</span>, top: <span class="number">0</span> });
-                    css(___+dot(cached_klass), { display: _none_ });
                   },</pre></div></div>
             
         </li>
@@ -2412,6 +2412,7 @@ asynchronously loads all of them.</p>
                       preload= is_sprite ? [get(_image_)] : order(images.slice(<span class="number">0</span>), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? <span class="number">0.5</span> : <span class="number">0</span>),
+                      $cache= $(tag(_div_)),
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());</pre></div></div>
             
@@ -2432,7 +2433,7 @@ asynchronously loads all of them.</p>
                         uri= opt.path+preload.shift(),
                         width= space.x * (!is_sprite ? <span class="number">1</span> : footage),
                         height= space.y * (!is_sprite ? <span class="number">1</span> : frames / footage) * (!opt.directional ? <span class="number">1</span> : <span class="number">2</span>),
-                        $img= $(tag(_img_)).attr({ <span class="string">'class'</span>: cached_klass, width: width, height: height }).appendTo($overlay)</pre></div></div>
+                        $img= $(tag(_img_)).appendTo($cache)</pre></div></div>
             
         </li>
         
@@ -2446,14 +2447,15 @@ asynchronously loads all of them.</p>
             
             <div class="content"><div class='highlight'><pre>                      $img.bind(<span class="string">'load error abort'</span>, <span class="keyword">function</span>(e){
                         e.type != <span class="string">'load'</span> &amp;&amp; t.trigger(e.type);
-                        <span class="keyword">return</span> !!$(<span class="keyword">this</span>).parent().length &amp;&amp; t.trigger(<span class="string">'preloaded'</span>) &amp;&amp; <span class="literal">false</span>;
+                        <span class="keyword">return</span> !detached($overlay) &amp;&amp; t.trigger(<span class="string">'preloaded'</span>) &amp;&amp; <span class="literal">false</span>;
                       });
                       load(uri, $img);
                       uris.push(uri);
                     }
+                    set(_cache_, $cache);
                     set(_cached_, uris);
                     <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">(uri, $img)</span>{</span> setTimeout(<span class="keyword">function</span>(){
-                      $img.parent().length &amp;&amp; $img.attr({ src: reen(uri) });
+                      !detached($overlay) &amp;&amp; $img.attr({ src: reen(uri) });
                     }, (to_load - preload.length) * <span class="number">2</span>) }
                   },</pre></div></div>
             
@@ -3171,7 +3173,7 @@ new preload sequence. Images are actually switched only after the new image is f
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'imageChange imagesChange'</span>: <span class="keyword">function</span>(e, nil, image){
                     preloader.$.remove();
-                    t.siblings(dot(cached_klass)).remove();
+                    get(_cache_).empty().remove();
                     t.parent().bind(_preloaded_, on.instance.preloaded);
                     pool.bind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     t.trigger(<span class="string">'preload'</span>);
@@ -3630,7 +3632,7 @@ again,</li>
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_),
                       monitor= opt.monitor
-                    <span class="keyword">if</span> (!reel.intense &amp;&amp; offscreen()) <span class="keyword">return</span> mute(e);
+                    <span class="keyword">if</span> (!reel.intense &amp;&amp; offscreen()) <span class="keyword">return</span>;
                     <span class="keyword">if</span> (braking) <span class="keyword">var</span>
                       braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked &gt; <span class="number">0.1</span> ? braked : (braking= operated= <span class="number">0</span>))
@@ -3821,7 +3823,6 @@ is halted until the opening finishes.</p>
                   rect= t[<span class="number">0</span>].getBoundingClientRect()
                 <span class="keyword">return</span> rect.top &lt; -height ||
                        rect.bottom &gt; height + $(window).height()
-                       
               },</pre></div></div>
             
         </li>
@@ -4905,7 +4906,6 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
             <div class="content"><div class='highlight'><pre>    overlay_klass= klass + <span class="string">'-overlay'</span>,
     indicator_klass= klass + <span class="string">'-indicator'</span>,
     preloader_klass= klass + <span class="string">'-preloader'</span>,
-    cached_klass= klass + <span class="string">'-cached'</span>,
     monitor_klass= klass + <span class="string">'-monitor'</span>,
     annotation_klass= klass + <span class="string">'-annotation'</span>,
     panning_klass= klass + <span class="string">'-panning'</span>,
@@ -4977,8 +4977,8 @@ when the code is minified.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    _annotations_= <span class="string">'annotations'</span>,
-    _area_= <span class="string">'area'</span>, _auto_= <span class="string">'auto'</span>, _backup_= <span class="string">'backup'</span>, _backwards_= <span class="string">'backwards'</span>, _bit_= <span class="string">'bit'</span>, _brake_= <span class="string">'brake'</span>, _cached_= <span class="string">'cached'</span>, _center_= <span class="string">'center'</span>,
-    _clicked_= <span class="string">'clicked'</span>, _clicked_location_= <span class="string">'clicked_location'</span>, _clicked_on_= <span class="string">'clicked_on'</span>, _clicked_tier_= <span class="string">'clicked_tier'</span>,
+    _area_= <span class="string">'area'</span>, _auto_= <span class="string">'auto'</span>, _backup_= <span class="string">'backup'</span>, _backwards_= <span class="string">'backwards'</span>, _bit_= <span class="string">'bit'</span>, _brake_= <span class="string">'brake'</span>, _cache_= <span class="string">'cache'</span>, _cached_=_cache_+<span class="string">'d'</span>, 
+    _center_= <span class="string">'center'</span>, _clicked_= <span class="string">'clicked'</span>, _clicked_location_= <span class="string">'clicked_location'</span>, _clicked_on_= <span class="string">'clicked_on'</span>, _clicked_tier_= <span class="string">'clicked_tier'</span>,
     _cwish_= <span class="string">'cwish'</span>, _dimensions_= <span class="string">'dimensions'</span>, _fraction_= <span class="string">'fraction'</span>, _frame_= <span class="string">'frame'</span>,
     _frames_= <span class="string">'frames'</span>, _hi_= <span class="string">'hi'</span>, _hidden_= <span class="string">'hidden'</span>, _image_= <span class="string">'image'</span>, _images_= <span class="string">'images'</span>, _opening_= <span class="string">'opening'</span>, _opening_ticks_= _opening_+<span class="string">'_ticks'</span>,
     _lo_= <span class="string">'lo'</span>, _options_= <span class="string">'options'</span>, _playing_= <span class="string">'playing'</span>, _preloaded_= <span class="string">'preloaded'</span>, _reeling_= <span class="string">'reeling'</span>, _reeled_= <span class="string">'reeled'</span>, _revolution_= <span class="string">'revolution'</span>,
@@ -5153,6 +5153,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
   <span class="function"><span class="keyword">function</span> <span class="title">pad</span><span class="params">(string, len, fill)</span>{</span> <span class="keyword">while</span> (string.length &lt; len) string= fill + string; <span class="keyword">return</span> string }
   <span class="function"><span class="keyword">function</span> <span class="title">reen</span><span class="params">(uri)</span>{</span> <span class="keyword">return</span> encodeURI(decodeURI(uri)) }
   <span class="function"><span class="keyword">function</span> <span class="title">soft_array</span><span class="params">(string)</span>{</span> <span class="keyword">return</span> reel.re.array.exec(string) ? string.split(reel.re.array) : string }
+  <span class="function"><span class="keyword">function</span> <span class="title">detached</span><span class="params">($node)</span>{</span> <span class="keyword">return</span> !$node.parents(_html_).length }
   <span class="function"><span class="keyword">function</span> <span class="title">numerize_array</span><span class="params">(array)</span>{</span> <span class="keyword">return</span> <span class="keyword">typeof</span> array == _string_ ? array : $.each(array, <span class="keyword">function</span>(ix, it){ array[ix]= it ? +it : <span class="literal">undefined</span> }) }
   <span class="function"><span class="keyword">function</span> <span class="title">deprecated</span><span class="params">(input)</span>{</span> <span class="keyword">try</span>{ console.warn(<span class="string">'Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations'</span>) }<span class="keyword">catch</span>(e){} <span class="keyword">return</span> input }
 })(jQuery, window, document);

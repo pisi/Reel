@@ -60,15 +60,15 @@ Requirements
 Download
 --------
 
-* **[Annotated open source][source] (~ 107,4 kB)**
-* or [minified version][min] (~ 18,0 kB)
+* **[Annotated open source][source] (~ 110,0 kB)**
+* or [minified version][min] (~ 18,2 kB)
 * or [entire package][zip] (~ 7,8 MB)
 
 
 Link the [CDN][cdn]
 -------------------
 
-* **[http://code.vostrel.net/jquery.reel-1.2-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
+* **[http://code.vostrel.net/jquery.reel-1.2.2-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
 
 
 Documentation
