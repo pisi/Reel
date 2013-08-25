@@ -839,7 +839,9 @@
                 src= attr.src || $this.attr('src'),
                 width= attr.width || $this.width(),
                 height= attr.height || $this.height()
-              if (src && width && height) return true;
+              if (src && width && height) return true
+              // In case element did not qualify an Javascript error is thrown out.
+              else error('Missing attributes: Image needs `src` and both dimensions to be set to Reel');
             }),
             instances= []
 
@@ -2481,6 +2483,7 @@
   function detached($node){ return !$node.parents(_html_).length }
   function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
+  function error(message){ try{ console.error(message) }catch(e){} }
 })(jQuery, window, document);
 
 });
