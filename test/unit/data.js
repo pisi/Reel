@@ -39,6 +39,7 @@
         preloaded: 'Number',
         reeled: 'Boolean',
         reeling: 'Boolean',
+        responsive: 'Boolean',
         revolution: 'Number',
         revolution_y: 'Number',
         row: 'Number',
