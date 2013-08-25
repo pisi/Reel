@@ -1843,12 +1843,10 @@
               //
               $monitor= $(),
               preloader= function(){
-                var
-                  size= opt.preloader
                 css(___+dot(preloader_klass), {
                   position: _absolute_,
-                  left: 0, top: get(_height_) - size,
-                  height: size,
+                  left: 0, bottom: 0,
+                  height: opt.preloader,
                   overflow: _hidden_,
                   backgroundColor: '#000'
                 });
