@@ -917,6 +917,7 @@
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
+                  set(_loading_, false);
                   set(_velocity_, 0);
                   set(_vertical_, opt.vertical);
                   set(_preloaded_, 0);
@@ -1083,6 +1084,7 @@
                     $overlay.addClass(loading_klass).append(preloader());
                     // It also finalizes the instance stylesheet and prepends it to the head.
                     set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
+                    set(_loading_, true);
                     t.trigger('stop');
                     while(preload.length){
                       var
@@ -1132,6 +1134,7 @@
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
                     opt.stitched && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
+                    set(_loading_, false);
                   },
 
                   // ----------------
@@ -1533,8 +1536,6 @@
                   'imageChange imagesChange': function(e, nil, image){
                     preloader.$.remove();
                     get(_cache_).empty().remove();
-                    t.parent().bind(_preloaded_, on.instance.preloaded);
-                    pool.bind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     t.trigger('preload');
                   },
 
@@ -1746,6 +1747,7 @@
                   // until all images are loaded and to unbind itself then.
                   //
                   'tick.reel.preload': function(e){
+                    if (!get(_loading_)) return;
                     var
                       width= get(_width_),
                       current= number(preloader.$.css(_width_)),
@@ -1754,7 +1756,6 @@
                     preloader.$.css({ width: current + (target - current) / 3 + 1 })
                     if (get(_preloaded_) === images && current > width - 1){
                       preloader.$.fadeOut(300, function(){ preloader.$.remove() });
-                      pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     }
                   },
 
@@ -2413,7 +2414,7 @@
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
     _cwish_= 'cwish', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
-    _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks', _lo_= 'lo', _options_= 'options',
+    _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks', _lo_= 'lo', _options_= 'options',
     _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive',
     _revolution_= 'revolution', _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',

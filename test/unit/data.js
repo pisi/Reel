@@ -32,6 +32,7 @@
         image: 'String',
         images: 'Array',
         lo: 'Number',
+        loading: 'Boolean',
         opening: 'Boolean',
         opening_ticks: 'Number',
         options: 'Object',
@@ -615,6 +616,26 @@
       ok( $reel.reel('cache').is('div'), 'Cache is a `<div>` element');
       equal( $reel.reel('cache').children().length, frames, 'Containing one children per frame');
       equal( $reel.reel('cache').children('img').length, frames, 'These children are all `<img>` elements');
+      start();
+    });
+
+  });
+
+  asyncTest( 'Preloading state of the instance can be read from `loading` data key', function(){
+
+    expect(2);
+
+    var
+      frames= 3,
+      $reel= $('#image').reel({
+        images: 'abc#.jpg',
+        frames: frames
+      })
+
+    equal( $reel.reel('loading'), true, 'Boolean `true` when loading is in progress');
+
+    $(document).bind('loaded.test', function(){
+      equal( $reel.reel('loading'), false, 'Boolean `true` when loading is over');
       start();
     });
 
