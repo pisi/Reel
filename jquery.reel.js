@@ -990,6 +990,7 @@
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
+                    get(_cache_).empty();
                     get(_area_).unbind(ns);
                     $(window).unbind(_resize_, gauge);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
@@ -1079,7 +1080,7 @@
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
-                      $cache= get(_cache_),
+                      $cache= get(_cache_).empty(),
                       uris= []
                     $overlay.addClass(loading_klass);
                     // It also finalizes the instance stylesheet and prepends it to the head.
@@ -1098,7 +1099,6 @@
                       load(uri, $img);
                       uris.push(uri);
                     }
-                    set(_cache_, $cache);
                     set(_cached_, uris);
                     function load(uri, $img){ setTimeout(function(){
                       !detached($overlay) && $img.attr({ src: reen(uri) });
@@ -1535,7 +1535,6 @@
                   // new preload sequence. Images are actually switched only after the new image is fully loaded.
                   //
                   'imageChange imagesChange': function(e, nil, image){
-                    get(_cache_).empty().remove();
                     t.trigger('preload');
                   },
 
