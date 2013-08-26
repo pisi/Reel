@@ -1723,6 +1723,7 @@
                   // images changes event leading to reload of frames.
                   //
                   'resize.responsive': function(e){
+                    if (get(_loading_)) return;
                     t.trigger('imagesChange');
                   },
 
