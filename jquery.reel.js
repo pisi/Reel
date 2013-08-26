@@ -1906,8 +1906,8 @@
                 var
                   truescale= get(_truescale_),
                   ratio= set(_ratio_, t.width() / truescale.width)
-                $.each(truescale, function(key, value){ set(key, value * ratio) })
                 t.trigger('frameChange.annotations');
+                $.each(truescale, function(key, value){ set(key, round(value * ratio)) })
               },
 
               // - Interaction graph's zero point reset
