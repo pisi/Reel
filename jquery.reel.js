@@ -1135,6 +1135,7 @@
                     opt.stitched && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
                     set(_loading_, false);
+                    loaded= true;
                   },
 
                   // ----------------
@@ -1747,7 +1748,7 @@
                   // until all images are loaded and to unbind itself then.
                   //
                   'tick.reel.preload': function(e){
-                    if (!get(_loading_)) return;
+                    if (!(loaded || get(_loading_))) return;
                     var
                       width= get(_width_),
                       current= number(preloader.$.css(_width_)),
@@ -1756,6 +1757,7 @@
                     preloader.$.css({ width: current + (target - current) / 3 + 1 })
                     if (get(_preloaded_) === images && current > width - 1){
                       preloader.$.fadeOut(300, function(){ preloader.$.remove() });
+                      loaded= false;
                     }
                   },
 
@@ -1815,6 +1817,8 @@
                   }
                 }
               },
+
+              loaded= false,
 
               // ------------------------
               // Instance Private Helpers
