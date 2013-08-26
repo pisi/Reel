@@ -468,7 +468,7 @@
 
           // Wait a sec for preloader transition to finish
           setTimeout(function(){
-            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            equal( !$reel.siblings('.reel-preloader').css('width'), 0, 'Preloader gets properly reset' );
             start();
           }, 1000);
           break;
@@ -516,7 +516,7 @@
 
           // Wait a sec for preloader transition to finish
           setTimeout(function(){
-            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            equal( !$reel.siblings('.reel-preloader').css('width'), 0, 'Preloader gets properly reset' );
             start();
           }, 1000);
           break;

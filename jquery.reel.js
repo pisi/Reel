@@ -1019,7 +1019,7 @@
                       id= t.attr(_id_),
                       rows= opt.rows,
                       stitched= opt.stitched,
-                      $overlay= t.parent(),
+                      $overlay= t.parent().append(preloader()),
                       $area= set(_area_, $(opt.area || $overlay )),
                       rows= opt.rows || 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
@@ -1081,7 +1081,7 @@
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
                       $cache= get(_cache_),
                       uris= []
-                    $overlay.addClass(loading_klass).append(preloader());
+                    $overlay.addClass(loading_klass);
                     // It also finalizes the instance stylesheet and prepends it to the head.
                     set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     set(_loading_, true);
@@ -1116,7 +1116,7 @@
                       images= get(_images_).length || 1,
                       preloaded= set(_preloaded_, min(get(_preloaded_) + 1, images))
                     if (preloaded === images){
-                      t.parent().removeClass(loading_klass).unbind(_preloaded_, on.instance.preloaded);
+                      t.parent().removeClass(loading_klass);
                       t.trigger('loaded');
                     }
                     if (preloaded === 1) var
@@ -1535,7 +1535,6 @@
                   // new preload sequence. Images are actually switched only after the new image is fully loaded.
                   //
                   'imageChange imagesChange': function(e, nil, image){
-                    preloader.$.remove();
                     get(_cache_).empty().remove();
                     t.trigger('preload');
                   },
@@ -1756,8 +1755,8 @@
                       target= round(1 / images * get(_preloaded_) * width)
                     preloader.$.css({ width: current + (target - current) / 3 + 1 })
                     if (get(_preloaded_) === images && current > width - 1){
-                      preloader.$.fadeOut(300, function(){ preloader.$.remove() });
                       loaded= false;
+                      preloader.$.fadeOut(300, function(){ preloader.$.css({ opacity: 1, width: 0 }) });
                     }
                   },
 
