@@ -907,7 +907,7 @@
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
-                  set(_cache_, $());
+                  set(_cache_, $(tag(_div_)));
                   set(_cached_, []);
                   set(_frame_, null);
                   set(_fraction_, null);
@@ -1078,7 +1078,7 @@
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
-                      $cache= $(tag(_div_)),
+                      $cache= get(_cache_),
                       uris= []
                     $overlay.addClass(loading_klass).append(preloader());
                     // It also finalizes the instance stylesheet and prepends it to the head.

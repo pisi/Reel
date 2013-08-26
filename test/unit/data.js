@@ -598,4 +598,26 @@
 
   });
 
+  asyncTest( 'Image cache stored in the data', function(){
+
+    expect(4);
+
+    var
+      frames= 3,
+      $reel= $('#image').reel({
+        images: 'abc#.jpg',
+        frames: frames
+      })
+
+    ok( !!$reel.reel('cache').children().length, 'Initially empty cache is filled right away');
+
+    $(document).bind('loaded.test', function(){
+      ok( $reel.reel('cache').is('div'), 'Cache is a `<div>` element');
+      equal( $reel.reel('cache').children().length, frames, 'Containing one children per frame');
+      equal( $reel.reel('cache').children('img').length, frames, 'These children are all `<img>` elements');
+      start();
+    });
+
+  });
+
 })(jQuery);
