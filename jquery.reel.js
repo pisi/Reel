@@ -992,7 +992,7 @@
                     get(_style_).remove();
                     get(_cache_).empty();
                     get(_area_).unbind(ns);
-                    $(window).unbind(_resize_, gauge);
+                    $(window).unbind(_resize_, slow_gauge);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
                       src: backup.src,
@@ -1048,7 +1048,7 @@
                     }
                     if (get(_responsive_)){
                       css(___+dot(klass), { width: '100%', height: _auto_ });
-                      $(window).bind(_resize_, gauge);
+                      $(window).bind(_resize_, slow_gauge);
                     }
                     function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
@@ -1087,6 +1087,7 @@
                     set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     set(_loading_, true);
                     t.trigger('stop');
+                    gauge();
                     while(preload.length){
                       var
                         uri= opt.path+preload.shift(),
@@ -1917,6 +1918,12 @@
               normal= reel.normal,
 
               // - Response to the size changes in responsive mode
+              //
+              gauge_delay,
+              slow_gauge= function(){
+                clearTimeout(gauge_delay);
+                gauge_delay= setTimeout(gauge, reel.resize_gauge);
+              },
               gauge= function(){
                 if (t.width() == get(_width_)) return;
                 var
@@ -2360,6 +2367,16 @@
       //
       leader: leader,
 
+      // `$.reel.resize_gauge` specifies a throttling interval for triggering of `resize` events,
+      // in milliseconds.
+      //
+      // ---
+
+      // ### `$.reel.resize_gauge` ######
+      // `Number`, since 1.3
+      //
+      resize_gauge: 300,
+      
       // `$.reel.cost` holds document-wide costs in miliseconds of running all Reel instances. It is used
       // to adjust actual timeout of the ticker.
       //
