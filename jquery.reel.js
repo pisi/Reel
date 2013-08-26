@@ -1712,6 +1712,19 @@
                     set(_row_, get(_row_) + 1);
                   },
 
+                  // -----------------------
+                  // [NEW] Responsive Events
+                  // -----------------------
+                  //
+                  // Reel is built to respect the dimensions of its parent when `responsive: true` is set.
+                  // In case the parent's size changes, in addition to physical measurements being recalculated
+                  // the instance starts to emit throttled `resize` events. This handler in turn emulates
+                  // images changes event leading to reload of frames.
+                  //
+                  'resize.responsive': function(e){
+                    t.trigger('imagesChange');
+                  },
+
                   // ----------------
                   // Follow-up Events
                   // ----------------
@@ -1909,8 +1922,8 @@
                 var
                   truescale= get(_truescale_),
                   ratio= set(_ratio_, t.width() / truescale.width)
-                t.trigger('frameChange.annotations');
                 $.each(truescale, function(key, value){ set(key, round(value * ratio)) })
+                t.trigger('resize');
               },
 
               // - Interaction graph's zero point reset
