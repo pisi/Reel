@@ -897,8 +897,8 @@
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
                     images= set(_images_, opt.images || []),
-                    stitched= opt.stitched,
                     responsive= set(_responsive_, opt.responsive && !stitched && !!images.length),
+                    stitched= set(_stitched_, opt.stitched),
                     truescale= set(_truescale_, {}),
                     loops= opt.loops,
                     orbital= opt.orbital,
@@ -1034,7 +1034,7 @@
                       frames= get(_frames_),
                       id= t.attr(_id_),
                       rows= opt.rows,
-                      stitched= opt.stitched,
+                      stitched= get(_stitched_),
                       $overlay= t.parent().append(preloader()),
                       $area= set(_area_, $(opt.area || $overlay )),
                       rows= opt.rows || 1
@@ -1147,7 +1147,7 @@
                   //
                   loaded: function(e){
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
-                    opt.stitched && t.attr({ src: cdn(transparent) });
+                    get(_stitched_) && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
                     set(_loading_, false);
                     loaded= true;
@@ -1511,9 +1511,9 @@
                       frame= frame + footage
                     var
                       horizontal= opt.horizontal,
-                      stitched= opt.stitched,
+                      stitched= get(_stitched_),
                       images= get(_images_),
-                      is_sprite= !images.length || opt.stitched,
+                      is_sprite= !images.length || stitched,
                       spacing= get(_spacing_),
                       width= get(_width_),
                       height= get(_height_)
@@ -1574,7 +1574,7 @@
                       weight= ceil(travel / slots),
                       travel= travel - weight,
                       indicate= round(interpolate(fraction, 0, travel)),
-                      indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
+                      indicate= !opt.cw || get(_stitched_) ? indicate : travel - indicate,
                       $indicator= indicator.$x.css(get(_vertical_)
                       ? { left: 0, top: px(indicate), bottom: _auto_, width: size, height: weight }
                       : { bottom: 0, left: px(indicate), top: _auto_, width: weight, height: size })
@@ -1638,7 +1638,7 @@
                   'frameChange.annotations': function(e, deprecation, frame){
                     var
                       width= get(_width_),
-                      stitched= opt.stitched,
+                      stitched= get(_stitched_),
                       ss= get(_stitched_shift_)
                     if (!get(_preloaded_)) return;
                     if (deprecation === undefined) $.each(get(_annotations_), function(ida, note){
@@ -2506,8 +2506,8 @@
     _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks', _lo_= 'lo', _options_= 'options',
     _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive',
     _revolution_= 'revolution', _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
-    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
+    _stitched_= 'stitched', _stitched_shift_= _stitched_+'_shift', _stitched_travel_= _stitched_+'_travel', _stopped_= 'stopped', _style_= 'style',
+    _tempo_= 'tempo', _ticks_= 'ticks', _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
 
     // And the same goes for browser events too.
     //

@@ -49,6 +49,7 @@
         spacing: 'Number',
         speed: 'Number',
         stage: 'String',
+        stitched: 'Number',
         stitched_travel: 'Number',
         stitched_shift: 'Number',
         stopped: 'Boolean',
