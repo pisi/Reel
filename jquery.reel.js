@@ -1090,7 +1090,7 @@
                     gauge();
                     while(preload.length){
                       var
-                        uri= opt.path+preload.shift(),
+                        uri= reel.substitute(opt.path+preload.shift(), get),
                         $img= $(tag(_img_)).appendTo($cache)
                       // Each image, which finishes the load triggers `"preloaded"` Event.
                       $img.bind('load error abort', function(e){
@@ -1506,8 +1506,8 @@
                     if (!is_sprite){
                       var
                         frameshot= images[frame - 1]
-                      ready && t.attr({ src: reen(path + frameshot) })
                       get(_responsive_) && gauge();
+                      ready && t.attr({ src: reen(reel.substitute(path + frameshot, get)) })
                     }else{
                       if (!stitched) var
                         minor= (frame % footage) - 1,
