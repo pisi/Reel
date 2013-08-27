@@ -1030,7 +1030,7 @@
                   setup: function(e){
                     var
                       width= get(_width_),
-                      height= get(_height_)
+                      height= get(_height_),
                       frames= get(_frames_),
                       id= t.attr(_id_),
                       rows= opt.rows,
