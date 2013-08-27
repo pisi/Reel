@@ -526,6 +526,45 @@
 
   });
 
+  $.each({
+    'width in folder':          { width: 357, height: 211, url: 'images/@W/image.jpg',           target: 'images/357/image.jpg' },
+    'height in folder':         { width: 357, height: 211, url: 'images/@H/image.jpg',           target: 'images/211/image.jpg' },
+    'both in folder':           { width: 357, height: 211, url: 'images/@W/@H/image.jpg',        target: 'images/357/211/image.jpg' },
+    'width in file':            { width:  78, height: 875, url: 'images/big/image-@W-wide.jpg',  target: 'images/big/image-78-wide.jpg' },
+    'height in file':           { width:  78, height: 875, url: 'images/big/image-@H-high.jpg',  target: 'images/big/image-875-high.jpg' },
+    'both in file':             { width:  78, height: 875, url: 'images/big/image-@Wx@H.jpg',    target: 'images/big/image-78x875.jpg' },
+    'width in query params':    { width: 124, height: 641, url: 'image.php?width=@W',            target: 'image.php?width=124' },
+    'height in query params':   { width: 124, height: 641, url: 'image.php?height=@H',           target: 'image.php?height=641' },
+    'both in query params':     { width: 124, height: 641, url: 'image.php?w=@W&h=@H',           target: 'image.php?w=124&h=641' },
+    'folder query combination': { width: 200, height: 150, url: 'files/@W/pic?@H',               target: 'files/200/pic?150' },
+    'folder file combination':  { width: 200, height: 150, url: 'files/@W/@H.png',               target: 'files/200/150.png' },
+    'file query combination':   { width: 200, height: 150, url: 'file/@W-wide?@H-high',          target: 'file/200-wide?150-high' },
+    'folder file query combo':  { width: 200, height: 150, url: 'files/@W-wide/@H-high?s=@Wx@H', target: 'files/200-wide/150-high?s=200x150' }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation, function(){
+
+      expect(3);
+
+      var
+        $reel= $('#image').reel({
+          attr: {
+            width:  def.width,
+            height: def.height
+          }
+        }),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) }
+
+      equal( $reel.reel('width'), def.width, 'Correct target width');
+      equal( $reel.reel('height'), def.height, 'Correct target height');
+
+      equal( $.reel.substitute(def.url, get), def.target, 'URL with substituted value(s)');
+
+    });
+  });
+
   test( 'Data-configured `&lt;img&gt;` tags are turned into Reel instances upon scan', function(){
 
     expect(7);

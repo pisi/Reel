@@ -2268,6 +2268,48 @@
         }
       },
 
+      // -------------------------
+      // [NEW] Data Values in URLs
+      // -------------------------
+      //
+      // Reel will process each and every image resource URL and substitute special markup
+      // with actual values from the data store. Marks made of `@` character followed by upper case
+      // letter will be substituted with values either directly from data store (`@W` and `@H`
+      // for `width` and `height`) or calculated (`@T` is substituted with momentary timestamp
+      // in milliseconds).
+      // Markup can appear anywhere in the folder name, file name or the query params
+      // (also in [`path`](#path-Option)) and even multiple times.
+      //
+      // Comes handy in product configurators
+      // and works magic in conjunction with [responsive](#responsive-Option) option.
+      //
+      // _**Example:** Following URLs:_
+      //
+      //     image.jpg?size=@Wx@H
+      //     pic/@W/@H/rabbit.png
+      //     image.php?nocache=@T
+      //
+      // _... will come out like this for Reel 320 pixels wide and 180 high:_
+      //
+      //     image.jpg?size=320x180
+      //     pic/320/180/rabbit.png
+      //     image.php?nocache=1377604502788
+      //
+      // ---
+
+      // ### `$.reel.substitute` ######
+      // `Function`, since 1.3
+      //
+      substitute: function(uri, get){
+        return uri.replace(/@([A-Z])/g, function(match, key){
+          switch(key){
+            case 'W': return get(_width_);
+            case 'H': return get(_height_);
+            case 'T': return +new Date();
+          }
+        });
+      },
+
       // ------------------------
       // Data Value Normalization
       // ------------------------
