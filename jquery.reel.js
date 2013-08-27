@@ -669,6 +669,26 @@
         annotations:    undefined,
 
 
+        // ### [NEW] Responsiveness ######
+        //
+        // By default, dimensions of Reel are fixed and pixel-match the dimensions of the original image
+        // and Reel's responsive mode is disabled. Using `responsive` option you can enable responsiveness.
+        // In that case Reel will adopt dimensions of its parent container element and scale all relevant
+        // values accordingly.
+        // The scale applied is stored in `"ratio"` data key, where `1.0` means 100% of the original.
+        //
+        // To take full advantage of this, you can setup your URLs to contain actual dimensions and
+        // deliver images in appropriate detail.
+        // Learn more about [data values in URLs](#Data-Values-in-URLs).
+        //
+        // ---
+
+        // #### `responsive` Option ####
+        // `Boolean`, since 1.3
+        //
+        responsive:         false,
+
+
         // ### Mathematics ######
         //
         // When reeling, instance conforms to a graph function, which defines whether it will loop
@@ -700,11 +720,6 @@
         // `String` (data key), since 1.1
         //
         monitor:        undefined,
-
-
-        // ---
-        //
-        responsive:         false,
 
 
         // ### Deprecated Options ######
