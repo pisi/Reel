@@ -672,13 +672,13 @@
         // ### [NEW] Responsiveness ######
         //
         // By default, dimensions of Reel are fixed and pixel-match the dimensions of the original image
-        // and Reel's responsive mode is disabled. Using `responsive` option you can enable responsiveness.
-        // In that case Reel will adopt dimensions of its parent container element and scale all relevant
-        // values accordingly.
-        // The scale applied is stored in `"ratio"` data key, where `1.0` means 100% of the original.
+        // and the responsive mode is disabled. Using `responsive` option you can enable responsiveness.
+        // In such a case Reel will adopt dimensions of its parent container element and scale all relevant
+        // data store values accordingly.
+        // The scale applied is stored in `"ratio"` data key, where `1.0` means 100% or no scale.
         //
         // To take full advantage of this, you can setup your URLs to contain actual dimensions and
-        // deliver images in appropriate detail.
+        // serve images in appropriate detail.
         // Learn more about [data values in URLs](#Data-Values-in-URLs).
         //
         // ---
@@ -1731,8 +1731,7 @@
                   // [NEW] Responsive Events
                   // -----------------------
                   //
-                  // Reel is built to respect the dimensions of its parent when `responsive: true` is set.
-                  // In case the parent's size changes, in addition to physical measurements being recalculated
+                  // In responsive mode in case of parent's size change, in addition to actual recalculations,
                   // the instance starts to emit throttled `resize` events. This handler in turn emulates
                   // images changes event leading to reload of frames.
                   //
