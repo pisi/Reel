@@ -1063,8 +1063,7 @@
                   // `Event`, since 1.1
                   //
                   // Reel keeps a cache of all images it needs for its operation. Either a sprite or all
-                  // sequence images. Physically, this cache is made up of a hidden `<img>` sibling for each
-                  // preloaded image. It first determines the order of requesting the images and then
+                  // sequence images. It first determines the order of requesting the images and then
                   // asynchronously loads all of them.
                   //
                   // - It preloads all frames and sprites.
