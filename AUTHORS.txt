@@ -1,0 +1,4 @@
+Authors ordered by first contribution.
+
+Petr Vostřel <petr@vostrel.cz>
+Katrin Ackermann <katrin.ackermann@jvm.de>
