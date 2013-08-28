@@ -2329,13 +2329,17 @@
       // `Function`, since 1.3
       //
       substitute: function(uri, get){
-        return uri.replace(/@([A-Z])/g, function(match, key){
-          switch(key){
-            case 'W': return get(_width_);
-            case 'H': return get(_height_);
-            case 'T': return +new Date();
-          }
+        return uri.replace(/(@([A-Z]))/g, function(match, mark, key){
+          return typeof reel.substitutes[key] == 'function'
+                      ? reel.substitutes[key](get) : substitution_keys[key]
+                      ? get(substitution_keys[key]) : mark;
         });
+      },
+      // ### `$.reel.substitutes` ######
+      // `Object` of `Function`s, since 1.3
+      //
+      substitutes: {
+        T: function(get){ return +new Date() }
       },
 
       // ------------------------
@@ -2545,6 +2549,7 @@
     // Collection of data keys holding scalable pixel values responsive to the scale ratio
     // 
     responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_, _stitched_, _stitched_shift_, _stitched_travel_],
+    substitution_keys= { W: _width_, H: _height_ },
 
     // ---------------
     // Image Resources

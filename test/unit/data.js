@@ -563,6 +563,79 @@
       equal( $reel.reel('height'), def.height, 'Correct target height');
 
       equal( $.reel.substitute(def.url, get), def.target, 'URL with substituted value(s)');
+    });
+  });
+
+  test( '`$.reel.substitutes` object for custom substitution definitions', function(){
+
+    expect(3);
+
+    ok( typeof $.reel.substitutes == 'object', 'Publicly accessible namespace for URL data substitutions');
+    ok( typeof $.reel.substitutes.T == 'function', 'Already contains the timestamp substitution `@T`');
+
+    var
+      url= 'url/with/non-existing/@Y',
+      $reel= $('#image').reel(),
+      // Minimal data interface expected by `$.reel.substitute()`
+      get= function(name){ return $reel.data(name) },
+      substitute= $.reel.substitute(url, get)
+
+    equal( substitute, url, 'Unrecognized mark will pass through unchanged: `'+substitute+'`');
+
+  });
+
+  $.each({
+    'in folder':       { url: 'imgs/@X/23.png',       target: 'imgs/hi/23.png' },
+    'in file':         { url: 'imgs/@X.jpg?23',       target: 'imgs/hi.jpg?23' },
+    'in query params': { url: 'imgs/pic.rb?23&@X',    target: 'imgs/pic.rb?23&hi' }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
+
+      expect(2);
+
+      ok( typeof $.reel.substitutes == 'object', 'Namespace ready');
+
+      // This custom substitution tests general functionality
+      $.reel.substitutes.X= function(){ return 'hi' }
+
+      var
+        $reel= $('#image').reel(),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
+
+      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+
+    });
+  });
+
+  $.each({
+    'in folder':       { frame: 5, url: 'imgs/@X/high.png',  target: 'imgs/5/high.png' },
+    'in file':         { frame: 5, url: 'imgs/@X.jpg',       target: 'imgs/5.jpg' },
+    'in query params': { frame: 5, url: 'imgs/img?index=@X', target: 'imgs/img?index=5' }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
+
+      expect(2);
+
+      ok( typeof $.reel.substitutes == 'object', 'Namespace ready');
+
+      // This custom substitution tests working access into the live data store
+      $.reel.substitutes.X= function(get){ return get('frame') }
+
+      var
+        $reel= $('#image').reel({
+          frame: def.frame
+        }),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
+
+      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
 
     });
   });
