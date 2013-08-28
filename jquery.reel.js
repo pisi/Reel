@@ -2155,6 +2155,8 @@
         lazy_agent:    /\(iphone|ipod|android|fennec|blackberry/i,
         /* Format of frame class flag on the instance */
         frame_klass:   /frame-\d+/,
+        /* Mask for substitutions in URL */
+        substitution:  /(@([A-Z]))/g,
         /* [Sequence](#Sequence) string format */
         sequence:      /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/
       },
@@ -2320,11 +2322,11 @@
       //
       // ---
 
-      // ### `$.reel.substitute` ######
+      // ### `$.reel.substitute()` ######
       // `Function`, since 1.3
       //
       substitute: function(uri, get){
-        return uri.replace(/(@([A-Z]))/g, function(match, mark, key){
+        return uri.replace(reel.re.substitution, function(match, mark, key){
           return typeof reel.substitutes[key] == 'function'
                       ? reel.substitutes[key](get) : substitution_keys[key]
                       ? get(substitution_keys[key]) : mark;
