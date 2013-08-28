@@ -1042,12 +1042,6 @@
                       rows= opt.rows || 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
                     if (touchy){
-                      // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-                      css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? !stitched ? undefined : px(stitched)+___+px(height)
-                        : stitched && px(stitched)+___+px((height + opt.spacing) * rows - opt.spacing)
-                        || px((width + opt.spacing) * get(_footage_) - opt.spacing)+___+px((height + opt.spacing) * get(_rows_) * rows * (opt.directional? 2:1) - opt.spacing)
-                      });
                       $area
                         .bind(_touchstart_, press)
                     }else{
@@ -1102,7 +1096,7 @@
                     set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     set(_loading_, true);
                     t.trigger('stop');
-                    get(_responsive_) && gauge();
+                    opt.responsive && gauge();
                     t.trigger('resize', true);
                     while(preload.length){
                       var
@@ -1739,6 +1733,18 @@
                   //
                   resize: function(e, force){
                     if (get(_loading_) && !force) return;
+                    var
+                      stitched= get(_stitched_),
+                      spacing= get(_spacing_),
+                      height= get(_height_),
+                      rows= opt.rows || 1,
+                      size= get(_images_).length
+                        ? !stitched ? undefined : px(stitched)+___+px(height)
+                        : stitched && px(stitched)+___+px((height + spacing) * rows - spacing)
+                        || px((get(_width_) + spacing) * get(_footage_) - spacing)+___+px((height + spacing) * get(_rows_) * rows * (opt.directional? 2:1) - spacing)
+                    t.css({
+                      backgroundSize: size
+                    });
                     force || t.trigger('imagesChange');
                   },
 

@@ -3,6 +3,29 @@
  */
 (function($){
 
+  var
+    browser = (function( ua ) {
+      // Adapted from jQuery Migrate
+      // https://github.com/jquery/jquery-migrate/blob/master/src/core.js
+      var
+        match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+                /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+                /(msie) ([\w.]+)/.exec( ua ) ||
+                ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+                [],
+        browser = {
+          browser: match[ 1 ] || "",
+          version: match[ 2 ] || "0"
+        }
+
+      if (browser.browser){
+        browser[browser.browser] = true;
+      }
+      return browser;
+
+    })(navigator.userAgent.toLowerCase())
+
   module('Rendering', reel_test_module_routine);
 
   test( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
@@ -306,6 +329,32 @@
           start();
           break;
       }
+    });
+  });
+
+  $.each({
+    'for sprite': { options: { frames: 18, footage: 4 }, expected: '1104px 630px' },
+    'for responsive sprite': { options: { frames: 18, footage: 4, responsive: true }, expected: '3600px 2055px' },
+    'for stitched': { options: { stitched: 500 }, expected: '500px 126px' },
+    'for responsive stitched': { options: { stitched: 500, responsive: true }, expected: '1630px 411px' },
+    '(none) for sequence': { options: { images: '#.jpg' }, expected: 'auto' },
+    '(none) for responsive sequence': { options: { images: '#.jpg', responsive: true }, expected: 'auto' },
+  },
+  // Test image dimensions are 276x126px
+  // Fixed tests stage width is 900px
+  function(name, def){
+    test( 'Correct background size '+name, function()
+    {
+      expect(1);
+      var
+        $reel= $('#image').reel(def.options)
+
+      if (browser.msie && browser.version > 8){
+        equiv( $reel.css('backgroundSize'), def.expected, '');
+      }else{
+        ok( 'Tests omitted. IE8- doesn\'t have support for this' )
+      }
+
     });
   });
 
