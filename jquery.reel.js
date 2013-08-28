@@ -904,7 +904,7 @@
                     orbital= opt.orbital,
                     revolution= opt.revolution,
                     rows= opt.rows,
-                    footage= opt.footage,
+                    footage= set(_footage_, min(opt.footage, opt.frames)),
                     spacing= set(_spacing_, opt.spacing),
                     width= set(_width_, t.width()),
                     height= set(_height_, t.height()),
@@ -1044,7 +1044,7 @@
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
                         ? !stitched ? undefined : px(stitched)+___+px(height)
                         : stitched && px(stitched)+___+px((height + opt.spacing) * rows - opt.spacing)
-                        || px((width + opt.spacing) * opt.footage - opt.spacing)+___+px((height + opt.spacing) * get(_rows_) * rows * (opt.directional? 2:1) - opt.spacing)
+                        || px((width + opt.spacing) * get(_footage_) - opt.spacing)+___+px((height + opt.spacing) * get(_rows_) * rows * (opt.directional? 2:1) - opt.spacing)
                       });
                       $area
                         .bind(_touchstart_, press)
@@ -1089,7 +1089,6 @@
                       images= get(_images_),
                       is_sprite= !images.length,
                       frames= get(_frames_),
-                      footage= opt.footage,
                       order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
@@ -1438,7 +1437,7 @@
                       frame= 1 + floor(fraction / get(_bit_)),
                       multirow= opt.rows > 1,
                       orbital= opt.orbital,
-                      center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
+                      center= set(_center_, !!orbital && (frame <= orbital || frame >= get(_footage_) - orbital + 2))
                     if (multirow) var
                       frame= frame + (get(_row_) - 1) * get(_frames_)
                     var
@@ -1505,7 +1504,7 @@
                       fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
                       same_spot= abs((get(_fraction_) || 0) - frame_fraction) < 1 / (get(_frames_) - 1),
                       fraction= ready && (fraction_frame === frame && same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
-                      footage= opt.footage
+                      footage= get(_footage_)
                     if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
                       frame= frame + footage
@@ -1570,7 +1569,7 @@
                       size= opt.indicator,
                       orbital= opt.orbital,
                       travel= orbital && get(_vertical_) ? get(_height_) : get(_width_),
-                      slots= orbital ? opt.footage : opt.images.length || get(_frames_),
+                      slots= orbital ? get(_footage_) : opt.images.length || get(_frames_),
                       weight= ceil(travel / slots),
                       travel= travel - weight,
                       indicate= round(interpolate(fraction, 0, travel)),
@@ -2240,7 +2239,7 @@
           var
             orbital= opt.orbital,
             rows= orbital ? 2 : opt.rows || 1,
-            frames= orbital ? opt.footage : get(_frames_),
+            frames= orbital ? get(_footage_) : get(_frames_),
             start= (opt.row-1) * frames,
             values= new Array().concat(sequence),
             present= new Array(sequence.length + 1),
@@ -2501,7 +2500,7 @@
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
-    _cwish_= 'cwish', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
+    _cwish_= 'cwish', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
     _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks', _lo_= 'lo', _options_= 'options',
     _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive',
     _revolution_= 'revolution', _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',

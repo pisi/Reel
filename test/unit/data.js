@@ -23,6 +23,7 @@
         clicked_on: 'Number',
         clicked_tier: 'Number',
         cwish: 'Number',
+        footage: 'Number',
         fraction: 'Number',
         frame: 'Number',
         frames: 'Number',
@@ -678,6 +679,21 @@
       equal( $reel.reel('loading'), false, 'Boolean `true` when loading is over');
       start();
     });
+
+  });
+
+  test( 'Footage will equal `frames` if total number of frames is less than default footage', function(){
+
+    expect(2);
+
+    var
+      frames= 3,
+      $reel= $('#image').reel({
+        frames: frames
+      })
+
+    ok( $reel.reel('footage') != $.reel.def.footage, 'Other than default');
+    equal( $reel.reel('footage'), frames, 'Footage equals frames');
 
   });
 
