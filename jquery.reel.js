@@ -897,8 +897,9 @@
                     styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
                     images= set(_images_, opt.images || []),
-                    responsive= set(_responsive_, opt.responsive && !stitched && !!images.length),
                     stitched= set(_stitched_, opt.stitched),
+                    is_sprite= !images.length || stitched,
+                    responsive= set(_responsive_, opt.responsive && (knows_background_size ? true : !is_sprite)),
                     truescale= set(_truescale_, {}),
                     loops= opt.loops,
                     orbital= opt.orbital,
@@ -2455,6 +2456,7 @@
     browser_version= +browser[2].split('.').slice(0,2).join('.'),
     ie= browser[1] == 'MSIE',
     knows_data_urls= !(ie && browser_version < 8),
+    knows_background_size= !(ie && browser_version < 9),
     ticker,
 
     // ---------------
@@ -2529,7 +2531,7 @@
 
     // Collection of data keys holding scalable pixel values responsive to the scale ratio
     // 
-    responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_],
+    responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_, _stitched_, _stitched_shift_, _stitched_travel_],
 
     // ---------------
     // Image Resources

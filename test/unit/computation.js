@@ -3,6 +3,29 @@
  */
 (function($){
 
+  var
+    browser = (function( ua ) {
+      // Adapted from jQuery Migrate
+      // https://github.com/jquery/jquery-migrate/blob/master/src/core.js
+      var
+        match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+                /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+                /(msie) ([\w.]+)/.exec( ua ) ||
+                ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+                [],
+        browser = {
+          browser: match[ 1 ] || "",
+          version: match[ 2 ] || "0"
+        }
+
+      if (browser.browser){
+        browser[browser.browser] = true;
+      }
+      return browser;
+
+    })(navigator.userAgent.toLowerCase())
+
   module('Computation', reel_test_module_routine);
 
   asyncTest( '(Deprecated) `fractionChange` accepts and normalizes any real fraction passed', function(){
@@ -616,6 +639,32 @@
       expect(1);
 
       equal( $.reel.math.interpolate( fraction, min, max ), result );
+    });
+  });
+
+  $.each({
+    'sequence': { options: { images: '#.jpg', responsive: true } }
+  },
+  function(name, def){
+    test( 'Values stored in `truescale` scaled by the `ratio` when responsive ('+name+')', function(){
+      var
+        responsive_keys= [
+          'width',
+          'height',
+          'revolution',
+          'revolution_y'
+        ],
+        $reel= $('#image').reel(def.options)
+
+      expect(1 + responsive_keys.length * 2);
+    
+      ok( typeof $reel.reel('truescale') == 'object', 'Truescale dimensions backup of type Object' );
+
+      $.each(responsive_keys, function(ix, key){
+        ok( typeof $reel.reel('truescale')[key] == 'number', 'Truescale `'+key+'` backup of type Number' );
+        equal( $reel.reel(key), Math.round($reel.reel('truescale')[key] * $reel.reel('ratio')), 'Value of `'+key+'` scaled' );
+      });
+
     });
   });
 
