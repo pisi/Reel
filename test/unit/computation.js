@@ -619,4 +619,40 @@
     });
   });
 
+  $.each({
+    'stitched': { options: { stitched: 360, responsive: true } },
+    'sprite': { options: { responsive: true } }
+  },
+  function(name, def){
+    test( 'Values stored in `truescale` scaled by the `ratio` when responsive ('+name+')', function(){
+      var
+        responsive_keys= [
+          'width',
+          'height',
+          'spacing',
+          'revolution',
+          'revolution_y',
+          'stitched',
+          'stitched_shift',
+          'stitched_travel'
+        ],
+        $reel= $('#image').reel(def.options)
+
+      if (browser.msie && +browser.version < 9){
+        // Individual values tests are omitted in tests as responsiveness with sprites or stitched
+        // is supported only by IE 9+. IE 8 lacks backround-size support in CSS.
+        expect(1);
+      }else{
+        expect(1 + responsive_keys.length * 2);
+      
+        $.each(responsive_keys, function(ix, key){
+          ok( typeof $reel.reel('truescale')[key] == 'number', 'Truescale `'+key+'` backup of type Number' );
+          equal( $reel.reel(key), Math.round($reel.reel('truescale')[key] * $reel.reel('ratio')), 'Value of `'+key+'` scaled' );
+        });
+      }
+
+      ok( typeof $reel.reel('truescale') == 'object', 'Truescale dimensions backup of type Object' );
+    });
+  });
+
 })(jQuery);

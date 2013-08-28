@@ -1100,7 +1100,8 @@
                     set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
                     set(_loading_, true);
                     t.trigger('stop');
-                    gauge();
+                    get(_responsive_) && gauge();
+                    t.trigger('resize', true);
                     while(preload.length){
                       var
                         uri= reel.substitute(opt.path+preload.shift(), get),
@@ -1734,9 +1735,9 @@
                   // the instance starts to emit throttled `resize` events. This handler in turn emulates
                   // images changes event leading to reload of frames.
                   //
-                  'resize.responsive': function(e){
-                    if (get(_loading_)) return;
-                    t.trigger('imagesChange');
+                  resize: function(e, force){
+                    if (get(_loading_) && !force) return;
+                    force || t.trigger('imagesChange');
                   },
 
                   // ----------------
