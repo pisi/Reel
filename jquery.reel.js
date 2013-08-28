@@ -1142,7 +1142,7 @@
                   // or animation.
                   //
                   loaded: function(e){
-                    get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
+                    get(_images_).length > 1 || t.css({ backgroundImage: url(reel.substitute(opt.path+get(_image_), get)) }).attr({ src: cdn(transparent) });
                     get(_stitched_) && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
                     set(_loading_, false);
@@ -1532,8 +1532,9 @@
                           x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % stitched),
                           y= rows <= 1 ? 0 : (height + spacing) * (rows - row),
                           shift= [px(-x), px(-y)],
-                          image= images.length > 1 && images[row - 1]
-                        image && t.css('backgroundImage').search(path+image) < 0 && t.css({ backgroundImage: url(path+image) })
+                          image= images.length > 1 && images[row - 1],
+                          fullpath= reel.substitute(path + image, get)
+                        image && t.css('backgroundImage').search(fullpath) < 0 && t.css({ backgroundImage: url(fullpath) })
                       }
                       t.css({ backgroundPosition: shift.join(___) })
                     }
