@@ -545,7 +545,7 @@
   },
   function(designation, def){
 
-    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation, function(){
+    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
 
       expect(3);
 
@@ -557,12 +557,37 @@
           }
         }),
         // Minimal data interface expected by `$.reel.substitute()`
-        get= function(name){ return $reel.data(name) }
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
 
       equal( $reel.reel('width'), def.width, 'Correct target width');
       equal( $reel.reel('height'), def.height, 'Correct target height');
 
-      equal( $.reel.substitute(def.url, get), def.target, 'URL with substituted value(s)');
+      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+
+    });
+  });
+
+  $.each({
+    'timestamp in folder':       { url: 'images/@T/image.jpg', target: /images\/\d{13,}\/image\.jpg/ },
+    'timestamp in file':         { url: 'images/@T.jpg',       target: /images\/\d{13,}\.jpg/ },
+    'timestamp in query params': { url: 'images/image.rb?@T',  target: /images\/image\.rb\?\d{13,}/ }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
+
+      expect(2);
+
+      ok( typeof $.reel.substitutes == 'object', 'Namespace ready');
+      var
+        $reel= $('#image').reel(),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
+
+      ok( substitute.match(def.target), 'URL with substituted value(s): `'+substitute+'`');
+
     });
   });
 
