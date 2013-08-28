@@ -1006,6 +1006,7 @@
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
                     get(_cache_).empty();
+                    clearTimeout(gauge_delay);
                     get(_area_).unbind(ns);
                     $(window).unbind(_resize_, slow_gauge);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
