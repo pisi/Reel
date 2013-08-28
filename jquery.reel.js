@@ -1731,6 +1731,11 @@
                   // the instance starts to emit throttled `resize` events. This handler in turn emulates
                   // images changes event leading to reload of frames.
                   //
+                  // ---
+                  //
+                  // ### `resize` Event ######
+                  // `Event`, since 1.3
+                  //
                   resize: function(e, force){
                     if (get(_loading_) && !force) return;
                     var
