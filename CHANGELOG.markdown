@@ -23,6 +23,7 @@ Version 1.2.2
 * Data key `dimensions` replaced with `width` and `height` keys.
 * URLs containing special markup (`@W`, `@H` or `@T`) will get it substituted with actualy
   values (`width` and `height` data values or timestamp).
+* New `responsive` option adds capability to scale in responsive page layouts (GH-222).
 
 
 Version 1.2.1
