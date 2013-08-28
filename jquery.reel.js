@@ -894,7 +894,6 @@
                   var
                     src= t.attr(opt.attr).attr('src'),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
-                    styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
                     images= set(_images_, opt.images || []),
                     stitched= set(_stitched_, opt.stitched),
@@ -955,8 +954,8 @@
                   set(_backup_, {
                     src: src,
                     classes: classes,
-                    style: styles || __,
-                    data: data
+                    data: data,
+                    style: t.attr(_style_) || __
                   });
                   opt.steppable || $overlay.unbind('up.steppable');
                   opt.indicator || $overlay.unbind('.indicator');
@@ -1007,6 +1006,7 @@
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
                     get(_cache_).empty();
+                    clearTimeout(delay);
                     clearTimeout(gauge_delay);
                     get(_area_).unbind(ns);
                     $(window).unbind(_resize_, slow_gauge);
@@ -1031,15 +1031,9 @@
                   //
                   setup: function(e){
                     var
-                      width= get(_width_),
-                      height= get(_height_),
-                      frames= get(_frames_),
-                      id= t.attr(_id_),
-                      rows= opt.rows,
-                      stitched= get(_stitched_),
                       $overlay= t.parent().append(preloader()),
                       $area= set(_area_, $(opt.area || $overlay )),
-                      rows= opt.rows || 1
+                      multirow= opt.rows > 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
                     if (touchy){
                       $area
@@ -1065,7 +1059,7 @@
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
                     opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
-                    rows > 1 && opt.indicator && $overlay.append(indicator('y'));
+                    multirow && opt.indicator && $overlay.append(indicator('y'));
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                   },
@@ -1084,7 +1078,6 @@
                       $overlay= t.parent(),
                       images= get(_images_),
                       is_sprite= !images.length,
-                      frames= get(_frames_),
                       order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
@@ -1587,9 +1580,8 @@
                   'tierChange.indicator': function(e, deprecated_set, tier){
                     if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
                       travel= get(_height_),
-                      slots= opt.rows,
                       size= opt.indicator,
-                      weight= ceil(travel / slots),
+                      weight= ceil(travel / opt.rows),
                       travel= travel - weight,
                       indicate= round(tier * travel),
                       $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
@@ -1616,8 +1608,7 @@
                   //
                   'setup.annotations': function(e){
                     var
-                      $overlay= t.parent(),
-                      film_css= { position: _absolute_, width: get(_width_), height: get(_height_), left: 0, top: 0 }
+                      $overlay= t.parent()
                     $.each(get(_annotations_), function(ida, note){
                       var
                         $note= typeof note.node == _string_ ? $(note.node) : note.node || {},
@@ -1633,12 +1624,12 @@
                     });
                   },
                   'frameChange.annotations': function(e, deprecation, frame){
+                    if (!get(_preloaded_) || deprecation !== undefined) return;
                     var
                       width= get(_width_),
                       stitched= get(_stitched_),
                       ss= get(_stitched_shift_)
-                    if (!get(_preloaded_)) return;
-                    if (deprecation === undefined) $.each(get(_annotations_), function(ida, note){
+                    $.each(get(_annotations_), function(ida, note){
                       var
                         $note= $(hash(ida)),
                         start= note.start || 1,
@@ -1884,7 +1875,6 @@
               },
               panned= 0,
               wheeled= false,
-              delay, // openingDone's delayed play pointer
 
               // - Constructors of UI elements
               //
@@ -1949,7 +1939,6 @@
 
               // - Response to the size changes in responsive mode
               //
-              gauge_delay,
               slow_gauge= function(){
                 clearTimeout(gauge_delay);
                 gauge_delay= setTimeout(gauge, reel.resize_gauge);
@@ -1963,15 +1952,20 @@
                 t.trigger('resize');
               },
 
+              // - Delay timer pointers
+              //
+              delay, // openingDone's delayed play
+              gauge_delay, // slow_gauge's throttle
+
               // - Interaction graph's zero point reset
               //
               recenter_mouse= function(revolution, x, y){
                 var
                   fraction= set(_clicked_on_, get(_fraction_)),
                   tier= set(_clicked_tier_, get(_tier_)),
-                  loops= opt.loops
-                set(_lo_, loops ? 0 : - fraction * revolution);
-                set(_hi_, loops ? revolution : revolution - fraction * revolution);
+                  loops= opt.loops,
+                  lo= set(_lo_, loops ? 0 : - fraction * revolution),
+                  hi= set(_hi_, loops ? revolution : revolution - fraction * revolution)
                 return x && set(_clicked_location_, { x: x, y: y }) || undefined
               },
               slidable= true,
