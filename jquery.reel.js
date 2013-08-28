@@ -1737,12 +1737,14 @@
                       stitched= get(_stitched_),
                       spacing= get(_spacing_),
                       height= get(_height_),
+                      is_sprite= !get(_images_).length || stitched,
                       rows= opt.rows || 1,
                       size= get(_images_).length
                         ? !stitched ? undefined : px(stitched)+___+px(height)
                         : stitched && px(stitched)+___+px((height + spacing) * rows - spacing)
                         || px((get(_width_) + spacing) * get(_footage_) - spacing)+___+px((height + spacing) * get(_rows_) * rows * (opt.directional? 2:1) - spacing)
                     t.css({
+                      height: is_sprite ? px(height) : null,
                       backgroundSize: size
                     });
                     force || t.trigger('imagesChange');
