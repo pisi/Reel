@@ -26,6 +26,7 @@
       'unit/computation.js',
       'unit/api.js',
       'unit/annotations.js',
+      'unit/interaction.js',
       'unit/animation.js'
     ],
     complete: function(){

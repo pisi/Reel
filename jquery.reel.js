@@ -316,6 +316,25 @@
         rows:                   0,
 
 
+        // ### Multi-Row Locks ######
+        //
+        // Optionally you can apply a lock on either of the two axes with `rowlock` and/or `framelock`.
+        // That will disable direct mouse interaction and will leave using of `.reel()` the only way
+        // of changing position on the locked axis.
+        //
+        // ---
+
+        // #### `rowlock` Option ####
+        // `Boolean`, since 1.3
+        //
+        rowlock:            false,
+
+        // #### `framelock` Option ####
+        // `Boolean`, since 1.3
+        //
+        framelock:          false,
+
+
         // ### Dual-Orbit Mode ######
         //
         // Special form of multi-axis movie is the dual-axis mode. In this mode the object offers two plain
@@ -906,6 +925,8 @@
                   set(_row_, null);
                   set(_tier_, null);
                   set(_rows_, rows);
+                  set(_rowlock_, opt.rowlock);
+                  set(_framelock_, opt.framelock);
                   set(_dimensions_, size);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
@@ -1316,7 +1337,8 @@
                         var
                           revolution= get(_revolution_),
                           origin= get(_clicked_location_),
-                          vertical= get(_vertical_),
+                          vertical= get(_vertical_)
+                        if (!get(_framelock_)) var
                           fraction= set(_fraction_, graph(vertical ? y - origin.y : x - origin.x, get(_clicked_on_), revolution, get(_lo_), get(_hi_), get(_cwish_), vertical ? y - origin.y : x - origin.x)),
                           reeling= set(_reeling_, get(_reeling_) || get(_frame_) != get(_clicked_)),
                           motion= to_bias(vertical ? delta.y : delta.x || 0),
@@ -1324,7 +1346,7 @@
                         if (orbital && get(_center_)) var
                           vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
                           origin= recenter_mouse(revolution, x, y)
-                        if (rows > 1) var
+                        if (rows > 1 && !get(_rowlock_)) var
                           space_y= get(_dimensions_).y,
                           revolution_y= get(_revolution_y_),
                           start= get(_clicked_tier_),
@@ -1896,7 +1918,7 @@
                   loops= opt.loops
                 set(_lo_, loops ? 0 : - fraction * revolution);
                 set(_hi_, loops ? revolution : revolution - fraction * revolution);
-                return x && set(_clicked_location_, { x: x, y: y }) || undefined
+                return x !== undefined && set(_clicked_location_, { x: x, y: y }) || undefined
               },
               slidable= true,
 
@@ -2389,10 +2411,10 @@
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
-    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame',
+    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
-    _revolution_y_= 'revolution_y', _row_= 'row', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
+    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
     _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
 
