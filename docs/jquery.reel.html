@@ -70,6 +70,7 @@
                       <li><a href="#Images-Preload-Order"><code>preload</code></a></li>
                       <li><a href="#Customization"><code>preloader</code></a></li>
                       <li><a href="#Animation"><code>rebound</code></a></li>
+                      <li><a href="#Responsiveness"><code>responsive</code></a></li>
                       <li><a href="#Sensitivity"><code>revolution</code></a></li>
                       <li><a href="#Multi-Row-Mode"><code>row</code></a></li>
                       <li><a href="#Multi-Row-Locks"><code>rowlock</code></a></li>
@@ -102,6 +103,7 @@
                       <li><a href="#play-Event"><code>play</code></a></li>
                       <li><a href="#preload-Event"><code>preload</code></a></li>
                       <li><a href="#preloaded-Event"><code>preloaded</code></a></li>
+                      <li><a href="#Responsive-Events"><code>resize</code></a></li>
                       <li><a href="#setup-Event"><code>setup</code></a></li>
                       <li><a href="#Click-Stepping-Events"><code>stepLeft</code></a></li>
                       <li><a href="#Click-Stepping-Events"><code>stepRight</code></a></li>
@@ -126,8 +128,11 @@
                       <li><a href="#Data-Value-Normalization"><code>normal</code></a></li>
                       <li><a href="#Preloading-Modes"><code>preload</code></a></li>
                       <li><a href="#Regular-Expressions"><code>re</code></a></li>
+                      <li><a href="#Reel-Instances"><code>resize_gauge</code></a></li>
                       <li><a href="#Quick-Start"><code>scan()</code></a></li>
                       <li><a href="#Sequence-Build-up"><code>sequence()</code></a></li>
+                      <li><a href="#Data-Values-in-URLs"><code>substitute()</code></a></li>
+                      <li><a href="#Data-Values-in-URLs"><code>substitutes</code></a></li>
                       <li><a href="#reel-version"><code>version</code></a></li>
                     </ul>
                   </li>
@@ -161,7 +166,7 @@
  *
  * jQuery Reel
  * http://reel360.org
- * Version: 1.2.2
+ * Version: 1.3-devel
  * Updated: 2013-08-26
  *
  * Requires jQuery 1.5 or higher
@@ -322,7 +327,7 @@ It is locally referenced as just <code>reel</code> for speedier access.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      version: <span class="string">'1.2.2'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      version: <span class="string">'1.3-devel'</span>,</pre></div></div>
             
         </li>
         
@@ -1325,7 +1330,7 @@ towards the other end. The time spent on the edge can be customized with <code>r
                 </div>
               
               <h4><code>duration</code> Option</h4>
-<p><code>Number</code> (seconds), EXPERIMENTAL</p>
+<p><code>Number</code> (seconds), since 1.3</p>
 
             </div>
             

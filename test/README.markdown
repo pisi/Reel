@@ -144,7 +144,7 @@ Results Reporting
 In 1.1 I asked you to submit failing tests reports to me. You did and it
 helped me tremendously. I thank you very much for doing so!
 
-In 1.2 the report gathering and submission is fully automated, so
+Since 1.2 the report gathering and submission is fully automated, so
 you don't need to do a thing to help. You take part in the distributed
 testing efforts merely by running the tests. __Run the tests on as
 many different devices as you can (even exotic ones) to help me even more.__

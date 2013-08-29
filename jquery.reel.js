@@ -23,7 +23,7 @@
  *
  * jQuery Reel
  * http://reel360.org
- * Version: 1.2.2
+ * Version: 1.3-devel
  * Updated: 2013-08-26
  *
  * Requires jQuery 1.5 or higher
@@ -88,7 +88,7 @@
       //
       // `String` (major.minor.patch), since 1.1
       //
-      version: '1.2.2',
+      version: '1.3-devel',
 
       // Options
       // -------
@@ -533,7 +533,7 @@
         timeout:                2,
 
         // #### `duration` Option ####
-        // `Number` (seconds), EXPERIMENTAL
+        // `Number` (seconds), since 1.3
         //
         duration:       undefined,
 
