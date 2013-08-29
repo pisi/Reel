@@ -22,7 +22,7 @@ Version 1.2.2
 * Hardware acceleration enabled in Firefox to help remedy occasional flickering therein (GH-196).
 * Error message into the console in case target image properties were deemed insufficient.
 * New `rowlock` and `framelock` options allow mouse interaction lock of axis in multirow setups (GH-191).
-
+* New option `orientable` enables gyroscope support on compatible devices (GH-92).
 
 Version 1.2.1
 -------------

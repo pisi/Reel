@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html data-type="example" data-id="panorama-click-free">
+  <head>
+    <title>jQuery Reel Orientable Stitched Panorama Example</title>
+    <meta charset='utf-8' content='text/html' http-equiv='Content-type' />
+
+    <script src='http://code.jquery.com/jquery-1.9.1.min.js' type='text/javascript'></script>
+    <script src='../../jquery.reel.js' type='text/javascript'></script>
+
+    <!-- Common examples style (gray background, thin fonts etc.) -->
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      #image-reel{ font-size: 85%; }
+      #image-reel .reel-annotation { color: #6a7587; white-space: nowrap; font-weight: bold; font-size: 108%; color: #6a7587; cursor: help; }
+      #image-reel a.reel-annotation { color: #6a7587; }
+      #image-reel .far.reel-annotation { font-size: 85%; color: #a3b4bc; }
+      #image-reel a.far.reel-annotation { color: #a3b4bc; }
+      #image-reel .near.reel-annotation { font-size: 163%; color: #fff5de; }
+      #image-reel a.near.reel-annotation { color: #fff5de; }
+      #image-reel .title.reel-annotation { font-size: 85%; color: white; }
+      #image-reel a.title.reel-annotation { color: white; }
+      #image-reel .headline.reel-annotation { font-size: 280%; opacity: 0.5; color: white; cursor: inherit; }
+      #image-reel a.headline.reel-annotation { color: white; }
+    </style>
+
+  </head>
+  <body>
+    <a href="../index.html">Examples</a> ‹
+    <h1>Orientable Stitched Panorama</h1>
+    <p class="credits photo"><a href="http://www.flickr.com/people/59683764@N00">Henning Leweke</a> (cc)</p>
+    <p>You can rotate this panorama with your gyroscope sensor on a compatible device.</p>
+
+    <img src="outlook.jpg" width="590" height="150"
+      class="reel"
+      id="image"
+      data-image="outlook-reel.jpg"
+      data-orientable="true"
+      data-stitched="1652">
+
+    <span class="reel-annotation headline"
+      id="headline"
+      data-x="160"
+      data-y="50"
+      data-for="image">
+      Moro Rock Lookout
+    </span>
+
+    <a class="reel-annotation title"
+      id="title"
+      href="https://maps.google.com/maps?ll=36.543225,-118.764481&spn=0.01,0.01&t=p&q=36.543225,-118.764481"
+      data-x="160"
+      data-y="86"
+      data-for="image">
+      1 Way Rd, Giant Sequoia National Park, CA
+    </a>
+
+    <a class="reel-annotation"
+      id="panther_peak"
+      href="http://www.mapquest.com/maps?name=Panther%20Peak&city=Sequoia%20National%20Park&state=CA"
+      data-x="260"
+      data-y="3"
+      data-for="image">
+      Panther Peak
+    </a>
+
+    <a class="reel-annotation far"
+      id="mount_silliman"
+      href="http://www.panoramio.com/photo/52847295"
+      data-x="400"
+      data-y="2"
+      data-for="image">
+      Mount Silliman
+    </a>
+
+    <span class="reel-annotation far"
+      id="castle_rocks"
+      data-x="700"
+      data-y="9"
+      data-for="image">
+      Castle Rocks
+    </span>
+
+    <a class="reel-annotation near"
+      id="moro_rock"
+      href="http://commons.wikimedia.org/wiki/File:Panorama_360_view_from_Moro_Rock_-_Giant_Sequoia_National_Park_-_California_USA_(2002).jpg"
+      data-x="795"
+      data-y="60"
+      data-for="image">
+      Moro Rock
+    </a>
+
+    <span class="reel-annotation"
+      id="ash_peaks_ridge"
+      data-x="1250"
+      data-y="40"
+      data-for="image">
+      Ash Peaks Ridge
+    </span>
+
+    <a class="reel-annotation"
+      id="milk_ranch_peak"
+      href="http://travelingluck.com/North%20America/United%20States/California/_5372983_Milk%20Ranch%20Peak.html"
+      data-x="970"
+      data-y="30"
+      data-for="image">
+      Milk Ranch Peak
+    </a>
+
+    <script>
+      $(function(){ // when DOM ready
+return;
+        $('#image').reel({
+          stitched:    1652,
+          orientable:  true,
+          annotations: {
+            moro_rock: { x: 795, y: 60, link: { 'class': 'external near', text: 'Moro Rock', href: 'http://commons.wikimedia.org/wiki/File:Panorama_360_view_from_Moro_Rock_-_Giant_Sequoia_National_Park_-_California_USA_(2002).jpg' } },
+            ash_peaks_ridge: { x: 1250, y: 40, node: { text: 'Ash Peaks Ridge' } },
+            milk_ranch_peak: { x: 970, y: 30, link: { 'class': 'external', text: 'Milk Ranch Peak', href: 'http://travelingluck.com/North%20America/United%20States/California/_5372983_Milk%20Ranch%20Peak.html' } }
+          }
+        });
+
+      });
+    </script>
+
+    <!-- Or Javascript alternative:
+
+    <img id="image" src='outlook.jpg' width="590" height="150" />
+    <script>
+      $('#image').reel({
+        stitched:    1652,
+        orientable:  true,
+        annotations: {
+          "headline": {
+            x: 160,
+            y: 50,
+            node: { 'class': 'headline', text: 'Moro Rock Lookout' }
+          },
+          "title": {
+            x: 160,
+            y: 86,
+            link: { 'class': 'external title', text: '1 Way Rd, Giant Sequoia National Park, CA',
+                    href: 'https://maps.google.com/maps?ll=36.543225,-118.764481&spn=0.01,0.01&t=p&q=36.543225,-118.764481' }
+          },
+          "panther_peak": {
+            x: 260,
+            y: 3,
+            link: { 'class': 'external', text: 'Panther Peak',
+                    href: 'http://www.mapquest.com/maps?name=Panther%20Peak&city=Sequoia%20National%20Park&state=CA' }
+          },
+          "mount_silliman": {
+            x: 400,
+            y: 2,
+            link: { 'class': 'far', text: 'Mount Silliman',
+                    href: 'http://www.panoramio.com/photo/52847295' }
+          },
+          "castle_rocks": {
+            x: 700,
+            y: 9,
+            node: { text: 'Castle Rocks' }
+          },
+          "moro_rock": {
+            x: 795,
+            y: 60,
+            link: { 'class': 'external near', text: 'Moro Rock',
+                    href: 'http://commons.wikimedia.org/wiki/File:Panorama_360_view_from_Moro_Rock_-_Giant_Sequoia_National_Park_-_California_USA_(2002).jpg' }
+          },
+          "ash_peaks_ridge": {
+            x: 1250,
+            y: 40,
+            node: { text: 'Ash Peaks Ridge' }
+          },
+          "milk_ranch_peak": {
+            x: 970,
+            y: 30,
+            link: { 'class': 'external', text: 'Milk Ranch Peak',
+                    href: 'http://travelingluck.com/North%20America/United%20States/California/_5372983_Milk%20Ranch%20Peak.html' }
+          }
+        }
+      });
+    </script>
+
+    -->
+
+<!--
+     Everything you might need to make Reel is above this line.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     Everything below this line is only here to make the example display illustratively
+     with pretty source code, indicators, ... So you do NOT need any of it.
+-->
+
+    <pre>
+    &lt;img src=<strong>"<a href="outlook.jpg">outlook.jpg</a>"</strong> width=<strong>"590"</strong> height=<strong>"150"</strong>
+      <a href="http://reel360.org/reel#class">class</a>=<strong>"reel"</strong>
+      <a href="http://reel360.org/reel#id">id</a>=<strong>"image"</strong>
+      data-<a href="http://reel360.org/reel#image">image</a>=<strong>"<a href="outlook-reel.jpg">outlook-reel.jpg</a>"</strong>
+      data-<a href="http://reel360.org/reel#stitched">stitched</a>=<strong>"1652"</strong>
+      data-<a href="http://reel360.org/reel#orientable">orientable</a>=<strong>"true"</strong>&gt;</pre>
+    
+    <p>
+      And the many <a href="http://github.com/pisi/Reel/wiki/Annotations">annotations</a>:
+    </p>
+
+    <pre>
+    &lt;span <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation headline"</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"headline"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"160"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"50"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Moro Rock Lookout</em></em>
+    &lt;/span&gt;
+    
+    &lt;a <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation title"</strong>
+      <a href="http://reel360.org/reel#annotation-href">href</a>=<strong>"https://maps.google.com/maps?ll=36.543225,-118.764481..."</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"title"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"160"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"86"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>1 Way Rd, Giant Sequoia National Park, CA</em></em>
+    &lt;/a&gt;
+    
+    &lt;a <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation"</strong>
+      <a href="http://reel360.org/reel#annotation-href">href</a>=<strong>"http://www.mapquest.com/maps?name=Panther%20Peak..."</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"panther_peak"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"260"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"3"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Panther Peak</em></em>
+    &lt;/a&gt;
+    
+    &lt;a <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation title"</strong>
+      <a href="http://reel360.org/reel#annotation-href">href</a>=<strong>"http://www.panoramio.com/photo/52847295"</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"mount_silliman"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"400"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"2"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Mount Silliman</em></em>
+    &lt;/a&gt;
+    
+    &lt;span <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation far"</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"castle_rocks"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"700"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"9"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Castle Rocks</em></em>
+    &lt;/span&gt;
+    
+    &lt;a <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation near"</strong>
+      <a href="http://reel360.org/reel#annotation-href">href</a>=<strong>"http://commons.wikimedia.org/wiki/File:Panorama..."</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"moro_rock"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"795"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"60"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Moro Rock</em></em>
+    &lt;/a&gt;
+    
+    &lt;span <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation"</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"ash_peaks_ridge"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"1250"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"40"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Ash Peaks Ridge</em></em>
+    &lt;/span&gt;
+    
+    &lt;a <a href="http://reel360.org/reel#annotation-class">class</a>=<strong>"reel-annotation"</strong>
+      <a href="http://reel360.org/reel#annotation-href">href</a>=<strong>"http://travelingluck.com/North%20America/United..."</strong>
+      <a href="http://reel360.org/reel#annotation-id">id</a>=<strong>"milk_ranch_peak"</strong>
+      data-<a href="http://reel360.org/reel#annotation-x">x</a>=<strong>"970"</strong>
+      data-<a href="http://reel360.org/reel#annotation-y">y</a>=<strong>"30"</strong>
+      data-<a href="http://reel360.org/reel#annotation-for">for</a>=<strong>"image"</strong>&gt;
+      <em><em>Milk Ranch Peak</em></em>
+    &lt;/a&gt;</pre>
+    
+    <!-- Following script line only enables in-picture indicators. To remove them simply delete it. -->
+    <script> $.reel.def.indicator = 5; </script>
+
+    <div class="ballast">
+      <p>Some text ballast to make the page positively scroll-worthy for testing purposes.</p>
+      <p><a href="http://en.wikipedia.org/wiki/Lorem_Ipsum">Lorem ipsum</a> dolor sit amet, consectetur adipiscing elit. Sed rutrum semper imperdiet. Integer non auctor orci. Nullam dictum pretium metus, interdum congue sapien lobortis in. Donec sed massa a tellus dapibus auctor et in mauris. Curabitur adipiscing fermentum felis vel molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut semper sem ut nulla fringilla luctus. Curabitur dignissim quam ac libero consequat tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In hac habitasse platea dictumst. Nunc sed lectus eget magna suscipit tempor eget id nibh.</p>
+    </div>
+  </body>
+</html>
+
