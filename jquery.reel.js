@@ -1587,6 +1587,10 @@
                     var
                       travelled= reel.math.distance(get(_departure_), frame, get(_frames_)),
                       onorover= abs(travelled) >= abs(get(_distance_))
+                    if (!onorover) return;
+                    set(_frame_, set(_destination_));
+                    set(_destination_, set(_distance_, set(_departure_, 0)));
+                    t.trigger('stop');
                   },
 
                   // ### `imageChange` Event ######

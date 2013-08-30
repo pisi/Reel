@@ -191,6 +191,7 @@
     ok( typeof $.reel.math.envelope == 'function',        '`$.reel.math.envelope()`' );
     ok( typeof $.reel.math.hatch == 'function',           '`$.reel.math.hatch()`' );
     ok( typeof $.reel.math.interpolate == 'function',     '`$.reel.math.interpolate()`' );
+    ok( typeof $.reel.math.interpolate == 'function',     '`$.reel.math.distance()`' );
     // Functionally of individual `$.reel.math` methods is tested in the Computations module
 
     ok( typeof $.reel.preload == 'object',                '`$.reel.preload` - preload ordering options' );
