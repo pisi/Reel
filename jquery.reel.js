@@ -2159,8 +2159,8 @@
       // Math Behind
       // -----------
       //
-      // Surprisingly there's very little math behind Reel, just two equations (graph functions). These two
-      // functions receive the same set of options.
+      // Surprisingly there's very little math behind Reel. Two equations (graph functions), which
+      // drive Reel motion and receive the same set of options.
       //
       // ---
 
@@ -2196,10 +2196,19 @@
           return fraction - floor(fraction)
         },
 
-        // And an equation for interpolating `fraction` (and `tier`) value into `frame` and `row`.
+        // Plus equation for interpolating `fraction` (and `tier`) value into `frame` and `row`.
         //
         interpolate: function(fraction, lo, hi){
           return lo + fraction * (hi - lo)
+        },
+
+        // And one for calculation of the shortest frame distance from start to the end.
+        // 
+        distance: function(start, end, total){
+          var
+            half= total / 2,
+            d= end - start
+          return d < -half ? d + total : d > half ? d - total : d
         }
       },
 

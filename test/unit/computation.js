@@ -619,4 +619,20 @@
     });
   });
 
+  $.each({
+    'positive over edge':    { start: 35, target:  2, expect: { distance:   3 }},
+    'positive':              { start: 25, target: 35, expect: { distance:  10 }},
+    'negative':              { start: 25, target: 10, expect: { distance: -15 }},
+    'positive over edge 2':  { start: 25, target:  5, expect: { distance:  16 }},
+    'negative over edge':    { start:  4, target: 33, expect: { distance:  -7 }}
+  },
+  function(name, def){
+    test( '`$.reel.math.distance( departure: '+def.start+', target: '+def.target+', speed: 36 )`', function()
+    {
+      expect(1);
+
+      equal( $.reel.math.distance(def.start, def.target, 36), def.expect.distance, 'Shortest distance to get to the target frame');
+    });
+  });
+
 })(jQuery);
