@@ -494,6 +494,11 @@
         //
         preload:       'fidelity',
 
+        // #### `shy` Option ####
+        // [NEW] `Boolean`, since 1.3
+        //
+        shy:                false,
+
 
         // ### Animation ######
         //
@@ -909,6 +914,7 @@
                     revolution= opt.revolution,
                     rows= opt.rows,
                     footage= opt.footage,
+                    shy= set(_shy_, opt.shy),
                     size= { x: t.width(), y: t.height() },
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
                     multirow= rows > 1 || orbital,
@@ -2441,9 +2447,9 @@
     _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
-    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
-    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
+    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _shy_= 'shy', _spacing_= 'spacing', _speed_= 'speed',
+    _stage_= 'stage', _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo',
+    _ticks_= 'ticks', _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
 
     // And the same goes for browser events too.
     //

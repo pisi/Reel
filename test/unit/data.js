@@ -45,6 +45,7 @@
         row: 'Number',
         rowlock: 'Boolean',
         rows: 'Number',
+        shy: 'Boolean',
         spacing: 'Number',
         speed: 'Number',
         stage: 'String',
