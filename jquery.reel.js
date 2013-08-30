@@ -1584,6 +1584,9 @@
                   //
                   'frameChange.reach': function(e, nil, frame){
                     if (!get(_destination_)) return;
+                    var
+                      travelled= reel.math.distance(get(_departure_), frame, get(_frames_)),
+                      onorover= abs(travelled) >= abs(get(_distance_))
                   },
 
                   // ### `imageChange` Event ######
