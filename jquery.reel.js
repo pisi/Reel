@@ -1233,6 +1233,7 @@
                       departure= set(_departure_, get(_frame_)),
                       target= set(_destination_, target),
                       shortest = set(_distance_, reel.math.distance(departure, target, frames))
+                      speed= abs(speed || get(_speed_)) * negative_when(1, shortest < 0)
                     t.trigger('play', speed);
                   },
 
