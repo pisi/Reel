@@ -23,6 +23,8 @@
         clicked_on: 'Number',
         clicked_tier: 'Number',
         cwish: 'Number',
+        departure: 'Number',
+        destination: 'Number',
         dimensions: 'Object',
         fraction: 'Number',
         frame: 'Number',
