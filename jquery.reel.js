@@ -1580,6 +1580,12 @@
                     }
                   },
 
+                  // This extra binding takes care of watching frame position while animating the `"reach"` event.
+                  //
+                  'frameChange.reach': function(e, nil, frame){
+                    if (!get(_destination_)) return;
+                  },
+
                   // ### `imageChange` Event ######
                   // `Event`, since 1.2.2
                   //
