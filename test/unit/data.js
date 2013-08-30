@@ -26,6 +26,7 @@
         departure: 'Number',
         destination: 'Number',
         dimensions: 'Object',
+        distance: 'Number',
         fraction: 'Number',
         frame: 'Number',
         framelock: 'Boolean',

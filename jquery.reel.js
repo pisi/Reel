@@ -933,7 +933,7 @@
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
                   set(_dimensions_, size);
-                  set(_departure_, set(_destination_, 0));
+                  set(_departure_, set(_destination_, set(_distance_, 0)));
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
                   set(_stitched_travel_, stitched - (loops ? 0 : size.x));
                   set(_stitched_shift_, 0);
@@ -1231,7 +1231,8 @@
                       frames= get(_frames_),
                       row= set(_row_, ceil(target / frames)),
                       departure= set(_departure_, get(_frame_)),
-                      target= set(_destination_, target)
+                      target= set(_destination_, target),
+                      shortest = set(_distance_, reel.math.distance(departure, target, frames))
                     t.trigger('play', speed);
                   },
 
@@ -2465,7 +2466,7 @@
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
-    _cwish_= 'cwish', _departure_= 'departure', _destination_= 'destination', _dimensions_= 'dimensions', _fraction_= 'fraction',
+    _cwish_= 'cwish', _departure_= 'departure', _destination_= 'destination', _dimensions_= 'dimensions', _distance_= 'distance', _fraction_= 'fraction',
     _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
