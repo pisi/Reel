@@ -1226,6 +1226,9 @@
                   //
                   reach: function(e, target, speed){
                     if (target == get(_frame_)) return;
+                    var
+                      frames= get(_frames_),
+                      row= set(_row_, ceil(target / frames))
                     t.trigger('play', speed);
                   },
 
