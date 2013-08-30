@@ -161,7 +161,7 @@
   });
 
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
-    expect(30);
+    expect(31);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
     ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
