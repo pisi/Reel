@@ -1217,6 +1217,18 @@
                     idle();
                   },
 
+                  // ### `reach` Event ######
+                  // `Event`, since 1.3
+                  //
+                  // Use this event to instruct Reel to play and reach a given frame. `"reach"` event requires
+                  // `target` parameter, which is the frame to which Reel should animate to and stop.
+                  // Optional `speed` parameter allows for custom speed independent on the regular speed.
+                  //
+                  reach: function(e, target, speed){
+                    if (target == get(_frame_)) return;
+                    t.trigger('play', speed);
+                  },
+
                   // ### `pause` Event ######
                   // `Event`, since 1.1
                   //
