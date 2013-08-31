@@ -1678,6 +1678,11 @@
                       $note.appendTo($overlay);
                     });
                   },
+                  'prepare.annotations': function(e){
+                    $.each(get(_annotations_), function(ida, note){
+                      $(hash(ida)).hide();
+                    });
+                  },
                   'frameChange.annotations': function(e, deprecation, frame){
                     var
                       space= get(_dimensions_),
