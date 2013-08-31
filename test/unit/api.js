@@ -27,7 +27,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 7);
 
-    equal( count, 53, 'Total number of options');
+    equal( count, 54, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -95,6 +95,7 @@
     equal( $.reel.def.rowlock,                false, 'enables mouse interaction lock on row' );
     equal( $.reel.def.orientable,             false, 'device orientation interaction (disabled by default)' );
     equal( $.reel.def.responsive,             false, 'whether to respond to viewport size changes' );
+    equal( $.reel.def.shy,                    false, 'shy on-demand initialization' );
   });
 
   test( 'jQuery of currently living instances is referenced as `$.reel.instances`', function()

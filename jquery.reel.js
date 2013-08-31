@@ -494,6 +494,18 @@
         //
         preload:       'fidelity',
 
+        // Sometimes, on-demand activation is desirable in order to conserve device resources or bandwidth
+        // especially with multiple instances on a single page. If so, enable _shy mode_, in which Reel will
+        // hold up the initialization process until the image is clicked by the user. Alternativelly you can
+        // initialize shy instance by triggering `"setup"` event.
+        //
+        // ---
+
+        // #### `shy` Option ####
+        // [NEW] `Boolean`, since 1.3
+        //
+        shy:                false,
+
 
         // ### Animation ######
         //
@@ -934,6 +946,7 @@
                     spacing= set(_spacing_, opt.spacing),
                     width= set(_width_, t.width()),
                     height= set(_height_, t.height()),
+                    shy= set(_shy_, opt.shy),
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
                     multirow= rows > 1 || orbital,
                     revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || width * 2),
@@ -993,7 +1006,7 @@
                   responsive && $.each(responsive_keys, function(i, key){ truescale[key]= get(key) });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
-                  t.trigger('setup');
+                  t.trigger(shy ? 'prepare' : 'setup')
                 },
 
                 // ------
@@ -1033,11 +1046,13 @@
                     var
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
-                    get(_style_).remove();
-                    get(_cache_).empty();
+                    if (!get(_shy_)){
+                      get(_style_).remove();
+                      get(_cache_).empty();
+                      get(_area_).unbind(ns);
+                    }
                     clearTimeout(delay);
                     clearTimeout(gauge_delay);
-                    get(_area_).unbind(ns);
                     $(window).unbind(_resize_, slow_gauge);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
@@ -1065,6 +1080,7 @@
                       $area= set(_area_, $(opt.area || $overlay )),
                       multirow= opt.rows > 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
+                    t.unbind(_click_, trigger_setup);
                     if (touchy){
                       $area
                         .bind(_touchstart_, press)
@@ -1134,6 +1150,7 @@
                       uris.push(uri);
                     }
                     set(_cached_, uris);
+                    set(_shy_, false);
                     function load(uri, $img){ setTimeout(function(){
                       !detached($overlay) && $img.attr({ src: reen(uri) });
                     }, (to_load - preload.length) * 2) }
@@ -1170,6 +1187,16 @@
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
                     set(_loading_, false);
                     loaded= true;
+                  },
+
+                  // ### `prepare` Event ######
+                  // [NEW] `Event`, since 1.3
+                  //
+                  // In case of `shy` activation, `"prepare"` event is called instead of the full `"setup"`.
+                  // It lefts the target image untouched waiting to be clicked to actually setup.
+                  //
+                  prepare: function(e){
+                    t.css('display', _block_).one(_click_, trigger_setup);
                   },
 
                   // ----------------
@@ -1707,6 +1734,11 @@
                       $note.appendTo($overlay);
                     });
                   },
+                  'prepare.annotations': function(e){
+                    $.each(get(_annotations_), function(ida, note){
+                      $(hash(ida)).hide();
+                    });
+                  },
                   'frameChange.annotations': function(e, deprecation, frame){
                     if (!get(_preloaded_) || deprecation !== undefined) return;
                     var
@@ -1865,7 +1897,7 @@
                   // until all images are loaded and to unbind itself then.
                   //
                   'tick.reel.preload': function(e){
-                    if (!(loaded || get(_loading_))) return;
+                    if (!(loaded || get(_loading_)) || get(_shy_)) return;
                     var
                       width= get(_width_),
                       current= number(preloader.$.css(_width_)),
@@ -1891,6 +1923,7 @@
                   // - and most importantly it animates the Reel if [`speed`](#speed-Option) is configured.
                   //
                   'tick.reel': function(e){
+                    if (get(_shy_)) return;
                     var
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_),
@@ -1944,6 +1977,10 @@
               // - Events propagation stopper / muter
               //
               mute= function(e, result){ return e.stopImmediatePropagation() || result },
+
+              // - Shy initialization helper
+              //
+              trigger_setup= function(){ t.trigger('setup') },
 
               // - User idle control
               //
@@ -2611,11 +2648,11 @@
     //
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
-    _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
+    _center_= 'center', _click_= 'click', _clicked_= _click_+'ed', _clicked_location_= _clicked_+'_location', _clicked_on_= _clicked_+'_on', _clicked_tier_= _clicked_+'_tier',
     _cwish_= 'cwish', _departure_= 'departure', _destination_= 'destination', _distance_= 'distance', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',
-    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
+    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _shy_= 'shy', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
     _stitched_= 'stitched', _stitched_shift_= _stitched_+'_shift', _stitched_travel_= _stitched_+'_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
     _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
 

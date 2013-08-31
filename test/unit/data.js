@@ -52,6 +52,7 @@
         row: 'Number',
         rowlock: 'Boolean',
         rows: 'Number',
+        shy: 'Boolean',
         spacing: 'Number',
         speed: 'Number',
         stage: 'String',
@@ -798,6 +799,23 @@
     ok( $reel.reel('footage') != $.reel.def.footage, 'Other than default');
     equal( $reel.reel('footage'), frames, 'Footage equals frames');
 
+  });
+
+  asyncTest( 'Shy data status gets cleared at setup', function(){
+
+    expect(2);
+
+    var
+      $reel= $('#image').reel({
+        shy: true
+      })
+
+    equal( $reel.reel('shy'), true, '`shy` data value before setup' );
+
+    $reel.trigger('setup');
+
+    equal( $reel.reel('shy'), false, '`shy` data value after setup' );
+    start();
   });
 
 })(jQuery);
