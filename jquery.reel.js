@@ -1123,6 +1123,7 @@
                     }
                     set(_cache_, $cache);
                     set(_cached_, uris);
+                    set(_shy_, false);
                     function load(uri, $img){ setTimeout(function(){
                       !detached($overlay) && $img.attr({ src: reen(uri) });
                     }, (to_load - preload.length) * 2) }

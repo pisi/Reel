@@ -598,4 +598,21 @@
 
   });
 
+  asyncTest( 'Shy data status gets cleared at setup', function(){
+
+    expect(2);
+
+    var
+      $reel= $('#image').reel({
+        shy: true
+      })
+
+    equal( $reel.reel('shy'), true, '`shy` data value before setup' );
+
+    $reel.trigger('setup');
+
+    equal( $reel.reel('shy'), false, '`shy` data value after setup' );
+    start();
+  });
+
 })(jQuery);
