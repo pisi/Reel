@@ -1048,11 +1048,9 @@
                     var
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
-                    if (!get(_shy_)){
-                      get(_style_).remove();
-                      get(_cache_).empty();
-                      get(_area_).unbind(ns);
-                    }
+                    if (get(_shy_)) t.unbind(_click_, trigger_setup)
+                    else get(_style_).remove() && get(_area_).unbind(ns);
+                    get(_cache_).empty();
                     clearTimeout(delay);
                     clearTimeout(gauge_delay);
                     $(window).unbind(_resize_, slow_gauge);

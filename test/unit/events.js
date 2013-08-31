@@ -225,6 +225,20 @@
     })
   });
 
+  asyncTest( 'Playback Shy activation triggers `"prepare"` event and waits for explicit setup being triggered', function(){
+    expect(1);
+
+    $(document).bind('prepare.test setup.test', function(e){
+      equal( e.type, 'prepare', 'Event triggered');
+      start();
+    });
+
+    var
+      $reel= $('#image').reel({
+        shy: true
+      })
+  });
+
   $.each([
     { before: 1, after: 23 },
     { before: 15, after: 14 },
@@ -367,23 +381,6 @@
       equal( $reel.reel('row'), def.expect.row, 'On the right row first');
       start();
     });
-  });
-
-  asyncTest( 'Shy activation triggers `"prepare"` event and waits for explicit setup being triggered', function(){
-    expect(1);
-
-    $(document).bind('prepare.test', function(){
-      ok( true, '`"prepare" event triggered');
-      start();
-    });
-    $(document).bind('setup.test', function(){
-      ok( false, '`"setup" event triggered');
-      start();
-    });
-    var
-      $reel= $('#image').reel({
-        shy: true
-      })
   });
 
 })(jQuery);
