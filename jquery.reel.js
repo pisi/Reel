@@ -494,6 +494,8 @@
         //
         preload:       'fidelity',
 
+        // ### Shy Mode ######
+        //
         // Sometimes, on-demand activation is desirable in order to conserve device resources or bandwidth
         // especially with multiple instances on a single page. If so, enable _shy mode_, in which Reel will
         // hold up the initialization process until the image is clicked by the user. Alternativelly you can

@@ -76,6 +76,7 @@
                       <li><a href="#Multi-Row-Locks"><code>rowlock</code></a></li>
                       <li><a href="#Multi-Row-Mode"><code>rows</code></a></li>
                       <li><a href="#Interaction"><code>scrollable</code></a></li>
+                      <li><a href="#Shy-Mode"><code>shy</code></a></li>
                       <li><a href="#Sprite-Layout"><code>spacing</code></a></li>
                       <li><a href="#Animation"><code>speed</code></a></li>
                       <li><a href="#Deprecated-Options"><code>step</code></a></li>
@@ -167,7 +168,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3-devel
- * Updated: 2013-08-26
+ * Updated: 2013-08-31
  *
  * Requires jQuery 1.5 or higher
  */</span>
@@ -616,7 +617,7 @@ thus allowing a click-free dragging.</p>
                 </div>
               
               <h4><code>orientable</code> Option</h4>
-<p><code>Boolean</code>, IN DEVELOPMENT</p>
+<p>[NEW] <code>Boolean</code>, since 1.3</p>
 
             </div>
             
@@ -1238,6 +1239,44 @@ behavior.</li>
         </li>
         
         
+        <li id='Shy-Mode'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#Shy-Mode">&#182;</a>
+                </div>
+              
+              <h3>Shy Mode</h3>
+<p>Sometimes, on-demand activation is desirable in order to conserve device resources or bandwidth
+especially with multiple instances on a single page. If so, enable <em>shy mode</em>, in which Reel will
+hold up the initialization process until the image is clicked by the user. Alternativelly you can
+initialize shy instance by triggering <code>&quot;setup&quot;</code> event.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='shy-Option'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h4">
+                  <a class="pilcrow" href="#shy-Option">&#182;</a>
+                </div>
+              
+              <h4><code>shy</code> Option</h4>
+<p>[NEW] <code>Boolean</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        shy:                <span class="literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
         <li id='Animation'>
             <div class="annotation">
               
@@ -1515,7 +1554,7 @@ and adjusts to his tempo.</p>
         </li>
         
         
-        <li id='section-71'>
+        <li id='section-73'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -1660,7 +1699,7 @@ to the instance.</p>
         </li>
         
         
-        <li id='section-79'>
+        <li id='section-81'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -1742,6 +1781,48 @@ by defining an <code>annotations</code> object. Learn more about <a href="https:
             </div>
             
             <div class="content"><div class='highlight'><pre>        annotations:    <span class="literal">undefined</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='Responsiveness'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#Responsiveness">&#182;</a>
+                </div>
+              
+              <h3>[NEW] Responsiveness</h3>
+<p>By default, dimensions of Reel are fixed and pixel-match the dimensions of the original image
+and the responsive mode is disabled. Using <code>responsive</code> option you can enable responsiveness.
+In such a case Reel will adopt dimensions of its parent container element and scale all relevant
+data store values accordingly.
+The scale applied is stored in <code>&quot;ratio&quot;</code> data key, where <code>1.0</code> means 100% or no scale.</p>
+<p>To take full advantage of this, you can setup your URLs to contain actual dimensions and
+serve images in appropriate detail.
+Learn more about <a href="#Data-Values-in-URLs">data values in URLs</a>.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='responsive-Option'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h4">
+                  <a class="pilcrow" href="#responsive-Option">&#182;</a>
+                </div>
+              
+              <h4><code>responsive</code> Option</h4>
+<p><code>Boolean</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        responsive:         <span class="literal">false</span>,</pre></div></div>
             
         </li>
         
@@ -1879,7 +1960,7 @@ of the viewport. Its visual can be customized by CSS using <code>.jquery-reel-mo
         </li>
         
         
-        <li id='section-91'>
+        <li id='section-95'>
             <div class="annotation">
               
               <hr>
@@ -1904,7 +1985,7 @@ of the viewport. Its visual can be customized by CSS using <code>.jquery-reel-mo
         </li>
         
         
-        <li id='section-93'>
+        <li id='section-97'>
             <div class="annotation">
               
               <p>For basic Reel initialization, you don&#39;t even need to write any Javascript!
@@ -1936,7 +2017,7 @@ and add configuration <strong>data attributes</strong>.</p>
         </li>
         
         
-        <li id='section-94'>
+        <li id='section-98'>
             <div class="annotation">
               
               <p>Responsible for discovery and subsequent conversion of data-configured Reel images is
@@ -1989,7 +2070,7 @@ into already ready DOM.</p>
         </li>
         
         
-        <li id='section-96'>
+        <li id='section-100'>
             <div class="annotation">
               
               <hr>
@@ -2014,7 +2095,7 @@ into already ready DOM.</p>
         </li>
         
         
-        <li id='section-98'>
+        <li id='section-102'>
             <div class="annotation">
               
               <p>Reel&#39;s methods extend jQuery core functions with members of its <code>$.reel.fn</code> object. Despite Reel
@@ -2045,7 +2126,7 @@ its dipolar twin <code>.unreel()</code>.</p>
         </li>
         
         
-        <li id='section-100'>
+        <li id='section-104'>
             <div class="annotation">
               
               <hr>
@@ -2070,7 +2151,7 @@ its dipolar twin <code>.unreel()</code>.</p>
         </li>
         
         
-        <li id='section-102'>
+        <li id='section-106'>
             <div class="annotation">
               
               <p><code>.reel()</code> method is the core of Reel and similar to some jQuery functions, this one is three-fold.
@@ -2100,7 +2181,7 @@ It either performs the following builder&#39;s duty or the <a href="#Data">data 
         </li>
         
         
-        <li id='section-104'>
+        <li id='section-108'>
             <div class="annotation">
               
               <p>The decision on what to actually do is made upon given arguments.</p>
@@ -2120,7 +2201,7 @@ It either performs the following builder&#39;s duty or the <a href="#Data">data 
         </li>
         
         
-        <li id='section-105'>
+        <li id='section-109'>
             <div class="annotation">
               
               <p>Establish local <code>opt</code> object made by extending the defaults.</p>
@@ -2132,7 +2213,7 @@ It either performs the following builder&#39;s duty or the <a href="#Data">data 
         </li>
         
         
-        <li id='section-106'>
+        <li id='section-110'>
             <div class="annotation">
               
               <p>Limit the given jQuery collection to just <code>&lt;img&gt;</code> tags with <code>src</code> attribute
@@ -2152,7 +2233,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-107'>
+        <li id='section-111'>
             <div class="annotation">
               
               <p>In case element did not qualify an Javascript error is thrown out.</p>
@@ -2166,7 +2247,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-108'>
+        <li id='section-112'>
             <div class="annotation">
               
               <p>Backward-compatibility of [deprecated] legacy options</p>
@@ -2183,7 +2264,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-109'>
+        <li id='section-113'>
             <div class="annotation">
               
               <p>Quick data interface</p>
@@ -2198,7 +2279,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-110'>
+        <li id='section-114'>
             <div class="annotation">
               
               <hr>
@@ -2223,7 +2304,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-112'>
+        <li id='section-116'>
             <div class="annotation">
               
               <p>This internally called private pseudo-handler:</p>
@@ -2241,21 +2322,28 @@ and dimensions defined.</p>
                   <span class="keyword">var</span>
                     src= t.attr(opt.attr).attr(<span class="string">'src'</span>),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+<span class="string">'-'</span>+(+<span class="keyword">new</span> Date())).attr(_id_)),
-                    styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
                     images= set(_images_, opt.images || []),
-                    stitched= opt.stitched,
+                    stitched= set(_stitched_, opt.stitched),
+                    is_sprite= !images.length || stitched,
+                    responsive= set(_responsive_, opt.responsive &amp;&amp; (knows_background_size ? <span class="literal">true</span> : !is_sprite)),
+                    truescale= set(_truescale_, {}),
                     loops= opt.loops,
                     orbital= opt.orbital,
                     revolution= opt.revolution,
                     rows= opt.rows,
-                    footage= opt.footage,
-                    size= { x: t.width(), y: t.height() },
+                    footage= set(_footage_, min(opt.footage, opt.frames)),
+                    spacing= set(_spacing_, opt.spacing),
+                    width= set(_width_, t.width()),
+                    height= set(_height_, t.height()),
+                    shy= set(_shy_, opt.shy),
                     frames= set(_frames_, orbital &amp;&amp; footage || rows &lt;= <span class="number">1</span> &amp;&amp; images.length || opt.frames),
                     multirow= rows &gt; <span class="number">1</span> || orbital,
-                    revolution_x= set(_revolution_, axis(<span class="string">'x'</span>, revolution) || stitched / <span class="number">2</span> || size.x * <span class="number">2</span>),
-                    revolution_y= set(_revolution_y_, !multirow ? <span class="number">0</span> : (axis(<span class="string">'y'</span>, revolution) || (rows &gt; <span class="number">3</span> ? size.y : size.y / (<span class="number">5</span> - rows)))),
+                    revolution_x= set(_revolution_, axis(<span class="string">'x'</span>, revolution) || stitched / <span class="number">2</span> || width * <span class="number">2</span>),
+                    revolution_y= set(_revolution_y_, !multirow ? <span class="number">0</span> : (axis(<span class="string">'y'</span>, revolution) || (rows &gt; <span class="number">3</span> ? height : height / (<span class="number">5</span> - rows)))),
                     rows= stitched ? <span class="number">1</span> : ceil(frames / footage),
+                    stitched_travel= set(_stitched_travel_, stitched - (loops ? <span class="number">0</span> : width)),
+                    stitched_shift= set(_stitched_shift_, <span class="number">0</span>),
                     stage_id= hash(id+opt.suffix),
                     classes= t[<span class="number">0</span>].className || __,
                     $overlay= $(tag(_div_), { id: stage_id.substr(<span class="number">1</span>), <span class="string">'class'</span>: classes+___+overlay_klass+___+frame_klass+<span class="string">'0'</span> }),
@@ -2263,9 +2351,8 @@ and dimensions defined.</p>
                     instances_count= instances.push(add_instance($instance)[<span class="number">0</span>]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, <span class="string">'$1'</span> + opt.suffix + <span class="string">'.$2'</span>));
-                  set(_cache_, $());
+                  set(_cache_, $(tag(_div_)));
                   set(_cached_, []);
-                  set(_spacing_, opt.spacing);
                   set(_frame_, <span class="literal">null</span>);
                   set(_fraction_, <span class="literal">null</span>);
                   set(_row_, <span class="literal">null</span>);
@@ -2273,12 +2360,11 @@ and dimensions defined.</p>
                   set(_rows_, rows);
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
-                  set(_dimensions_, size);
+                  set(_departure_, set(_destination_, set(_distance_, <span class="number">0</span>)));
                   set(_bit_, <span class="number">1</span> / (frames - (loops &amp;&amp; !stitched ? <span class="number">0</span> : <span class="number">1</span>)));
-                  set(_stitched_travel_, stitched - (loops ? <span class="number">0</span> : size.x));
-                  set(_stitched_shift_, <span class="number">0</span>);
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) &lt; <span class="number">0</span>);
+                  set(_loading_, <span class="literal">false</span>);
                   set(_velocity_, <span class="number">0</span>);
                   set(_vertical_, opt.vertical);
                   set(_preloaded_, <span class="number">0</span>);
@@ -2296,24 +2382,27 @@ and dimensions defined.</p>
                   set(_opening_ticks_, -<span class="number">1</span>);
                   set(_ticks_, -<span class="number">1</span>);
                   set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) &amp;&amp; {});
+                  set(_ratio_, <span class="number">1</span>);
                   set(_backup_, {
                     src: src,
                     classes: classes,
-                    style: styles || __,
-                    data: data
+                    data: data,
+                    style: t.attr(_style_) || __
                   });
                   opt.steppable || $overlay.unbind(<span class="string">'up.steppable'</span>);
                   opt.indicator || $overlay.unbind(<span class="string">'.indicator'</span>);
-                  css(__, { width: size.x, height: size.y, overflow: _hidden_, position: <span class="string">'relative'</span> });
+                  css(__, { overflow: _hidden_, position: <span class="string">'relative'</span> });
+                  responsive || css(__, { width: width, height: height });
+                  responsive &amp;&amp; $.each(responsive_keys, <span class="keyword">function</span>(i, key){ truescale[key]= get(key) });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
-                  t.trigger(<span class="string">'setup'</span>);
+                  t.trigger(shy ? <span class="string">'prepare'</span> : <span class="string">'setup'</span>)
                 },</pre></div></div>
             
         </li>
         
         
-        <li id='section-113'>
+        <li id='section-117'>
             <div class="annotation">
               
               <hr>
@@ -2338,7 +2427,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-115'>
+        <li id='section-119'>
             <div class="annotation">
               
               <p>Reel is completely event-driven meaning there are many events, which can be called
@@ -2385,8 +2474,14 @@ belongings leaving no trace.</p>
                     <span class="keyword">var</span>
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
-                    get(_style_).remove();
-                    get(_area_).unbind(ns);
+                    <span class="keyword">if</span> (!get(_shy_)){
+                      get(_style_).remove();
+                      get(_cache_).empty();
+                      get(_area_).unbind(ns);
+                    }
+                    clearTimeout(delay);
+                    clearTimeout(gauge_delay);
+                    $(window).unbind(_resize_, slow_gauge);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      <span class="string">'class'</span>: backup.classes,
                       src: backup.src,
@@ -2422,32 +2517,12 @@ handler.</p>
             
             <div class="content"><div class='highlight'><pre>                  setup: <span class="keyword">function</span>(e){
                     <span class="keyword">var</span>
-                      space= get(_dimensions_),
-                      frames= get(_frames_),
-                      id= t.attr(_id_),
-                      rows= opt.rows,
-                      stitched= opt.stitched,
-                      $overlay= t.parent(),
+                      $overlay= t.parent().append(preloader()),
                       $area= set(_area_, $(opt.area || $overlay )),
-                      rows= opt.rows || <span class="number">1</span>
+                      multirow= opt.rows &gt; <span class="number">1</span>
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: <span class="string">'translateZ(0)'</span> });
-                    <span class="keyword">if</span> (touchy){</pre></div></div>
-            
-        </li>
-        
-        
-        <li id='section-118'>
-            <div class="annotation">
-              
-              <p>workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                      css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? !stitched ? <span class="literal">undefined</span> : px(stitched)+___+px(space.y)
-                        : stitched &amp;&amp; px(stitched)+___+px((space.y + opt.spacing) * rows - opt.spacing)
-                        || px((space.x + opt.spacing) * opt.footage - opt.spacing)+___+px((space.y + opt.spacing) * get(_rows_) * rows * (opt.directional? <span class="number">2</span>:<span class="number">1</span>) - opt.spacing)
-                      });
+                    t.unbind(_click_, trigger_setup);
+                    <span class="keyword">if</span> (touchy){
                       $area
                         .bind(_touchstart_, press)
                     }<span class="keyword">else</span>{
@@ -2463,11 +2538,15 @@ handler.</p>
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                         .bind(_dragstart_, <span class="keyword">function</span>(){ <span class="keyword">return</span> <span class="literal">false</span> })
                     }
+                    <span class="keyword">if</span> (get(_responsive_)){
+                      css(___+dot(klass), { width: <span class="string">'100%'</span>, height: _auto_ });
+                      $(window).bind(_resize_, slow_gauge);
+                    }
                     <span class="function"><span class="keyword">function</span> <span class="title">press</span><span class="params">(e)</span>{</span> <span class="keyword">return</span> t.trigger(<span class="string">'down'</span>, [finger(e).clientX, finger(e).clientY, e]) &amp;&amp; e.give }
                     <span class="function"><span class="keyword">function</span> <span class="title">wheel</span><span class="params">(e, delta)</span>{</span> <span class="keyword">return</span> !delta || t.trigger(<span class="string">'wheel'</span>, [delta, e]) &amp;&amp; e.give }
                     opt.hint &amp;&amp; $area.attr(<span class="string">'title'</span>, opt.hint);
                     opt.indicator &amp;&amp; $overlay.append(indicator(<span class="string">'x'</span>));
-                    rows &gt; <span class="number">1</span> &amp;&amp; opt.indicator &amp;&amp; $overlay.append(indicator(<span class="string">'y'</span>));
+                    multirow &amp;&amp; opt.indicator &amp;&amp; $overlay.append(indicator(<span class="string">'y'</span>));
                     opt.monitor &amp;&amp; $overlay.append($monitor= $(tag(_div_), { <span class="string">'class'</span>: monitor_klass }))
                                 &amp;&amp; css(___+dot(monitor_klass), { position: _absolute_, left: <span class="number">0</span>, top: <span class="number">0</span> });
                   },</pre></div></div>
@@ -2486,8 +2565,7 @@ handler.</p>
               <h3><code>preload</code> Event</h3>
 <p><code>Event</code>, since 1.1</p>
 <p>Reel keeps a cache of all images it needs for its operation. Either a sprite or all
-sequence images. Physically, this cache is made up of a hidden <code>&lt;img&gt;</code> sibling for each
-preloaded image. It first determines the order of requesting the images and then
+sequence images. It first determines the order of requesting the images and then
 asynchronously loads all of them.</p>
 <ul>
 <li>It preloads all frames and sprites.</li>
@@ -2497,24 +2575,21 @@ asynchronously loads all of them.</p>
             
             <div class="content"><div class='highlight'><pre>                  preload: <span class="keyword">function</span>(e){
                     <span class="keyword">var</span>
-                      space= get(_dimensions_),
                       $overlay= t.parent(),
                       images= get(_images_),
                       is_sprite= !images.length,
-                      frames= get(_frames_),
-                      footage= opt.footage,
                       order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
                       preload= is_sprite ? [get(_image_)] : order(images.slice(<span class="number">0</span>), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? <span class="number">0.5</span> : <span class="number">0</span>),
-                      $cache= $(tag(_div_)),
+                      $cache= get(_cache_).empty(),
                       uris= []
-                    $overlay.addClass(loading_klass).append(preloader());</pre></div></div>
+                    $overlay.addClass(loading_klass);</pre></div></div>
             
         </li>
         
         
-        <li id='section-120'>
+        <li id='section-123'>
             <div class="annotation">
               
               <p>It also finalizes the instance stylesheet and prepends it to the head.</p>
@@ -2522,18 +2597,19 @@ asynchronously loads all of them.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                    set(_style_, get(_style_) || $(<span class="string">'&lt;'</span>+_style_+<span class="string">' type="text/css"&gt;'</span>+css.rules.join(<span class="string">'\n'</span>)+<span class="string">'&lt;/'</span>+_style_+<span class="string">'&gt;'</span>).prependTo(_head_));
+                    set(_loading_, <span class="literal">true</span>);
                     t.trigger(<span class="string">'stop'</span>);
+                    opt.responsive &amp;&amp; gauge();
+                    t.trigger(<span class="string">'resize'</span>, <span class="literal">true</span>);
                     <span class="keyword">while</span>(preload.length){
                       <span class="keyword">var</span>
-                        uri= opt.path+preload.shift(),
-                        width= space.x * (!is_sprite ? <span class="number">1</span> : footage),
-                        height= space.y * (!is_sprite ? <span class="number">1</span> : frames / footage) * (!opt.directional ? <span class="number">1</span> : <span class="number">2</span>),
+                        uri= reel.substitute(opt.path+preload.shift(), get),
                         $img= $(tag(_img_)).appendTo($cache)</pre></div></div>
             
         </li>
         
         
-        <li id='section-121'>
+        <li id='section-124'>
             <div class="annotation">
               
               <p>Each image, which finishes the load triggers <code>&quot;preloaded&quot;</code> Event.</p>
@@ -2547,8 +2623,8 @@ asynchronously loads all of them.</p>
                       load(uri, $img);
                       uris.push(uri);
                     }
-                    set(_cache_, $cache);
                     set(_cached_, uris);
+                    set(_shy_, <span class="literal">false</span>);
                     <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">(uri, $img)</span>{</span> setTimeout(<span class="keyword">function</span>(){
                       !detached($overlay) &amp;&amp; $img.attr({ src: reen(uri) });
                     }, (to_load - preload.length) * <span class="number">2</span>) }
@@ -2577,7 +2653,7 @@ target position. Once all images are preloaded, <code>&quot;loaded&quot;</code> 
                       images= get(_images_).length || <span class="number">1</span>,
                       preloaded= set(_preloaded_, min(get(_preloaded_) + <span class="number">1</span>, images))
                     <span class="keyword">if</span> (preloaded === images){
-                      t.parent().removeClass(loading_klass).unbind(_preloaded_, on.instance.preloaded);
+                      t.parent().removeClass(loading_klass);
                       t.trigger(<span class="string">'loaded'</span>);
                     }
                     <span class="keyword">if</span> (preloaded === <span class="number">1</span>) <span class="keyword">var</span>
@@ -2604,15 +2680,39 @@ or animation.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                  loaded: <span class="keyword">function</span>(e){
-                    get(_images_).length &gt; <span class="number">1</span> || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
-                    opt.stitched &amp;&amp; t.attr({ src: cdn(transparent) });
+                    get(_images_).length &gt; <span class="number">1</span> || t.css({ backgroundImage: url(reel.substitute(opt.path+get(_image_), get)) }).attr({ src: cdn(transparent) });
+                    get(_stitched_) &amp;&amp; t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || <span class="number">0</span>);
+                    set(_loading_, <span class="literal">false</span>);
+                    loaded= <span class="literal">true</span>;
                   },</pre></div></div>
             
         </li>
         
         
-        <li id='section-124'>
+        <li id='prepare-Event'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#prepare-Event">&#182;</a>
+                </div>
+              
+              <h3><code>prepare</code> Event</h3>
+<p>[NEW] <code>Event</code>, since 1.3</p>
+<p>In case of <code>shy</code> activation, <code>&quot;prepare&quot;</code> event is called instead of the full <code>&quot;setup&quot;</code>.
+It lefts the target image untouched waiting to be clicked to actually setup.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                  prepare: <span class="keyword">function</span>(e){
+                    t.css(<span class="string">'display'</span>, _block_).one(_click_, trigger_setup);
+                  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-128'>
             <div class="annotation">
               
               <hr>
@@ -2703,7 +2803,7 @@ the tick handler</p>
         </li>
         
         
-        <li id='section-128'>
+        <li id='section-132'>
             <div class="annotation">
               
               <hr>
@@ -2757,6 +2857,37 @@ speed on the fly.</p>
         </li>
         
         
+        <li id='reach-Event'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#reach-Event">&#182;</a>
+                </div>
+              
+              <h3><code>reach</code> Event</h3>
+<p><code>Event</code>, since 1.3</p>
+<p>Use this event to instruct Reel to play and reach a given frame. <code>&quot;reach&quot;</code> event requires
+<code>target</code> parameter, which is the frame to which Reel should animate to and stop.
+Optional <code>speed</code> parameter allows for custom speed independent on the regular speed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                  reach: <span class="keyword">function</span>(e, target, speed){
+                    <span class="keyword">if</span> (target == get(_frame_)) <span class="keyword">return</span>;
+                    <span class="keyword">var</span>
+                      frames= get(_frames_),
+                      row= set(_row_, ceil(target / frames)),
+                      departure= set(_departure_, get(_frame_)),
+                      target= set(_destination_, target),
+                      shortest = set(_distance_, reel.math.distance(departure, target, frames)),
+                      speed= abs(speed || get(_speed_)) * negative_when(<span class="number">1</span>, shortest &lt; <span class="number">0</span>)
+                    t.trigger(<span class="string">'play'</span>, speed);
+                  },</pre></div></div>
+            
+        </li>
+        
+        
         <li id='pause-Event'>
             <div class="annotation">
               
@@ -2802,7 +2933,7 @@ by the <code>timeout</code> option. After this timenout, the playback is resumed
         </li>
         
         
-        <li id='section-133'>
+        <li id='section-138'>
             <div class="annotation">
               
               <hr>
@@ -2867,7 +2998,7 @@ the event target element. However in click-free mode, it binds directly to the i
         </li>
         
         
-        <li id='section-136'>
+        <li id='section-141'>
             <div class="annotation">
               
               <p>Browser events differ for touch and mouse, but both of them are treated equally and
@@ -2959,6 +3090,7 @@ or <code>drag</code> (that conflicted with MSIE).</p>
                     <span class="keyword">if</span> (opt.draggable &amp;&amp; slidable){
                       slidable= <span class="literal">false</span>;
                       unidle();
+                      console.log(last)
                       <span class="keyword">var</span>
                         rows= opt.rows,
                         orbital= opt.orbital,
@@ -2983,7 +3115,6 @@ or <code>drag</code> (that conflicted with MSIE).</p>
                           vertical= set(_vertical_, abs(y - origin.y) &gt; abs(x - origin.x)),
                           origin= recenter_mouse(revolution, x, y)
                         <span class="keyword">if</span> (rows &gt; <span class="number">1</span> &amp;&amp; !get(_rowlock_)) <span class="keyword">var</span>
-                          space_y= get(_dimensions_).y,
                           revolution_y= get(_revolution_y_),
                           start= get(_clicked_tier_),
                           lo= - start * revolution_y,
@@ -3050,7 +3181,7 @@ the positive or negative wheeled distance in arguments. This event:</p>
                 </div>
               
               <h3><code>orient</code> Event</h3>
-<p><code>Event</code>, IN DEVELOPMENT</p>
+<p>[NEW] <code>Event</code>, since 1.3</p>
 <p>Maps Reel to device orientation event which is provided by some touch enabled devices
 with gyroscope inside. Event handler receives all three device orientation angles 
 in arguments. This event:</p>
@@ -3072,7 +3203,7 @@ in arguments. This event:</p>
         </li>
         
         
-        <li id='section-141'>
+        <li id='section-146'>
             <div class="annotation">
               
               <hr>
@@ -3097,7 +3228,7 @@ in arguments. This event:</p>
         </li>
         
         
-        <li id='section-143'>
+        <li id='section-148'>
             <div class="annotation">
               
               <p>Besides Reel being event-driven, it also is data-driven respectively data-change-driven
@@ -3142,7 +3273,7 @@ this handler basically calculates and sets new value of <code>frame</code>.</p>
                       frame= <span class="number">1</span> + floor(fraction / get(_bit_)),
                       multirow= opt.rows &gt; <span class="number">1</span>,
                       orbital= opt.orbital,
-                      center= set(_center_, !!orbital &amp;&amp; (frame &lt;= orbital || frame &gt;= opt.footage - orbital + <span class="number">2</span>))
+                      center= set(_center_, !!orbital &amp;&amp; (frame &lt;= orbital || frame &gt;= get(_footage_) - orbital + <span class="number">2</span>))
                     <span class="keyword">if</span> (multirow) <span class="keyword">var</span>
                       frame= frame + (get(_row_) - <span class="number">1</span>) * get(_frames_)
                     <span class="keyword">var</span>
@@ -3246,40 +3377,64 @@ This handler converts <code>row</code> value to <code>tier</code> and sets it. T
                       fraction_frame= round(interpolate(frame_fraction, row_shift + <span class="number">1</span>, row_shift + frames)),
                       same_spot= abs((get(_fraction_) || <span class="number">0</span>) - frame_fraction) &lt; <span class="number">1</span> / (get(_frames_) - <span class="number">1</span>),
                       fraction= ready &amp;&amp; (fraction_frame === frame &amp;&amp; same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
-                      footage= opt.footage
+                      footage= get(_footage_)
                     <span class="keyword">if</span> (opt.orbital &amp;&amp; get(_vertical_)) <span class="keyword">var</span>
                       frame= opt.inversed ? footage + <span class="number">1</span> - frame : frame,
                       frame= frame + footage
                     <span class="keyword">var</span>
                       horizontal= opt.horizontal,
-                      stitched= opt.stitched,
+                      stitched= get(_stitched_),
                       images= get(_images_),
-                      is_sprite= !images.length || opt.stitched,
+                      is_sprite= !images.length || stitched,
                       spacing= get(_spacing_),
-                      space= get(_dimensions_)
+                      width= get(_width_),
+                      height= get(_height_)
                     <span class="keyword">if</span> (!is_sprite){
                       <span class="keyword">var</span>
                         frameshot= images[frame - <span class="number">1</span>]
-                      ready &amp;&amp; t.attr({ src: reen(path + frameshot) })
+                      get(_responsive_) &amp;&amp; gauge();
+                      ready &amp;&amp; t.attr({ src: reen(reel.substitute(path + frameshot, get)) })
                     }<span class="keyword">else</span>{
                       <span class="keyword">if</span> (!stitched) <span class="keyword">var</span>
                         minor= (frame % footage) - <span class="number">1</span>,
                         minor= minor &lt; <span class="number">0</span> ? footage - <span class="number">1</span> : minor,
                         major= floor((frame - <span class="number">0.1</span>) / footage),
                         major= major + (rows &gt; <span class="number">1</span> ? <span class="number">0</span> : (get(_backwards_) ? <span class="number">0</span> : !opt.directional ? <span class="number">0</span> : get(_rows_))),
-                        a= major * ((horizontal ? space.y : space.x) + spacing),
-                        b= minor * ((horizontal ? space.x : space.y) + spacing),
+                        a= major * ((horizontal ? height : width) + spacing),
+                        b= minor * ((horizontal ? width : height) + spacing),
                         shift= images.length ? [<span class="number">0</span>, <span class="number">0</span>] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
                       <span class="keyword">else</span>{
                         <span class="keyword">var</span>
                           x= set(_stitched_shift_, round(interpolate(frame_fraction, <span class="number">0</span>, get(_stitched_travel_))) % stitched),
-                          y= rows &lt;= <span class="number">1</span> ? <span class="number">0</span> : (space.y + spacing) * (rows - row),
+                          y= rows &lt;= <span class="number">1</span> ? <span class="number">0</span> : (height + spacing) * (rows - row),
                           shift= [px(-x), px(-y)],
-                          image= images.length &gt; <span class="number">1</span> &amp;&amp; images[row - <span class="number">1</span>]
-                        image &amp;&amp; t.css(<span class="string">'backgroundImage'</span>).search(path+image) &lt; <span class="number">0</span> &amp;&amp; t.css({ backgroundImage: url(path+image) })
+                          image= images.length &gt; <span class="number">1</span> &amp;&amp; images[row - <span class="number">1</span>],
+                          fullpath= reel.substitute(path + image, get)
+                        image &amp;&amp; t.css(<span class="string">'backgroundImage'</span>).search(fullpath) &lt; <span class="number">0</span> &amp;&amp; t.css({ backgroundImage: url(fullpath) })
                       }
                       t.css({ backgroundPosition: shift.join(___) })
                     }
+                  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-153'>
+            <div class="annotation">
+              
+              <p>This extra binding takes care of watching frame position while animating the <code>&quot;reach&quot;</code> event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                  <span class="string">'frameChange.reach'</span>: <span class="keyword">function</span>(e, nil, frame){
+                    <span class="keyword">if</span> (!get(_destination_)) <span class="keyword">return</span>;
+                    <span class="keyword">var</span>
+                      travelled= reel.math.distance(get(_departure_), frame, get(_frames_)),
+                      onorover= abs(travelled) &gt;= abs(get(_distance_))
+                    <span class="keyword">if</span> (!onorover) <span class="keyword">return</span>;
+                    set(_frame_, set(_destination_));
+                    set(_destination_, set(_distance_, set(_departure_, <span class="number">0</span>)));
+                    t.trigger(<span class="string">'stop'</span>);
                   },</pre></div></div>
             
         </li>
@@ -3301,17 +3456,13 @@ new preload sequence. Images are actually switched only after the new image is f
             </div>
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'imageChange imagesChange'</span>: <span class="keyword">function</span>(e, nil, image){
-                    preloader.$.remove();
-                    get(_cache_).empty().remove();
-                    t.parent().bind(_preloaded_, on.instance.preloaded);
-                    pool.bind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     t.trigger(<span class="string">'preload'</span>);
                   },</pre></div></div>
             
         </li>
         
         
-        <li id='section-149'>
+        <li id='section-155'>
             <div class="annotation">
               
               <hr>
@@ -3336,7 +3487,7 @@ new preload sequence. Images are actually switched only after the new image is f
         </li>
         
         
-        <li id='section-151'>
+        <li id='section-157'>
             <div class="annotation">
               
               <p>When configured with the <a href="#indicator-Option"><code>indicator</code></a> option, Reel adds to the scene
@@ -3352,15 +3503,14 @@ indicator).</li>
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'fractionChange.indicator'</span>: <span class="keyword">function</span>(e, deprecated_set, fraction){
                     <span class="keyword">if</span> (deprecated_set === <span class="literal">undefined</span> &amp;&amp; opt.indicator) <span class="keyword">var</span>
-                      space= get(_dimensions_),
                       size= opt.indicator,
                       orbital= opt.orbital,
-                      travel= orbital &amp;&amp; get(_vertical_) ? space.y : space.x,
-                      slots= orbital ? opt.footage : opt.images.length || get(_frames_),
+                      travel= orbital &amp;&amp; get(_vertical_) ? get(_height_) : get(_width_),
+                      slots= orbital ? get(_footage_) : opt.images.length || get(_frames_),
                       weight= ceil(travel / slots),
                       travel= travel - weight,
                       indicate= round(interpolate(fraction, <span class="number">0</span>, travel)),
-                      indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
+                      indicate= !opt.cw || get(_stitched_) ? indicate : travel - indicate,
                       $indicator= indicator.$x.css(get(_vertical_)
                       ? { left: <span class="number">0</span>, top: px(indicate), bottom: _auto_, width: size, height: weight }
                       : { bottom: <span class="number">0</span>, left: px(indicate), top: _auto_, width: weight, height: size })
@@ -3369,7 +3519,7 @@ indicator).</li>
         </li>
         
         
-        <li id='section-152'>
+        <li id='section-158'>
             <div class="annotation">
               
               <p>For multi-row object movies, there&#39;s a second indicator sticked to the left edge
@@ -3384,11 +3534,9 @@ indicator).</li>
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'tierChange.indicator'</span>: <span class="keyword">function</span>(e, deprecated_set, tier){
                     <span class="keyword">if</span> (deprecated_set === <span class="literal">undefined</span> &amp;&amp; opt.rows &gt; <span class="number">1</span> &amp;&amp; opt.indicator) <span class="keyword">var</span>
-                      space= get(_dimensions_),
-                      travel= space.y,
-                      slots= opt.rows,
+                      travel= get(_height_),
                       size= opt.indicator,
-                      weight= ceil(travel / slots),
+                      weight= ceil(travel / opt.rows),
                       travel= travel - weight,
                       indicate= round(tier * travel),
                       $yindicator= indicator.$y.css({ left: <span class="number">0</span>, top: indicate, width: size, height: weight })
@@ -3397,7 +3545,7 @@ indicator).</li>
         </li>
         
         
-        <li id='section-153'>
+        <li id='section-159'>
             <div class="annotation">
               
               <p>Indicators are bound to <code>fraction</code> or <code>row</code> changes, meaning they alone can consume
@@ -3424,7 +3572,7 @@ more CPU resources than the entire Reel scene. Use them for development only.</p
         </li>
         
         
-        <li id='section-155'>
+        <li id='section-161'>
             <div class="annotation">
               
               <p>If you want to annotate features of your scene to better describe the subject,
@@ -3439,7 +3587,6 @@ to in-depth explain this new exciting functionality.</p>
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'setup.annotations'</span>: <span class="keyword">function</span>(e){
                     <span class="keyword">var</span>
-                      space= get(_dimensions_),
                       $overlay= t.parent()
                     $.each(get(_annotations_), <span class="keyword">function</span>(ida, note){
                       <span class="keyword">var</span>
@@ -3455,17 +3602,23 @@ to in-depth explain this new exciting functionality.</p>
                       $note.appendTo($overlay);
                     });
                   },
+                  <span class="string">'prepare.annotations'</span>: <span class="keyword">function</span>(e){
+                    $.each(get(_annotations_), <span class="keyword">function</span>(ida, note){
+                      $(hash(ida)).hide();
+                    });
+                  },
                   <span class="string">'frameChange.annotations'</span>: <span class="keyword">function</span>(e, deprecation, frame){
+                    <span class="keyword">if</span> (!get(_preloaded_) || deprecation !== <span class="literal">undefined</span>) <span class="keyword">return</span>;
                     <span class="keyword">var</span>
-                      space= get(_dimensions_),
-                      stitched= opt.stitched,
+                      width= get(_width_),
+                      stitched= get(_stitched_),
                       ss= get(_stitched_shift_)
-                    <span class="keyword">if</span> (!get(_preloaded_)) <span class="keyword">return</span>;
-                    <span class="keyword">if</span> (deprecation === <span class="literal">undefined</span>) $.each(get(_annotations_), <span class="keyword">function</span>(ida, note){
+                    $.each(get(_annotations_), <span class="keyword">function</span>(ida, note){
                       <span class="keyword">var</span>
                         $note= $(hash(ida)),
                         start= note.start || <span class="number">1</span>,
                         end= note.end,
+                        frame= frame || get(_frame_),
                         offset= frame - <span class="number">1</span>,
                         at= note.at ? (note.at[offset] == <span class="string">'+'</span>) : <span class="literal">false</span>,
                         offset= note.at ? offset : offset - start + <span class="number">1</span>,
@@ -3474,11 +3627,15 @@ to in-depth explain this new exciting functionality.</p>
                         placed= x !== <span class="literal">undefined</span> &amp;&amp; y !== <span class="literal">undefined</span>,
                         visible= placed &amp;&amp; (note.at ? at : (offset &gt;= <span class="number">0</span> &amp;&amp; (!end || offset &lt;= end - start)))
                       <span class="keyword">if</span> (stitched) <span class="keyword">var</span>
-                        on_edge= x &lt; space.x &amp;&amp; ss &gt; stitched - space.x,
-                        after_edge= x &gt; stitched - space.x &amp;&amp; ss &gt;= <span class="number">0</span> &amp;&amp; ss &lt; space.x,
+                        on_edge= x &lt; width &amp;&amp; ss &gt; stitched - width,
+                        after_edge= x &gt; stitched - width &amp;&amp; ss &gt;= <span class="number">0</span> &amp;&amp; ss &lt; width,
                         x= !on_edge ? x : x + stitched,
                         x= !after_edge ? x : x - stitched,
                         x= x - ss
+                      <span class="keyword">if</span> (get(_responsive_)) <span class="keyword">var</span>
+                        ratio= get(_ratio_),
+                        x= x &amp;&amp; x * ratio,
+                        y= y &amp;&amp; y * ratio
                       <span class="keyword">var</span>
                         style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
@@ -3496,7 +3653,7 @@ to in-depth explain this new exciting functionality.</p>
         </li>
         
         
-        <li id='section-156'>
+        <li id='section-162'>
             <div class="annotation">
               
               <hr>
@@ -3521,7 +3678,7 @@ to in-depth explain this new exciting functionality.</p>
         </li>
         
         
-        <li id='section-158'>
+        <li id='section-164'>
             <div class="annotation">
               
               <p>For devices without drag support or for developers, who want to use some sort
@@ -3534,7 +3691,7 @@ triggering of <code>stepLeft</code> and <code>stepRight</code> events respective
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'up.steppable'</span>: <span class="keyword">function</span>(e, ev){
                     <span class="keyword">if</span> (panned || wheeled) <span class="keyword">return</span>;
-                    t.trigger(get(_clicked_location_).x - t.offset().left &gt; <span class="number">0.5</span> * get(_dimensions_).x ? <span class="string">'stepRight'</span> : <span class="string">'stepLeft'</span>)
+                    t.trigger(get(_clicked_location_).x - t.offset().left &gt; <span class="number">0.5</span> * get(_width_) ? <span class="string">'stepRight'</span> : <span class="string">'stepLeft'</span>)
                   },
                   <span class="string">'stepLeft stepRight'</span>: <span class="keyword">function</span>(e){
                     unidle();
@@ -3625,7 +3782,80 @@ triggering of <code>stepLeft</code> and <code>stepRight</code> events respective
         </li>
         
         
-        <li id='section-163'>
+        <li id='section-169'>
+            <div class="annotation">
+              
+              <hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='Responsive-Events'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h2">
+                  <a class="pilcrow" href="#Responsive-Events">&#182;</a>
+                </div>
+              
+              <h2>[NEW] Responsive Events</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='section-171'>
+            <div class="annotation">
+              
+              <p>In responsive mode in case of parent&#39;s size change, in addition to actual recalculations,
+the instance starts to emit throttled <code>resize</code> events. This handler in turn emulates
+images changes event leading to reload of frames.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='resize-Event'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#resize-Event">&#182;</a>
+                </div>
+              
+              <h3><code>resize</code> Event</h3>
+<p><code>Event</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                  resize: <span class="keyword">function</span>(e, force){
+                    <span class="keyword">if</span> (get(_loading_) &amp;&amp; !force) <span class="keyword">return</span>;
+                    <span class="keyword">var</span>
+                      stitched= get(_stitched_),
+                      spacing= get(_spacing_),
+                      height= get(_height_),
+                      is_sprite= !get(_images_).length || stitched,
+                      rows= opt.rows || <span class="number">1</span>,
+                      size= get(_images_).length
+                        ? !stitched ? <span class="literal">undefined</span> : px(stitched)+___+px(height)
+                        : stitched &amp;&amp; px(stitched)+___+px((height + spacing) * rows - spacing)
+                        || px((get(_width_) + spacing) * get(_footage_) - spacing)+___+px((height + spacing) * get(_rows_) * rows * (opt.directional? <span class="number">2</span>:<span class="number">1</span>) - spacing)
+                    t.css({
+                      height: is_sprite ? px(height) : <span class="literal">null</span>,
+                      backgroundSize: size
+                    });
+                    force || t.trigger(<span class="string">'imagesChange'</span>);
+                  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-173'>
             <div class="annotation">
               
               <hr>
@@ -3650,7 +3880,7 @@ triggering of <code>stepLeft</code> and <code>stepRight</code> events respective
         </li>
         
         
-        <li id='section-165'>
+        <li id='section-175'>
             <div class="annotation">
               
               <p>When some event as a result triggers another event, it preferably is not triggered
@@ -3673,7 +3903,7 @@ second one.</p>
         </li>
         
         
-        <li id='section-166'>
+        <li id='section-176'>
             <div class="annotation">
               
               <hr>
@@ -3698,7 +3928,7 @@ second one.</p>
         </li>
         
         
-        <li id='section-168'>
+        <li id='section-178'>
             <div class="annotation">
               
               <p>As opposed to the events bound to the instance itself, there is a <a href="#Ticker">ticker</a>
@@ -3713,7 +3943,7 @@ to the tick.</p>
         </li>
         
         
-        <li id='section-169'>
+        <li id='section-179'>
             <div class="annotation">
               
               <p>This handler has a responsibility of continuously updating the preloading indicator
@@ -3722,22 +3952,23 @@ until all images are loaded and to unbind itself then.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'tick.reel.preload'</span>: <span class="keyword">function</span>(e){
+                    <span class="keyword">if</span> (!(loaded || get(_loading_)) || get(_shy_)) <span class="keyword">return</span>;
                     <span class="keyword">var</span>
-                      space= get(_dimensions_),
+                      width= get(_width_),
                       current= number(preloader.$.css(_width_)),
                       images= get(_images_).length || <span class="number">1</span>,
-                      target= round(<span class="number">1</span> / images * get(_preloaded_) * space.x)
+                      target= round(<span class="number">1</span> / images * get(_preloaded_) * width)
                     preloader.$.css({ width: current + (target - current) / <span class="number">3</span> + <span class="number">1</span> })
-                    <span class="keyword">if</span> (get(_preloaded_) === images &amp;&amp; current &gt; space.x - <span class="number">1</span>){
-                      preloader.$.fadeOut(<span class="number">300</span>, <span class="keyword">function</span>(){ preloader.$.remove() });
-                      pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
+                    <span class="keyword">if</span> (get(_preloaded_) === images &amp;&amp; current &gt; width - <span class="number">1</span>){
+                      loaded= <span class="literal">false</span>;
+                      preloader.$.fadeOut(<span class="number">300</span>, <span class="keyword">function</span>(){ preloader.$.css({ opacity: <span class="number">1</span>, width: <span class="number">0</span> }) });
                     }
                   },</pre></div></div>
             
         </li>
         
         
-        <li id='section-170'>
+        <li id='section-180'>
             <div class="annotation">
               
               <p>This handler binds to the document&#39;s ticks at all times, regardless the situation.
@@ -3756,6 +3987,7 @@ again,</li>
             </div>
             
             <div class="content"><div class='highlight'><pre>                  <span class="string">'tick.reel'</span>: <span class="keyword">function</span>(e){
+                    <span class="keyword">if</span> (get(_shy_)) <span class="keyword">return</span>;
                     <span class="keyword">var</span>
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_),
@@ -3788,7 +4020,7 @@ again,</li>
         </li>
         
         
-        <li id='section-171'>
+        <li id='section-181'>
             <div class="annotation">
               
               <p>This handler performs the opening animation duty when during it the normal animation
@@ -3806,12 +4038,14 @@ is halted until the opening finishes.</p>
                     ticks || t.trigger(<span class="string">'openingDone'</span>);
                   }
                 }
-              },</pre></div></div>
+              },
+
+              loaded= <span class="literal">false</span>,</pre></div></div>
             
         </li>
         
         
-        <li id='section-172'>
+        <li id='section-182'>
             <div class="annotation">
               
               <hr>
@@ -3836,7 +4070,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-174'>
+        <li id='section-184'>
             <div class="annotation">
               
               <ul>
@@ -3850,7 +4084,21 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-175'>
+        <li id='section-185'>
+            <div class="annotation">
+              
+              <ul>
+<li>Shy initialization helper</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              trigger_setup= <span class="keyword">function</span>(){ t.trigger(<span class="string">'setup'</span>) },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-186'>
             <div class="annotation">
               
               <ul>
@@ -3871,13 +4119,12 @@ is halted until the opening finishes.</p>
               },
               panned= <span class="number">0</span>,
               wheeled= <span class="literal">false</span>,
-              oriented= <span class="literal">false</span>,
-              delay, <span class="comment">// openingDone's delayed play pointer</span></pre></div></div>
+              oriented= <span class="literal">false</span>,</pre></div></div>
             
         </li>
         
         
-        <li id='section-176'>
+        <li id='section-187'>
             <div class="annotation">
               
               <ul>
@@ -3888,12 +4135,10 @@ is halted until the opening finishes.</p>
             
             <div class="content"><div class='highlight'><pre>              $monitor= $(),
               preloader= <span class="keyword">function</span>(){
-                <span class="keyword">var</span>
-                  size= opt.preloader
                 css(___+dot(preloader_klass), {
                   position: _absolute_,
-                  left: <span class="number">0</span>, top: get(_dimensions_).y - size,
-                  height: size,
+                  left: <span class="number">0</span>, bottom: <span class="number">0</span>,
+                  height: opt.preloader,
                   overflow: _hidden_,
                   backgroundColor: <span class="string">'#000'</span>
                 });
@@ -3912,7 +4157,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-177'>
+        <li id='section-188'>
             <div class="annotation">
               
               <ul>
@@ -3937,7 +4182,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-178'>
+        <li id='section-189'>
             <div class="annotation">
               
               <ul>
@@ -3948,7 +4193,7 @@ is halted until the opening finishes.</p>
             
             <div class="content"><div class='highlight'><pre>              offscreen= <span class="keyword">function</span>(){
                 <span class="keyword">var</span>
-                  height= get(_dimensions_).y,
+                  height= get(_height_),
                   rect= t[<span class="number">0</span>].getBoundingClientRect()
                 <span class="keyword">return</span> rect.top &lt; -height ||
                        rect.bottom &gt; height + $(window).height()
@@ -3957,7 +4202,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-179'>
+        <li id='section-190'>
             <div class="annotation">
               
               <ul>
@@ -3975,7 +4220,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-180'>
+        <li id='section-191'>
             <div class="annotation">
               
               <ul>
@@ -3990,7 +4235,47 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-181'>
+        <li id='section-192'>
+            <div class="annotation">
+              
+              <ul>
+<li>Response to the size changes in responsive mode</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              slow_gauge= <span class="keyword">function</span>(){
+                clearTimeout(gauge_delay);
+                gauge_delay= setTimeout(gauge, reel.resize_gauge);
+              },
+              gauge= <span class="keyword">function</span>(){
+                <span class="keyword">if</span> (t.width() == get(_width_)) <span class="keyword">return</span>;
+                <span class="keyword">var</span>
+                  truescale= get(_truescale_),
+                  ratio= set(_ratio_, t.width() / truescale.width)
+                $.each(truescale, <span class="keyword">function</span>(key, value){ set(key, round(value * ratio)) })
+                t.trigger(<span class="string">'resize'</span>);
+              },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-193'>
+            <div class="annotation">
+              
+              <ul>
+<li>Delay timer pointers</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              delay, <span class="comment">// openingDone's delayed play</span>
+              gauge_delay, <span class="comment">// slow_gauge's throttle</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-194'>
             <div class="annotation">
               
               <ul>
@@ -4003,9 +4288,9 @@ is halted until the opening finishes.</p>
                 <span class="keyword">var</span>
                   fraction= set(_clicked_on_, get(_fraction_)),
                   tier= set(_clicked_tier_, get(_tier_)),
-                  loops= opt.loops
-                set(_lo_, loops ? <span class="number">0</span> : - fraction * revolution);
-                set(_hi_, loops ? revolution : revolution - fraction * revolution);
+                  loops= opt.loops,
+                  lo= set(_lo_, loops ? <span class="number">0</span> : - fraction * revolution),
+                  hi= set(_hi_, loops ? revolution : revolution - fraction * revolution)
                 <span class="keyword">return</span> x !== <span class="literal">undefined</span> &amp;&amp; set(_clicked_location_, { x: x, y: y }) || <span class="literal">undefined</span>
               },
               slidable= <span class="literal">true</span>,</pre></div></div>
@@ -4013,7 +4298,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-182'>
+        <li id='section-195'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4030,7 +4315,7 @@ of the <code>&lt;iframe&gt;</code>.</p>
         </li>
         
         
-        <li id='section-183'>
+        <li id='section-196'>
             <div class="annotation">
               
               <p>A private flag <code>$iframe</code> is established to indicate Reel being viewed inside <code>&lt;iframe&gt;</code>.</p>
@@ -4052,7 +4337,7 @@ of the <code>&lt;iframe&gt;</code>.</p>
         </li>
         
         
-        <li id='section-184'>
+        <li id='section-197'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4080,7 +4365,7 @@ as possible.</p>
         </li>
         
         
-        <li id='section-185'>
+        <li id='section-198'>
             <div class="annotation">
               
               <hr>
@@ -4105,7 +4390,7 @@ as possible.</p>
         </li>
         
         
-        <li id='section-187'>
+        <li id='section-200'>
             <div class="annotation">
               
               <p>Reel stores all its inner state values with the standard DOM <a href="http://api.jquery.com/data">data interface</a> interface
@@ -4222,7 +4507,7 @@ binding methods.</p>
         </li>
         
         
-        <li id='section-192'>
+        <li id='section-205'>
             <div class="annotation">
               
               <p>The handler function will be executed every time the value changes and
@@ -4246,7 +4531,7 @@ If the second argument is not <code>undefined</code> it is the backward compatib
         </li>
         
         
-        <li id='section-193'>
+        <li id='section-206'>
             <div class="annotation">
               
               <hr>
@@ -4271,7 +4556,7 @@ If the second argument is not <code>undefined</code> it is the backward compatib
         </li>
         
         
-        <li id='section-195'>
+        <li id='section-208'>
             <div class="annotation">
               
               <p>The evil-twin of <code>.reel()</code>. Tears down and wipes off entire instance.</p>
@@ -4303,7 +4588,7 @@ If the second argument is not <code>undefined</code> it is the backward compatib
         </li>
         
         
-        <li id='section-197'>
+        <li id='section-210'>
             <div class="annotation">
               
               <hr>
@@ -4328,7 +4613,7 @@ If the second argument is not <code>undefined</code> it is the backward compatib
         </li>
         
         
-        <li id='section-199'>
+        <li id='section-212'>
             <div class="annotation">
               
               <p>Few regular expressions is used here and there mostly for options validation and verification
@@ -4370,6 +4655,8 @@ levels of user agent&#39;s capabilities.</p>
         lazy_agent:    <span class="regexp">/\(iphone|ipod|android|fennec|blackberry/i</span>,
         <span class="comment">/* Format of frame class flag on the instance */</span>
         frame_klass:   <span class="regexp">/frame-\d+/</span>,
+        <span class="comment">/* Mask for substitutions in URL */</span>
+        substitution:  <span class="regexp">/(@([A-Z]))/g</span>,
         <span class="comment">/* [Sequence](#Sequence) string format */</span>
         sequence:      <span class="regexp">/(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/</span>
       },</pre></div></div>
@@ -4377,7 +4664,7 @@ levels of user agent&#39;s capabilities.</p>
         </li>
         
         
-        <li id='section-201'>
+        <li id='section-214'>
             <div class="annotation">
               
               <hr>
@@ -4402,7 +4689,7 @@ levels of user agent&#39;s capabilities.</p>
         </li>
         
         
-        <li id='section-203'>
+        <li id='section-216'>
             <div class="annotation">
               
               <p><a href="https://github.com/pisi/Reel/wiki/CDN">CDN</a> is used for distributing mouse cursors to all instances running world-wide. It runs
@@ -4433,7 +4720,7 @@ your own location with the cursors.</p>
         </li>
         
         
-        <li id='section-205'>
+        <li id='section-218'>
             <div class="annotation">
               
               <hr>
@@ -4458,11 +4745,11 @@ your own location with the cursors.</p>
         </li>
         
         
-        <li id='section-207'>
+        <li id='section-220'>
             <div class="annotation">
               
-              <p>Surprisingly there&#39;s very little math behind Reel, just two equations (graph functions). These two
-functions receive the same set of options.</p>
+              <p>Surprisingly there&#39;s very little math behind Reel. Two equations (graph functions), which
+drive Reel motion and receive the same set of options.</p>
 <hr>
 
             </div>
@@ -4488,7 +4775,7 @@ functions receive the same set of options.</p>
         </li>
         
         
-        <li id='section-209'>
+        <li id='section-222'>
             <div class="annotation">
               
               <pre><code>1 |  ********
@@ -4508,7 +4795,7 @@ functions receive the same set of options.</p>
         </li>
         
         
-        <li id='section-210'>
+        <li id='section-223'>
             <div class="annotation">
               
               <pre><code>1 |        **          **
@@ -4531,22 +4818,39 @@ functions receive the same set of options.</p>
         </li>
         
         
-        <li id='section-211'>
+        <li id='section-224'>
             <div class="annotation">
               
-              <p>And an equation for interpolating <code>fraction</code> (and <code>tier</code>) value into <code>frame</code> and <code>row</code>.</p>
+              <p>Plus equation for interpolating <code>fraction</code> (and <code>tier</code>) value into <code>frame</code> and <code>row</code>.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>        interpolate: <span class="keyword">function</span>(fraction, lo, hi){
           <span class="keyword">return</span> lo + fraction * (hi - lo)
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-225'>
+            <div class="annotation">
+              
+              <p>And one for calculation of the shortest frame distance from start to the end.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        distance: <span class="keyword">function</span>(start, end, total){
+          <span class="keyword">var</span>
+            half= total / <span class="number">2</span>,
+            d= end - start
+          <span class="keyword">return</span> d &lt; -half ? d + total : d &gt; half ? d - total : d
         }
       },</pre></div></div>
             
         </li>
         
         
-        <li id='section-212'>
+        <li id='section-226'>
             <div class="annotation">
               
               <hr>
@@ -4571,7 +4875,7 @@ functions receive the same set of options.</p>
         </li>
         
         
-        <li id='section-214'>
+        <li id='section-228'>
             <div class="annotation">
               
               <p>Reel doesn&#39;t load frames in a linear manner from first to last (alhough it can if configured
@@ -4604,7 +4908,7 @@ it back.</p>
         </li>
         
         
-        <li id='section-216'>
+        <li id='section-230'>
             <div class="annotation">
               
               <p>The best (and default) option is the <code>fidelity</code> processor, which is designed for a faster and
@@ -4617,7 +4921,7 @@ better perceived loading.</p>
           <span class="keyword">var</span>
             orbital= opt.orbital,
             rows= orbital ? <span class="number">2</span> : opt.rows || <span class="number">1</span>,
-            frames= orbital ? opt.footage : get(_frames_),
+            frames= orbital ? get(_footage_) : get(_frames_),
             start= (opt.row-<span class="number">1</span>) * frames,
             values= <span class="keyword">new</span> Array().concat(sequence),
             present= <span class="keyword">new</span> Array(sequence.length + <span class="number">1</span>),
@@ -4653,7 +4957,7 @@ better perceived loading.</p>
         </li>
         
         
-        <li id='section-217'>
+        <li id='section-231'>
             <div class="annotation">
               
               <p>You can opt for a <code>linear</code> loading order too, but that has a drawback of leaving large gap
@@ -4669,7 +4973,103 @@ of unloaded frames.</p>
         </li>
         
         
-        <li id='section-218'>
+        <li id='section-232'>
+            <div class="annotation">
+              
+              <hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='Data-Values-in-URLs'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h2">
+                  <a class="pilcrow" href="#Data-Values-in-URLs">&#182;</a>
+                </div>
+              
+              <h2>[NEW] Data Values in URLs</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='section-234'>
+            <div class="annotation">
+              
+              <p>Reel will process each and every image resource URL and substitute special markup
+with actual values from the data store. Marks made of <code>@</code> character followed by upper case
+letter will be substituted with values either directly from data store (<code>@W</code> and <code>@H</code>
+for <code>width</code> and <code>height</code>) or calculated (<code>@T</code> is substituted with momentary timestamp
+in milliseconds).
+Markup can appear anywhere in the folder name, file name or the query params
+(also in <a href="#path-Option"><code>path</code></a>) and even multiple times.</p>
+<p>Comes handy in product configurators
+and works magic in conjunction with <a href="#responsive-Option">responsive</a> option.</p>
+<p><em><strong>Example:</strong> Following URLs:</em></p>
+<pre><code>image.jpg?size=@Wx@H
+pic/@W/@H/rabbit.png
+image.php?nocache=@T</code></pre>
+<p><em>... will come out like this for Reel 320 pixels wide and 180 high:</em></p>
+<pre><code>image.jpg?size=320x180
+pic/320/180/rabbit.png
+image.php?nocache=1377604502788</code></pre>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='reel-substitute'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#reel-substitute">&#182;</a>
+                </div>
+              
+              <h3><code>$.reel.substitute()</code></h3>
+<p><code>Function</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      substitute: <span class="keyword">function</span>(uri, get){
+        <span class="keyword">return</span> uri.replace(reel.re.substitution, <span class="keyword">function</span>(match, mark, key){
+          <span class="keyword">return</span> <span class="keyword">typeof</span> reel.substitutes[key] == <span class="string">'function'</span>
+                      ? reel.substitutes[key](get) : substitution_keys[key]
+                      ? get(substitution_keys[key]) : mark;
+        });
+      },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='reel-substitutes'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#reel-substitutes">&#182;</a>
+                </div>
+              
+              <h3><code>$.reel.substitutes</code></h3>
+<p><code>Object</code> of <code>Function</code>s, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      substitutes: {
+        T: <span class="keyword">function</span>(get){ <span class="keyword">return</span> +<span class="keyword">new</span> Date() }
+      },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-237'>
             <div class="annotation">
               
               <hr>
@@ -4694,7 +5094,7 @@ of unloaded frames.</p>
         </li>
         
         
-        <li id='section-220'>
+        <li id='section-239'>
             <div class="annotation">
               
               <p>On all data values being stored with <code>.reel()</code> an attempt is made to normalize the value. Like
@@ -4754,7 +5154,7 @@ and it has to return the normalized value.</p>
         </li>
         
         
-        <li id='section-222'>
+        <li id='section-241'>
             <div class="annotation">
               
               <hr>
@@ -4779,7 +5179,7 @@ and it has to return the normalized value.</p>
         </li>
         
         
-        <li id='section-224'>
+        <li id='section-243'>
             <div class="annotation">
               
               <p>When configured with a String value for <a href="#images-Option"><code>images</code></a> like <code>image##.jpg</code>, it first has
@@ -4828,7 +5228,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-226'>
+        <li id='section-245'>
             <div class="annotation">
               
               <hr>
@@ -4853,7 +5253,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-228'>
+        <li id='section-247'>
             <div class="annotation">
               
               <p><code>$.reel.instances</code> holds an inventory of all running instances in the DOM document.</p>
@@ -4882,7 +5282,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-230'>
+        <li id='section-249'>
             <div class="annotation">
               
               <p>For ticker-synchronization-related purposes Reel maintains a reference to the leaders data object
@@ -4912,7 +5312,37 @@ all the time.</p>
         </li>
         
         
-        <li id='section-232'>
+        <li id='section-251'>
+            <div class="annotation">
+              
+              <p><code>$.reel.resize_gauge</code> specifies a throttling interval for triggering of <code>resize</code> events,
+in milliseconds.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='reel-resize-gauge'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#reel-resize-gauge">&#182;</a>
+                </div>
+              
+              <h3><code>$.reel.resize_gauge</code></h3>
+<p><code>Number</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      resize_gauge: <span class="number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-253'>
             <div class="annotation">
               
               <p><code>$.reel.cost</code> holds document-wide costs in miliseconds of running all Reel instances. It is used
@@ -4943,7 +5373,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-234'>
+        <li id='section-255'>
             <div class="annotation">
               
               <hr>
@@ -4968,7 +5398,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-236'>
+        <li id='section-257'>
             <div class="annotation">
               
               
@@ -4980,12 +5410,13 @@ to adjust actual timeout of the ticker.</p>
     browser_version= +browser[<span class="number">2</span>].split(<span class="string">'.'</span>).slice(<span class="number">0</span>,<span class="number">2</span>).join(<span class="string">'.'</span>),
     ie= browser[<span class="number">1</span>] == <span class="string">'MSIE'</span>,
     knows_data_urls= !(ie &amp;&amp; browser_version &lt; <span class="number">8</span>),
+    knows_background_size= !(ie &amp;&amp; browser_version &lt; <span class="number">9</span>),
     ticker,</pre></div></div>
             
         </li>
         
         
-        <li id='section-237'>
+        <li id='section-258'>
             <div class="annotation">
               
               <hr>
@@ -5010,7 +5441,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-239'>
+        <li id='section-260'>
             <div class="annotation">
               
               <p>These are all the class names assigned by Reel to various DOM elements during initialization of the UI
@@ -5024,7 +5455,7 @@ converted into Reel.</p>
         </li>
         
         
-        <li id='section-240'>
+        <li id='section-261'>
             <div class="annotation">
               
               <p>Rest of the class names only extend this base class forming for example <code>.reel-overlay</code>, a class
@@ -5043,7 +5474,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-241'>
+        <li id='section-262'>
             <div class="annotation">
               
               <p>The instance wrapper is flagged with actual frame number using a this class.</p>
@@ -5056,7 +5487,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-242'>
+        <li id='section-263'>
             <div class="annotation">
               
               <hr>
@@ -5081,7 +5512,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-244'>
+        <li id='section-265'>
             <div class="annotation">
               
               <p>Several math functions are referenced inside the private scope to yield smaller filesize
@@ -5098,7 +5529,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-245'>
+        <li id='section-266'>
             <div class="annotation">
               
               <p>For the very same reason all storage key Strings are cached into local vars.</p>
@@ -5107,18 +5538,18 @@ when the code is minified.</p>
             
             <div class="content"><div class='highlight'><pre>    _annotations_= <span class="string">'annotations'</span>,
     _area_= <span class="string">'area'</span>, _auto_= <span class="string">'auto'</span>, _backup_= <span class="string">'backup'</span>, _backwards_= <span class="string">'backwards'</span>, _bit_= <span class="string">'bit'</span>, _brake_= <span class="string">'brake'</span>, _cache_= <span class="string">'cache'</span>, _cached_=_cache_+<span class="string">'d'</span>, 
-    _center_= <span class="string">'center'</span>, _clicked_= <span class="string">'clicked'</span>, _clicked_location_= <span class="string">'clicked_location'</span>, _clicked_on_= <span class="string">'clicked_on'</span>, _clicked_tier_= <span class="string">'clicked_tier'</span>,
-    _cwish_= <span class="string">'cwish'</span>, _dimensions_= <span class="string">'dimensions'</span>, _fraction_= <span class="string">'fraction'</span>, _frame_= <span class="string">'frame'</span>, _framelock_= <span class="string">'framelock'</span>,
-    _frames_= <span class="string">'frames'</span>, _hi_= <span class="string">'hi'</span>, _hidden_= <span class="string">'hidden'</span>, _image_= <span class="string">'image'</span>, _images_= <span class="string">'images'</span>, _opening_= <span class="string">'opening'</span>, _opening_ticks_= _opening_+<span class="string">'_ticks'</span>,
-    _lo_= <span class="string">'lo'</span>, _options_= <span class="string">'options'</span>, _playing_= <span class="string">'playing'</span>, _preloaded_= <span class="string">'preloaded'</span>, _reeling_= <span class="string">'reeling'</span>, _reeled_= <span class="string">'reeled'</span>, _revolution_= <span class="string">'revolution'</span>,
-    _revolution_y_= <span class="string">'revolution_y'</span>, _row_= <span class="string">'row'</span>, _rowlock_= <span class="string">'rowlock'</span>, _rows_= <span class="string">'rows'</span>, _spacing_= <span class="string">'spacing'</span>, _speed_= <span class="string">'speed'</span>, _stage_= <span class="string">'stage'</span>,
-    _stitched_shift_= <span class="string">'stitched_shift'</span>, _stitched_travel_= <span class="string">'stitched_travel'</span>, _stopped_= <span class="string">'stopped'</span>, _style_= <span class="string">'style'</span>, _tempo_= <span class="string">'tempo'</span>, _ticks_= <span class="string">'ticks'</span>,
-    _tier_= <span class="string">'tier'</span>, _velocity_= <span class="string">'velocity'</span>, _vertical_= <span class="string">'vertical'</span>,</pre></div></div>
+    _center_= <span class="string">'center'</span>, _click_= <span class="string">'click'</span>, _clicked_= _click_+<span class="string">'ed'</span>, _clicked_location_= _clicked_+<span class="string">'_location'</span>, _clicked_on_= _clicked_+<span class="string">'_on'</span>, _clicked_tier_= _clicked_+<span class="string">'_tier'</span>,
+    _cwish_= <span class="string">'cwish'</span>, _departure_= <span class="string">'departure'</span>, _destination_= <span class="string">'destination'</span>, _distance_= <span class="string">'distance'</span>, _footage_= <span class="string">'footage'</span>, _fraction_= <span class="string">'fraction'</span>, _frame_= <span class="string">'frame'</span>, _framelock_= <span class="string">'framelock'</span>,
+    _frames_= <span class="string">'frames'</span>, _height_= <span class="string">'height'</span>, _hi_= <span class="string">'hi'</span>, _hidden_= <span class="string">'hidden'</span>, _image_= <span class="string">'image'</span>, _images_= <span class="string">'images'</span>, _loading_= <span class="string">'loading'</span>, _opening_= <span class="string">'opening'</span>, _opening_ticks_= _opening_+<span class="string">'_ticks'</span>,
+    _lo_= <span class="string">'lo'</span>, _options_= <span class="string">'options'</span>, _playing_= <span class="string">'playing'</span>, _preloaded_= <span class="string">'preloaded'</span>, _ratio_= <span class="string">'ratio'</span>, _reeling_= <span class="string">'reeling'</span>, _reeled_= <span class="string">'reeled'</span>, _responsive_= <span class="string">'responsive'</span>, _revolution_= <span class="string">'revolution'</span>,
+    _revolution_y_= <span class="string">'revolution_y'</span>, _row_= <span class="string">'row'</span>, _rowlock_= <span class="string">'rowlock'</span>, _rows_= <span class="string">'rows'</span>, _shy_= <span class="string">'shy'</span>, _spacing_= <span class="string">'spacing'</span>, _speed_= <span class="string">'speed'</span>, _stage_= <span class="string">'stage'</span>,
+    _stitched_= <span class="string">'stitched'</span>, _stitched_shift_= _stitched_+<span class="string">'_shift'</span>, _stitched_travel_= _stitched_+<span class="string">'_travel'</span>, _stopped_= <span class="string">'stopped'</span>, _style_= <span class="string">'style'</span>, _tempo_= <span class="string">'tempo'</span>, _ticks_= <span class="string">'ticks'</span>,
+    _tier_= <span class="string">'tier'</span>, _truescale_= <span class="string">'truescale'</span>, _velocity_= <span class="string">'velocity'</span>, _vertical_= <span class="string">'vertical'</span>, _width_= <span class="string">'width'</span>,</pre></div></div>
             
         </li>
         
         
-        <li id='section-246'>
+        <li id='section-267'>
             <div class="annotation">
               
               <p>And the same goes for browser events too.</p>
@@ -5132,12 +5563,12 @@ when the code is minified.</p>
     _mouseleave_= _mouse_+<span class="string">'leave'</span>+pns, _mousemove_= _mouse_+<span class="string">'move'</span>+pns, _mouseup_= _mouse_+<span class="string">'up'</span>+pns,
     _mousewheel_= _mouse_+<span class="string">'wheel'</span>+ns, _tick_= <span class="string">'tick'</span>+ns, _touchcancel_= _touch_+<span class="string">'cancel'</span>+pns,
     _touchend_= _touch_+<span class="string">'end'</span>+pns, _touchstart_= _touch_+<span class="string">'start'</span>+ns, _touchmove_= _touch_+<span class="string">'move'</span>+pns,
-    _deviceorientation_= <span class="string">'deviceorientation'</span>+ns,</pre></div></div>
+    _deviceorientation_= <span class="string">'deviceorientation'</span>+ns, _resize_= <span class="string">'resize'</span>+ns,</pre></div></div>
             
         </li>
         
         
-        <li id='section-247'>
+        <li id='section-268'>
             <div class="annotation">
               
               <p>And some other frequently used Strings.</p>
@@ -5145,15 +5576,27 @@ when the code is minified.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    __= <span class="string">''</span>, ___= <span class="string">' '</span>, ____=<span class="string">','</span>, _absolute_= <span class="string">'absolute'</span>, _block_= <span class="string">'block'</span>, _cdn_= <span class="string">'@CDN@'</span>, _div_= <span class="string">'div'</span>,
-    _hand_= <span class="string">'hand'</span>, _head_= <span class="string">'head'</span>, _height_= <span class="string">'height'</span>, _html_= <span class="string">'html'</span>, _id_= <span class="string">'id'</span>,
+    _hand_= <span class="string">'hand'</span>, _head_= <span class="string">'head'</span>, _html_= <span class="string">'html'</span>, _id_= <span class="string">'id'</span>,
     _img_= <span class="string">'img'</span>, _jquery_reel_= <span class="string">'jquery.'</span>+klass, _move_= <span class="string">'move'</span>, _none_= <span class="string">'none'</span>, _object_= <span class="string">'object'</span>,
-    _preload_= <span class="string">'preload'</span>, _string_= <span class="string">'string'</span>,
-    _width_= <span class="string">'width'</span>,</pre></div></div>
+    _preload_= <span class="string">'preload'</span>, _string_= <span class="string">'string'</span>,</pre></div></div>
             
         </li>
         
         
-        <li id='section-248'>
+        <li id='section-269'>
+            <div class="annotation">
+              
+              <p>Collection of data keys holding scalable pixel values responsive to the scale ratio</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_, _stitched_, _stitched_shift_, _stitched_travel_],
+    substitution_keys= { W: _width_, H: _height_ },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-270'>
             <div class="annotation">
               
               <hr>
@@ -5178,7 +5621,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-250'>
+        <li id='section-272'>
             <div class="annotation">
               
               <p>Alhough we do what we can to hide the fact, Reel actually needs a few image resources to support
@@ -5192,7 +5635,7 @@ the sprite applied to its background. This one is embedded in the code as it is 
         </li>
         
         
-        <li id='section-251'>
+        <li id='section-273'>
             <div class="annotation">
               
               <p>Proper cross-browser cursors however need to come in an odd format, which essentially is not
@@ -5209,7 +5652,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-252'>
+        <li id='section-274'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5226,7 +5669,7 @@ identification quirk (IE 8- reports left as right).</p>
         </li>
         
         
-        <li id='section-253'>
+        <li id='section-275'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5245,7 +5688,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-254'>
+        <li id='section-276'>
             <div class="annotation">
               
               <p>Expose plugin functions as jQuery methods, do the initial global scan for data-configured
@@ -5259,7 +5702,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-255'>
+        <li id='section-277'>
             <div class="annotation">
               
               <p>Bunch of very useful helpers.</p>
