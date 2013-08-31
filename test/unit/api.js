@@ -162,7 +162,7 @@
   });
 
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
-    expect(31);
+    expect(32);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
     ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
@@ -192,6 +192,7 @@
     ok( typeof $.reel.math.envelope == 'function',        '`$.reel.math.envelope()`' );
     ok( typeof $.reel.math.hatch == 'function',           '`$.reel.math.hatch()`' );
     ok( typeof $.reel.math.interpolate == 'function',     '`$.reel.math.interpolate()`' );
+    ok( typeof $.reel.math.distance == 'function',        '`$.reel.math.distance()`' );
     // Functionally of individual `$.reel.math` methods is tested in the Computations module
 
     ok( typeof $.reel.preload == 'object',                '`$.reel.preload` - preload ordering options' );

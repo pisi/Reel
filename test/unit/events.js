@@ -343,4 +343,30 @@
     });
   });
 
+  $.each({
+    'upwards':                    { start: 2, reach: 28, expect: { row: 3 }},
+    'upwards from the floor':     { start: 1, reach: 35, expect: { row: 4 }},
+    'downwards':                  { start: 3, reach:  5, expect: { row: 1 }},
+    'downwards from the ceiling': { start: 5, reach: 18, expect: { row: 2 }}
+  },
+  function(name, def){
+    asyncTest( 'Playback event `"reach"` sets the appropriate row before it starts to animate - '+name, function()
+    {
+      expect(1);
+      var
+        $reel= $('#image').reel({
+          frame: 2,
+          frames: 10,
+          row: def.start,
+          rows: 5,
+          speed: 1
+        })
+
+      $reel.trigger('reach', def.reach);
+
+      equal( $reel.reel('row'), def.expect.row, 'On the right row first');
+      start();
+    });
+  });
+
 })(jQuery);

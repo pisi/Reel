@@ -957,6 +957,7 @@
                   set(_rows_, rows);
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
+                  set(_departure_, set(_destination_, set(_distance_, 0)));
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
@@ -1236,6 +1237,25 @@
                       playing= set(_playing_, !!speed),
                       stopped= set(_stopped_, !playing)
                     idle();
+                  },
+
+                  // ### `reach` Event ######
+                  // `Event`, since 1.3
+                  //
+                  // Use this event to instruct Reel to play and reach a given frame. `"reach"` event requires
+                  // `target` parameter, which is the frame to which Reel should animate to and stop.
+                  // Optional `speed` parameter allows for custom speed independent on the regular speed.
+                  //
+                  reach: function(e, target, speed){
+                    if (target == get(_frame_)) return;
+                    var
+                      frames= get(_frames_),
+                      row= set(_row_, ceil(target / frames)),
+                      departure= set(_departure_, get(_frame_)),
+                      target= set(_destination_, target),
+                      shortest = set(_distance_, reel.math.distance(departure, target, frames)),
+                      speed= abs(speed || get(_speed_)) * negative_when(1, shortest < 0)
+                    t.trigger('play', speed);
                   },
 
                   // ### `pause` Event ######
@@ -1582,6 +1602,19 @@
                       }
                       t.css({ backgroundPosition: shift.join(___) })
                     }
+                  },
+
+                  // This extra binding takes care of watching frame position while animating the `"reach"` event.
+                  //
+                  'frameChange.reach': function(e, nil, frame){
+                    if (!get(_destination_)) return;
+                    var
+                      travelled= reel.math.distance(get(_departure_), frame, get(_frames_)),
+                      onorover= abs(travelled) >= abs(get(_distance_))
+                    if (!onorover) return;
+                    set(_frame_, set(_destination_));
+                    set(_destination_, set(_distance_, set(_departure_, 0)));
+                    t.trigger('stop');
                   },
 
                   // ### `imageChange` Event ######
@@ -2234,8 +2267,8 @@
       // Math Behind
       // -----------
       //
-      // Surprisingly there's very little math behind Reel, just two equations (graph functions). These two
-      // functions receive the same set of options.
+      // Surprisingly there's very little math behind Reel. Two equations (graph functions), which
+      // drive Reel motion and receive the same set of options.
       //
       // ---
 
@@ -2271,10 +2304,19 @@
           return fraction - floor(fraction)
         },
 
-        // And an equation for interpolating `fraction` (and `tier`) value into `frame` and `row`.
+        // Plus equation for interpolating `fraction` (and `tier`) value into `frame` and `row`.
         //
         interpolate: function(fraction, lo, hi){
           return lo + fraction * (hi - lo)
+        },
+
+        // And one for calculation of the shortest frame distance from start to the end.
+        // 
+        distance: function(start, end, total){
+          var
+            half= total / 2,
+            d= end - start
+          return d < -half ? d + total : d > half ? d - total : d
         }
       },
 
@@ -2570,7 +2612,7 @@
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
-    _cwish_= 'cwish', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
+    _cwish_= 'cwish', _departure_= 'departure', _destination_= 'destination', _distance_= 'distance', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',

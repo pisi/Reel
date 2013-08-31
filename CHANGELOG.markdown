@@ -28,6 +28,7 @@ Version 1.3
   values (`width` and `height` data values or timestamp).
 * New `$.reel.substitutes` object for custom substitution methods.
 * New `responsive` option adds capability to scale in responsive page layouts (GH-222).
+* New `"reach"` event for playing to certain frame.
 
 
 Version 1.2.1
