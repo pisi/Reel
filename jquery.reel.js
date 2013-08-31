@@ -1012,8 +1012,10 @@
                     var
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
-                    get(_style_).remove();
-                    get(_area_).unbind(ns);
+                    if (!get(_shy_)){
+                      get(_style_).remove();
+                      get(_area_).unbind(ns);
+                    }
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
                       src: backup.src,
@@ -1796,6 +1798,7 @@
                   // until all images are loaded and to unbind itself then.
                   //
                   'tick.reel.preload': function(e){
+                    if (get(_shy_)) return;
                     var
                       space= get(_dimensions_),
                       current= number(preloader.$.css(_width_)),
@@ -1821,6 +1824,7 @@
                   // - and most importantly it animates the Reel if [`speed`](#speed-Option) is configured.
                   //
                   'tick.reel': function(e){
+                    if (get(_shy_)) return;
                     var
                       velocity= get(_velocity_),
                       leader_tempo= leader(_tempo_),
