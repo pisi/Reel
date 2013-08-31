@@ -21,12 +21,12 @@
       'unit/rendering.js',
       'unit/options.js',
       'unit/issues.js',
+      'unit/interaction.js',
       'unit/events.js',
       'unit/data.js',
       'unit/computation.js',
       'unit/api.js',
       'unit/annotations.js',
-      'unit/interaction.js',
       'unit/animation.js'
     ],
     complete: function(){

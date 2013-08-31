@@ -27,7 +27,7 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 7);
 
-    equal( count, 52, 'Total number of options');
+    equal( count, 53, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -94,6 +94,7 @@
     equal( $.reel.def.framelock,              false, 'enables mouse interaction lock on frame' );
     equal( $.reel.def.rowlock,                false, 'enables mouse interaction lock on row' );
     equal( $.reel.def.orientable,             false, 'device orientation interaction (disabled by default)' );
+    equal( $.reel.def.responsive,             false, 'whether to respond to viewport size changes' );
   });
 
   test( 'jQuery of currently living instances is referenced as `$.reel.instances`', function()
@@ -161,7 +162,7 @@
   });
 
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
-    expect(30);
+    expect(31);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
     ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
@@ -206,6 +207,9 @@
     // Functionally of individual `$.reel.normal` methods is tested in the Data module
 
     ok( typeof $.reel.sequence == 'function',            '`$.reel.sequence()` - builds the images array from given `sequence` option' );
+    // Functionally of `$.reel.sequence()` is tested in the Computations module
+
+    ok( typeof $.reel.resize_gauge == 'number',          '`$.reel.resize_gauge` - millisecong throttling interval for `resize` events' );
     // Functionally of `$.reel.sequence()` is tested in the Computations module
   });
 

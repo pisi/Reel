@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3-devel
- * Updated: 2013-08-26
+ * Updated: 2013-08-31
  *
  * Requires jQuery 1.5 or higher
  */
@@ -693,6 +693,26 @@
         annotations:    undefined,
 
 
+        // ### [NEW] Responsiveness ######
+        //
+        // By default, dimensions of Reel are fixed and pixel-match the dimensions of the original image
+        // and the responsive mode is disabled. Using `responsive` option you can enable responsiveness.
+        // In such a case Reel will adopt dimensions of its parent container element and scale all relevant
+        // data store values accordingly.
+        // The scale applied is stored in `"ratio"` data key, where `1.0` means 100% or no scale.
+        //
+        // To take full advantage of this, you can setup your URLs to contain actual dimensions and
+        // serve images in appropriate detail.
+        // Learn more about [data values in URLs](#Data-Values-in-URLs).
+        //
+        // ---
+
+        // #### `responsive` Option ####
+        // `Boolean`, since 1.3
+        //
+        responsive:         false,
+
+
         // ### Mathematics ######
         //
         // When reeling, instance conforms to a graph function, which defines whether it will loop
@@ -900,21 +920,27 @@
                   var
                     src= t.attr(opt.attr).attr('src'),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
-                    styles= t.attr(_style_),
                     data= $.extend({}, t.data()),
                     images= set(_images_, opt.images || []),
-                    stitched= opt.stitched,
+                    stitched= set(_stitched_, opt.stitched),
+                    is_sprite= !images.length || stitched,
+                    responsive= set(_responsive_, opt.responsive && (knows_background_size ? true : !is_sprite)),
+                    truescale= set(_truescale_, {}),
                     loops= opt.loops,
                     orbital= opt.orbital,
                     revolution= opt.revolution,
                     rows= opt.rows,
-                    footage= opt.footage,
-                    size= { x: t.width(), y: t.height() },
+                    footage= set(_footage_, min(opt.footage, opt.frames)),
+                    spacing= set(_spacing_, opt.spacing),
+                    width= set(_width_, t.width()),
+                    height= set(_height_, t.height()),
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
                     multirow= rows > 1 || orbital,
-                    revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || size.x * 2),
-                    revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (rows > 3 ? size.y : size.y / (5 - rows)))),
+                    revolution_x= set(_revolution_, axis('x', revolution) || stitched / 2 || width * 2),
+                    revolution_y= set(_revolution_y_, !multirow ? 0 : (axis('y', revolution) || (rows > 3 ? height : height / (5 - rows)))),
                     rows= stitched ? 1 : ceil(frames / footage),
+                    stitched_travel= set(_stitched_travel_, stitched - (loops ? 0 : width)),
+                    stitched_shift= set(_stitched_shift_, 0),
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
                     $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+'0' }),
@@ -922,9 +948,8 @@
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
-                  set(_cache_, $());
+                  set(_cache_, $(tag(_div_)));
                   set(_cached_, []);
-                  set(_spacing_, opt.spacing);
                   set(_frame_, null);
                   set(_fraction_, null);
                   set(_row_, null);
@@ -932,12 +957,10 @@
                   set(_rows_, rows);
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
-                  set(_dimensions_, size);
                   set(_bit_, 1 / (frames - (loops && !stitched ? 0 : 1)));
-                  set(_stitched_travel_, stitched - (loops ? 0 : size.x));
-                  set(_stitched_shift_, 0);
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
+                  set(_loading_, false);
                   set(_velocity_, 0);
                   set(_vertical_, opt.vertical);
                   set(_preloaded_, 0);
@@ -955,15 +978,18 @@
                   set(_opening_ticks_, -1);
                   set(_ticks_, -1);
                   set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
+                  set(_ratio_, 1);
                   set(_backup_, {
                     src: src,
                     classes: classes,
-                    style: styles || __,
-                    data: data
+                    data: data,
+                    style: t.attr(_style_) || __
                   });
                   opt.steppable || $overlay.unbind('up.steppable');
                   opt.indicator || $overlay.unbind('.indicator');
-                  css(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
+                  css(__, { overflow: _hidden_, position: 'relative' });
+                  responsive || css(__, { width: width, height: height });
+                  responsive && $.each(responsive_keys, function(i, key){ truescale[key]= get(key) });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
                   t.trigger('setup');
@@ -1007,7 +1033,11 @@
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
                     get(_style_).remove();
+                    get(_cache_).empty();
+                    clearTimeout(delay);
+                    clearTimeout(gauge_delay);
                     get(_area_).unbind(ns);
+                    $(window).unbind(_resize_, slow_gauge);
                     remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
                      'class': backup.classes,
                       src: backup.src,
@@ -1030,22 +1060,11 @@
                   //
                   setup: function(e){
                     var
-                      space= get(_dimensions_),
-                      frames= get(_frames_),
-                      id= t.attr(_id_),
-                      rows= opt.rows,
-                      stitched= opt.stitched,
-                      $overlay= t.parent(),
+                      $overlay= t.parent().append(preloader()),
                       $area= set(_area_, $(opt.area || $overlay )),
-                      rows= opt.rows || 1
+                      multirow= opt.rows > 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
                     if (touchy){
-                      // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
-                      css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
-                        ? !stitched ? undefined : px(stitched)+___+px(space.y)
-                        : stitched && px(stitched)+___+px((space.y + opt.spacing) * rows - opt.spacing)
-                        || px((space.x + opt.spacing) * opt.footage - opt.spacing)+___+px((space.y + opt.spacing) * get(_rows_) * rows * (opt.directional? 2:1) - opt.spacing)
-                      });
                       $area
                         .bind(_touchstart_, press)
                     }else{
@@ -1061,11 +1080,15 @@
                         .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                         .bind(_dragstart_, function(){ return false })
                     }
+                    if (get(_responsive_)){
+                      css(___+dot(klass), { width: '100%', height: _auto_ });
+                      $(window).bind(_resize_, slow_gauge);
+                    }
                     function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
                     opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
-                    rows > 1 && opt.indicator && $overlay.append(indicator('y'));
+                    multirow && opt.indicator && $overlay.append(indicator('y'));
                     opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
                                 && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
                   },
@@ -1074,35 +1097,32 @@
                   // `Event`, since 1.1
                   //
                   // Reel keeps a cache of all images it needs for its operation. Either a sprite or all
-                  // sequence images. Physically, this cache is made up of a hidden `<img>` sibling for each
-                  // preloaded image. It first determines the order of requesting the images and then
+                  // sequence images. It first determines the order of requesting the images and then
                   // asynchronously loads all of them.
                   //
                   // - It preloads all frames and sprites.
                   //
                   preload: function(e){
                     var
-                      space= get(_dimensions_),
                       $overlay= t.parent(),
                       images= get(_images_),
                       is_sprite= !images.length,
-                      frames= get(_frames_),
-                      footage= opt.footage,
                       order= reel.preload[opt.preload] || reel.preload[reel.def.preload],
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
-                      $cache= $(tag(_div_)),
+                      $cache= get(_cache_).empty(),
                       uris= []
-                    $overlay.addClass(loading_klass).append(preloader());
+                    $overlay.addClass(loading_klass);
                     // It also finalizes the instance stylesheet and prepends it to the head.
                     set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
+                    set(_loading_, true);
                     t.trigger('stop');
+                    opt.responsive && gauge();
+                    t.trigger('resize', true);
                     while(preload.length){
                       var
-                        uri= opt.path+preload.shift(),
-                        width= space.x * (!is_sprite ? 1 : footage),
-                        height= space.y * (!is_sprite ? 1 : frames / footage) * (!opt.directional ? 1 : 2),
+                        uri= reel.substitute(opt.path+preload.shift(), get),
                         $img= $(tag(_img_)).appendTo($cache)
                       // Each image, which finishes the load triggers `"preloaded"` Event.
                       $img.bind('load error abort', function(e){
@@ -1112,7 +1132,6 @@
                       load(uri, $img);
                       uris.push(uri);
                     }
-                    set(_cache_, $cache);
                     set(_cached_, uris);
                     function load(uri, $img){ setTimeout(function(){
                       !detached($overlay) && $img.attr({ src: reen(uri) });
@@ -1130,7 +1149,7 @@
                       images= get(_images_).length || 1,
                       preloaded= set(_preloaded_, min(get(_preloaded_) + 1, images))
                     if (preloaded === images){
-                      t.parent().removeClass(loading_klass).unbind(_preloaded_, on.instance.preloaded);
+                      t.parent().removeClass(loading_klass);
                       t.trigger('loaded');
                     }
                     if (preloaded === 1) var
@@ -1145,9 +1164,11 @@
                   // or animation.
                   //
                   loaded: function(e){
-                    get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
-                    opt.stitched && t.attr({ src: cdn(transparent) });
+                    get(_images_).length > 1 || t.css({ backgroundImage: url(reel.substitute(opt.path+get(_image_), get)) }).attr({ src: cdn(transparent) });
+                    get(_stitched_) && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
+                    set(_loading_, false);
+                    loaded= true;
                   },
 
                   // ----------------
@@ -1331,6 +1352,7 @@
                     if (opt.draggable && slidable){
                       slidable= false;
                       unidle();
+                      console.log(last)
                       var
                         rows= opt.rows,
                         orbital= opt.orbital,
@@ -1355,7 +1377,6 @@
                           vertical= set(_vertical_, abs(y - origin.y) > abs(x - origin.x)),
                           origin= recenter_mouse(revolution, x, y)
                         if (rows > 1 && !get(_rowlock_)) var
-                          space_y= get(_dimensions_).y,
                           revolution_y= get(_revolution_y_),
                           start= get(_clicked_tier_),
                           lo= - start * revolution_y,
@@ -1457,7 +1478,7 @@
                       frame= 1 + floor(fraction / get(_bit_)),
                       multirow= opt.rows > 1,
                       orbital= opt.orbital,
-                      center= set(_center_, !!orbital && (frame <= orbital || frame >= opt.footage - orbital + 2))
+                      center= set(_center_, !!orbital && (frame <= orbital || frame >= get(_footage_) - orbital + 2))
                     if (multirow) var
                       frame= frame + (get(_row_) - 1) * get(_frames_)
                     var
@@ -1524,37 +1545,40 @@
                       fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
                       same_spot= abs((get(_fraction_) || 0) - frame_fraction) < 1 / (get(_frames_) - 1),
                       fraction= ready && (fraction_frame === frame && same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
-                      footage= opt.footage
+                      footage= get(_footage_)
                     if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
                       frame= frame + footage
                     var
                       horizontal= opt.horizontal,
-                      stitched= opt.stitched,
+                      stitched= get(_stitched_),
                       images= get(_images_),
-                      is_sprite= !images.length || opt.stitched,
+                      is_sprite= !images.length || stitched,
                       spacing= get(_spacing_),
-                      space= get(_dimensions_)
+                      width= get(_width_),
+                      height= get(_height_)
                     if (!is_sprite){
                       var
                         frameshot= images[frame - 1]
-                      ready && t.attr({ src: reen(path + frameshot) })
+                      get(_responsive_) && gauge();
+                      ready && t.attr({ src: reen(reel.substitute(path + frameshot, get)) })
                     }else{
                       if (!stitched) var
                         minor= (frame % footage) - 1,
                         minor= minor < 0 ? footage - 1 : minor,
                         major= floor((frame - 0.1) / footage),
                         major= major + (rows > 1 ? 0 : (get(_backwards_) ? 0 : !opt.directional ? 0 : get(_rows_))),
-                        a= major * ((horizontal ? space.y : space.x) + spacing),
-                        b= minor * ((horizontal ? space.x : space.y) + spacing),
+                        a= major * ((horizontal ? height : width) + spacing),
+                        b= minor * ((horizontal ? width : height) + spacing),
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
                       else{
                         var
                           x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % stitched),
-                          y= rows <= 1 ? 0 : (space.y + spacing) * (rows - row),
+                          y= rows <= 1 ? 0 : (height + spacing) * (rows - row),
                           shift= [px(-x), px(-y)],
-                          image= images.length > 1 && images[row - 1]
-                        image && t.css('backgroundImage').search(path+image) < 0 && t.css({ backgroundImage: url(path+image) })
+                          image= images.length > 1 && images[row - 1],
+                          fullpath= reel.substitute(path + image, get)
+                        image && t.css('backgroundImage').search(fullpath) < 0 && t.css({ backgroundImage: url(fullpath) })
                       }
                       t.css({ backgroundPosition: shift.join(___) })
                     }
@@ -1567,10 +1591,6 @@
                   // new preload sequence. Images are actually switched only after the new image is fully loaded.
                   //
                   'imageChange imagesChange': function(e, nil, image){
-                    preloader.$.remove();
-                    get(_cache_).empty().remove();
-                    t.parent().bind(_preloaded_, on.instance.preloaded);
-                    pool.bind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
                     t.trigger('preload');
                   },
 
@@ -1588,15 +1608,14 @@
                   //
                   'fractionChange.indicator': function(e, deprecated_set, fraction){
                     if (deprecated_set === undefined && opt.indicator) var
-                      space= get(_dimensions_),
                       size= opt.indicator,
                       orbital= opt.orbital,
-                      travel= orbital && get(_vertical_) ? space.y : space.x,
-                      slots= orbital ? opt.footage : opt.images.length || get(_frames_),
+                      travel= orbital && get(_vertical_) ? get(_height_) : get(_width_),
+                      slots= orbital ? get(_footage_) : opt.images.length || get(_frames_),
                       weight= ceil(travel / slots),
                       travel= travel - weight,
                       indicate= round(interpolate(fraction, 0, travel)),
-                      indicate= !opt.cw || opt.stitched ? indicate : travel - indicate,
+                      indicate= !opt.cw || get(_stitched_) ? indicate : travel - indicate,
                       $indicator= indicator.$x.css(get(_vertical_)
                       ? { left: 0, top: px(indicate), bottom: _auto_, width: size, height: weight }
                       : { bottom: 0, left: px(indicate), top: _auto_, width: weight, height: size })
@@ -1611,11 +1630,9 @@
                   //
                   'tierChange.indicator': function(e, deprecated_set, tier){
                     if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
-                      space= get(_dimensions_),
-                      travel= space.y,
-                      slots= opt.rows,
+                      travel= get(_height_),
                       size= opt.indicator,
-                      weight= ceil(travel / slots),
+                      weight= ceil(travel / opt.rows),
                       travel= travel - weight,
                       indicate= round(tier * travel),
                       $yindicator= indicator.$y.css({ left: 0, top: indicate, width: size, height: weight })
@@ -1642,7 +1659,6 @@
                   //
                   'setup.annotations': function(e){
                     var
-                      space= get(_dimensions_),
                       $overlay= t.parent()
                     $.each(get(_annotations_), function(ida, note){
                       var
@@ -1659,16 +1675,17 @@
                     });
                   },
                   'frameChange.annotations': function(e, deprecation, frame){
+                    if (!get(_preloaded_) || deprecation !== undefined) return;
                     var
-                      space= get(_dimensions_),
-                      stitched= opt.stitched,
+                      width= get(_width_),
+                      stitched= get(_stitched_),
                       ss= get(_stitched_shift_)
-                    if (!get(_preloaded_)) return;
-                    if (deprecation === undefined) $.each(get(_annotations_), function(ida, note){
+                    $.each(get(_annotations_), function(ida, note){
                       var
                         $note= $(hash(ida)),
                         start= note.start || 1,
                         end= note.end,
+                        frame= frame || get(_frame_),
                         offset= frame - 1,
                         at= note.at ? (note.at[offset] == '+') : false,
                         offset= note.at ? offset : offset - start + 1,
@@ -1677,11 +1694,15 @@
                         placed= x !== undefined && y !== undefined,
                         visible= placed && (note.at ? at : (offset >= 0 && (!end || offset <= end - start)))
                       if (stitched) var
-                        on_edge= x < space.x && ss > stitched - space.x,
-                        after_edge= x > stitched - space.x && ss >= 0 && ss < space.x,
+                        on_edge= x < width && ss > stitched - width,
+                        after_edge= x > stitched - width && ss >= 0 && ss < width,
                         x= !on_edge ? x : x + stitched,
                         x= !after_edge ? x : x - stitched,
                         x= x - ss
+                      if (get(_responsive_)) var
+                        ratio= get(_ratio_),
+                        x= x && x * ratio,
+                        y= y && y * ratio
                       var
                         style= { display: visible ? _block_:_none_, left: px(x), top: px(y) }
                       $note.css(style);
@@ -1709,7 +1730,7 @@
                   //
                   'up.steppable': function(e, ev){
                     if (panned || wheeled) return;
-                    t.trigger(get(_clicked_location_).x - t.offset().left > 0.5 * get(_dimensions_).x ? 'stepRight' : 'stepLeft')
+                    t.trigger(get(_clicked_location_).x - t.offset().left > 0.5 * get(_width_) ? 'stepRight' : 'stepLeft')
                   },
                   'stepLeft stepRight': function(e){
                     unidle();
@@ -1743,6 +1764,38 @@
                   //
                   stepDown: function(e){
                     set(_row_, get(_row_) + 1);
+                  },
+
+                  // -----------------------
+                  // [NEW] Responsive Events
+                  // -----------------------
+                  //
+                  // In responsive mode in case of parent's size change, in addition to actual recalculations,
+                  // the instance starts to emit throttled `resize` events. This handler in turn emulates
+                  // images changes event leading to reload of frames.
+                  //
+                  // ---
+                  //
+                  // ### `resize` Event ######
+                  // `Event`, since 1.3
+                  //
+                  resize: function(e, force){
+                    if (get(_loading_) && !force) return;
+                    var
+                      stitched= get(_stitched_),
+                      spacing= get(_spacing_),
+                      height= get(_height_),
+                      is_sprite= !get(_images_).length || stitched,
+                      rows= opt.rows || 1,
+                      size= get(_images_).length
+                        ? !stitched ? undefined : px(stitched)+___+px(height)
+                        : stitched && px(stitched)+___+px((height + spacing) * rows - spacing)
+                        || px((get(_width_) + spacing) * get(_footage_) - spacing)+___+px((height + spacing) * get(_rows_) * rows * (opt.directional? 2:1) - spacing)
+                    t.css({
+                      height: is_sprite ? px(height) : null,
+                      backgroundSize: size
+                    });
+                    force || t.trigger('imagesChange');
                   },
 
                   // ----------------
@@ -1779,15 +1832,16 @@
                   // until all images are loaded and to unbind itself then.
                   //
                   'tick.reel.preload': function(e){
+                    if (!(loaded || get(_loading_))) return;
                     var
-                      space= get(_dimensions_),
+                      width= get(_width_),
                       current= number(preloader.$.css(_width_)),
                       images= get(_images_).length || 1,
-                      target= round(1 / images * get(_preloaded_) * space.x)
+                      target= round(1 / images * get(_preloaded_) * width)
                     preloader.$.css({ width: current + (target - current) / 3 + 1 })
-                    if (get(_preloaded_) === images && current > space.x - 1){
-                      preloader.$.fadeOut(300, function(){ preloader.$.remove() });
-                      pool.unbind(_tick_+dot(_preload_), on.pool[_tick_+dot(_preload_)]);
+                    if (get(_preloaded_) === images && current > width - 1){
+                      loaded= false;
+                      preloader.$.fadeOut(300, function(){ preloader.$.css({ opacity: 1, width: 0 }) });
                     }
                   },
 
@@ -1848,6 +1902,8 @@
                 }
               },
 
+              loaded= false,
+
               // ------------------------
               // Instance Private Helpers
               // ------------------------
@@ -1871,18 +1927,15 @@
               panned= 0,
               wheeled= false,
               oriented= false,
-              delay, // openingDone's delayed play pointer
 
               // - Constructors of UI elements
               //
               $monitor= $(),
               preloader= function(){
-                var
-                  size= opt.preloader
                 css(___+dot(preloader_klass), {
                   position: _absolute_,
-                  left: 0, top: get(_dimensions_).y - size,
-                  height: size,
+                  left: 0, bottom: 0,
+                  height: opt.preloader,
                   overflow: _hidden_,
                   backgroundColor: '#000'
                 });
@@ -1917,7 +1970,7 @@
               //
               offscreen= function(){
                 var
-                  height= get(_dimensions_).y,
+                  height= get(_height_),
                   rect= t[0].getBoundingClientRect()
                 return rect.top < -height ||
                        rect.bottom > height + $(window).height()
@@ -1936,15 +1989,35 @@
               graph= opt.graph || reel.math[opt.loops ? 'hatch' : 'envelope'],
               normal= reel.normal,
 
+              // - Response to the size changes in responsive mode
+              //
+              slow_gauge= function(){
+                clearTimeout(gauge_delay);
+                gauge_delay= setTimeout(gauge, reel.resize_gauge);
+              },
+              gauge= function(){
+                if (t.width() == get(_width_)) return;
+                var
+                  truescale= get(_truescale_),
+                  ratio= set(_ratio_, t.width() / truescale.width)
+                $.each(truescale, function(key, value){ set(key, round(value * ratio)) })
+                t.trigger('resize');
+              },
+
+              // - Delay timer pointers
+              //
+              delay, // openingDone's delayed play
+              gauge_delay, // slow_gauge's throttle
+
               // - Interaction graph's zero point reset
               //
               recenter_mouse= function(revolution, x, y){
                 var
                   fraction= set(_clicked_on_, get(_fraction_)),
                   tier= set(_clicked_tier_, get(_tier_)),
-                  loops= opt.loops
-                set(_lo_, loops ? 0 : - fraction * revolution);
-                set(_hi_, loops ? revolution : revolution - fraction * revolution);
+                  loops= opt.loops,
+                  lo= set(_lo_, loops ? 0 : - fraction * revolution),
+                  hi= set(_hi_, loops ? revolution : revolution - fraction * revolution)
                 return x !== undefined && set(_clicked_location_, { x: x, y: y }) || undefined
               },
               slidable= true,
@@ -2134,6 +2207,8 @@
         lazy_agent:    /\(iphone|ipod|android|fennec|blackberry/i,
         /* Format of frame class flag on the instance */
         frame_klass:   /frame-\d+/,
+        /* Mask for substitutions in URL */
+        substitution:  /(@([A-Z]))/g,
         /* [Sequence](#Sequence) string format */
         sequence:      /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/
       },
@@ -2229,7 +2304,7 @@
           var
             orbital= opt.orbital,
             rows= orbital ? 2 : opt.rows || 1,
-            frames= orbital ? opt.footage : get(_frames_),
+            frames= orbital ? get(_footage_) : get(_frames_),
             start= (opt.row-1) * frames,
             values= new Array().concat(sequence),
             present= new Array(sequence.length + 1),
@@ -2268,6 +2343,52 @@
         linear: function(sequence, opt, get){
           return sequence
         }
+      },
+
+      // -------------------------
+      // [NEW] Data Values in URLs
+      // -------------------------
+      //
+      // Reel will process each and every image resource URL and substitute special markup
+      // with actual values from the data store. Marks made of `@` character followed by upper case
+      // letter will be substituted with values either directly from data store (`@W` and `@H`
+      // for `width` and `height`) or calculated (`@T` is substituted with momentary timestamp
+      // in milliseconds).
+      // Markup can appear anywhere in the folder name, file name or the query params
+      // (also in [`path`](#path-Option)) and even multiple times.
+      //
+      // Comes handy in product configurators
+      // and works magic in conjunction with [responsive](#responsive-Option) option.
+      //
+      // _**Example:** Following URLs:_
+      //
+      //     image.jpg?size=@Wx@H
+      //     pic/@W/@H/rabbit.png
+      //     image.php?nocache=@T
+      //
+      // _... will come out like this for Reel 320 pixels wide and 180 high:_
+      //
+      //     image.jpg?size=320x180
+      //     pic/320/180/rabbit.png
+      //     image.php?nocache=1377604502788
+      //
+      // ---
+
+      // ### `$.reel.substitute()` ######
+      // `Function`, since 1.3
+      //
+      substitute: function(uri, get){
+        return uri.replace(reel.re.substitution, function(match, mark, key){
+          return typeof reel.substitutes[key] == 'function'
+                      ? reel.substitutes[key](get) : substitution_keys[key]
+                      ? get(substitution_keys[key]) : mark;
+        });
+      },
+      // ### `$.reel.substitutes` ######
+      // `Object` of `Function`s, since 1.3
+      //
+      substitutes: {
+        T: function(get){ return +new Date() }
       },
 
       // ------------------------
@@ -2370,6 +2491,16 @@
       //
       leader: leader,
 
+      // `$.reel.resize_gauge` specifies a throttling interval for triggering of `resize` events,
+      // in milliseconds.
+      //
+      // ---
+
+      // ### `$.reel.resize_gauge` ######
+      // `Number`, since 1.3
+      //
+      resize_gauge: 300,
+      
       // `$.reel.cost` holds document-wide costs in miliseconds of running all Reel instances. It is used
       // to adjust actual timeout of the ticker.
       //
@@ -2391,6 +2522,7 @@
     browser_version= +browser[2].split('.').slice(0,2).join('.'),
     ie= browser[1] == 'MSIE',
     knows_data_urls= !(ie && browser_version < 8),
+    knows_background_size= !(ie && browser_version < 9),
     ticker,
 
     // ---------------
@@ -2438,12 +2570,12 @@
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
     _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
-    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
-    _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
-    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
+    _cwish_= 'cwish', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
+    _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
+    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
-    _stitched_shift_= 'stitched_shift', _stitched_travel_= 'stitched_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _tier_= 'tier', _velocity_= 'velocity', _vertical_= 'vertical',
+    _stitched_= 'stitched', _stitched_shift_= _stitched_+'_shift', _stitched_travel_= _stitched_+'_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
+    _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
 
     // And the same goes for browser events too.
     //
@@ -2454,15 +2586,19 @@
     _mouseleave_= _mouse_+'leave'+pns, _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns,
     _mousewheel_= _mouse_+'wheel'+ns, _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns,
     _touchend_= _touch_+'end'+pns, _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
-    _deviceorientation_= 'deviceorientation'+ns,
+    _deviceorientation_= 'deviceorientation'+ns, _resize_= 'resize'+ns,
 
     // And some other frequently used Strings.
     //
     __= '', ___= ' ', ____=',', _absolute_= 'absolute', _block_= 'block', _cdn_= '@CDN@', _div_= 'div',
-    _hand_= 'hand', _head_= 'head', _height_= 'height', _html_= 'html', _id_= 'id',
+    _hand_= 'hand', _head_= 'head', _html_= 'html', _id_= 'id',
     _img_= 'img', _jquery_reel_= 'jquery.'+klass, _move_= 'move', _none_= 'none', _object_= 'object',
     _preload_= 'preload', _string_= 'string',
-    _width_= 'width',
+
+    // Collection of data keys holding scalable pixel values responsive to the scale ratio
+    // 
+    responsive_keys= [_width_, _height_, _spacing_, _revolution_, _revolution_y_, _stitched_, _stitched_shift_, _stitched_travel_],
+    substitution_keys= { W: _width_, H: _height_ },
 
     // ---------------
     // Image Resources

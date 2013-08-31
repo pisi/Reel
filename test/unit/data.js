@@ -23,23 +23,27 @@
         clicked_on: 'Number',
         clicked_tier: 'Number',
         cwish: 'Number',
-        dimensions: 'Object',
+        footage: 'Number',
         fraction: 'Number',
         frame: 'Number',
         framelock: 'Boolean',
         frames: 'Number',
+        height: 'Number',
         hi: 'Number',
         id: 'String',
         image: 'String',
         images: 'Array',
         lo: 'Number',
+        loading: 'Boolean',
         opening: 'Boolean',
         opening_ticks: 'Number',
         options: 'Object',
         playing: 'Boolean',
         preloaded: 'Number',
+        ratio: 'Number',
         reeled: 'Boolean',
         reeling: 'Boolean',
+        responsive: 'Boolean',
         revolution: 'Number',
         revolution_y: 'Number',
         row: 'Number',
@@ -48,6 +52,7 @@
         spacing: 'Number',
         speed: 'Number',
         stage: 'String',
+        stitched: 'Number',
         stitched_travel: 'Number',
         stitched_shift: 'Number',
         stopped: 'Boolean',
@@ -55,8 +60,10 @@
         tempo: 'Number',
         ticks: 'Number',
         tier: 'Number',
+        truescale: 'Object',
         velocity: 'Number',
-        vertical: 'Boolean'
+        vertical: 'Boolean',
+        width: 'Number'
       }
       count= 0;
 
@@ -86,15 +93,14 @@
 
   });
 
-  test( 'Stage dimensions inside `.reel("dimensions")`', function(){
+  test( 'Stage dimensions inside `.reel("width")` and `.reel("height")', function(){
 
-    expect(3);
+    expect(2);
     var
       $reel= $('#image').reel()
 
-    ok( is('Object', $reel.reel('dimensions')), '`.reel("dimensions")` Object');
-    ok( is('Number', $reel.reel('dimensions').x), '`x` Number');
-    ok( is('Number', $reel.reel('dimensions').y), '`y` Number');
+    ok( is('Number', $reel.reel('width')), '`width` Number');
+    ok( is('Number', $reel.reel('height')), '`height` Number');
 
   });
 
@@ -146,14 +152,14 @@
     ok( $image.data(key), 'Test probe exists even in the running instance after the `.reel() call');
     equal( $image.data(key), value, 'And it still is the same probe');
     ok( is('Number', $image.data('frame')), 'Instance data are accessible (`"frame"`)');
-    ok( is('Object', $image.data('dimensions')), 'Instance data are gone (`"dimensions"`)');
+    ok( is('Number', $image.data('width')), 'Instance data are accessible (`"width"`)');
     ok( is('Array', $image.data('images')), 'Instance data are accessible (`"images"`)');
 
     $image.unreel();
     ok( $image.data(key), 'Test probe is still present even after `.unreel() call');
     equal( $image.data(key), value, 'And it is our probe');
     ok( typeof $image.data('frame') === 'undefined', 'Instance data are gone (`"frame"`)');
-    ok( typeof $image.data('dimensions') === 'undefined', 'Instance data are gone (`"dimensions"`)');
+    ok( typeof $image.data('height') === 'undefined', 'Instance data are gone (`"height"`)');
     ok( typeof $image.data('images') === 'undefined', 'Instance data are gone (`"images"`)');
 
   });
@@ -466,7 +472,7 @@
 
           // Wait a sec for preloader transition to finish
           setTimeout(function(){
-            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            equal( !$reel.siblings('.reel-preloader').css('width'), 0, 'Preloader gets properly reset' );
             start();
           }, 1000);
           break;
@@ -514,7 +520,7 @@
 
           // Wait a sec for preloader transition to finish
           setTimeout(function(){
-            ok( !$reel.siblings('.reel-preloader').length, 'Preloader gets properly cleared' );
+            equal( !$reel.siblings('.reel-preloader').css('width'), 0, 'Preloader gets properly reset' );
             start();
           }, 1000);
           break;
@@ -522,6 +528,143 @@
       }
     });
 
+  });
+
+  $.each({
+    'width in folder':          { width: 357, height: 211, url: 'images/@W/image.jpg',           target: 'images/357/image.jpg' },
+    'height in folder':         { width: 357, height: 211, url: 'images/@H/image.jpg',           target: 'images/211/image.jpg' },
+    'both in folder':           { width: 357, height: 211, url: 'images/@W/@H/image.jpg',        target: 'images/357/211/image.jpg' },
+    'width in file':            { width:  78, height: 875, url: 'images/big/image-@W-wide.jpg',  target: 'images/big/image-78-wide.jpg' },
+    'height in file':           { width:  78, height: 875, url: 'images/big/image-@H-high.jpg',  target: 'images/big/image-875-high.jpg' },
+    'both in file':             { width:  78, height: 875, url: 'images/big/image-@Wx@H.jpg',    target: 'images/big/image-78x875.jpg' },
+    'width in query params':    { width: 124, height: 641, url: 'image.php?width=@W',            target: 'image.php?width=124' },
+    'height in query params':   { width: 124, height: 641, url: 'image.php?height=@H',           target: 'image.php?height=641' },
+    'both in query params':     { width: 124, height: 641, url: 'image.php?w=@W&h=@H',           target: 'image.php?w=124&h=641' },
+    'folder query combination': { width: 200, height: 150, url: 'files/@W/pic?@H',               target: 'files/200/pic?150' },
+    'folder file combination':  { width: 200, height: 150, url: 'files/@W/@H.png',               target: 'files/200/150.png' },
+    'file query combination':   { width: 200, height: 150, url: 'file/@W-wide?@H-high',          target: 'file/200-wide?150-high' },
+    'folder file query combo':  { width: 200, height: 150, url: 'files/@W-wide/@H-high?s=@Wx@H', target: 'files/200-wide/150-high?s=200x150' }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
+
+      expect(3);
+
+      var
+        $reel= $('#image').reel({
+          attr: {
+            width:  def.width,
+            height: def.height
+          }
+        }),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
+
+      equal( $reel.reel('width'), def.width, 'Correct target width');
+      equal( $reel.reel('height'), def.height, 'Correct target height');
+
+      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+
+    });
+  });
+
+  $.each({
+    'timestamp in folder':       { url: 'images/@T/image.jpg', target: /images\/\d{13,}\/image\.jpg/ },
+    'timestamp in file':         { url: 'images/@T.jpg',       target: /images\/\d{13,}\.jpg/ },
+    'timestamp in query params': { url: 'images/image.rb?@T',  target: /images\/image\.rb\?\d{13,}/ }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
+
+      expect(2);
+
+      ok( typeof $.reel.substitutes == 'object', 'Namespace ready');
+      var
+        $reel= $('#image').reel(),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
+
+      ok( substitute.match(def.target), 'URL with substituted value(s): `'+substitute+'`');
+
+    });
+  });
+
+  test( '`$.reel.substitutes` object for custom substitution definitions', function(){
+
+    expect(3);
+
+    ok( typeof $.reel.substitutes == 'object', 'Publicly accessible namespace for URL data substitutions');
+    ok( typeof $.reel.substitutes.T == 'function', 'Already contains the timestamp substitution `@T`');
+
+    var
+      url= 'url/with/non-existing/@Y',
+      $reel= $('#image').reel(),
+      // Minimal data interface expected by `$.reel.substitute()`
+      get= function(name){ return $reel.data(name) },
+      substitute= $.reel.substitute(url, get)
+
+    equal( substitute, url, 'Unrecognized mark will pass through unchanged: `'+substitute+'`');
+
+  });
+
+  $.each({
+    'in folder':       { url: 'imgs/@X/23.png',       target: 'imgs/hi/23.png' },
+    'in file':         { url: 'imgs/@X.jpg?23',       target: 'imgs/hi.jpg?23' },
+    'in query params': { url: 'imgs/pic.rb?23&@X',    target: 'imgs/pic.rb?23&hi' }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
+
+      expect(2);
+
+      ok( typeof $.reel.substitutes == 'object', 'Namespace ready');
+
+      // This custom substitution tests general functionality
+      $.reel.substitutes.X= function(){ return 'hi' }
+
+      var
+        $reel= $('#image').reel(),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
+
+      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+
+    });
+  });
+
+  $.each({
+    'in folder':       { frame: 5, url: 'imgs/@X/high.png',  target: 'imgs/5/high.png' },
+    'in file':         { frame: 5, url: 'imgs/@X.jpg',       target: 'imgs/5.jpg' },
+    'in query params': { frame: 5, url: 'imgs/img?index=@X', target: 'imgs/img?index=5' }
+  },
+  function(designation, def){
+
+    test( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
+
+      expect(2);
+
+      ok( typeof $.reel.substitutes == 'object', 'Namespace ready');
+
+      // This custom substitution tests working access into the live data store
+      $.reel.substitutes.X= function(get){ return get('frame') }
+
+      var
+        $reel= $('#image').reel({
+          frame: def.frame
+        }),
+        // Minimal data interface expected by `$.reel.substitute()`
+        get= function(name){ return $reel.data(name) },
+        substitute= $.reel.substitute(def.url, get)
+
+      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+
+    });
   });
 
   test( 'Data-configured `&lt;img&gt;` tags are turned into Reel instances upon scan', function(){
@@ -594,6 +737,63 @@
         start();
       }, 0);
     });
+
+  });
+
+  asyncTest( 'Image cache stored in the data', function(){
+
+    expect(4);
+
+    var
+      frames= 3,
+      $reel= $('#image').reel({
+        images: 'abc#.jpg',
+        frames: frames
+      })
+
+    ok( !!$reel.reel('cache').children().length, 'Initially empty cache is filled right away');
+
+    $(document).bind('loaded.test', function(){
+      ok( $reel.reel('cache').is('div'), 'Cache is a `<div>` element');
+      equal( $reel.reel('cache').children().length, frames, 'Containing one children per frame');
+      equal( $reel.reel('cache').children('img').length, frames, 'These children are all `<img>` elements');
+      start();
+    });
+
+  });
+
+  asyncTest( 'Preloading state of the instance can be read from `loading` data key', function(){
+
+    expect(2);
+
+    var
+      frames= 3,
+      $reel= $('#image').reel({
+        images: 'abc#.jpg',
+        frames: frames
+      })
+
+    equal( $reel.reel('loading'), true, 'Boolean `true` when loading is in progress');
+
+    $(document).bind('loaded.test', function(){
+      equal( $reel.reel('loading'), false, 'Boolean `true` when loading is over');
+      start();
+    });
+
+  });
+
+  test( 'Footage will equal `frames` if total number of frames is less than default footage', function(){
+
+    expect(2);
+
+    var
+      frames= 3,
+      $reel= $('#image').reel({
+        frames: frames
+      })
+
+    ok( $reel.reel('footage') != $.reel.def.footage, 'Other than default');
+    equal( $reel.reel('footage'), frames, 'Footage equals frames');
 
   });
 
