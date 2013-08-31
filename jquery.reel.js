@@ -197,7 +197,7 @@
         wheelable:           true,
 
         // #### `orientable` Option ####
-        // `Boolean`, IN DEVELOPMENT
+        // [NEW] `Boolean`, since 1.3
         //
         orientable:         false,
 
@@ -1401,7 +1401,7 @@
                   },
 
                   // ### `orient` Event ######
-                  // `Event`, IN DEVELOPMENT
+                  // [NEW] `Event`, since 1.3
                   //
                   // Maps Reel to device orientation event which is provided by some touch enabled devices
                   // with gyroscope inside. Event handler receives all three device orientation angles 
