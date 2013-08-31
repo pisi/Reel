@@ -2547,6 +2547,13 @@
         return images;
       },
 
+      // ### `$.reel.raf()` ######
+      // [NEW] `Function`, since 1.3
+      //
+      // Reference to browser's built-in interface. `null` if not available.
+      //
+      raf: scout('r|webkitR|mozR|msR|oR'.split('|'), 'equestAnimationFrame') || null,
+
       // --------------
       // Reel Instances
       // --------------
@@ -2748,6 +2755,7 @@
   function soft_array(string){ return reel.re.array.exec(string) ? string.split(reel.re.array) : string }
   function detached($node){ return !$node.parents(_html_).length }
   function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
+  function scout(prefixes, property, r){ $.each(prefixes, function(ix, prefix){ r= r || window[prefix+property] }); return r }
   function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
   function error(message){ try{ console.error(message) }catch(e){} }
 })(jQuery, window, document);

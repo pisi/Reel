@@ -163,7 +163,7 @@
   });
 
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
-    expect(32);
+    expect(33);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
     ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
@@ -207,6 +207,13 @@
     ok( typeof $.reel.normal.row == 'function',          '`$.reel.normal.row()`' );
     ok( typeof $.reel.normal.frame == 'function',        '`$.reel.normal.frame()`' );
     // Functionally of individual `$.reel.normal` methods is tested in the Data module
+
+    if ($.reel.raf){
+      ok( typeof $.reel.raf == 'function',                 '`$.reel.normal.raf()`' );
+    }else{
+      ok( $.reel.raf === null,                             '`$.reel.normal.raf()`' );
+    }
+    // Functionally of `$.reel.raf()` is tested further here in the API module
 
     ok( typeof $.reel.sequence == 'function',            '`$.reel.sequence()` - builds the images array from given `sequence` option' );
     // Functionally of `$.reel.sequence()` is tested in the Computations module
@@ -953,6 +960,18 @@
 
       ok( $.reel.re.array.test(string) == pass );
     });
+  });
+
+
+  test( '`$.reel.raf()` references the `requestAnimationFrame()` of that particular browser', function(){
+    expect(2);
+
+    if ($.reel.raf){
+      ok( typeof $.reel.raf == 'function', '`requestAnimationFrame` available in this browser' );
+    }else{
+      ok( $.reel.raf === null, '`requestAnimationFrame` not available in this browser' );
+    }
+    ok( true, '$.reel.raf = '+$.reel.raf+';' );
   });
 
 })(jQuery);
