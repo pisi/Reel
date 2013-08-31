@@ -343,4 +343,22 @@
     });
   });
 
+  asyncTest( 'Shy activation triggers `"prepare"` event and waits for explicit setup being triggered', function(){
+    expect(1);
+
+    $(document).bind('prepare.test', function(){
+      ok( true, '`"prepare" event triggered');
+      start();
+    });
+    $(document).bind('setup.test', function(){
+      ok( false, '`"setup" event triggered');
+      start();
+    });
+    var
+      $reel= $('#image').reel({
+        shy: true
+      })
+
+  });
+
 })(jQuery);

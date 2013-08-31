@@ -972,7 +972,7 @@
                   css(__, { width: size.x, height: size.y, overflow: _hidden_, position: 'relative' });
                   css(____+___+dot(klass), { display: _block_ });
                   pool.bind(on.pool);
-                  t.trigger('setup');
+                  t.trigger(shy ? 'prepare' : 'setup')
                 },
 
                 // ------
@@ -1045,6 +1045,7 @@
                       $area= set(_area_, $(opt.area || $overlay )),
                       rows= opt.rows || 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
+                    t.unbind(_click_, trigger_setup);
                     if (touchy){
                       // workaround for downsizing-sprites-bug-in-iPhoneOS inspired by Katrin Ackermann
                       css(___+dot(klass), { WebkitBackgroundSize: get(_images_).length
@@ -1154,6 +1155,16 @@
                     get(_images_).length > 1 || t.css({ backgroundImage: url(opt.path+get(_image_)) }).attr({ src: cdn(transparent) });
                     opt.stitched && t.attr({ src: cdn(transparent) });
                     get(_reeled_) || set(_velocity_, opt.velocity || 0);
+                  },
+
+                  // ### `prepare` Event ######
+                  // [NEW] `Event`, since 1.3
+                  //
+                  // In case of `shy` activation, `"prepare"` event is called instead of the full `"setup"`.
+                  // It lefts the target image untouched waiting to be clicked to actually setup.
+                  //
+                  prepare: function(e){
+                    t.css('display', _block_).one(_click_, trigger_setup);
                   },
 
                   // ----------------
@@ -1862,6 +1873,10 @@
               //
               mute= function(e, result){ return e.stopImmediatePropagation() || result },
 
+              // - Shy initialization helper
+              //
+              trigger_setup= function(){ t.trigger('setup') },
+
               // - User idle control
               //
               operated,
@@ -2443,8 +2458,8 @@
     //
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
-    _center_= 'center', _clicked_= 'clicked', _clicked_location_= 'clicked_location', _clicked_on_= 'clicked_on', _clicked_tier_= 'clicked_tier',
-    _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
+    _center_= 'center', _click_= 'click', _clicked_= _click_+'ed', _clicked_location_= _clicked_+'_location', _clicked_on_= _clicked_+'_on',
+    _clicked_tier_= _clicked_+'_tier', _cwish_= 'cwish', _dimensions_= 'dimensions', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _reeling_= 'reeling', _reeled_= 'reeled', _revolution_= 'revolution',
     _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _shy_= 'shy', _spacing_= 'spacing', _speed_= 'speed',
