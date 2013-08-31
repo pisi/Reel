@@ -2559,6 +2559,13 @@
       //
       setTimeout: function(callback, delay){
         if (!reel.raf) return setTimeout(callback, delay);
+        var
+          start= +new Date(),
+          loop= function(){
+            if (delay <= +new Date() - start) callback()
+            else reel.raf.call(window, loop);
+          }
+        loop();
       },
 
       // ### `$.reel.raf()` ######
