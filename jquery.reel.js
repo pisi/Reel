@@ -2131,7 +2131,7 @@
             if (!tempo) return ticker= null;
             pool.trigger(_tick_);
             reel.cost= (+new Date() + reel.cost - start) / 2;
-            return ticker= setTimeout(tick, max(4, 1000 / tempo - reel.cost));
+            return ticker= reel.setTimeout(tick, max(4, 1000 / tempo - reel.cost));
           })();
 
           return $(instances);
@@ -2545,6 +2545,20 @@
           counter+= increment;
         }
         return images;
+      },
+
+      // RAF-powered Ticker
+      // ------------------
+      //
+      // Modern browsers allow Reel to take advantage of the new `requestAnimationFrame` (RAF) interface.
+      // It scouts for the support and where available, it establishes quick RAF loop instead of the former,
+      // less precise `setTimeout()` turnarounds. Result is a smoother run of the ticker.
+      //
+      // ### `$.reel.setTimeout()` ######
+      // [NEW] `Function`, since 1.3
+      //
+      setTimeout: function(callback, delay){
+        if (!reel.raf) return setTimeout(callback, delay);
       },
 
       // ### `$.reel.raf()` ######

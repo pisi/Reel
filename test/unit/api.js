@@ -163,7 +163,7 @@
   });
 
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
-    expect(33);
+    expect(34);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
     ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
@@ -214,6 +214,9 @@
       ok( $.reel.raf === null,                             '`$.reel.normal.raf()`' );
     }
     // Functionally of `$.reel.raf()` is tested further here in the API module
+
+    ok( typeof $.reel.setTimeout == 'function',          '`$.reel.normal.setTimeout()`' );
+    // Functionally of `$.reel.setTimeout()` is tested further here in the API module
 
     ok( typeof $.reel.sequence == 'function',            '`$.reel.sequence()` - builds the images array from given `sequence` option' );
     // Functionally of `$.reel.sequence()` is tested in the Computations module
@@ -972,6 +975,31 @@
       ok( $.reel.raf === null, '`requestAnimationFrame` not available in this browser' );
     }
     ok( true, '$.reel.raf = '+$.reel.raf+';' );
+  });
+
+  asyncTest( '`$.reel.setTimeout()` works just as one would expect from `window.setTimeout()` (200 ms delay tested)', function(){
+    expect(4);
+    var
+      beginning= +new Date(),
+      delay= 200,
+      fired= 0,
+      callback= function(){
+        fired++;
+        var
+          end= +new Date()
+
+        ok( true, 'Callback fired' );
+        ok( end >= beginning + delay, 'Delay passed (in '+(end - beginning)+' ms)' );
+      }
+
+    ok( typeof $.reel.setTimeout == 'function', 'Function present' );
+
+    $.reel.setTimeout(callback, delay);
+
+    setTimeout(function(){
+        ok( fired == 1, 'Callback fired just once' );
+        start();
+    }, 600)
   });
 
 })(jQuery);
