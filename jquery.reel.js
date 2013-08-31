@@ -2123,6 +2123,7 @@
           // the `tick.reel` event trigger to estimate the time spent on executing `tick.reel`'s handlers.
           // The actual timeout time is then adjusted by the amount to run as close to expected tempo
           // as possible.
+          // Ticker is requestAnimationFrame powered where supported. [Learn more](#RAF-powered-Ticker)
           //
           ticker= ticker || (function tick(){
             var
