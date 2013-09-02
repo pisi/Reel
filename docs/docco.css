@@ -435,6 +435,7 @@ pre .tex .formula {
 
 /* CUSTOM */
 
+h1 em{ font-weight: bold; padding: 0 6px; color: #fff; background: #bd0000; font-size: 23px; font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Calibri, Helvetica, Arial; }
 .annotation h3 code, .annotation h4 code {
   background: #f8f8ff;
   background: #181818;
@@ -449,9 +450,14 @@ pre .tex .formula {
 .navigation li { font-weight: bold; margin-bottom: 24px; list-style-type: none; }
 .navigation li li { font-weight: normal; }
 .navigation li li code { font-size: 10px; }
+.navigation li.new a { color: #bd0000; }
+.navigation .first-new:before { content: 'NEW'; font-weight: bold; padding: 0 3px; color: #fff; background: #bd0000; font-size: 10px; text-decoration: none; font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Calibri, Helvetica, Arial; }
+.navigation .first-new .additions { display: block; color: #bd0000; font-size: 11px; }
+.navigation .news li { display: block; margin-bottom: 0; font-size: 13px; padding-left: 30px; }
 .navigation ul li { display: inline; }
 .navigation, .navigation ul { padding-left: 0; }
 
 pre .title, pre .params { color: #000; }
 hr { display: none; }
 .annotation h4 { margin-top: 10px; }
+
