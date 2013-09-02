@@ -2021,9 +2021,12 @@
               offscreen= function(){
                 var
                   height= get(_height_),
+                  width= get(_width_),
                   rect= t[0].getBoundingClientRect()
-                return rect.top < -height ||
-                       rect.bottom > height + $(window).height()
+                return rect.top < -height
+                    || rect.left < -width
+                    || rect.right > width + $(window).width()
+                    || rect.bottom > height + $(window).height()
               },
 
               // - Inertia rotation control
