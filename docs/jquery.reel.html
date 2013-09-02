@@ -99,6 +99,7 @@
                       <li><a href="#loaded-Event"><code>loaded</code></a></li>
                       <li><a href="#opening-Event"><code>opening</code></a></li>
                       <li><a href="#openingDone-Event"><code>openingDone</code></a></li>
+                      <li><a href="#orient-Event"><code>orient</code></a></li>
                       <li><a href="#pan-Event"><code>pan</code></a></li>
                       <li><a href="#pause-Event"><code>pause</code></a></li>
                       <li><a href="#play-Event"><code>play</code></a></li>
@@ -128,10 +129,12 @@
                       <li><a href="#Math-Behind"><code>math</code></a></li>
                       <li><a href="#Data-Value-Normalization"><code>normal</code></a></li>
                       <li><a href="#Preloading-Modes"><code>preload</code></a></li>
+                      <li><strong>NEW</strong><a href="#RAF-powered-Ticker"><code>raf()</code></a></li>
                       <li><a href="#Regular-Expressions"><code>re</code></a></li>
                       <li><a href="#Reel-Instances"><code>resize_gauge</code></a></li>
                       <li><a href="#Quick-Start"><code>scan()</code></a></li>
                       <li><a href="#Sequence-Build-up"><code>sequence()</code></a></li>
+                      <li><strong>NEW</strong><a href="#RAF-powered-Ticker"><code>setTimeout()</code></a></li>
                       <li><a href="#Data-Values-in-URLs"><code>substitute()</code></a></li>
                       <li><a href="#Data-Values-in-URLs"><code>substitutes</code></a></li>
                       <li><a href="#reel-version"><code>version</code></a></li>
@@ -168,7 +171,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3-devel
- * Updated: 2013-08-31
+ * Updated: 2013-09-02
  *
  * Requires jQuery 1.5 or higher
  */</span>
@@ -2474,11 +2477,9 @@ belongings leaving no trace.</p>
                     <span class="keyword">var</span>
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
-                    <span class="keyword">if</span> (!get(_shy_)){
-                      get(_style_).remove();
-                      get(_cache_).empty();
-                      get(_area_).unbind(ns);
-                    }
+                    <span class="keyword">if</span> (get(_shy_)) t.unbind(_click_, trigger_setup)
+                    <span class="keyword">else</span> get(_style_).remove() &amp;&amp; get(_area_).unbind(ns);
+                    get(_cache_).empty();
                     clearTimeout(delay);
                     clearTimeout(gauge_delay);
                     $(window).unbind(_resize_, slow_gauge);
@@ -3090,7 +3091,6 @@ or <code>drag</code> (that conflicted with MSIE).</p>
                     <span class="keyword">if</span> (opt.draggable &amp;&amp; slidable){
                       slidable= <span class="literal">false</span>;
                       unidle();
-                      console.log(last)
                       <span class="keyword">var</span>
                         rows= opt.rows,
                         orbital= opt.orbital,
@@ -4345,7 +4345,8 @@ of the <code>&lt;iframe&gt;</code>.</p>
 and all instances bind to it. Ticker&#39;s mechanism measures and compares times before and after
 the <code>tick.reel</code> event trigger to estimate the time spent on executing <code>tick.reel</code>&#39;s handlers.
 The actual timeout time is then adjusted by the amount to run as close to expected tempo
-as possible.</p>
+as possible.
+Ticker is requestAnimationFrame powered where supported. <a href="#RAF-powered-Ticker">Learn more</a></p>
 
             </div>
             
@@ -4356,7 +4357,7 @@ as possible.</p>
             <span class="keyword">if</span> (!tempo) <span class="keyword">return</span> ticker= <span class="literal">null</span>;
             pool.trigger(_tick_);
             reel.cost= (+<span class="keyword">new</span> Date() + reel.cost - start) / <span class="number">2</span>;
-            <span class="keyword">return</span> ticker= setTimeout(tick, max(<span class="number">4</span>, <span class="number">1000</span> / tempo - reel.cost));
+            <span class="keyword">return</span> ticker= reel.setTimeout(tick, max(<span class="number">4</span>, <span class="number">1000</span> / tempo - reel.cost));
           })();
 
           <span class="keyword">return</span> $(instances);
@@ -5228,7 +5229,71 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-245'>
+        <li id='RAF-powered-Ticker'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h2">
+                  <a class="pilcrow" href="#RAF-powered-Ticker">&#182;</a>
+                </div>
+              
+              <h2>RAF-powered Ticker</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='reel-setTimeout'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap ">
+                  <a class="pilcrow" href="#reel-setTimeout">&#182;</a>
+                </div>
+              
+              <p>Modern browsers allow Reel to take advantage of the new <code>requestAnimationFrame</code> (RAF) interface.
+It scouts for the support and where available, it establishes quick RAF loop instead of the former,
+less precise <code>setTimeout()</code> turnarounds. Result is a smoother run of the ticker.</p>
+<h3><code>$.reel.setTimeout()</code></h3>
+<p>[NEW] <code>Function</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      setTimeout: <span class="keyword">function</span>(callback, delay){
+        <span class="keyword">if</span> (!reel.raf) <span class="keyword">return</span> setTimeout.call(window, callback, delay);
+        <span class="keyword">var</span>
+          start= +<span class="keyword">new</span> Date(),
+          loop= <span class="keyword">function</span>(){
+            <span class="keyword">if</span> (+<span class="keyword">new</span> Date() &gt;= start + delay) callback.call(window)
+            <span class="keyword">else</span> reel.raf.call(window, loop);
+          }
+        loop();
+      },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='reel-raf'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#reel-raf">&#182;</a>
+                </div>
+              
+              <h3><code>$.reel.raf()</code></h3>
+<p>[NEW] <code>Function</code>, since 1.3</p>
+<p>Reference to browser&#39;s built-in interface. <code>null</code> if not available.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      raf: scout(<span class="string">'r|webkitR|mozR|msR|oR'</span>.split(<span class="string">'|'</span>), <span class="string">'equestAnimationFrame'</span>) || <span class="literal">null</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-248'>
             <div class="annotation">
               
               <hr>
@@ -5253,7 +5318,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-247'>
+        <li id='section-250'>
             <div class="annotation">
               
               <p><code>$.reel.instances</code> holds an inventory of all running instances in the DOM document.</p>
@@ -5282,7 +5347,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-249'>
+        <li id='section-252'>
             <div class="annotation">
               
               <p>For ticker-synchronization-related purposes Reel maintains a reference to the leaders data object
@@ -5312,7 +5377,7 @@ all the time.</p>
         </li>
         
         
-        <li id='section-251'>
+        <li id='section-254'>
             <div class="annotation">
               
               <p><code>$.reel.resize_gauge</code> specifies a throttling interval for triggering of <code>resize</code> events,
@@ -5342,7 +5407,7 @@ in milliseconds.</p>
         </li>
         
         
-        <li id='section-253'>
+        <li id='section-256'>
             <div class="annotation">
               
               <p><code>$.reel.cost</code> holds document-wide costs in miliseconds of running all Reel instances. It is used
@@ -5373,7 +5438,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-255'>
+        <li id='section-258'>
             <div class="annotation">
               
               <hr>
@@ -5398,7 +5463,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-257'>
+        <li id='section-260'>
             <div class="annotation">
               
               
@@ -5416,7 +5481,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-258'>
+        <li id='section-261'>
             <div class="annotation">
               
               <hr>
@@ -5441,7 +5506,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-260'>
+        <li id='section-263'>
             <div class="annotation">
               
               <p>These are all the class names assigned by Reel to various DOM elements during initialization of the UI
@@ -5455,7 +5520,7 @@ converted into Reel.</p>
         </li>
         
         
-        <li id='section-261'>
+        <li id='section-264'>
             <div class="annotation">
               
               <p>Rest of the class names only extend this base class forming for example <code>.reel-overlay</code>, a class
@@ -5474,7 +5539,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-262'>
+        <li id='section-265'>
             <div class="annotation">
               
               <p>The instance wrapper is flagged with actual frame number using a this class.</p>
@@ -5487,7 +5552,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-263'>
+        <li id='section-266'>
             <div class="annotation">
               
               <hr>
@@ -5512,7 +5577,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-265'>
+        <li id='section-268'>
             <div class="annotation">
               
               <p>Several math functions are referenced inside the private scope to yield smaller filesize
@@ -5529,7 +5594,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-266'>
+        <li id='section-269'>
             <div class="annotation">
               
               <p>For the very same reason all storage key Strings are cached into local vars.</p>
@@ -5549,7 +5614,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-267'>
+        <li id='section-270'>
             <div class="annotation">
               
               <p>And the same goes for browser events too.</p>
@@ -5568,7 +5633,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-268'>
+        <li id='section-271'>
             <div class="annotation">
               
               <p>And some other frequently used Strings.</p>
@@ -5583,7 +5648,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-269'>
+        <li id='section-272'>
             <div class="annotation">
               
               <p>Collection of data keys holding scalable pixel values responsive to the scale ratio</p>
@@ -5596,7 +5661,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-270'>
+        <li id='section-273'>
             <div class="annotation">
               
               <hr>
@@ -5621,7 +5686,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-272'>
+        <li id='section-275'>
             <div class="annotation">
               
               <p>Alhough we do what we can to hide the fact, Reel actually needs a few image resources to support
@@ -5635,7 +5700,7 @@ the sprite applied to its background. This one is embedded in the code as it is 
         </li>
         
         
-        <li id='section-273'>
+        <li id='section-276'>
             <div class="annotation">
               
               <p>Proper cross-browser cursors however need to come in an odd format, which essentially is not
@@ -5652,7 +5717,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-274'>
+        <li id='section-277'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5669,7 +5734,7 @@ identification quirk (IE 8- reports left as right).</p>
         </li>
         
         
-        <li id='section-275'>
+        <li id='section-278'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5688,7 +5753,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-276'>
+        <li id='section-279'>
             <div class="annotation">
               
               <p>Expose plugin functions as jQuery methods, do the initial global scan for data-configured
@@ -5702,7 +5767,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-277'>
+        <li id='section-280'>
             <div class="annotation">
               
               <p>Bunch of very useful helpers.</p>
@@ -5729,6 +5794,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
   <span class="function"><span class="keyword">function</span> <span class="title">soft_array</span><span class="params">(string)</span>{</span> <span class="keyword">return</span> reel.re.array.exec(string) ? string.split(reel.re.array) : string }
   <span class="function"><span class="keyword">function</span> <span class="title">detached</span><span class="params">($node)</span>{</span> <span class="keyword">return</span> !$node.parents(_html_).length }
   <span class="function"><span class="keyword">function</span> <span class="title">numerize_array</span><span class="params">(array)</span>{</span> <span class="keyword">return</span> <span class="keyword">typeof</span> array == _string_ ? array : $.each(array, <span class="keyword">function</span>(ix, it){ array[ix]= it ? +it : <span class="literal">undefined</span> }) }
+  <span class="function"><span class="keyword">function</span> <span class="title">scout</span><span class="params">(prefixes, property, r)</span>{</span> $.each(prefixes, <span class="keyword">function</span>(ix, prefix){ r= r || window[prefix+property] }); <span class="keyword">return</span> r }
   <span class="function"><span class="keyword">function</span> <span class="title">deprecated</span><span class="params">(input)</span>{</span> <span class="keyword">try</span>{ console.warn(<span class="string">'Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations'</span>) }<span class="keyword">catch</span>(e){} <span class="keyword">return</span> input }
   <span class="function"><span class="keyword">function</span> <span class="title">error</span><span class="params">(message)</span>{</span> <span class="keyword">try</span>{ console.error(message) }<span class="keyword">catch</span>(e){} }
 })(jQuery, window, document);
