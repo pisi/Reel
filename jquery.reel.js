@@ -2206,7 +2206,7 @@
                   if (data[name] === undefined) data[name]= value
                   else if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
                 }
-                return value;
+                return t
               }
             }
           }
