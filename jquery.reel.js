@@ -1399,7 +1399,6 @@
                     if (opt.draggable && slidable){
                       slidable= false;
                       unidle();
-                      console.log(last)
                       var
                         rows= opt.rows,
                         orbital= opt.orbital,
