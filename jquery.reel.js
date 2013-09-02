@@ -764,26 +764,7 @@
         // #### `monitor` Option ####
         // `String` (data key), since 1.1
         //
-        monitor:        undefined,
-
-
-        // ### Deprecated Options ######
-        //
-        // Two options are currently deprecated in version 1.2. Learn more about [Deprecations][1]
-        //
-        // [1]:https://github.com/pisi/Reel/wiki/Deprecations
-        //
-        // ---
-
-        // #### `step` Option ####
-        // `Number`, since 1.1
-        //
-        step:           undefined, // use `frame` instead
-
-        // #### `steps` Option ####
-        // `Number`, since 1.1
-        //
-        steps:          undefined // use `frames` instead
+        monitor:        undefined
 
       },
 
@@ -909,11 +890,6 @@
               else error('Missing attributes: Image needs `src` and both dimensions to be set to Reel');
             }),
             instances= []
-
-          // Backward-compatibility of [deprecated] legacy options
-          //
-          opt.step && (opt.frame= opt.step);
-          opt.steps && (opt.frames= opt.steps);
 
           applicable.each(function(){
             var
@@ -1525,8 +1501,8 @@
                   // __fraction__, which is a numeric value ranging from 0.0 to 1.0. When `fraction` changes
                   // this handler basically calculates and sets new value of `frame`.
                   //
-                  fractionChange: function(e, set_fraction, fraction){
-                    if (set_fraction !== undefined) return deprecated(set(_fraction_, set_fraction));
+                  fractionChange: function(e, nil, fraction){
+                    if (nil !== undefined) return;
                     var
                       frame= 1 + floor(fraction / get(_bit_)),
                       multirow= opt.rows > 1,
@@ -1545,8 +1521,8 @@
                   // movies, __tier__ is an internal value for the vertical axis. Its value also ranges from
                   // 0.0 to 1.0. Handler calculates and sets new value of `frame`.
                   //
-                  tierChange: function(e, deprecated_set, tier){
-                    if (deprecated_set === undefined) var
+                  tierChange: function(e, nil, tier){
+                    if (nil === undefined) var
                       row= set(_row_, round(interpolate(tier, 1, opt.rows))),
                       frames= get(_frames_),
                       frame= get(_frame_) % frames || frames,
@@ -1560,9 +1536,8 @@
                   // from 1 to the total number of rows defined with [`rows`](#rows-Option). This handler
                   // only converts `row` value to `tier` and sets it.
                   //
-                  rowChange: function(e, set_row, row){
-                    if (set_row !== undefined) return set(_row_, set_row);
-                    var
+                  rowChange: function(e, nil, row){
+                    if (nil === undefined) var
                       tier= set(_tier_, 1 / (opt.rows - 1) * (row - 1))
                   },
 
@@ -1579,8 +1554,8 @@
                   // - for sequences, it switches the `<img>`'s `src` to the right frame
                   // - and for sprites it recalculates sprite's 'background position shift and applies it.
                   //
-                  frameChange: function(e, set_frame, frame){
-                    if (set_frame !== undefined) return deprecated(set(_frame_, set_frame));
+                  frameChange: function(e, nil, frame){
+                    if (nil !== undefined) return;
                     this.className= this.className.replace(reel.re.frame_klass, frame_klass + frame);
                     var
                       frames= get(_frames_),
@@ -1640,7 +1615,7 @@
                   // This extra binding takes care of watching frame position while animating the `"reach"` event.
                   //
                   'frameChange.reach': function(e, nil, frame){
-                    if (!get(_destination_)) return;
+                    if (!get(_destination_) || nil !== undefined) return;
                     var
                       travelled= reel.math.distance(get(_departure_), frame, get(_frames_)),
                       onorover= abs(travelled) >= abs(get(_distance_))
@@ -1671,8 +1646,8 @@
                   // - and its width reflect one frame's share on the whole (more frames mean narrower
                   //   indicator).
                   //
-                  'fractionChange.indicator': function(e, deprecated_set, fraction){
-                    if (deprecated_set === undefined && opt.indicator) var
+                  'fractionChange.indicator': function(e, nil, fraction){
+                    if (opt.indicator && nil === undefined) var
                       size= opt.indicator,
                       orbital= opt.orbital,
                       travel= orbital && get(_vertical_) ? get(_height_) : get(_width_),
@@ -1693,8 +1668,8 @@
                   // - and its height reflect one row's share on the whole (more rows mean narrower
                   //   indicator).
                   //
-                  'tierChange.indicator': function(e, deprecated_set, tier){
-                    if (deprecated_set === undefined && opt.rows > 1 && opt.indicator) var
+                  'tierChange.indicator': function(e, nil, tier){
+                    if (opt.rows > 1 && opt.indicator && nil === undefined) var
                       travel= get(_height_),
                       size= opt.indicator,
                       weight= ceil(travel / opt.rows),
@@ -1744,8 +1719,8 @@
                       $(hash(ida)).hide();
                     });
                   },
-                  'frameChange.annotations': function(e, deprecation, frame){
-                    if (!get(_preloaded_) || deprecation !== undefined) return;
+                  'frameChange.annotations': function(e, nil, frame){
+                    if (!get(_preloaded_) || nil !== undefined) return;
                     var
                       width= get(_width_),
                       stitched= get(_stitched_),
@@ -2167,10 +2142,7 @@
             //
             if (typeof name == 'string'){
               if (args.length == 1){
-                var
-                  value= data[name]
-                t.trigger('recall', [name, value]);
-                return value;
+                return data[name]
               }
 
               // ### Write Access ###
@@ -2231,7 +2203,7 @@
                   if (data[name] === undefined) data[name]= value
                   else if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
                 }
-                return t.trigger('store', [name, value]);
+                return value;
               }
             }
           }
@@ -2753,7 +2725,6 @@
   function soft_array(string){ return reel.re.array.exec(string) ? string.split(reel.re.array) : string }
   function detached($node){ return !$node.parents(_html_).length }
   function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
-  function deprecated(input){ try{ console.warn('Deprecation - Please consult https://github.com/pisi/Reel/wiki/Deprecations') }catch(e){} return input }
   function error(message){ try{ console.error(message) }catch(e){} }
 })(jQuery, window, document);
 

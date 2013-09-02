@@ -118,7 +118,7 @@
 
     // As the indicator indicates the beginning of the frame and not its end we need to simulate
     // the "end" by providing a fraction as near to 1 as possible, but not quite
-    $reel.trigger('fractionChange', [0.9999]);
+    $reel.reel('fraction', 0.9999);
 
     equiv( $indicator.css('left'), Math.round(width - weight) + 'px' );
   });

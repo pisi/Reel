@@ -40,14 +40,14 @@
 
     expect(iesaurus ? 4 : 2);
 
-    $pano.trigger('frameChange', 1);
+    $pano.reel('frame', 1);
     if (iesaurus){
       equiv($pano.css('backgroundPositionX'), '0px', 'Frame 1 (min, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Frame 1 (min, Y)');
     }else{
       equiv($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
     }
-    $pano.trigger('frameChange', 36);
+    $pano.reel('frame', 36);
     if (iesaurus){
       equiv($pano.css('backgroundPositionX'), -travel+'px', 'Frame 36 (max, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Frame 36 (max, Y)');
@@ -68,14 +68,14 @@
 
     expect(iesaurus ? 4 : 2);
 
-    $pano.trigger('frameChange', 1);
+    $pano.reel('frame', 1);
     if (iesaurus){
       equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 1 (min, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 1 (min, Y)');
     }else{
       equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
     }
-    $pano.trigger('frameChange', 36);
+    $pano.reel('frame', 36);
     if (iesaurus){
       equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 36 (max, X)');
       equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');

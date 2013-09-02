@@ -28,7 +28,7 @@
 
   module('Computation', reel_test_module_routine);
 
-  asyncTest( '(Deprecated) `fractionChange` accepts and normalizes any real fraction passed', function(){
+  asyncTest( '`fractionChange` no longer accepts fraction passed (deprecated & removed)', function(){
     expect(10);
     var
       selector= '#image',
@@ -46,15 +46,18 @@
         '-1.2': 0.8
       }
     $(document).bind('loaded.test', function(){
+      var
+        fraction= $reel.reel('fraction')
+
       $.each(entries, function(ix,it){
         $reel.trigger('fractionChange', Number(ix));
-        equal( $reel.data('fraction').toFixed(4), it, 'Passed '+ix);
+        equal( $reel.data('fraction').toFixed(4), fraction, 'Despite passed '+ix+' Reel holds original fraction');
       });
       start();
     });
   });
 
-  asyncTest( '(Deprecated) `rowChange` accepts and normalizes any real row fraction passed', function(){
+  asyncTest( '`rowChange` no longer accepts row fraction passed (deprecated & removed)', function(){
     expect(7);
     var
       selector= '#image',
@@ -69,15 +72,18 @@
         '-1.23456': 1
       }
     $(document).bind('loaded.test', function(){
+      var
+        row= $reel.reel('row')
+
       $.each(entries, function(ix,it){
         $reel.trigger('rowChange', Number(ix));
-        equal( $reel.data('row').toFixed(4), it, 'Fraction '+ix);
+        equal( $reel.data('row').toFixed(4), row, 'Despite passed '+ix+' Reel holds original row');
       });
       start();
     });
   });
 
-  asyncTest( '(Deprecated) `frameChange` accepts and normalizes any frame passed across all rows or orbits', function(){
+  asyncTest( '`frameChange` no longer accepts frame passed (deprecated & removed)', function(){
     expect(19);
     var
       selector= '#image',
@@ -104,9 +110,12 @@
         '-90': 30
       }
     $(document).bind('loaded.test', function(){
+      var
+        frame= $reel.reel('frame')
+
       $.each(entries, function(ix,it){
         $reel.trigger('frameChange', Number(ix));
-        equal( $reel.data('frame'), it, 'Frame '+ix);
+        equal( $reel.data('frame'), frame, 'Despite passed '+ix+' Reel holds original frame');
       });
       start();
     });

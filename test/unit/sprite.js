@@ -67,7 +67,7 @@
     equal( $reel.reel('frame'), 2, 'Initial frame');
 
     $.each(entries, function(ix, it){
-      $reel.trigger('rowChange', Number(ix));
+      $reel.reel('row', Number(ix));
       equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
       equal( $reel.data('tier').toFixed(4), it[0], 'Row '+ix+': Tier');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
@@ -112,7 +112,7 @@
     expect(iesaurus ? 15 : 12);
 
     $.each(entries, function(ix,it){
-      $reel.trigger('rowChange', Number(ix));
+      $reel.reel('row', Number(ix));
       equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
       equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
@@ -197,7 +197,7 @@
     expect(iesaurus ? 15 : 12);
 
     $.each(entries, function(ix,it){
-      $reel.trigger('rowChange', Number(ix));
+      $reel.reel('row', Number(ix));
       equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
       equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
@@ -240,7 +240,7 @@
     expect(iesaurus ? 15 : 12);
 
     $.each(entries, function(ix,it){
-      $reel.trigger('rowChange', Number(ix));
+      $reel.reel('row', Number(ix));
       equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
       equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
@@ -293,7 +293,7 @@
       }
 
     $.each(entries, function(ix,it){
-      $reel.trigger('rowChange', Number(ix));
+      $reel.reel('row', Number(ix));
       equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
       equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
       equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');

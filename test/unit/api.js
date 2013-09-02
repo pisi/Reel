@@ -25,9 +25,9 @@
       count= 0
 
     $.each($.reel.def, function(){ count++ });
-    expect(count + 7);
+    expect(count + 9);
 
-    equal( count, 54, 'Total number of options');
+    equal( count, 52, 'Total number of options');
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
@@ -72,8 +72,8 @@
     equal( $.reel.def.row,                        1, 'initial row' );
     equal( $.reel.def.rows,                       0, 'number of rows for a multi-row setup (zero from one-row setup)' );
     equal( $.reel.def.speed,                      0, 'animated rotation speed in revolutions per second (Hz)' );
-    equal( $.reel.def.step,               undefined, '[deprecated] use `frame` instead' );
-    equal( $.reel.def.steps,              undefined, '[deprecated] use `frames` instead' );
+    ok( $.reel.def.step === undefined,               '[removed] use `frame` instead' );
+    ok( $.reel.def.steps === undefined,              '[removed] use `frames` instead' );
     equal( $.reel.def.tempo,                     36, 'shared ticker tempo in ticks per second' );
     equal( $.reel.def.timeout,                    2, 'idle timeout in seconds' );
     equal( $.reel.def.throwable,               true, 'drag & throw interaction (allowed by default)' );

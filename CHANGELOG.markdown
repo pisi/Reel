@@ -29,6 +29,8 @@ Version 1.3
 * New `$.reel.substitutes` object for custom substitution methods.
 * New `responsive` option adds capability to scale in responsive page layouts (GH-222).
 * New `"reach"` event for playing to certain frame.
+* Deprecated options `step` and `steps`, `store` and `recall` events and usage of change reaction
+  events to perform data change were all removed.
 
 
 Version 1.2.1

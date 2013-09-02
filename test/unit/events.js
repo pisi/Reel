@@ -5,49 +5,35 @@
 
   module('Events', reel_test_module_routine);
 
-  asyncTest( '(Deprecated) Internal data setting triggers "store" event and passes name and value to the handler', function(){
-    expect(3);
+  asyncTest( 'Internal data setting no longer triggers "store" event and passes name and value to the handler (deprecated & removed)', function(){
+    expect(0);
     var
-      $reel= $('#image').reel({ frame: 1, speed: 1 }),
-      compare= false
+      $reel= $('#image').reel({ frame: 1, speed: 1 })
 
     $reel
       .bind('loaded.test', function(){
         setTimeout(function(){
-          compare= true;
+          start();
         }, 500);
       })
       .bind('store.test', function(e, name, value){
-        if (compare && name == 'frame'){
-          ok(name, '`name` is passed as first param');
-          ok(value, '`value` is passed as second param');
-          ok(value != 1, 'Frame passed in "store" binding differs from original frame 1');
-          compare= false;
-          start();
-        }
+        ok( false, '"store" event should not have been triggered');
       })
   });
 
-  asyncTest( '(Deprecated) Internal data getting triggers "recall" event and passes name of the value in question', function(){
-    expect(3);
+  asyncTest( 'Internal data getting no longer triggers "recall" event and passes name of the value in question (deprecated & removed)', function(){
+    expect(0);
     var
-      $reel= $('#image').reel(),
-      compare= false
+      $reel= $('#image').reel()
 
     $reel
       .bind('loaded.test', function(){
         setTimeout(function(){
-          compare= true;
+          start();
         }, 500);
       })
       .bind('recall.test', function(e, name, value){
-        if (compare){
-          ok(true, '"recall" event is being triggered');
-          ok(name, '`name` is passed as first param');
-          ok(typeof value != 'undefined', '`value` is passed as second param');
-          compare= false;
-          start();
-        }
+        ok( false, '"recall" event should not have been triggered');
       })
   });
 
