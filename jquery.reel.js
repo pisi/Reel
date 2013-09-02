@@ -177,12 +177,12 @@
         draggable:           true,
 
         // #### `scrollable` Option ####
-        // [NEW] `Boolean`, since 1.2
+        // `Boolean`, since 1.2
         //
         scrollable:          true,
 
         // #### `steppable` Option ####
-        // [NEW] `Boolean`, since 1.2
+        // `Boolean`, since 1.2
         //
         steppable:           true,
 
@@ -490,7 +490,7 @@
         // ---
 
         // #### `preload` Option ####
-        // [NEW] `String`, since 1.2
+        // `String`, since 1.2
         //
         preload:       'fidelity',
 
@@ -599,7 +599,7 @@
         brake:               0.23,
 
         // #### `velocity` Option ####
-        // [NEW] `Number`, since 1.2
+        // `Number`, since 1.2
         //
         velocity:               0,
 
@@ -649,7 +649,7 @@
         // ---
 
         // #### `cursor` Option ####
-        // [NEW] `String`, since 1.2
+        // `String`, since 1.2
         //
         cursor:         undefined,
 
@@ -687,7 +687,7 @@
         area:           undefined,
 
         // #### `attr` Option ####
-        // [NEW] `Object`, since 1.2
+        // `Object`, since 1.2
         //
         attr:                  {},
 
@@ -702,7 +702,7 @@
         // ---
 
         // #### `annotations` Option ####
-        // [NEW] `Object`, since 1.2
+        // `Object`, since 1.2
         //
         annotations:    undefined,
 
@@ -1701,9 +1701,9 @@
                   // more CPU resources than the entire Reel scene. Use them for development only.
                   //
 
-                  // -----------------
-                  // [NEW] Annotations
-                  // -----------------
+                  // -----------
+                  // Annotations
+                  // -----------
                   //
                   // If you want to annotate features of your scene to better describe the subject,
                   // there's annotations for you. Annotations feature allows you to place virtually any
@@ -1781,9 +1781,9 @@
                     href && (panned= 10);
                   },
 
-                  // ---------------------------
-                  // [NEW] Click Stepping Events
-                  // ---------------------------
+                  // ---------------------
+                  // Click Stepping Events
+                  // ---------------------
                   //
                   // For devices without drag support or for developers, who want to use some sort
                   // of left & right buttons on their site to control your instance from outside, Reel
