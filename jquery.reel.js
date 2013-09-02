@@ -196,6 +196,13 @@
         //
         wheelable:           true,
 
+
+        // ### [NEW] Gyroscope Support ######
+        //
+        // When enabled allows gyro-enabled devices (iPad2 for example) to control rotational
+        // position using the device's attitude in space. In this more, Reel directly maps the
+        // 360° range of your gyro's primary (alpha) axis directly to the value of `fraction`.
+        //
         // #### `orientable` Option ####
         // [NEW] `Boolean`, since 1.3
         //
@@ -321,7 +328,7 @@
         rows:                   0,
 
 
-        // ### Multi-Row Locks ######
+        // ### [NEW] Multi-Row Locks ######
         //
         // Optionally you can apply a lock on either of the two axes with `rowlock` and/or `framelock`.
         // That will disable direct mouse interaction and will leave using of `.reel()` the only way
@@ -330,12 +337,12 @@
         // ---
 
         // #### `rowlock` Option ####
-        // `Boolean`, since 1.3
+        // [NEW] `Boolean`, since 1.3
         //
         rowlock:            false,
 
         // #### `framelock` Option ####
-        // `Boolean`, since 1.3
+        // [NEW] `Boolean`, since 1.3
         //
         framelock:          false,
 
@@ -494,7 +501,7 @@
         //
         preload:       'fidelity',
 
-        // ### Shy Mode ######
+        // ### [NEW] Shy Initialization ######
         //
         // Sometimes, on-demand activation is desirable in order to conserve device resources or bandwidth
         // especially with multiple instances on a single page. If so, enable _shy mode_, in which Reel will
@@ -722,7 +729,7 @@
         // ---
 
         // #### `responsive` Option ####
-        // `Boolean`, since 1.3
+        // [NEW] `Boolean`, since 1.3
         //
         responsive:         false,
 
@@ -780,9 +787,9 @@
 
       },
 
-      // -----------
-      // Quick Start
-      // -----------
+      // -----------------
+      // [NEW] Quick Start
+      // -----------------
       //
       // For basic Reel initialization, you don't even need to write any Javascript!
       // All it takes is to add __class name__ `"reel"` to your `<img>` HTML tag,
@@ -825,7 +832,7 @@
       // ---
 
       // ### `$.reel.scan()` Method ######
-      // returns `jQuery`, since 1.2.2
+      // [NEW] returns `jQuery`, since 1.3
       //
       scan: function(){
         return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
@@ -1267,7 +1274,7 @@
                   },
 
                   // ### `reach` Event ######
-                  // `Event`, since 1.3
+                  // [NEW] `Event`, since 1.3
                   //
                   // Use this event to instruct Reel to play and reach a given frame. `"reach"` event requires
                   // `target` parameter, which is the frame to which Reel should animate to and stop.
@@ -1643,8 +1650,7 @@
                     t.trigger('stop');
                   },
 
-                  // ### `imageChange` Event ######
-                  // `Event`, since 1.2.2
+                  // ~~~
                   //
                   // When `image` or `images` is changed on the fly, this handler resets the loading cache and triggers
                   // new preload sequence. Images are actually switched only after the new image is fully loaded.
@@ -1817,14 +1823,14 @@
                   },
 
                   // ### `stepUp` Event ######
-                  // `Event`, since 1.3
+                  // [NEW] `Event`, since 1.3
                   //
                   stepUp: function(e){
                     set(_row_, get(_row_) - 1);
                   },
 
                   // ### `stepDown` Event ######
-                  // `Event`, since 1.3
+                  // [NEW] `Event`, since 1.3
                   //
                   stepDown: function(e){
                     set(_row_, get(_row_) + 1);
@@ -1841,7 +1847,7 @@
                   // ---
                   //
                   // ### `resize` Event ######
-                  // `Event`, since 1.3
+                  // [NEW] `Event`, since 1.3
                   //
                   resize: function(e, force){
                     if (get(_loading_) && !force) return;
@@ -2453,7 +2459,7 @@
       // ---
 
       // ### `$.reel.substitute()` ######
-      // `Function`, since 1.3
+      // [NEW] `Function`, since 1.3
       //
       substitute: function(uri, get){
         return uri.replace(reel.re.substitution, function(match, mark, key){
@@ -2463,7 +2469,7 @@
         });
       },
       // ### `$.reel.substitutes` ######
-      // `Object` of `Function`s, since 1.3
+      // [NEW] `Object` of `Function`s, since 1.3
       //
       substitutes: {
         T: function(get){ return +new Date() }
@@ -2575,7 +2581,7 @@
       // ---
 
       // ### `$.reel.resize_gauge` ######
-      // `Number`, since 1.3
+      // [NEW] `Number`, since 1.3
       //
       resize_gauge: 300,
       
