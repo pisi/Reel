@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3-devel
- * Updated: 2013-08-31
+ * Updated: 2013-09-02
  *
  * Requires jQuery 1.5 or higher
  */
@@ -1048,7 +1048,7 @@
                     var
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
-                    if (get(_shy_)) t.unbind(_click_, trigger_setup)
+                    if (get(_shy_)) t.unbind(_click_, shy_setup)
                     else get(_style_).remove() && get(_area_).unbind(ns);
                     get(_cache_).empty();
                     clearTimeout(delay);
@@ -1080,7 +1080,7 @@
                       $area= set(_area_, $(opt.area || $overlay )),
                       multirow= opt.rows > 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
-                    t.unbind(_click_, trigger_setup);
+                    t.unbind(_click_, shy_setup);
                     if (touchy){
                       $area
                         .bind(_touchstart_, press)
@@ -1196,7 +1196,7 @@
                   // It lefts the target image untouched waiting to be clicked to actually setup.
                   //
                   prepare: function(e){
-                    t.css('display', _block_).one(_click_, trigger_setup);
+                    t.css('display', _block_).one(_click_, shy_setup);
                   },
 
                   // ----------------
@@ -1979,7 +1979,7 @@
 
               // - Shy initialization helper
               //
-              trigger_setup= function(){ t.trigger('setup') },
+              shy_setup= function(){ t.trigger('setup') },
 
               // - User idle control
               //
