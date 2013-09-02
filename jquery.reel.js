@@ -2559,11 +2559,11 @@
       // [NEW] `Function`, since 1.3
       //
       setTimeout: function(callback, delay){
-        if (!reel.raf) return setTimeout(callback, delay);
+        if (!reel.raf) return setTimeout.call(window, callback, delay);
         var
           start= +new Date(),
           loop= function(){
-            if (delay <= +new Date() - start) callback()
+            if (+new Date() >= start + delay) callback.call(window)
             else reel.raf.call(window, loop);
           }
         loop();
