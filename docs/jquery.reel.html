@@ -182,7 +182,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3-devel
- * Updated: 2013-09-03
+ * Updated: 2013-09-12
  *
  * Requires jQuery 1.5 or higher
  */</span>
@@ -5153,7 +5153,8 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
           orbital= opt.orbital,
           url= sequence[<span class="number">1</span>],
           placeholder= sequence[<span class="number">2</span>],
-          start= +sequence[<span class="number">4</span>] || <span class="number">1</span>,
+          start= sequence[<span class="number">4</span>],
+          start= start !== <span class="literal">undefined</span> ? +start : <span class="number">1</span>,
           rows= orbital ? <span class="number">2</span> : opt.rows || <span class="number">1</span>,
           frames= orbital ? opt.footage : opt.stitched ? <span class="number">1</span> : opt.frames,
           end= +(sequence[<span class="number">5</span>] || rows * frames),

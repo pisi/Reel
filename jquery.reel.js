@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3-devel
- * Updated: 2013-09-03
+ * Updated: 2013-09-12
  *
  * Requires jQuery 1.5 or higher
  */
@@ -2513,7 +2513,8 @@
           orbital= opt.orbital,
           url= sequence[1],
           placeholder= sequence[2],
-          start= +sequence[4] || 1,
+          start= sequence[4],
+          start= start !== undefined ? +start : 1,
           rows= orbital ? 2 : opt.rows || 1,
           frames= orbital ? opt.footage : opt.stitched ? 1 : opt.frames,
           end= +(sequence[5] || rows * frames),
