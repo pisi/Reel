@@ -478,6 +478,16 @@
       '1',                            // [4] start
       '36'                            // [5] end
     ],
+    '##.jpg|00..35': [
+      '##.jpg|00..35',                // [0]
+                                      // Counter URL:
+      '##.jpg',                       // [1] entire segment
+      '##',                           // [2] counter
+                                      // Optional range:
+      '|00..35',                      // [3] entire range segment
+      '00',                           // [4] start
+      '35'                            // [5] end
+    ],
     '##_small.jpg|20..50|3': [
       '##_small.jpg|20..50|3',  // [0]
                                 // Counter URL:
@@ -527,6 +537,18 @@
       'prefix002.jpg',
       'prefix003.jpg',
       'prefix004.jpg'
+    ],
+    '##.jpg|0..3': [
+      '00.jpg',
+      '01.jpg',
+      '02.jpg',
+      '03.jpg'
+    ],
+    '##.jpg|00..03': [
+      '00.jpg',
+      '01.jpg',
+      '02.jpg',
+      '03.jpg'
     ],
     'prefix#.jpg|1..16|4': [ // Single `#` doesn't left pad the counter number with zero `0`
       'prefix1.jpg',
