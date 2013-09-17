@@ -955,4 +955,63 @@
     });
   });
 
+
+  asyncTest( 'jQuery plugins descriptior JSON integrity', function(){
+    expect( 26 );
+    var
+      filename= 'reel.jquery.json'
+
+    // First fetch authors for counting
+    $.get('../AUTHORS.txt')
+    .done(function( authors ){
+      var
+        authors= authors.match(/.*\<.+\...+\>\n/g)
+
+      $.get('../'+filename)
+      .done(function( plugin ){
+        ok( true, '`'+filename+' file exists' );
+
+        equal( plugin.version, $.reel.version, 'Version in sync');
+        equal( plugin.name, 'reel', 'Plugin name');
+        equal( plugin.homepage, 'http://reel360.org', 'Plugin homepage');
+        ok( plugin.keywords, 'Keywords present');
+        ok( plugin.keywords.length > 3, 'More than 3 keywords');
+
+        ok( plugin.author, 'Author present');
+        equal( plugin.author.name, 'Petr Vostřel', 'Author name');
+        ok( plugin.author.email, 'Author email present');
+        ok( plugin.author.url, 'Author url present');
+
+        ok( plugin.contributors, 'Contributors present');
+        ok( plugin.contributors.length == authors.length - 1, 'Contributors match AUTHORS.txt (by count)');
+
+        ok( plugin.dependencies, 'Dependencies present');
+        equal( plugin.dependencies.jquery, '>=1.5', 'jQuery dependency');
+        equal( plugin.dependencies.mousewheel, '>=3.0.5', 'jQuery Mouswheel dependency (optional)');
+
+        ok( plugin.licenses, 'Licenses present');
+        ok( plugin.licenses.length > 0, 'Non-empty licenses list');
+        equal( plugin.licenses.length, 1, 'Just one license');
+        equal( plugin.licenses[0].type, 'MIT', 'License');
+
+        ok( plugin.files, 'Files present');
+        equal( plugin.files.length, 1, 'Number of files');
+        equal( plugin.files[0], 'jquery.reel.js', 'Main Javascript file (the only one)');
+
+        ok( plugin.repository, 'Repository present');
+        equal( plugin.repository.type, 'git', 'Repository type');
+        equal( plugin.repository.url, 'git://github.com/pisi/Reel.git', 'Repository URL');
+        equal( plugin.title, 'jQuery Reel', 'Plugin title');
+
+        start();
+      })
+      .fail(function(){
+        ok( false, '`'+filename+'` file is missing' );
+        start();
+      });
+
+    });
+
+  });
+
 })(jQuery);
