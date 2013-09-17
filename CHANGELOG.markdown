@@ -4,33 +4,46 @@ Changelog
 Version 1.3
 -----------
 
-* New `duration` option for the animation (GH-90).
-* Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-179).
-* Annotation links received a click aim allowance to improve their clickability (GH-186).
-* Values of `image` and `images` data can now be changed on the fly (GH-190).
-* Click on annotations threshold improved (GH-186).
-* Fixed bug in vertical `spacing` calculation on iOS (GH-188, GH-189).
+### Infrastructure
 * New alternative Javascript-less initialization with HTML data attributes (GH-193).
 * Revised examples with syntax-highlighted code and improved index.
 * New AMD & CommonJS compatibility.
-* New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
-* New CPU power conservation feature disables the instance when off screen.
 * Annotations now compatible with many lightbox plugins (GH-219).
-* Opted out of the dual license scheme and in for the MIT License only to carry on
-  sharing of licensing policies with the jQuery framework itself.
 * Preloading cache moved from DOM to memory for better performance.
 * Hardware acceleration enabled in Firefox to help remedy occasional flickering therein (GH-196).
 * Error message into the console in case target image properties were deemed insufficient.
-* New `rowlock` and `framelock` options allow mouse interaction lock of axis in multirow setups (GH-191).
-* New option `orientable` enables gyroscope support on compatible devices (GH-92).
-* Data key `dimensions` replaced with `width` and `height` keys.
 * URLs containing special markup (`@W`, `@H` or `@T`) will get it substituted with actualy
   values (`width` and `height` data values or timestamp).
 * New `$.reel.substitutes` object for custom substitution methods.
-* New `responsive` option adds capability to scale in responsive page layouts (GH-222).
+
+### Data
+* Values of `image` and `images` data can now be changed on the fly (GH-190).
+* Data key `dimensions` replaced with `width` and `height` keys.
+
+### Animation
+* New `duration` option for the animation (GH-90).
+* New CPU power conservation feature disables the instance when off screen.
+
+### Events
 * New `"reach"` event for playing to certain frame.
+* New `"stepUp"` and `"stepDown"` events to complement `"stepLeft"` and `"stepRight"` (GH-202).
+* Image loading `"error"` and `"abort"` events now propagated up the DOM (GH-179).
+
+### Interaction
+* Annotation links click threshold increased to improve clickability (GH-186).
+* New `rowlock` and `framelock` options allow mouse interaction lock of axis in multirow setups (GH-191).
+* New option `orientable` enables gyroscope support on compatible devices (GH-92).
+
+### UI
+* New `responsive` option adds capability to scale in responsive page layouts (GH-222).
+* Fixed bug in vertical `spacing` calculation on iOS (GH-188, GH-189).
+
+### Otherwise
 * Deprecated options `step` and `steps`, `store` and `recall` events and usage of change reaction
   events to perform data change were all removed.
+
+* As of this release opted out of the dual license scheme and in for the MIT License only to carry on
+  sharing of licensing policies with the jQuery framework itself.
 
 
 Version 1.2.1
