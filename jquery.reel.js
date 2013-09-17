@@ -23,7 +23,7 @@
  *
  * jQuery Reel
  * http://reel360.org
- * Version: 1.3-devel
+ * Version: 1.3rc
  * Updated: 2013-09-18
  *
  * Requires jQuery 1.5 or higher
@@ -88,7 +88,7 @@
       //
       // `String` (major.minor.patch), since 1.1
       //
-      version: '1.3-devel',
+      version: '1.3rc',
 
       // Options
       // -------

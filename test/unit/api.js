@@ -89,7 +89,7 @@
     equal( $.reel.def.steppable,               true, 'allows to step the view (horizontally) by clicking on image' );
     equal( $.reel.def.velocity,                   0, 'initial velocity of user interaction; washes off quickly with `brake`' );
 
-    // Version 1.3 options (in development)
+    // Version 1.3 options
     equal( $.reel.def.duration,           undefined, 'duration of animation (in seconds)' );
     equal( $.reel.def.framelock,              false, 'enables mouse interaction lock on frame' );
     equal( $.reel.def.rowlock,                false, 'enables mouse interaction lock on row' );
@@ -403,13 +403,15 @@
   });
 
   test( 'Current Reel code version is stored as a string in `$.reel.version`', function(){
-    expect(5);
+    expect(6);
 
     ok( $.reel.version.length >= 3,                                         'Minimal length' );
     ok( $.reel.version.match(/^.\...?\.?.?.?-?.*$/),                        'Is formatted major.minor.patch, where patch segment is optional' );
     ok( $.reel.version.split('.').length > 1,                               'Is splittable by dot `.` into `[ major, minor, patch ]`' );
     ok( $.reel.version.split('.')[0].match(/^[0-9]+$/),                     'Major is strictly a number' );
     ok( $.reel.version.split('.')[1].match(/^[0-9]+(|-?[a-z][a-z0-9]+)$/),  'Minor may contain additional lowercase letters after an optional dash (like 1.2rc or 1.2-devel)' );
+
+    equal( $.reel.version, '1.3rc', 'Current version' );
   });
 
   $.each({

@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Version 1.3
------------
+Version 1.3 RC
+--------------
 
 ### Infrastructure
 * New alternative Javascript-less initialization with HTML data attributes (GH-193).
