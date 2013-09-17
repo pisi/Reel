@@ -1,4 +1,6 @@
 Authors ordered by first contribution.
 
 Petr Vostřel <petr@vostrel.cz>
+Matt Smith <photospherix.com>
 Katrin Ackermann <katrin.ackermann@jvm.de>
+Tino Hußlack <hyperheld.com>
