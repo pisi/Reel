@@ -233,7 +233,7 @@ var QUnit = {
 				li.className = bad ? "fail" : "pass";
 				li.appendChild( b );
 				li.appendChild( ol );
-				tests.appendChild( li );
+				tests.insertBefore( li, tests.childNodes[0] );
 
 				if ( bad ) {
 					var toolbar = id("qunit-testrunner-toolbar");
@@ -540,10 +540,12 @@ function done() {
 		QUnit.moduleDone( config.currentModule, config.moduleStats.bad, config.moduleStats.all );
 	}
 
+	qunit_completed_in = +new Date - config.started;
+
 	var banner = id("qunit-banner"),
 		tests = id("qunit-tests"),
 		html = ['Tests completed in <span class="completed_in">',
-		+new Date - config.started, '</span> milliseconds. ',
+		qunit_completed_in, '</span> milliseconds. ',
 		'<span class="passed">', config.stats.all - config.stats.bad, '</span> tests of <span class="total">', config.stats.all, '</span> passed, <span class="failed">', config.stats.bad,'</span> failed.'].join('');
 
 	if ( banner ) {

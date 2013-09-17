@@ -31,15 +31,16 @@
     ],
     complete: function(){
 
+      var
+        dawn= +new Date(),
+        bads= 0,
+        counts= 0
+
       location.params.respawn && setTimeout(function(){
         location.href= location.href;
       }, location.params.respawn * 1000);
       QUnit.load();
       QUnit.stop();
-
-      var
-        bads= 0,
-        counts= 0
 
       QUnit.testDone = function(testName, bad, count) {
         bad && (bads+= bad);
@@ -80,6 +81,7 @@
           timestamp= +new Date(),
           report= {
             timestamp:  timestamp,
+            duration:   qunit_completed_in,
             host:       location.host,
             filter:     config.filters,
             count: {
