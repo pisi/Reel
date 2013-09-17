@@ -175,6 +175,43 @@
 
   });
 
+  $.each({
+    'positive':                    { opt: { frame: 10              }, speed:  0.2, expect: { next_frames: [ 11, 12, 13 ], backwards: false } },
+    'negative':                    { opt: { frame: 10              }, speed: -0.2, expect: { next_frames: [  9,  8,  7 ], backwards:  true } },
+    'positive w/ intial negative': { opt: { frame:  5, speed: -0.8 }, speed:  0.4, expect: { next_frames: [  6,  7,  8 ], backwards: false } },
+    'negative w/ intial negative': { opt: { frame:  5, speed: -0.8 }, speed: -0.4, expect: { next_frames: [  4,  3,  2 ], backwards:  true } },
+    'positive w/ intial positive': { opt: { frame:  5, speed:  0.8 }, speed:  0.4, expect: { next_frames: [  6,  7,  8 ], backwards: false } },
+    'negative w/ intial positive': { opt: { frame:  5, speed:  0.8 }, speed: -0.4, expect: { next_frames: [  4,  3,  2 ], backwards:  true } }
+  },
+  function( name, probe ){
+    asyncTest( 'Test actual real playback direction when given a '+name+' speed', function(){
+      expect( 3 + probe.expect.next_frames.length );
+      var
+        step= 0,
+        beginning= probe.opt.frame,
+        $reel= $('#image').reel(probe.opt)
+
+      $reel.one('frameChange.test', function(){
+        equal( $reel.reel('frame'), beginning, 'Intial start frame' );
+
+        $reel.one('frameChange.test', function(){
+          equal( $reel.reel('backwards'), probe.expect.backwards, '`backwards` flag' );
+          equal( $reel.reel('speed'), probe.speed, '`speed` value' );
+
+        });
+        $reel.bind('frameChange.test', function(){
+          equal( $reel.reel('frame'), probe.expect.next_frames[ step ], 'Next frame in the given direction' );
+          if ( ++step >= probe.expect.next_frames.length ){
+            start();
+          }
+        });
+
+        $reel.trigger('play', probe.speed );
+      });
+
+    });
+  })
+
   asyncTest( 'GH-142 Velocity kick after all images are loaded', function(){
     /*
       `velocity` value shouldn't be set on setup, but rather after all images are loaded
