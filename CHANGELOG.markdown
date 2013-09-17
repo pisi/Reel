@@ -33,13 +33,14 @@ Version 1.3
 * Annotation links click threshold increased to improve clickability (GH-186).
 * New `rowlock` and `framelock` options allow mouse interaction lock of axis in multirow setups (GH-191).
 * New option `orientable` enables gyroscope support on compatible devices (GH-92).
+* New `shy` option initializes the instance only after a click (GH-224).
 
 ### UI
 * New `responsive` option adds capability to scale in responsive page layouts (GH-222).
 * Fixed bug in vertical `spacing` calculation on iOS (GH-188, GH-189).
 
 ### Otherwise
-* Deprecated options `step` and `steps`, `store` and `recall` events and usage of change reaction
+* Deprecated options `step` and `steps`, `store` and `recall` events and old usage of change reaction
   events to perform data change were all removed.
 
 * As of this release opted out of the dual license scheme and in for the MIT License only to carry on
