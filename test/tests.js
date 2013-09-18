@@ -9,6 +9,7 @@
   yepnope( {
     load: [
       'http://code.jquery.com/jquery-'+(location.params.jq || default_jquery)+'.min.js',
+      'lib/vendor/jquery.xdomainrequest.js',
       '../jquery.reel.js',
       'lib/vendor/jquery.mousewheel-min.js',
 
