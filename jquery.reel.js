@@ -816,7 +816,7 @@
       // [NEW] returns `jQuery`, since 1.3
       //
       scan: function(){
-        return $(dot(klass)+':not('+dot(overlay_klass)+' >)').each(function(ix, image){
+        return $(dot(klass)+':not('+dot(overlay_klass)+' > '+dot(klass)+')').each(function(ix, image){
           var
             $image= $(image),
             options= $image.data(),
