@@ -138,7 +138,7 @@
     'valid opening': { opening: 1.23 }
   },
   function(ix, setup){
-    asyncTest( 'Removal of redundant `rowChange` and untimately the `frameChange` event from `loaded.fu` handler left the functionality untouched when ' + ix + ' is set', function()
+    asyncTest( 'Removal of redundant `rowChange` and ultimately the `frameChange` event from `loaded.fu` handler left the functionality untouched when ' + ix + ' is set', function()
     {
       expect(1);
       var
