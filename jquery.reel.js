@@ -2259,6 +2259,8 @@
         frame_klass:   /frame-\d+/,
         /* Mask for substitutions in URL */
         substitution:  /(@([A-Z]))/g,
+        /* Used for cross-browser detection of Regexp no match situation */
+        no_match:      /^(undefined|)$/,
         /* [Sequence](#Sequence) string format */
         sequence:      /(^[^#|]*([#]+)[^#|]*)($|[|]([0-9]+)\.\.([0-9]+))($|[|]([0-9]+)$)/
       },
@@ -2514,7 +2516,7 @@
           url= sequence[1],
           placeholder= sequence[2],
           start= sequence[4],
-          start= start !== undefined ? +start : 1,
+          start= reel.re.no_match.test(start+__) ? 1 : +start,
           rows= orbital ? 2 : opt.rows || 1,
           frames= orbital ? opt.footage : opt.stitched ? 1 : opt.frames,
           end= +(sequence[5] || rows * frames),
