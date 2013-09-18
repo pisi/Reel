@@ -233,7 +233,7 @@ var QUnit = {
 				li.className = bad ? "fail" : "pass";
 				li.appendChild( b );
 				li.appendChild( ol );
-				tests.insertBefore( li, tests.childNodes[0] );
+				tests.appendChild( li );
 
 				if ( bad ) {
 					var toolbar = id("qunit-testrunner-toolbar");
