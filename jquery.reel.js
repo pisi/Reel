@@ -1043,11 +1043,11 @@
                     clearTimeout(delay);
                     clearTimeout(gauge_delay);
                     $(window).unbind(_resize_, slow_gauge);
-                    no_bias();
+                    $(window).unbind(ns);
                     pool.unbind(on.pool);
                     pools.unbind(pns);
-                    $(window).unbind(ns);
                     t.siblings().unbind(ns).remove();
+                    no_bias();
                     remove_instance(t.unbind(ns).removeData().unwrap().attr(backup.attr).data(backup.data));
                   },
 
