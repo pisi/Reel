@@ -2703,7 +2703,8 @@
     //
     cleanData= $.cleanData,
     cleanDataEvent= $.cleanData= function(elements){
-      cleanData($(elements).each(function(){ $(this).triggerHandler('clean'); }));
+      $(elements).each(function(){ $(this).triggerHandler('clean'); });
+      return cleanData.apply(this, arguments);
     }
 
   // Expose plugin functions as jQuery methods, do the initial global scan for data-configured
