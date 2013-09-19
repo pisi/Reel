@@ -915,6 +915,13 @@
                   if (t.hasClass(klass) && t.parent().hasClass(overlay_klass)) return;
                   set(_options_, opt);
                   var
+                    attr= {
+                      src: t.attr(_src_),
+                      width: t.attr(_width_) || null,
+                      height: t.attr(_height_) || null,
+                      style: t.attr(_style_) || null,
+                      'class': t.attr(_class_) || null
+                    },
                     src= t.attr(opt.attr).attr('src'),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
                     data= $.extend({}, t.data()),
@@ -940,9 +947,10 @@
                     stitched_travel= set(_stitched_travel_, stitched - (loops ? 0 : width)),
                     stitched_shift= set(_stitched_shift_, 0),
                     stage_id= hash(id+opt.suffix),
-                    classes= t[0].className || __,
-                    $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+'0' }),
                     $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
+                    img_class= t.attr(_class_),
+                    classes= !img_class ? __ : img_class+___,
+                    $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+overlay_klass+___+frame_klass+'0' }),
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
@@ -979,10 +987,8 @@
                   set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
                   set(_ratio_, 1);
                   set(_backup_, {
-                    src: src,
-                    classes: classes,
-                    data: data,
-                    style: t.attr(_style_) || __
+                    attr: attr,
+                    data: data
                   });
                   opt.steppable || $overlay.unbind('up.steppable');
                   opt.indicator || $overlay.unbind('.indicator');
@@ -1037,15 +1043,12 @@
                     clearTimeout(delay);
                     clearTimeout(gauge_delay);
                     $(window).unbind(_resize_, slow_gauge);
-                    remove_instance(t.unbind(ns).removeData().siblings().unbind(ns).remove().end().attr({
-                     'class': backup.classes,
-                      src: backup.src,
-                      style: backup.style
-                    }).data(backup.data).unwrap());
                     no_bias();
                     pool.unbind(on.pool);
                     pools.unbind(pns);
                     $(window).unbind(ns);
+                    t.siblings().unbind(ns).remove();
+                    remove_instance(t.unbind(ns).removeData().unwrap().attr(backup.attr).data(backup.data));
                   },
 
                   // ### `setup` Event ######
@@ -2631,7 +2634,7 @@
     //
     _annotations_= 'annotations',
     _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
-    _center_= 'center', _click_= 'click', _clicked_= _click_+'ed', _clicked_location_= _clicked_+'_location', _clicked_on_= _clicked_+'_on', _clicked_tier_= _clicked_+'_tier',
+    _center_= 'center', _class_= 'class', _click_= 'click', _clicked_= _click_+'ed', _clicked_location_= _clicked_+'_location', _clicked_on_= _clicked_+'_on', _clicked_tier_= _clicked_+'_tier',
     _cwish_= 'cwish', _departure_= 'departure', _destination_= 'destination', _distance_= 'distance', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',

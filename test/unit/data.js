@@ -86,13 +86,15 @@
 
   test( 'Contents of attributes backup `.reel("backup")`', function(){
 
-    expect(4);
+    expect(6);
     var
       $reel= $('#image').reel()
 
     ok( is('Object', $reel.reel('backup')), '`.reel("backup")` Object');
-    ok( is('String', $reel.reel('backup').src), '`src` String');
-    ok( is('String', $reel.reel('backup').style), '`style` String');
+    ok( is('Object', $reel.reel('backup').attr), '`attr` String');
+    ok( is('String', $reel.reel('backup').attr.src), '`attr.src` String');
+    ok( is('String', $reel.reel('backup').attr.width), '`attr.width` String');
+    ok( is('String', $reel.reel('backup').attr.height), '`attr.height` String');
     ok( is('Object', $reel.reel('backup').data), '`data` String');
 
   });
