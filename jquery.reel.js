@@ -882,9 +882,9 @@
               var
                 $this= $(this),
                 attr= opt.attr,
-                src= attr.src || $this.attr('src'),
                 width= attr.width || $this.width(),
                 height= attr.height || $this.height()
+                src= attr.src || $this.attr(_src_),
               if (src && width && height) return true
               // In case element did not qualify an Javascript error is thrown out.
               else error('Missing attributes: Image needs `src` and both dimensions to be set to Reel');
@@ -922,7 +922,7 @@
                       style: t.attr(_style_) || null,
                       'class': t.attr(_class_) || null
                     },
-                    src= t.attr(opt.attr).attr('src'),
+                    src= t.attr(opt.attr).attr(_src_),
                     id= set(_id_, t.attr(_id_) || t.attr(_id_, klass+'-'+(+new Date())).attr(_id_)),
                     data= $.extend({}, t.data()),
                     images= set(_images_, opt.images || []),
@@ -2638,7 +2638,7 @@
     _cwish_= 'cwish', _departure_= 'departure', _destination_= 'destination', _distance_= 'distance', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
     _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
     _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',
-    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _shy_= 'shy', _spacing_= 'spacing', _speed_= 'speed', _stage_= 'stage',
+    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _shy_= 'shy', _spacing_= 'spacing', _speed_= 'speed', _src_= 'src', _stage_= 'stage',
     _stitched_= 'stitched', _stitched_shift_= _stitched_+'_shift', _stitched_travel_= _stitched_+'_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
     _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
 
