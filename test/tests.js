@@ -4,6 +4,7 @@
 ( function run(){
   
   var
+    test_subjects_snapshot,
     default_jquery = '1.10.2'
 
   yepnope( {
@@ -40,6 +41,9 @@
       location.params.respawn && setTimeout(function(){
         location.href= location.href;
       }, location.params.respawn * 1000);
+
+      test_subjects_snapshot= $('#Body').html();
+
       QUnit.load();
       QUnit.stop();
 
@@ -168,6 +172,19 @@
       $('#Body *').add(document).unbind('.test');
       $.reel.instances.unreel();
       $('#my_data_configured_image').remove();
+      $('#Body .no_id').removeAttr('id');
+
+      // Verify the integrity of test samples
+      QUnit.stop();
+      if ($('#Body').html() === test_subjects_snapshot){
+        QUnit.start();
+      }else{
+        console.error('Test subjects intergrity has been compromised:');
+        console.info( $('#Body').html() );
+        console.warn('... should have read:');
+        console.info( test_subjects_snapshot );
+        console.error('Can not continue...');
+      }
     }
   }
 
