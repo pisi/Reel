@@ -32,14 +32,15 @@
     expect(3);
     var
       $reel_with_id= $('#image').reel(),
-      $reel_without_id= $('.no_id:first').attr('id', null).reel()
+      now= new Date(),
+      $reel_without_id= $('.no_id:first').reel()
 
     // Given ID attribute
     equal( $reel_with_id.attr('id'), 'image');
 
     // The generated ID consists of "reel-" followed by a timestamp
     equal( $reel_without_id.attr('id').substr(0, 5), 'reel-');
-    equal( Math.floor(+$reel_without_id.attr('id').substr(5) / 10000), Math.floor(+new Date() / 10000));
+    equal( Math.floor(+$reel_without_id.attr('id').substr(5) / 10000), Math.floor(+now / 10000));
   });
 
   test( 'Overlay: is created with proper ID', function(){
