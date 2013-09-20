@@ -132,32 +132,6 @@
 
   });
 
-  $.each({
-    'no opening': { /* No `opening` equals `opening: 0` */ },
-    'zero opening': { opening: 0 },
-    'valid opening': { opening: 1.23 }
-  },
-  function(ix, setup){
-    asyncTest( 'Removal of redundant `rowChange` and ultimately the `frameChange` event from `loaded.fu` handler left the functionality untouched when ' + ix + ' is set', function()
-    {
-      expect(1);
-      var
-        ticked,
-        $reel= $('#image').reel(setup)
-
-      $(document).bind('loaded.test', function(){
-        $(document).bind('frameChange.test', function(){
-          ok( !ticked, '`openingDone` induced `frameChange` triggered before the first tick');
-          start();
-        })
-        $(document).bind('tick.reel.test', function(){
-          ticked= true;
-        });
-      });
-
-    });
-  });
-
   asyncTest( 'Playing the instance with speed parameter set has the power to reverse the animation direction', function(){
     expect(2);
     var
