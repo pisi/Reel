@@ -282,13 +282,14 @@
      */
     expect( 1 );
     var
-      image = undefined
+      image = undefined,
+      $reel = $('#image').reel()
 
-    $('#image').reel().bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       if (image === undefined){
-        image= $(this).data('image');
+        image= $reel.data('image');
         var
-          new_instance= $(this).reel({
+          new_instance= $reel.reel({
             image: 'resources/green-reel.jpg'
           });
 
@@ -322,7 +323,7 @@
         images: images
       })
 
-    $reel.bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       equal( $reel.data('frame'), 1);
       equal( $reel.attr('src'), images[0]);
 
@@ -344,7 +345,7 @@
       escaped = 're%20sources/object-reel.jpg',
       $reel = $('#image_with_unescaped_url').reel()
 
-    $reel.parent().bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       var
         // Isolate the actual filename used
         image = $reel.css('backgroundImage').replace(/['"]?\)$/, '')
@@ -371,7 +372,7 @@
         images: sequence
       })
 
-    $reel.parent().bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       equal( $reel.data('images')[0], raw, 'Given raw sequence frame URL (escaped or unescaped)');
       equal( $reel.attr('src'), escaped, 'Actual escaped URL used');
       start();
@@ -398,7 +399,7 @@
         speed: 0.2
       })
 
-    $reel.one('loaded.test', function(){
+    $(document).one('loaded.test', function(){
       $container.empty();
       ok( !$('#injected_image').length, '`#injected_image` no longer present in the DOM' )
       equal( $.reel.leader('tempo'), null, 'No leader tempo, ticker stopped' );
@@ -426,7 +427,7 @@
             speed: 0.2
           })
 
-        $reel.bind('loaded.test', function(){
+        $(document).bind('loaded.test', function(){
           var
             ticked= false
 
@@ -460,7 +461,7 @@
         }
       })
 
-    $reel.parent().bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       var
         image= $reel.css('backgroundImage').replace(/['"]?\)$/, ''),
         is= image.substr(image.length - sprite.length)
@@ -492,7 +493,7 @@
           steppable: def.steppable
         })
 
-      $reel.parent().bind('loaded.test', function(){
+      $(document).bind('loaded.test', function(){
         var
           $area= $reel.reel('area')
 
@@ -538,7 +539,7 @@
           frames: 2
         })
 
-      $reel.parent().bind('loaded.test', function(){
+      $(document).bind('loaded.test', function(){
         ok( matchingURL($reel.css('backgroundImage'), url), url );
         start();
       })
@@ -560,7 +561,7 @@
           frames: 2
         })
 
-      $reel.parent().bind('loaded.test', function(){
+      $(document).bind('loaded.test', function(){
         equal( $reel.attr('src'), should );
         start();
       });
@@ -577,7 +578,7 @@
           frames: 2
         })
 
-      $reel.parent().bind('loaded.test', function(){
+      $(document).bind('loaded.test', function(){
         ok( matchingURL($reel.css('backgroundImage'), url), url );
         start();
       })
@@ -605,10 +606,10 @@
         }
       })
 
-    $(document).click(function( e ){
+    $(document).bind('click.test', function( e ){
       ok( true, 'Event bubbled through the DOM all the way up to the document' );
     });
-    $reel.parent().bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       $('#link a').click(function( e ){
         ok( true, 'Registered `click` on the link' );
       });
@@ -625,6 +626,7 @@
      * http://github.com/pisi/Reel/issues/#issue/42
      */
     var
+      $reel,
       frames = 35
 
     expect( frames );
@@ -633,16 +635,16 @@
 
     function tryout( frame ){
       if ( frame > 0 ){
-        $('#image')
-          .reel({
-            frames: frames,
-            frame: frame,
-            cw: true,
-            images: 'resources/mini/###.gif'
-          })
+        $reel = $('#image').reel({
+          frames: frames,
+          frame: frame,
+          cw: true,
+          images: 'resources/mini/###.gif'
+        })
+
+        $(document)
           .one('loaded.test', function(){
-            $( this ).unreel;
-            equal( $( this ).reel('frame'), frame );
+            equal( $reel.reel('frame'), frame );
             tryout( frame - 1 );
           });
       }else{

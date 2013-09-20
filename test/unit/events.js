@@ -10,7 +10,7 @@
     var
       $reel= $('#image').reel({ frame: 1, speed: 1 })
 
-    $reel
+    $(document)
       .bind('loaded.test', function(){
         setTimeout(function(){
           start();
@@ -26,7 +26,7 @@
     var
       $reel= $('#image').reel()
 
-    $reel
+    $(document)
       .bind('loaded.test', function(){
         setTimeout(function(){
           start();
@@ -61,8 +61,8 @@
         opening: 1
       })
 
-    $reel
-      .bind('openingDone.test', function(){
+    $(document)
+      .bind('loaded.test', function(){
         ok( true, '`"openingDone"` has been triggered and set to prevent event bubbling');
         setTimeout(function(){
           ok( true, 'The cancelled `"play"` correctly didn\'t fire (waited for it half a second)');
@@ -83,8 +83,8 @@
         speed: speed
       })
 
-    $reel
-      .bind('openingDone.test', function(){
+    $(document)
+      .bind('loaded.test', function(){
         setTimeout(function(){
           $reel.trigger('play');
         }, 50);
@@ -101,17 +101,21 @@
     var
       $reel= $('#image').reel()
 
-    $reel
-      .bind('openingDone.test', function(){
+    $(document)
+      .bind('loaded.test', function(){
+
         setTimeout(function(){
           $reel.trigger('play');
         }, 50);
+
         setTimeout(function(){
           equal( $reel.data('playing'), false, 'Instance played with non-zero `speed` parameter starts to play');
           equal( $reel.data('speed'), 0, 'Stored internal speed value');
+
           start();
         }, 100);
-      });
+
+      })
   });
 
   asyncTest( '`"play"` event accepts optional `speed` parameter, which overrides the one specified in options', function(){
@@ -123,8 +127,8 @@
         speed: initial_speed // which is also the default value
       })
 
-    $reel
-      .bind('openingDone.test', function(){
+    $(document)
+      .bind('loaded.test', function(){
         setTimeout(function(){
           equal( $reel.data('playing'), false, 'Instance initiated with `speed: 0` is not playing');
           equal( $reel.data('speed'), initial_speed, 'Stored internal speed value');
@@ -241,12 +245,12 @@
 
       equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
 
-      $reel
         .one('frameChange.test', function(){
           equal( $reel.reel('frame'), probe.after, 'Target frame');
           start();
         })
         .trigger('stepRight')
+      $(document)
 
     });
   });
@@ -267,12 +271,12 @@
 
       equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
 
-      $reel
         .one('frameChange.test', function(){
           equal( $reel.reel('frame'), probe.after, 'Target frame');
           start();
         })
         .trigger('stepLeft')
+      $(document)
 
     });
   });
@@ -293,7 +297,6 @@
 
       equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
 
-      $reel
         .one('rowChange.test', function(){
           equal( $reel.reel('row'), probe.after, 'Target row');
           start();
@@ -306,6 +309,7 @@
           start();
         }, 100);
       }
+      $(document)
 
     });
   });
@@ -326,7 +330,6 @@
 
       equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
 
-      $reel
         .one('rowChange.test', function(){
           equal( $reel.reel('row'), probe.after, 'Target row');
           start();
@@ -339,6 +342,7 @@
           start();
         }, 100);
       }
+      $(document)
 
     });
   });

@@ -165,7 +165,7 @@
         speed: 0.5
       })
 
-    $(document).bind('openingDone.test', function(){
+    $(document).bind('loaded.test', function(){
       equal( $reel.reel('backwards'), false, 'Animates forward' );
       $reel.trigger('play', -0.5);
 
@@ -250,7 +250,7 @@
         duration: 3
       })
 
-    $reel.bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       $reel.trigger('play');
       ticks= $reel.reel('ticks');
       ok( ticks > 0, 'Positive `ticks`');
@@ -273,7 +273,7 @@
         speed: 1
       })
 
-    $reel.bind('loaded.test', function(){
+    $(document).bind('loaded.test', function(){
       $reel.trigger('play');
       equal( $reel.reel('ticks'), -1, 'Default value signalizing no duration');
       start();
@@ -320,7 +320,7 @@
         duration: 0.5
       })
 
-    $reel.bind('play.test', function(){
+    $(document).bind('play.test', function(){
       setTimeout(function(){
         equal( $reel.reel('playing'), false, 'Not playing after');
         equal( $reel.reel('stopped'), true, 'Is stopped');

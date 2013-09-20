@@ -154,20 +154,23 @@
     equiv( $indicator.css('opacity'), '0.5', 'Custom opacity' );
   });
 
-  test( 'Indicator:  is disabled (not rendered) when `indicator` option evaluates false', function(){
-    expect(3);
-    try_different_values([false, undefined, 0]);
+  $.each([
+    false,
+    undefined,
+    0
+  ],
+  function( ix, value ){
+    asyncTest( 'Indicator:  is disabled (not rendered) when `indicator` option evaluates false like `'+value+'`', function(){
+      expect( 1 );
+      var
+        $reel= $('#image').reel({ indicator: value }),
+        $indicator= $('#image-reel .reel-indicator')
 
-    function try_different_values(values){
-      $(values).each(function try_value(ix, value){
-        $('#image').unreel()
-        var
-          $reel= $('#image').reel({ indicator: value }),
-          $indicator= $('#image-reel .reel-indicator');
-
-        equal( $indicator.length, 0, 'When ' + value );
-      });
-    }
+      $( document ).bind('loaded.test', function(){
+        equal( $indicator.length, 0, 'No indicator');
+        start();
+      })
+    });
   });
 
   test( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){

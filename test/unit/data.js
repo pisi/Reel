@@ -462,7 +462,7 @@
         frame: frame
       })
 
-    $reel.bind('opening.test', function(){
+    $(document).bind('opening.test', function(){
 
       switch (++pass){
 
@@ -509,7 +509,7 @@
         frame: frame
       })
 
-    $reel.bind('opening.test', function(){
+    $(document).bind('opening.test', function(){
 
       switch (++pass){
 
