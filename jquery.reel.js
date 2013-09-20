@@ -955,6 +955,7 @@
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
                   set(_cache_, $(tag(_div_)));
+                  set(_area_, $()),
                   set(_cached_, []);
                   set(_frame_, null);
                   set(_fraction_, null);
