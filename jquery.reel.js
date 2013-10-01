@@ -1038,7 +1038,7 @@
                     var
                       backup= t.data(_backup_)
                     t.parent().unbind(on.instance);
-                    if (get(_shy_)) t.unbind(_click_, shy_setup)
+                    if (get(_shy_)) t.parent().unbind(_click_, shy_setup)
                     else get(_style_).remove() && get(_area_).unbind(ns);
                     get(_cache_).empty();
                     clearTimeout(delay);
@@ -1183,7 +1183,7 @@
                   // It lefts the target image untouched waiting to be clicked to actually setup.
                   //
                   prepare: function(e){
-                    t.css('display', _block_).one(_click_, shy_setup);
+                    t.css('display', _block_).parent().one(_click_, shy_setup);
                   },
 
                   // ----------------
