@@ -231,27 +231,40 @@
     asyncTest( 'Change events: Changing `"'+def.change+'"` results in a `"'+def.verify+'"` change', function(){
 
       var
+        i= 0,
         $reel= $('#image').reel(def.options),
         before
 
       expect(def.samples.length * 2);
 
       $(document).bind('loaded.test', function(){
-        $.each(def.samples, function(ix, sample){
-
-          $reel.one(def.change+'Change.test', function(evnt, depr, probe){
-            equal( probe, sample, 'Change had been reported with the `"'+def.change+'Change"` event');
-          });
-
-          $reel.one(def.verify+'Change.test', function(evnt, depr, probe){
-            ok( probe != before, 'Change had been reported with the `"'+def.verify+'Change"` event');
-          });
-
-          before= $reel.reel(def.verify);
-          $reel.reel(def.change, sample);
-        });
-        start();
+        try_sample();
       });
+
+      function try_sample(){
+        var
+          verified= 0,
+          sample= def.samples[ i++ ]
+        
+        if ( !sample ) return start();
+
+        $(document).one(def.change+'Change.test', function(evnt, depr, probe){
+          equal( probe, sample, 'Change had been reported with the `"'+def.change+'Change"` event');
+          verify();
+        });
+
+        $(document).one(def.verify+'Change.test', function(evnt, depr, probe){
+          ok( probe != before, 'Change had been reported with the `"'+def.verify+'Change"` event');
+          verify();
+        });
+
+        before= $reel.reel(def.verify);
+        $reel.reel(def.change, sample);
+
+        function verify(){
+          if ( verified++ ) try_sample();
+        }
+      }
 
     });
 
