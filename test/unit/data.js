@@ -192,7 +192,7 @@
     },
     'frame2tier': {
       change: 'frame', verify: 'tier',
-      samples: [ 40, 36, 70, 60, 108, 3, 91 ],
+      samples: [ 40, 36, 70, 10, 108, 3, 91 ],
       options: {
         rows: 3,
         frame: 3
