@@ -1542,7 +1542,11 @@
                   //
                   rowChange: function(e, nil, row){
                     if (nil === undefined) var
-                      tier= set(_tier_, 1 / (opt.rows - 1) * (row - 1))
+                      rows= opt.rows,
+                      row_tier= (row - 1) / (rows - 1),
+                      tier_row= round(interpolate(row_tier, 1, rows)),
+                      same_spot= +abs((get(_tier_) || 0) - row_tier).toFixed(8) < +(1 / (rows - 1)).toFixed(8),
+                      tier= tier_row === row && same_spot ? get(_tier_) : set(_tier_, row_tier)
                   },
 
                   // ### `frameChange` Event ######
