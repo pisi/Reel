@@ -1579,7 +1579,7 @@
                       frame_fraction= min((base - 1) / (frames - 1), 0.9999),
                       row_shift= row * frames - frames,
                       fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
-                      same_spot= abs((get(_fraction_) || 0) - frame_fraction) < 1 / (get(_frames_) - 1),
+                      same_spot= +abs((get(_fraction_) || 0) - frame_fraction).toFixed(8) < +(1 / (get(_frames_) - 1)).toFixed(8),
                       fraction= ready && (fraction_frame === frame && same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
                       footage= get(_footage_)
                     if (opt.orbital && get(_vertical_)) var
