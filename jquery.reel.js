@@ -2251,8 +2251,6 @@
         ],
         /* Array in a string (comma-separated values) */
         array:         / *, */,
-        /* Multi touch devices */
-        touchy_agent:  /iphone|ipod|ipad|android|fennec|rim tablet/i,
         /* Lazy (low-CPU mobile devices) */
         lazy_agent:    /\(iphone|ipod|android|fennec|blackberry/i,
         /* Format of frame class flag on the instance */
@@ -2684,7 +2682,7 @@
     // We then only identify the user's browser's capabilities and route around a MSIE's left button
     // identification quirk (IE 8- reports left as right).
     //
-    touchy= reel.touchy= (reel.re.touchy_agent).test(client),
+    touchy= reel.touchy= 'ontouchstart' in window || !!navigator.msMaxTouchPoints,
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
     DRAG_BUTTON= touchy ? undefined : (ie && browser_version < 9) ? 1 : 0,
