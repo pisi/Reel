@@ -182,7 +182,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3rc
- * Updated: 2013-09-18
+ * Updated: 2013-10-07
  *
  * Requires jQuery 1.5 or higher
  */</span>
@@ -4591,8 +4591,6 @@ levels of user agent&#39;s capabilities.</p>
         ],
         <span class="comment">/* Array in a string (comma-separated values) */</span>
         array:         <span class="regexp">/ *, */</span>,
-        <span class="comment">/* Multi touch devices */</span>
-        touchy_agent:  <span class="regexp">/iphone|ipod|ipad|android|fennec|rim tablet/i</span>,
         <span class="comment">/* Lazy (low-CPU mobile devices) */</span>
         lazy_agent:    <span class="regexp">/\(iphone|ipod|android|fennec|blackberry/i</span>,
         <span class="comment">/* Format of frame class flag on the instance */</span>
@@ -5604,7 +5602,7 @@ identification quirk (IE 8- reports left as right).</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    touchy= reel.touchy= (reel.re.touchy_agent).test(client),
+            <div class="content"><div class='highlight'><pre>    touchy= reel.touchy= <span class="string">'ontouchstart'</span> <span class="keyword">in</span> window || !!navigator.msMaxTouchPoints,
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
     DRAG_BUTTON= touchy ? <span class="literal">undefined</span> : (ie &amp;&amp; browser_version &lt; <span class="number">9</span>) ? <span class="number">1</span> : <span class="number">0</span>,</pre></div></div>
