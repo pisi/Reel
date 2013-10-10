@@ -119,10 +119,6 @@
       // `Object`, since 1.1
       //
       def: {
-
-        // ### EXPERIMENTAL / NOT TO STAY ###
-        cache_hide:         false,
-
         //
         // ### Basic Definition ######
         //
@@ -946,7 +942,7 @@
                     stage_id= hash(id+opt.suffix),
                     classes= t[0].className || __,
                     $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+'0' }),
-                    $cache= set(_cache_, $(tag(_div_), { 'class': cache_klass }).appendTo('body').toggle(!opt.cache_hide)),
+                    $cache= set(_cache_, $(tag(_div_), { 'class': cache_klass }).appendTo('body')),
                     $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
