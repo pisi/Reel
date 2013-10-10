@@ -23,8 +23,8 @@
  *
  * jQuery Reel
  * http://reel360.org
- * Version: 1.3rc
- * Updated: 2013-10-07
+ * Version: 1.3-devel
+ * Updated: 2013-10-10
  *
  * Requires jQuery 1.5 or higher
  */
@@ -1064,10 +1064,12 @@
                       multirow= opt.rows > 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
                     t.unbind(_click_, shy_setup);
-                    if (touchy){
-                      $area
-                        .bind(_touchstart_, press)
-                    }else{
+                    $area
+                      .bind(_touchstart_, press)
+                      .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
+                      .bind(opt.wheelable ? _mousewheel_ : null, wheel)
+                      .bind(_dragstart_, function(){ return false })
+                    if (!touchy){
                       var
                         cursor= opt.cursor,
                         cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
@@ -1075,10 +1077,6 @@
                       css(__, { cursor: cdn(cursor_up) });
                       css(dot(loading_klass), { cursor: 'wait' });
                       css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor_up) }, true);
-                      $area
-                        .bind(opt.wheelable ? _mousewheel_ : null, wheel)
-                        .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
-                        .bind(_dragstart_, function(){ return false })
                     }
                     if (get(_responsive_)){
                       css(___+dot(klass), { width: '100%', height: _auto_ });
@@ -1313,23 +1311,17 @@
                         clicked= set(_clicked_, get(_frame_)),
                         clickfree= opt.clickfree,
                         velocity= set(_velocity_, 0),
+                        $area= clickfree ? get(_area_) : pools,
                         origin= last= recenter_mouse(get(_revolution_), x, y)
                       touchy || ev && ev.preventDefault();
                       unidle();
                       no_bias();
                       panned= 0;
                       $(_html_, pools).addClass(panning_klass);
-                      // Browser events differ for touch and mouse, but both of them are treated equally and
-                      // forwarded to the same `"pan"` or `"up"` Events.
-                      if (touchy){
-                        pools
-                        .bind(_touchmove_, drag)
+                      $area
+                        .bind(_touchmove_+___+_mousemove_, drag)
                         .bind(_touchend_+___+_touchcancel_, lift)
-                      }else{
-                        (clickfree ? get(_area_) : pools)
-                        .bind(_mousemove_, drag)
                         .bind(clickfree ? _mouseleave_ : _mouseup_, lift)
-                      }
                     }
                     function drag(e){ return t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]) && e.give }
                     function lift(e){ return t.trigger('up', [e]) && e.give }
