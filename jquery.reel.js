@@ -1082,7 +1082,7 @@
                       css(___+dot(klass), { width: '100%', height: _auto_ });
                       $(window).bind(_resize_, slow_gauge);
                     }
-                    function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
+                    function press(e){ return t.trigger('down', [pointer(e).clientX, pointer(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
                     opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
@@ -1323,7 +1323,7 @@
                         .bind(_touchend_+___+_touchcancel_, lift)
                         .bind(clickfree ? _mouseleave_ : _mouseup_, lift)
                     }
-                    function drag(e){ return t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]) && e.give }
+                    function drag(e){ return t.trigger('pan', [pointer(e).clientX, pointer(e).clientY, e]) && e.give }
                     function lift(e){ return t.trigger('up', [e]) && e.give }
                   },
 
@@ -2710,7 +2710,7 @@
   function axis(key, value){ return typeof value == _object_ ? value[key] : value }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
-  function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
+  function pointer(e){ return e.touch || e.originalEvent.touches && e.originalEvent.touches[0] || e }
   function gyro(e){ return e.originalEvent }
   function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + 'px' }
   function hash(value){ return '#' + value }
