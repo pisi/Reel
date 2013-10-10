@@ -27,7 +27,10 @@
     $.each($.reel.def, function(){ count++ });
     expect(count + 9);
 
-    equal( count, 52, 'Total number of options');
+    equal( count, 53, 'Total number of options');
+
+    // EXPERIMENTAL / TEMPORARY
+    equal( $.reel.def.cache_hide,             false, 'whether to hide the entire cache container' );
 
     // Version 1.0 options
     equal( $.reel.def.footage,                    6, 'number of frames per line/column' );
