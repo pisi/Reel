@@ -286,7 +286,7 @@
       ticks,
       $reel= $('#image').reel({
         speed: 1,
-        duration: 0.5
+        duration: 0.2
       })
 
     $(document).bind('play.test', function(){
