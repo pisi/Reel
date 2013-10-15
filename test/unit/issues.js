@@ -443,7 +443,6 @@
           setTimeout(function(){
             equal( $.reel.leader('tempo'), lazy_tempo, 'Leader tempo reported again' );
             ok( ticked, 'Newly created instance restarts the ticker')
-            $reel.unreel();
             $container.empty();
             start();
           }, 500);
