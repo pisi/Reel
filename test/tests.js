@@ -38,10 +38,6 @@
         bads= 0,
         counts= 0
 
-      location.params.respawn && setTimeout(function(){
-        location.href= location.href;
-      }, location.params.respawn * 1000);
-
       test_subjects_snapshot= $('#Body').html();
 
       QUnit.load();
@@ -113,6 +109,10 @@
           cache: false,
           data: report
         });
+
+        location.params.respawn && setTimeout(function(){
+          location.href= location.href;
+        }, 60000);
 
         function formatted( bit, label ){
           var $result= $('<li/>')
