@@ -882,9 +882,9 @@
               var
                 $this= $(this),
                 attr= opt.attr,
-                width= attr.width || $this.width(),
-                height= attr.height || $this.height()
                 src= attr.src || $this.attr(_src_),
+                width= attr.width || $this.attr(_height_) || $this.width(),
+                height= attr.height || $this.attr(_width_) || $this.height()
               if (src && width && height) return true
               // In case element did not qualify an Javascript error is thrown out.
               else error('Missing attributes: Image needs `src` and both dimensions to be set to Reel');
@@ -936,8 +936,8 @@
                     rows= opt.rows,
                     footage= set(_footage_, min(opt.footage, opt.frames)),
                     spacing= set(_spacing_, opt.spacing),
-                    width= set(_width_, t.width()),
-                    height= set(_height_, t.height()),
+                    width= set(_width_, +t.attr(_width_) || t.width()),
+                    height= set(_height_, +t.attr(_height_) || t.height()),
                     shy= set(_shy_, opt.shy),
                     frames= set(_frames_, orbital && footage || rows <= 1 && images.length || opt.frames),
                     multirow= rows > 1 || orbital,
