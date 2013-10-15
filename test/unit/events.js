@@ -226,7 +226,7 @@
   asyncTest( 'Playback Shy activation triggers `"prepare"` event and waits for explicit setup being triggered', function(){
     expect(1);
 
-    $(document).bind('prepare.test setup.test', function(e){
+    $(document).bind('prepare.test', function(e){
       equal( e.type, 'prepare', 'Event triggered');
       start();
     });
