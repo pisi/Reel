@@ -68,8 +68,10 @@
       $reel= $('#image').reel({ indicator: 5 })
 
     $(document).bind('loaded.test', function(e){
-      equiv( $('#image-reel .reel-indicator').css('bottom'), 0 );
-      start();
+      setTimeout(function(){
+        equiv( $('#image-reel .reel-indicator').css('bottom'), 0 );
+        start();
+      }, 100);
     });
   });
 
@@ -83,9 +85,11 @@
         $indicator= $('#image-reel .reel-indicator')
 
       $(document).bind('loaded.test', function(){
-        equiv( $indicator.css('width'), portion );
-        equiv( $indicator.css('height'), size );
-        start();
+        setTimeout(function(){
+          equiv( $indicator.css('width'), portion );
+          equiv( $indicator.css('height'), size );
+          start();
+        }, 100);
       });
     });
   });
@@ -102,9 +106,11 @@
       $indicator= $('#image-reel .reel-indicator');
 
     $(document).bind('loaded.test', function(){
-      equal( $reel.data('frame'), 1, 'It is frame number 1');
-      equiv( $indicator.css('left'), '0px' );
-      start();
+      setTimeout(function(){
+        equal( $reel.data('frame'), 1, 'It is frame number 1');
+        equiv( $indicator.css('left'), '0px' );
+        start();
+      }, 100);
     });
   });
 
@@ -122,7 +128,10 @@
       // the "end" by providing a fraction as near to 1 as possible, but not quite
       $reel.reel('fraction', 0.9999);
 
-    equiv( $indicator.css('left'), Math.round(width - weight) + 'px' );
+      setTimeout(function(){
+        equiv( $indicator.css('left'), Math.round(width - weight) + 'px' );
+        start();
+      }, 100);
     });
   });
 
