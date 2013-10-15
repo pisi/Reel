@@ -331,9 +331,10 @@
   });
 
   asyncTest( 'Rendering of early annotation on late frame in looped panoramas', function(){
-    expect( 1 );
+    expect( 2 );
     var
-      $reel= $('#image').reel({ frames: 20, frame: 20, stitched: 2000, annotations: {
+      frame= 20,
+      $reel= $('#image').reel({ frames: 20, frame: frame, stitched: 2000, annotations: {
         'test-annotation': {
           x: 20,
           y: 0
@@ -341,15 +342,17 @@
       }})
 
     $(document).bind('frameChange.test', function(){
-      equiv( $('#test-annotation').css('left'), 125, 'position of the annotation');
+      equal( $reel.reel('frame'), frame, 'On correct frame' );
+      equiv( $('#test-annotation').css('left'), 20, 'position of the annotation');
       start();
     });
   });
 
   asyncTest( 'Rendering of late over-the-edge annotation on early frame in looped panoramas', function(){
-    expect( 1 );
+    expect( 2 );
     var
-      $reel= $('#image').reel({ frames: 20, frame: 1, stitched: 2000, annotations: {
+      frame= 1,
+      $reel= $('#image').reel({ frames: 20, frame: frame, stitched: 2000, annotations: {
         'test-annotation': {
           x: 1990,
           y: 0
@@ -357,6 +360,7 @@
       }})
 
     $(document).bind('frameChange.test', function(){
+      equal( $reel.reel('frame'), frame, 'On correct frame' );
       equiv( $('#test-annotation').css('left'), -10, 'position of the annotation');
       start();
     });
