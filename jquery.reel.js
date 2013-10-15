@@ -959,8 +959,8 @@
                   set(_cached_, []);
                   set(_frame_, null);
                   set(_fraction_, null);
-                  set(_row_, null);
-                  set(_tier_, null);
+                  set(_row_, opt.row);
+                  set(_tier_, 0);
                   set(_rows_, rows);
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
@@ -1543,11 +1543,7 @@
                   //
                   rowChange: function(e, nil, row){
                     if (nil === undefined) var
-                      rows= opt.rows,
-                      row_tier= (row - 1) / (rows - 1),
-                      tier_row= round(interpolate(row_tier, 1, rows)),
-                      same_spot= +abs((get(_tier_) || 0) - row_tier).toFixed(8) < +(1 / (rows - 1)).toFixed(8),
-                      tier= tier_row === row && same_spot ? get(_tier_) : set(_tier_, row_tier)
+                      tier= may_set(_tier_, undefined, row, opt.rows)
                   },
 
                   // ### `frameChange` Event ######
@@ -1574,14 +1570,9 @@
                       ready= !!get(_preloaded_),
                       frame_row= (frame - base) / frames + 1,
                       frame_tier= (frame_row - 1) / (rows - 1),
-                      tier_row= round(interpolate(frame_tier, 1, rows)),
                       row= get(_row_),
-                      tier= ready && tier_row === row ? get(_tier_) : set(_tier_, frame_tier),
-                      frame_fraction= min((base - 1) / (frames - 1), 0.9999),
-                      row_shift= row * frames - frames,
-                      fraction_frame= round(interpolate(frame_fraction, row_shift + 1, row_shift + frames)),
-                      same_spot= +abs((get(_fraction_) || 0) - frame_fraction).toFixed(8) < +(1 / (get(_frames_) - 1)).toFixed(8),
-                      fraction= ready && (fraction_frame === frame && same_spot) ? get(_fraction_) : set(_fraction_, frame_fraction),
+                      tier= !rows ? get(_tier_) : may_set(_tier_, frame_tier, row, rows),
+                      fraction= may_set(_fraction_, undefined, base, frames),
                       footage= get(_footage_)
                     if (opt.orbital && get(_vertical_)) var
                       frame= opt.inversed ? footage + 1 - frame : frame,
@@ -1610,7 +1601,7 @@
                         shift= images.length ? [0, 0] : horizontal ? [px(-b), px(-a)] : [px(-a), px(-b)]
                       else{
                         var
-                          x= set(_stitched_shift_, round(interpolate(frame_fraction, 0, get(_stitched_travel_))) % stitched),
+                          x= set(_stitched_shift_, round(interpolate(fraction, 0, get(_stitched_travel_))) % stitched),
                           y= rows <= 1 ? 0 : (height + spacing) * (rows - row),
                           shift= [px(-x), px(-y)],
                           image= images.length > 1 && images[row - 1],
@@ -1863,7 +1854,7 @@
                   //
                   'setup.fu': function(e){
                     var
-                      frame= set(_frame_, opt.frame + (opt.row - 1) * get(_frames_))
+                      frame= set(_frame_, opt.frame + (get(_row_) - 1) * get(_frames_))
                     t.trigger('preload')
                   },
                   'wheel.fu': function(){ wheeled= false },
@@ -2083,6 +2074,23 @@
                 return x !== undefined && set(_clicked_location_, { x: x, y: y }) || undefined
               },
               slidable= true,
+
+              // ~~~
+              //
+              // Data interface used to set `fraction` and `tier` with the value recalculated through their
+              // _cousin_ keys (`frame` for `fraction` and `row` for `tier`). This value is actually set
+              // only if it does make a difference in the cousin value.
+              //
+              may_set= function(key, value, cousin, maximum){
+                if (!maximum) return;
+                var
+                  current= get(key) || 0,
+                  recalculated= value !== undefined ? value : (cousin - 1) / (maximum - 1),
+                  recalculated= key != _fraction_ ? recalculated : min( recalculated, 0.9999),
+                  worthy= +abs(current - recalculated).toFixed(8) >= +(1 / (maximum - 1)).toFixed(8),
+                  value= worthy ? set(key, recalculated) : value || current
+                return value
+              },
 
               // ~~~
               //
