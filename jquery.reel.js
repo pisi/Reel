@@ -947,10 +947,10 @@
                     stitched_travel= set(_stitched_travel_, stitched - (loops ? 0 : width)),
                     stitched_shift= set(_stitched_shift_, 0),
                     stage_id= hash(id+opt.suffix),
-                    $instance= t.wrap($overlay.addClass(opt.klass)).attr({ 'class': klass }),
                     img_class= t.attr(_class_),
                     classes= !img_class ? __ : img_class+___,
                     $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+overlay_klass+___+frame_klass+'0' }),
+                    $instance= t.wrap($overlay.addClass(opt.klass)).addClass(klass),
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
@@ -1154,12 +1154,12 @@
                     var
                       images= get(_images_).length || 1,
                       preloaded= set(_preloaded_, min(get(_preloaded_) + 1, images))
+                    if (preloaded === 1) var
+                      frame= t.trigger('frameChange', [undefined, get(_frame_)])
                     if (preloaded === images){
                       t.parent().removeClass(loading_klass);
                       t.trigger('loaded');
                     }
-                    if (preloaded === 1) var
-                      frame= t.trigger('frameChange', [undefined, get(_frame_)])
                   },
 
                   // ### `loaded` Event ######
