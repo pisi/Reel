@@ -221,16 +221,15 @@
       })
 
     $(document).bind('loaded.test', function(){
-      $reel.trigger('play');
       ticks= $reel.reel('ticks');
       ok( ticks > 0, 'Positive `ticks`');
+      setTimeout(function(){
+        $reel.trigger('play');
+        equal( $reel.reel('ticks'), ticks, 'Positive `ticks` reset to same value on second `play`');
+        start();
+      }, 500);
     });
     
-    setTimeout(function(){
-      $reel.trigger('play');
-      equal( $reel.reel('ticks'), ticks, 'Positive `ticks` reset to same value on second `play`');
-      start();
-    }, 500);
 
   });
 
