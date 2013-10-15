@@ -1049,6 +1049,7 @@
                     pools.unbind(pns);
                     t.siblings().unbind(ns).remove();
                     no_bias();
+                    t.removeAttr('onloaded');
                     remove_instance(t.unbind(ns).removeData().unwrap().attr(backup.attr).data(backup.data));
                   },
 

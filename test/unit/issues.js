@@ -207,6 +207,7 @@
       ok( $reel.is('.reel'), 'IMG tag is flagged as a Reel instance');
       ok( $reel.parent().is('.reel-overlay'), 'and wrapped in overlay DIV');
       $reel.click();
+      $reel.removeAttr('onclick'); // for IE8-
       start();
     }, 500 );
   });
