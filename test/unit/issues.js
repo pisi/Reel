@@ -527,12 +527,18 @@
       })
 
     $(document).bind('loaded.test', function(){
-      equiv( 0, $reel.css('backgroundPosition').split(' ')[1], 'Non-directional sprite stays at 0px vertically');
+      var
+        background= $reel.css('backgroundPosition') || '0px 0px'
+
+      equiv( 0, background.split(' ')[1], 'Non-directional sprite stays at 0px vertically');
 
       $reel.reel('backwards', true);
       $reel.reel('frame', 3);
 
-      equiv( 0, $reel.css('backgroundPosition').split(' ')[1], 'Even when in backwards motion');
+      var
+        background= $reel.css('backgroundPosition') || '0px 0px'
+
+      equiv( 0, background.split(' ')[1], 'Even when in backwards motion');
       start();
     })
   });
