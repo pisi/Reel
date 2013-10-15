@@ -966,7 +966,7 @@
   });
 
 
-  asyncTest( 'jQuery plugins descriptior JSON integrity', function(){
+  asyncTest( 'jQuery plugins descriptor JSON integrity', function(){
     expect( 26 );
     var
       filename= 'reel.jquery.json'
@@ -977,7 +977,7 @@
       var
         authors= authors.match(/.*\<.+\...+\>\n/g)
 
-      $.get('../'+filename)
+      $.get('../'+filename+'?'+(+new Date()))
       .done(function( plugin ){
         ok( true, '`'+filename+' file exists' );
 
