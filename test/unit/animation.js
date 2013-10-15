@@ -74,7 +74,7 @@
     // We also try both animated and non-animated
     $.each([0, 1], function(ixx, speed){
 
-      asyncTest( 'Measuring 1 second timing accuracy when running ' + (speed ? 'animated' : 'non-animated') + ' instance at `tempo: ' + lazy_tempo + '`', function()
+      asyncTest( 'Measuring 1 second timing accuracy when running ' + (speed ? 'animated' : 'non-animated') + ' instance at `tempo: ' + tempo + '`', function()
       {
         expect(1);
 

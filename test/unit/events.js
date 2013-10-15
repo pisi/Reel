@@ -168,7 +168,7 @@
     var
       $reel= $('#image').reel(),
       waiter= setTimeout(function(){
-        ok( true, '`didn\'tmake it to the `"wheel"` event');
+        ok( true, '`didn\'t make it to the `"wheel"` event');
         start();
       }, 100);
 
