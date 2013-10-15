@@ -2,7 +2,7 @@
 
   module('Data', reel_test_module_routine);
 
-  test( 'Read access to all instance\'s states and values (data) is provided with `.reel( name )`', function(){
+  asyncTest( 'Read access to all instance\'s states and values (data) is provided with `.reel( name )`', function(){
 
     var
       $reel= $('#image').reel({
@@ -71,17 +71,20 @@
       }
       count= 0;
 
-    $.each($reel.data(), function(key){
-      // We exclude all jQuery internal keys
-      if (key.match(/^(_[a-z]+|jQuery\d+|events|handle)$/)) return;
-      count++
-    });
-    expect(count * 2);
+    $(document).bind('loaded.test', function(){
+      $.each($reel.data(), function(key){
+        // We exclude all jQuery internal keys
+        if (key.match(/^(_[a-z]+|jQuery\d+|events|handle)$/)) return;
+        count++
+      });
+      expect(count * 2);
 
-    $.each(probes, function(key, type){
-      ok( is(type, $reel.data(key)), '`'+key+'` '+type+' with `.data("'+key+'")`'); // 1.1 way
-      ok( is(type, $reel.reel(key)), '`'+key+'` '+type+' with `.reel("'+key+'")`'); // 1.2+ way
-    });
+      $.each(probes, function(key, type){
+        ok( is(type, $reel.data(key)), '`'+key+'` '+type+' with `.data("'+key+'")`'); // 1.1 way
+        ok( is(type, $reel.reel(key)), '`'+key+'` '+type+' with `.reel("'+key+'")`'); // 1.2+ way
+      });
+      start();
+    })
   });
 
   test( 'Contents of attributes backup `.reel("backup")`', function(){
@@ -475,7 +478,7 @@
         frame: frame
       })
 
-    $(document).bind('opening.test', function(){
+    $(document).bind('loaded.test', function(){
 
       switch (++pass){
 
@@ -664,7 +667,7 @@
   },
   function(designation, def){
 
-    test( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
+    asyncTest( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
 
       expect(2);
 
@@ -678,10 +681,15 @@
           frame: def.frame
         }),
         // Minimal data interface expected by `$.reel.substitute()`
-        get= function(name){ return $reel.data(name) },
-        substitute= $.reel.substitute(def.url, get)
+        get= function(name){ return $reel.data(name) }
 
-      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+      $( document ).bind('openingDone.test', function(){
+        var
+          substitute= $.reel.substitute(def.url, get)
+
+        equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+        start();
+      });
 
     });
   });

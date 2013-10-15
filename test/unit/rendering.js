@@ -74,7 +74,7 @@
   });
 
   $.each([5, 10, 30], function(index, sample){
-    asyncTest( 'Indicator: `indicator` option value ('+sample+')is the height of the indicator', function(){
+    asyncTest( 'Indicator: `indicator` option value ('+sample+') is the height of the indicator', function(){
       expect(2);
       var
         size= sample,
@@ -108,7 +108,7 @@
     });
   });
 
-  test( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){
+  asyncTest( 'Indicator: is sticked to the bottom right corner when on max frame (36)', function(){
     expect(1);
     var
       $image= $('#image'),
@@ -117,11 +117,13 @@
       width= parseInt($reel.css('width')),
       $indicator= $('#image-reel .reel-indicator');
 
-    // As the indicator indicates the beginning of the frame and not its end we need to simulate
-    // the "end" by providing a fraction as near to 1 as possible, but not quite
-    $reel.reel('fraction', 0.9999);
+    $(document).bind('loaded.test', function(){
+      // As the indicator indicates the beginning of the frame and not its end we need to simulate
+      // the "end" by providing a fraction as near to 1 as possible, but not quite
+      $reel.reel('fraction', 0.9999);
 
     equiv( $indicator.css('left'), Math.round(width - weight) + 'px' );
+    });
   });
 
   asyncTest( 'Indicator: reacts on frame change', function(){
@@ -132,11 +134,11 @@
       before= $indicator.css('left')
 
       $(document).bind('loaded.test', function(){
-        $reel.reel('frame', 3);
         $(document).bind('frameChange.test', function(e, depr, frame){
           ok( before != $indicator.css('left'), 'Position change after frame change' );
           start();
         });
+        $reel.reel('frame', 3);
       });
   });
 

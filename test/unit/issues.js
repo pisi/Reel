@@ -245,33 +245,37 @@
             row: row
           })
 
-        // Click and drag long way down
-        $pano.trigger('down', [ 100, 200 ]);
-        $pano.trigger('pan', [ 100, 400 ]);
-        deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
-                  { row: rows,              tier: 1,                  frame: rows * frames - frames + frame },
-                  'Drag way down on frame '+frame+' / '+frames+', row '+row+' / '+rows);
+        $(document).bind('loaded.test', function(){
 
-        // `tick` needs to be triggered manually between `pan`s in order to have the instance slidable again
-        $pano.trigger('tick');
+          // Click and drag long way down
+          $pano.trigger('down', [ 100, 200 ]);
+          $pano.trigger('pan', [ 100, 400 ]);
+          deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
+                    { row: rows,              tier: 1,                  frame: rows * frames - frames + frame },
+                    'Drag way down on frame '+frame+' / '+frames+', row '+row+' / '+rows);
 
-        // Then drag it all the way back up to reach the first row
-        $pano.trigger('pan', [ 100, 1 ]);
-        deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
-                  { row: 1,                 tier: 0,                  frame: frame },
-                  '& drag way up');
+          // `tick` needs to be triggered manually between `pan`s in order to have the instance slidable again
+          $pano.trigger('tick');
 
-        $pano.trigger('tick');
+          // Then drag it all the way back up to reach the first row
+          $pano.trigger('pan', [ 100, 1 ]);
+          deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
+                    { row: 1,                 tier: 0,                  frame: frame },
+                    '& drag way up');
 
-        // Then drag it back all the way down
-        $pano.trigger('pan', [ 100, 400 ]);
-        deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
-                  { row: rows,              tier: 1,                  frame: rows * frames - frames + frame },
-                  '& drag way down again.');
+          $pano.trigger('tick');
 
-        // Conclude the drag
-        $pano.trigger('up');
-        start();
+          // Then drag it back all the way down
+          $pano.trigger('pan', [ 100, 400 ]);
+          deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
+                    { row: rows,              tier: 1,                  frame: rows * frames - frames + frame },
+                    '& drag way down again.');
+
+          // Conclude the drag
+          $pano.trigger('up');
+          start();
+
+        })
       });
     });
   });
@@ -299,7 +303,7 @@
           start();
         }
       }else{
-        ok( image !== $(this).data('image'), 'The second reel image is different than the starting one');
+        ok( image !== $reel.data('image'), 'The second reel image is different than the first one');
         start();
       }
     });

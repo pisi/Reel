@@ -147,17 +147,20 @@
     var
       $reel= $('#image').reel()
 
-    $(document).bind('up.test', function(){
-      ok( true, '`"wheel"` event caused the `"up"` event to trigger and cancel `"pan"`');
-      ok( !$('html').hasClass('reel-panning'), 'HTML is not flagged as "panning in progress"')
-      start();
-    })
+    $(document).bind('loaded.test', function(){
+      $(document).bind('up.test', function(){
+        ok( true, '`"wheel"` event caused the `"up"` event to trigger and cancel `"pan"`');
+        ok( !$('html').hasClass('reel-panning'), 'HTML is not flagged as "panning in progress"')
+  
+        start();
+      })
 
-    $reel
-      .trigger('down')
-      .trigger('wheel', [1])
-      // Because of IE the non-zero distance parameter to the event is
-      // required to be present
+      $reel
+        .trigger('down')
+        .trigger('wheel', [1])
+        // Because of IE the non-zero distance parameter to the event is
+        // required to be present
+    });
   });
 
   asyncTest( 'Improper mouse wheel event triggers (with no reasonable delta) don\'t make it to the Reel\'s `"wheel"` event', function(){
@@ -169,15 +172,19 @@
         start();
       }, 100);
 
-    $(document).bind('wheel.test', function(){
-      ok( false, '`"wheel"` event should not be fired, but was');
-      clearTimeout(waiter);
-      start();
-    })
-    $reel.trigger('mousewheel');
+    $(document).bind('loaded.test', function(){
+      $(document).bind('wheel.test', function(){
+        ok( false, '`"wheel"` event should have not been fired');
+        clearTimeout(waiter);
+  
+        start();
+      })
+  
+      $reel.trigger('mousewheel');
+    });
   });
 
-  test( 'As a result of `jQuery.cleanData()` wrapper, `clean` event is triggered on the removed node', function(){
+  asyncTest( 'As a result of `jQuery.cleanData()` wrapper, `clean` event is triggered on the removed node', function(){
     expect(3);
     var
       $container= $('#non_image'),
@@ -200,6 +207,7 @@
 
     $innermost.remove();
     $container.empty();
+    start();
   });
 
   asyncTest( 'Image loading error events encountered by the preloader (`error` and `abort`) are forwarded and bubble up the DOM', function(){
@@ -243,14 +251,18 @@
           frame: probe.before
         })
 
-      equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
+      $(document).bind('loaded.test', function(){
+        equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
 
-        .one('frameChange.test', function(){
-          equal( $reel.reel('frame'), probe.after, 'Target frame');
-          start();
-        })
-        .trigger('stepRight')
-      $(document)
+        $(document)
+          .one('frameChange.test', function(){
+            equal( $reel.reel('frame'), probe.after, 'Target frame');
+
+            start();
+          })
+
+        $reel.trigger('stepRight')
+      });
 
     });
   });
@@ -269,14 +281,18 @@
           frame: probe.before
         })
 
-      equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
+      $(document).bind('loaded.test', function(){
+        equal( $reel.reel('frame'), probe.before, 'Initial frame out of 23');
 
-        .one('frameChange.test', function(){
-          equal( $reel.reel('frame'), probe.after, 'Target frame');
-          start();
-        })
-        .trigger('stepLeft')
       $(document)
+          .one('frameChange.test', function(){
+            equal( $reel.reel('frame'), probe.after, 'Target frame');
+
+            start();
+          })
+  
+        $reel.trigger('stepLeft')
+      });
 
     });
   });
@@ -295,21 +311,27 @@
           row: probe.before
         })
 
-      equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
+      $(document).bind('loaded.test', function(){
+        equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
 
-        .one('rowChange.test', function(){
-          equal( $reel.reel('row'), probe.after, 'Target row');
-          start();
-        })
-        .trigger('stepUp')
-
-      if (probe.after == probe.before){
-        setTimeout(function(){
-          equal( $reel.reel('row'), probe.after, 'Target row');
-          start();
-        }, 100);
-      }
       $(document)
+          .one('rowChange.test', function(){
+            equal( $reel.reel('row'), probe.after, 'Target row');
+  
+            start();
+          })
+  
+        $reel
+          .trigger('stepUp')
+
+        if (probe.after == probe.before){
+          setTimeout(function(){
+            equal( $reel.reel('row'), probe.after, 'Target row');
+  
+            start();
+          }, 100);
+        }
+      });
 
     });
   });
@@ -328,21 +350,27 @@
           row: probe.before
         })
 
-      equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
+      $(document).bind('loaded.test', function(){
+        equal( $reel.reel('row'), probe.before, 'Initial row out of 3');
 
-        .one('rowChange.test', function(){
-          equal( $reel.reel('row'), probe.after, 'Target row');
-          start();
-        })
-        .trigger('stepDown')
-
-      if (probe.after == probe.before){
-        setTimeout(function(){
-          equal( $reel.reel('row'), probe.after, 'Target row');
-          start();
-        }, 100);
-      }
       $(document)
+          .one('rowChange.test', function(){
+            equal( $reel.reel('row'), probe.after, 'Target row');
+  
+            start();
+          })
+  
+        $reel
+          .trigger('stepDown')
+
+        if (probe.after == probe.before){
+          setTimeout(function(){
+            equal( $reel.reel('row'), probe.after, 'Target row');
+  
+            start();
+          }, 100);
+        }
+      });
 
     });
   });
@@ -366,10 +394,13 @@
           speed: 1
         })
 
-      $reel.trigger('reach', def.reach);
+      $(document).bind('loaded.test', function(){
+        $reel.trigger('reach', def.reach);
 
-      equal( $reel.reel('row'), def.expect.row, 'On the right row first');
-      start();
+        equal( $reel.reel('row'), def.expect.row, 'On the right row first');
+
+        start();
+      });
     });
   });
 

@@ -56,13 +56,16 @@
       ver: 300
     }
   }, function(name, def){
-    test( '`revolution` option: '+name+'', function(){
+    asyncTest( '`revolution` option: '+name+'', function(){
       expect( 2 );
       var
         $pano= $('#image').reel(def.options)
 
-      equal( $pano.reel('revolution'), def.hor );
-      equal( $pano.reel('revolution_y'), def.ver );
+      $(document).bind('loaded.test', function(){
+        equal( $pano.reel('revolution'), def.hor );
+        equal( $pano.reel('revolution_y'), def.ver );
+        start();
+      })
     });
   })
 
