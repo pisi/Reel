@@ -1836,7 +1836,7 @@
                         || px((get(_width_) + spacing) * get(_footage_) - spacing)+___+px((height + spacing) * get(_rows_) * rows * (opt.directional? 2:1) - spacing)
                     t.css({
                       height: is_sprite ? px(height) : null,
-                      backgroundSize: size
+                      backgroundSize: size || null
                     });
                     force || t.trigger('imagesChange');
                   },
