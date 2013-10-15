@@ -195,17 +195,13 @@
     /*
       `velocity` value shouldn't be set on setup, but rather after all images are loaded
     */
-    expect(3);
+    expect(2);
     var
       $reel= $('#image').reel({
         velocity: 3
       })
 
     equal( $reel.reel('velocity'), 0, '`velocity` value at initialization (setup)');
-
-    $reel.bind('loaded.test', function(){
-      equal( $reel.reel('velocity'), 0, '`velocity` value right after loading is complete');
-    });
 
     $(document).bind('opening.test', function(){
       equal( $reel.reel('velocity'), 3, '`velocity` value after initialization (incl. preload) is complete');
