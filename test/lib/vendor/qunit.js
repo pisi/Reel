@@ -501,6 +501,22 @@ QUnit.load = (function() {
 		label.setAttribute("for", "qunit-filter-missing");
 		label.innerHTML = "Hide missing tests (untested code is broken code)";
 		toolbar.appendChild( label );
+
+		var respawn = document.createElement("input");
+		respawn.type = "checkbox";
+		respawn.id = "qunit-respawn";
+		respawn.checked= !!location.params.respawn;
+		addEvent( respawn, "change", function() {
+			if ( location.params.respawn ) var href = location.href.replace(/&respawn/, '')
+			else var href = location.href + '&respawn';
+			location.href = href;
+		});
+		toolbar.appendChild( respawn );
+
+		var label = document.createElement("label");
+		label.setAttribute("for", "qunit-respawn");
+		label.innerHTML = "Auto re-spawn";
+		toolbar.appendChild( label );
 	}
 
 	var main = id('main');
