@@ -28,7 +28,7 @@
 
   module('Issues', reel_test_module_routine);
 
-  test( 'GH-4 Proper background positioning range for stitched non-looping panoramas', function(){
+  asyncTest( 'GH-4 Proper background positioning range for stitched non-looping panoramas', function(){
     /* Github issue 4 bugfix
      * http://github.com/pisi/Reel/issues/#issue/4
      */
@@ -40,23 +40,27 @@
 
     expect(iesaurus ? 4 : 2);
 
-    $pano.reel('frame', 1);
-    if (iesaurus){
-      equiv($pano.css('backgroundPositionX'), '0px', 'Frame 1 (min, X)');
-      equiv($pano.css('backgroundPositionY'), '0px', 'Frame 1 (min, Y)');
-    }else{
-      equiv($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
-    }
-    $pano.reel('frame', 36);
-    if (iesaurus){
-      equiv($pano.css('backgroundPositionX'), -travel+'px', 'Frame 36 (max, X)');
-      equiv($pano.css('backgroundPositionY'), '0px', 'Frame 36 (max, Y)');
-    }else{
-      equiv($pano.css('backgroundPosition'), -travel+'px 0px', 'Frame 36 (max)');
-    }
+    $(document).bind('loaded.test', function(){
+      $pano.reel('frame', 1);
+      if (iesaurus){
+        equiv($pano.css('backgroundPositionX'), '0px', 'Frame 1 (min, X)');
+        equiv($pano.css('backgroundPositionY'), '0px', 'Frame 1 (min, Y)');
+      }else{
+        equiv($pano.css('backgroundPosition'), '0px 0px', 'Frame 1 (min)');
+      }
+      $pano.reel('frame', 36);
+      if (iesaurus){
+        equiv($pano.css('backgroundPositionX'), -travel+'px', 'Frame 36 (max, X)');
+        equiv($pano.css('backgroundPositionY'), '0px', 'Frame 36 (max, Y)');
+      }else{
+        equiv($pano.css('backgroundPosition'), -travel+'px 0px', 'Frame 36 (max)');
+      }
+      start();
+    });
+
   });
 
-  test( 'GH-6 Proper background positioning range for stitched looping panoramas', function(){
+  asyncTest( 'GH-6 Proper background positioning range for stitched looping panoramas', function(){
     /* Github issue 6 bugfix
      * http://github.com/pisi/Reel/issues/#issue/6
      */
@@ -68,20 +72,23 @@
 
     expect(iesaurus ? 4 : 2);
 
-    $pano.reel('frame', 1);
-    if (iesaurus){
-      equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 1 (min, X)');
-      equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 1 (min, Y)');
-    }else{
-      equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
-    }
-    $pano.reel('frame', 36);
-    if (iesaurus){
-      equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 36 (max, X)');
-      equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');
-    }else{
-      equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 36 (max)');
-    }
+    $(document).bind('loaded.test', function(){
+      $pano.reel('frame', 1);
+      if (iesaurus){
+        equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 1 (min, X)');
+        equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 1 (min, Y)');
+      }else{
+        equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 1 (min)');
+      }
+      $pano.reel('frame', 36);
+      if (iesaurus){
+        equiv($pano.css('backgroundPositionX'), '0px', 'Looping - frame 36 (max, X)');
+        equiv($pano.css('backgroundPositionY'), '0px', 'Looping - frame 36 (max, Y)');
+      }else{
+        equiv($pano.css('backgroundPosition'), '0px 0px', 'Looping - frame 36 (max)');
+      }
+      start();
+    });
   });
 
   asyncTest( 'GH-11 First frame disappears after image sequence loading is complete', function(){

@@ -28,7 +28,7 @@
 
   module('Sprite', reel_test_module_routine);
 
-  test( 'Multi-row: Frame shifting (4 rows)', function(){
+  asyncTest( 'Multi-row: Frame shifting (4 rows)', function(){
 
     var
       iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
@@ -64,23 +64,26 @@
 
     expect(iesaurus ? 21 : 17);
 
-    equal( $reel.reel('frame'), 2, 'Initial frame');
+    $(document).bind('loaded.test', function(){
+      equal( $reel.reel('frame'), 2, 'Initial frame');
 
-    $.each(entries, function(ix, it){
-      $reel.reel('row', Number(ix));
-      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
-      equal( $reel.data('tier').toFixed(4), it[0], 'Row '+ix+': Tier');
-      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
-      if (iesaurus){
-        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
-        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
-      }else{
-        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
-      }
+      $.each(entries, function(ix, it){
+        $reel.reel('row', Number(ix));
+        equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+        equal( $reel.data('tier').toFixed(4), it[0], 'Row '+ix+': Tier');
+        equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+        if (iesaurus){
+          equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+          equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+        }else{
+          equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+        }
+      });
+      start();
     });
   });
 
-  test( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
+  asyncTest( 'Multi-row: Uneven rows frame shifting (3 rows)', function(){
     var
       iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
       selector= '#image',
@@ -111,17 +114,20 @@
 
     expect(iesaurus ? 15 : 12);
 
-    $.each(entries, function(ix,it){
-      $reel.reel('row', Number(ix));
-      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
-      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
-      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
-      if (iesaurus){
-        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
-        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
-      }else{
-        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
-      }
+    $(document).bind('loaded.test', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('row', Number(ix));
+        equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+        equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+        equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+        if (iesaurus){
+          equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+          equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+        }else{
+          equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+        }
+      });
+      start();
     });
   });
 
@@ -166,7 +172,7 @@
     });
   });
 
-  test( 'Multi-row: Non-looping stitched panorama shifting (3 rows)', function(){
+  asyncTest( 'Multi-row: Non-looping stitched panorama shifting (3 rows)', function(){
     var
       iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
       selector= '#image',
@@ -196,21 +202,24 @@
 
     expect(iesaurus ? 15 : 12);
 
-    $.each(entries, function(ix,it){
-      $reel.reel('row', Number(ix));
-      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
-      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
-      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
-      if (iesaurus){
-        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
-        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
-      }else{
-        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
-      }
+    $(document).bind('loaded.test', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('row', Number(ix));
+        equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+        equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+        equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+        if (iesaurus){
+          equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+          equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+        }else{
+          equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+        }
+      });
+      start();
     });
   });
 
-  test( 'Multi-row: Looping stitched panorama shifting (3 rows)', function(){
+  asyncTest( 'Multi-row: Looping stitched panorama shifting (3 rows)', function(){
     var
       iesaurus = browser.msie && +browser.version < 9, // Flag for IE 8- quirks
       selector= '#image',
@@ -239,21 +248,24 @@
 
     expect(iesaurus ? 15 : 12);
 
-    $.each(entries, function(ix,it){
-      $reel.reel('row', Number(ix));
-      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
-      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
-      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
-      if (iesaurus){
-        equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
-        equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
-      }else{
-        equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
-      }
+    $(document).bind('loaded.test', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('row', Number(ix));
+        equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+        equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+        equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+        if (iesaurus){
+          equiv( $reel.css('backgroundPositionX'), it[2], 'Row '+ix+': Sprite CSS background X position');
+          equiv( $reel.css('backgroundPositionY'), it[3], 'Row '+ix+': Sprite CSS background Y position');
+        }else{
+          equiv( $reel.css('backgroundPosition'), it[2]+' '+it[3], 'Row '+ix+': Sprite CSS background position');
+        }
+      });
+      start();
     });
   });
 
-  test( 'Multi-row: `$.reel.sequence()` ignores number of stitched frames and loads one file per row', function()
+  asyncTest( 'Multi-row: `$.reel.sequence()` ignores number of stitched frames and loads one file per row', function()
   {
     expect(1);
     var
@@ -264,14 +276,17 @@
         rows: 3
       })
 
-    deepEqual( $reel.reel('cached'), [
-      'stitched-row-01.png',
-      'stitched-row-02.png',
-      'stitched-row-03.png'
-    ]);
+    $(document).bind('loaded.test', function(){
+      deepEqual( $reel.reel('cached'), [
+        'stitched-row-01.png',
+        'stitched-row-02.png',
+        'stitched-row-03.png'
+      ]);
+      start();
+    });
   });
 
-  test( 'Multi-row: Stitched panorama shifting of individual images (5 rows)', function()
+  asyncTest( 'Multi-row: Stitched panorama shifting of individual images (5 rows)', function()
   {
     expect(12);
     var
@@ -292,12 +307,15 @@
         '1': [         0,           3,      'stitched-row-01.png' ]
       }
 
-    $.each(entries, function(ix,it){
-      $reel.reel('row', Number(ix));
-      equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
-      equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
-      equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
-      ok( $reel.css('backgroundImage').search(it[2]) >= 0, 'Row '+ix+': CSS background image file');
+    $(document).bind('loaded.test', function(){
+      $.each(entries, function(ix,it){
+        $reel.reel('row', Number(ix));
+        equal( $reel.data('row'), ix, 'Row '+ix+': Interpolated row');
+        equal( $reel.data('tier'), it[0], 'Row '+ix+': Interpolated row');
+        equal( $reel.data('frame'), it[1], 'Row '+ix+': Shifted frame');
+        ok( $reel.css('backgroundImage').search(it[2]) >= 0, 'Row '+ix+': CSS background image file');
+      });
+      start();
     });
   });
 

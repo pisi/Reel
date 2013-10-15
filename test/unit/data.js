@@ -87,64 +87,77 @@
     })
   });
 
-  test( 'Contents of attributes backup `.reel("backup")`', function(){
+  asyncTest( 'Contents of attributes backup `.reel("backup")`', function(){
 
     expect(6);
     var
       $reel= $('#image').reel()
 
-    ok( is('Object', $reel.reel('backup')), '`.reel("backup")` Object');
-    ok( is('Object', $reel.reel('backup').attr), '`attr` String');
-    ok( is('String', $reel.reel('backup').attr.src), '`attr.src` String');
-    ok( is('String', $reel.reel('backup').attr.width), '`attr.width` String');
-    ok( is('String', $reel.reel('backup').attr.height), '`attr.height` String');
-    ok( is('Object', $reel.reel('backup').data), '`data` String');
+    $(document).bind('loaded.test', function(){
+      ok( is('Object', $reel.reel('backup')), '`.reel("backup")` Object');
+      ok( is('Object', $reel.reel('backup').attr), '`attr` String');
+      ok( is('String', $reel.reel('backup').attr.src), '`attr.src` String');
+      ok( is('String', $reel.reel('backup').attr.width), '`attr.width` String');
+      ok( is('String', $reel.reel('backup').attr.height), '`attr.height` String');
+      ok( is('Object', $reel.reel('backup').data), '`data` String');
+      start();
+    });
 
   });
 
-  test( 'Stage dimensions inside `.reel("width")` and `.reel("height")', function(){
+  asyncTest( 'Stage dimensions inside `.reel("width")` and `.reel("height")', function(){
 
     expect(2);
     var
       $reel= $('#image').reel()
 
-    ok( is('Number', $reel.reel('width')), '`width` Number');
-    ok( is('Number', $reel.reel('height')), '`height` Number');
+    $(document).bind('loaded.test', function(){
+      ok( is('Number', $reel.reel('width')), '`width` Number');
+      ok( is('Number', $reel.reel('height')), '`height` Number');
+      start();
+    });
 
   });
 
-  test( 'Write access is provided by `.reel( name, value )`', function(){
+  asyncTest( 'Write access is provided by `.reel( name, value )`', function(){
 
     expect(1);
     var
       $reel= $('#image').reel(),
       value= 5
 
-    $reel.reel('something', value);
-    equal( $reel.reel('something'), value, '`"something"` value set' )
+    $(document).bind('loaded.test', function(){
+      $reel.reel('something', value);
+      equal( $reel.reel('something'), value, '`"something"` value set' )
+      start();
+    });
 
   });
 
-  test( 'Changing a data key value triggers respective change event', function(){
+  asyncTest( 'Changing a data key value triggers respective change event', function(){
 
     expect(4);
     var
       value= 5,
       $reel= $('#image').reel()
 
-    $(document).bind('somethingChange.test', function(evnt, nothing, something){
-      ok(true, 'Change event has been triggered once');
-      ok( is('Object', evnt), 'The event handler is passed the event as first argument as usual,');
-      ok( typeof nothing === 'undefined', 'always `undefined` as the second argument,');
-      equal( something, value, 'and finally the actual value as the third/last argument');
-    })
-    $reel.reel('something', null); // Change from undefined to anything else is no longer considered as change
-                                   // so in order to test this, we need a non-undefined initial value
-    $reel.reel('something', value);
+    $(document).bind('loaded.test', function(){
+      $(document).bind('somethingChange.test', function(evnt, nothing, something){
+        ok(true, 'Change event has been triggered once');
+        ok( is('Object', evnt), 'The event handler is passed the event as first argument as usual,');
+        ok( typeof nothing === 'undefined', 'always `undefined` as the second argument,');
+        equal( something, value, 'and finally the actual value as the third/last argument');
+      })
+      $reel.reel('something', null); // Change from undefined to anything else is no longer considered as change
+                                     // so in order to test this, we need a non-undefined initial value
+      $reel.reel('something', value);
+
+      start();
+    });
 
   });
 
-  test( 'Instance data get cleared on teardown and original data are recovered from the backup', function(){
+  asyncTest( 'Instance data get cleared on teardown and original data are recovered from the backup', function(){
 
     expect(12);
     var
@@ -154,34 +167,40 @@
       $image= $('#image').data(key, value),
       $reel= $image.reel()
 
-    ok( $image.data(key), 'Test probe key exists in the data prior to `.reel()` call');
-    equal( $image.data(key), value, 'And it indeed is our verified probe');
+    $(document).bind('loaded.test', function(){
+      ok( $image.data(key), 'Test probe key exists in the data prior to `.reel()` call');
+      equal( $image.data(key), value, 'And it indeed is our verified probe');
 
-    $image.reel();
-    ok( $image.data(key), 'Test probe exists even in the running instance after the `.reel() call');
-    equal( $image.data(key), value, 'And it still is the same probe');
-    ok( is('Number', $image.data('frame')), 'Instance data are accessible (`"frame"`)');
-    ok( is('Number', $image.data('width')), 'Instance data are accessible (`"width"`)');
-    ok( is('Array', $image.data('images')), 'Instance data are accessible (`"images"`)');
+      $image.reel();
+      ok( $image.data(key), 'Test probe exists even in the running instance after the `.reel() call');
+      equal( $image.data(key), value, 'And it still is the same probe');
+      ok( is('Number', $image.data('frame')), 'Instance data are accessible (`"frame"`)');
+      ok( is('Number', $image.data('width')), 'Instance data are accessible (`"width"`)');
+      ok( is('Array', $image.data('images')), 'Instance data are accessible (`"images"`)');
 
-    $image.unreel();
-    ok( $image.data(key), 'Test probe is still present even after `.unreel() call');
-    equal( $image.data(key), value, 'And it is our probe');
-    ok( typeof $image.data('frame') === 'undefined', 'Instance data are gone (`"frame"`)');
-    ok( typeof $image.data('height') === 'undefined', 'Instance data are gone (`"height"`)');
-    ok( typeof $image.data('images') === 'undefined', 'Instance data are gone (`"images"`)');
+      $image.unreel();
+      ok( $image.data(key), 'Test probe is still present even after `.unreel() call');
+      equal( $image.data(key), value, 'And it is our probe');
+      ok( typeof $image.data('frame') === 'undefined', 'Instance data are gone (`"frame"`)');
+      ok( typeof $image.data('height') === 'undefined', 'Instance data are gone (`"height"`)');
+      ok( typeof $image.data('images') === 'undefined', 'Instance data are gone (`"images"`)');
+      start();
+    });
 
   });
 
-  test( 'Options used in `.reel(options)` call are stored in `"options"` data key', function(){
+  asyncTest( 'Options used in `.reel(options)` call are stored in `"options"` data key', function(){
 
     expect(2);
     var
       path= 'test_path',
       $reel= $('#image').reel({ path: path })
 
-    equal( $reel.data('options').path, path, '`path` key exists and equals');
-    equal( $reel.data('options').frames, 36, 'along with defaults for all other options');
+    $(document).bind('loaded.test', function(){
+      equal( $reel.data('options').path, path, '`path` key exists and equals');
+      equal( $reel.data('options').frames, 36, 'along with defaults for all other options');
+      start();
+    });
 
   });
 
@@ -569,7 +588,7 @@
   },
   function(designation, def){
 
-    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
+    asyncTest( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
 
       expect(3);
 
@@ -584,10 +603,14 @@
         get= function(name){ return $reel.data(name) },
         substitute= $.reel.substitute(def.url, get)
 
-      equal( $reel.reel('width'), def.width, 'Correct target width');
-      equal( $reel.reel('height'), def.height, 'Correct target height');
+      $(document).bind('loaded.test', function(){
+        equal( $reel.reel('width'), def.width, 'Correct target width');
+        equal( $reel.reel('height'), def.height, 'Correct target height');
 
-      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+        equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+
+        start();
+      });
 
     });
   });
@@ -599,7 +622,7 @@
   },
   function(designation, def){
 
-    test( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
+    asyncTest( '`$.reel.substitute()` substitutes data values in image resource URLs - '+designation+' (`'+def.url+'`)', function(){
 
       expect(2);
 
@@ -610,12 +633,15 @@
         get= function(name){ return $reel.data(name) },
         substitute= $.reel.substitute(def.url, get)
 
-      ok( substitute.match(def.target), 'URL with substituted value(s): `'+substitute+'`');
+      $(document).bind('loaded.test', function(){
+        ok( substitute.match(def.target), 'URL with substituted value(s): `'+substitute+'`');
+        start();
+      });
 
     });
   });
 
-  test( '`$.reel.substitutes` object for custom substitution definitions', function(){
+  asyncTest( '`$.reel.substitutes` object for custom substitution definitions', function(){
 
     expect(3);
 
@@ -629,7 +655,10 @@
       get= function(name){ return $reel.data(name) },
       substitute= $.reel.substitute(url, get)
 
-    equal( substitute, url, 'Unrecognized mark will pass through unchanged: `'+substitute+'`');
+    $(document).bind('loaded.test', function(){
+      equal( substitute, url, 'Unrecognized mark will pass through unchanged: `'+substitute+'`');
+      start();
+    });
 
   });
 
@@ -640,7 +669,7 @@
   },
   function(designation, def){
 
-    test( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
+    asyncTest( '`$.reel.substitute()` with custom substitution function - '+designation+' (`'+def.url+'`)', function(){
 
       expect(2);
 
@@ -655,7 +684,10 @@
         get= function(name){ return $reel.data(name) },
         substitute= $.reel.substitute(def.url, get)
 
-      equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+      $(document).bind('loaded.test', function(){
+        equal( substitute, def.target, 'URL with substituted value(s): `'+substitute+'`');
+        start();
+      });
 
     });
   });
@@ -694,7 +726,7 @@
     });
   });
 
-  test( 'Data-configured `&lt;img&gt;` tags are turned into Reel instances upon scan', function(){
+  asyncTest( 'Data-configured `&lt;img&gt;` tags are turned into Reel instances upon scan', function(){
 
     expect(7);
 
@@ -717,10 +749,14 @@
 
     $.reel.scan();
 
-    ok( $img.parent().is('.reel-overlay'), 'Image is nested inside the Reel overlay (`.reel-overlay`)' );
-    $.each(options, function(option, value){
-      equal( $img.reel('options')[option], value, 'Tested `'+option+'` value picked up.');
-      equal( $img.reel(option), value, 'Tested `'+option+'` actually used.');
+    $(document).bind('loaded.test', function(){
+      ok( $img.parent().is('.reel-overlay'), 'Image is nested inside the Reel overlay (`.reel-overlay`)' );
+      $.each(options, function(option, value){
+        equal( $img.reel('options')[option], value, 'Tested `'+option+'` value picked up.');
+        equal( $img.reel(option), value, 'Tested `'+option+'` actually used.');
+      });
+
+      start();
     });
 
   });
@@ -809,7 +845,7 @@
 
   });
 
-  test( 'Footage will equal `frames` if total number of frames is less than default footage', function(){
+  asyncTest( 'Footage will equal `frames` if total number of frames is less than default footage', function(){
 
     expect(2);
 
@@ -819,8 +855,11 @@
         frames: frames
       })
 
-    ok( $reel.reel('footage') != $.reel.def.footage, 'Other than default');
-    equal( $reel.reel('footage'), frames, 'Footage equals frames');
+    $(document).bind('loaded.test', function(){
+      ok( $reel.reel('footage') != $.reel.def.footage, 'Other than default');
+      equal( $reel.reel('footage'), frames, 'Footage equals frames');
+      start();
+    });
 
   });
 

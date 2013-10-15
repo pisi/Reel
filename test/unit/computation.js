@@ -271,14 +271,17 @@
     start();
   });
 
-  test( '`$.reel.preload.linear` for linear order of preloaded images', function(){
+  asyncTest( '`$.reel.preload.linear` for linear order of preloaded images', function(){
     expect(2);
     var
       images= '1,2,3,4,5,6,7,8,9,10'.split(/,/),
       $reel= $('#image').reel({ images: new Array().concat(images), preload: 'linear' })
 
-    ok( typeof $.reel.preload.linear == 'function', '`$.reel.preload.linear` available');
-    deepEqual( $reel.data('cached'), images, 'What comes in, comes out');
+    $(document).bind('loaded.test', function(){
+      ok( typeof $.reel.preload.linear == 'function', '`$.reel.preload.linear` available');
+      deepEqual( $reel.data('cached'), images, 'What comes in, comes out');
+      start();
+    });
   });
 
   test( '`$.reel.preload.fidelity` for evenly spread preloaded images', function(){
@@ -423,13 +426,16 @@
     }
   },
   function(ix, def){
-    test( 'Fidelity spreading of preloaded images in "' + ix + '" scenario', function(){
+    asyncTest( 'Fidelity spreading of preloaded images in "' + ix + '" scenario', function(){
       expect(2);
       var
         $reel= $('#image').reel(def.options)
 
-      equal( $reel.data('cached').join(', '), def.ordered.join(', '), ix+' frames starting at frame '+def.options.frame);
-      equal( $.unique($reel.data('cached')).length, def.ordered.length, 'equal length');
+      $(document).bind('loaded.test', function(){
+        equal( $reel.data('cached').join(', '), def.ordered.join(', '), ix+' frames starting at frame '+def.options.frame);
+        equal( $.unique($reel.data('cached')).length, def.ordered.length, 'equal length');
+        start();
+      });
     });
   });
 
@@ -677,7 +683,7 @@
     'sequence': { options: { images: '#.jpg', responsive: true } }
   },
   function(name, def){
-    test( 'Values stored in `truescale` scaled by the `ratio` when responsive ('+name+')', function(){
+    asyncTest( 'Values stored in `truescale` scaled by the `ratio` when responsive ('+name+')', function(){
       var
         responsive_keys= [
           'width',
@@ -689,11 +695,14 @@
 
       expect(1 + responsive_keys.length * 2);
     
-      ok( typeof $reel.reel('truescale') == 'object', 'Truescale dimensions backup of type Object' );
+      $(document).bind('loaded.test', function(){
+        ok( typeof $reel.reel('truescale') == 'object', 'Truescale dimensions backup of type Object' );
 
-      $.each(responsive_keys, function(ix, key){
-        ok( typeof $reel.reel('truescale')[key] == 'number', 'Truescale `'+key+'` backup of type Number' );
-        equal( $reel.reel(key), Math.round($reel.reel('truescale')[key] * $reel.reel('ratio')), 'Value of `'+key+'` scaled' );
+        $.each(responsive_keys, function(ix, key){
+          ok( typeof $reel.reel('truescale')[key] == 'number', 'Truescale `'+key+'` backup of type Number' );
+          equal( $reel.reel(key), Math.round($reel.reel('truescale')[key] * $reel.reel('ratio')), 'Value of `'+key+'` scaled' );
+        });
+        start();
       });
 
     });
@@ -704,7 +713,7 @@
     'sprite': { options: { responsive: true } }
   },
   function(name, def){
-    test( 'Values stored in `truescale` scaled by the `ratio` when responsive ('+name+')', function(){
+    asyncTest( 'Values stored in `truescale` scaled by the `ratio` when responsive ('+name+')', function(){
       var
         responsive_keys= [
           'width',
@@ -718,18 +727,21 @@
         ],
         $reel= $('#image').reel(def.options)
 
-      if (browser.msie && +browser.version < 9){
-        // Individual values tests are omitted in tests as responsiveness with sprites or stitched
-        // is supported only by IE 9+. IE 8 lacks backround-size support in CSS.
-        expect(1);
-      }else{
-        expect(1 + responsive_keys.length * 2);
-      
-        $.each(responsive_keys, function(ix, key){
-          ok( typeof $reel.reel('truescale')[key] == 'number', 'Truescale `'+key+'` backup of type Number' );
-          equal( $reel.reel(key), Math.round($reel.reel('truescale')[key] * $reel.reel('ratio')), 'Value of `'+key+'` scaled' );
-        });
-      }
+      $(document).bind('loaded.test', function(){
+        if (browser.msie && +browser.version < 9){
+          // Individual values tests are omitted in tests as responsiveness with sprites or stitched
+          // is supported only by IE 9+. IE 8 lacks backround-size support in CSS.
+          expect(1);
+        }else{
+          expect(1 + responsive_keys.length * 2);
+        
+          $.each(responsive_keys, function(ix, key){
+            ok( typeof $reel.reel('truescale')[key] == 'number', 'Truescale `'+key+'` backup of type Number' );
+            equal( $reel.reel(key), Math.round($reel.reel('truescale')[key] * $reel.reel('ratio')), 'Value of `'+key+'` scaled' );
+          });
+        }
+        start();
+      });
 
       ok( typeof $reel.reel('truescale') == 'object', 'Truescale dimensions backup of type Object' );
     });

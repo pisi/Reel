@@ -28,38 +28,48 @@
 
   module('Rendering', reel_test_module_routine);
 
-  test( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
+  asyncTest( 'The DOM element gets its own generated ID if it doesn\'t currently has one', function(){
     expect(3);
     var
       $reel_with_id= $('#image').reel(),
       now= new Date(),
       $reel_without_id= $('.no_id:first').reel()
 
-    // Given ID attribute
-    equal( $reel_with_id.attr('id'), 'image');
+    $(document).bind('loaded.test', function(){
+      // Given ID attribute
+      equal( $reel_with_id.attr('id'), 'image');
 
-    // The generated ID consists of "reel-" followed by a timestamp
-    equal( $reel_without_id.attr('id').substr(0, 5), 'reel-');
-    equal( Math.floor(+$reel_without_id.attr('id').substr(5) / 10000), Math.floor(+now / 10000));
+      // The generated ID consists of "reel-" followed by a timestamp
+      equal( $reel_without_id.attr('id').substr(0, 5), 'reel-');
+      equal( Math.floor(+$reel_without_id.attr('id').substr(5) / 10000), Math.floor(+now / 10000));
+
+      start();
+    });
   });
 
-  test( 'Overlay: is created with proper ID', function(){
+  asyncTest( 'Overlay: is created with proper ID', function(){
     expect(1);
     var
       suffix= '-abc',
       $reel= $('#image').reel({ suffix: suffix }),
       $overlay= $('#image' + suffix)
 
-    ok( $overlay.length, 'Has the right ID (original image ID + `suffix`)' );
+    $(document).bind('loaded.test', function(){
+      ok( $overlay.length, 'Has the right ID (original image ID + `suffix`)' );
+      start();
+    });
   });
 
-  test( 'Overlay: has the proper `reel-overlay` class', function(){
+  asyncTest( 'Overlay: has the proper `reel-overlay` class', function(){
     expect(1);
     var
       $reel= $('#image').reel(),
       $overlay= $('#image-reel')
 
-    ok( $overlay.hasClass('reel-overlay'), 'Has the class');
+    $(document).bind('loaded.test', function(){
+      ok( $overlay.hasClass('reel-overlay'), 'Has the class');
+      start();
+    });
   });
 
   asyncTest( 'Indicator: is sticked to the bottom edge of the container no matter its size', function(){
@@ -151,18 +161,22 @@
       });
   });
 
-  test( 'Indicator: Custom style may be applied to indicator via `.reel-indicator`', function(){
+  asyncTest( 'Indicator: Custom style may be applied to indicator via `.reel-indicator`', function(){
     expect(2);
     var
       $reel= $('#image').reel({ indicator: 10 }),
       $indicator= $('#image-reel .reel-indicator');
 
-    $indicator.css({         // This may as well be done in external CSS
-      background: '#fff',
-      opacity: 0.5
-    })
-    equiv( $indicator.css('backgroundColor'), '#ffffff', 'Custom background' );
-    equiv( $indicator.css('opacity'), '0.5', 'Custom opacity' );
+    $(document).bind('loaded.test', function(){
+      $indicator.css({         // This may as well be done in external CSS
+        background: '#fff',
+        opacity: 0.5
+      })
+      equiv( $indicator.css('backgroundColor'), '#ffffff', 'Custom background' );
+      equiv( $indicator.css('opacity'), '0.5', 'Custom opacity' );
+
+      start();
+    });
   });
 
   $.each([
@@ -184,29 +198,35 @@
     });
   });
 
-  test( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
+  asyncTest( 'For each instance there is a stylesheet prepended to stylesheets existing at that time', function(){
     expect(4);
     var
       $reel= $('#image').reel(),
       $style= $reel.data('style')
 
-    ok( is('Object', $style), '`"style"` data key on instance');
-    equiv( $style[0].nodeName, 'style', '`<style>` DOM node');
-    ok( !$style.prevAll('style').length, 'At the bottom of the stack (all others inherit from it)');
+    $(document).bind('loaded.test', function(){
+      ok( is('Object', $style), '`"style"` data key on instance');
+      equiv( $style[0].nodeName, 'style', '`<style>` DOM node');
+      ok( !$style.prevAll('style').length, 'At the bottom of the stack (all others inherit from it)');
 
-    $reel.unreel();
-    ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
+      $reel.unreel();
+      ok( !$style.parent().length, 'Each instance removes its own style from the DOM at teardown');
+      start();
+    });
   });
 
-  test( 'Instance wrapper carries a class name defined by the `klass` option', function(){
+  asyncTest( 'Instance wrapper carries a class name defined by the `klass` option', function(){
     expect(2);
     var
       $reel= $('#image').reel({
         klass: 'my_own_class'
       })
 
-    ok( $reel.parent().is('.my_own_class'), '`.my_own_class` it is on the wrapper');
-    ok( !$reel.parent().find('.my_own_class').length, 'and not anywhere within');
+    $(document).bind('loaded.test', function(){
+      ok( $reel.parent().is('.my_own_class'), '`.my_own_class` it is on the wrapper');
+      ok( !$reel.parent().find('.my_own_class').length, 'and not anywhere within');
+      start();
+    });
   });
 
   asyncTest( 'When no `cursor` option is specified, default cursor is used', function(){
@@ -358,17 +378,20 @@
   // Test image dimensions are 276x126px
   // Fixed tests stage width is 900px
   function(name, def){
-    test( 'Correct background size '+name, function()
+    asyncTest( 'Correct background size '+name, function()
     {
       expect(1);
       var
         $reel= $('#image').reel(def.options)
 
-      if (browser.msie && browser.version > 8){
-        equiv( $reel.css('backgroundSize'), def.expected, '');
-      }else{
-        ok( 'Tests omitted. IE8- doesn\'t have support for this' )
-      }
+      $(document).bind('loaded.test', function(){
+        if (browser.msie && browser.version > 8){
+          equiv( $reel.css('backgroundSize'), def.expected, '');
+        }else{
+          ok( 'Tests omitted. IE8- doesn\'t have support for this' )
+        }
+        start();
+      });
 
     });
   });

@@ -137,15 +137,23 @@
 
   });
 
-  test( 'Pseudo-testing for the "leader" - the oldest living instance on page', function()
+  asyncTest( 'Pseudo-testing for the "leader" - the oldest living instance on page', function()
   {
+
+    var
+      count= 0
 
     $('#image2, #image').reel();
     $('#image_width_only, .no_id').reel();
 
-    equal( $.reel.instances.length, 4, 'We\'ve just setup 4 instances (2 + 2)');
-    equal( $.reel.instances.first().attr('id'), 'image', '`.first()` returns the oldest (by ID)');
-    equal( $.reel.instances[0].id, 'image', '`[0] too`');
+    $(document).bind('loaded.test', function(){
+      if (++count == 4){
+        equal( $.reel.instances.length, 4, 'We\'ve just setup 4 instances (2 + 2)');
+        equal( $.reel.instances.first().attr('id'), 'image', '`.first()` returns the oldest (by ID)');
+        equal( $.reel.instances[0].id, 'image', '`[0] too`');
+        start();
+      }
+    })
 
   });
 
