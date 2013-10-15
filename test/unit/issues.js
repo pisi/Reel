@@ -419,6 +419,7 @@
         ok( !ticked, 'Ticker positively not ticking');
         var
           new_tempo = 15,
+          lazy_tempo = new_tempo / ($.reel.lazy? $.reel.def.laziness : 1),
           $container = $('#non_image'),
           $image = $('<img>', {
             id: 'injected_image',
@@ -439,13 +440,13 @@
           $(document).bind('tick.reel.test', function(){
             ticked= true;
           });
-          equal( $.reel.leader('tempo'), new_tempo, 'Leader tempo reported again' );
           setTimeout(function(){
+            equal( $.reel.leader('tempo'), lazy_tempo, 'Leader tempo reported again' );
             ok( ticked, 'Newly created instance restarts the ticker')
             $reel.unreel();
             $container.empty();
             start();
-          }, 200);
+          }, 500);
         });
       }, 200);
     })

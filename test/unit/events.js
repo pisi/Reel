@@ -87,13 +87,13 @@
       .bind('loaded.test', function(){
         setTimeout(function(){
           $reel.trigger('play');
-        }, 50);
+        }, 200);
         setTimeout(function(){
           equal( $reel.data('playing'), true, 'Instance played with non-zero `speed` parameter starts to play');
           equal( $reel.data('speed'), speed, 'Stored internal speed value');
           start();
-        }, 100);
-      });
+        }, 400);
+      })
   });
 
   asyncTest( '`"play"` event has no effect, when no `speed` option was specified or is zero', function(){
@@ -106,14 +106,14 @@
 
         setTimeout(function(){
           $reel.trigger('play');
-        }, 50);
+        }, 200);
 
         setTimeout(function(){
           equal( $reel.data('playing'), false, 'Instance played with non-zero `speed` parameter starts to play');
           equal( $reel.data('speed'), 0, 'Stored internal speed value');
 
           start();
-        }, 100);
+        }, 400);
 
       })
   });
@@ -133,12 +133,12 @@
           equal( $reel.data('playing'), false, 'Instance initiated with `speed: 0` is not playing');
           equal( $reel.data('speed'), initial_speed, 'Stored internal speed value');
           $reel.trigger('play', [ new_speed ]);
-        }, 50);
+        }, 200);
         setTimeout(function(){
           equal( $reel.data('playing'), true, 'Instance played with non-zero `speed` parameter starts to play');
           equal( $reel.data('speed'), new_speed, 'Stored internal speed value');
           start();
-        }, 100);
+        }, 400);
       });
   });
 
@@ -170,7 +170,7 @@
       waiter= setTimeout(function(){
         ok( true, '`didn\'t make it to the `"wheel"` event');
         start();
-      }, 100);
+      }, 1000);
 
     $(document).bind('loaded.test', function(){
       $(document).bind('wheel.test', function(){

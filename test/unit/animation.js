@@ -53,11 +53,11 @@
           equals( ticks_copy, ticks, 'Ticker is stopped.');
 
           start();
-        }, 100);
+        }, 500);
 
-      }, 100);
+      }, 500);
 
-    }, 100);
+    }, 500);
 
     function tick(){
       ticks++
@@ -126,9 +126,9 @@
         ok( cost_of_three > 0, 'Non-zero cost of two more instances (' + cost_of_three + ' ms)' )
         start();
 
-      }, 100);
+      }, 500);
 
-    }, 100);
+    }, 500);
 
   });
 
