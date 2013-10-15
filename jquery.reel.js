@@ -1567,7 +1567,6 @@
                       rows= opt.rows,
                       path= opt.path,
                       base= frame % frames || frames,
-                      ready= !!get(_preloaded_),
                       frame_row= (frame - base) / frames + 1,
                       frame_tier= (frame_row - 1) / (rows - 1),
                       row= get(_row_),
@@ -1578,20 +1577,19 @@
                       frame= opt.inversed ? footage + 1 - frame : frame,
                       frame= frame + footage
                     var
-                      horizontal= opt.horizontal,
                       stitched= get(_stitched_),
                       images= get(_images_),
-                      is_sprite= !images.length || stitched,
-                      spacing= get(_spacing_),
-                      width= get(_width_),
-                      height= get(_height_)
+                      is_sprite= !images.length || stitched
                     if (!is_sprite){
-                      var
-                        frameshot= images[frame - 1]
                       get(_responsive_) && gauge();
-                      ready && t.attr({ src: reen(reel.substitute(path + frameshot, get)) })
+                      get(_preloaded_) && t.attr({ src: reen(reel.substitute(path + images[frame - 1], get)) });
                     }else{
+                      var
+                        spacing= get(_spacing_),
+                        width= get(_width_),
+                        height= get(_height_)
                       if (!stitched) var
+                        horizontal= opt.horizontal,
                         minor= (frame % footage) - 1,
                         minor= minor < 0 ? footage - 1 : minor,
                         major= floor((frame - 0.1) / footage),
