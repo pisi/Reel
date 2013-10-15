@@ -51,7 +51,7 @@ License
 Requirements
 ------------
 
-* **[jQuery 1.5 or higher][jquery]**
+* **[jQuery 1.6.1 or higher][jquery]**
 * Optionaly you can also include one of these two handy jQuery plugins (recommended):
     * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
     * or [jQuery.event.special.wheel][wheel] is also a nice alternative

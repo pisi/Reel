@@ -996,7 +996,7 @@
         ok( plugin.contributors.length == authors.length - 1, 'Contributors match AUTHORS.txt (by count)');
 
         ok( plugin.dependencies, 'Dependencies present');
-        equal( plugin.dependencies.jquery, '>=1.5', 'jQuery dependency');
+        equal( plugin.dependencies.jquery, '>=1.6.2', 'jQuery dependency');
         equal( plugin.dependencies.mousewheel, '>=3.0.5', 'jQuery Mouswheel dependency (optional)');
 
         ok( plugin.licenses, 'Licenses present');

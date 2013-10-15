@@ -15,6 +15,7 @@ Version 1.3 RC
 * URLs containing special markup (`@W`, `@H` or `@T`) will get it substituted with actualy
   values (`width` and `height` data values or timestamp).
 * New `$.reel.substitutes` object for custom substitution methods.
+* The minimal required version of jQuery has been increased to 1.6.2.
 
 ### Data
 * Values of `image` and `images` data can now be changed on the fly (GH-190).

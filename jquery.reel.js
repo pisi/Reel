@@ -24,9 +24,9 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3rc
- * Updated: 2013-09-18
+ * Updated: 2013-10-16
  *
- * Requires jQuery 1.5 or higher
+ * Requires jQuery 1.6.2 or higher
  */
 
 /*
@@ -69,11 +69,10 @@
   // jQuery
   // ------
   //
-  // One vital requirement is the correct jQuery. Reel requires at least version 1.5
+  // One vital requirement is the correct jQuery. Reel requires at least version 1.6.2
   // and a make sure check is made at the very beginning.
   //
-  if (!$ || +$().jquery.replace('.', __).substr(0, 2) < 15) return;
-
+  if (!$ || +($().jquery.replace(/\./g, '')+'0').substr(0, 3) < 162) return;
   // ----------------
   // Global Namespace
   // ----------------
