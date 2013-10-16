@@ -288,8 +288,7 @@ and a make sure check is made at the very beginning.</p>
             <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (!$) <span class="keyword">return</span>;
   <span class="keyword">var</span>
     version= $ &amp;&amp; $().jquery.split(<span class="regexp">/\./</span>)
-
-  <span class="keyword">if</span> (!version || +(pad(version[<span class="number">0</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">1</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">2</span>], <span class="number">2</span>, <span class="string">'0'</span>)) &lt; <span class="number">10602</span>) <span class="keyword">return</span>;</pre></div></div>
+  <span class="keyword">if</span> (!version || +(pad(version[<span class="number">0</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">1</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">2</span>] || <span class="string">''</span>, <span class="number">2</span>, <span class="string">'0'</span>)) &lt; <span class="number">10602</span>) <span class="keyword">return</span>;</pre></div></div>
             
         </li>
         

@@ -75,8 +75,7 @@
   if (!$) return;
   var
     version= $ && $().jquery.split(/\./)
-
-  if (!version || +(pad(version[0], 2, '0')+pad(version[1], 2, '0')+pad(version[2], 2, '0')) < 10602) return;
+  if (!version || +(pad(version[0], 2, '0')+pad(version[1], 2, '0')+pad(version[2] || '', 2, '0')) < 10602) return;
   // ----------------
   // Global Namespace
   // ----------------
