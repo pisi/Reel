@@ -1074,10 +1074,12 @@
                       multirow= opt.rows > 1
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
                     t.unbind(_click_, shy_setup);
-                    if (touchy){
-                      $area
-                        .bind(_touchstart_, press)
-                    }else{
+                    $area
+                      .bind(_touchstart_, press)
+                      .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
+                      .bind(opt.wheelable ? _mousewheel_ : null, wheel)
+                      .bind(_dragstart_, function(){ return false })
+                    if (!touchy){
                       var
                         cursor= opt.cursor,
                         cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
@@ -1085,16 +1087,12 @@
                       css(__, { cursor: cdn(cursor_up) });
                       css(dot(loading_klass), { cursor: 'wait' });
                       css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor_up) }, true);
-                      $area
-                        .bind(opt.wheelable ? _mousewheel_ : null, wheel)
-                        .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
-                        .bind(_dragstart_, function(){ return false })
                     }
                     if (get(_responsive_)){
                       css(___+dot(klass), { width: '100%', height: _auto_ });
                       $(window).bind(_resize_, slow_gauge);
                     }
-                    function press(e){ return t.trigger('down', [finger(e).clientX, finger(e).clientY, e]) && e.give }
+                    function press(e){ return t.trigger('down', [pointer(e).clientX, pointer(e).clientY, e]) && e.give }
                     function wheel(e, delta){ return !delta || t.trigger('wheel', [delta, e]) && e.give }
                     opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
@@ -1323,25 +1321,19 @@
                         clicked= set(_clicked_, get(_frame_)),
                         clickfree= opt.clickfree,
                         velocity= set(_velocity_, 0),
+                        $area= clickfree ? get(_area_) : pools,
                         origin= last= recenter_mouse(get(_revolution_), x, y)
                       touchy || ev && ev.preventDefault();
                       unidle();
                       no_bias();
                       panned= 0;
                       $(_html_, pools).addClass(panning_klass);
-                      // Browser events differ for touch and mouse, but both of them are treated equally and
-                      // forwarded to the same `"pan"` or `"up"` Events.
-                      if (touchy){
-                        pools
-                        .bind(_touchmove_, drag)
+                      $area
+                        .bind(_touchmove_+___+_mousemove_, drag)
                         .bind(_touchend_+___+_touchcancel_, lift)
-                      }else{
-                        (clickfree ? get(_area_) : pools)
-                        .bind(_mousemove_, drag)
                         .bind(clickfree ? _mouseleave_ : _mouseup_, lift)
-                      }
                     }
-                    function drag(e){ return t.trigger('pan', [finger(e).clientX, finger(e).clientY, e]) && e.give }
+                    function drag(e){ return t.trigger('pan', [pointer(e).clientX, pointer(e).clientY, e]) && e.give }
                     function lift(e){ return t.trigger('up', [e]) && e.give }
                   },
 
@@ -2271,8 +2263,6 @@
         ],
         /* Array in a string (comma-separated values) */
         array:         / *, */,
-        /* Multi touch devices */
-        touchy_agent:  /iphone|ipod|ipad|android|fennec|rim tablet/i,
         /* Lazy (low-CPU mobile devices) */
         lazy_agent:    /\(iphone|ipod|android|fennec|blackberry/i,
         /* Format of frame class flag on the instance */
@@ -2707,7 +2697,7 @@
     // We then only identify the user's browser's capabilities and route around a MSIE's left button
     // identification quirk (IE 8- reports left as right).
     //
-    touchy= reel.touchy= (reel.re.touchy_agent).test(client),
+    touchy= reel.touchy= 'ontouchstart' in window || !!navigator.msMaxTouchPoints,
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
     DRAG_BUTTON= touchy ? undefined : (ie && browser_version < 9) ? 1 : 0,
@@ -2744,7 +2734,7 @@
   function axis(key, value){ return typeof value == _object_ ? value[key] : value }
   function min_max(minimum, maximum, number){ return max(minimum, min(maximum, number)) }
   function negative_when(value, condition){ return abs(value) * (condition ? -1 : 1) }
-  function finger(e){ return touchy ? e.touch || e.originalEvent.touches[0] : e }
+  function pointer(e){ return e.touch || e.originalEvent.touches && e.originalEvent.touches[0] || e }
   function gyro(e){ return e.originalEvent }
   function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + 'px' }
   function hash(value){ return '#' + value }

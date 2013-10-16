@@ -187,7 +187,7 @@
 
     ok( typeof $.reel.re == 'object',                     '`$.reel.re` - regular expressions used by the plugin' );
     ok( $.reel.re.image instanceof RegExp,                '`$.reel.re.image`' );
-    ok( $.reel.re.touchy_agent instanceof RegExp,         '`$.reel.re.touchy_agent`' );
+    ok( $.reel.re.touchy_agent === undefined,             '`$.reel.re.touchy_agent (removed)`' );
     ok( $.reel.re.lazy_agent instanceof RegExp,           '`$.reel.re.lazy_agent`' );
     ok( $.reel.re.frame_klass instanceof RegExp,          '`$.reel.re.frame_klass`' );
     ok( $.reel.re.sequence instanceof RegExp,             '`$.reel.re.sequence`' );
@@ -322,39 +322,6 @@
         'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2a1pre) Gecko/20090317 Fennec/1.0b1'
       ]
     }
-
-  $.each({
-    pass: [
-      'iPhone',
-      'iPod',
-      'iPad',
-      'RIM',
-      'Generic Android',
-      'LG',
-      'HTC',
-      'ZTE',
-      'Samsung',
-      'T-Mobile',
-      'Fennec'
-    ],
-    fail: [
-      'PCs'
-    ]
-  },
-  function(result, agent_ids){
-    $.each(agent_ids, function(ix, group){
-      test( '`$.reel.re.touchy_agent` '+group+' '+(result? 'qualifies' : 'does NOT qualify')+' as "touchy" device', function(){
-        var
-          agent_strings= user_agent[group]
-
-        expect(agent_strings.length);
-
-        $.each(agent_strings, function(){
-          ok( $.reel.re.touchy_agent.test(this) == (result == 'pass'), this );
-        })
-      });
-    });
-  });
 
   $.each({
     pass: [
