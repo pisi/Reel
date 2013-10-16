@@ -138,8 +138,10 @@
         });
 
         if (!isNaN(+version) && !failures){
-          var url= location.href.replace( /jq=[0-9.a-z\-]+/, 'jq=' + ++version );
-          var interval= 5000;
+          if (++version < jquery_versions.length){
+            var url= location.href.replace( /jq=[0-9.a-z\-]+/, 'jq=' + version );
+            var interval= 5000;
+          }
         }else if (location.params.respawn){
           var url= location.href;
           var interval= 60000;
