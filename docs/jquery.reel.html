@@ -504,7 +504,7 @@ entire 360° or not.</p>
 <p>Using boolean switches many user interaction aspects can be turned on and off.
 You can disable the mouse wheel control with <code>wheelable</code>, the drag &amp; throw
 action with <code>throwable</code>, disallow the dragging completely with <code>draggable</code>,
-on &quot;touchy&quot; devices you can disable the browser&#39;s decision to scroll the page
+on touch devices you can disable the browser&#39;s decision to scroll the page
 instead of Reel script and you can of course disable the stepping of Reel by
 clicking on either half of the image with <code>steppable</code>.</p>
 <p>You can even enable <code>clickfree</code> operation,
@@ -2480,7 +2480,10 @@ handler.</p>
                     <span class="keyword">var</span>
                       $overlay= t.parent().append(preloader()),
                       $area= set(_area_, $(opt.area || $overlay )),
-                      multirow= opt.rows &gt; <span class="number">1</span>
+                      multirow= opt.rows &gt; <span class="number">1</span>,
+                      cursor= opt.cursor,
+                      cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
+                      cursor_down= cursor == _hand_ ? drag_cursor_down+___+<span class="string">'!important'</span> : <span class="literal">undefined</span>
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: <span class="string">'translateZ(0)'</span> });
                     t.unbind(_click_, shy_setup);
                     $area
@@ -2488,15 +2491,9 @@ handler.</p>
                       .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                       .bind(opt.wheelable ? _mousewheel_ : <span class="literal">null</span>, wheel)
                       .bind(_dragstart_, <span class="keyword">function</span>(){ <span class="keyword">return</span> <span class="literal">false</span> })
-                    <span class="keyword">if</span> (!touchy){
-                      <span class="keyword">var</span>
-                        cursor= opt.cursor,
-                        cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
-                        cursor_down= cursor == _hand_ ? drag_cursor_down+___+<span class="string">'!important'</span> : <span class="literal">undefined</span>
-                      css(__, { cursor: cdn(cursor_up) });
-                      css(dot(loading_klass), { cursor: <span class="string">'wait'</span> });
-                      css(dot(panning_klass)+____+dot(panning_klass)+<span class="string">' *'</span>, { cursor: cdn(cursor_down || cursor_up) }, <span class="literal">true</span>);
-                    }
+                    css(__, { cursor: cdn(cursor_up) });
+                    css(dot(loading_klass), { cursor: <span class="string">'wait'</span> });
+                    css(dot(panning_klass)+____+dot(panning_klass)+<span class="string">' *'</span>, { cursor: cdn(cursor_down || cursor_up) }, <span class="literal">true</span>);
                     <span class="keyword">if</span> (get(_responsive_)){
                       css(___+dot(klass), { width: <span class="string">'100%'</span>, height: _auto_ });
                       $(window).bind(_resize_, slow_gauge);
@@ -2753,7 +2750,7 @@ the tick handler</p>
                       opening= set(_opening_, <span class="literal">false</span>),
                       evnt= _tick_+dot(_opening_)
                     pool.unbind(evnt, on.pool[evnt]);
-                    touchy &amp;&amp; opt.orientable &amp;&amp; $(window).bind(_deviceorientation_, orient);
+                    opt.orientable &amp;&amp; $(window).bind(_deviceorientation_, orient);
                     <span class="keyword">if</span> (opt.delay &gt; <span class="number">0</span>) delay= setTimeout(<span class="keyword">function</span>(){ t.trigger(<span class="string">'play'</span>) }, opt.delay * <span class="number">1000</span>)
                     <span class="keyword">else</span> t.trigger(<span class="string">'play'</span>);
                     <span class="function"><span class="keyword">function</span> <span class="title">orient</span><span class="params">(e)</span>{</span> <span class="keyword">return</span> t.trigger(<span class="string">'orient'</span>, [gyro(e).alpha, gyro(e).beta, gyro(e).gamma, e]) &amp;&amp; e.give }
@@ -2941,7 +2938,7 @@ the event target element. However in click-free mode, it binds directly to the i
             </div>
             
             <div class="content"><div class='highlight'><pre>                  down: <span class="keyword">function</span>(e, x, y, ev){
-                    <span class="keyword">if</span> (ev &amp;&amp; ev.button != DRAG_BUTTON &amp;&amp; !opt.clickfree) <span class="keyword">return</span>;
+                    <span class="keyword">if</span> (!opt.clickfree &amp;&amp; ev &amp;&amp; ev.button !== <span class="literal">undefined</span> &amp;&amp; ev.button != DRAG_BUTTON) <span class="keyword">return</span>;
                     <span class="keyword">if</span> (opt.draggable){
                       <span class="keyword">var</span>
                         clicked= set(_clicked_, get(_frame_)),
@@ -2949,7 +2946,6 @@ the event target element. However in click-free mode, it binds directly to the i
                         velocity= set(_velocity_, <span class="number">0</span>),
                         $area= clickfree ? get(_area_) : pools,
                         origin= last= recenter_mouse(get(_revolution_), x, y)
-                      touchy || ev &amp;&amp; ev.preventDefault();
                       unidle();
                       no_bias();
                       panned= <span class="number">0</span>;
@@ -3036,7 +3032,7 @@ or <code>drag</code> (that conflicted with MSIE).</p>
                       <span class="keyword">var</span>
                         rows= opt.rows,
                         orbital= opt.orbital,
-                        scrollable= touchy &amp;&amp; !get(_reeling_) &amp;&amp; rows &lt;= <span class="number">1</span> &amp;&amp; !orbital &amp;&amp; opt.scrollable,
+                        scrollable= !get(_reeling_) &amp;&amp; rows &lt;= <span class="number">1</span> &amp;&amp; !orbital &amp;&amp; opt.scrollable,
                         delta= { x: x - last.x, y: y - last.y },
                         abs_delta= { x: abs(delta.x), y: abs(delta.y) }
                       <span class="keyword">if</span> (ev &amp;&amp; scrollable &amp;&amp; abs_delta.x &lt; abs_delta.y) <span class="keyword">return</span> ev.give = <span class="literal">true</span>;
@@ -5610,15 +5606,13 @@ the images from in an effective gzipped and cachable manner.</p>
             <div class="annotation">
               
               <p>~~~</p>
-<p>We then only identify the user&#39;s browser&#39;s capabilities and route around a MSIE&#39;s left button
-identification quirk (IE 8- reports left as right).</p>
+<p>We then only route around MSIE&#39;s left button identification quirk (IE 8- reports left as right).</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    touchy= reel.touchy= <span class="string">'ontouchstart'</span> <span class="keyword">in</span> window || !!navigator.msMaxTouchPoints,
-    lazy= reel.lazy= (reel.re.lazy_agent).test(client),
+            <div class="content"><div class='highlight'><pre>    lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
-    DRAG_BUTTON= touchy ? <span class="literal">undefined</span> : (ie &amp;&amp; browser_version &lt; <span class="number">9</span>) ? <span class="number">1</span> : <span class="number">0</span>,</pre></div></div>
+    DRAG_BUTTON= ie &amp;&amp; browser_version &lt; <span class="number">9</span> ? <span class="number">1</span> : <span class="number">0</span>,</pre></div></div>
             
         </li>
         
