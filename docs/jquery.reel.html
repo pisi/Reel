@@ -182,7 +182,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3rc
- * Updated: 2013-10-16
+ * Updated: 2013-10-17
  *
  * Requires jQuery 1.6.2 or higher
  */</span>
@@ -2538,6 +2538,7 @@ asynchronously loads all of them.</p>
                       preload= is_sprite ? [get(_image_)] : order(images.slice(<span class="number">0</span>), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? <span class="number">0.5</span> : <span class="number">0</span>),
+                      simultaneous= <span class="number">0</span>,
                       $cache= get(_cache_).empty(),
                       uris= []
                     $overlay.addClass(loading_klass);</pre></div></div>
@@ -2560,7 +2561,7 @@ asynchronously loads all of them.</p>
                     <span class="keyword">while</span>(preload.length){
                       <span class="keyword">var</span>
                         uri= reel.substitute(opt.path+preload.shift(), get),
-                        $img= $(tag(_img_)).appendTo($cache)</pre></div></div>
+                        $img= $(tag(_img_)).data(_src_, uri).appendTo($cache)</pre></div></div>
             
         </li>
         
@@ -2574,16 +2575,18 @@ asynchronously loads all of them.</p>
             
             <div class="content"><div class='highlight'><pre>                      $img.bind(<span class="string">'load error abort'</span>, <span class="keyword">function</span>(e){
                         e.type != <span class="string">'load'</span> &amp;&amp; t.trigger(e.type);
-                        <span class="keyword">return</span> !detached($overlay) &amp;&amp; t.trigger(<span class="string">'preloaded'</span>) &amp;&amp; <span class="literal">false</span>;
+                        <span class="keyword">return</span> !detached($overlay) &amp;&amp; t.trigger(<span class="string">'preloaded'</span>) &amp;&amp; load() &amp;&amp; <span class="literal">false</span>;
                       });
-                      load(uri, $img);
                       uris.push(uri);
                     }
+                    setTimeout(<span class="keyword">function</span>(){ <span class="keyword">while</span> (++simultaneous &lt; reel.concurrent_requests) load(); }, <span class="number">0</span>);
                     set(_cached_, uris);
                     set(_shy_, <span class="literal">false</span>);
-                    <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">(uri, $img)</span>{</span> setTimeout(<span class="keyword">function</span>(){
-                      !detached($overlay) &amp;&amp; $img.attr({ src: reen(uri) });
-                    }, (to_load - preload.length) * <span class="number">2</span>) }
+                    <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">()</span>{</span>
+                      <span class="keyword">var</span>
+                        $img= $cache.children(<span class="string">':not([src]):first'</span>)
+                      <span class="keyword">return</span> $img.attr(_src_, $img.data(_src_))
+                    }
                   },</pre></div></div>
             
         </li>
@@ -5294,6 +5297,35 @@ in milliseconds.</p>
         <li id='section-249'>
             <div class="annotation">
               
+              <p><code>$.reel.concurrent_requests</code> specifies how many preloading requests will run simultaneously.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='reel-concurrent-requests'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#reel-concurrent-requests">&#182;</a>
+                </div>
+              
+              <h3><code>$.reel.concurrent_requests</code></h3>
+<p>[NEW] <code>Number</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      concurrent_requests: <span class="number">4</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-251'>
+            <div class="annotation">
+              
               <p><code>$.reel.cost</code> holds document-wide costs in miliseconds of running all Reel instances. It is used
 to adjust actual timeout of the ticker.</p>
 <hr>
@@ -5322,7 +5354,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-251'>
+        <li id='section-253'>
             <div class="annotation">
               
               <hr>
@@ -5347,7 +5379,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-253'>
+        <li id='section-255'>
             <div class="annotation">
               
               
@@ -5365,7 +5397,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-254'>
+        <li id='section-256'>
             <div class="annotation">
               
               <hr>
@@ -5390,7 +5422,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-256'>
+        <li id='section-258'>
             <div class="annotation">
               
               <p>These are all the class names assigned by Reel to various DOM elements during initialization of the UI
@@ -5404,7 +5436,7 @@ converted into Reel.</p>
         </li>
         
         
-        <li id='section-257'>
+        <li id='section-259'>
             <div class="annotation">
               
               <p>Rest of the class names only extend this base class forming for example <code>.reel-overlay</code>, a class
@@ -5424,7 +5456,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-258'>
+        <li id='section-260'>
             <div class="annotation">
               
               <p>The instance wrapper is flagged with actual frame number using a this class.</p>
@@ -5437,7 +5469,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-259'>
+        <li id='section-261'>
             <div class="annotation">
               
               <hr>
@@ -5462,7 +5494,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-261'>
+        <li id='section-263'>
             <div class="annotation">
               
               <p>Several math functions are referenced inside the private scope to yield smaller filesize
@@ -5479,7 +5511,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-262'>
+        <li id='section-264'>
             <div class="annotation">
               
               <p>For the very same reason all storage key Strings are cached into local vars.</p>
@@ -5499,7 +5531,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-263'>
+        <li id='section-265'>
             <div class="annotation">
               
               <p>And the same goes for browser events too.</p>
@@ -5518,7 +5550,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-264'>
+        <li id='section-266'>
             <div class="annotation">
               
               <p>And some other frequently used Strings.</p>
@@ -5533,7 +5565,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-265'>
+        <li id='section-267'>
             <div class="annotation">
               
               <p>Collection of data keys holding scalable pixel values responsive to the scale ratio</p>
@@ -5546,7 +5578,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-266'>
+        <li id='section-268'>
             <div class="annotation">
               
               <hr>
@@ -5571,7 +5603,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-268'>
+        <li id='section-270'>
             <div class="annotation">
               
               <p>Alhough we do what we can to hide the fact, Reel actually needs a few image resources to support
@@ -5585,7 +5617,7 @@ the sprite applied to its background. This one is embedded in the code as it is 
         </li>
         
         
-        <li id='section-269'>
+        <li id='section-271'>
             <div class="annotation">
               
               <p>Proper cross-browser cursors however need to come in an odd format, which essentially is not
@@ -5602,7 +5634,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-270'>
+        <li id='section-272'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5617,7 +5649,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-271'>
+        <li id='section-273'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5637,7 +5669,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-272'>
+        <li id='section-274'>
             <div class="annotation">
               
               <p>Expose plugin functions as jQuery methods, do the initial global scan for data-configured
@@ -5651,7 +5683,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-273'>
+        <li id='section-275'>
             <div class="annotation">
               
               <p>Bunch of very useful helpers.</p>
