@@ -1053,6 +1053,7 @@
                     no_bias();
                     t.removeAttr('onloaded');
                     remove_instance(t.unbind(ns).removeData().unwrap().attr(backup.attr).data(backup.data));
+                    t.attr(_style_) == __ && t.removeAttr(_style_);
                   },
 
                   // ### `setup` Event ######
