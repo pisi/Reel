@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3rc
- * Updated: 2013-10-16
+ * Updated: 2013-10-17
  *
  * Requires jQuery 1.6.2 or higher
  */
@@ -1116,6 +1116,7 @@
                       preload= is_sprite ? [get(_image_)] : order(images.slice(0), opt, get),
                       to_load= preload.length,
                       preloaded= set(_preloaded_, is_sprite ? 0.5 : 0),
+                      simultaneous= 0,
                       $cache= get(_cache_).empty(),
                       uris= []
                     $overlay.addClass(loading_klass);
@@ -1128,20 +1129,22 @@
                     while(preload.length){
                       var
                         uri= reel.substitute(opt.path+preload.shift(), get),
-                        $img= $(tag(_img_)).appendTo($cache)
+                        $img= $(tag(_img_)).data(_src_, uri).appendTo($cache)
                       // Each image, which finishes the load triggers `"preloaded"` Event.
                       $img.bind('load error abort', function(e){
                         e.type != 'load' && t.trigger(e.type);
-                        return !detached($overlay) && t.trigger('preloaded') && false;
+                        return !detached($overlay) && t.trigger('preloaded') && load() && false;
                       });
-                      load(uri, $img);
                       uris.push(uri);
                     }
+                    setTimeout(function(){ while (++simultaneous < reel.concurrent_requests) load(); }, 0);
                     set(_cached_, uris);
                     set(_shy_, false);
-                    function load(uri, $img){ setTimeout(function(){
-                      !detached($overlay) && $img.attr({ src: reen(uri) });
-                    }, (to_load - preload.length) * 2) }
+                    function load(){
+                      var
+                        $img= $cache.children(':not([src]):first')
+                      return $img.attr(_src_, $img.data(_src_))
+                    }
                   },
 
                   // ### `preloaded` Event ######
@@ -2568,6 +2571,15 @@
       // [NEW] `Number`, since 1.3
       //
       resize_gauge: 300,
+      
+      // `$.reel.concurrent_requests` specifies how many preloading requests will run simultaneously.
+      //
+      // ---
+
+      // ### `$.reel.concurrent_requests` ######
+      // [NEW] `Number`, since 1.3
+      //
+      concurrent_requests: 4,
       
       // `$.reel.cost` holds document-wide costs in miliseconds of running all Reel instances. It is used
       // to adjust actual timeout of the ticker.

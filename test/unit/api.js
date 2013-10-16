@@ -185,7 +185,7 @@
   });
 
   test( 'Key algorithms, handlers and defaults are defined within `$.reel` object namespace (types)', function(){
-    expect(32);
+    expect(33);
 
     ok( typeof $.reel == 'object',                        '`$.reel` - root namespace' );
     ok( typeof $.reel.version == 'string',                '`$.reel.version`' );
@@ -234,7 +234,7 @@
     // Functionally of `$.reel.sequence()` is tested in the Computations module
 
     ok( typeof $.reel.resize_gauge == 'number',          '`$.reel.resize_gauge` - millisecong throttling interval for `resize` events' );
-    // Functionally of `$.reel.sequence()` is tested in the Computations module
+    ok( typeof $.reel.concurrent_requests == 'number',   '`$.reel.concurrent_requests` - number of simultaneous preload requests' );
   });
 
   test( 'CDN address configuration in `$.reel.cdn`', function(){

@@ -17,6 +17,8 @@ Version 1.3 RC
 * New `$.reel.substitutes` object for custom substitution methods.
 * The minimal required version of jQuery has been increased to 1.6.2.
 * `$.reel.touchy` distinction became obsolete and was removed (GH-233).
+* New sequential less cloging method of preloading with configurable number
+  of `$.reel.concurrent_requests` (GH-237).
 
 ### Data
 * Values of `image` and `images` data can now be changed on the fly (GH-190).
