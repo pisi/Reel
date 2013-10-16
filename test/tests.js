@@ -5,7 +5,30 @@
   
   var
     test_subjects_snapshot,
-    default_jquery = '1.10.2'
+    default_jquery = '1.10.2',
+    jquery_versions = [
+      '2.1.0-beta1',
+      '2.0.3',
+      '2.0.2',
+      '2.0.1',
+      '2.0.0',
+      '1.11.0-beta1',
+      '1.10.2',
+      '1.10.1',
+      '1.10.0',
+      '1.9.1',
+      '1.9.0',
+      '1.8.3',
+      '1.8.2',
+      '1.8.1',
+      '1.8.0',
+      '1.7.2',
+      '1.7.1',
+      '1.7',
+      '1.6.4',
+      '1.6.3',
+      '1.6.2',
+    ]
 
   yepnope( {
     load: [
@@ -138,6 +161,10 @@
           return collection;
         }
       }
+
+      $.each(jquery_versions, function(ix, version){
+        $('<option>', { value: version, text: version }).appendTo('#against-jquery-versions');
+      });
 
       $('#against-jquery-versions')
       .val( location.params.jq || default_jquery )
