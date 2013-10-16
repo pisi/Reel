@@ -28,11 +28,15 @@
       '1.6.4',
       '1.6.3',
       '1.6.2',
-    ]
+      'all'
+    ],
+    version = location.params.jq,
+    version = isNaN(+version) || version < jquery_versions.length ? version : 1,
+    use_jquery = isNaN(+version) ? version : jquery_versions[version - 1]
 
   yepnope( {
     load: [
-      'http://code.jquery.com/jquery-'+(location.params.jq || default_jquery)+'.min.js',
+      'http://code.jquery.com/jquery-'+(use_jquery || default_jquery)+'.min.js',
       'lib/vendor/jquery.xdomainrequest.js',
       '../jquery.reel.js',
       'lib/vendor/jquery.mousewheel-min.js',
@@ -133,9 +137,17 @@
           data: report
         });
 
-        location.params.respawn && setTimeout(function(){
-          location.href= location.href;
-        }, 60000);
+        if (!isNaN(+version) && !failures){
+          var url= location.href.replace( /jq=[0-9.a-z\-]+/, 'jq=' + ++version );
+          var interval= 5000;
+        }else if (location.params.respawn){
+          var url= location.href;
+          var interval= 60000;
+        }
+
+        url && setTimeout(function(){
+          location.href= url;
+        }, interval);
 
         function formatted( bit, label ){
           var $result= $('<li/>')
@@ -167,17 +179,18 @@
       });
 
       $('#against-jquery-versions')
-      .val( location.params.jq || default_jquery )
+      .val( use_jquery )
       .change( function(){
-        var url= ''
+        var url= '';
+        var version= $(this).val() == 'all' ? 1 : $(this).val();
         if( location.params.jq === undefined ){
           if( location.search === '' ){
-            url= location.href.replace( /\?$/, '' ) + '?jq='+$(this).val()
+            url= location.href.replace( /\?$/, '' ) + '?jq=' + version
           }else{
-            url= location.href + '&jq=' + $(this).val()
+            url= location.href + '&jq=' + version
           }
         }else{
-          url= location.href.replace( 'jq=' + location.params.jq, 'jq=' + $(this).val() );
+          url= location.href.replace( /jq=[0-9.a-z\-]+/, 'jq=' + version );
         }
         location.href= url;
       } )
