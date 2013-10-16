@@ -38,25 +38,25 @@
     load: [
       'http://code.jquery.com/jquery-'+(use_jquery || default_jquery)+'.min.js',
       'lib/vendor/jquery.xdomainrequest.js',
-      '../jquery.reel.js',
+      '../jquery.reel.js?'+(+new Date()),
       'lib/vendor/jquery.mousewheel-min.js',
 
       'lib/vendor/qunit.js',
       'lib/vendor/jquery.cookie-min.js',
       'lib/quny.js',
 
-      'unit/sprite.js',
-      'unit/selector.js',
-      'unit/rendering.js',
-      'unit/options.js',
-      'unit/issues.js',
-      'unit/interaction.js',
-      'unit/events.js',
-      'unit/data.js',
-      'unit/computation.js',
-      'unit/api.js',
-      'unit/annotations.js',
-      'unit/animation.js'
+      'unit/sprite.js?'+(+new Date()),
+      'unit/selector.js?'+(+new Date()),
+      'unit/rendering.js?'+(+new Date()),
+      'unit/options.js?'+(+new Date()),
+      'unit/issues.js?'+(+new Date()),
+      'unit/interaction.js?'+(+new Date()),
+      'unit/events.js?'+(+new Date()),
+      'unit/data.js?'+(+new Date()),
+      'unit/computation.js?'+(+new Date()),
+      'unit/api.js?'+(+new Date()),
+      'unit/annotations.js?'+(+new Date()),
+      'unit/animation.js?'+(+new Date())
     ],
     complete: function(){
 
