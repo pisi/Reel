@@ -951,12 +951,12 @@
                     stage_id= hash(id+opt.suffix),
                     img_class= t.attr(_class_),
                     classes= !img_class ? __ : img_class+___,
-                    $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+overlay_klass+___+frame_klass+'0' }),
+                    $overlay= $(tag(_div_), { id: stage_id.substr(1), 'class': classes+___+overlay_klass+___+frame_klass+'0' }),
                     $instance= t.wrap($overlay.addClass(opt.klass)).addClass(klass),
                     instances_count= instances.push(add_instance($instance)[0]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, '$1' + opt.suffix + '.$2'));
-                  set(_cache_, $(tag(_div_)));
+                  set(_cache_, $(tag(_div_), { 'class': cache_klass }).appendTo('body'));
                   set(_area_, $()),
                   set(_cached_, []);
                   set(_frame_, null);
@@ -999,6 +999,8 @@
                   responsive || css(__, { width: width, height: height });
                   responsive && $.each(responsive_keys, function(i, key){ truescale[key]= get(key) });
                   css(____+___+dot(klass), { display: _block_ });
+                  css(dot(cache_klass), { position: 'fixed', left: px(-100), top: px(-100) }, true);
+                  css(dot(cache_klass)+___+_img_, { position: _absolute_, width: 10, height: 10 }, true);
                   pool.bind(on.pool);
                   t.trigger(shy ? 'prepare' : 'setup')
                 },
@@ -2619,6 +2621,7 @@
     // assigned to the outter instance wrapper (`<img>`'s injected parent).
     //
     overlay_klass= klass + '-overlay',
+    cache_klass= klass + '-cache',
     indicator_klass= klass + '-indicator',
     preloader_klass= klass + '-preloader',
     monitor_klass= klass + '-monitor',

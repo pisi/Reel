@@ -2309,12 +2309,12 @@ and dimensions defined.</p>
                     stage_id= hash(id+opt.suffix),
                     img_class= t.attr(_class_),
                     classes= !img_class ? __ : img_class+___,
-                    $overlay= $(tag(_div_), { id: stage_id.substr(<span class="number">1</span>), <span class="string">'class'</span>: classes+overlay_klass+___+frame_klass+<span class="string">'0'</span> }),
+                    $overlay= $(tag(_div_), { id: stage_id.substr(<span class="number">1</span>), <span class="string">'class'</span>: classes+___+overlay_klass+___+frame_klass+<span class="string">'0'</span> }),
                     $instance= t.wrap($overlay.addClass(opt.klass)).addClass(klass),
                     instances_count= instances.push(add_instance($instance)[<span class="number">0</span>]),
                     $overlay= $instance.parent().bind(on.instance)
                   set(_image_, images.length ? __ : opt.image || src.replace(reel.re.image, <span class="string">'$1'</span> + opt.suffix + <span class="string">'.$2'</span>));
-                  set(_cache_, $(tag(_div_)));
+                  set(_cache_, $(tag(_div_), { <span class="string">'class'</span>: cache_klass }).appendTo(<span class="string">'body'</span>));
                   set(_area_, $()),
                   set(_cached_, []);
                   set(_frame_, <span class="literal">null</span>);
@@ -2357,6 +2357,8 @@ and dimensions defined.</p>
                   responsive || css(__, { width: width, height: height });
                   responsive &amp;&amp; $.each(responsive_keys, <span class="keyword">function</span>(i, key){ truescale[key]= get(key) });
                   css(____+___+dot(klass), { display: _block_ });
+                  css(dot(cache_klass), { position: <span class="string">'fixed'</span>, left: px(-<span class="number">100</span>), top: px(-<span class="number">100</span>) }, <span class="literal">true</span>);
+                  css(dot(cache_klass)+___+_img_, { position: _absolute_, width: <span class="number">10</span>, height: <span class="number">10</span> }, <span class="literal">true</span>);
                   pool.bind(on.pool);
                   t.trigger(shy ? <span class="string">'prepare'</span> : <span class="string">'setup'</span>)
                 },</pre></div></div>
@@ -2449,6 +2451,7 @@ belongings leaving no trace.</p>
                     no_bias();
                     t.removeAttr(<span class="string">'onloaded'</span>);
                     remove_instance(t.unbind(ns).removeData().unwrap().attr(backup.attr).data(backup.data));
+                    t.attr(_style_) == __ &amp;&amp; t.removeAttr(_style_);
                   },</pre></div></div>
             
         </li>
@@ -5434,6 +5437,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
             </div>
             
             <div class="content"><div class='highlight'><pre>    overlay_klass= klass + <span class="string">'-overlay'</span>,
+    cache_klass= klass + <span class="string">'-cache'</span>,
     indicator_klass= klass + <span class="string">'-indicator'</span>,
     preloader_klass= klass + <span class="string">'-preloader'</span>,
     monitor_klass= klass + <span class="string">'-monitor'</span>,
