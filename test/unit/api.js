@@ -139,7 +139,7 @@
 
   asyncTest( 'Pseudo-testing for the "leader" - the oldest living instance on page', function()
   {
-
+    expect(3);
     var
       count= 0
 
