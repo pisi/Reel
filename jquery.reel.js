@@ -158,7 +158,7 @@
         // Using boolean switches many user interaction aspects can be turned on and off.
         // You can disable the mouse wheel control with `wheelable`, the drag & throw
         // action with `throwable`, disallow the dragging completely with `draggable`,
-        // on "touchy" devices you can disable the browser's decision to scroll the page
+        // on touch devices you can disable the browser's decision to scroll the page
         // instead of Reel script and you can of course disable the stepping of Reel by
         // clicking on either half of the image with `steppable`.
         //
