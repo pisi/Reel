@@ -1,8 +1,8 @@
 jQuery Reel Test Suite
 ======================
 
-Reel is very well tested. To date we have **2089 tests in 436 tasks and 12 modules**.
-The unit test coverage has been **increased by 175%** (in comparison with release 1.2)
+Reel is very well tested. To date we have **2040 tests in 425 tasks and 12 modules**.
+The unit test coverage has been **increased by 171%** (in comparison with release 1.2)
 with 99% of code being covered now. The suite will keep on growing as enhancements are made
 or new bugs discovered. The test suite grows independent on regular version releases.
 
@@ -16,7 +16,7 @@ Positive Results
 ----------------
 
 Both manual and automated tests indicate, that Reel is extremely compatible with nearly everything.
-From an array of 12 browsers Reel fails badly in just two cases, in mobile Opera Mini
+From an array of 15 browsers on 9 platforms Reel fails badly in just two cases, in mobile Opera Mini
 (see [FAQ][FAQ] for explanation) and on Windows Phones. I could as well leave out these browsers 
 completely to make it seem Reel is 100% compatible, but let's leave them there to be fair.
 
@@ -25,10 +25,13 @@ completely to make it seem Reel is 100% compatible, but let's leave them there t
 
 #### Chrome
 
-* `Mozilla/5.0 (Windows; U; Windows NT 5.1) AppleWebKit/533.4 Chrome/5.0.375.125 Safari/533.4`
+* `Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36`
   * **OK** -- Unit
   * **OK** -- Interaction
 * `Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5) AppleWebKit/534.16 Chrome/10.0.648.205 Safari/534.16`
+  * **OK** -- Unit
+  * **OK** -- Interaction
+* `Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.106 Safari/535.2`
   * **OK** -- Unit
   * **OK** -- Interaction
 
@@ -45,6 +48,9 @@ completely to make it seem Reel is 100% compatible, but let's leave them there t
 
 #### Internet Explorer
 
+* `Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0; SLCC2; Media Center PC 6.0)`
+  * **OK** -- Unit
+  * **OK** -- Interaction
 * `Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; SLCC2; Media Center PC 6.0)`
   * **OK** -- Unit
   * **OK** -- Interaction
@@ -61,23 +67,22 @@ completely to make it seem Reel is 100% compatible, but let's leave them there t
 
 #### Safari / WebKit
 
-* `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.6+ (KHTML, like Gecko) Version/5.1 Safari/534.50`
-  * **OK** -- Unit
-  * **OK** -- Interaction
-* `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50`
+* `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.59.8 (KHTML, like Gecko) Version/5.1.9 Safari/534.59.8`
   * **OK** -- Unit
   * **OK** -- Interaction
 
 
 #### Opera
 
+* `Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8) Presto/2.12.388 Version/12.16`
 * `Opera/9.80 (Macintosh; Intel Mac OS X; U; en) Presto/2.2.15 Version/10.10`
   * **OK** -- Unit
   * **OK** -- Interaction
 
 
-#### Camino
-* `Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; rv:1.9.0.19) Gecko/2010111021 Camino/2.0.6`
+#### Camino (RIP)
+
+* `Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en; rv:1.9.2.28) Gecko/20120308 Camino/2.1.2 (MultiLang) (like Firefox/3.6.28)`
   * **OK** -- Unit
   * **OK** -- Interaction
 
@@ -86,10 +91,17 @@ completely to make it seem Reel is 100% compatible, but let's leave them there t
 
 #### iOS Safari
 
-* `Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X) AppleWebKit/533.17.9 Version/5.0.2 Mobile/8C148 Safari/6533.18.5`
+* `Mozilla/5.0 (iPad; CPU OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25`
   * **OK** -- Unit
   * **OK** -- Interaction
-* `Mozilla/5.0 (iPhone Simulator; U; CPU iPhone OS 3_0) AppleWebKit/528.18 Version/4.0 Mobile/7A341 Safari/528.16`
+* `Mozilla/5.0 (iPad; CPU OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3`
+  * **OK** -- Unit
+  * **OK** -- Interaction
+
+
+#### iOS Chrome
+
+* `Mozilla/5.0 (iPad; CPU OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) CriOS/28.0.1500.16 Mobile/10B146 Safari/8536.25`
   * **OK** -- Unit
   * **OK** -- Interaction
 
@@ -99,6 +111,17 @@ completely to make it seem Reel is 100% compatible, but let's leave them there t
 * `Mozilla/5.0 (Linux; U; Android 2.3.5; ZTE-SKATE) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1`
   * **OK** -- Unit
   * **OK** -- Interaction
+
+* `Mozilla/5.0 (Linux; U; Android 4.2.2; cs-cz; RKM MK802IV Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30`
+  * **OK** -- Unit
+  * **OK** -- Interaction (no mouse wheel)
+
+
+#### Blackberry Playbook
+
+* `Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.0.0; en-US) AppleWebKit/535.8+ (KHTML, like Gecko) Version/7.2.0.0 Safari/535.8+`
+  * **OK** -- Unit
+  * **OK** -- Interaction (reported but not witnessed)
 
 
 #### Opera Mobile
@@ -128,6 +151,15 @@ completely to make it seem Reel is 100% compatible, but let's leave them there t
 * `Mozilla/5.0 (???)`
   * **?** -- Unit
   * **FAIL** -- Interaction
+
+
+### Console
+
+#### Playstation 3
+
+* `Mozilla/5.0 (PLAYSTATION 3 4.30) AppleWebKit/531.22.8 (KHTML, like Gecko)`
+  * **OK** -- Unit
+  * **?** -- Interaction (if someone can confirm please)
 
 
 ### Missing some?
