@@ -72,7 +72,11 @@
   // One vital requirement is the correct jQuery. Reel requires at least version 1.6.2
   // and a make sure check is made at the very beginning.
   //
-  if (!$ || +($().jquery.replace(/\./g, '')+'0').substr(0, 3) < 162) return;
+  if (!$) return;
+  var
+    version= $ && $().jquery.split(/\./)
+
+  if (!version || +(pad(version[0], 2, '0')+pad(version[1], 2, '0')+pad(version[2], 2, '0')) < 10602) return;
   // ----------------
   // Global Namespace
   // ----------------
