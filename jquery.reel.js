@@ -1071,7 +1071,10 @@
                     var
                       $overlay= t.parent().append(preloader()),
                       $area= set(_area_, $(opt.area || $overlay )),
-                      multirow= opt.rows > 1
+                      multirow= opt.rows > 1,
+                      cursor= opt.cursor,
+                      cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
+                      cursor_down= cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
                     t.unbind(_click_, shy_setup);
                     $area
@@ -1079,15 +1082,9 @@
                       .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
                       .bind(opt.wheelable ? _mousewheel_ : null, wheel)
                       .bind(_dragstart_, function(){ return false })
-                    if (!touchy){
-                      var
-                        cursor= opt.cursor,
-                        cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
-                        cursor_down= cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
-                      css(__, { cursor: cdn(cursor_up) });
-                      css(dot(loading_klass), { cursor: 'wait' });
-                      css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor_up) }, true);
-                    }
+                    css(__, { cursor: cdn(cursor_up) });
+                    css(dot(loading_klass), { cursor: 'wait' });
+                    css(dot(panning_klass)+____+dot(panning_klass)+' *', { cursor: cdn(cursor_down || cursor_up) }, true);
                     if (get(_responsive_)){
                       css(___+dot(klass), { width: '100%', height: _auto_ });
                       $(window).bind(_resize_, slow_gauge);
@@ -1230,7 +1227,7 @@
                       opening= set(_opening_, false),
                       evnt= _tick_+dot(_opening_)
                     pool.unbind(evnt, on.pool[evnt]);
-                    touchy && opt.orientable && $(window).bind(_deviceorientation_, orient);
+                    opt.orientable && $(window).bind(_deviceorientation_, orient);
                     if (opt.delay > 0) delay= setTimeout(function(){ t.trigger('play') }, opt.delay * 1000)
                     else t.trigger('play');
                     function orient(e){ return t.trigger('orient', [gyro(e).alpha, gyro(e).beta, gyro(e).gamma, e]) && e.give }
@@ -1315,7 +1312,7 @@
                   // the event target element. However in click-free mode, it binds directly to the instance.
                   //
                   down: function(e, x, y, ev){
-                    if (ev && ev.button != DRAG_BUTTON && !opt.clickfree) return;
+                    if (!opt.clickfree && ev && ev.button !== undefined && ev.button != DRAG_BUTTON) return;
                     if (opt.draggable){
                       var
                         clicked= set(_clicked_, get(_frame_)),
@@ -1323,7 +1320,6 @@
                         velocity= set(_velocity_, 0),
                         $area= clickfree ? get(_area_) : pools,
                         origin= last= recenter_mouse(get(_revolution_), x, y)
-                      touchy || ev && ev.preventDefault();
                       unidle();
                       no_bias();
                       panned= 0;
@@ -1387,7 +1383,7 @@
                       var
                         rows= opt.rows,
                         orbital= opt.orbital,
-                        scrollable= touchy && !get(_reeling_) && rows <= 1 && !orbital && opt.scrollable,
+                        scrollable= !get(_reeling_) && rows <= 1 && !orbital && opt.scrollable,
                         delta= { x: x - last.x, y: y - last.y },
                         abs_delta= { x: abs(delta.x), y: abs(delta.y) }
                       if (ev && scrollable && abs_delta.x < abs_delta.y) return ev.give = true;
@@ -2694,13 +2690,11 @@
 
     // ~~~
     //
-    // We then only identify the user's browser's capabilities and route around a MSIE's left button
-    // identification quirk (IE 8- reports left as right).
+    // We then only route around MSIE's left button identification quirk (IE 8- reports left as right).
     //
-    touchy= reel.touchy= 'ontouchstart' in window || !!navigator.msMaxTouchPoints,
     lazy= reel.lazy= (reel.re.lazy_agent).test(client),
 
-    DRAG_BUTTON= touchy ? undefined : (ie && browser_version < 9) ? 1 : 0,
+    DRAG_BUTTON= ie && browser_version < 9 ? 1 : 0,
 
     // ~~~
     //

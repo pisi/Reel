@@ -234,8 +234,7 @@
     var
       // Touch clients and Opera don't support custom cursors
       opera= (/opera/i).test(navigator.userAgent),
-      touchy= $.reel.touchy,
-      unsupported = touchy ? 'auto' : opera ? 'move' : false,
+      unsupported = opera ? 'move' : false,
       $reel= $('#image').reel({
       })
 
@@ -257,8 +256,7 @@
     var
       // Touch clients and Opera don't support custom cursors
       opera= (/opera/i).test(navigator.userAgent),
-      touchy= $.reel.touchy,
-      unsupported = touchy ? 'auto' : opera ? 'move' : false,
+      unsupported = opera ? 'move' : false,
       $reel= $('#image').reel({
         cursor: 'hand'
       })
@@ -282,19 +280,18 @@
     var
       // Touch clients and Opera don't support custom cursors
       opera= (/opera/i).test(navigator.userAgent),
-      touchy= $.reel.touchy,
       $reel= $('#image').reel({
         cursor: 'pointer'
       })
 
     $(document).bind('loaded.test', function(){
-      equal( $reel.css('cursor'), touchy ? 'auto' : 'pointer');
+      equal( $reel.css('cursor'), 'pointer');
 
       // Simulate dragging/panning
       $('html').addClass('reel-panning');
-      equiv( $reel.css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', 'instance');
-      equiv( $('html').css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', '`html`');
-      equiv( $('body').css('cursor').split(/, ?/)[0], touchy ? 'auto' : 'pointer', '`html *`');
+      equiv( $reel.css('cursor').split(/, ?/)[0], 'pointer', 'instance');
+      equiv( $('html').css('cursor').split(/, ?/)[0], 'pointer', '`html`');
+      equiv( $('body').css('cursor').split(/, ?/)[0], 'pointer', '`html *`');
       $('html').removeClass('reel-panning');
 
       start();
@@ -304,13 +301,11 @@
   asyncTest( 'Instance being preloaded has a "hourglass" cursor to indicate the pending loading', function(){
     expect(4);
     var
-      // Touch clients don't support cursors
-      touchy= $.reel.touchy,
       $reel= $('#image').reel({
       })
 
     ok( $reel.parent().is('.reel-loading'), 'Is `reel-loading` at the very start');
-    equal ($reel.css('cursor'), touchy ? 'auto' : 'wait', 'Has the "wait" cursor');
+    equal ($reel.css('cursor'), 'wait', 'Has the "wait" cursor');
     $(document).bind('loaded.test', function(){
       ok( !$reel.parent().is('.reel-loading'), 'No longer has the `reel-loading` class when loaded');
       ok ($reel.css('cursor') != 'wait', 'Does not have the "wait" cursor after the load');

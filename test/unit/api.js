@@ -157,6 +157,20 @@
 
   });
 
+  asyncTest( 'Client characteristics', function()
+  {
+    expect(2);
+    var
+      $reel= $('#image').reel();
+
+    $(document).bind('loaded.test', function(){
+      ok( $.reel.lazy !== undefined, '`$.reel.lazy` - Indication of "lazy" (slow) clients (usually phones)');
+      ok( $.reel.touchy === undefined, '`$.reel.touchy` - Removed');
+      start();
+    });
+
+  });
+
   test( 'Path to CDN used for fetching cursor graphics', function(){
     expect(2);
 
