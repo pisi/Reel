@@ -888,9 +888,9 @@
                 src= attr.src || $this.attr(_src_),
                 width= attr.width || $this.attr(_height_) || $this.width(),
                 height= attr.height || $this.attr(_width_) || $this.height()
-              if (src && width && height) return true
-              // In case element did not qualify an Javascript error is thrown out.
-              else error('Missing attributes: Image needs `src` and both dimensions to be set to Reel');
+              if (!src) return error('`src` attribute missing on target image');
+              if (!width || !height) return error('Dimension(s) of the target image unknown');
+              return true;
             }),
             instances= []
 
