@@ -845,7 +845,7 @@
       //
       // Reel's methods extend jQuery core functions with members of its `$.reel.fn` object. Despite Reel
       // being a typical one-method plug-in with its `.reel()` function, for convenience it also offers
-      // its dipolar twin `.unreel()`.
+      // its bipolar twin `.unreel()`.
       //
       // ---
 
