@@ -17,7 +17,6 @@ Version 1.3 RC
   values (`width` and `height` data values or timestamp).
 * New `$.reel.substitutes` object for custom substitution methods.
 * The minimal required version of jQuery has been increased to 1.6.2.
-* `$.reel.touchy` distinction became obsolete and was removed (GH-233).
 * New sequential less cloging method of preloading with configurable number
   of `$.reel.concurrent_requests` (GH-237).
 
@@ -47,6 +46,7 @@ Version 1.3 RC
 ### Otherwise
 * Deprecated options `step` and `steps`, `store` and `recall` events and old usage of change reaction
   events to perform data change were all removed.
+* `$.reel.touchy` distinction became obsolete and was removed (GH-233).
 
 * As of this release opted out of the dual license scheme and in for the MIT License only to carry on
   sharing of licensing policies with the jQuery framework itself.
