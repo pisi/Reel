@@ -2131,6 +2131,10 @@
           return $(instances);
           }else{
 
+            if (name.slice(0, 1) == ':'){
+              t.trigger(name.slice(1), value);
+            }
+
             // ----
             // Data
             // ----
@@ -2154,7 +2158,7 @@
             // #### `.reel( name )` ######
             // can return anything, since 1.2
             //
-            if (typeof name == 'string'){
+            else{
               if (args.length == 1){
                 return data[name]
               }
