@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3rc
- * Updated: 2013-10-17
+ * Updated: 2013-11-04
  *
  * Requires jQuery 1.6.2 or higher
  */

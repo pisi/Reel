@@ -33,6 +33,7 @@
                       <li class="new"><a href="#Shy-Initialization">Shy Initialization</a></li>
                       <li class="new"><a href="#Responsiveness">Responsiveness</a> (w/ <a href="#Responsive-Events">Event</a>)</li>
                       <li class="new"><a href="#Gyroscope-Support">Gyroscope Support</a></li>
+                      <li class="new"><a href="#Control-Events">Event interface</a></li>
                       <li class="new"><a href="#Data-Values-in-URLs">Data Values in URLs</a></li>
                     </ul>
                   </li>
@@ -40,7 +41,8 @@
                     <a href="#Methods">Methods</a>
                     <ul>
                       <li><a href="#Construction"><code>.reel([options])</code></a></li>
-                      <li><a href="#Data"><code>.reel(key, [value])</code></a></li>
+                      <li><a href="#Data"><code>.reel(data, [value])</code></a></li>
+                      <li class="new"><a href="#Control-Events"><code>.reel(event, [arguments])</code></a></li>
                       <li><a href="#Destruction"><code>.unreel()</code></a></li>
                     </ul>
                   </li>
@@ -182,7 +184,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3rc
- * Updated: 2013-10-17
+ * Updated: 2013-11-04
  *
  * Requires jQuery 1.6.2 or higher
  */</span>
@@ -288,7 +290,8 @@ and a make sure check is made at the very beginning.</p>
             <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (!$) <span class="keyword">return</span>;
   <span class="keyword">var</span>
     version= $ &amp;&amp; $().jquery.split(<span class="regexp">/\./</span>)
-  <span class="keyword">if</span> (!version || +(pad(version[<span class="number">0</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">1</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">2</span>] || <span class="string">''</span>, <span class="number">2</span>, <span class="string">'0'</span>)) &lt; <span class="number">10602</span>) <span class="keyword">return</span>;</pre></div></div>
+  <span class="keyword">if</span> (!version || +(pad(version[<span class="number">0</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">1</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">2</span>] || <span class="string">''</span>, <span class="number">2</span>, <span class="string">'0'</span>)) &lt; <span class="number">10602</span>)
+    <span class="keyword">return</span> error(<span class="string">'Too old jQuery library. Please upgrade your jQuery to version 1.6.2 or higher'</span>);</pre></div></div>
             
         </li>
         
@@ -2068,7 +2071,7 @@ into already ready DOM.</p>
               
               <p>Reel&#39;s methods extend jQuery core functions with members of its <code>$.reel.fn</code> object. Despite Reel
 being a typical one-method plug-in with its <code>.reel()</code> function, for convenience it also offers
-its dipolar twin <code>.unreel()</code>.</p>
+its bipolar twin <code>.unreel()</code>.</p>
 <hr>
 
             </div>
@@ -2122,8 +2125,8 @@ its dipolar twin <code>.unreel()</code>.</p>
         <li id='section-103'>
             <div class="annotation">
               
-              <p><code>.reel()</code> method is the core of Reel and similar to some jQuery functions, this one is three-fold.
-It either performs the following builder&#39;s duty or the <a href="#Data">data duty</a>.</p>
+              <p><code>.reel()</code> method is the core of Reel and similar to some jQuery functions, it has adaptive interface.
+It either builds, <a href="#Data">reads &amp; writes data</a> or <a href="#Control-Events">causes events</a>.</p>
 <hr>
 
             </div>
@@ -2131,20 +2134,26 @@ It either performs the following builder&#39;s duty or the <a href="#Data">data 
         </li>
         
         
-        <li id='reel-Method'>
+        <li id='reel-options-Method'>
             <div class="annotation">
               
                 
                 <div class="pilwrap for-h3">
-                  <a class="pilcrow" href="#reel-Method">&#182;</a>
+                  <a class="pilcrow" href="#reel-options-Method">&#182;</a>
                 </div>
               
-              <h3><code>.reel()</code> Method</h3>
+              <h3><code>.reel( [options] )</code> Method</h3>
 <p>returns <code>jQuery</code>, since 1.0</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        reel: <span class="keyword">function</span>(){</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        reel: <span class="keyword">function</span>(){
+          <span class="keyword">var</span>
+            args= arguments,
+            t= $(<span class="keyword">this</span>),
+            data= t.data(),
+            name= args[<span class="number">0</span>] || {},
+            value= args[<span class="number">1</span>]</pre></div></div>
             
         </li>
         
@@ -2152,36 +2161,283 @@ It either performs the following builder&#39;s duty or the <a href="#Data">data 
         <li id='section-105'>
             <div class="annotation">
               
-              <p>The decision on what to actually do is made upon given arguments.</p>
+              <p>The main <a href="#Construction-Core">core of this procedure</a> is rather bulky, so let&#39;s skip it for now
+and instead let me introduce the other uses first.</p>
+<hr>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>          <span class="keyword">var</span>
-            args= arguments,
-            t= $(<span class="keyword">this</span>),
-            data= t.data(),
-            name= args[<span class="number">0</span>] || {},
-            value= args[<span class="number">1</span>]
-
-          <span class="keyword">if</span> (<span class="keyword">typeof</span> name == <span class="string">'object'</span>){
-          <span class="keyword">var</span></pre></div></div>
             
         </li>
         
         
-        <li id='section-106'>
+        <li id='Control-Events'>
             <div class="annotation">
               
-              <p>Establish local <code>opt</code> object made by extending the defaults.</p>
+                
+                <div class="pilwrap for-h2">
+                  <a class="pilcrow" href="#Control-Events">&#182;</a>
+                </div>
+              
+              <h2>[NEW] Control Events</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>            opt= $.extend({}, reel.def, name),</pre></div></div>
             
         </li>
         
         
         <li id='section-107'>
+            <div class="annotation">
+              
+              <p><a href="http://api.jquery.com/category/events/event-object/">Event</a> messages are what ties and binds all Reel&#39;s internal working components together.
+Besides being able to binding to any of these events from your script and react on Reel status changes
+(e.g. position), you can also trigger some of them in order to control Reel&#39;s attitude.</p>
+<p>You can:</p>
+<ul>
+<li>control the playback of animated Reels with <a href="#play-Event"><code>play</code></a>, <a href="#pause-Event"><code>pause</code></a>
+or <a href="#stop-Event"><code>stop</code></a></li>
+<li>step the Reel in any direction with <a href="#stepRight-Event"><code>stepRight</code></a>, <a href="#stepLeft-Event"><code>stepLeft</code></a>,
+<a href="#stepUp-Event"><code>stepUp</code></a>, <a href="#stepDown-Event"><code>stepDown</code></a>, </li>
+<li>reach certain frame with <a href="#reach-Event"><code>reach</code></a></li>
+</ul>
+<p>Triggering Reel&#39;s control event is as simple as passing the desired event name to <code>.reel()</code>.</p>
+<p><em><strong>Example:</strong> Stop the animation in progress:</em></p>
+<pre><code>.reel(&#39;:stop&#39;)</code></pre>
+<p>Think of <code>.reel()</code> as a convenient shortcut to and synonym for <a href="http://api.jquery.com/trigger"><code>.trigger()</code></a>, only prefix
+the event name with <code>:</code>. Of course you can use simple <code>.trigger()</code> instead and without the colon.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='reel-event-arguments'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h4">
+                  <a class="pilcrow" href="#reel-event-arguments">&#182;</a>
+                </div>
+              
+              <h4><code>.reel( event, [arguments] )</code></h4>
+<p>returns <code>jQuery</code>, since 1.3</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">if</span> (<span class="keyword">typeof</span> name != <span class="string">'object'</span>){
+
+            <span class="keyword">if</span> (name.slice(<span class="number">0</span>, <span class="number">1</span>) == <span class="string">':'</span>){
+              <span class="keyword">return</span> t.trigger(name.slice(<span class="number">1</span>), value);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-109'>
+            <div class="annotation">
+              
+              <hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='Data'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h2">
+                  <a class="pilcrow" href="#Data">&#182;</a>
+                </div>
+              
+              <h2>Data</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='section-111'>
+            <div class="annotation">
+              
+              <p>Reel stores all its inner state values with the standard DOM <a href="http://api.jquery.com/data">data interface</a> interface
+while adding an additional change-detecting event layer, which makes Reel entirely data-driven.</p>
+<p><em><strong>Example:</strong> Find out on what frame a Reel instance currently is:</em></p>
+<pre><code>.reel(&#39;frame&#39;) // Returns the frame number</code></pre>
+<p>This time think of <code>.reel(data)</code> as a synonym for <code>.data()</code>. Note, that you can therefore easily
+inspect the entire datastore with <code>.data()</code> (without arguments). Use it for debugging only.
+For real-time data watch use <a href="#Monitor"><code>monitor</code></a> option instead of manually hooking into
+the data.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='reel-data'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h4">
+                  <a class="pilcrow" href="#reel-data">&#182;</a>
+                </div>
+              
+              <h4><code>.reel( data )</code></h4>
+<p>can return anything, since 1.2</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">else</span>{
+              <span class="keyword">if</span> (args.length == <span class="number">1</span>){
+                <span class="keyword">return</span> data[name]
+              }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='Write-Access'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#Write-Access">&#182;</a>
+                </div>
+              
+              <h3>Write Access</h3>
+<p>You can store any value the very same way by passing the value as the second function
+argument.</p>
+<p><em><strong>Example:</strong> Jump to frame 12:</em></p>
+<pre><code>.reel(&#39;frame&#39;, 12)</code></pre>
+<p>Only a handful of data keys is suitable for external manipulation. These include <code>area</code>,
+<code>backwards</code>, <code>brake</code>, <strong><code>fraction</code></strong>, <strong><code>frame</code></strong>, <code>playing</code>, <code>reeling</code>, <strong><code>row</code></strong>, <code>speed</code>,
+<code>stopped</code>, <code>velocity</code> and <code>vertical</code>. Use the rest of the keys for reading only, you can
+mess up easily changing them.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='reel-data-value'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h4">
+                  <a class="pilcrow" href="#reel-data-value">&#182;</a>
+                </div>
+              
+              <h4><code>.reel( data, value )</code></h4>
+<p>returns <code>jQuery</code>, since 1.2</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              <span class="keyword">else</span>{
+                <span class="keyword">if</span> (value !== <span class="literal">undefined</span>){
+                  reel.normal[name] &amp;&amp; (value= reel.normal[name](value, data));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='Changes'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h3">
+                  <a class="pilcrow" href="#Changes">&#182;</a>
+                </div>
+              
+              <h3>Changes</h3>
+<p>Any value that does not equal (<code>===</code>) the old value is considered <em>new value</em> and
+in such a case Reel will trigger a <em>change event</em> to announce the change. The event
+type takes form of <em><code>key</code></em><code>Change</code>, where <em><code>key</code></em> will be the data key/name you&#39;ve
+just assigned.</p>
+<p><em><strong>Example:</strong> Setting <code>&quot;frame&quot;</code> to <code>12</code> in the above example will trigger
+<code>&quot;frameChange&quot;</code>.</em></p>
+<p>Some of these <em>change events</em> (like <code>frame</code> or <code>fraction</code>) have a
+default handler attached.</p>
+<p>You can easily bind to any of the data key change with standard event
+binding methods.</p>
+<p><em><strong>Example:</strong> React on instance being manipulated or not:</em></p>
+<pre><code>.bind(&#39;reelingChange&#39;, function(evnt, nothing, reeling){
+  if (reeling) console.log(&#39;Rock &amp; reel!&#39;)
+  else console.log(&#39;Not reeling...&#39;)
+})</code></pre>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='section-116'>
+            <div class="annotation">
+              
+              <p>The handler function will be executed every time the value changes and
+it will be supplied with three arguments. First one is the event object
+as usual, second is <code>undefined</code> and the third will be the actual value.
+In this case it was a boolean type value.
+If the second argument is not <code>undefined</code> it is the backward compatible
+&quot;before&quot; event triggered from outside Reel.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                  <span class="keyword">if</span> (data[name] === <span class="literal">undefined</span>) data[name]= value
+                  <span class="keyword">else</span> <span class="keyword">if</span> (data[name] !== value) t.trigger(name+<span class="string">'Change'</span>, [ <span class="literal">undefined</span>, data[name]= value ]);
+                }
+                <span class="keyword">return</span> t
+              }
+            }
+          }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-117'>
+            <div class="annotation">
+              
+              <hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='Construction-Core'>
+            <div class="annotation">
+              
+                
+                <div class="pilwrap for-h2">
+                  <a class="pilcrow" href="#Construction-Core">&#182;</a>
+                </div>
+              
+              <h2>Construction Core</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id='section-119'>
+            <div class="annotation">
+              
+              <p>Now, back to the procedure of <a href="#Construction">constructing</a> a Reel instance
+and binding its event handlers.</p>
+<p>Establish local <code>opt</code> object made by extending the defaults.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">else</span>{
+
+          <span class="keyword">var</span>
+            opt= $.extend({}, reel.def, name),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-120'>
             <div class="annotation">
               
               <p>Limit the given jQuery collection to just <code>&lt;img&gt;</code> tags with <code>src</code> attribute
@@ -2196,19 +2452,9 @@ and dimensions defined.</p>
                 src= attr.src || $<span class="keyword">this</span>.attr(_src_),
                 width= attr.width || $<span class="keyword">this</span>.attr(_height_) || $<span class="keyword">this</span>.width(),
                 height= attr.height || $<span class="keyword">this</span>.attr(_width_) || $<span class="keyword">this</span>.height()
-              <span class="keyword">if</span> (src &amp;&amp; width &amp;&amp; height) <span class="keyword">return</span> <span class="literal">true</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id='section-108'>
-            <div class="annotation">
-              
-              <p>In case element did not qualify an Javascript error is thrown out.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>              <span class="keyword">else</span> error(<span class="string">'Missing attributes: Image needs `src` and both dimensions to be set to Reel'</span>);
+              <span class="keyword">if</span> (!src) <span class="keyword">return</span> error(<span class="string">'`src` attribute missing on target image'</span>);
+              <span class="keyword">if</span> (!width || !height) <span class="keyword">return</span> error(<span class="string">'Dimension(s) of the target image unknown'</span>);
+              <span class="keyword">return</span> <span class="literal">true</span>;
             }),
             instances= []
 
@@ -2219,22 +2465,22 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-109'>
+        <li id='section-121'>
             <div class="annotation">
               
               <p>Quick data interface</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>              set= <span class="keyword">function</span>(name, value){ <span class="keyword">return</span> t.reel(name, value) &amp;&amp; t.data(name) },
-              get= <span class="keyword">function</span>(name){ <span class="keyword">return</span> t.reel(name) },
+            <div class="content"><div class='highlight'><pre>              set= <span class="keyword">function</span>(name, value){ <span class="keyword">return</span> t.reel(name, value) &amp;&amp; get(name) },
+              get= <span class="keyword">function</span>(name){ <span class="keyword">return</span> t.data(name) },
 
               on= {</pre></div></div>
             
         </li>
         
         
-        <li id='section-110'>
+        <li id='section-122'>
             <div class="annotation">
               
               <hr>
@@ -2259,7 +2505,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-112'>
+        <li id='section-124'>
             <div class="annotation">
               
               <p>This internally called private pseudo-handler:</p>
@@ -2366,7 +2612,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-113'>
+        <li id='section-125'>
             <div class="annotation">
               
               <hr>
@@ -2391,7 +2637,7 @@ and dimensions defined.</p>
         </li>
         
         
-        <li id='section-115'>
+        <li id='section-127'>
             <div class="annotation">
               
               <p>Reel is completely event-driven meaning there are many events, which can be called
@@ -2546,7 +2792,7 @@ asynchronously loads all of them.</p>
         </li>
         
         
-        <li id='section-119'>
+        <li id='section-131'>
             <div class="annotation">
               
               <p>It also finalizes the instance stylesheet and prepends it to the head.</p>
@@ -2566,7 +2812,7 @@ asynchronously loads all of them.</p>
         </li>
         
         
-        <li id='section-120'>
+        <li id='section-132'>
             <div class="annotation">
               
               <p>Each image, which finishes the load triggers <code>&quot;preloaded&quot;</code> Event.</p>
@@ -2671,7 +2917,7 @@ It lefts the target image untouched waiting to be clicked to actually setup.</p>
         </li>
         
         
-        <li id='section-124'>
+        <li id='section-136'>
             <div class="annotation">
               
               <hr>
@@ -2762,7 +3008,7 @@ the tick handler</p>
         </li>
         
         
-        <li id='section-128'>
+        <li id='section-140'>
             <div class="annotation">
               
               <hr>
@@ -2892,7 +3138,7 @@ by the <code>timeout</code> option. After this timenout, the playback is resumed
         </li>
         
         
-        <li id='section-134'>
+        <li id='section-146'>
             <div class="annotation">
               
               <hr>
@@ -3144,7 +3390,7 @@ in arguments. This event:</p>
         </li>
         
         
-        <li id='section-141'>
+        <li id='section-153'>
             <div class="annotation">
               
               <hr>
@@ -3169,7 +3415,7 @@ in arguments. This event:</p>
         </li>
         
         
-        <li id='section-143'>
+        <li id='section-155'>
             <div class="annotation">
               
               <p>Besides Reel being event-driven, it also is data-driven respectively data-change-driven
@@ -3352,7 +3598,7 @@ This handler converts <code>row</code> value to <code>tier</code> and sets it. T
         </li>
         
         
-        <li id='section-148'>
+        <li id='section-160'>
             <div class="annotation">
               
               <p>This extra binding takes care of watching frame position while animating the <code>&quot;reach&quot;</code> event.</p>
@@ -3373,7 +3619,7 @@ This handler converts <code>row</code> value to <code>tier</code> and sets it. T
         </li>
         
         
-        <li id='section-149'>
+        <li id='section-161'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -3389,7 +3635,7 @@ new preload sequence. Images are actually switched only after the new image is f
         </li>
         
         
-        <li id='section-150'>
+        <li id='section-162'>
             <div class="annotation">
               
               <hr>
@@ -3414,7 +3660,7 @@ new preload sequence. Images are actually switched only after the new image is f
         </li>
         
         
-        <li id='section-152'>
+        <li id='section-164'>
             <div class="annotation">
               
               <p>When configured with the <a href="#indicator-Option"><code>indicator</code></a> option, Reel adds to the scene
@@ -3446,7 +3692,7 @@ indicator).</li>
         </li>
         
         
-        <li id='section-153'>
+        <li id='section-165'>
             <div class="annotation">
               
               <p>For multi-row object movies, there&#39;s a second indicator sticked to the left edge
@@ -3472,7 +3718,7 @@ indicator).</li>
         </li>
         
         
-        <li id='section-154'>
+        <li id='section-166'>
             <div class="annotation">
               
               <p>Indicators are bound to <code>fraction</code> or <code>row</code> changes, meaning they alone can consume
@@ -3499,7 +3745,7 @@ more CPU resources than the entire Reel scene. Use them for development only.</p
         </li>
         
         
-        <li id='section-156'>
+        <li id='section-168'>
             <div class="annotation">
               
               <p>If you want to annotate features of your scene to better describe the subject,
@@ -3580,7 +3826,7 @@ to in-depth explain this new exciting functionality.</p>
         </li>
         
         
-        <li id='section-157'>
+        <li id='section-169'>
             <div class="annotation">
               
               <hr>
@@ -3605,7 +3851,7 @@ to in-depth explain this new exciting functionality.</p>
         </li>
         
         
-        <li id='section-159'>
+        <li id='section-171'>
             <div class="annotation">
               
               <p>For devices without drag support or for developers, who want to use some sort
@@ -3709,7 +3955,7 @@ triggering of <code>stepLeft</code> and <code>stepRight</code> events respective
         </li>
         
         
-        <li id='section-164'>
+        <li id='section-176'>
             <div class="annotation">
               
               <hr>
@@ -3734,7 +3980,7 @@ triggering of <code>stepLeft</code> and <code>stepRight</code> events respective
         </li>
         
         
-        <li id='section-166'>
+        <li id='section-178'>
             <div class="annotation">
               
               <p>In responsive mode in case of parent&#39;s size change, in addition to actual recalculations,
@@ -3782,7 +4028,7 @@ images changes event leading to reload of frames.</p>
         </li>
         
         
-        <li id='section-168'>
+        <li id='section-180'>
             <div class="annotation">
               
               <hr>
@@ -3807,7 +4053,7 @@ images changes event leading to reload of frames.</p>
         </li>
         
         
-        <li id='section-170'>
+        <li id='section-182'>
             <div class="annotation">
               
               <p>When some event as a result triggers another event, it preferably is not triggered
@@ -3830,7 +4076,7 @@ second one.</p>
         </li>
         
         
-        <li id='section-171'>
+        <li id='section-183'>
             <div class="annotation">
               
               <hr>
@@ -3855,7 +4101,7 @@ second one.</p>
         </li>
         
         
-        <li id='section-173'>
+        <li id='section-185'>
             <div class="annotation">
               
               <p>As opposed to the events bound to the instance itself, there is a <a href="#Ticker">ticker</a>
@@ -3870,7 +4116,7 @@ to the tick.</p>
         </li>
         
         
-        <li id='section-174'>
+        <li id='section-186'>
             <div class="annotation">
               
               <p>This handler has a responsibility of continuously updating the preloading indicator
@@ -3895,7 +4141,7 @@ until all images are loaded and to unbind itself then.</p>
         </li>
         
         
-        <li id='section-175'>
+        <li id='section-187'>
             <div class="annotation">
               
               <p>This handler binds to the document&#39;s ticks at all times, regardless the situation.
@@ -3947,7 +4193,7 @@ again,</li>
         </li>
         
         
-        <li id='section-176'>
+        <li id='section-188'>
             <div class="annotation">
               
               <p>This handler performs the opening animation duty when during it the normal animation
@@ -3972,7 +4218,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-177'>
+        <li id='section-189'>
             <div class="annotation">
               
               <hr>
@@ -3997,7 +4243,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-179'>
+        <li id='section-191'>
             <div class="annotation">
               
               <ul>
@@ -4011,7 +4257,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-180'>
+        <li id='section-192'>
             <div class="annotation">
               
               <ul>
@@ -4025,7 +4271,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-181'>
+        <li id='section-193'>
             <div class="annotation">
               
               <ul>
@@ -4051,7 +4297,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-182'>
+        <li id='section-194'>
             <div class="annotation">
               
               <ul>
@@ -4084,7 +4330,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-183'>
+        <li id='section-195'>
             <div class="annotation">
               
               <ul>
@@ -4109,7 +4355,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-184'>
+        <li id='section-196'>
             <div class="annotation">
               
               <ul>
@@ -4132,7 +4378,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-185'>
+        <li id='section-197'>
             <div class="annotation">
               
               <ul>
@@ -4150,7 +4396,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-186'>
+        <li id='section-198'>
             <div class="annotation">
               
               <ul>
@@ -4165,7 +4411,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-187'>
+        <li id='section-199'>
             <div class="annotation">
               
               <ul>
@@ -4190,7 +4436,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-188'>
+        <li id='section-200'>
             <div class="annotation">
               
               <ul>
@@ -4205,7 +4451,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-189'>
+        <li id='section-201'>
             <div class="annotation">
               
               <ul>
@@ -4228,7 +4474,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-190'>
+        <li id='section-202'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4252,7 +4498,7 @@ only if it does make a difference in the cousin value.</p>
         </li>
         
         
-        <li id='section-191'>
+        <li id='section-203'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4269,7 +4515,7 @@ of the <code>&lt;iframe&gt;</code>.</p>
         </li>
         
         
-        <li id='section-192'>
+        <li id='section-204'>
             <div class="annotation">
               
               <p>A private flag <code>$iframe</code> is established to indicate Reel being viewed inside <code>&lt;iframe&gt;</code>.</p>
@@ -4291,7 +4537,7 @@ of the <code>&lt;iframe&gt;</code>.</p>
         </li>
         
         
-        <li id='section-193'>
+        <li id='section-205'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4314,175 +4560,13 @@ as possible.</p>
           })();
 
           <span class="keyword">return</span> $(instances);
-          }<span class="keyword">else</span>{</pre></div></div>
-            
-        </li>
-        
-        
-        <li id='section-194'>
-            <div class="annotation">
-              
-              <hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id='Data'>
-            <div class="annotation">
-              
-                
-                <div class="pilwrap for-h2">
-                  <a class="pilcrow" href="#Data">&#182;</a>
-                </div>
-              
-              <h2>Data</h2>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id='section-196'>
-            <div class="annotation">
-              
-              <p>Reel stores all its inner state values with the standard DOM <a href="http://api.jquery.com/data">data interface</a> interface
-while adding an additional change-detecting event layer, which makes Reel entirely data-driven.</p>
-<p><em><strong>Example:</strong> Find out on what frame a Reel instance currently is:</em></p>
-<pre><code>.reel(&#39;frame&#39;) // Returns the frame number</code></pre>
-<p>Think of <code>.reel()</code> as a synonym for <code>.data()</code>. Note, that you can therefore easily inspect
-the entire datastore with <code>.data()</code> (without arguments). Use it for debugging only.
-For real-time data watch use <a href="#Monitor"><code>monitor</code></a> option instead of manually hooking into
-the data.</p>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id='reel-name'>
-            <div class="annotation">
-              
-                
-                <div class="pilwrap for-h4">
-                  <a class="pilcrow" href="#reel-name">&#182;</a>
-                </div>
-              
-              <h4><code>.reel( name )</code></h4>
-<p>can return anything, since 1.2</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> name == <span class="string">'string'</span>){
-              <span class="keyword">if</span> (args.length == <span class="number">1</span>){
-                <span class="keyword">return</span> data[name]
-              }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id='Write-Access'>
-            <div class="annotation">
-              
-                
-                <div class="pilwrap for-h3">
-                  <a class="pilcrow" href="#Write-Access">&#182;</a>
-                </div>
-              
-              <h3>Write Access</h3>
-<p>You can store any value the very same way by passing the value as the second function
-argument.</p>
-<p><em><strong>Example:</strong> Jump to frame 12:</em></p>
-<pre><code>.reel(&#39;frame&#39;, 12)</code></pre>
-<p>Only a handful of data keys is suitable for external manipulation. These include <code>area</code>,
-<code>backwards</code>, <code>brake</code>, <strong><code>fraction</code></strong>, <strong><code>frame</code></strong>, <code>playing</code>, <code>reeling</code>, <strong><code>row</code></strong>, <code>speed</code>,
-<code>stopped</code>, <code>velocity</code> and <code>vertical</code>. Use the rest of the keys for reading only, you can
-mess up easily changing them.</p>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id='reel-name-value'>
-            <div class="annotation">
-              
-                
-                <div class="pilwrap for-h4">
-                  <a class="pilcrow" href="#reel-name-value">&#182;</a>
-                </div>
-              
-              <h4><code>.reel( name, value )</code></h4>
-<p>returns <code>jQuery</code>, since 1.2</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>              <span class="keyword">else</span>{
-                <span class="keyword">if</span> (value !== <span class="literal">undefined</span>){
-                  reel.normal[name] &amp;&amp; (value= reel.normal[name](value, data));</pre></div></div>
-            
-        </li>
-        
-        
-        <li id='Changes'>
-            <div class="annotation">
-              
-                
-                <div class="pilwrap for-h3">
-                  <a class="pilcrow" href="#Changes">&#182;</a>
-                </div>
-              
-              <h3>Changes</h3>
-<p>Any value that does not equal (<code>===</code>) the old value is considered <em>new value</em> and
-in such a case Reel will trigger a <em>change event</em> to announce the change. The event
-type takes form of <em><code>key</code></em><code>Change</code>, where <em><code>key</code></em> will be the data key/name you&#39;ve
-just assigned.</p>
-<p><em><strong>Example:</strong> Setting <code>&quot;frame&quot;</code> to <code>12</code> in the above example will trigger
-<code>&quot;frameChange&quot;</code>.</em></p>
-<p>Some of these <em>change events</em> (like <code>frame</code> or <code>fraction</code>) have a
-default handler attached.</p>
-<p>You can easily bind to any of the data key change with standard event
-binding methods.</p>
-<p><em><strong>Example:</strong> React on instance being manipulated or not:</em></p>
-<pre><code>.bind(&#39;reelingChange&#39;, function(evnt, nothing, reeling){
-  if (reeling) console.log(&#39;Rock &amp; reel!&#39;)
-  else console.log(&#39;Not reeling...&#39;)
-})</code></pre>
-<hr>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id='section-201'>
-            <div class="annotation">
-              
-              <p>The handler function will be executed every time the value changes and
-it will be supplied with three arguments. First one is the event object
-as usual, second is <code>undefined</code> and the third will be the actual value.
-In this case it was a boolean type value.
-If the second argument is not <code>undefined</code> it is the backward compatible
-&quot;before&quot; event triggered from outside Reel.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>                  <span class="keyword">if</span> (data[name] === <span class="literal">undefined</span>) data[name]= value
-                  <span class="keyword">else</span> <span class="keyword">if</span> (data[name] !== value) t.trigger(name+<span class="string">'Change'</span>, [ <span class="literal">undefined</span>, data[name]= value ]);
-                }
-                <span class="keyword">return</span> t
-              }
-            }
           }
         },</pre></div></div>
             
         </li>
         
         
-        <li id='section-202'>
+        <li id='section-206'>
             <div class="annotation">
               
               <hr>
@@ -4507,7 +4591,7 @@ If the second argument is not <code>undefined</code> it is the backward compatib
         </li>
         
         
-        <li id='section-204'>
+        <li id='section-208'>
             <div class="annotation">
               
               <p>The evil-twin of <code>.reel()</code>. Tears down and wipes off entire instance.</p>
@@ -4539,7 +4623,7 @@ If the second argument is not <code>undefined</code> it is the backward compatib
         </li>
         
         
-        <li id='section-206'>
+        <li id='section-210'>
             <div class="annotation">
               
               <hr>
@@ -4564,7 +4648,7 @@ If the second argument is not <code>undefined</code> it is the backward compatib
         </li>
         
         
-        <li id='section-208'>
+        <li id='section-212'>
             <div class="annotation">
               
               <p>Few regular expressions is used here and there mostly for options validation and verification
@@ -4615,7 +4699,7 @@ levels of user agent&#39;s capabilities.</p>
         </li>
         
         
-        <li id='section-210'>
+        <li id='section-214'>
             <div class="annotation">
               
               <hr>
@@ -4640,7 +4724,7 @@ levels of user agent&#39;s capabilities.</p>
         </li>
         
         
-        <li id='section-212'>
+        <li id='section-216'>
             <div class="annotation">
               
               <p><a href="https://github.com/pisi/Reel/wiki/CDN">CDN</a> is used for distributing mouse cursors to all instances running world-wide. It runs
@@ -4671,7 +4755,7 @@ your own location with the cursors.</p>
         </li>
         
         
-        <li id='section-214'>
+        <li id='section-218'>
             <div class="annotation">
               
               <hr>
@@ -4696,7 +4780,7 @@ your own location with the cursors.</p>
         </li>
         
         
-        <li id='section-216'>
+        <li id='section-220'>
             <div class="annotation">
               
               <p>Surprisingly there&#39;s very little math behind Reel. Two equations (graph functions), which
@@ -4726,7 +4810,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-218'>
+        <li id='section-222'>
             <div class="annotation">
               
               <pre><code>1 |  ********
@@ -4746,7 +4830,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-219'>
+        <li id='section-223'>
             <div class="annotation">
               
               <pre><code>1 |        **          **
@@ -4769,7 +4853,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-220'>
+        <li id='section-224'>
             <div class="annotation">
               
               <p>Plus equation for interpolating <code>fraction</code> (and <code>tier</code>) value into <code>frame</code> and <code>row</code>.</p>
@@ -4783,7 +4867,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-221'>
+        <li id='section-225'>
             <div class="annotation">
               
               <p>And one for calculation of the shortest frame distance from start to the end.</p>
@@ -4801,7 +4885,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-222'>
+        <li id='section-226'>
             <div class="annotation">
               
               <hr>
@@ -4826,7 +4910,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-224'>
+        <li id='section-228'>
             <div class="annotation">
               
               <p>Reel doesn&#39;t load frames in a linear manner from first to last (alhough it can if configured
@@ -4859,7 +4943,7 @@ it back.</p>
         </li>
         
         
-        <li id='section-226'>
+        <li id='section-230'>
             <div class="annotation">
               
               <p>The best (and default) option is the <code>fidelity</code> processor, which is designed for a faster and
@@ -4908,7 +4992,7 @@ better perceived loading.</p>
         </li>
         
         
-        <li id='section-227'>
+        <li id='section-231'>
             <div class="annotation">
               
               <p>You can opt for a <code>linear</code> loading order too, but that has a drawback of leaving large gap
@@ -4924,7 +5008,7 @@ of unloaded frames.</p>
         </li>
         
         
-        <li id='section-228'>
+        <li id='section-232'>
             <div class="annotation">
               
               <hr>
@@ -4949,7 +5033,7 @@ of unloaded frames.</p>
         </li>
         
         
-        <li id='section-230'>
+        <li id='section-234'>
             <div class="annotation">
               
               <p>Reel will process each and every image resource URL and substitute special markup
@@ -5020,7 +5104,7 @@ image.php?nocache=1377604502788</code></pre>
         </li>
         
         
-        <li id='section-233'>
+        <li id='section-237'>
             <div class="annotation">
               
               <hr>
@@ -5045,7 +5129,7 @@ image.php?nocache=1377604502788</code></pre>
         </li>
         
         
-        <li id='section-235'>
+        <li id='section-239'>
             <div class="annotation">
               
               <p>On all data values being stored with <code>.reel()</code> an attempt is made to normalize the value. Like
@@ -5105,7 +5189,7 @@ and it has to return the normalized value.</p>
         </li>
         
         
-        <li id='section-237'>
+        <li id='section-241'>
             <div class="annotation">
               
               <hr>
@@ -5130,7 +5214,7 @@ and it has to return the normalized value.</p>
         </li>
         
         
-        <li id='section-239'>
+        <li id='section-243'>
             <div class="annotation">
               
               <p>When configured with a String value for <a href="#images-Option"><code>images</code></a> like <code>image##.jpg</code>, it first has
@@ -5180,7 +5264,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-241'>
+        <li id='section-245'>
             <div class="annotation">
               
               <hr>
@@ -5205,7 +5289,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-243'>
+        <li id='section-247'>
             <div class="annotation">
               
               <p><code>$.reel.instances</code> holds an inventory of all running instances in the DOM document.</p>
@@ -5234,7 +5318,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-245'>
+        <li id='section-249'>
             <div class="annotation">
               
               <p>For ticker-synchronization-related purposes Reel maintains a reference to the leaders data object
@@ -5264,7 +5348,7 @@ all the time.</p>
         </li>
         
         
-        <li id='section-247'>
+        <li id='section-251'>
             <div class="annotation">
               
               <p><code>$.reel.resize_gauge</code> specifies a throttling interval for triggering of <code>resize</code> events,
@@ -5294,7 +5378,7 @@ in milliseconds.</p>
         </li>
         
         
-        <li id='section-249'>
+        <li id='section-253'>
             <div class="annotation">
               
               <p><code>$.reel.concurrent_requests</code> specifies how many preloading requests will run simultaneously.</p>
@@ -5323,7 +5407,7 @@ in milliseconds.</p>
         </li>
         
         
-        <li id='section-251'>
+        <li id='section-255'>
             <div class="annotation">
               
               <p><code>$.reel.cost</code> holds document-wide costs in miliseconds of running all Reel instances. It is used
@@ -5354,7 +5438,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-253'>
+        <li id='section-257'>
             <div class="annotation">
               
               <hr>
@@ -5379,7 +5463,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-255'>
+        <li id='section-259'>
             <div class="annotation">
               
               
@@ -5397,7 +5481,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-256'>
+        <li id='section-260'>
             <div class="annotation">
               
               <hr>
@@ -5422,7 +5506,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-258'>
+        <li id='section-262'>
             <div class="annotation">
               
               <p>These are all the class names assigned by Reel to various DOM elements during initialization of the UI
@@ -5436,7 +5520,7 @@ converted into Reel.</p>
         </li>
         
         
-        <li id='section-259'>
+        <li id='section-263'>
             <div class="annotation">
               
               <p>Rest of the class names only extend this base class forming for example <code>.reel-overlay</code>, a class
@@ -5456,7 +5540,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-260'>
+        <li id='section-264'>
             <div class="annotation">
               
               <p>The instance wrapper is flagged with actual frame number using a this class.</p>
@@ -5469,7 +5553,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-261'>
+        <li id='section-265'>
             <div class="annotation">
               
               <hr>
@@ -5494,7 +5578,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-263'>
+        <li id='section-267'>
             <div class="annotation">
               
               <p>Several math functions are referenced inside the private scope to yield smaller filesize
@@ -5511,7 +5595,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-264'>
+        <li id='section-268'>
             <div class="annotation">
               
               <p>For the very same reason all storage key Strings are cached into local vars.</p>
@@ -5531,7 +5615,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-265'>
+        <li id='section-269'>
             <div class="annotation">
               
               <p>And the same goes for browser events too.</p>
@@ -5550,7 +5634,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-266'>
+        <li id='section-270'>
             <div class="annotation">
               
               <p>And some other frequently used Strings.</p>
@@ -5565,7 +5649,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-267'>
+        <li id='section-271'>
             <div class="annotation">
               
               <p>Collection of data keys holding scalable pixel values responsive to the scale ratio</p>
@@ -5578,7 +5662,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-268'>
+        <li id='section-272'>
             <div class="annotation">
               
               <hr>
@@ -5603,7 +5687,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-270'>
+        <li id='section-274'>
             <div class="annotation">
               
               <p>Alhough we do what we can to hide the fact, Reel actually needs a few image resources to support
@@ -5617,7 +5701,7 @@ the sprite applied to its background. This one is embedded in the code as it is 
         </li>
         
         
-        <li id='section-271'>
+        <li id='section-275'>
             <div class="annotation">
               
               <p>Proper cross-browser cursors however need to come in an odd format, which essentially is not
@@ -5634,7 +5718,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-272'>
+        <li id='section-276'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5649,7 +5733,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-273'>
+        <li id='section-277'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5669,7 +5753,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-274'>
+        <li id='section-278'>
             <div class="annotation">
               
               <p>Expose plugin functions as jQuery methods, do the initial global scan for data-configured
@@ -5683,7 +5767,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-275'>
+        <li id='section-279'>
             <div class="annotation">
               
               <p>Bunch of very useful helpers.</p>
@@ -5710,7 +5794,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
   <span class="function"><span class="keyword">function</span> <span class="title">soft_array</span><span class="params">(string)</span>{</span> <span class="keyword">return</span> reel.re.array.exec(string) ? string.split(reel.re.array) : string }
   <span class="function"><span class="keyword">function</span> <span class="title">detached</span><span class="params">($node)</span>{</span> <span class="keyword">return</span> !$node.parents(_html_).length }
   <span class="function"><span class="keyword">function</span> <span class="title">numerize_array</span><span class="params">(array)</span>{</span> <span class="keyword">return</span> <span class="keyword">typeof</span> array == _string_ ? array : $.each(array, <span class="keyword">function</span>(ix, it){ array[ix]= it ? +it : <span class="literal">undefined</span> }) }
-  <span class="function"><span class="keyword">function</span> <span class="title">error</span><span class="params">(message)</span>{</span> <span class="keyword">try</span>{ console.error(message) }<span class="keyword">catch</span>(e){} }
+  <span class="function"><span class="keyword">function</span> <span class="title">error</span><span class="params">(message)</span>{</span> <span class="keyword">try</span>{ console.error(<span class="string">'[ Reel ] '</span>+message) }<span class="keyword">catch</span>(e){} }
 })(jQuery, window, document);
 
 });</pre></div></div>
