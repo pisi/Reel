@@ -75,7 +75,7 @@
   if (!$) return;
   var
     version= $ && $().jquery.split(/\./)
-  if (!version || +(pad(version[0], 2, '0')+pad(version[1], 2, '0')+pad(version[2] || '', 2, '0')) < 10602)
+  if (!version || +(twochar(version[0])+twochar(version[1])+twochar(version[2] || '')) < 10602)
     return error('Too old jQuery library. Please upgrade your jQuery to version 1.6.2 or higher');
   // ----------------
   // Global Namespace
@@ -2798,6 +2798,7 @@
   function px(value){ return value === undefined ? 0 : typeof value == _string_ ? value : value + 'px' }
   function hash(value){ return '#' + value }
   function pad(string, len, fill){ while (string.length < len) string= fill + string; return string }
+  function twochar(string){ return pad(string, 2, '0') }
   function reen(uri){ return encodeURI(decodeURI(uri)) }
   function soft_array(string){ return reel.re.array.exec(string) ? string.split(reel.re.array) : string }
   function detached($node){ return !$node.parents(_html_).length }
