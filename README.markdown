@@ -9,15 +9,17 @@ jQuery Reel 1.3
 
 * Modes covering beyond usual 360° span.
 * Animated rotation and inertial motion.
-* **NEW** In-scene annotations (hotspots) in sync with frames.
+* In-scene annotations (hotspots) in sync with frames.
 * Intuitive operation. Supports both mouse and touch.
-* Apple, Blackberry and **NEW** Android mobile devices supported.
-* **NEW** 50+ options for full customization.
 * **NEW** Javascript-free initialization. Oh yes!
+* 50+ options for full customization.
+* Apple, Blackberry and Android mobile devices supported.
+* **NEW** Gyroscope support.
 * Browser and operating system agnostic. Flash-free. It's just an image...
-* Loves your existing CSS.
-* Transparent, **NEW** documented, eventful & well-tested tiny code base.
-* Tools for Drupal, **NEW** Joomla, Dreamweaver, Poser or Python by the loving community!
+* Loves your existing CSS. **NEW** Responsive
+* Transparent, documented, eventful & well-tested tiny code base.
+* **NEW** AMD and CommonJS compatible.
+* Tools for Drupal, Joomla, Dreamweaver, Poser or Python by the loving community!
 
 Demo
 ----
@@ -51,7 +53,7 @@ License
 Requirements
 ------------
 
-* **[jQuery 1.6.1 or higher][jquery]**
+* **[jQuery 1.6.2 or higher][jquery]**
 * Optionaly you can also include one of these two handy jQuery plugins (recommended):
     * [jQuery.mouseWheel][mousewheel] will enable mouse wheel interaction
     * or [jQuery.event.special.wheel][wheel] is also a nice alternative
@@ -60,15 +62,15 @@ Requirements
 Download
 --------
 
-* **[Annotated open source][source] (~ 110,0 kB)**
-* or [minified version][min] (~ 18,2 kB)
+* **[Annotated open source][source] (~ 124,5 kB)**
+* or [minified version][min] (~ 20,8 kB)
 * or [entire package][zip] (~ 7,8 MB)
 
 
 Link the [CDN][cdn]
 -------------------
 
-* **[http://code.vostrel.net/jquery.reel-edge-bundle.js][cdn-bundle] (~ 8,5 kB; gzipped)**
+* **[http://code.vostrel.net/jquery.reel-bundle.js][cdn-bundle] (~ 10,0 kB; gzipped)**
 
 
 Documentation
@@ -95,4 +97,4 @@ For options head to plugin [options on-line reference][options] or view the [ent
 [zip]: http://github.com/pisi/Reel/zipball/v1.3
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [cdn]: http://wiki.github.com/pisi/Reel/cdn
-[cdn-bundle]: http://code.vostrel.net/jquery.reel-edge-bundle.js
+[cdn-bundle]: http://code.vostrel.net/jquery.reel-bundle.js
