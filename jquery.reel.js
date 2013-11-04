@@ -913,7 +913,7 @@
           if (typeof name != 'object'){
 
             if (name.slice(0, 1) == ':'){
-              t.trigger(name.slice(1), value);
+              return t.trigger(name.slice(1), value);
             }
 
             // ----
