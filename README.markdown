@@ -1,7 +1,7 @@
 ![logo](assets/logo.gif)
 
-jQuery Reel 1.3 RC
-==================
+jQuery Reel 1.3
+===============
 
 **Reel** is an established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation. Reel is used on hundreds of websites around the globe by  big ones like Nikon, BMW, Adidas, Blackberry or The New York Times, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. Reel is the premier alternative to Flash, Java, Quicktime and alike.
 
@@ -90,9 +90,9 @@ For options head to plugin [options on-line reference][options] or view the [ent
 [jquery]: http://www.jquery.com/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
-[source]: http://github.com/pisi/Reel/raw/v1.3rc/jquery.reel.js
-[min]: http://github.com/pisi/Reel/raw/v1.3rc/jquery.reel-min.js
-[zip]: http://github.com/pisi/Reel/zipball/v1.3rc
+[source]: http://github.com/pisi/Reel/raw/v1.3/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/v1.3/jquery.reel-min.js
+[zip]: http://github.com/pisi/Reel/zipball/v1.3
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [cdn]: http://wiki.github.com/pisi/Reel/cdn
 [cdn-bundle]: http://code.vostrel.net/jquery.reel-edge-bundle.js
