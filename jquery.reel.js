@@ -2750,7 +2750,7 @@
   function soft_array(string){ return reel.re.array.exec(string) ? string.split(reel.re.array) : string }
   function detached($node){ return !$node.parents(_html_).length }
   function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
-  function error(message){ try{ console.error(message) }catch(e){} }
+  function error(message){ try{ console.error('[ Reel ] '+message) }catch(e){} }
 })(jQuery, window, document);
 
 });
