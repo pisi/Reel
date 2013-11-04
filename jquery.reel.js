@@ -2701,26 +2701,38 @@
 
     // For the very same reason all storage key Strings are cached into local vars.
     //
-    _annotations_= 'annotations',
-    _area_= 'area', _auto_= 'auto', _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake', _cache_= 'cache', _cached_=_cache_+'d', 
-    _center_= 'center', _class_= 'class', _click_= 'click', _clicked_= _click_+'ed', _clicked_location_= _clicked_+'_location', _clicked_on_= _clicked_+'_on', _clicked_tier_= _clicked_+'_tier',
-    _cwish_= 'cwish', _departure_= 'departure', _destination_= 'destination', _distance_= 'distance', _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock',
-    _frames_= 'frames', _height_= 'height', _hi_= 'hi', _hidden_= 'hidden', _image_= 'image', _images_= 'images', _loading_= 'loading', _opening_= 'opening', _opening_ticks_= _opening_+'_ticks',
-    _lo_= 'lo', _options_= 'options', _playing_= 'playing', _preloaded_= 'preloaded', _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',
-    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows', _shy_= 'shy', _spacing_= 'spacing', _speed_= 'speed', _src_= 'src', _stage_= 'stage',
-    _stitched_= 'stitched', _stitched_shift_= _stitched_+'_shift', _stitched_travel_= _stitched_+'_travel', _stopped_= 'stopped', _style_= 'style', _tempo_= 'tempo', _ticks_= 'ticks',
-    _tier_= 'tier', _truescale_= 'truescale', _velocity_= 'velocity', _vertical_= 'vertical', _width_= 'width',
+    _annotations_= 'annotations', _area_= 'area', _auto_= 'auto',
+    _backup_= 'backup', _backwards_= 'backwards', _bit_= 'bit', _brake_= 'brake',
+    _cache_= 'cache', _cached_=_cache_+'d', _center_= 'center', _class_= 'class', _click_= 'click',
+    _clicked_= _click_+'ed', _clicked_location_= _clicked_+'_location', _clicked_on_= _clicked_+'_on',
+    _clicked_tier_= _clicked_+'_tier', _cwish_= 'cwish',
+    _departure_= 'departure', _destination_= 'destination', _distance_= 'distance',
+    _footage_= 'footage', _fraction_= 'fraction', _frame_= 'frame', _framelock_= 'framelock', _frames_= 'frames',
+    _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
+    _image_= 'image', _images_= 'images',
+    _lo_= 'lo', _loading_= 'loading',
+    _mouse_= 'mouse',
+    _opening_= 'opening', _opening_ticks_= _opening_+'_ticks', _options_= 'options',
+    _playing_= 'playing', _preloaded_= 'preloaded',
+    _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',
+    _revolution_y_= 'revolution_y', _row_= 'row', _rowlock_= 'rowlock', _rows_= 'rows',
+    _shy_= 'shy', _spacing_= 'spacing', _speed_= 'speed', _src_= 'src', _stage_= 'stage', _stitched_= 'stitched',
+    _stitched_shift_= _stitched_+'_shift', _stitched_travel_= _stitched_+'_travel', _stopped_= 'stopped',
+    _style_= 'style',
+    _tempo_= 'tempo', _ticks_= 'ticks', _tier_= 'tier', _touch_= 'touch', _truescale_= 'truescale',
+    _velocity_= 'velocity', _vertical_= 'vertical',
+    _width_= 'width',
 
     // And the same goes for browser events too.
     //
     ns= dot(klass),
     pns= dot('pan') + ns,
-    _touch_= 'touch', _mouse_= 'mouse', _dragstart_= 'dragstart'+ns,
-    _mousedown_= _mouse_+'down'+ns, _mouseenter_= _mouse_+'enter'+ns,
-    _mouseleave_= _mouse_+'leave'+pns, _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns,
-    _mousewheel_= _mouse_+'wheel'+ns, _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns,
-    _touchend_= _touch_+'end'+pns, _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
-    _deviceorientation_= 'deviceorientation'+ns, _resize_= 'resize'+ns,
+    _deviceorientation_= 'deviceorientation'+ns, _dragstart_= 'dragstart'+ns,
+    _mousedown_= _mouse_+'down'+ns, _mouseenter_= _mouse_+'enter'+ns, _mouseleave_= _mouse_+'leave'+pns,
+    _mousemove_= _mouse_+'move'+pns, _mouseup_= _mouse_+'up'+pns, _mousewheel_= _mouse_+'wheel'+ns,
+    _tick_= 'tick'+ns, _touchcancel_= _touch_+'cancel'+pns, _touchend_= _touch_+'end'+pns,
+    _touchstart_= _touch_+'start'+ns, _touchmove_= _touch_+'move'+pns,
+    _resize_= 'resize'+ns,
 
     // And some other frequently used Strings.
     //
