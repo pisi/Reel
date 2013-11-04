@@ -898,8 +898,8 @@
               t= $(this),
 
               // Quick data interface
-              set= function(name, value){ return t.reel(name, value) && t.data(name) },
-              get= function(name){ return t.reel(name) },
+              set= function(name, value){ return t.reel(name, value) && get(name) },
+              get= function(name){ return t.data(name) },
 
               on= {
 
