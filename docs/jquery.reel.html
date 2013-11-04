@@ -290,7 +290,7 @@ and a make sure check is made at the very beginning.</p>
             <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (!$) <span class="keyword">return</span>;
   <span class="keyword">var</span>
     version= $ &amp;&amp; $().jquery.split(<span class="regexp">/\./</span>)
-  <span class="keyword">if</span> (!version || +(pad(version[<span class="number">0</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">1</span>], <span class="number">2</span>, <span class="string">'0'</span>)+pad(version[<span class="number">2</span>] || <span class="string">''</span>, <span class="number">2</span>, <span class="string">'0'</span>)) &lt; <span class="number">10602</span>)
+  <span class="keyword">if</span> (!version || +(twochar(version[<span class="number">0</span>])+twochar(version[<span class="number">1</span>])+twochar(version[<span class="number">2</span>] || <span class="string">''</span>)) &lt; <span class="number">10602</span>)
     <span class="keyword">return</span> error(<span class="string">'Too old jQuery library. Please upgrade your jQuery to version 1.6.2 or higher'</span>);</pre></div></div>
             
         </li>
@@ -5602,15 +5602,27 @@ when the code is minified.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    _annotations_= <span class="string">'annotations'</span>,
-    _area_= <span class="string">'area'</span>, _auto_= <span class="string">'auto'</span>, _backup_= <span class="string">'backup'</span>, _backwards_= <span class="string">'backwards'</span>, _bit_= <span class="string">'bit'</span>, _brake_= <span class="string">'brake'</span>, _cache_= <span class="string">'cache'</span>, _cached_=_cache_+<span class="string">'d'</span>, 
-    _center_= <span class="string">'center'</span>, _class_= <span class="string">'class'</span>, _click_= <span class="string">'click'</span>, _clicked_= _click_+<span class="string">'ed'</span>, _clicked_location_= _clicked_+<span class="string">'_location'</span>, _clicked_on_= _clicked_+<span class="string">'_on'</span>, _clicked_tier_= _clicked_+<span class="string">'_tier'</span>,
-    _cwish_= <span class="string">'cwish'</span>, _departure_= <span class="string">'departure'</span>, _destination_= <span class="string">'destination'</span>, _distance_= <span class="string">'distance'</span>, _footage_= <span class="string">'footage'</span>, _fraction_= <span class="string">'fraction'</span>, _frame_= <span class="string">'frame'</span>, _framelock_= <span class="string">'framelock'</span>,
-    _frames_= <span class="string">'frames'</span>, _height_= <span class="string">'height'</span>, _hi_= <span class="string">'hi'</span>, _hidden_= <span class="string">'hidden'</span>, _image_= <span class="string">'image'</span>, _images_= <span class="string">'images'</span>, _loading_= <span class="string">'loading'</span>, _opening_= <span class="string">'opening'</span>, _opening_ticks_= _opening_+<span class="string">'_ticks'</span>,
-    _lo_= <span class="string">'lo'</span>, _options_= <span class="string">'options'</span>, _playing_= <span class="string">'playing'</span>, _preloaded_= <span class="string">'preloaded'</span>, _ratio_= <span class="string">'ratio'</span>, _reeling_= <span class="string">'reeling'</span>, _reeled_= <span class="string">'reeled'</span>, _responsive_= <span class="string">'responsive'</span>, _revolution_= <span class="string">'revolution'</span>,
-    _revolution_y_= <span class="string">'revolution_y'</span>, _row_= <span class="string">'row'</span>, _rowlock_= <span class="string">'rowlock'</span>, _rows_= <span class="string">'rows'</span>, _shy_= <span class="string">'shy'</span>, _spacing_= <span class="string">'spacing'</span>, _speed_= <span class="string">'speed'</span>, _src_= <span class="string">'src'</span>, _stage_= <span class="string">'stage'</span>,
-    _stitched_= <span class="string">'stitched'</span>, _stitched_shift_= _stitched_+<span class="string">'_shift'</span>, _stitched_travel_= _stitched_+<span class="string">'_travel'</span>, _stopped_= <span class="string">'stopped'</span>, _style_= <span class="string">'style'</span>, _tempo_= <span class="string">'tempo'</span>, _ticks_= <span class="string">'ticks'</span>,
-    _tier_= <span class="string">'tier'</span>, _truescale_= <span class="string">'truescale'</span>, _velocity_= <span class="string">'velocity'</span>, _vertical_= <span class="string">'vertical'</span>, _width_= <span class="string">'width'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    _annotations_= <span class="string">'annotations'</span>, _area_= <span class="string">'area'</span>, _auto_= <span class="string">'auto'</span>,
+    _backup_= <span class="string">'backup'</span>, _backwards_= <span class="string">'backwards'</span>, _bit_= <span class="string">'bit'</span>, _brake_= <span class="string">'brake'</span>,
+    _cache_= <span class="string">'cache'</span>, _cached_=_cache_+<span class="string">'d'</span>, _center_= <span class="string">'center'</span>, _class_= <span class="string">'class'</span>, _click_= <span class="string">'click'</span>,
+    _clicked_= _click_+<span class="string">'ed'</span>, _clicked_location_= _clicked_+<span class="string">'_location'</span>, _clicked_on_= _clicked_+<span class="string">'_on'</span>,
+    _clicked_tier_= _clicked_+<span class="string">'_tier'</span>, _cwish_= <span class="string">'cwish'</span>,
+    _departure_= <span class="string">'departure'</span>, _destination_= <span class="string">'destination'</span>, _distance_= <span class="string">'distance'</span>,
+    _footage_= <span class="string">'footage'</span>, _fraction_= <span class="string">'fraction'</span>, _frame_= <span class="string">'frame'</span>, _framelock_= <span class="string">'framelock'</span>, _frames_= <span class="string">'frames'</span>,
+    _height_= <span class="string">'height'</span>, _hi_= <span class="string">'hi'</span>, _hidden_= <span class="string">'hidden'</span>,
+    _image_= <span class="string">'image'</span>, _images_= <span class="string">'images'</span>,
+    _lo_= <span class="string">'lo'</span>, _loading_= <span class="string">'loading'</span>,
+    _mouse_= <span class="string">'mouse'</span>,
+    _opening_= <span class="string">'opening'</span>, _opening_ticks_= _opening_+<span class="string">'_ticks'</span>, _options_= <span class="string">'options'</span>,
+    _playing_= <span class="string">'playing'</span>, _preloaded_= <span class="string">'preloaded'</span>,
+    _ratio_= <span class="string">'ratio'</span>, _reeling_= <span class="string">'reeling'</span>, _reeled_= <span class="string">'reeled'</span>, _responsive_= <span class="string">'responsive'</span>, _revolution_= <span class="string">'revolution'</span>,
+    _revolution_y_= <span class="string">'revolution_y'</span>, _row_= <span class="string">'row'</span>, _rowlock_= <span class="string">'rowlock'</span>, _rows_= <span class="string">'rows'</span>,
+    _shy_= <span class="string">'shy'</span>, _spacing_= <span class="string">'spacing'</span>, _speed_= <span class="string">'speed'</span>, _src_= <span class="string">'src'</span>, _stage_= <span class="string">'stage'</span>, _stitched_= <span class="string">'stitched'</span>,
+    _stitched_shift_= _stitched_+<span class="string">'_shift'</span>, _stitched_travel_= _stitched_+<span class="string">'_travel'</span>, _stopped_= <span class="string">'stopped'</span>,
+    _style_= <span class="string">'style'</span>,
+    _tempo_= <span class="string">'tempo'</span>, _ticks_= <span class="string">'ticks'</span>, _tier_= <span class="string">'tier'</span>, _touch_= <span class="string">'touch'</span>, _truescale_= <span class="string">'truescale'</span>,
+    _velocity_= <span class="string">'velocity'</span>, _vertical_= <span class="string">'vertical'</span>,
+    _width_= <span class="string">'width'</span>,</pre></div></div>
             
         </li>
         
@@ -5624,12 +5636,12 @@ when the code is minified.</p>
             
             <div class="content"><div class='highlight'><pre>    ns= dot(klass),
     pns= dot(<span class="string">'pan'</span>) + ns,
-    _touch_= <span class="string">'touch'</span>, _mouse_= <span class="string">'mouse'</span>, _dragstart_= <span class="string">'dragstart'</span>+ns,
-    _mousedown_= _mouse_+<span class="string">'down'</span>+ns, _mouseenter_= _mouse_+<span class="string">'enter'</span>+ns,
-    _mouseleave_= _mouse_+<span class="string">'leave'</span>+pns, _mousemove_= _mouse_+<span class="string">'move'</span>+pns, _mouseup_= _mouse_+<span class="string">'up'</span>+pns,
-    _mousewheel_= _mouse_+<span class="string">'wheel'</span>+ns, _tick_= <span class="string">'tick'</span>+ns, _touchcancel_= _touch_+<span class="string">'cancel'</span>+pns,
-    _touchend_= _touch_+<span class="string">'end'</span>+pns, _touchstart_= _touch_+<span class="string">'start'</span>+ns, _touchmove_= _touch_+<span class="string">'move'</span>+pns,
-    _deviceorientation_= <span class="string">'deviceorientation'</span>+ns, _resize_= <span class="string">'resize'</span>+ns,</pre></div></div>
+    _deviceorientation_= <span class="string">'deviceorientation'</span>+ns, _dragstart_= <span class="string">'dragstart'</span>+ns,
+    _mousedown_= _mouse_+<span class="string">'down'</span>+ns, _mouseenter_= _mouse_+<span class="string">'enter'</span>+ns, _mouseleave_= _mouse_+<span class="string">'leave'</span>+pns,
+    _mousemove_= _mouse_+<span class="string">'move'</span>+pns, _mouseup_= _mouse_+<span class="string">'up'</span>+pns, _mousewheel_= _mouse_+<span class="string">'wheel'</span>+ns,
+    _tick_= <span class="string">'tick'</span>+ns, _touchcancel_= _touch_+<span class="string">'cancel'</span>+pns, _touchend_= _touch_+<span class="string">'end'</span>+pns,
+    _touchstart_= _touch_+<span class="string">'start'</span>+ns, _touchmove_= _touch_+<span class="string">'move'</span>+pns,
+    _resize_= <span class="string">'resize'</span>+ns,</pre></div></div>
             
         </li>
         
@@ -5790,6 +5802,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
   <span class="function"><span class="keyword">function</span> <span class="title">px</span><span class="params">(value)</span>{</span> <span class="keyword">return</span> value === <span class="literal">undefined</span> ? <span class="number">0</span> : <span class="keyword">typeof</span> value == _string_ ? value : value + <span class="string">'px'</span> }
   <span class="function"><span class="keyword">function</span> <span class="title">hash</span><span class="params">(value)</span>{</span> <span class="keyword">return</span> <span class="string">'#'</span> + value }
   <span class="function"><span class="keyword">function</span> <span class="title">pad</span><span class="params">(string, len, fill)</span>{</span> <span class="keyword">while</span> (string.length &lt; len) string= fill + string; <span class="keyword">return</span> string }
+  <span class="function"><span class="keyword">function</span> <span class="title">twochar</span><span class="params">(string)</span>{</span> <span class="keyword">return</span> pad(string, <span class="number">2</span>, <span class="string">'0'</span>) }
   <span class="function"><span class="keyword">function</span> <span class="title">reen</span><span class="params">(uri)</span>{</span> <span class="keyword">return</span> encodeURI(decodeURI(uri)) }
   <span class="function"><span class="keyword">function</span> <span class="title">soft_array</span><span class="params">(string)</span>{</span> <span class="keyword">return</span> reel.re.array.exec(string) ? string.split(reel.re.array) : string }
   <span class="function"><span class="keyword">function</span> <span class="title">detached</span><span class="params">($node)</span>{</span> <span class="keyword">return</span> !$node.parents(_html_).length }
