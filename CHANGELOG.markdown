@@ -12,6 +12,7 @@ Version 1.3 RC
 * Preloading cache moved from DOM to memory for better performance.
 * Hardware acceleration enabled in Firefox to help remedy occasional flickering therein (GH-196).
 * Error message into the console in case target image properties were deemed insufficient.
+* Convenient event interface shortcut `.reel(:event)`.
 * URLs containing special markup (`@W`, `@H` or `@T`) will get it substituted with actualy
   values (`width` and `height` data values or timestamp).
 * New `$.reel.substitutes` object for custom substitution methods.
