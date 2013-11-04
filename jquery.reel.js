@@ -857,16 +857,15 @@
         // Construction
         // ------------
         //
-        // `.reel()` method is the core of Reel and similar to some jQuery functions, this one is three-fold.
-        // It either performs the following builder's duty or the [data duty](#Data).
+        // `.reel()` method is the core of Reel and similar to some jQuery functions, it has adaptive interface.
+        // It either builds, [reads & writes data](#Data) or [causes events](#Control-Events).
         //
         // ---
 
-        // ### `.reel()` Method ######
+        // ### `.reel( [options] )` Method ######
         // returns `jQuery`, since 1.0
         //
         reel: function(){
-          // The decision on what to actually do is made upon given arguments.
           var
             args= arguments,
             t= $(this),
@@ -874,9 +873,153 @@
             name= args[0] || {},
             value= args[1]
 
-          if (typeof name == 'object'){
+          // The main [core of this procedure](#Construction-Core) is rather bulky, so let's skip it for now
+          // and instead let me introduce the other uses first.
+
+          // --------------------
+          // [NEW] Control Events
+          // --------------------
+          //
+          // [Event][1] messages are what ties and binds all Reel's internal working components together.
+          // Besides being able to binding to any of these events from your script and react on Reel status changes
+          // (e.g. position), you can also trigger some of them in order to control Reel's attitude.
+          //
+          // You can:
+          //
+          // * control the playback of animated Reels with [`play`](#play-Event), [`pause`](#pause-Event)
+          // or [`stop`](#stop-Event)
+          // * step the Reel in any direction with [`stepRight`](#stepRight-Event), [`stepLeft`](#stepLeft-Event),
+          // [`stepUp`](#stepUp-Event), [`stepDown`](#stepDown-Event), 
+          // * reach certain frame with [`reach`](#reach-Event)
+          //
+          // Triggering Reel's control event is as simple as passing the desired event name to `.reel()`.
+          //
+          // _**Example:** Stop the animation in progress:_
+          //
+          //     .reel(':stop')
+          //
+          // Think of `.reel()` as a convenient shortcut to and synonym for [`.trigger()`][2], only prefix
+          // the event name with `:`. Of course you can use simple `.trigger()` instead and without the colon.
+          //
+          //
+          // [1]:http://api.jquery.com/category/events/event-object/
+          // [2]:http://api.jquery.com/trigger
+          //
+          // ---
+
+          // #### `.reel( event, [arguments] )` ######
+          // returns `jQuery`, since 1.3
+          //
+          if (typeof name != 'object'){
+
+            if (name.slice(0, 1) == ':'){
+              t.trigger(name.slice(1), value);
+            }
+
+            // ----
+            // Data
+            // ----
+            //
+            // Reel stores all its inner state values with the standard DOM [data interface][1] interface
+            // while adding an additional change-detecting event layer, which makes Reel entirely data-driven.
+            //
+            // [1]:http://api.jquery.com/data
+            //
+            // _**Example:** Find out on what frame a Reel instance currently is:_
+            //
+            //     .reel('frame') // Returns the frame number
+            //
+            // This time think of `.reel(data)` as a synonym for `.data()`. Note, that you can therefore easily
+            // inspect the entire datastore with `.data()` (without arguments). Use it for debugging only.
+            // For real-time data watch use [`monitor`](#Monitor) option instead of manually hooking into
+            // the data.
+            //
+            // ---
+
+            // #### `.reel( data )` ######
+            // can return anything, since 1.2
+            //
+            else{
+              if (args.length == 1){
+                return data[name]
+              }
+
+              // ### Write Access ###
+              //
+              // You can store any value the very same way by passing the value as the second function
+              // argument.
+              //
+              // _**Example:** Jump to frame 12:_
+              //
+              //     .reel('frame', 12)
+              //
+              // Only a handful of data keys is suitable for external manipulation. These include `area`,
+              // `backwards`, `brake`, __`fraction`__, __`frame`__, `playing`, `reeling`, __`row`__, `speed`,
+              // `stopped`, `velocity` and `vertical`. Use the rest of the keys for reading only, you can
+              // mess up easily changing them.
+              //
+              // ---
+
+              // #### `.reel( data, value )` ######
+              // returns `jQuery`, since 1.2
+              //
+              else{
+                if (value !== undefined){
+                  reel.normal[name] && (value= reel.normal[name](value, data));
+
+                  // ### Changes ######
+                  //
+                  // Any value that does not equal (`===`) the old value is considered _new value_ and
+                  // in such a case Reel will trigger a _change event_ to announce the change. The event
+                  // type takes form of _`key`_`Change`, where _`key`_ will be the data key/name you've
+                  // just assigned.
+                  //
+                  // _**Example:** Setting `"frame"` to `12` in the above example will trigger
+                  // `"frameChange"`._
+                  //
+                  // Some of these _change events_ (like `frame` or `fraction`) have a
+                  // default handler attached.
+                  //
+                  // You can easily bind to any of the data key change with standard event
+                  // binding methods.
+                  //
+                  // _**Example:** React on instance being manipulated or not:_
+                  //
+                  //     .bind('reelingChange', function(evnt, nothing, reeling){
+                  //       if (reeling) console.log('Rock & reel!')
+                  //       else console.log('Not reeling...')
+                  //     })
+                  //
+                  // ---
+
+                  // The handler function will be executed every time the value changes and
+                  // it will be supplied with three arguments. First one is the event object
+                  // as usual, second is `undefined` and the third will be the actual value.
+                  // In this case it was a boolean type value.
+                  // If the second argument is not `undefined` it is the backward compatible
+                  // "before" event triggered from outside Reel.
+                  //
+                  if (data[name] === undefined) data[name]= value
+                  else if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
+                }
+                return t
+              }
+            }
+          }
+
+          //
+          // -----------------
+          // Construction Core
+          // -----------------
+          //
+          // Now, back to the procedure of [constructing](#Construction) a Reel instance
+          // and binding its event handlers.
+          //
+          // Establish local `opt` object made by extending the defaults.
+          //
+          else{
+
           var
-            // Establish local `opt` object made by extending the defaults.
             opt= $.extend({}, reel.def, name),
             // Limit the given jQuery collection to just `<img>` tags with `src` attribute
             // and dimensions defined.
@@ -2129,101 +2272,6 @@
           })();
 
           return $(instances);
-          }else{
-
-            if (name.slice(0, 1) == ':'){
-              t.trigger(name.slice(1), value);
-            }
-
-            // ----
-            // Data
-            // ----
-            //
-            // Reel stores all its inner state values with the standard DOM [data interface][1] interface
-            // while adding an additional change-detecting event layer, which makes Reel entirely data-driven.
-            //
-            // [1]:http://api.jquery.com/data
-            //
-            // _**Example:** Find out on what frame a Reel instance currently is:_
-            //
-            //     .reel('frame') // Returns the frame number
-            //
-            // Think of `.reel()` as a synonym for `.data()`. Note, that you can therefore easily inspect
-            // the entire datastore with `.data()` (without arguments). Use it for debugging only.
-            // For real-time data watch use [`monitor`](#Monitor) option instead of manually hooking into
-            // the data.
-            //
-            // ---
-
-            // #### `.reel( name )` ######
-            // can return anything, since 1.2
-            //
-            else{
-              if (args.length == 1){
-                return data[name]
-              }
-
-              // ### Write Access ###
-              //
-              // You can store any value the very same way by passing the value as the second function
-              // argument.
-              //
-              // _**Example:** Jump to frame 12:_
-              //
-              //     .reel('frame', 12)
-              //
-              // Only a handful of data keys is suitable for external manipulation. These include `area`,
-              // `backwards`, `brake`, __`fraction`__, __`frame`__, `playing`, `reeling`, __`row`__, `speed`,
-              // `stopped`, `velocity` and `vertical`. Use the rest of the keys for reading only, you can
-              // mess up easily changing them.
-              //
-              // ---
-
-              // #### `.reel( name, value )` ######
-              // returns `jQuery`, since 1.2
-              //
-              else{
-                if (value !== undefined){
-                  reel.normal[name] && (value= reel.normal[name](value, data));
-
-                  // ### Changes ######
-                  //
-                  // Any value that does not equal (`===`) the old value is considered _new value_ and
-                  // in such a case Reel will trigger a _change event_ to announce the change. The event
-                  // type takes form of _`key`_`Change`, where _`key`_ will be the data key/name you've
-                  // just assigned.
-                  //
-                  // _**Example:** Setting `"frame"` to `12` in the above example will trigger
-                  // `"frameChange"`._
-                  //
-                  // Some of these _change events_ (like `frame` or `fraction`) have a
-                  // default handler attached.
-                  //
-                  // You can easily bind to any of the data key change with standard event
-                  // binding methods.
-                  //
-                  // _**Example:** React on instance being manipulated or not:_
-                  //
-                  //     .bind('reelingChange', function(evnt, nothing, reeling){
-                  //       if (reeling) console.log('Rock & reel!')
-                  //       else console.log('Not reeling...')
-                  //     })
-                  //
-                  // ---
-
-                  // The handler function will be executed every time the value changes and
-                  // it will be supplied with three arguments. First one is the event object
-                  // as usual, second is `undefined` and the third will be the actual value.
-                  // In this case it was a boolean type value.
-                  // If the second argument is not `undefined` it is the backward compatible
-                  // "before" event triggered from outside Reel.
-                  //
-                  if (data[name] === undefined) data[name]= value
-                  else if (data[name] !== value) t.trigger(name+'Change', [ undefined, data[name]= value ]);
-                }
-                return t
-              }
-            }
           }
         },
 
