@@ -75,7 +75,8 @@
   if (!$) return;
   var
     version= $ && $().jquery.split(/\./)
-  if (!version || +(pad(version[0], 2, '0')+pad(version[1], 2, '0')+pad(version[2] || '', 2, '0')) < 10602) return;
+  if (!version || +(pad(version[0], 2, '0')+pad(version[1], 2, '0')+pad(version[2] || '', 2, '0')) < 10602)
+    return error('Too old jQuery library. Please upgrade your jQuery to version 1.6.2 or higher');
   // ----------------
   // Global Namespace
   // ----------------
