@@ -92,9 +92,9 @@ For options head to plugin [options on-line reference][options] or view the [ent
 [jquery]: http://www.jquery.com/
 [mousewheel]: http://github.com/brandonaaron/jquery-mousewheel
 [wheel]: http://blog.threedubmedia.com/2008/08/eventspecialwheel.html
-[source]: http://github.com/pisi/Reel/raw/v1.3/jquery.reel.js
-[min]: http://github.com/pisi/Reel/raw/v1.3/jquery.reel-min.js
-[zip]: http://github.com/pisi/Reel/zipball/v1.3
+[source]: http://github.com/pisi/Reel/raw/v1.3.0/jquery.reel.js
+[min]: http://github.com/pisi/Reel/raw/v1.3.0/jquery.reel-min.js
+[zip]: http://github.com/pisi/Reel/zipball/v1.3.0
 [iphone-test]: http://www.youtube.com/watch?v=R0hiYmVre6s
 [cdn]: http://wiki.github.com/pisi/Reel/cdn
 [cdn-bundle]: http://code.vostrel.net/jquery.reel-bundle.js
