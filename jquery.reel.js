@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3.0
- * Updated: 2013-11-04
+ * Updated: 2013-12-04
  *
  * Requires jQuery 1.6.2 or higher
  */
@@ -1286,7 +1286,7 @@
                     set(_shy_, false);
                     function load(){
                       var
-                        $img= $cache.children(':not([src]):first')
+                        $img= $cache.children(':not([src]),[src=""]').first()
                       return $img.attr(_src_, $img.data(_src_))
                     }
                   },
