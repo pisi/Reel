@@ -671,4 +671,32 @@
     }
   });
 
+  asyncTest( 'GH-244 Looping of fraction in non-looping multirow setups', function(){
+    /* Github issue 244 bugfix
+     * http://github.com/pisi/Reel/issues/244
+     */
+    expect( 2 );
+
+    var
+      $reel= $('#image').reel({
+        rows: 3,
+        row: 2,
+        frames: 10,
+        frame: 6,
+        loops: false
+      })
+
+    $(document).bind('loaded.test', function(){
+
+      $reel.reel('fraction', 0);
+      equal( $reel.reel('frame'), 11, 'First frame of row 2');
+
+      $reel.reel('fraction', 1);
+      equal( $reel.reel('frame'), 20, 'Last frame of row 2');
+
+      start();
+    });
+
+  });
+
 })(jQuery);
