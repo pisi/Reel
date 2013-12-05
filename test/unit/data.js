@@ -319,6 +319,20 @@
         '-0.3': 0,
         '-1.2': 0
       }
+    },
+    'non-looping-multirow': {
+      options: {
+        rows: 3,
+        row: 2,
+        loops: false
+      },
+      probes: {
+        '3': 1,
+        '1.8': 1,
+        '0.4': 0.4,
+        '-0.3': 0,
+        '-1.2': 0
+      }
     }
   }, function(testcase, def){
     test( 'Normalization of '+testcase+' `"fraction"`', function(){
