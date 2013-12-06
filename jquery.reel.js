@@ -23,8 +23,8 @@
  *
  * jQuery Reel
  * http://reel360.org
- * Version: 1.3.0
- * Updated: 2013-11-04
+ * Version: 1.3.0-gh-244
+ * Updated: 2013-12-06
  *
  * Requires jQuery 1.6.2 or higher
  */
@@ -1111,7 +1111,7 @@
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
                   set(_departure_, set(_destination_, set(_distance_, 0)));
-                  set(_bit_, 1 / frames);
+                  set(_bit_, 1 / (frames - +!loops));
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
                   set(_loading_, false);
