@@ -1113,7 +1113,8 @@
                   set(_departure_, set(_destination_, set(_distance_, 0)));
                   set(_bit_, 1 / (frames - +!loops));
                   set(_stage_, stage_id);
-                  set(_backwards_, set(_speed_, opt.speed) < 0);
+                  set(_speed_, opt.speed);
+                  set(_backwards_, false);
                   set(_loading_, false);
                   set(_velocity_, 0);
                   set(_vertical_, opt.vertical);
@@ -2549,6 +2550,11 @@
             frames= data[_frames_] * (opt.orbital ? 2 : opt.rows || 1),
             result= round(opt.loops ? frame % frames || frames : min_max(1, frames, frame))
           return result < 0 ? result + frames : result
+        },
+        speed: function(speed, data){
+          var
+            backwards= data[_backwards_]= speed < 0
+          return speed;
         },
         images: function(images, data){
           var
