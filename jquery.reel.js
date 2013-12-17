@@ -1111,7 +1111,7 @@
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
                   set(_departure_, set(_destination_, set(_distance_, 0)));
-                  set(_bit_, 1 / frames);
+                  set(_bit_, 1 / (frames - +!loops));
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) < 0);
                   set(_loading_, false);

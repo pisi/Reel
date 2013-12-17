@@ -2571,7 +2571,7 @@ and dimensions defined.</p>
                   set(_rowlock_, opt.rowlock);
                   set(_framelock_, opt.framelock);
                   set(_departure_, set(_destination_, set(_distance_, <span class="number">0</span>)));
-                  set(_bit_, <span class="number">1</span> / frames);
+                  set(_bit_, <span class="number">1</span> / (frames - +!loops));
                   set(_stage_, stage_id);
                   set(_backwards_, set(_speed_, opt.speed) &lt; <span class="number">0</span>);
                   set(_loading_, <span class="literal">false</span>);

@@ -5,6 +5,7 @@ Development
 -----------
 
 * Fixed preloading failure in IEs 6 and 7 (GH-243).
+* Non-looping multi-rows fixed (GH-244).
 
 
 Version 1.3
