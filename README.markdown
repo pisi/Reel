@@ -1,7 +1,7 @@
 ![logo](assets/logo.gif)
 
-jQuery Reel 1.3
-===============
+jQuery Reel 1.3.1 DEVELOPMENT
+=============================
 
 **Reel** is an established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation. Reel is used on hundreds of websites around the globe by  big ones like Nikon, BMW, Adidas, Blackberry or The New York Times, government agencies, non-profits, businesses and individuals to embrace their visitors and enrich their user experience. Reel is the premier alternative to Flash, Java, Quicktime and alike.
 

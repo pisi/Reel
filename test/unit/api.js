@@ -400,7 +400,7 @@
     ok( $.reel.version.split('.')[0].match(/^[0-9]+$/),                     'Major is strictly a number' );
     ok( $.reel.version.split('.')[1].match(/^[0-9]+(|-?[a-z][a-z0-9]+)$/),  'Minor may contain additional lowercase letters after an optional dash (like 1.2rc or 1.2-devel)' );
 
-    equal( $.reel.version, '1.3.0', 'Current version' );
+    equal( $.reel.version, '1.3.1-devel', 'Current version' );
   });
 
   $.each({
