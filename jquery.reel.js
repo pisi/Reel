@@ -1286,7 +1286,7 @@
                     set(_shy_, false);
                     function load(){
                       var
-                        $img= $cache.children(':not([src]):first')
+                        $img= $cache.children(':not([src]),[src=""]').first()
                       return $img.attr(_src_, $img.data(_src_))
                     }
                   },

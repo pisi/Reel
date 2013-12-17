@@ -4,6 +4,7 @@ Changelog
 Development
 -----------
 
+* Fixed preloading failure in IEs 6 and 7 (GH-243).
 
 
 Version 1.3

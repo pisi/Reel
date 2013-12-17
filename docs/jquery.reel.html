@@ -183,8 +183,8 @@
  *
  * jQuery Reel
  * http://reel360.org
- * Version: 1.3.0
- * Updated: 2013-11-04
+ * Version: 1.3.1-devel
+ * Updated: 2013-12-17
  *
  * Requires jQuery 1.6.2 or higher
  */</span>
@@ -348,7 +348,7 @@ It is locally referenced as just <code>reel</code> for speedier access.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      version: <span class="string">'1.3.0'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      version: <span class="string">'1.3.1-devel'</span>,</pre></div></div>
             
         </li>
         
@@ -2830,7 +2830,7 @@ asynchronously loads all of them.</p>
                     set(_shy_, <span class="literal">false</span>);
                     <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">()</span>{</span>
                       <span class="keyword">var</span>
-                        $img= $cache.children(<span class="string">':not([src]):first'</span>)
+                        $img= $cache.children(<span class="string">':not([src]),[src=""]'</span>).first()
                       <span class="keyword">return</span> $img.attr(_src_, $img.data(_src_))
                     }
                   },</pre></div></div>
