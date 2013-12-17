@@ -1,6 +1,6 @@
 /*
  QUny for QUnit.
- Copyright (c) 2011-2012 Petr Vostrel (http://petr.vostrel.cz/)
+ Copyright (c) 2011-2014 Petr Vostrel (http://petr.vostrel.cz/)
  Dual licensed under the MIT (MIT-LICENSE.txt)
  and GPL (GPL-LICENSE.txt) licenses.
 

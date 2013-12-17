@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2009-2013 Petr Vostrel (http://petr.vostrel.cz/)
+ Copyright (c) 2009-2014 Petr Vostrel (http://petr.vostrel.cz/)
  Licensed under the MIT License (LICENSE.txt).
 
  jQuery Reel

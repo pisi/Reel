@@ -29,7 +29,7 @@ See the complete source of [index.html](index.html) for full
 implementation.
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
+&copy; 2009-2014 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 

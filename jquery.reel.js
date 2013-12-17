@@ -18,7 +18,7 @@
  * ===========
  * The 360° plugin for jQuery
  *
- * @license Copyright (c) 2009-2013 Petr Vostrel (http://petr.vostrel.cz/)
+ * @license Copyright (c) 2009-2014 Petr Vostrel (http://petr.vostrel.cz/)
  * Licensed under the MIT License (LICENSE.txt).
  *
  * jQuery Reel

@@ -2,7 +2,7 @@
 
   // URL Params Hash
   //--------------------------------------------------------------------------------
-  // (cc) 2011-2012 Petr Vostrel, MIT / GPL license
+  // (cc) 2011-2014 Petr Vostrel, MIT / GPL license
   //
   // Automatically parses URL search query string and makes all the parameters
   // readily available in newly created `window.location.params` hash.

@@ -24,7 +24,7 @@ Reel requests one, two or three images from the CDN to complete its UI:
 
 
 ---
-&copy; 2009-2013 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
+&copy; 2009-2014 Petr Vostřel, part of [jQuery Reel][reel] project, free under the [MIT License][license]
 
 
 [reel]:http://reel360.org
