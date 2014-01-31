@@ -1973,7 +1973,7 @@
                       size= get(_images_).length
                         ? !stitched ? undefined : px(stitched)+___+px(height)
                         : stitched && px(stitched)+___+px((height + spacing) * rows - spacing)
-                        || px((get(_width_) + spacing) * get(_footage_) - spacing)+___+px((height + spacing) * get(_rows_) * rows * (opt.directional? 2:1) - spacing)
+                        || px((get(_width_) + spacing) * get(_footage_) - spacing)+___+px((height + spacing) * ceil((get(_frames_) * rows) / opt.footage) * (opt.directional? 2:1) - spacing)
                     t.css({
                       height: is_sprite ? px(height) : null,
                       backgroundSize: size || null
