@@ -1269,7 +1269,7 @@
                     set(_loading_, true);
                     t.trigger('stop');
                     opt.responsive && gauge();
-                    t.trigger('resize', true);
+                    t.trigger(_resize_, true);
                     while(preload.length){
                       var
                         uri= reel.substitute(opt.path+preload.shift(), get),
