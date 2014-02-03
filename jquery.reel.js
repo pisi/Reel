@@ -1269,7 +1269,7 @@
                     set(_loading_, true);
                     t.trigger('stop');
                     opt.responsive && gauge();
-                    t.trigger(_resize_, true);
+                    t.trigger('resize', true);
                     while(preload.length){
                       var
                         uri= reel.substitute(opt.path+preload.shift(), get),
@@ -1979,6 +1979,7 @@
                       backgroundSize: size || null
                     });
                     force || t.trigger('imagesChange');
+                    return false;
                   },
 
                   // ----------------
@@ -2192,7 +2193,8 @@
                   truescale= get(_truescale_),
                   ratio= set(_ratio_, t.width() / truescale.width)
                 $.each(truescale, function(key, value){ set(key, round(value * ratio)) })
-                t.trigger('resize');
+                //t.trigger('resize');
+                t.trigger(_resize_);
               },
 
               // - Delay timer pointers
