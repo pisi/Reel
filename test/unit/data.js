@@ -38,6 +38,7 @@
         images: 'Array',
         lo: 'Number',
         loading: 'Boolean',
+        monitor: 'String',
         opening: 'Boolean',
         opening_ticks: 'Number',
         options: 'Object',

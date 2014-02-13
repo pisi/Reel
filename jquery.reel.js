@@ -1134,6 +1134,7 @@
                   set(_ticks_, -1);
                   set(_annotations_, opt.annotations || $overlay.unbind(dot(_annotations_)) && {});
                   set(_ratio_, 1);
+                  set(_monitor_, '');
                   set(_backup_, {
                     attr: attr,
                     data: data
@@ -2051,7 +2052,7 @@
                     if (braking) var
                       braked= velocity - (get(_brake_) / leader_tempo * braking),
                       velocity= set(_velocity_, braked > 0.1 ? braked : (braking= operated= 0))
-                    monitor && $monitor.text(get(monitor));
+                    monitor && set(_monitor_, get(monitor)+__);
                     velocity && braking++;
                     operated && operated++;
                     to_bias(0);
@@ -2717,7 +2718,7 @@
     _height_= 'height', _hi_= 'hi', _hidden_= 'hidden',
     _image_= 'image', _images_= 'images',
     _lo_= 'lo', _loading_= 'loading',
-    _mouse_= 'mouse',
+    _monitor_= 'monitor', _mouse_= 'mouse',
     _opening_= 'opening', _opening_ticks_= _opening_+'_ticks', _options_= 'options',
     _playing_= 'playing', _preloaded_= 'preloaded',
     _ratio_= 'ratio', _reeling_= 'reeling', _reeled_= 'reeled', _responsive_= 'responsive', _revolution_= 'revolution',
