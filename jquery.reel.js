@@ -1240,8 +1240,7 @@
                     opt.hint && $area.attr('title', opt.hint);
                     opt.indicator && $overlay.append(indicator('x'));
                     multirow && opt.indicator && $overlay.append(indicator('y'));
-                    opt.monitor && $overlay.append($monitor= $(tag(_div_), { 'class': monitor_klass }))
-                                && css(___+dot(monitor_klass), { position: _absolute_, left: 0, top: 0 });
+                    opt.monitor && $overlay.append(monitor())
                   },
 
                   // ### `preload` Event ######
@@ -2120,7 +2119,14 @@
 
               // - Constructors of UI elements
               //
-              $monitor= $(),
+              monitor= function(){
+                css(___+dot(monitor_klass), {
+                  position: _absolute_,
+                  left: 0,
+                  top: 0
+                });
+                return monitor.$= $(tag(_div_), { 'class': monitor_klass })
+              },
               preloader= function(){
                 css(___+dot(preloader_klass), {
                   position: _absolute_,
