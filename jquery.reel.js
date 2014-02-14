@@ -1821,6 +1821,17 @@
                   // more CPU resources than the entire Reel scene. Use them for development only.
                   //
 
+                  // -----------------
+                  // Debugging Monitor
+                  // -----------------
+                  //
+                  // With [`monitor`](#monitor-Option) option set, a simple text node in the upper left corner
+                  // of the scene is continuously updated with the actual value of given monitored data field.
+                  // 
+                  monitorChange: function(e, nil, value){
+                    monitor.$.text(value);
+                  },
+
                   // -----------
                   // Annotations
                   // -----------
