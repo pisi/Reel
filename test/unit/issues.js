@@ -751,4 +751,30 @@
 
   });
 
+  asyncTest( 'GH-241 Negative initial speed', function(){
+    /* 
+     * http://github.com/pisi/Reel/issues/241
+     */
+    expect( 1 );
+
+    var
+      frame,
+      $reel= $('#image').reel({
+        frame: 15,
+        speed: -0.1
+      })
+
+    $(document).bind('play.test', function(){
+      $(document).bind('frameChange.test', function(){
+        if (!frame){
+          frame= $reel.reel('frame');
+        }else{
+          ok( $reel.reel('frame') < frame, 'Frames progress backwards');
+          start();
+        }
+      });
+    });
+
+  });
+
 })(jQuery);

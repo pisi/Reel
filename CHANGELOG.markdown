@@ -6,6 +6,7 @@ Development
 
 * Fixed preloading failure in IEs 6 and 7 (GH-243).
 * Non-looping multi-rows fixed (GH-244).
+* Negative speed now rolling in correct direction (GH-241).
 
 
 Version 1.3

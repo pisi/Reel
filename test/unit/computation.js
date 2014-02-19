@@ -267,8 +267,10 @@
       selector= '#image',
       $reel= $(selector).reel({ speed: -1 })
 
-    equal( $reel.data('backwards'), true, 'Reversed at negative speeds');
-    start();
+    $(document).bind('play.test', function(){
+      equal( $reel.data('backwards'), true, 'Reversed at negative speeds');
+      start();
+    });
   });
 
   asyncTest( '`$.reel.preload.linear` for linear order of preloaded images', function(){

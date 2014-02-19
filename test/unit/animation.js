@@ -327,4 +327,58 @@
     });
   });
 
+  asyncTest( 'Speed: Positive initial value', function()
+  {
+    expect(3);
+    var
+      frame,
+      $reel= $('#image').reel({
+        frame: 15,
+        speed: 0.1
+      })
+
+    $(document).bind('play.test', function(){
+
+      equal( $reel.reel('speed'), 0.1, 'Value of `speed`');
+      equal( $reel.reel('backwards'), false, 'In backwards mode');
+
+      $(document).bind('frameChange.test', function(){
+        if (!frame){
+          frame= $reel.reel('frame');
+        }else{
+          ok( $reel.reel('frame') > frame, 'Frames progress forward');
+
+          start();
+        }
+      });
+    });
+  });
+
+  asyncTest( 'Speed: negative initial value', function()
+  {
+    expect(3);
+    var
+      frame,
+      $reel= $('#image').reel({
+        frame: 15,
+        speed: -0.1
+      })
+
+    $(document).bind('play.test', function(){
+
+      equal( $reel.reel('speed'), -0.1, 'Value of `speed`');
+      equal( $reel.reel('backwards'), true, 'In backwards mode');
+
+      $(document).bind('frameChange.test', function(){
+        if (!frame){
+          frame= $reel.reel('frame');
+        }else{
+          ok( $reel.reel('frame') < frame, 'Frames progress backwards');
+
+          start();
+        }
+      });
+    });
+  });
+
 })(jQuery);
