@@ -1266,7 +1266,7 @@
                       uris= []
                     $overlay.addClass(loading_klass);
                     // It also finalizes the instance stylesheet and prepends it to the head.
-                    set(_style_, get(_style_) || $('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>').prependTo(_head_));
+                    set(_style_, get(_style_) || $(sanitize('<'+_style_+' type="text/css">'+css.rules.join('\n')+'</'+_style_+'>')).prependTo(_head_));
                     set(_loading_, true);
                     t.trigger('stop');
                     opt.responsive && gauge();
@@ -2822,6 +2822,7 @@
   function detached($node){ return !$node.parents(_html_).length }
   function numerize_array(array){ return typeof array == _string_ ? array : $.each(array, function(ix, it){ array[ix]= it ? +it : undefined }) }
   function error(message){ try{ console.error('[ Reel ] '+message) }catch(e){} }
+  function sanitize(html){ return toStaticHTML ? toStaticHTML(html) : html }
 })(jQuery, window, document);
 
 });
