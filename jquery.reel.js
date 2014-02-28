@@ -1189,7 +1189,7 @@
                     t.parent().unbind(on.instance);
                     if (get(_shy_)) t.parent().unbind(_click_, shy_setup)
                     else get(_style_).remove() && get(_area_).unbind(ns);
-                    get(_cache_).empty();
+                    get(_cache_).remove();
                     clearTimeout(delay);
                     clearTimeout(gauge_delay);
                     $(window).unbind(_resize_, slow_gauge);

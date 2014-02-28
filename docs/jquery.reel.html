@@ -2687,7 +2687,7 @@ belongings leaving no trace.</p>
                     t.parent().unbind(on.instance);
                     <span class="keyword">if</span> (get(_shy_)) t.parent().unbind(_click_, shy_setup)
                     <span class="keyword">else</span> get(_style_).remove() &amp;&amp; get(_area_).unbind(ns);
-                    get(_cache_).empty();
+                    get(_cache_).remove();
                     clearTimeout(delay);
                     clearTimeout(gauge_delay);
                     $(window).unbind(_resize_, slow_gauge);

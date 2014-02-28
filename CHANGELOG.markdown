@@ -8,6 +8,7 @@ Development
 * Non-looping multi-rows fixed (GH-244).
 * Negative speed now rolling in correct direction (GH-241).
 * Compatibility with Visual Studio Windows 8 apps added (GH-263).
+* Cache teardown removal fixed (GH-265).
 
 
 Version 1.3
