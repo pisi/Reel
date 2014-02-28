@@ -184,7 +184,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3.1-devel
- * Updated: 2014-02-19
+ * Updated: 2014-02-28
  *
  * Requires jQuery 1.6.2 or higher
  */</span>
@@ -2800,7 +2800,7 @@ asynchronously loads all of them.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    set(_style_, get(_style_) || $(<span class="string">'&lt;'</span>+_style_+<span class="string">' type="text/css"&gt;'</span>+css.rules.join(<span class="string">'\n'</span>)+<span class="string">'&lt;/'</span>+_style_+<span class="string">'&gt;'</span>).prependTo(_head_));
+            <div class="content"><div class='highlight'><pre>                    set(_style_, get(_style_) || $(sanitize(<span class="string">'&lt;'</span>+_style_+<span class="string">' type="text/css"&gt;'</span>+css.rules.join(<span class="string">'\n'</span>)+<span class="string">'&lt;/'</span>+_style_+<span class="string">'&gt;'</span>)).prependTo(_head_));
                     set(_loading_, <span class="literal">true</span>);
                     t.trigger(<span class="string">'stop'</span>);
                     opt.responsive &amp;&amp; gauge();
@@ -5814,6 +5814,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
   <span class="function"><span class="keyword">function</span> <span class="title">detached</span><span class="params">($node)</span>{</span> <span class="keyword">return</span> !$node.parents(_html_).length }
   <span class="function"><span class="keyword">function</span> <span class="title">numerize_array</span><span class="params">(array)</span>{</span> <span class="keyword">return</span> <span class="keyword">typeof</span> array == _string_ ? array : $.each(array, <span class="keyword">function</span>(ix, it){ array[ix]= it ? +it : <span class="literal">undefined</span> }) }
   <span class="function"><span class="keyword">function</span> <span class="title">error</span><span class="params">(message)</span>{</span> <span class="keyword">try</span>{ console.error(<span class="string">'[ Reel ] '</span>+message) }<span class="keyword">catch</span>(e){} }
+  <span class="function"><span class="keyword">function</span> <span class="title">sanitize</span><span class="params">(html)</span>{</span> <span class="keyword">return</span> window.toStaticHTML ? toStaticHTML(html) : html }
 })(jQuery, window, document);
 
 });</pre></div></div>
