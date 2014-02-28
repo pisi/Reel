@@ -777,4 +777,22 @@
 
   });
 
+  asyncTest( 'GH-263 Cache element teardown', function(){
+    /* 
+     * http://github.com/pisi/Reel/issues/263
+     */
+    expect( 1 );
+
+    var
+      frame,
+      $reel= $('#image').reel(),
+      $reel= $('#image').reel()
+
+    $(document).bind('loaded.test', function(){
+      ok( $('.reel-cache').length == 1, 'Loading cache of the first instance is removed.');
+      start();
+    });
+
+  });
+
 })(jQuery);
