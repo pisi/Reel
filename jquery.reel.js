@@ -2344,7 +2344,7 @@
       // ### `$.reel.cdn` ######
       // `String` (URL path), since 1.1
       //
-      cdn: 'http://code.vostrel.net/',
+      cdn: (document.location.protocol === 'https:' ? 'https:' : ' http:')+'{{cdn:url}}/{{branch}}/assets/',
 
       // -----------
       // Math Behind
