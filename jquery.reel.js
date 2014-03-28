@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3.1-devel
- * Updated: 2014-03-24
+ * Updated: 2014-03-28
  *
  * Requires jQuery 1.6.2 or higher
  */
@@ -1460,6 +1460,7 @@
                   // the event target element. However in click-free mode, it binds directly to the instance.
                   //
                   down: function(e, x, y, ev){
+                    if (mouse_touch(ev)) return e.stopImmediatePropagation();
                     if (!opt.clickfree && ev && ev.button !== undefined && ev.button != DRAG_BUTTON) return;
                     if (opt.draggable){
                       var
@@ -1492,6 +1493,7 @@
                   // - and unbinds dragging events from the pool.
                   //
                   up: function(e, ev){
+                    if (mouse_touch(ev, true)) return e.stopImmediatePropagation();
                     var
                       clicked= set(_clicked_, false),
                       reeling= set(_reeling_, false),
@@ -1525,6 +1527,7 @@
                   // [1]:https://github.com/pisi/Reel/issues/51
                   //
                   pan: function(e, x, y, ev){
+                    if (mouse_touch(ev)) return e.stopImmediatePropagation();
                     if (opt.draggable && slidable){
                       slidable= false;
                       unidle();
@@ -2065,6 +2068,7 @@
                     monitor && set(_monitor_, get(monitor)+__);
                     velocity && braking++;
                     operated && operated++;
+                    touched > 0 && touched--;
                     to_bias(0);
                     slidable= true;
                     if (operated && !velocity) return mute(e);
@@ -2127,6 +2131,16 @@
               panned= 0,
               wheeled= false,
               oriented= false,
+
+              // - Touch input type registration and check routine for devices,
+              // which fire both touch and mouse events simultaneously
+              touched= 0,
+              mouse_touch= function(ev, release){
+                var
+                  touch_event= ev.type.match(/^touch/)
+                touch_event && (touched= release ? 30 : -1);
+                return touched && !touch_event;
+              },
 
               // - Constructors of UI elements
               //
