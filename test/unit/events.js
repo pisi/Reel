@@ -192,16 +192,16 @@
       $inner= $('<div>', { 'class': 'inner' }).appendTo($outer),
       $innermost= $('<div>', { 'class': 'innermost' }).appendTo($inner)
 
-    $container.bind('clean', function(){
+    $container.bind('clean.test', function(){
       ok( false, 'The `clean` event doesn\'t bubble up the DOM ever');
     });
-    $outer.bind('clean', function(){
+    $outer.bind('clean.test', function(){
       ok( true, '`clean` handler triggered on the outer node after emptying container (indirect removal)' );
     });
-    $inner.bind('clean', function(){
+    $inner.bind('clean.test', function(){
       ok( true, '`clean` handler triggered on the inner node after emptying container (indirect removal)' );
     });
-    $innermost.bind('clean', function(){
+    $innermost.bind('clean.test', function(){
       ok( true, '`clean` handler triggered on the innermost node after its direct removal' );
     });
 

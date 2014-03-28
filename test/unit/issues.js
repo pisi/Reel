@@ -47,8 +47,7 @@
       setTimeout(function(){
         var
           src= $reel.reel('cache').children().attr('src')
-  
-        ok( src && src.match($.reel.re.path), 'Image `src` has been assigned for the actual preload');
+        ok( src && src.match($.reel.re.image), 'Image `src` has been assigned for the actual preload');
         ok( !$reel.is('.reel-loading'), 'Loading flag has been removed from the instance');
         ok( !$reel.reel('loading'), 'Loading state updated');
         ok( hits > 5, 'Actually animating');
