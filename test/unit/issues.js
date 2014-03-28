@@ -308,8 +308,8 @@
         $(document).bind('loaded.test', function(){
 
           // Click and drag long way down
-          $pano.trigger('down', [ 100, 200 ]);
-          $pano.trigger('pan', [ 100, 400 ]);
+          $pano.trigger('down', [ 100, 200, { type: 'mousedown' } ]);
+          $pano.trigger('pan', [ 100, 400, { type: 'mousemove' } ]);
           deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
                     { row: rows,              tier: 1,                  frame: rows * frames - frames + frame },
                     'Drag way down on frame '+frame+' / '+frames+', row '+row+' / '+rows);
@@ -318,7 +318,7 @@
           $pano.trigger('tick');
 
           // Then drag it all the way back up to reach the first row
-          $pano.trigger('pan', [ 100, 1 ]);
+          $pano.trigger('pan', [ 100, 1, { type: 'mousemove' } ]);
           deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
                     { row: 1,                 tier: 0,                  frame: frame },
                     '& drag way up');
@@ -326,13 +326,13 @@
           $pano.trigger('tick');
 
           // Then drag it back all the way down
-          $pano.trigger('pan', [ 100, 400 ]);
+          $pano.trigger('pan', [ 100, 400, { type: 'mousemove' } ]);
           deepEqual({ row: $pano.data('row'), tier: $pano.data('tier'), frame: $pano.data('frame') },
                     { row: rows,              tier: 1,                  frame: rows * frames - frames + frame },
                     '& drag way down again.');
 
           // Conclude the drag
-          $pano.trigger('up');
+          $pano.trigger('up', [ { type: 'mouseup' } ]);
           start();
 
         })

@@ -156,8 +156,8 @@
       })
 
       $reel
-        .trigger('down')
-        .trigger('wheel', [1])
+        .trigger('down', [100, 100, { type: '' }])
+        .trigger('wheel', [1, { type: '', preventDefault: function(){} }])
         // Because of IE the non-zero distance parameter to the event is
         // required to be present
     });
