@@ -10,6 +10,7 @@ Development
 * Compatibility with Visual Studio Windows 8 apps added (GH-263).
 * Cache teardown removal fixed (GH-265).
 * Improved performance of debugging monitor.
+* Fixed interaction issues on iPad (GH-260).
 
 
 Version 1.3

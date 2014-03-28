@@ -184,7 +184,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3.1-devel
- * Updated: 2014-03-24
+ * Updated: 2014-03-28
  *
  * Requires jQuery 1.6.2 or higher
  */</span>
@@ -3188,6 +3188,7 @@ the event target element. However in click-free mode, it binds directly to the i
             </div>
             
             <div class="content"><div class='highlight'><pre>                  down: <span class="keyword">function</span>(e, x, y, ev){
+                    <span class="keyword">if</span> (mouse_touch(ev)) <span class="keyword">return</span> e.stopImmediatePropagation();
                     <span class="keyword">if</span> (!opt.clickfree &amp;&amp; ev &amp;&amp; ev.button !== <span class="literal">undefined</span> &amp;&amp; ev.button != DRAG_BUTTON) <span class="keyword">return</span>;
                     <span class="keyword">if</span> (opt.draggable){
                       <span class="keyword">var</span>
@@ -3233,6 +3234,7 @@ or lift the finger of the touch screen. This event handler:</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                  up: <span class="keyword">function</span>(e, ev){
+                    <span class="keyword">if</span> (mouse_touch(ev, <span class="literal">true</span>)) <span class="keyword">return</span> e.stopImmediatePropagation();
                     <span class="keyword">var</span>
                       clicked= set(_clicked_, <span class="literal">false</span>),
                       reeling= set(_reeling_, <span class="literal">false</span>),
@@ -3276,6 +3278,7 @@ or <code>drag</code> (that conflicted with MSIE).</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                  pan: <span class="keyword">function</span>(e, x, y, ev){
+                    <span class="keyword">if</span> (mouse_touch(ev)) <span class="keyword">return</span> e.stopImmediatePropagation();
                     <span class="keyword">if</span> (opt.draggable &amp;&amp; slidable){
                       slidable= <span class="literal">false</span>;
                       unidle();
@@ -4213,6 +4216,7 @@ again,</li>
                     monitor &amp;&amp; set(_monitor_, get(monitor)+__);
                     velocity &amp;&amp; braking++;
                     operated &amp;&amp; operated++;
+                    touched &gt; <span class="number">0</span> &amp;&amp; touched--;
                     to_bias(<span class="number">0</span>);
                     slidable= <span class="literal">true</span>;
                     <span class="keyword">if</span> (operated &amp;&amp; !velocity) <span class="keyword">return</span> mute(e);
@@ -4342,6 +4346,27 @@ is halted until the opening finishes.</p>
             <div class="annotation">
               
               <ul>
+<li>Touch input type registration and check routine for devices,
+which fire both touch and mouse events simultaneously</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              touched= <span class="number">0</span>,
+              mouse_touch= <span class="keyword">function</span>(ev, release){
+                <span class="keyword">var</span>
+                  touch_event= ev.type.match(<span class="regexp">/^touch/</span>)
+                touch_event &amp;&amp; (touched= release ? <span class="number">30</span> : -<span class="number">1</span>);
+                <span class="keyword">return</span> touched &amp;&amp; !touch_event;
+              },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id='section-198'>
+            <div class="annotation">
+              
+              <ul>
 <li>Constructors of UI elements</li>
 </ul>
 
@@ -4378,7 +4403,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-198'>
+        <li id='section-199'>
             <div class="annotation">
               
               <ul>
@@ -4403,7 +4428,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-199'>
+        <li id='section-200'>
             <div class="annotation">
               
               <ul>
@@ -4426,7 +4451,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-200'>
+        <li id='section-201'>
             <div class="annotation">
               
               <ul>
@@ -4444,7 +4469,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-201'>
+        <li id='section-202'>
             <div class="annotation">
               
               <ul>
@@ -4459,7 +4484,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-202'>
+        <li id='section-203'>
             <div class="annotation">
               
               <ul>
@@ -4484,7 +4509,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-203'>
+        <li id='section-204'>
             <div class="annotation">
               
               <ul>
@@ -4499,7 +4524,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-204'>
+        <li id='section-205'>
             <div class="annotation">
               
               <ul>
@@ -4522,7 +4547,7 @@ is halted until the opening finishes.</p>
         </li>
         
         
-        <li id='section-205'>
+        <li id='section-206'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4546,7 +4571,7 @@ only if it does make a difference in the cousin value.</p>
         </li>
         
         
-        <li id='section-206'>
+        <li id='section-207'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4563,7 +4588,7 @@ of the <code>&lt;iframe&gt;</code>.</p>
         </li>
         
         
-        <li id='section-207'>
+        <li id='section-208'>
             <div class="annotation">
               
               <p>A private flag <code>$iframe</code> is established to indicate Reel being viewed inside <code>&lt;iframe&gt;</code>.</p>
@@ -4585,7 +4610,7 @@ of the <code>&lt;iframe&gt;</code>.</p>
         </li>
         
         
-        <li id='section-208'>
+        <li id='section-209'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -4614,7 +4639,7 @@ as possible.</p>
         </li>
         
         
-        <li id='section-209'>
+        <li id='section-210'>
             <div class="annotation">
               
               <hr>
@@ -4639,7 +4664,7 @@ as possible.</p>
         </li>
         
         
-        <li id='section-211'>
+        <li id='section-212'>
             <div class="annotation">
               
               <p>The evil-twin of <code>.reel()</code>. Tears down and wipes off entire instance.</p>
@@ -4671,7 +4696,7 @@ as possible.</p>
         </li>
         
         
-        <li id='section-213'>
+        <li id='section-214'>
             <div class="annotation">
               
               <hr>
@@ -4696,7 +4721,7 @@ as possible.</p>
         </li>
         
         
-        <li id='section-215'>
+        <li id='section-216'>
             <div class="annotation">
               
               <p>Few regular expressions is used here and there mostly for options validation and verification
@@ -4747,7 +4772,7 @@ levels of user agent&#39;s capabilities.</p>
         </li>
         
         
-        <li id='section-217'>
+        <li id='section-218'>
             <div class="annotation">
               
               <hr>
@@ -4772,7 +4797,7 @@ levels of user agent&#39;s capabilities.</p>
         </li>
         
         
-        <li id='section-219'>
+        <li id='section-220'>
             <div class="annotation">
               
               <p><a href="https://github.com/pisi/Reel/wiki/CDN">CDN</a> is used for distributing mouse cursors to all instances running world-wide. It runs
@@ -4803,7 +4828,7 @@ your own location with the cursors.</p>
         </li>
         
         
-        <li id='section-221'>
+        <li id='section-222'>
             <div class="annotation">
               
               <hr>
@@ -4828,7 +4853,7 @@ your own location with the cursors.</p>
         </li>
         
         
-        <li id='section-223'>
+        <li id='section-224'>
             <div class="annotation">
               
               <p>Surprisingly there&#39;s very little math behind Reel. Two equations (graph functions), which
@@ -4858,7 +4883,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-225'>
+        <li id='section-226'>
             <div class="annotation">
               
               <pre><code>1 |  ********
@@ -4878,7 +4903,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-226'>
+        <li id='section-227'>
             <div class="annotation">
               
               <pre><code>1 |        **          **
@@ -4901,7 +4926,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-227'>
+        <li id='section-228'>
             <div class="annotation">
               
               <p>Plus equation for interpolating <code>fraction</code> (and <code>tier</code>) value into <code>frame</code> and <code>row</code>.</p>
@@ -4915,7 +4940,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-228'>
+        <li id='section-229'>
             <div class="annotation">
               
               <p>And one for calculation of the shortest frame distance from start to the end.</p>
@@ -4933,7 +4958,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-229'>
+        <li id='section-230'>
             <div class="annotation">
               
               <hr>
@@ -4958,7 +4983,7 @@ drive Reel motion and receive the same set of options.</p>
         </li>
         
         
-        <li id='section-231'>
+        <li id='section-232'>
             <div class="annotation">
               
               <p>Reel doesn&#39;t load frames in a linear manner from first to last (alhough it can if configured
@@ -4991,7 +5016,7 @@ it back.</p>
         </li>
         
         
-        <li id='section-233'>
+        <li id='section-234'>
             <div class="annotation">
               
               <p>The best (and default) option is the <code>fidelity</code> processor, which is designed for a faster and
@@ -5040,7 +5065,7 @@ better perceived loading.</p>
         </li>
         
         
-        <li id='section-234'>
+        <li id='section-235'>
             <div class="annotation">
               
               <p>You can opt for a <code>linear</code> loading order too, but that has a drawback of leaving large gap
@@ -5056,7 +5081,7 @@ of unloaded frames.</p>
         </li>
         
         
-        <li id='section-235'>
+        <li id='section-236'>
             <div class="annotation">
               
               <hr>
@@ -5081,7 +5106,7 @@ of unloaded frames.</p>
         </li>
         
         
-        <li id='section-237'>
+        <li id='section-238'>
             <div class="annotation">
               
               <p>Reel will process each and every image resource URL and substitute special markup
@@ -5152,7 +5177,7 @@ image.php?nocache=1377604502788</code></pre>
         </li>
         
         
-        <li id='section-240'>
+        <li id='section-241'>
             <div class="annotation">
               
               <hr>
@@ -5177,7 +5202,7 @@ image.php?nocache=1377604502788</code></pre>
         </li>
         
         
-        <li id='section-242'>
+        <li id='section-243'>
             <div class="annotation">
               
               <p>On all data values being stored with <code>.reel()</code> an attempt is made to normalize the value. Like
@@ -5242,7 +5267,7 @@ and it has to return the normalized value.</p>
         </li>
         
         
-        <li id='section-244'>
+        <li id='section-245'>
             <div class="annotation">
               
               <hr>
@@ -5267,7 +5292,7 @@ and it has to return the normalized value.</p>
         </li>
         
         
-        <li id='section-246'>
+        <li id='section-247'>
             <div class="annotation">
               
               <p>When configured with a String value for <a href="#images-Option"><code>images</code></a> like <code>image##.jpg</code>, it first has
@@ -5317,7 +5342,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-248'>
+        <li id='section-249'>
             <div class="annotation">
               
               <hr>
@@ -5342,7 +5367,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-250'>
+        <li id='section-251'>
             <div class="annotation">
               
               <p><code>$.reel.instances</code> holds an inventory of all running instances in the DOM document.</p>
@@ -5371,7 +5396,7 @@ to be converted into an actual Array by engaging the counter placeholder.</p>
         </li>
         
         
-        <li id='section-252'>
+        <li id='section-253'>
             <div class="annotation">
               
               <p>For ticker-synchronization-related purposes Reel maintains a reference to the leaders data object
@@ -5401,7 +5426,7 @@ all the time.</p>
         </li>
         
         
-        <li id='section-254'>
+        <li id='section-255'>
             <div class="annotation">
               
               <p><code>$.reel.resize_gauge</code> specifies a throttling interval for triggering of <code>resize</code> events,
@@ -5431,7 +5456,7 @@ in milliseconds.</p>
         </li>
         
         
-        <li id='section-256'>
+        <li id='section-257'>
             <div class="annotation">
               
               <p><code>$.reel.concurrent_requests</code> specifies how many preloading requests will run simultaneously.</p>
@@ -5460,7 +5485,7 @@ in milliseconds.</p>
         </li>
         
         
-        <li id='section-258'>
+        <li id='section-259'>
             <div class="annotation">
               
               <p><code>$.reel.cost</code> holds document-wide costs in miliseconds of running all Reel instances. It is used
@@ -5491,7 +5516,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-260'>
+        <li id='section-261'>
             <div class="annotation">
               
               <hr>
@@ -5516,7 +5541,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-262'>
+        <li id='section-263'>
             <div class="annotation">
               
               
@@ -5534,7 +5559,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-263'>
+        <li id='section-264'>
             <div class="annotation">
               
               <hr>
@@ -5559,7 +5584,7 @@ to adjust actual timeout of the ticker.</p>
         </li>
         
         
-        <li id='section-265'>
+        <li id='section-266'>
             <div class="annotation">
               
               <p>These are all the class names assigned by Reel to various DOM elements during initialization of the UI
@@ -5573,7 +5598,7 @@ converted into Reel.</p>
         </li>
         
         
-        <li id='section-266'>
+        <li id='section-267'>
             <div class="annotation">
               
               <p>Rest of the class names only extend this base class forming for example <code>.reel-overlay</code>, a class
@@ -5593,7 +5618,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-267'>
+        <li id='section-268'>
             <div class="annotation">
               
               <p>The instance wrapper is flagged with actual frame number using a this class.</p>
@@ -5606,7 +5631,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-268'>
+        <li id='section-269'>
             <div class="annotation">
               
               <hr>
@@ -5631,7 +5656,7 @@ assigned to the outter instance wrapper (<code>&lt;img&gt;</code>&#39;s injected
         </li>
         
         
-        <li id='section-270'>
+        <li id='section-271'>
             <div class="annotation">
               
               <p>Several math functions are referenced inside the private scope to yield smaller filesize
@@ -5648,7 +5673,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-271'>
+        <li id='section-272'>
             <div class="annotation">
               
               <p>For the very same reason all storage key Strings are cached into local vars.</p>
@@ -5680,7 +5705,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-272'>
+        <li id='section-273'>
             <div class="annotation">
               
               <p>And the same goes for browser events too.</p>
@@ -5699,7 +5724,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-273'>
+        <li id='section-274'>
             <div class="annotation">
               
               <p>And some other frequently used Strings.</p>
@@ -5714,7 +5739,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-274'>
+        <li id='section-275'>
             <div class="annotation">
               
               <p>Collection of data keys holding scalable pixel values responsive to the scale ratio</p>
@@ -5727,7 +5752,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-275'>
+        <li id='section-276'>
             <div class="annotation">
               
               <hr>
@@ -5752,7 +5777,7 @@ when the code is minified.</p>
         </li>
         
         
-        <li id='section-277'>
+        <li id='section-278'>
             <div class="annotation">
               
               <p>Alhough we do what we can to hide the fact, Reel actually needs a few image resources to support
@@ -5766,7 +5791,7 @@ the sprite applied to its background. This one is embedded in the code as it is 
         </li>
         
         
-        <li id='section-278'>
+        <li id='section-279'>
             <div class="annotation">
               
               <p>Proper cross-browser cursors however need to come in an odd format, which essentially is not
@@ -5783,7 +5808,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-279'>
+        <li id='section-280'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5798,7 +5823,7 @@ the images from in an effective gzipped and cachable manner.</p>
         </li>
         
         
-        <li id='section-280'>
+        <li id='section-281'>
             <div class="annotation">
               
               <p>~~~</p>
@@ -5818,7 +5843,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-281'>
+        <li id='section-282'>
             <div class="annotation">
               
               <p>Expose plugin functions as jQuery methods, do the initial global scan for data-configured
@@ -5832,7 +5857,7 @@ Note, that the <code>clean</code> event does not bubble.</p>
         </li>
         
         
-        <li id='section-282'>
+        <li id='section-283'>
             <div class="annotation">
               
               <p>Bunch of very useful helpers.</p>
