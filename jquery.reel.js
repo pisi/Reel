@@ -1410,7 +1410,7 @@
                   // Optional `speed` parameter allows for custom speed independent on the regular speed.
                   //
                   reach: function(e, target, speed){
-                    if (target == get(_frame_)) return;
+                    if (target == get(_frame_)) return t.trigger('reached', target);
                     var
                       frames= get(_frames_),
                       row= set(_row_, ceil(target / frames)),
@@ -1759,7 +1759,7 @@
                       travelled= reel.math.distance(get(_departure_), frame, get(_frames_)),
                       onorover= abs(travelled) >= abs(get(_distance_))
                     if (!onorover) return;
-                    set(_frame_, set(_destination_));
+                    t.trigger('reached', set(_frame_, get(_destination_)));
                     set(_destination_, set(_distance_, set(_departure_, 0)));
                     t.trigger('stop');
                   },

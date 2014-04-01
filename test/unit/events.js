@@ -404,4 +404,43 @@
     });
   });
 
+  $.each({
+    'forward motion': { frame: 6, reach: 12 },
+    'backward motion': { frame: 15, reach: 10 },
+    'static': { frame: 9, reach: 9 },
+  },
+  function(name, def)
+  {
+    asyncTest( 'Reach triggers `reached` event when animation is complete (' + name + ')', function()
+    {
+      expect( 3 );
+
+      var
+        frame,
+        $reel= $('#image').reel({
+          speed: 0.5,
+          frame: def.frame
+        })
+
+      $(document).bind('loaded.test', function(){
+        $reel.trigger('reach', def.reach);
+
+      });
+
+      $(document).bind('reached.test', function(e, frame){
+        clearTimeout(timeout);
+        ok( true, '`reached` event fired');
+        equal( $reel.reel('frame'), frame, 'Gives `frame` in parameter' );
+        equal( frame, def.reach, 'Correct frame' );
+        start();
+      });
+
+      var
+        timeout= setTimeout(function(){
+          ok( false, '`reached` event did not fire (in time)');
+          start();
+        }, 1000);
+
+    });
+  });
 })(jQuery);
