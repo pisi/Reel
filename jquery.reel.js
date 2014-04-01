@@ -1421,6 +1421,10 @@
                     t.trigger('play', speed);
                   },
 
+                  reached: function(e, target){
+                    set(_speed_, opt.speed);
+                  },
+
                   // ### `pause` Event ######
                   // `Event`, since 1.1
                   //
