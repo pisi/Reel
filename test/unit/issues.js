@@ -795,4 +795,37 @@
 
   });
 
+  $.each({
+    'no speed': { speed: 0.6, frame: 12, original: 0 },
+    'lower speed': { speed: 0.3, frame: 6, original: 0.8 },
+    'higher speed': { speed: 0.8, frame: 18, original: 0.3 }
+  },
+  function(name, def)
+  {
+    asyncTest( 'GH-250 Original speed restored after `reach` event reaction is complete (' + name + ')', function()
+    {
+      /* 
+       * http://github.com/pisi/Reel/issues/250
+       */
+      expect( 2 );
+
+      var
+        frame,
+        $reel= $('#image').reel({
+          speed: def.original
+        })
+
+      $(document).bind('loaded.test', function(){
+        $reel.trigger('reach', [ def.frame, def.speed ]);
+        equal( $reel.reel('speed'), def.speed, 'During reach `speed` holds the reach speed' );
+
+        setTimeout(function(){
+          equal( $reel.reel('speed'), def.original, 'When done `speed` gets reset to the orignal option value' );
+          start();
+        }, 1000);
+      });
+
+    });
+  });
+
 })(jQuery);
