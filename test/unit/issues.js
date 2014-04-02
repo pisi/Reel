@@ -819,10 +819,11 @@
         $reel.trigger('reach', [ def.frame, def.speed ]);
         equal( $reel.reel('speed'), def.speed, 'During reach `speed` holds the reach speed' );
 
-        setTimeout(function(){
-          equal( $reel.reel('speed'), def.original, 'When done `speed` gets reset to the orignal option value' );
+        $(document).bind('reached.test', function(){
+          equal( $reel.reel('speed'), def.original, 'When done `speed` gets reset to the original option value' );
           start();
-        }, 1000);
+        });
+
       });
 
     });

@@ -300,10 +300,10 @@
   });
 
   $.each({
-    'positive':           { start:  3, reach: 15, expect: { speed:  1 }},
-    'negative':           { start: 13, reach:  5, expect: { speed: -1 }},
-    'positive over edge': { start: 20, reach:  3, expect: { speed:  1 }},
-    'negative over edge': { start:  2, reach: 18, expect: { speed: -1 }}
+    'positive':           { start:  3, reach:  5, expect: { next:  4 }},
+    'negative':           { start: 13, reach: 11, expect: { next: 12 }},
+    'positive over edge': { start: 22, reach:  2, expect: { next: 23 }},
+    'negative over edge': { start:  2, reach: 22, expect: { next:  1 }}
   },
   function(name, def){
     asyncTest( 'Reach: Trigger `reach` event to playback to given frame - '+name, function()
@@ -313,17 +313,23 @@
         $reel= $('#image').reel({
           frame: def.start,
           frames: 24,
-          speed: 1
+          speed: 0.1
         })
 
-      $reel.trigger('reach', def.reach);
+      $(document).bind('loaded.test', function(){
+        $reel.trigger('reach', def.reach);
 
-      $(document).bind('stop.test', function(){
-        ok( true, 'Reached a stop');
-        equal( $reel.reel('frame'), def.reach, 'On the right frame');
-        equal( $reel.reel('speed'), def.expect.speed, 'With the right speed/direction');
-        start();
+        $(document).one('frameChange.test', function(){
+          equal( $reel.reel('frame'), def.expect.next, 'Correct neighbouring frame');
+        });
+
+        $(document).bind('reached.test', function(){
+          ok( true, 'Reached a stop');
+          equal( $reel.reel('frame'), def.reach, 'On the right frame');
+          start();
+        });
       });
+
     });
   });
 
