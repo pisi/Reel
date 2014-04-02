@@ -3080,7 +3080,7 @@ Optional <code>speed</code> parameter allows for custom speed independent on the
             </div>
             
             <div class="content"><div class='highlight'><pre>                  reach: <span class="keyword">function</span>(e, target, speed){
-                    <span class="keyword">if</span> (target == get(_frame_)) <span class="keyword">return</span>;
+                    <span class="keyword">if</span> (target == get(_frame_)) <span class="keyword">return</span> t.trigger(<span class="string">'reached'</span>, target);
                     <span class="keyword">var</span>
                       frames= get(_frames_),
                       row= set(_row_, ceil(target / frames)),
@@ -3089,6 +3089,10 @@ Optional <code>speed</code> parameter allows for custom speed independent on the
                       shortest = set(_distance_, reel.math.distance(departure, target, frames)),
                       speed= abs(speed || get(_speed_)) * negative_when(<span class="number">1</span>, shortest &lt; <span class="number">0</span>)
                     t.trigger(<span class="string">'play'</span>, speed);
+                  },
+
+                  reached: <span class="keyword">function</span>(e, target){
+                    set(_speed_, opt.speed);
                   },</pre></div></div>
             
         </li>
@@ -3612,7 +3616,7 @@ This handler converts <code>row</code> value to <code>tier</code> and sets it. T
                       travelled= reel.math.distance(get(_departure_), frame, get(_frames_)),
                       onorover= abs(travelled) &gt;= abs(get(_distance_))
                     <span class="keyword">if</span> (!onorover) <span class="keyword">return</span>;
-                    set(_frame_, set(_destination_));
+                    t.trigger(<span class="string">'reached'</span>, set(_frame_, get(_destination_)));
                     set(_destination_, set(_distance_, set(_departure_, <span class="number">0</span>)));
                     t.trigger(<span class="string">'stop'</span>);
                   },</pre></div></div>
