@@ -24,7 +24,7 @@
  * jQuery Reel
  * http://reel360.org
  * Version: 1.3.1-devel
- * Updated: 2014-03-24
+ * Updated: 2014-08-13
  *
  * Requires jQuery 1.6.2 or higher
  */
@@ -1609,7 +1609,7 @@
                     if (!slidable || operated) return;
                     oriented= true;
                     var
-                      alpha_fraction= alpha / 360
+                      alpha_fraction= alpha / 360,
                       fraction= set(_fraction_, +((opt.stitched || opt.cw ? 1 - alpha_fraction : alpha_fraction)).toFixed(2))
                     slidable = false;
                   },
