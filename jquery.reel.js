@@ -1220,7 +1220,7 @@
                       cursor_up= cursor == _hand_ ? drag_cursor : cursor || reel_cursor,
                       cursor_down= cursor == _hand_ ? drag_cursor_down+___+'!important' : undefined
                     css(___+dot(klass), { MozUserSelect: _none_, WebkitUserSelect: _none_, MozTransform: 'translateZ(0)' });
-                    t.unbind(_click_, shy_setup);
+                    t.parent().unbind(_click_, shy_setup);
                     $area
                       .bind(_touchstart_, press)
                       .bind(opt.clickfree ? _mouseenter_ : _mousedown_, press)
